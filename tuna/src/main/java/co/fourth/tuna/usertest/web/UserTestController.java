@@ -7,18 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import co.fourth.tuna.usertest.service.userTestService;
-import co.fourth.tuna.usertest.vo.userTestVO;
+import co.fourth.tuna.usertest.service.UserTestService;
+import co.fourth.tuna.usertest.vo.UserTestVO;
 
 @Controller
-public class userTestController {
+public class UserTestController {
 	
 	@Autowired
-	userTestService userDao;
+	UserTestService userDao;
 	
 	@RequestMapping("/userInfo.do")
 	public String userTest(Model model) {
-		List<userTestVO> list = userDao.findAll();
+		List<UserTestVO> list = userDao.findAll();
 		model.addAttribute("list", list);
 		return "test/test";
 	}

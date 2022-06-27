@@ -1,4 +1,4 @@
-package co.fourth.tuna.usertest.service.Impl;
+package co.fourth.tuna.usertest.service.impl;
 
 import java.util.List;
 
@@ -10,34 +10,34 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import co.fourth.tuna.usertest.mapper.userTestMapper;
-import co.fourth.tuna.usertest.service.userTestService;
-import co.fourth.tuna.usertest.vo.userTestVO;
+import co.fourth.tuna.usertest.mapper.UserTestMapper;
+import co.fourth.tuna.usertest.service.UserTestService;
+import co.fourth.tuna.usertest.vo.UserTestVO;
 
 @Service
-public class userTestServiceImpl implements userTestService, UserDetailsService{
+public class UserTestServiceImpl implements UserTestService, UserDetailsService{
 	
-	Logger logger = LoggerFactory.getLogger(userTestServiceImpl.class);
+	Logger logger = LoggerFactory.getLogger(UserTestServiceImpl.class);
 	
 	
 	@Autowired
-	userTestMapper mapper;
+	UserTestMapper mapper;
 
 	@Override
-	public List<userTestVO> findAll() {
+	public List<UserTestVO> findAll() {
 		// TODO Auto-generated method stub
 		return mapper.findAll();
 	}
 	
 	@Override
-	public userTestVO findById(userTestVO vo) {
+	public UserTestVO findById(UserTestVO vo) {
 		// TODO Auto-generated method stub
 		return mapper.findById(vo);
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		userTestVO vo = new userTestVO();
+		UserTestVO vo = new UserTestVO();
 		vo.setStudentId(username);
 		vo = mapper.findById(vo);
 		if(vo == null)

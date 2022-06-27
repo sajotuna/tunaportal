@@ -15,7 +15,8 @@
 		<security:intercept-url pattern="/**"
 			access="isAuthenticated()" />
 		<security:form-login
-			username-parameter="id"
+			login-processing-url="/processLogin"
+			username-parameter="studentId"
 			default-target-url="/home.jsp" 
 			/>
 		<security:logout logout-url="/logout"
