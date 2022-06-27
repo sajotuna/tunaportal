@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.fourth.tuna.usertest.mapper.userTest-map">
+<mapper namespace="co.fourth.tuna.usertest.mapper.UserTestMapper">
 
 <select id="findAll" resultType="userTestVO">
 	SELECT *
@@ -10,7 +10,7 @@
 <select id="findById" parameterType="userTestVO" resultType="userTestVO">
 	select student_id, student_pwd, student_email, user_role 
 	FROM usertest 
-	WHERE student_id = #{student_id}
+	WHERE student_id = #{studentId}
 </select>
 
 
