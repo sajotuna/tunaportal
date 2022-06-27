@@ -15,20 +15,17 @@
 		<security:intercept-url pattern="/**"
 			access="isAuthenticated()" />
 		<security:form-login
-			default-target-url="/home.jsp" />
+			username-parameter="id"
+			default-target-url="/home.jsp" 
+			/>
 		<security:logout logout-url="/logout"
 			logout-success-url="/home.jsp" />
-		<security:csrf disabled="true" />
+		<security:csrf disabled="false" />
 	</security:http>
 
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="user" password="1234"
-					authorities="ROLE_USER" />
-				<security:user name="admin" password="1234"
-					authorities="ROLE_ADMIN" />
-			</security:user-service>
+		<security:authentication-provider user-service-ref="userTestServiceImpl">
+			<security:password-encoder hash="bcrypt"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
 
