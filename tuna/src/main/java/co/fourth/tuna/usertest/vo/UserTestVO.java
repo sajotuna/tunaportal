@@ -11,19 +11,75 @@ import org.springframework.security.core.userdetails.UserDetails;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
-public class UserTestVO implements UserDetails {
+public class UserTestVO implements UserDetails{
 	private String studentId;
 	private String studentPwd;
 	private String studentEmail;
 	private String userRole;
 	
 	
+	
+	public String getStudentId() {
+		return studentId;
+	}
+
+
+
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
+	}
+
+
+
+	public String getStudentPwd() {
+		return studentPwd;
+	}
+
+
+
+	public void setStudentPwd(String studentPwd) {
+		this.studentPwd = studentPwd;
+	}
+
+
+
+	public String getStudentEmail() {
+		return studentEmail;
+	}
+
+
+
+	public void setStudentEmail(String studentEmail) {
+		this.studentEmail = studentEmail;
+	}
+
+
+
+	public String getUserRole() {
+		return userRole;
+	}
+
+
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "userTestVO [studentId=" + studentId + ", studentPwd=" + studentPwd + ", studentEmail=" + studentEmail
+				+ ", userRole=" + userRole + "]";
+	}
+
+
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		//권한 지정
 		List<GrantedAuthority> auth = new ArrayList<>(); 
-		auth.add(new SimpleGrantedAuthority("ROLE_" + this.userRole.toUpperCase()));
+		auth.add(new SimpleGrantedAuthority(this.userRole.toUpperCase()));
 		return null;
 	}
 	@Override
@@ -46,13 +102,15 @@ public class UserTestVO implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "userTestVO [studentId=" + studentId + ", studentPwd=" + studentPwd + ", studentEmail=" + studentEmail
-				+ ", userRole=" + userRole + "]";
-	}
+
+
 	@Override
 	public String getPassword() {
-		return null;
+		// TODO Auto-generated method stub
+		return studentPwd;
 	}
+
+	
+	
+	
 }

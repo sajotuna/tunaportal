@@ -49,6 +49,4 @@ public class UserTestServiceImpl implements UserTestService, UserDetailsService{
 	}
 
 	
-	
-	
 }

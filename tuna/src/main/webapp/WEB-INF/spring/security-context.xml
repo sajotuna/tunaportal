@@ -2,32 +2,42 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<security:http pattern="/css/**" security="none" />
 
 	<security:http>
-		<security:intercept-url pattern="/home.jsp"
+		<security:intercept-url pattern="/custom/**"
 			access="permitAll()" />
 		<security:intercept-url pattern="/admin/**"
 			access="hasAuthority('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/staff/**"
+			access="hasAuthority('ROLE_STAFF')" />
+		<security:intercept-url pattern="/stud/**"
+			access="hasAuthority('ROLE_STUDENT')" />
 		<security:intercept-url pattern="/**"
 			access="isAuthenticated()" />
 		<security:form-login
-			login-processing-url="/processLogin"
-			username-parameter="studentId"
-			default-target-url="/home.jsp" 
-			/>
-		<security:logout logout-url="/logout"
-			logout-success-url="/home.jsp" />
-		<security:csrf disabled="false" />
+			authentication-success-handler-ref="customLoginSuccessHandler"
+		 />
+		 <security:logout logout-url="/logout" invalidate-session="true"/>
+		 <security:csrf disabled="false" />
 	</security:http>
 
 	<security:authentication-manager>
-		<security:authentication-provider user-service-ref="userTestServiceImpl">
-			<security:password-encoder hash="bcrypt"/>
+		<security:authentication-provider>
+			<security:jdbc-user-service data-source-ref="dataSource"
+			users-by-username-query="select student_id username, student_pwd password,1 from usertest where student_id = ?"
+			authorities-by-username-query="select student_id username, upper(user_role) authority from usertest where student_id = ?"
+			/>
+			<security:password-encoder ref = "customNoOpPasswordEncoder"/>
+			<security:password-encoder ref = "bcryptPasswordEncoder"/>
 		</security:authentication-provider>
+		
 	</security:authentication-manager>
+	
+	<bean id="bcryptPasswordEncoder" class = "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
 
 </beans>
