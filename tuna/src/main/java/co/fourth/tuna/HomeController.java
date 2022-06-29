@@ -21,6 +21,10 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		return "home";
 	}
+	@RequestMapping("/")
+	public String homepage(Locale locale, Model model) {
+		return "home";
+	}
 	
 	@RequestMapping("/logout")
 	public void logout() {
@@ -32,10 +36,15 @@ public class HomeController {
 		return "custom/login";
 	}
 	
-	@RequestMapping("/custom/processLogin")
-	public String proocessLogin() {
-		return "home";
+	@RequestMapping("/duplicatelogin")
+	public String duplicateLogin(Model model) {
+		model.addAttribute("LoginFailMessage", "다른 IP에서 접속하셨기 때문에 기존의 접속이 끊어집니다.");
+		return "custom/login";
 	}
 	
+	@RequestMapping("/mypage")
+	public String home() {
+		return "mypage";
+	}
 	
 }

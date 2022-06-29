@@ -8,6 +8,8 @@
 	<security:http pattern="/css/**" security="none" />
 
 	<security:http>
+		<security:intercept-url pattern="/home"
+			access="permitAll()" />
 		<security:intercept-url pattern="/custom/**"
 			access="permitAll()" />
 		<security:intercept-url pattern="/admin/**"
@@ -19,12 +21,23 @@
 		<security:intercept-url pattern="/**"
 			access="isAuthenticated()" />
 		<security:form-login
+			login-page="/custom/login"
+			login-processing-url="/processLogin"
 			authentication-success-handler-ref="customLoginSuccessHandler"
+			default-target-url="/home"
+			authentication-failure-handler-ref="customLoginFailureHandler"
+			
+			
 		 />
-		 <security:logout logout-url="/logout" invalidate-session="true"/>
+		 <security:logout logout-url="/logout" invalidate-session="true" logout-success-url="/home"/>
 		 <security:csrf disabled="false" />
+	
+		<security:session-management>
+			<security:concurrency-control max-sessions="1" expired-url="/custom/login"/>
+		</security:session-management>
 	</security:http>
-
+	
+	
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:jdbc-user-service data-source-ref="dataSource"
@@ -38,6 +51,6 @@
 	</security:authentication-manager>
 	
 	<bean id="bcryptPasswordEncoder" class = "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-	
+
 
 </beans>

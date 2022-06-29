@@ -11,13 +11,15 @@
 <h1>로그인 페이지</h1>
 ${param.error}
 
-<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-  로그인 에러입니다.<br>
-  예외 타입：${SPRING_SECURITY_LAST_EXCEPTION.getClass().name}<br>
-  메시지：${SPRING_SECURITY_LAST_EXCEPTION.message}<br>
-  <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
+<c:if test ="${!empty LoginFailMessage }">
+	<script>
+		alert(`${LoginFailMessage}`)
+	</script>
 </c:if>
-<form action="processLogin" method="post">
+
+<a href = "${pageContext.request.contextPath }/home">TUNA</a>
+
+<form action="${pageContext.request.contextPath }/processLogin" method="post">
 	<sec:csrfInput/>
   <dl>
     <dt>
@@ -35,5 +37,6 @@ ${param.error}
   </dl>
   <button>로그인</button>
 </form>
+<a href = "pwdfind">비밀번호찾기</a>
 </body>
 </html>
