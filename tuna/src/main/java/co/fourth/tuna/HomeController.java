@@ -1,7 +1,5 @@
 package co.fourth.tuna;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -18,22 +16,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/home")
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
 		return "home";
+	}
+	@RequestMapping("/")
+	public String homepage(Locale locale, Model model) {
+		return "home";
+	}
+	
+	@RequestMapping("/logout")
+	public void logout() {
+		logger.info("Logout");
+	}
+	
+	@RequestMapping("/custom/login")
+	public String login() {
+		return "custom/login";
+	}
+	
+	@RequestMapping("/duplicatelogin")
+	public String duplicateLogin(Model model) {
+		model.addAttribute("LoginFailMessage", "다른 IP에서 접속하셨기 때문에 기존의 접속이 끊어집니다.");
+		return "custom/login";
+	}
+	
+	@RequestMapping("/mypage")
+	public String home() {
+		return "mypage";
 	}
 	
 }

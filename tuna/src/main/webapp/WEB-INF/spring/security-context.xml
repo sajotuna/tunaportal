@@ -2,34 +2,55 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<security:http pattern="/css/**" security="none" />
 
 	<security:http>
-		<security:intercept-url pattern="/home.jsp"
+		<security:intercept-url pattern="/home"
+			access="permitAll()" />
+		<security:intercept-url pattern="/custom/**"
 			access="permitAll()" />
 		<security:intercept-url pattern="/admin/**"
 			access="hasAuthority('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/staff/**"
+			access="hasAuthority('ROLE_STAFF')" />
+		<security:intercept-url pattern="/stud/**"
+			access="hasAuthority('ROLE_STUDENT')" />
 		<security:intercept-url pattern="/**"
 			access="isAuthenticated()" />
 		<security:form-login
-			default-target-url="/home.jsp" />
-		<security:logout logout-url="/logout"
-			logout-success-url="/home.jsp" />
-		<security:csrf disabled="true" />
+			login-page="/custom/login"
+			login-processing-url="/processLogin"
+			authentication-success-handler-ref="customLoginSuccessHandler"
+			default-target-url="/home"
+			authentication-failure-handler-ref="customLoginFailureHandler"
+			
+			
+		 />
+		 <security:logout logout-url="/logout" invalidate-session="true" logout-success-url="/home"/>
+		 <security:csrf disabled="false" />
+	
+		<security:session-management>
+			<security:concurrency-control max-sessions="1" expired-url="/custom/login"/>
+		</security:session-management>
 	</security:http>
-
+	
+	
 	<security:authentication-manager>
 		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="user" password="1234"
-					authorities="ROLE_USER" />
-				<security:user name="admin" password="1234"
-					authorities="ROLE_ADMIN" />
-			</security:user-service>
+			<security:jdbc-user-service data-source-ref="dataSource"
+			users-by-username-query="select student_id username, student_pwd password,1 from usertest where student_id = ?"
+			authorities-by-username-query="select student_id username, upper(user_role) authority from usertest where student_id = ?"
+			/>
+			<security:password-encoder ref = "customNoOpPasswordEncoder"/>
+			<security:password-encoder ref = "bcryptPasswordEncoder"/>
 		</security:authentication-provider>
+		
 	</security:authentication-manager>
+	
+	<bean id="bcryptPasswordEncoder" class = "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
 
 </beans>
