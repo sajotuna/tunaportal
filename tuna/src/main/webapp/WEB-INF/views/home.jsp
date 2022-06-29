@@ -18,6 +18,9 @@
 	<sec:authorize access="isAnonymous()">
 		<a href = "custom/login">로그인</a>
 	</sec:authorize>
+	
+	<a href = "coursesreg">수강신청</a>
+	
 	<h1>톱 페이지입니다.</h1>
 	<ul>
 		<li><a href="user/user.jsp">일반 사용자용 페이지로</a></li>
