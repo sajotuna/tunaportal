@@ -12,22 +12,40 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<mvc:annotation-driven />
-	
-	<context:component-scan base-package="co.fourth.tuna">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+
+	<context:component-scan
+		base-package="co.fourth.tuna">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	
-	<task:annotation-driven/>
-	
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+
+	<task:annotation-driven />
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	
 	<!-- @Transactional -->
-	<tx:annotation-driven/>
+	<tx:annotation-driven />
+
+	<aop:aspectj-autoproxy />
 	
-	<aop:aspectj-autoproxy/>
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="lnsertgood123@gmail.com" />
+		<property name="password" value="jpinpsjmnekvsbho" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
 </beans>
