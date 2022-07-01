@@ -19,6 +19,16 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value = "2"/>
+	</beans:bean>
+	
+	<beans:bean class = "org.springframework.web.servlet.view.UrlBasedViewResolver" id = "urlBasedViewResolver">
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+		<beans:property name="order" value = "1"/>
+	</beans:bean>
+	
+	<beans:bean class = "org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions" value = "/WEB-INF/spring/tiles.xml"/>
 	</beans:bean>
 	
 	<context:component-scan base-package="co.fourth.tuna" >
