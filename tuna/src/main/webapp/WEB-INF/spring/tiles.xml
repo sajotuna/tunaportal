@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd"><!--  -->
 <tiles-definitions>
-	<definition name = "extra.homepage" template="/WEB-INF/views/layout/layout2.jsp">
-		<put-attribute name="title" value = "My WebSite"/>
-		<put-attribute name="header" value = "/WEB-INF/views/layout/header.jsp"/>
+	<definition name = "extra.homepage" template="/WEB-INF/views/layout/navLayout.jsp">
+		<put-attribute name="title" value = "TUNA Portal"/>
+		<put-attribute name="header" value = "/WEB-INF/views/layout/navHeader.jsp"/>
 		<put-attribute name="body" value = ""/>
-		<put-attribute name="footer" value = "/WEB-INF/views/layout/footer.jsp"/>	
+		<put-attribute name="footer" value = "/WEB-INF/views/layout/navFooter.jsp"/>	
 	</definition>
-	<definition name = "*/*/*" extends="student.homepage">
+	<definition name = "*/extra/*" extends="extra.homepage">
 		<put-attribute name="body" value = "/WEB-INF/views/{1}/extra/{2}.jsp"/>
 	</definition>
 

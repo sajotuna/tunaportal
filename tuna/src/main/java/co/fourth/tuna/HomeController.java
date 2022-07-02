@@ -127,5 +127,10 @@ public class HomeController {
 		}
 		return result;
 	}
+	
+	@RequestMapping("/custom/extra/lectureAndReportSelect")
+	public String lectureAndReportSelect() {
+		return "custom/extra/lectureAndReportSelect";
+	}
 
 }
