@@ -128,9 +128,39 @@ public class HomeController {
 		return result;
 	}
 	
+	// stud; 강의&성적 조회 페이지
 	@RequestMapping("/custom/extra/lectureAndReportSelect")
 	public String lectureAndReportSelect() {
 		return "custom/extra/lectureAndReportSelect";
 	}
+	
+	// stud; 당해학기 성적 조회 페이지
+	@RequestMapping("/custom/extra/semesterReportSelect")
+	public String semesterReportSelect() {
+		return "custom/extra/semesterReportSelect";
+	}
+	
+	// admin; 슬라이드 배너 관리 페이지
+	@RequestMapping("/custom/extra/sliderBannerManagm")
+	public String sliderBannerManagm() {
+		return "custom/extra/sliderBannerManagm";
+	}
+	
+	// admin; 기본 바로가기 배너 관리 페이지
+	@RequestMapping("/custom/extra/basicBannerManagm")
+	public String basicBannerManagm() {
+		return "custom/extra/basicBannerManagm";
+	}
 
+	// admin; 옵션 바로가기 배너 관리 페이지
+	@RequestMapping("/custom/extra/optionBannerManagm")
+	public String optionBannerManagm() {
+		return "custom/extra/optionBannerManagm";
+	}
+
+	// e-class prof; 이의신청 목록 페이지
+	@RequestMapping("/custom/extra/objectionList")
+	public String objectionList() {
+		return "custom/extra/objectionList";
+	}
 }

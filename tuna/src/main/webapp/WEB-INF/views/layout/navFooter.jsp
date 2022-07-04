@@ -21,5 +21,10 @@
     </div>
     </footer>
     <!-- END Footer -->
+        
+    <!-- Script -->
+	<script src="${path }/assets/js/oneui.app.min.js"></script>
+	<!-- jQuery -->
+	<script src="${path}/assets/js/lib/jquery.min.js"></script>
 </body>
 </html>

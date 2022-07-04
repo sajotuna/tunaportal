@@ -35,9 +35,8 @@
 					
 					<li class="nav-main-item"><a
 						class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
-						aria-haspopup="true" aria-expanded="false" href="#"> <i
-							class="nav-main-link-icon fa fa-graduation-cap"> 학사정보</i> <span
-							class="nav-main-link-name"></span>
+						aria-haspopup="true" aria-expanded="false" href="#"><span
+							class="nav-main-link-name">학사정보</span>
 					</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item"><a class="nav-main-link"
@@ -50,9 +49,8 @@
 						
 					<li class="nav-main-item"><a
 						class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
-						aria-haspopup="true" aria-expanded="false" href="#"> <i
-							class="nav-main-link-icon fa fa-rectangle-list"> 조회</i> <span
-							class="nav-main-link-name"></span>
+						aria-haspopup="true" aria-expanded="false" href="#"><span
+							class="nav-main-link-name">조회</span>
 					</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item"><a class="nav-main-link"
@@ -71,9 +69,8 @@
 						
 					<li class="nav-main-item"><a
 						class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
-						aria-haspopup="true" aria-expanded="false" href="#"> <i
-							class="nav-main-link-icon fa fa-bookmark"> 강의</i> <span
-							class="nav-main-link-name"></span>
+						aria-haspopup="true" aria-expanded="false" href="#"><span
+							class="nav-main-link-name">강의</span>
 					</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item"><a class="nav-main-link"

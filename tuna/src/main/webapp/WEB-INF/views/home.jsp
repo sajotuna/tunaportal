@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Home</title>
     <!-- Icons -->
-        <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
         <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
         <link rel="icon" type="image/png" sizes="192x192" href="assets/media/favicons/favicon-192x192.png">
         <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
@@ -24,10 +23,6 @@
         <link rel="stylesheet" href="${path}/assets/js/plugins/slick-carousel/slick-theme.css">
     <!-- END Stylesheets -->
     <style>
-
-        #section {
-            margin: 21.5px 0;
-        }
         .box {
             height: 300px;
             padding:0;
@@ -36,10 +31,7 @@
             height: 136px;
             padding:0;
         }
-        .py-3 {
-            padding-top: 2rem!important;
-            padding-bottom: 2rem!important;
-        }
+
         .banner {
             overflow:hidden;
             padding:0;   
@@ -70,7 +62,6 @@
         .btn-outline-light {
             border:none;
         }
-
     </style>
 </head>
 <body>
@@ -143,13 +134,74 @@
         </div>
     </div>
     <!-- END Hero -->
+    
+    <!-- Main Navigation -->
+    <div class="bg-primary-darker">
+	<div id="main-navigation" class="d-md-none mt-2 mt-lg-0">
+		<ul class="nav-main nav-main-dark nav-main-horizontal nav-main-hover">
+			<li class="nav-main-item"><a
+				class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+				aria-haspopup="true" aria-expanded="false" href="#"><span
+					class="nav-main-link-name">학사정보</span>
+			</a>
+				<ul class="nav-main-submenu">
+					<li class="nav-main-item"><a class="nav-main-link"
+						href="javascript:void(0)"> <span class="nav-main-link-name">공지사항</span>
+					</a></li>
+					<li class="nav-main-item"><a class="nav-main-link"
+						href="javascript:void(0)"> <span class="nav-main-link-name">학사일정</span>
+					</a></li>
+				</ul></li>
+				
+			<li class="nav-main-item"><a
+				class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+				aria-haspopup="true" aria-expanded="false" href="#"><span
+					class="nav-main-link-name">조회</span>
+			</a>
+				<ul class="nav-main-submenu">
+					<li class="nav-main-item"><a class="nav-main-link"
+						href="javascript:void(0)"> <span class="nav-main-link-name">강의/성적 조회</span>
+					</a></li>
+					<li class="nav-main-item"><a class="nav-main-link"
+						href="javascript:void(0)"> <span class="nav-main-link-name">장학 신청 및 조회</span>
+					</a></li>
+					<li class="nav-main-item"><a class="nav-main-link"
+						href="javascript:void(0)"> <span class="nav-main-link-name">등록금납입확인서</span>
+					</a></li>
+					<li class="nav-main-item"><a class="nav-main-link"
+						href="javascript:void(0)"> <span class="nav-main-link-name">당해학기 성적 조회</span>
+					</a></li>
+				</ul></li>
+				
+			<li class="nav-main-item"><a
+				class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+				aria-haspopup="true" aria-expanded="false" href="#"><span
+					class="nav-main-link-name">강의</span>
+			</a>
+				<ul class="nav-main-submenu">
+					<li class="nav-main-item"><a class="nav-main-link"
+						href="javascript:void(0)"> <span class="nav-main-link-name">e-class</span>
+					</a></li>
+					<li class="nav-main-item"><a class="nav-main-link"
+						href="javascript:void(0)"> <span class="nav-main-link-name">수강신청</span>
+					</a></li>
+					<li class="nav-main-item"><a class="nav-main-link"
+						href="javascript:void(0)"> <span class="nav-main-link-name">강의평가</span>
+					</a></li>
+				</ul></li>
 
-    <div id="section">
+		</ul>
+	</div>
+	</div>
+	<!-- END Main Navigation -->
+
+    <div class="mt-3">
     <!-- Page Content -->
     <div class="content content-boxed">
-        <!-- Grid -->
+        <!-- First Row -->
         <div class="row">
-            <div class="col-sm-5">
+        	<!-- Slide Banner -->
+            <div class="col-xl-5">
                 <div class="block block-rounded">
                     <div class="block-content box banner">
                         <div class="js-slider slick-dotted-inner slick-dotted-white box" data-dots="true" data-autoplay="true" data-autoplay-speed="1800">
@@ -169,24 +221,24 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <!-- END Slide Banner -->
+            <div class="col-xl-3 col-md-6 d-none d-md-block">
                 <div class="block block-rounded">
                     <div class="block-content box">
                         <button class="box-btn btn btn-dark fw-bold" href="#">수강신청</button>
                     </div>
                 </div>
             </div>
-
-            <div class="col-sm-4">
+            <div class="col-xl-4 col-md-6 d-none d-md-block">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-md-6">
                         <div class="block block-rounded">
                             <div class="block-content short-box">
                                 <button class="box-btn btn btn-info fw-bold" href="#">등록금납입확인서</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-md-6">
                         <div class="block block-rounded">
                             <div class="block-content short-box">
                                 <button class="box-btn btn btn-outline-light 
@@ -202,17 +254,19 @@
                 </div>
             </div>
         </div>
+        <!-- END First Row -->
+        <!-- Second Row -->
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-xl-4 col-md-6 d-none d-md-block">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-md-6">
                         <div class="block block-rounded">
                             <div class="block-content short-box">
-                                <button class="box-btn btn btn-alt-info fw-bold" href="#">포탈 공지사항</button>
+                                <button class="box-btn btn btn-alt-info fw-bold text-dark" href="#">학사공지</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-md-6">
                         <div class="block block-rounded">
                             <div class="block-content short-box">
                                 <button class="box-btn btn btn-primary fw-bold" href="#">학사일정</button>
@@ -228,7 +282,7 @@
                 </div>
                 
             </div>
-            <div class="col-sm-3">
+            <div class="col-xl-3 col-md-6 d-none d-md-block">
                 <div class="block block-rounded">
                     <div class="block-content box">
                         <button class="box-btn btn btn-outline-light 
@@ -236,34 +290,37 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-5">
+            <!-- Shortcut Banner -->
+            <div class="col-xl-5">
                 <div class="block block-rounded">
                     <div id="shortcut-banner" class="block-content box banner">
                         <button id="shortcut-btn" class="btn btn-alt-secondary" href="#">바로가기</button>
-                        <img class="banner-img" src="" alt="">
-                    </div>
+						<img class="banner-img" src="" alt="">
+					</div>
                 </div>
             </div>
+            <!-- END Shortcut Banner -->
         </div>
+        <!-- END Second Row -->
     </div>
     <!-- END Grid -->
     </div>
     <!-- Footer -->
-    <footer id="page-footer" class="bg-sidebar-dark">
-    <div class="content content-boxed py-3">
-        <div class="row fs-sm text-gray-dark">
-        <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
-            Crafted by <i class="fa fa-fish text-gray-light"></i><a class="fw-semibold text-gray-light" href="#"> sajotuna</a>
-        </div>
-        <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start text-gray-dark">
-            대구광역시 중구 남일동 중앙대로 403 <br><a class="fw-semibold text-gray-light" href="#">&copy;<span data-toggle="year-copy"></span> TUNA Univ. </a>
-        </div>
-        </div>
-    </div>
-    </footer>
-    <!-- END Footer -->
 </main>
 </div>
+ <footer id="page-footer" class="bg-sidebar-dark">
+ <div class="content content-boxed py-4">
+     <div class="row fs-sm text-gray-dark">
+     <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
+         Crafted by <i class="fa fa-fish text-gray-light"></i><a class="fw-semibold text-gray-light" href="#"> sajotuna</a>
+     </div>
+     <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start text-gray-dark">
+         대구광역시 중구 남일동 중앙대로 403 <br><a class="fw-semibold text-gray-light" href="#">&copy;<span data-toggle="year-copy"></span> TUNA Univ. </a>
+     </div>
+     </div>
+ </div>
+ </footer>
+ <!-- END Footer -->
 <!-- Script -->
     <script src="${path}/assets/js/oneui.app.min.js"></script>
     <!-- jQuery (required for Slick Slider plugin) -->
