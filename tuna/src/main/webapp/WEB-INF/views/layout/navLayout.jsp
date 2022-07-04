@@ -21,6 +21,9 @@
     <link rel="stylesheet" id="css-main" href="${path }/assets/css/oneui.min.css">
     <link rel="stylesheet" id="css-theme" href="${path }/assets/css/themes/modern.min.css">
     <!-- END Stylesheets -->
+       
+    <!-- Script -->
+	<script src="${path }/assets/js/oneui.app.min.js"></script>
 
 </head>
 <body>
@@ -33,6 +36,6 @@
 		<!-- END Main Container -->
 	<tiles:insertAttribute name = "footer"/>
 	</div>
-	<script src="assets/js/oneui.app.min.js"></script>
+	
 </body>
 </html>
