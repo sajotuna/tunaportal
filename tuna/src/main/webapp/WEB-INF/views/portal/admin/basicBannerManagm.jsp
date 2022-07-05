@@ -12,18 +12,7 @@
 	<title>basicBannerManagm</title>
 </head>
 <body>
-	<!-- Hero -->
-	<div class="bg-body-light">
-	  <div class="content content-full">
-	    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-	      <div class="flex-grow-1">
-	        <h3 class="h3 fw-bold mb-2">기본 바로가기 배너</h3>
-	        <h2 class="fs-base lh-base fw-medium text-muted mb-0">포탈 메인의 기본 바로가기 배너 관리 페이지입니다.</h2>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!-- END Hero -->
+
 	<!-- Page Content -->
 	<div class="content">
 		<!-- Block -->
