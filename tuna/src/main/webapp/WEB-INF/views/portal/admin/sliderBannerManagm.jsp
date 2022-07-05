@@ -18,18 +18,6 @@
 	<!-- End Stylesheets -->
 </head>
 <body>
-	<!-- Hero -->
-	<div class="bg-body-light">
-		<div class="content content-full">
-			<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-				<div class="flex-grow-1">
-					<h1 class="h3 fw-bold mb-2">슬라이드 배너 관리</h1>
-					<h2 class="fs-base lh-base fw-medium text-muted mb-0">포탈 메인의 슬라이드 배너 관리 페이지입니다.</h2>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- END Hero -->
 	<!-- Page Content -->
 	<div class="content">
 		<div class="block block-rounded">

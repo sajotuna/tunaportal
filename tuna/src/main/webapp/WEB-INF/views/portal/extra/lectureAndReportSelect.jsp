@@ -16,6 +16,16 @@
 	.chart-margin {
 		margin: 2rem 0 6rem 0;
 	}
+	.scroll-table-div {
+		width: 100%;
+		min-height:200px;
+		max-height:450px; 
+		overflow:scroll;
+	}
+	
+	.scroll-table {
+		width:1163px;
+	}
 	</style>
 </head>
 <body>
@@ -108,7 +118,7 @@
 							</div>
 							<div class="col-md-6 col-xl-3">
 								<div class="mb-3">
-									<input type="text" class="form-control" id="example-text-input"	name="example-text-input" placeholder="검색어">
+									<input type="text" class="form-control" id="" name="" placeholder="검색어">
 								</div>
 							</div>
 							<div class="col-md-12 col-xl-1">
@@ -119,19 +129,91 @@
 						</form>
 						<!-- END Form -->
 						<!-- Table -->
-						<div class="mb-4">
-							<table class="table table-striped table-vcenter">
+						<div class="mb-4 scroll-table-div">
+							<table class="table table-striped table-vcenter scroll-table">
 								<thead>
 									<tr>
-										<th class="d-none d-sm-table-cell" style="width: 120px;">과목번호</th>
-										<th class="d-none d-sm-table-cell" style="width: 230px;">과목명</th>
-										<th class="d-none d-sm-table-cell" style="width: 200px;">개설학과</th>
-										<th class="d-none d-sm-table-cell" style="width: 100px;">이수구분</th>
-										<th class="d-none d-sm-table-cell" style="width: 100px;">담당교수</th>
-										<th class="d-none d-sm-table-cell">강의실/강의시간</th>
+										<th style="width: 120px;">과목번호</th>
+										<th style="width: 230px;">과목명</th>
+										<th style="width: 200px;">개설학과</th>
+										<th style="width: 100px;">이수구분</th>
+										<th style="width: 100px;">담당교수</th>
+										<th>강의실/강의시간</th>
 									</tr>
 								</thead>
 								<tbody>
+									<tr>
+										<th scope="row" class="fw-semibold fs-sm">49171-01</th>
+										<td class="fw-semibold fs-sm"><a href="#">비주얼인포메이션디자인(2)</a></td>
+										<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
+										<td class="fw-semibold fs-sm">전공</td>
+										<td class="fw-semibold fs-sm"><a href="#">이설민</a></td>
+										<td class="fw-semibold fs-sm">808관(조형관) 423호 시각디자인실 / 화5,6,7,8</td>
+									</tr>
+									<tr>
+										<th scope="row" class="fw-semibold fs-sm">49171-01</th>
+										<td class="fw-semibold fs-sm"><a href="#">비주얼인포메이션디자인(2)</a></td>
+										<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
+										<td class="fw-semibold fs-sm">전공</td>
+										<td class="fw-semibold fs-sm"><a href="#">이설민</a></td>
+										<td class="fw-semibold fs-sm">808관(조형관) 423호 시각디자인실 / 화5,6,7,8</td>
+									</tr>
+									<tr>
+										<th scope="row" class="fw-semibold fs-sm">49171-01</th>
+										<td class="fw-semibold fs-sm"><a href="#">비주얼인포메이션디자인(2)</a></td>
+										<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
+										<td class="fw-semibold fs-sm">전공</td>
+										<td class="fw-semibold fs-sm"><a href="#">이설민</a></td>
+										<td class="fw-semibold fs-sm">808관(조형관) 423호 시각디자인실 / 화5,6,7,8</td>
+									</tr>
+									<tr>
+										<th scope="row" class="fw-semibold fs-sm">49171-01</th>
+										<td class="fw-semibold fs-sm"><a href="#">비주얼인포메이션디자인(2)</a></td>
+										<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
+										<td class="fw-semibold fs-sm">전공</td>
+										<td class="fw-semibold fs-sm"><a href="#">이설민</a></td>
+										<td class="fw-semibold fs-sm">808관(조형관) 423호 시각디자인실 / 화5,6,7,8</td>
+									</tr>
+									<tr>
+										<th scope="row" class="fw-semibold fs-sm">49171-01</th>
+										<td class="fw-semibold fs-sm"><a href="#">비주얼인포메이션디자인(2)</a></td>
+										<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
+										<td class="fw-semibold fs-sm">전공</td>
+										<td class="fw-semibold fs-sm"><a href="#">이설민</a></td>
+										<td class="fw-semibold fs-sm">808관(조형관) 423호 시각디자인실 / 화5,6,7,8</td>
+									</tr>
+									<tr>
+										<th scope="row" class="fw-semibold fs-sm">49171-01</th>
+										<td class="fw-semibold fs-sm"><a href="#">비주얼인포메이션디자인(2)</a></td>
+										<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
+										<td class="fw-semibold fs-sm">전공</td>
+										<td class="fw-semibold fs-sm"><a href="#">이설민</a></td>
+										<td class="fw-semibold fs-sm">808관(조형관) 423호 시각디자인실 / 화5,6,7,8</td>
+									</tr>
+									<tr>
+										<th scope="row" class="fw-semibold fs-sm">49171-01</th>
+										<td class="fw-semibold fs-sm"><a href="#">비주얼인포메이션디자인(2)</a></td>
+										<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
+										<td class="fw-semibold fs-sm">전공</td>
+										<td class="fw-semibold fs-sm"><a href="#">이설민</a></td>
+										<td class="fw-semibold fs-sm">808관(조형관) 423호 시각디자인실 / 화5,6,7,8</td>
+									</tr>
+									<tr>
+										<th scope="row" class="fw-semibold fs-sm">49171-01</th>
+										<td class="fw-semibold fs-sm"><a href="#">비주얼인포메이션디자인(2)</a></td>
+										<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
+										<td class="fw-semibold fs-sm">전공</td>
+										<td class="fw-semibold fs-sm"><a href="#">이설민</a></td>
+										<td class="fw-semibold fs-sm">808관(조형관) 423호 시각디자인실 / 화5,6,7,8</td>
+									</tr>
+									<tr>
+										<th scope="row" class="fw-semibold fs-sm">49171-01</th>
+										<td class="fw-semibold fs-sm"><a href="#">비주얼인포메이션디자인(2)</a></td>
+										<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
+										<td class="fw-semibold fs-sm">전공</td>
+										<td class="fw-semibold fs-sm"><a href="#">이설민</a></td>
+										<td class="fw-semibold fs-sm">808관(조형관) 423호 시각디자인실 / 화5,6,7,8</td>
+									</tr>
 									<tr>
 										<th scope="row" class="fw-semibold fs-sm">49171-01</th>
 										<td class="fw-semibold fs-sm"><a href="#">비주얼인포메이션디자인(2)</a></td>
@@ -183,16 +265,16 @@
 						</div>
 						<!-- END Input -->
 						<!-- Table -->
-						<div class="mb-4">
-							<table class="table table-striped table-vcenter">
+						<div class="mb-4 scroll-table-div">
+							<table class="table table-striped table-vcenter scroll-table" style="width:1163px;">
 								<thead>
 									<tr>
-										<th class="d-none d-sm-table-cell" style="width: 120px;">과목번호</th>
-										<th class="d-none d-sm-table-cell" style="width: 230px;">과목명</th>
-										<th class="d-none d-sm-table-cell" style="width: 200px;">개설학과</th>
-										<th class="d-none d-sm-table-cell" style="width: 100px;">이수구분</th>
-										<th class="d-none d-sm-table-cell" style="width: 100px;">담당교수</th>
-										<th class="d-none d-sm-table-cell">강의실/강의시간</th>
+										<th style="width: 120px;">과목번호</th>
+										<th style="width: 230px;">과목명</th>
+										<th style="width: 200px;">개설학과</th>
+										<th style="width: 100px;">이수구분</th>
+										<th style="width: 100px;">담당교수</th>
+										<th>강의실/강의시간</th>
 										<th class="d-none d-sm-table-cell">강의평가</th>
 									</tr>
 								</thead>
@@ -219,9 +301,6 @@
 						aria-labelledby="btabs-static-grade-tab">
 						<!-- Bar Chart -->
 						<div class="block block-rounded block-themed mb-4">
-							<div class="block-header bg-primary-dark">
-								<h4 class="block-title">Information</h4>
-							</div>
 							<div class="flex-grow-1 d-flex align-items-center justify-content-center chart-margin">
 								<div class="col-9">
 									<canvas id="js-chartjs-earnings"></canvas>
@@ -282,18 +361,18 @@
 								</div>
 							</div>
 							<!-- Table -->
-							<div class="mb-4">
-								<table class="table table-striped table-vcenter">
+							<div class="mb-4 scroll-table-div">
+								<table class="table table-striped table-vcenter scroll-table">
 									<thead>
 										<tr>
-											<th class="d-none d-sm-table-cell" style="width: 100px;">연도</th>
-											<th class="d-none d-sm-table-cell" style="width: 100px;">학기</th>
-											<th class="d-none d-sm-table-cell" style="width: 100px;">이수구분</th>
-											<th class="d-none d-sm-table-cell" style="width: 150px;">교과목-분반</th>
-											<th class="d-none d-sm-table-cell">과목명</th>
-											<th class="d-none d-sm-table-cell" style="width: 100px;">학점</th>
-											<th class="d-none d-sm-table-cell" style="width: 100px;">등급</th>
-											<th class="d-none d-sm-table-cell" style="width: 100px;">평점</th>
+											<th style="width: 100px;">연도</th>
+											<th style="width: 100px;">학기</th>
+											<th style="width: 100px;">이수구분</th>
+											<th style="width: 150px;">교과목-분반</th>
+											<th>과목명</th>
+											<th style="width: 100px;">학점</th>
+											<th style="width: 100px;">등급</th>
+											<th style="width: 100px;">평점</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -322,7 +401,7 @@
 										<h4 class="block-title">평균 평점</h4>
 									</div>
 									<!-- Table -->
-									<div class="mb-4">
+									<div class="mb-4" style="height:200px; overflow:auto;">
 										<table class="table table-striped table-vcenter text-center">
 											<thead>
 												<tr>

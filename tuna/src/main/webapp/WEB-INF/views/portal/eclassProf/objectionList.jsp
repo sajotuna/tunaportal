@@ -7,19 +7,6 @@
 	<title>objectionList</title>
 </head>
 <body>
-	<!-- Hero -->
-	<div class="bg-body-light">
-		<div class="content content-full content-boxed">
-			<div
-				class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
-				<div class="flex-grow-1 mb-1 mb-md-0">
-					<h3 class="h3 fw-bold mb-2">이의신청 목록</h3>
-					<h2 class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">학기별 이의신청 목록 조회 페이지입니다.</h2>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- END Hero -->
 	<!-- Page Content -->
 	<div class="mt-3">
 		<div class="content content-boxed">

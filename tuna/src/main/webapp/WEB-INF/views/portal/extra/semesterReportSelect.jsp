@@ -9,6 +9,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>semesterReportSelect</title>
+	<style>
+	.table-div {
+		 max-height:300px; 
+		 overflow:auto;
+	}
+	</style>
 </head>
 <body>
 	<!-- Hero -->
@@ -29,6 +35,8 @@
 	<div class="mt-3">
 		<div class="content content-boxed">
 			<!-- Block -->
+			<div class="block block-rounded">
+			<div class="content content-full">
 			<div class="block block-rounded block-themed mb-4">
 				<div class="block-header bg-primary-dark">
 					<h3 class="block-title">수강 과목 및 성적</h3>
@@ -37,36 +45,36 @@
 							data-bs-toggle="modal" data-bs-target="#modal-block-vcenter">성적 이의신청</button>
 					</div>
 				</div>
-				<div class="block-content block-content-full">
-					<!-- Table -->
-					<table class="table table-striped table-hover table-vcenter">
-						<thead>
-							<tr>
-								<th class="d-none d-sm-table-cell" style="width: 100px;">년도</th>
-								<th class="d-none d-sm-table-cell" style="width: 100px;">학기</th>
-								<th class="d-none d-sm-table-cell" style="width: 100px;">이수구분</th>
-								<th class="d-none d-sm-table-cell" style="width: 150px;">교과목-분반</th>
-								<th class="d-none d-sm-table-cell">과목명</th>
-								<th class="d-none d-sm-table-cell" style="width: 100px;">학점</th>
-								<th class="d-none d-sm-table-cell" style="width: 100px;">등급</th>
-								<th class="d-none d-sm-table-cell" style="width: 100px;">평점</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td scope="row" class="fw-semibold fs-sm">2014</td>
-								<td class="fw-semibold fs-sm">1</td>
-								<td class="fw-semibold fs-sm">전공필수</td>
-								<td class="fw-semibold fs-sm">40753-01</td>
-								<td class="fw-semibold fs-sm">타이포그래피(1)</td>
-								<td class="fw-semibold fs-sm">2</td>
-								<td class="fw-semibold fs-sm">A+</td>
-								<td class="fw-semibold fs-sm">4.5</td>
-							</tr>
-						</tbody>
-					</table>
-					<!-- END Table -->
-				</div>
+					<div class="table-div">
+						<!-- Table -->
+						<table class="table table-striped table-vcenter">
+							<thead>
+								<tr>
+									<th class="d-none d-sm-table-cell" style="width: 100px;">년도</th>
+									<th class="d-none d-sm-table-cell" style="width: 100px;">학기</th>
+									<th class="d-none d-sm-table-cell" style="width: 100px;">이수구분</th>
+									<th class="d-none d-sm-table-cell" style="width: 150px;">교과목-분반</th>
+									<th class="d-none d-sm-table-cell">과목명</th>
+									<th class="d-none d-sm-table-cell" style="width: 100px;">학점</th>
+									<th class="d-none d-sm-table-cell" style="width: 100px;">등급</th>
+									<th class="d-none d-sm-table-cell" style="width: 100px;">평점</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td scope="row" class="fw-semibold fs-sm">2014</td>
+									<td class="fw-semibold fs-sm">1</td>
+									<td class="fw-semibold fs-sm">전공필수</td>
+									<td class="fw-semibold fs-sm">40753-01</td>
+									<td class="fw-semibold fs-sm">타이포그래피(1)</td>
+									<td class="fw-semibold fs-sm">2</td>
+									<td class="fw-semibold fs-sm">A+</td>
+									<td class="fw-semibold fs-sm">4.5</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- END Table -->
+					</div>
 			</div>
 			<!-- END Block -->
 			<!-- Block -->
@@ -74,7 +82,6 @@
 				<div class="block-header bg-primary-dark">
 					<h3 class="block-title">성적 누계</h3>
 				</div>
-				<div class="block-content block-content-full">
 					<!-- Table -->
 					<table class="table table-vcenter table-striped">
 						<thead>
@@ -93,9 +100,10 @@
 						</tbody>
 					</table>
 					<!-- END Table -->
-				</div>
 			</div>
 			<!-- END Block -->
+			</div>
+			</div>
 		</div>
 	</div>
 	<!-- END Page Content -->
