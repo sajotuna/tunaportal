@@ -40,10 +40,10 @@
 					</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="javascript:void(0)"> <span class="nav-main-link-name">공지사항</span>
+								href="portalNoticeList"> <span class="nav-main-link-name">공지사항</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="javascript:void(0)"> <span class="nav-main-link-name">학사일정</span>
+								href="portalSchedule"> <span class="nav-main-link-name">학사일정</span>
 							</a></li>
 						</ul></li>
 						
