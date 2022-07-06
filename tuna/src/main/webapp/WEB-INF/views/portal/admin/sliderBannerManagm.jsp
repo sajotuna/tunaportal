@@ -19,21 +19,14 @@
 </head>
 <body>
 	<!-- Page Content -->
+	<div class="mt-3">
 	<div class="content">
+		<p class="h3 fw-bold">슬라이드 배너 등록 및 삭제</p>
 		<div class="block block-rounded">
-			<div class="block-header block-header-default">
-				<h3 class="block-title">슬라이드 배너 등록 및 삭제</h3>
-				<div class="block-options">
-					<button type="button" class="btn btn-sm btn-dark"
-						data-bs-toggle="modal" data-bs-target="#modal-block-vcenter">배너 미리보기</button>
-            	</div>
-			</div>
 			<div class="block-content block-content-full">
+				<div class="m-3">
 				<!-- Image Preview -->
 				<div class="block block-rounded block-themed mb-4">
-					<div class="block-header bg-primary-dark">
-						<h4 class="block-title">사진 미리보기</h4>
-					</div>
 					<div id="preview-img" style="background: #eeeeee; height:350px;">
 						<img src="#">
 					</div>
@@ -41,7 +34,7 @@
 				<!-- END Image Preview -->
 				<!-- Image List -->
 				<div class="block block-rounded block-themed mb-4">
-					<div class="block-header bg-primary-dark">
+					<div class="block-header bg-primary-darker">
 						<h4 class="block-title">배너 사진 목록</h4>
 						<div class="block-options">
 						<button type="button" class="btn btn-sm btn-light" style="margin-right: 10px;">삭제</button>
@@ -74,10 +67,16 @@
 							</tr>
 						</tbody>
 					</table>
+					<div class="d-flex justify-content-center mt-5">
+						<button type="button" class="btn btn-sm btn-dark"
+							data-bs-toggle="modal" data-bs-target="#modal-block-vcenter">배너 미리보기</button>
+            		</div>
 				</div>
 				<!-- END Image List -->
+				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	<!-- END Page Content -->
 	

@@ -5,21 +5,29 @@
 <head>
 	<meta charset="UTF-8">
 	<title>objectionList</title>
+	<style>
+	.scroll-table-div {
+		width: 100%;
+		height:500px; 
+		overflow:scroll;
+	}
+	.scroll-table {
+		width:1395px;
+	}
+	</style>
 </head>
 <body>
 	<!-- Page Content -->
 	<div class="mt-3">
-		<div class="content content-boxed">
+		<div class="content">
+		<p class="h3 fw-bold">학기별 이의신청 조회</p>
 			<!-- Block -->
 			<div class="block block-rounded mb-4">
-				<div class="block-header block-header-default">
-					<h3 class="block-title">학기별 이의신청 조회</h3>
-				</div>
 				<div class="block-content block-content-full">
 					<!-- Input -->
 					<div class="row">
 						<div class="col-lg-6">
-							<div class="mb-4">
+							<div class="mb-2 mb-lg-4">
 								<select class="form-select" id="" name="">
 									<option selected>연도</option>
 									<option value="2022">2022</option>
@@ -40,18 +48,18 @@
 					</div>
 					<!-- END Input -->
 					<!-- Table -->
-					<div class="mb-4">
-						<table class="table table-hover table-striped table-vcenter">
+					<div class="mb-4 scroll-table-div">
+						<table class="table table-hover table-striped table-vcenter scroll-table">
 							<thead>
 								<tr>
-									<th class="d-none d-sm-table-cell" style="width: 120px;">과목번호</th>
-									<th class="d-none d-sm-table-cell">과목명</th>
-									<th class="d-none d-sm-table-cell" style="width: 200px;">개설학과</th>
-									<th class="d-none d-sm-table-cell" style="width: 100px;">이수구분</th>
-									<th class="d-none d-sm-table-cell" style="width: 100px;">담당교수</th>
-									<th class="d-none d-sm-table-cell" style="width: 100px;">학생명</th>
-									<th class="d-none d-sm-table-cell">이의신청일</th>
-									<th class="d-none d-sm-table-cell" style="width: 100px;">답변</th>
+									<th style="width: 120px;">과목번호</th>
+									<th>과목명</th>
+									<th style="width: 200px;">개설학과</th>
+									<th style="width: 100px;">이수구분</th>
+									<th style="width: 100px;">담당교수</th>
+									<th style="width: 100px;">학생명</th>
+									<th>이의신청일</th>
+									<th style="width: 100px;">답변</th>
 								</tr>
 							</thead>
 							<tbody>

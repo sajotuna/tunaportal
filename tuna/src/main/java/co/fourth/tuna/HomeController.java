@@ -127,6 +127,15 @@ public class HomeController {
 		}
 		return result;
 	}
-
+	
+	@RequestMapping("lectureAndReportSelect")
+	public String lectureAndReportSelect() {
+		return "portal/extra/lectureAndReportSelect";
+	}
+	
+	@RequestMapping("semesterReportSelect")
+	public String semesterReportSelect() {
+		return "portal/extra/semesterReportSelect";
+	}
 
 }

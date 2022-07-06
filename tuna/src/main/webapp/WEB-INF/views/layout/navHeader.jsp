@@ -28,7 +28,7 @@
 				<ul
 					class="nav-main nav-main-dark nav-main-horizontal nav-main-hover">
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="#"> <i
+						href="home"> <i
 							class="nav-main-link-icon fa fa-house"></i> <span
 							class="nav-main-link-name">홈</span>
 					</a></li>
@@ -54,7 +54,7 @@
 					</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="javascript:void(0)"> <span class="nav-main-link-name">강의/성적 조회</span>
+								href="lectureAndReportSelect"> <span class="nav-main-link-name">강의/성적 조회</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
 								href="javascript:void(0)"> <span class="nav-main-link-name">장학 신청 및 조회</span>

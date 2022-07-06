@@ -7,11 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Home</title>
-    <!-- Icons -->
-        <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="assets/media/favicons/favicon-192x192.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
-    <!-- END Icons -->
+
 
     <!-- Stylesheets -->
         <!-- Fonts and OneUI framework -->
@@ -121,6 +117,11 @@
                         <span class="fs-sm fw-medium">내 정보 수정</span>
                       </a>
                     </div>
+                    <div class="p-2">
+                      <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
+                        <span class="fs-sm fw-medium">관리자 페이지</span>
+                      </a>
+                    </div>
                     <div role="separator" class="dropdown-divider m-0"></div>
                     <div class="p-2">
                       <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
@@ -160,7 +161,7 @@
 			</a>
 				<ul class="nav-main-submenu">
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="javascript:void(0)"> <span class="nav-main-link-name">강의/성적 조회</span>
+						href="lectureAndReportSelect"> <span class="nav-main-link-name">강의/성적 조회</span>
 					</a></li>
 					<li class="nav-main-item"><a class="nav-main-link"
 						href="javascript:void(0)"> <span class="nav-main-link-name">장학 신청 및 조회</span>
@@ -249,7 +250,8 @@
                 </div>
                 <div class="block block-rounded">
                     <div class="block-content short-box">
-                        <button class="box-btn btn bg-modern-light text-gray-lighter fw-bold" onclick="#">강의 / 성적 조회</button>
+                        <button class="box-btn btn bg-modern-light text-gray-lighter fw-bold" 
+                        		onclick="location.href='lectureAndReportSelect'">강의 / 성적 조회</button>
                     </div>
                 </div>
             </div>
