@@ -70,13 +70,18 @@
 	           </a>
 	           <ul class="nav-main-submenu">
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
-	                 <span class="nav-main-link-name">홍보 배너 관리</span>
+	               <a class="nav-main-link" href="sliderBannerManagm">
+	                 <span class="nav-main-link-name">슬라이드 배너 관리</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
-	                 <span class="nav-main-link-name">바로가기 배너 관리</span>
+	               <a class="nav-main-link" href="basicBannerManagm">
+	                 <span class="nav-main-link-name">기본 바로가기 배너 관리</span>
+	               </a>
+	             </li>
+	             <li class="nav-main-item">
+	               <a class="nav-main-link" href="optionBannerManagm">
+	                 <span class="nav-main-link-name">옵션 바로가기 배너 관리</span>
 	               </a>
 	             </li>
 	           </ul>

@@ -19,7 +19,6 @@
     <!-- Fonts and OneUI framework -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" id="css-main" href="${path }/assets/css/oneui.min.css">
-    <link rel="stylesheet" id="css-theme" href="${path }/assets/css/themes/modern.min.css">
     <!-- END Stylesheets -->
        
     <!-- Script -->

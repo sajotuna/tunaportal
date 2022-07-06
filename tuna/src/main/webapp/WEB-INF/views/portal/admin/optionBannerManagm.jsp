@@ -17,16 +17,12 @@
 </head>
 <body>
 	<!-- Page Content -->
+	<div class="mt-3">
 	<div class="content">
+		<p class="h3 fw-bold">옵션 바로가기 배너 수정 및 등록</p>
 		<div class="block block-rounded">
-			<div class="block-header block-header-default">
-				<h3 class="block-title">옵션 바로가기 배너 등록</h3>
-				<div class="block-options">
-					<button type="button" class="btn btn-sm btn-dark">배너 등록</button>
-				</div>
-			</div>
 		    <div class="block-content block-content-full">
-				<div class="content content-full">
+				<div class="m-3">
 			        <div class="row justify-content-center">
 						<div class="col-xl-10">
 							<!-- Banner Preview -->
@@ -66,6 +62,10 @@
 				                <input type="text" class="form-control" id="" name="" required="required"
 				                  placeholder="To" data-week-start="1" data-autoclose="true" data-today-highlight="true">
 				              </div>
+			                  <div class="d-flex justify-content-center mt-5">
+					    		<button type="submit" class="btn btn-sm btn-dark m-1">배너 수정</button>
+			      				<button type="submit" class="btn btn-sm btn-dark m-1">배너 등록</button>
+		      				  </div>
 				            </div>
 				            <!-- END Form -->
 						</div>
@@ -73,6 +73,7 @@
 				</div>
 			</div>	
 		</div>
+	</div>
 	</div>
 	<!-- END Page Content -->
 

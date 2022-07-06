@@ -12,20 +12,15 @@
 	<title>basicBannerManagm</title>
 </head>
 <body>
-
+	
 	<!-- Page Content -->
+	<div class="mt-3">
 	<div class="content">
 		<!-- Block -->
+		<p class="h3 fw-bold">기본 바로가기 배너 수정 및 등록</p>
 		<div class="block block-rounded justify-content-center">
-			<div class="block-header block-header-default">
-    			<h3 class="block-title">기본 바로가기 배너 수정 및 등록</h3>
-			    <div class="block-options">
-			      <button type="button" class="btn btn-sm btn-dark">배너 수정</button>
-			      <button type="button" class="btn btn-sm btn-dark">배너 등록</button>
-			    </div>
-  			</div>
 			<div class="block-content block-content-full">
-				<div class="content content-full">
+				<div class="m-3">
 					<div class="row justify-content-center">
 					
 						<div class="col-xl-6">
@@ -45,6 +40,10 @@
 	          					<h2 class="content-heading">바로가기 URL <span class="text-danger">*</span></h2>
 					            <input type="text" class="form-control" id="val-website" name="val-website" placeholder="http://example.com">
 					            <div id="val-website-error" class="invalid-feedback animated fadeIn">정확한 URL을 입력해 주세요.</div>
+					    		<div class="d-flex justify-content-center mt-5">
+						    		<button type="button" class="btn btn-sm btn-dark m-1">배너 수정</button>
+				      				<button type="button" class="btn btn-sm btn-dark m-1">배너 등록</button>
+			      				</div>
 					    	</form>
 					    	<!-- END Form -->
 					    	
@@ -54,6 +53,7 @@
 			</div>
 		</div>
 		<!-- END Block -->
+	</div>
 	</div>
 	<!-- END Page Content -->
 	

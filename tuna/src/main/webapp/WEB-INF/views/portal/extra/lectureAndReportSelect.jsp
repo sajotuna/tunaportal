@@ -346,7 +346,7 @@
 						<!-- END Ring Chart -->
 						<!-- Lecture grade list -->
 						<div class="block block-rounded block-themed mb-4">
-							<div class="block-header bg-primary-dark">
+							<div class="block-header bg-primary-darker">
 								<h4 class="block-title">과목별 성적 내역</h4>
 								<div class="block-options">
 									<select class="form-select btn-sm" style="width: 150px;">
@@ -397,7 +397,7 @@
 							<!-- Grade avg -->
 							<div class="col-7">
 								<div class="block block-rounded block-themed mb-4">
-									<div class="block-header bg-primary-dark">
+									<div class="block-header bg-primary-darker">
 										<h4 class="block-title">평균 평점</h4>
 									</div>
 									<!-- Table -->
@@ -428,7 +428,7 @@
 							<!-- Total grade -->
 							<div class="col-5">
 								<div class="block block-rounded block-themed mb-4">
-									<div class="block-header bg-primary-dark">
+									<div class="block-header bg-primary-darker">
 										<h4 class="block-title">이수구분별 취득 학점</h4>
 									</div>
 									<!-- Table -->
