@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 public class SubmitTaskVO {
 	private int no;
-	private String file;
+	private String fileName;
 	private String uri;
-	private Date date;
+	private Date enrollDate;
 	private int score;
 	private int stNo;
 	private int taskNo;

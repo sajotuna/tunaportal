@@ -12,7 +12,7 @@ public class ScholarApplyVO {
 	private Date applyDate;
 	private Date confirmDate;
 	private String stateCode;
-	private String file;
+	private String fileName;
 	private String uri;
 	private String seasonCode;
 	private int stNo;

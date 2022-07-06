@@ -10,8 +10,8 @@ import lombok.Setter;
 public class LectureFileVO {
 	private int no;
 	private String title;
-	private Date date;
-	private String file;
+	private Date enrollDate;
+	private String fileName;
 	private String uri;
 	private int sbjNo;
 }

@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 public class PortalSchedualVO {
 	private int no;
-	private Date start;
-	private Date end;
+	private Date startDate;
+	private Date endDate;
 	private String content;
 	private String seasonCode;
 	private int adNo;

@@ -10,10 +10,10 @@ import lombok.Setter;
 public class BannerVO {
 	private int no;
 	private String bannerCode;
-	private Date date;
-	private Date start;
-	private Date end;
-	private String file;
+	private Date enrollDate;
+	private Date startDate;
+	private Date endDate;
+	private String fileName;
 	private String uri;
 	private int adNo;
 }
