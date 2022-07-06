@@ -10,7 +10,7 @@ import lombok.Setter;
 public class tuitionGiveVO {
 	private int no;
 	private String yn;
-	private Date date;
+	private Date giveDate;
 	private String seasonCode;
 	private String deptCode;
 	private int scPct;
