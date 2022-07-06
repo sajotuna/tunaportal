@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="path" value="${pageContext.request.contextPath }/resources" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,12 +95,12 @@
 	           </a>
 	           <ul class="nav-main-submenu">
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" href="adminNoticeList">
 	                 <span class="nav-main-link-name">공지사항 관리</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" href="adminSchedule">
 	                 <span class="nav-main-link-name">학사일정 관리</span>
 	               </a>
 	             </li>
@@ -296,5 +298,6 @@
 	   <!-- END Sidebar Scrolling -->
 	 </nav>
 	 <!-- END Sidebar -->
+	 <script src="${path}/assets/js/oneui.app.min.js"></script>
 </body>
 </html>

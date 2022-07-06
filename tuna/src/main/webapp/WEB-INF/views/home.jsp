@@ -147,10 +147,10 @@
 			</a>
 				<ul class="nav-main-submenu">
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="javascript:void(0)"> <span class="nav-main-link-name">공지사항</span>
+						href="portalNoticeList"> <span class="nav-main-link-name">공지사항</span>
 					</a></li>
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="javascript:void(0)"> <span class="nav-main-link-name">학사일정</span>
+						href="portalSchedule"> <span class="nav-main-link-name">학사일정</span>
 					</a></li>
 				</ul></li>
 				
@@ -226,7 +226,7 @@
             <div class="col-xl-3 col-md-6 d-none d-md-block">
                 <div class="block block-rounded">
                     <div class="block-content box">
-                        <button class="box-btn btn btn-dark fw-bold" href="#">수강신청</button>
+                        <button class="box-btn btn btn-dark fw-bold" onclick="#">수강신청</button>
                     </div>
                 </div>
             </div>
@@ -235,7 +235,7 @@
                     <div class="col-md-6">
                         <div class="block block-rounded">
                             <div class="block-content short-box">
-                                <button class="box-btn btn btn-info fw-bold" href="#">등록금납입확인서</button>
+                                <button class="box-btn btn btn-info fw-bold" onclick="#">등록금납입확인서</button>
                             </div>
                         </div>
                     </div>
@@ -243,7 +243,7 @@
                         <div class="block block-rounded">
                             <div class="block-content short-box">
                                 <button class="box-btn btn btn-outline-light 
-                                    text-primary-darker fw-bold" href="#">장학 신청 및 조회</button>
+                                    text-primary-darker fw-bold" onclick="#">장학 신청 및 조회</button>
                             </div>
                         </div>
                     </div>
@@ -264,14 +264,14 @@
                     <div class="col-md-6">
                         <div class="block block-rounded">
                             <div class="block-content short-box">
-                                <button class="box-btn btn btn-alt-info fw-bold text-dark" href="#">학사공지</button>
+                                <button class="box-btn btn btn-alt-info fw-bold text-dark" onclick="location.href='portalNoticeList'">학사공지</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="block block-rounded">
                             <div class="block-content short-box">
-                                <button class="box-btn btn btn-primary fw-bold" href="#">학사일정</button>
+                                <button class="box-btn btn btn-primary fw-bold" onclick="location.href='portalSchedule'">학사일정</button>
                             </div>
                         </div>
                     </div>
@@ -288,7 +288,7 @@
                 <div class="block block-rounded">
                     <div class="block-content box">
                         <button class="box-btn btn btn-outline-light 
-                                    text-primary-darker fw-bold" href="#">e-Class</button>
+                                    text-primary-darker fw-bold" onclick="#">e-Class</button>
                     </div>
                 </div>
             </div>
@@ -296,7 +296,7 @@
             <div class="col-xl-5">
                 <div class="block block-rounded">
                     <div id="shortcut-banner" class="block-content box banner">
-                        <button id="shortcut-btn" class="btn btn-alt-secondary" href="#">바로가기</button>
+                        <button id="shortcut-btn" class="btn btn-alt-secondary" onclick="#">바로가기</button>
 						<img class="banner-img" src="" alt="">
 					</div>
                 </div>
