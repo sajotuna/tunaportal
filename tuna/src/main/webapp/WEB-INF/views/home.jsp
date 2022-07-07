@@ -61,26 +61,8 @@
     </style>
 </head>
 <body>
-	<%-- <sec:authorize access="isAuthenticated()">
-		<form method = "post" action = "${pageContext.request.contextPath }/logout">
-			<sec:csrfInput/>
-			<button>로그아웃</button>
-		</form>
-		
-		<a href = "${pageContext.request.contextPath }/mypage">마이페이지</a>
-		
-	</sec:authorize>
-	<sec:authorize access="isAnonymous()">
-		<a href = "custom/login">로그인</a>
-	</sec:authorize>
-	
-	<a href = "coursesreg">수강신청</a>
-	
-	<h1>톱 페이지입니다.</h1>
-	<ul>
-		<li><a href="user/user.jsp">일반 사용자용 페이지로</a></li>
-		<li><a href="admin/admin.jsp">관리자 전용 페이지로</a></li>
-	</ul> --%>
+
+<sec:authentication property="principal" var = "user"/>
 <div id="page-container">
 <!-- Main Container -->
 <main id="main-container">
@@ -92,19 +74,26 @@
             <h1 class="h1 fw-bold mb-2">
                 TUNA Portal
             </h1>
+           <sec:authorize access="isAuthenticated()">
+            
             <h2 class="h6 fw-medium fw-medium text-muted mb-0">
-                <a class="fw-semibold" href="#">지수빈</a> 님, 환영합니다. 
+                <a class="fw-semibold" href="#">${user.username }</a> 님, 환영합니다. 
             </h2>
+            </sec:authorize>
             </div>
+            
             <div class="mt-3 mt-md-0 ms-md-3 space-x-1">
-            <a class="btn btn-sm btn-dark space-x-1" href="#">
+            <sec:authorize access="isAnonymous()">
+            <a class="btn btn-sm btn-dark space-x-1" href="${pageContext.request.contextPath }/custom/login">
                 <i class="far fa-user opacity-50"></i>
                 <span>로그인</span>
             </a>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn btn-sm btn-dark space-x-1" id="dropdown-analytics-overview" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="far fa-user opacity-50"></i>
-                <span>지수빈 님</span>
+                <span>${user.username}</span>
                 <i class="fa fa-fw fa-angle-down"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
@@ -113,23 +102,27 @@
                       <p class="mb-0 text-muted fs-sm fw-medium">시각디자인학과</p>
                     </div>
                     <div class="p-2">
-                      <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
+                      <a class="dropdown-item d-flex align-items-center justify-content-between" href="${pageContext.request.contextPath }/stud/userUpdate">
                         <span class="fs-sm fw-medium">내 정보 수정</span>
                       </a>
                     </div>
+                    <sec:authorize access="hasAuthority('ROLE_ADMIN')">
                     <div class="p-2">
-                      <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
+                      <a class="dropdown-item d-flex align-items-center justify-content-between" href="${pageContext.request.contextPath }/admin/adminUserInfo">
                         <span class="fs-sm fw-medium">관리자 페이지</span>
                       </a>
                     </div>
+                    </sec:authorize>
                     <div role="separator" class="dropdown-divider m-0"></div>
                     <div class="p-2">
-                      <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
-                        <span class="fs-sm fw-medium">로그아웃</span>
-                      </a>
+                    <form method = "post" action = "${pageContext.request.contextPath }/logout">
+                    	<sec:csrfInput/>
+							<button class=" dropdown-item d-flex align-items-center justify-content-between fs-sm fw-medium" >로그아웃</button>
+                    </form>
                     </div>
                   </div>
             </div>
+            </sec:authorize>
             </div>
         </div>
         </div>
@@ -164,10 +157,10 @@
 						href="lectureAndReportSelect"> <span class="nav-main-link-name">강의/성적 조회</span>
 					</a></li>
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="javascript:void(0)"> <span class="nav-main-link-name">장학 신청 및 조회</span>
+						href="${pageContext.request.contextPath }/stud/scholarshipApplication"> <span class="nav-main-link-name">장학 신청 및 조회</span>
 					</a></li>
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="javascript:void(0)"> <span class="nav-main-link-name">등록금납입확인서</span>
+						href="${pageContext.request.contextPath }/stud/tuitionCheck"> <span class="nav-main-link-name">등록금납입확인서</span>
 					</a></li>
 					<li class="nav-main-item"><a class="nav-main-link"
 						href="javascript:void(0)"> <span class="nav-main-link-name">당해학기 성적 조회</span>
@@ -184,10 +177,10 @@
 						href="javascript:void(0)"> <span class="nav-main-link-name">e-class</span>
 					</a></li>
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="javascript:void(0)"> <span class="nav-main-link-name">수강신청</span>
+						href="${pageContext.request.contextPath }/stud/courseWarning"> <span class="nav-main-link-name">수강신청</span>
 					</a></li>
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="javascript:void(0)"> <span class="nav-main-link-name">강의평가</span>
+						href="${pageContext.request.contextPath }/stud/lectureEvaluationDetails"> <span class="nav-main-link-name">강의평가</span>
 					</a></li>
 				</ul></li>
 
@@ -226,7 +219,7 @@
             <div class="col-xl-3 col-md-6 d-none d-md-block">
                 <div class="block block-rounded">
                     <div class="block-content box">
-                        <button class="box-btn btn btn-dark fw-bold" onclick="#">수강신청</button>
+                        <button class="box-btn btn btn-dark fw-bold" onclick="location.href='${pageContext.request.contextPath }/stud/courseWarning'">수강신청</button>
                     </div>
                 </div>
             </div>
@@ -235,7 +228,7 @@
                     <div class="col-md-6">
                         <div class="block block-rounded">
                             <div class="block-content short-box">
-                                <button class="box-btn btn btn-info fw-bold" onclick="#">등록금납입확인서</button>
+                                <button class="box-btn btn btn-info fw-bold" onclick="location.href='${pageContext.request.contextPath }/stud/tuitionCheck'">등록금납입확인서</button>
                             </div>
                         </div>
                     </div>
@@ -243,7 +236,7 @@
                         <div class="block block-rounded">
                             <div class="block-content short-box">
                                 <button class="box-btn btn btn-outline-light 
-                                    text-primary-darker fw-bold" onclick="#">장학 신청 및 조회</button>
+                                    text-primary-darker fw-bold" onclick="location.href='${pageContext.request.contextPath }/stud/scholarshipApplication'">장학 신청 및 조회</button>
                             </div>
                         </div>
                     </div>

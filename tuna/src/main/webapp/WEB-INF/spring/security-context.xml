@@ -41,8 +41,8 @@
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:jdbc-user-service data-source-ref="dataSource"
-			users-by-username-query="select student_id username, student_pwd password,1 from usertest where student_id = ?"
-			authorities-by-username-query="select student_id username, upper(user_role) authority from usertest where student_id = ?"
+			users-by-username-query="select username, password, status from login where username = ?"
+			authorities-by-username-query="select username,authority from loginAuthority where username = ?"
 			/>
 			<security:password-encoder ref = "customNoOpPasswordEncoder"/>
 			<security:password-encoder ref = "bcryptPasswordEncoder"/>
