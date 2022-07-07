@@ -15,4 +15,21 @@ public class PortalNoticeController {
 	public String portalNoticeSelect() {
 		return "portal/extra/portalNoticeSelect";
 	}
+	
+	@RequestMapping("/adminNoticeList")
+	public String adminNoticeList() {
+		return "portal/admin/adminNoticeList";
+	}
+	
+	@RequestMapping("/adminNoticeInsert")
+	public String adminNoticeInsert() {
+		return "portal/admin/adminNoticeInsert";
+	}
+	
+	@RequestMapping("/adminNoticeUpdate")
+	public String adminNoticeUpdate() {
+		return "portal/admin/adminNoticeUpdate";
+	}
+	
+	
 }
