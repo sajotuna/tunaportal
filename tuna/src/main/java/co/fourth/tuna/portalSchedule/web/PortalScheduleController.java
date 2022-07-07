@@ -10,4 +10,9 @@ public class PortalScheduleController {
 	public String portalSchedule() {
 		return "portal/extra/portalSchedule";
 	}
+	
+	@RequestMapping("/adminSchedule")
+	public String adminSchedule() {
+		return "portal/admin/adminSchedule";
+	}
 }
