@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ObjectionController {
 	
-	@RequestMapping("/objectionList")
+	@RequestMapping("/staff/objectionList")
 	public String objectionList() {
-		return "portal/eclassProf/objectionList";
+		return "objection/staff/objectionList";
 	}
 }

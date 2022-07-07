@@ -6,19 +6,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class BannerController {
 	
-	@RequestMapping("basicBannerManagm")
+	@RequestMapping("/admin/basicBannerManagm")
 	public String basicBannerManagm() {
-		return "portal/admin/basicBannerManagm";
+		return "banner/admin/basicBannerManagm";
 	}
 	
-	@RequestMapping("optionBannerManagm")
+	@RequestMapping("/admin/optionBannerManagm")
 	public String optionBannerManagm() {
-		return "portal/admin/optionBannerManagm";
+		return "banner/admin/optionBannerManagm";
 	}
 	
-	@RequestMapping("sliderBannerManagm")
+	@RequestMapping("/admin/sliderBannerManagm")
 	public String sliderBannerManagm() {
-		return "portal/admin/sliderBannerManagm";
+		return "banner/admin/sliderBannerManagm";
 	}
 	
 }

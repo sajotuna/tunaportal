@@ -128,12 +128,12 @@ public class HomeController {
 		return result;
 	}
 	
-	@RequestMapping("lectureAndReportSelect")
+	@RequestMapping("/stud/lectureAndReportSelect")
 	public String lectureAndReportSelect() {
 		return "portal/extra/lectureAndReportSelect";
 	}
 	
-	@RequestMapping("semesterReportSelect")
+	@RequestMapping("/stud/semesterReportSelect")
 	public String semesterReportSelect() {
 		return "portal/extra/semesterReportSelect";
 	}
