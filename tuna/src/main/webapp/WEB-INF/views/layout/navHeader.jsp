@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
 <c:set var = "path" value = "${pageContext.request.contextPath }/resources"/>
 <!DOCTYPE html>
 <html>
@@ -57,10 +58,10 @@
 								href="lectureAndReportSelect"> <span class="nav-main-link-name">강의/성적 조회</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="javascript:void(0)"> <span class="nav-main-link-name">장학 신청 및 조회</span>
+								href="${pageContext.request.contextPath }/stud/scholarshipApplication"> <span class="nav-main-link-name">장학 신청 및 조회</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="javascript:void(0)"> <span class="nav-main-link-name">등록금납입확인서</span>
+								href="${pageContext.request.contextPath }/stud/tuitionCheck"> <span class="nav-main-link-name">등록금납입확인서</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
 								href="javascript:void(0)"> <span class="nav-main-link-name">당해학기 성적 조회</span>
@@ -77,10 +78,10 @@
 								href="javascript:void(0)"> <span class="nav-main-link-name">e-class</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="javascript:void(0)"> <span class="nav-main-link-name">수강신청</span>
+								href="${pageContext.request.contextPath }/stud/courseWarning"> <span class="nav-main-link-name">수강신청</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="javascript:void(0)"> <span class="nav-main-link-name">강의평가</span>
+								href="${pageContext.request.contextPath }/stud/lectureEvaluationDetails"> <span class="nav-main-link-name">강의평가</span>
 							</a></li>
 						</ul></li>
 						
@@ -92,13 +93,15 @@
 					</a>
 						<ul class="nav-main-submenu nav-main-submenu-right">
 							<li class="nav-main-item">
-								<a class="nav-main-link" href="#">
+								<a class="nav-main-link" href="${pageContext.request.contextPath }/stud/userUpdate">
 								<span class="nav-main-link-name">내 정보 수정</span>
 							</a></li>
 							<li class="nav-main-item">
-								<a class="nav-main-link" href="#"> 
-								<span class="nav-main-link-name">로그아웃</span>
-							</a></li>
+							<form method = "post" action = "${pageContext.request.contextPath }/logout">
+                    			<sec:csrfInput/>
+								<button class="nav-main-link" style = "background-color : rgb(25,34,45); outline : none; border : none;"><span class="nav-main-link-name">로그아웃</span></button>
+                    		</form>
+                    		</li>
 						</ul></li>
 				</ul>
 			</div>

@@ -116,7 +116,7 @@
     <script src="assets/js/oneui.app.min.js"></script>
     <script>
       function showPopup(){
-          window.open("op_error_403.html","강의평가","width=1000, height=800, top=10, left=10");
+          window.open("/tuna/stud/lectureEvaluation","강의평가","width=1000, height=800, top=10, left=10");
       }
 
         let btns = document.querySelectorAll('button')
