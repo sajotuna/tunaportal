@@ -8,11 +8,11 @@ public class PortalScheduleController {
 
 	@RequestMapping("/portalSchedule")
 	public String portalSchedule() {
-		return "portal/extra/portalSchedule";
+		return "schedule/user/portalSchedule";
 	}
 	
 	@RequestMapping("/adminSchedule")
 	public String adminSchedule() {
-		return "portal/admin/adminSchedule";
+		return "schedule/admin/adminSchedule";
 	}
 }
