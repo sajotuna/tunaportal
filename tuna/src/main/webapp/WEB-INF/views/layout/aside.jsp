@@ -46,24 +46,17 @@
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" href="${pageContext.request.contextPath }/admin/adminUserInfo">
 	                 <span class="nav-main-link-name">사용자 조회 및 관리</span>
 	               </a>
 	             </li>
 	           </ul>
 	         </li>
 	         <li class="nav-main-item">
-	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="${pageContext.request.contextPath }/admin/adminScholarshipApplicationSearch">
 	             <i class="nav-main-link-icon fa fa-graduation-cap"></i>
-	             <span class="nav-main-link-name fw-bold">장학 관리</span>
+	             <span class="nav-main-link-name fw-bold">장학 신청 조회 및 승인</span>
 	           </a>
-	           <ul class="nav-main-submenu">
-	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
-	                 <span class="nav-main-link-name">장학 신청 조회 및 승인</span>
-	               </a>
-	             </li>
-	           </ul>
 	         </li>
 	         <li class="nav-main-item">
 	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">

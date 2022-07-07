@@ -8,27 +8,27 @@ public class PortalNoticeController {
 	
 	@RequestMapping("/portalNoticeList")
 	public String portalnoticeList() {
-		return "portal/extra/portalNoticeList";
+		return "notice/user/portalNoticeList";
 	}
 	
 	@RequestMapping("/portalNoticeSelect")
 	public String portalNoticeSelect() {
-		return "portal/extra/portalNoticeSelect";
+		return "notice/user/portalNoticeSelect";
 	}
 	
 	@RequestMapping("/adminNoticeList")
 	public String adminNoticeList() {
-		return "portal/admin/adminNoticeList";
+		return "notice/admin/adminNoticeList";
 	}
 	
 	@RequestMapping("/adminNoticeInsert")
 	public String adminNoticeInsert() {
-		return "portal/admin/adminNoticeInsert";
+		return "notice/admin/adminNoticeInsert";
 	}
 	
 	@RequestMapping("/adminNoticeUpdate")
 	public String adminNoticeUpdate() {
-		return "portal/admin/adminNoticeUpdate";
+		return "notice/admin/adminNoticeUpdate";
 	}
 	
 	

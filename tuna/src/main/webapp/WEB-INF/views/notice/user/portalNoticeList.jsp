@@ -10,7 +10,7 @@
   <link rel="stylesheet" id="css-main" href="${path}/assets/css/oneui.min.css">
 </head>
 <body>
-    <!--title start-->
+     <!--title start-->
     <div class="bg-body-light">
       <div class="content content-full content-boxed">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
@@ -34,9 +34,8 @@
             <form class="row d-flex justify-content-end" action="" method="POST">
               <div class="col-2">
                 <select class="form-select">
-                  <option value="1">작성자</option>
-                  <option value="2">제목</option>
-                  <option value="3">내용</option>
+                  <option value="1">제목</option>
+                  <option value="2">내용</option>
                 </select>
               </div>
               <div class="col-3 p-0">
@@ -57,12 +56,6 @@
             <!--thead 표 제목-->
             <thead>
               <tr>
-                <th class="text-center" style="width: 70px;">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="check-all" name="check-all">
-                    <label class="form-check-label" for="check-all"></label>
-                  </div>
-                </th>
                 <th class="text-center" style="width: 10%;">#</th>
                 <th style="text-align:center">제목</th>
                 <th style=" text-align:center; width: 10%; height: 10%;">첨부파일</th>
@@ -72,12 +65,6 @@
             <!--tbody 표 내용-->
             <tbody>
               <tr>
-                <td class="text-center">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="row_1" name="row_1">
-                    <label class="form-check-label" for="row_1"></label>
-                  </div>
-                </td>
                 <th class="text-center" scope="row">1</th>
                 <td class="fs-sm">
                   <p class="fw-semibold mb-1">
@@ -91,12 +78,6 @@
                 </td>
               </tr>
               <tr>
-                <td class="text-center">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="row_2" name="row_2">
-                    <label class="form-check-label" for="row_2"></label>
-                  </div>
-                </td>
                 <th class="text-center" scope="row">2</th>
                 <td class="fs-sm">
                   <p class="fw-semibold mb-1">
@@ -110,12 +91,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="text-center">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="row_3" name="row_3">
-                    <label class="form-check-label" for="row_3"></label>
-                  </div>
-                </td>
+
                 <th class="text-center" scope="row">3</th>
                 <td class="fs-sm">
                   <p class="fw-semibold mb-1">
@@ -129,12 +105,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="text-center">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="row_4" name="row_4">
-                    <label class="form-check-label" for="row_4"></label>
-                  </div>
-                </td>
+
                 <th class="text-center" scope="row">4</th>
                 <td class="fs-sm">
                   <p class="fw-semibold mb-1">
@@ -148,12 +119,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="text-center">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="row_5" name="row_5">
-                    <label class="form-check-label" for="row_5"></label>
-                  </div>
-                </td>
+
                 <th class="text-center" scope="row">5</th>
                 <td class="fs-sm">
                   <p class="fw-semibold mb-1">
@@ -167,12 +133,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="text-center">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="row_6" name="row_6">
-                    <label class="form-check-label" for="row_6"></label>
-                  </div>
-                </td>
+
                 <th class="text-center" scope="row">6</th>
                 <td class="fs-sm">
                   <p class="fw-semibold mb-1">
@@ -185,12 +146,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="text-center">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="row_6" name="row_6">
-                    <label class="form-check-label" for="row_6"></label>
-                  </div>
-                </td>
+
                 <th class="text-center" scope="row">7</th>
                 <td class="fs-sm">
                   <p class="fw-semibold mb-1">
@@ -203,12 +159,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="text-center">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="row_6" name="row_6">
-                    <label class="form-check-label" for="row_6"></label>
-                  </div>
-                </td>
+    
                 <th class="text-center" scope="row">8</th>
                 <td class="fs-sm">
                   <p class="fw-semibold mb-1">
@@ -221,12 +172,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="text-center">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="row_6" name="row_6">
-                    <label class="form-check-label" for="row_6"></label>
-                  </div>
-                </td>
+
                 <th class="text-center" scope="row">9</th>
                 <td class="fs-sm">
                   <p class="fw-semibold mb-1">
@@ -239,12 +185,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="text-center">
-                  <div class="form-check d-inline-block">
-                    <input class="form-check-input" type="checkbox" value="" id="row_6" name="row_6">
-                    <label class="form-check-label" for="row_6"></label>
-                  </div>
-                </td>
+
                 <th class="text-center" scope="row">10</th>
                 <td class="fs-sm">
                   <p class="fw-semibold mb-1">
@@ -294,10 +235,8 @@
             </ul>
           </nav>
         </div>
-
-
       </div>
     </div>
-    
+<script src="${path}/assets/js/oneui.app.min.js"></script>
 </body>
 </html>
