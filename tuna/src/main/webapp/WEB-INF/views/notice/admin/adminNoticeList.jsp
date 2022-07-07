@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" id="css-main" href="${path}/assets/css/oneui.min.css">
 <title>adminNoticeList</title>
 </head>
 <body>
@@ -20,9 +21,8 @@
                                 <form class="row d-flex justify-content-end" action="" method="POST">
                                     <div class="col-2">
                                         <select class="form-select">
-                                            <option value="1">작성자</option>
-                                            <option value="2">제목</option>
-                                            <option value="3">내용</option>
+                                            <option value="1">제목</option>
+                                            <option value="2">내용</option>
                                         </select>
                                     </div>
                                     <div class="col-3 p-0">
@@ -330,5 +330,7 @@
             </div>
 </body>
 <script src="${path}/assets/js/oneui.app.min.js"></script>
- <link rel="stylesheet" id="css-main" href="${path}/assets/css/oneui.min.css">
+<script src="${path}/assets/js/plugins/simplemde/simplemde.min.js"></script>
+<script>One.helpersOnLoad(['one-table-tools-checkable', 'one-table-tools-sections']);</script>
+
 </html>
