@@ -1,5 +1,7 @@
 package co.fourth.tuna.attendance.vo;
 
+import java.sql.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +10,7 @@ import lombok.Setter;
 public class AttendanceVO {
 	private int no;
 	private String state;
+	private Date classDate;
 	private int stNo;
-	private int wkNo;
+	private int sbjNo;
 }
