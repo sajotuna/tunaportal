@@ -235,11 +235,8 @@
             </ul>
           </nav>
         </div>
-
-
       </div>
     </div>
-    
-    
+<script src="${path}/assets/js/oneui.app.min.js"></script>
 </body>
 </html>
