@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- Sidebar -->
+	 <nav id="sidebar" aria-label="Main Navigation">
+	   <!-- Side Header -->
+	   <div class="content-header">
+	     <a class="fw-semibold text-dual">
+	       <span class="smini-hide fs-5 tracking-wider">TUNA<span class="fw-normal"> admin</span></span>
+<!-- 	   <span class="smini-hide fs-5 tracking-wider">TUNA<span class="fw-normal"> e-Class Prof</span></span>
+	       <span class="smini-hide fs-5 tracking-wider">TUNA<span class="fw-normal"> e-Class</span></span>
+	       <span class="smini-hide fs-5 tracking-wider">TUNA<span class="fw-normal"> scholar</span></span> -->
+	     </a>
+	   </div>
+	   <!-- END Side Header -->
+	
+	   <!-- Sidebar Scrolling -->
+	   <div class="js-sidebar-scroll">
+	     <!-- Side Navigation -->
+	     <div class="content-side">
+	       <ul class="nav-main">
+	         
+<!-- 	    █████   ██████  ███    ███ ██ ███    ██ 
+		    ██   ██ ██   ██ ████  ████ ██ ████   ██ 
+			███████ ██   ██ ██ ████ ██ ██ ██ ██  ██ 
+			██   ██ ██   ██ ██  ██  ██ ██ ██  ██ ██ 
+			██   ██ ██████  ██      ██ ██ ██   ████  -->
+	         
+	         <li class="nav-main-item">
+	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+	             <i class="nav-main-link-icon fa fa-circle-user"></i>
+	             <span class="nav-main-link-name fw-bold">사용자 관리</span>
+	           </a>
+	           <ul class="nav-main-submenu">
+	             <li class="nav-main-item">
+	               <a class="nav-main-link" href="#">
+	                 <span class="nav-main-link-name">사용자 로그 조회</span>
+	               </a>
+	             </li>
+	             <li class="nav-main-item">
+	               <a class="nav-main-link" href="${pageContext.request.contextPath }/admin/adminUserInfo">
+	                 <span class="nav-main-link-name">사용자 조회 및 관리</span>
+	               </a>
+	             </li>
+	           </ul>
+	         </li>
+	         <li class="nav-main-item">
+	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+	             <i class="nav-main-link-icon fa fa-graduation-cap"></i>
+	             <span class="nav-main-link-name fw-bold">장학 신청</span>
+	           </a>
+	           <ul class="nav-main-submenu">
+	             <li class="nav-main-item">
+	               <a class="nav-main-link" th:href="@{/admin/adminScholarshipApplicationSearch}">
+	                 <span class="nav-main-link-name">사용자 장학신청 조회</span>
+	               </a>
+	             </li>
+	            </ul>
+	         </li>
+	         <li class="nav-main-item">
+	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+	             <i class="nav-main-link-icon fa fa-file-image"></i>
+	             <span class="nav-main-link-name fw-bold">배너 관리</span>
+	           </a>
+	           <ul class="nav-main-submenu">
+	             <li class="nav-main-item">
+	               <a class="nav-main-link" href="${pageContext.request.contextPath }/admin/sliderBannerManagm">
+	                 <span class="nav-main-link-name">슬라이드 배너 관리</span>
+	               </a>
+	             </li>
+	             <li class="nav-main-item">
+	               <a class="nav-main-link" href="${pageContext.request.contextPath }/admin/basicBannerManagm">
+	                 <span class="nav-main-link-name">기본 바로가기 배너 관리</span>
+	               </a>
+	             </li>
+	             <li class="nav-main-item">
+	               <a class="nav-main-link" href="${pageContext.request.contextPath }/admin/optionBannerManagm">
+	                 <span class="nav-main-link-name">옵션 바로가기 배너 관리</span>
+	               </a>
+	             </li>
+	           </ul>
+	         </li>
+	         <li class="nav-main-item">
+	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+	             <i class="nav-main-link-icon fa fa-clipboard"></i>
+	             <span class="nav-main-link-name fw-bold">게시물 관리</span>
+	           </a>
+	           <ul class="nav-main-submenu">
+	             <li class="nav-main-item">
+	               <a class="nav-main-link" href="adminNoticeList">
+	                 <span class="nav-main-link-name">공지사항 관리</span>
+	               </a>
+	             </li>
+	             <li class="nav-main-item">
+	               <a class="nav-main-link" href="adminSchedule">
+	                 <span class="nav-main-link-name">학사일정 관리</span>
+	               </a>
+	             </li>
+	           </ul>
+	         </li>
+	       </ul>
+	     </div>
+	     <!-- END Side Navigation -->
+	   </div>
+	   <!-- END Sidebar Scrolling -->
+	 </nav>
+	 <!-- END Sidebar -->
+</body>
+</html>
