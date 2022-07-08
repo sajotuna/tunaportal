@@ -102,7 +102,7 @@
                       <p class="mb-0 text-muted fs-sm fw-medium">시각디자인학과</p>
                     </div>
                     <div class="p-2">
-                      <a class="dropdown-item d-flex align-items-center justify-content-between" href="${pageContext.request.contextPath }/stud/userUpdate">
+                      <a class="dropdown-item d-flex align-items-center justify-content-between" href="${pageContext.request.contextPath }/userUpdate">
                         <span class="fs-sm fw-medium">내 정보 수정</span>
                       </a>
                     </div>

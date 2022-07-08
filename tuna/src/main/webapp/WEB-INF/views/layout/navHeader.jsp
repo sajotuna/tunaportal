@@ -93,7 +93,7 @@
 					</a>
 						<ul class="nav-main-submenu nav-main-submenu-right">
 							<li class="nav-main-item">
-								<a class="nav-main-link" href="${pageContext.request.contextPath }/stud/userUpdate">
+								<a class="nav-main-link" href="${pageContext.request.contextPath }/userUpdate">
 								<span class="nav-main-link-name">내 정보 수정</span>
 							</a></li>
 							<li class="nav-main-item">

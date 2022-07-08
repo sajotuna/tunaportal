@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class StudentController {
 
-	@RequestMapping("/stud/userUpdate")
+	@RequestMapping("/userUpdate")
 	public String userUpdate() {
 		return "manage/user/userUpdate";
 	}
-	@RequestMapping("/stud/pwdUpdate")
+	@RequestMapping("/pwdUpdate")
 	public String pwdUpdate() {
 		return "manage/user/pwdUpdate";
 	}

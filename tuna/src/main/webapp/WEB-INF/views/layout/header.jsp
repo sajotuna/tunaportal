@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,15 +42,16 @@
                 <p class="mb-0 text-muted fs-sm fw-medium">시각디자인학과</p>
               </div>
               <div class="p-2">
-                <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
+                <a class="dropdown-item d-flex align-items-center justify-content-between" href="${pageContext.request.contextPath }/userUpdate">
                   <span class="fs-sm fw-medium">내 정보 수정</span>
                 </a>
               </div>
               <div role="separator" class="dropdown-divider m-0"></div>
               <div class="p-2">
-                <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
-                  <span class="fs-sm fw-medium">로그아웃</span>
-                </a>
+                <form method = "post" action = "${pageContext.request.contextPath }/logout">
+                    	<sec:csrfInput/>
+							<button class=" dropdown-item d-flex align-items-center justify-content-between fs-sm fw-medium" >로그아웃</button>
+                    </form>
               </div>
             </div>
           </div>
