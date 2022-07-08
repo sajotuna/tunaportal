@@ -1,5 +1,7 @@
 package co.fourth.tuna.professor.mapper;
 
-public interface ProfessorMapper {
+import co.fourth.tuna.professor.vo.ProfessorVO;
 
+public interface ProfessorMapper {
+	public ProfessorVO findById(ProfessorVO vo);
 }
