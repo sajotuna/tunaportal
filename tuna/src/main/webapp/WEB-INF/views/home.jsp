@@ -154,7 +154,7 @@
 			</a>
 				<ul class="nav-main-submenu">
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="lectureAndReportSelect"> <span class="nav-main-link-name">강의/성적 조회</span>
+						href="${pageContext.request.contextPath }/stud/lectureAndReportSelect"> <span class="nav-main-link-name">강의/성적 조회</span>
 					</a></li>
 					<li class="nav-main-item"><a class="nav-main-link"
 						href="${pageContext.request.contextPath }/stud/scholarshipApplication"> <span class="nav-main-link-name">장학 신청 및 조회</span>
@@ -163,7 +163,7 @@
 						href="${pageContext.request.contextPath }/stud/tuitionCheck"> <span class="nav-main-link-name">등록금납입확인서</span>
 					</a></li>
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="javascript:void(0)"> <span class="nav-main-link-name">당해학기 성적 조회</span>
+						href="${pageContext.request.contextPath }/stud/semesterReportSelect"> <span class="nav-main-link-name">당해학기 성적 조회</span>
 					</a></li>
 				</ul></li>
 				
@@ -244,7 +244,7 @@
                 <div class="block block-rounded">
                     <div class="block-content short-box">
                         <button class="box-btn btn bg-modern-light text-gray-lighter fw-bold" 
-                        		onclick="location.href='lectureAndReportSelect'">강의 / 성적 조회</button>
+                        		onclick="location.href='${pageContext.request.contextPath }/stud/lectureAndReportSelect'">강의 / 성적 조회</button>
                     </div>
                 </div>
             </div>
