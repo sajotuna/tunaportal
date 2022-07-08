@@ -1,5 +1,7 @@
 package co.fourth.tuna.admin.mapper;
 
-public interface AdminMapper {
+import co.fourth.tuna.admin.vo.AdminVO;
 
+public interface AdminMapper {
+	public AdminVO findById(AdminVO vo);
 }

@@ -18,4 +18,5 @@ public class ProfessorVO {
 	private String zip;
 	private Date hireDate;
 	private String role;
+	private String deptcode;
 }
