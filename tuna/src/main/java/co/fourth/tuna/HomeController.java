@@ -82,15 +82,15 @@ public class HomeController {
 
 		return "custom/pwdfind";
 	}
-
-	@RequestMapping("/stud/lectureAndReportSelect")
-	public String lectureAndReportSelect() {
-		return "portal/extra/lectureAndReportSelect";
+	
+	@RequestMapping("/custom/navExample")
+	public String navExample() {
+		return "custom/navExample";
 	}
 	
-	@RequestMapping("/stud/semesterReportSelect")
-	public String semesterReportSelect() {
-		return "portal/extra/semesterReportSelect";
+	@RequestMapping("/custom/asideExample")
+	public String asideExample() {
+		return "custom/asideExample";
 	}
 
 }
