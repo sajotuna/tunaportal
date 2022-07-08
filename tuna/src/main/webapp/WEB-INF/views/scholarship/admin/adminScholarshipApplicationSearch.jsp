@@ -129,7 +129,7 @@
 
           <div class="d-flex justify-content-end">
             <div class="m-2">
-              <button type="button" class="btn btn-secondary">전체선택</button>
+              <button type="button" class="btn btn-secondary" id = "allSelect">전체선택</button>
             </div>
           </div>
           <form action="" method="post" >
@@ -153,6 +153,22 @@
               </tr>
             </thead>
             <tbody>
+              <tr scope="row">
+                <th class="fw-semibold fs-sm"><input type = "checkbox"></th>
+                <td class="fw-semibold fs-sm">014-124357</td>
+                <td class="fw-semibold fs-sm">최규완</td>
+                <td class="fw-semibold fs-sm">3학년</td>
+                <td class="fw-semibold fs-sm">재학</td>
+                <td class="fw-semibold fs-sm">X</td>
+                <th class="fw-semibold fs-sm">17</th>
+                <td class="fw-semibold fs-sm">4.5</td>
+                <td class="fw-semibold fs-sm">1/45</td>
+                <td class="fw-semibold fs-sm">성적우수</td>
+                <td class="fw-semibold fs-sm">141-123141</td>
+                <td class="fw-semibold fs-sm">심사대기</td>
+                <td class="fw-semibold fs-sm"></td>
+                <td class="fw-semibold fs-sm"></td>
+              </tr>
               <tr scope="row">
                 <th class="fw-semibold fs-sm"><input type = "checkbox"></th>
                 <td class="fw-semibold fs-sm">014-124357</td>
@@ -227,9 +243,25 @@
 
 
   <script>
-    function showPopup() {
-      window.open("op_error_403.html", "강의평가조회", "width=650, height=600, top=10, left=10");
-    }
+
+      let btnCheckCnt = 0;
+
+      document.querySelector("#allSelect").addEventListener('click', function(){
+      document.querySelectorAll("[type = 'checkbox']").forEach(function(checkbox,idx){
+        if(btnCheckCnt % 2 == 0){
+          checkbox.checked= true
+        }else{
+          checkbox.checked = false
+        }
+        
+      })
+      btnCheckCnt++;
+    })
+    
+
+    
+    
+
   </script>
 </body>
 

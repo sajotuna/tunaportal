@@ -53,10 +53,17 @@
 	           </ul>
 	         </li>
 	         <li class="nav-main-item">
-	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="${pageContext.request.contextPath }/admin/adminScholarshipApplicationSearch">
+	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
 	             <i class="nav-main-link-icon fa fa-graduation-cap"></i>
-	             <span class="nav-main-link-name fw-bold">장학 신청 조회 및 승인</span>
+	             <span class="nav-main-link-name fw-bold">장학 신청</span>
 	           </a>
+	           <ul class="nav-main-submenu">
+	             <li class="nav-main-item">
+	               <a class="nav-main-link" href="${pageContext.request.contextPath }/admin/adminScholarshipApplicationSearch">
+	                 <span class="nav-main-link-name">사용자 장학신청 조회</span>
+	               </a>
+	             </li>
+	            </ul>
 	         </li>
 	         <li class="nav-main-item">
 	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
@@ -212,19 +219,19 @@
 			███████  ██████ ██   ██  ██████  ███████ ██   ██ ██   ██  -->
 			
 			<li class="nav-main-item">
-	           <a class="nav-main-link" href="#">
+	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/scholarshipApplication">
 	             <i class="nav-main-link-icon fa fa-graduation-cap"></i>
 	             <span class="nav-main-link-name fw-bold">장학금 신청</span>
 	           </a>
 	        </li>
 			<li class="nav-main-item">
-	           <a class="nav-main-link" href="#">
+	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/scholarshipApplicationStatus">
 	             <i class="nav-main-link-icon fa fa-money-check"></i>
 	             <span class="nav-main-link-name fw-bold">당해학기 장학 신청 현황</span>
 	           </a>
 	        </li>
 			<li class="nav-main-item">
-	           <a class="nav-main-link" href="#">
+	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/scholarshipApplicationSearch">
 	             <i class="nav-main-link-icon fa fa-clipboard"></i>
 	             <span class="nav-main-link-name fw-bold">전체 장학 조회</span>
 	           </a>
@@ -237,7 +244,14 @@
 			███████ ███████  ██████      ██   ██ ██      ██      ███████    ██     -->
 	     
 	     	<li class="nav-main-item">
-	           <a class="nav-main-link" href="#">
+	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseWarning">
+	           	 <i class="nav-main-link-icon fa fa-basket-shopping"></i>
+	             <span class="nav-main-link-name fw-bold">수강신청유의사항</span>
+	           </a>
+	        </li>
+	     
+	     	<li class="nav-main-item">
+	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseBasket">
 	           	 <i class="nav-main-link-icon fa fa-basket-shopping"></i>
 	             <span class="nav-main-link-name fw-bold">수강꾸러미</span>
 	           </a>
@@ -249,19 +263,19 @@
 	           </a>
 	           <ul class="nav-main-submenu">
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseBasketSchedule">
 	                 <span class="nav-main-link-name">시간표</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseBasketLectureList">
 	                 <span class="nav-main-link-name">강의목록</span>
 	               </a>
 	             </li>
 	         	</ul>
 	         </li>
 	         	     	<li class="nav-main-item">
-	           <a class="nav-main-link" href="#">
+	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseApplication">
 	           	 <i class="nav-main-link-icon fa fa-check-to-slot"></i>
 	             <span class="nav-main-link-name fw-bold">수강신청</span>
 	           </a>
@@ -273,12 +287,12 @@
 	           </a>
 	           <ul class="nav-main-submenu">
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseApplicationSchedule">
 	                 <span class="nav-main-link-name">시간표</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseApplicationLectureList">
 	                 <span class="nav-main-link-name">강의목록</span>
 	               </a>
 	             </li>

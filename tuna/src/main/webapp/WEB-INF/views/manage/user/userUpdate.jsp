@@ -139,7 +139,7 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
       function showPopup(){
-          window.open("op_error_403.html","비밀번호변경","width=600, height=400, top=10, left=10");
+          window.open("/tuna/pwdUpdate","비밀번호변경","width=600, height=400, top=10, left=10");
       }
 
       function execDaumPostcode() {

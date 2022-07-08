@@ -32,8 +32,7 @@
 					'click',
 					function() {
 						var params = {
-							answer : document.querySelector('#answer')
-									.getAttribute('value')
+							answer : document.querySelector('#answer').value
 						};
 						AF.ajax('chkAnswer.do', params, function(
 								returnData) {
