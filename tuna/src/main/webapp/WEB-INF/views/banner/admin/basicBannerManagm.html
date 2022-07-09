@@ -1,58 +1,119 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
 <head>
 	<meta charset="UTF-8">
 	<title>basicBannerManagm</title>
+	<style>
+		.shortcut-banner {
+			width: 100%;
+			height: 300px;
+			background: gray;
+			position:relative;
+		}
+
+        .shortcut-btn {
+            position:absolute;
+            left:2rem!important;
+            top:2rem!important;
+        }
+        
+        .banner-img {
+            height:100%;
+            width:auto;
+        }
+	</style>
 </head>
 <body>
-	
-	<!-- Page Content -->
-	<div class="mt-3">
-	<div class="content">
-		<!-- Block -->
-		<p class="h3 fw-bold">기본 바로가기 배너 수정 및 등록</p>
-		<div class="block block-rounded justify-content-center">
-			<div class="block-content block-content-full">
-				<div class="m-3">
-					<div class="row justify-content-center">
-					
-						<div class="col-xl-6">
-							<!-- Banner Preview -->
-							<div id="shortcut-banner" class="block-content box banner">
-								<button id="shortcut-btn" class="btn btn-alt-secondary" th:href="#">바로가기</button>
-								<img class="banner-img" th:src="#" alt="">
-							</div> 
-							<!-- END Banner Preview -->
-						
-							<!-- Basic Banner Form -->
-							<form id="basicBnFrm">
-		          				<h2 class="content-heading">사진 올리기 <span class="text-danger">*</span></h2>
-					            <div class="mb-2">
-					              <input class="form-control" type="file" id="example-file-input">
-					            </div>
-	          					<h2 class="content-heading">바로가기 URL <span class="text-danger">*</span></h2>
-					            <input type="text" class="form-control" id="val-website" name="val-website" placeholder="http://example.com">
-					            <div id="val-website-error" class="invalid-feedback animated fadeIn">정확한 URL을 입력해 주세요.</div>
-					    		<div class="d-flex justify-content-center mt-5">
-						    		<button id="basicBnModBtn" type="button" class="btn btn-sm btn-dark m-1">배너 수정</button>
-				      				<button id="basicBnInsBtn" type="button" class="btn btn-sm btn-dark m-1">배너 등록</button>
-			      				</div>
-					    	</form>
-					    	<!-- END Basic Banner Form -->
-					    	
-      					</div>
+	<main layout:fragment="main">
+		<!-- Page Content -->
+		<div class="mt-3" >
+			<div class="content">
+				<!-- Block -->
+				<p class="h3 fw-bold">기본 바로가기 배너 수정 및 등록</p>
+				<div class="block block-rounded">
+					<div class="block-content block-content-full">
+						<div class="m-3">
+							<div class="row justify-content-center">
+							
+								<div class="col-xl-6">
+									<!-- Banner Preview -->
+									<h2 class="content-heading mb-2 pb-2">배너 미리보기</h2>
+									<div class="mb-4 box banner shortcut-banner">
+										<button id="btn" class="btn btn-alt-secondary shortcut-btn">바로가기</button>
+										<img id="bnImg" class="banner-img" src="#" alt="">
+									</div> 
+									<!-- END Banner Preview -->
+								
+									<!-- Basic Banner Form -->
+									<form id="basicBnFrm" onsubmit="return urlInputCheck(this)">
+										<h2 class="content-heading border-bottom mb-2 pb-2">배너 업로드</h2>
+							                <div class="row items-push">
+							                    <p class="fs-sm text-muted">
+							                      5MB 이하의 사진 파일(jpg, jpeg, png)을 업로드하세요.
+							                    </p>
+												<div class="mb-4">
+							                      <label class="form-label" for="file">사진 올리기 <span class="text-danger">*</span></label>
+							                      <input class="form-control" type="file" id="file"
+							                      		accept="image/jpg, image/jpeg, image/png"
+							                      		required>
+							                    </div>
+												<div class="mb-4">
+							                      <label class="form-label" for="urlInput">버튼 URL <span class="text-danger">*</span></label>
+							                      <input type="text" class="form-control" id="urlInput" name="url" placeholder="URL Input">
+							                    </div>
+									    		<div class="d-flex justify-content-center mt-5">
+										    		<button id="basicBnModBtn" type="submit" class="btn btn-sm btn-dark m-1">배너 수정</button>
+								      				<button id="basicBnInsBtn" type="submit" class="btn btn-sm btn-dark m-1">배너 등록</button>
+							      				</div>
+							      			</div>
+							    	</form>
+							    	<!-- END Basic Banner Form -->
+							    	
+		      					</div>
+							</div>
+						</div>
 					</div>
 				</div>
+				<!-- END Block -->
 			</div>
 		</div>
-		<!-- END Block -->
-	</div>
-	</div>
-	<!-- END Page Content -->
+		<!-- END Page Content -->
+
+	<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
 	
-	<!-- Script -->
-	<script th:src="@{/resources/assets/js/plugins/jquery-validation/jquery.validate.min.js}"></script>
-	<script th:src="@{/resources/assets/js/pages/be_forms_validation.min.js}"></script>
-	<!-- END Script -->
+	<script type="text/javascript">
+	
+	// 배너 미리보기
+	$('#file').on('change', changeEvent => {
+		const reader = new FileReader();
+		$(reader).on('load', readerEvent => {
+ 			$('#bnImg').attr("src", readerEvent.target.result); 
+		})
+		
+		const img = changeEvent.target.files[0];
+		reader.readAsDataURL(img);
+	})
+	
+	// form submit 시 url input check
+	function urlInputCheck(frm) {
+		let urlInput = frm.urlInput;
+		if (!$(urlInput).val()) {
+			$(urlInput).addClass('form-control-alt is-invalid');
+			$(urlInput).parent().append($('<div>').addClass('invalid-feedback').attr('id', 'urlCheckInfo').text('url을 입력해 주세요.'));
+			return false;
+		} else {
+			$(urlInput).removeClass('form-control-alt is-invalid');
+			$('#urlCheckInfo').remove();
+			return true;
+		}
+	}
+
+	</script>
+	
+	
+</main>
+
 </body>
 </html>

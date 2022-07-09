@@ -20,11 +20,12 @@
 	}
 	
 	.scroll-table {
-		width:1163px;
+		width:1165px;
 	}
 	</style>
 </head>
 <body>
+<main layout:fragment="main">
 	<!-- Hero -->
 	<div class="bg-body-light">
 		<div class="content content-full content-boxed">
@@ -68,28 +69,25 @@
 				<!-- Block -->
 				<div class="block-content tab-content">
 				
-					<!-- SUBJECT Tab -->
-					
-					<!-- END SUBJECT Tab -->
+					<!-- lecturePlanList Tab -->
+					<th:block th:replace="portal/stud/lecturePlanList"></th:block>	
+					<!-- END lecturePlanList Tab -->
 
-					<!-- MYSUBJECT Tab -->
-					
-					<!-- END MYSUBJECT Tab -->
+					<!-- mySubjectList Tab -->
+					<th:block th:replace="portal/stud/mySubjectList"></th:block>	
+					<!-- END mySubjectList Tab -->
 
 					<!-- Grade Report Tab -->
-
+					<th:block th:replace="portal/stud/gradeReport"></th:block>	
 					<!-- END Grade Report Tab -->
+					
 				</div>
 				<!-- END Block -->
 			</div>
 		</div>
 	</div>
 	<!-- END Page Content -->
+</main>
 
-	<!-- Script -->
-	<script th:src="@{/resources/assets/js/oneui.app.min.js)"></script>
-	<script th:src="@{/resources/assets/js/lib/jquery.min.js)"></script>
-
-	<!-- END Script -->
 </body>
 </html>
