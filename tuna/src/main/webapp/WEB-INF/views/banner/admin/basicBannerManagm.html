@@ -24,8 +24,8 @@
 							</div> 
 							<!-- END Banner Preview -->
 						
-							<!-- Form -->
-							<form id="basicBannerFrm" action="" method="post">
+							<!-- Basic Banner Form -->
+							<form id="basicBnFrm">
 		          				<h2 class="content-heading">사진 올리기 <span class="text-danger">*</span></h2>
 					            <div class="mb-2">
 					              <input class="form-control" type="file" id="example-file-input">
@@ -34,11 +34,11 @@
 					            <input type="text" class="form-control" id="val-website" name="val-website" placeholder="http://example.com">
 					            <div id="val-website-error" class="invalid-feedback animated fadeIn">정확한 URL을 입력해 주세요.</div>
 					    		<div class="d-flex justify-content-center mt-5">
-						    		<button type="button" class="btn btn-sm btn-dark m-1">배너 수정</button>
-				      				<button type="button" class="btn btn-sm btn-dark m-1">배너 등록</button>
+						    		<button id="basicBnModBtn" type="button" class="btn btn-sm btn-dark m-1">배너 수정</button>
+				      				<button id="basicBnInsBtn" type="button" class="btn btn-sm btn-dark m-1">배너 등록</button>
 			      				</div>
 					    	</form>
-					    	<!-- END Form -->
+					    	<!-- END Basic Banner Form -->
 					    	
       					</div>
 					</div>
@@ -51,9 +51,8 @@
 	<!-- END Page Content -->
 	
 	<!-- Script -->
-	<script th:src="@{resources/assets/js/plugins/jquery-validation/jquery.validate.min.js}"></script>
-	<script th:src="@{resources/assets/js/plugins/jquery-validation/jquery.validate.min.js}"></script>
-	<script th:src="@{resources/assets/js/pages/be_forms_validation.min.js}"></script>
+	<script th:src="@{/resources/assets/js/plugins/jquery-validation/jquery.validate.min.js}"></script>
+	<script th:src="@{/resources/assets/js/pages/be_forms_validation.min.js}"></script>
 	<!-- END Script -->
 </body>
 </html>

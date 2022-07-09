@@ -17,8 +17,8 @@
 		destroy-method="close">
 		<property name="driverClassName" value="${driver}" />
 		<property name="url" value="${url}" />
-		<property name="username" value="${user}" />
-		<property name="password" value="${password}" />
+		<property name="username" value="tuna" />
+		<property name="password" value="Tnqtnql12!@#$" />
 	</bean>
 
 	<bean id="sqlSessionFactory"
