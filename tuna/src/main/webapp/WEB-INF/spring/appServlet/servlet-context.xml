@@ -23,14 +23,17 @@
 		<beans:property name="templateMode" value="HTML5" />
 		<beans:property name="cacheable" value="false" />
 	</beans:bean>
+	
 
 	<beans:bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
 		<beans:property name="templateResolver" ref="templateResolver" />
 		<beans:property name="additionalDialects">
 			<beans:set>
 			  <beans:bean class="nz.net.ultraq.thymeleaf.LayoutDialect" />
+			  <beans:bean class="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect"/>
 			</beans:set>
 		</beans:property>
+				
 	</beans:bean>	
 	
 	<beans:bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">

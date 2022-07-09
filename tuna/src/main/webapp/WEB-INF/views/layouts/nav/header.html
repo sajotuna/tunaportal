@@ -93,7 +93,7 @@
 							</a></li>
 							<li class="nav-main-item">
 							<form method = "post" th:action ="@{/logout}">
-                    			<sec:csrfInput/>
+                    			<input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
 								<button class="nav-main-link" style = "background-color : rgb(25,34,45); outline : none; border : none;"><span class="nav-main-link-name">로그아웃</span></button>
                     		</form>
                     		</li>
