@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" id="css-main" th:href="@{resources/assets/css/oneui.min.css}">
-    <link rel="stylesheet" th:href="@{resources/assets/js/plugins/slick-carousel/slick.css}">
-    <link rel="stylesheet" th:href="@{resources/assets/js/plugins/slick-carousel/slick-theme.css}">
+    <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
     <style>
         .box {
             height: 300px;
@@ -142,7 +142,7 @@
 				</a>
 					<ul class="nav-main-submenu">
 						<li class="nav-main-item"><a class="nav-main-link"
-							th:href="@{/stud/lectureAndReportSelect}"> <span class="nav-main-link-name">강의/성적 조회</span>
+							th:href="@{/stud/subjectAndReport}"> <span class="nav-main-link-name">강의/성적 조회</span>
 						</a></li>
 						<li class="nav-main-item"><a class="nav-main-link"
 							th:href="@{/stud/scholarshipApplication}"> <span class="nav-main-link-name">장학 신청 및 조회</span>
@@ -235,7 +235,7 @@
 	                <div class="block block-rounded">
 	                    <div class="block-content short-box">
 	                        <button class="box-btn btn bg-modern-light text-gray-lighter fw-bold" 
-	                        		th:onclick="|location.href='@{/stud/lectureAndReportSelect}'|">강의 / 성적 조회</button>
+	                        		th:onclick="|location.href='@{/stud/subjectAndReport}'|">강의 / 성적 조회</button>
 	                    </div>
 	                </div>
 	            </div>
@@ -248,14 +248,14 @@
 	                    <div class="col-md-6">
 	                        <div class="block block-rounded">
 	                            <div class="block-content short-box">
-	                                <button class="box-btn btn btn-alt-info fw-bold text-dark" onclick="location.href='portalNoticeList'">학사공지</button>
+	                                <button class="box-btn btn btn-alt-info fw-bold text-dark" th:onclick="|location.href='@{/portalNoticeList}'|">학사공지</button>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-md-6">
 	                        <div class="block block-rounded">
 	                            <div class="block-content short-box">
-	                                <button class="box-btn btn btn-primary fw-bold" onclick="location.href='portalSchedule'">학사일정</button>
+	                                <button class="box-btn btn btn-primary fw-bold" th:onclick="|location.href='@{/portalSchedule}'|">학사일정</button>
 	                            </div>
 	                        </div>
 	                    </div>

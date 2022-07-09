@@ -1,20 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="path" value="${pageContext.request.contextPath }/resources" />
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
 <head>
 	<meta charset="UTF-8">
 	<title>sliderBannerManagm</title>
-	
 	<!-- Stylesheets -->
-	<!-- Page JS Plugins CSS -->
-	<link rel="stylesheet" href="${path}/assets/js/plugins/dropzone/min/dropzone.min.css">
-	<link rel="stylesheet" href="${path}/assets/js/plugins/slick-carousel/slick.css">
-	<link rel="stylesheet" href="${path}/assets/js/plugins/slick-carousel/slick-theme.css">
+	<link rel="stylesheet" th:href="@(resources/assets/js/plugins/slick-carousel/slick.css)">
+	<link rel="stylesheet" th:href="@(resources/assets/js/plugins/slick-carousel/slick-theme.css)">
 	<!-- End Stylesheets -->
 </head>
 <body>
@@ -53,8 +46,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr scope="row">
-								<td class="fw-semibold fs-sm">
+							<tr>
+								<td scope="row" class="fw-semibold fs-sm">
 									<input class="form-check-input" type="checkbox">
 								</td>
 								<td class="fw-semibold fs-sm">banner-1.jpg</td>
@@ -123,10 +116,9 @@
 	<!-- END Banner Preview Modal -->
 
 	<!-- Script -->
-	<script src="${path}/assets/js/lib/jquery.min.js"></script>
-	<script src="${path}/assets/js/plugins/dropzone/min/dropzone.min.js"></script>
-	<script src="${path}/assets/js/plugins/slick-carousel/slick.min.js"></script>
-	<!-- Page JS Helpers (Slick Slider Plugin) -->
+	<script th:src="@(resources/assets/js/lib/jquery.min.js)"></script>
+	<script th:src="@(resources/assets/js/plugins/dropzone/min/dropzone.min.js)"></script>
+	<script th:src="@(resources/assets/js/plugins/slick-carousel/slick.min.js)"></script>
 	<script>One.helpersOnLoad([ 'jq-slick' ]);</script>
 	<!-- END Script -->
 </body>
