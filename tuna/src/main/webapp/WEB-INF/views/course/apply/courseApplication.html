@@ -1,45 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+data-layout-decorate="~{layouts/lecApplyLayout}">
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
   <title>수강신청</title>
-  <meta name="_csrf" content="${_csrf.token}">
-  <meta name="_csrf_header" content="${_csrf.headerName}">
-  <meta name="description"
-    content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-  <meta name="author" content="pixelcave">
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
 
-  <!-- Open Graph Meta -->
-  <meta property="og:title" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework">
-  <meta property="og:site_name" content="OneUI">
-  <meta property="og:description"
-    content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-  
-
-  <!-- Icons -->
-  <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-  <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/media/favicons/favicon-192x192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
-  <!-- END Icons -->
-
-  <!-- Stylesheets -->
-  <!-- Fonts and OneUI framework -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-  <link rel="stylesheet" id="css-main" href="assets/css/oneui.min.css">
-
-  <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-  <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/amethyst.min.css"> -->
-  <!-- END Stylesheets -->
   <style>
     h5 {
       margin-top: 50px;
@@ -54,14 +23,14 @@
 </head>
 
 <body>
-
+<main layout:fragment="main">
   <div id="section">
     <div id="page-container">
       <div class="content content-boxed">
         <h3 class="h3 fw-bold mb-2">수강신청</h3>
         <div class="bg-body-extra-light" style="padding: 10px;">
           <div class="m-4">
-            <form action="" method="post" class="row">
+            <form th:action="@{/}" method="post" class="row">
               <div class="col-md-3 col-xl-2 col-10 fomrtag">
                 <div class="mb-5">
                   <select class="form-select" id="example-select" name="example-select">
@@ -209,7 +178,7 @@
             </div>
             <div class="mb-5 ">
               <div class="block-contents">
-              <form action="" method="post">
+              <form th:action = "@{/}" method="post">
                 <div class="row">
                   <div class="col-md-2 col-xl-1 mt-4">
                     <label class="form-label" for="example-flatpickr-time-standalone-24">과목코드</label>
@@ -288,6 +257,7 @@
       </div>
     </div>
   </div>
+  </main>
   <script src="assets/js/oneui.app.min.js"></script>
   <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script>
@@ -306,7 +276,7 @@
 					function() {
 						$.ajax(
 								{
-									url:'${pageContext.request.contextPath}/stud/chkAnswer.do', 
+									url:'/tuna/stud/chkAnswer.do', 
 									method:'POST',
 									data: {'answer':document.querySelector('#answer').value},
 									beforeSend: function (xhr) {
@@ -333,7 +303,7 @@
 		function audio() {
 			var rand = Math.random();
 			var uAgent = navigator.userAgent;
-			var soundUrl = '${pageContext.request.contextPath }/stud/captchaAudio.do?rand=' + rand;
+			var soundUrl = '/tuna/stud/captchaAudio.do?rand=' + rand;
 			if (uAgent.indexOf('Trident') > -1 || uAgent.indexOf('MISE') > -1) { /*IE 경우 */
 				audioPlayer(soundUrl);
 			} else if (!!document.createElement('audio').canPlayType) { /*Chrome 경우 */
@@ -348,7 +318,7 @@
 		}
 		function getImage() {
 			var rand = Math.random();
-			var url = '${pageContext.request.contextPath }/stud/captchaImg.do?rand=' + rand;
+			var url = '/tuna/stud/captchaImg.do?rand=' + rand;
 			document.querySelector('img').setAttribute('src', url);
 		}
 		function audioPlayer(objUrl) {

@@ -31,19 +31,19 @@
 			███████  ██████ ██   ██  ██████  ███████ ██   ██ ██   ██  -->
 			
 			<li class="nav-main-item">
-	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/scholarshipApplication">
+	           <a class="nav-main-link" th:href="@{/stud/scholarshipApplication}">
 	             <i class="nav-main-link-icon fa fa-graduation-cap"></i>
 	             <span class="nav-main-link-name fw-bold">장학금 신청</span>
 	           </a>
 	        </li>
 			<li class="nav-main-item">
-	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/scholarshipApplicationStatus">
+	           <a class="nav-main-link" th:href="@{/stud/scholarshipApplicationStatus}">
 	             <i class="nav-main-link-icon fa fa-money-check"></i>
 	             <span class="nav-main-link-name fw-bold">당해학기 장학 신청 현황</span>
 	           </a>
 	        </li>
 			<li class="nav-main-item">
-	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/scholarshipApplicationSearch">
+	           <a class="nav-main-link" th:href="@{/stud/scholarshipApplicationSearch}">
 	             <i class="nav-main-link-icon fa fa-clipboard"></i>
 	             <span class="nav-main-link-name fw-bold">전체 장학 조회</span>
 	           </a>

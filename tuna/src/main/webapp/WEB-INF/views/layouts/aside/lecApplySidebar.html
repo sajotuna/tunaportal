@@ -31,14 +31,14 @@
 			███████ ███████  ██████      ██   ██ ██      ██      ███████    ██     -->
 	     
 	     	<li class="nav-main-item">
-	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseWarning">
+	           <a class="nav-main-link" th:href="@{/stud/courseWarning}">
 	           	 <i class="nav-main-link-icon fa fa-basket-shopping"></i>
 	             <span class="nav-main-link-name fw-bold">수강신청유의사항</span>
 	           </a>
 	        </li>
 	     
 	     	<li class="nav-main-item">
-	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseBasket">
+	           <a class="nav-main-link" th:href="@{/stud/courseBasket}">
 	           	 <i class="nav-main-link-icon fa fa-basket-shopping"></i>
 	             <span class="nav-main-link-name fw-bold">수강꾸러미</span>
 	           </a>
@@ -50,19 +50,19 @@
 	           </a>
 	           <ul class="nav-main-submenu">
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseBasketSchedule">
+	               <a class="nav-main-link" th:href="@{/stud/courseBasketSchedule}">
 	                 <span class="nav-main-link-name">시간표</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseBasketLectureList">
+	               <a class="nav-main-link" th:href="@{/stud/courseBasketLectureList}">
 	                 <span class="nav-main-link-name">강의목록</span>
 	               </a>
 	             </li>
 	         	</ul>
 	         </li>
 	         	     	<li class="nav-main-item">
-	           <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseApplication">
+	           <a class="nav-main-link" th:href="@{/stud/courseApplication}">
 	           	 <i class="nav-main-link-icon fa fa-check-to-slot"></i>
 	             <span class="nav-main-link-name fw-bold">수강신청</span>
 	           </a>
@@ -74,12 +74,12 @@
 	           </a>
 	           <ul class="nav-main-submenu">
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseApplicationSchedule">
+	               <a class="nav-main-link" th:href="@{/stud/courseApplicationSchedule}">
 	                 <span class="nav-main-link-name">시간표</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="${pageContext.request.contextPath }/stud/courseApplicationLectureList">
+	               <a class="nav-main-link" th:href="@{/stud/courseApplicationLectureList}">
 	                 <span class="nav-main-link-name">강의목록</span>
 	               </a>
 	             </li>

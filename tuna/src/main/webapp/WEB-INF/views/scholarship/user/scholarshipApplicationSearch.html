@@ -1,0 +1,97 @@
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/scholarAsideLayout}">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+  <title>장학금 신청 조회</title>
+
+  <style>
+
+    tr {
+      text-align: center;
+    }
+
+    td {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+<main layout:fragment="main">
+  <div id="section">
+
+    <div id="page-container">
+      <div class="content content-boxed">
+        <h3 class="h3 fw-bold mb-2">장학금 신청조회</h3>
+        <div class="bg-body-extra-light" style="padding: 10px;">
+        <form th:action = "@{/}" method = post>
+            <div class="d-flex justify-content-end">
+              
+	            <div class="col-md-3 col-xl-2">
+	              <div class="m-2">
+	                  <select class="form-select" id="example-select" name="example-select" onchange="this.form.submit()">
+	                    <option selected>연도</option>
+	                    <option value="1">2022</option>
+	                    <option value="2">2021</option>
+	                    <option value="3">2020</option>
+	                  </select>
+	              </div>
+	            </div>
+	            <div class="col-md-3 col-xl-2">
+	              <div class="m-2">
+	                  <select class="form-select" id="example-select" name="example-select" onchange="this.form.submit()">
+	                    <option selected>학기</option>
+	                    <option value="1">1</option>
+	                    <option value="2">2</option>
+	                  </select>
+	              </div>
+	            </div>
+            
+            </div>
+            </form>
+          <div class="mb-4">
+            <table class="table table-striped table-vcenter">
+              <thead>
+                <tr>
+                  <th class="d-none d-sm-table-cell" style="width: 30px;">순번</th>
+                  <th class="d-none d-sm-table-cell" style="width: 80px;">장학년도</th>
+                  <th class="d-none d-sm-table-cell" style="width: 30px;">학기</th>
+                  <th class="d-none d-sm-table-cell" style="width: 80px;">장학명</th>
+                  <th class="d-none d-sm-table-cell" style="width: 80px;">접수번호</th>
+                  <th class="d-none d-sm-table-cell" style="width: 80px;">학번</th>
+                  <th class="d-none d-sm-table-cell" style="width: 80px;">성명</th>
+                  <th class="d-none d-sm-table-cell" style="width: 80px;">소속</th>
+                  <th class="d-none d-sm-table-cell" style="width: 50px;">학년</th>
+                  <th class="d-none d-sm-table-cell" style="width: 80px;">신청상태</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:scope="row">
+                  <td class="fw-semibold fs-sm">1</td>
+                  <td class="fw-semibold fs-sm">2022년</td>
+                  <td class="fw-semibold fs-sm">1학기</td>
+                  <td class="fw-semibold fs-sm">성적우수</td>
+                  <td class="fw-semibold fs-sm">01432154</td>
+                  <td class="fw-semibold fs-sm">22015879</td>
+                  <td class="fw-semibold fs-sm">권태현</td>
+                  <td class="fw-semibold fs-sm">컴퓨터공학</td>
+                  <td class="fw-semibold fs-sm">3학년</td>
+                  <td class="fw-semibold fs-sm">신청대기</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </main>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
 
 <head>
   <meta charset="utf-8">
@@ -9,35 +9,6 @@
 
   <title>장학신청조회</title>
 
-  <meta name="description"
-    content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-  <meta name="author" content="pixelcave">
-  <meta name="robots" content="noindex, nofollow">
-
-  <!-- Open Graph Meta -->
-  <meta property="og:title" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework">
-  <meta property="og:site_name" content="OneUI">
-  <meta property="og:description"
-    content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-
-  <!-- Icons -->
-  <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-  <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/media/favicons/favicon-192x192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
-  <!-- END Icons -->
-  <link rel="stylesheet" href="assets/js/plugins/flatpickr/flatpickr.min.css">
-  <!-- Stylesheets -->
-  <!-- Fonts and OneUI framework -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-  <link rel="stylesheet" id="css-main" href="assets/css/oneui.min.css">
-
-  <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-  <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/amethyst.min.css"> -->
-  <!-- END Stylesheets -->
   <style>
 
     h5 {
@@ -54,12 +25,13 @@
 </head>
 
 <body>
+<main layout:fragment="main">
   <div id="section">
     <div class="content content-boxed">
       <div id="page-container">
         <h3 class="h3 fw-bold mb-2">장학신청 조회</h3>
         <div class=" bg-body-extra-light" style="padding: 10px;">
-        <form action="" method="post" class="row">
+        <form th:action="@{/}" method="post" class="row">
           <div class="col-md-4 col-xl-3 fomrtag">
             <div class="mb-2">
               <select class="form-select" id="example-select" name="example-select">
@@ -153,7 +125,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr scope="row">
+              <tr th:scope="row">
                 <th class="fw-semibold fs-sm"><input type = "checkbox"></th>
                 <td class="fw-semibold fs-sm">014-124357</td>
                 <td class="fw-semibold fs-sm">최규완</td>
@@ -169,7 +141,7 @@
                 <td class="fw-semibold fs-sm"></td>
                 <td class="fw-semibold fs-sm"></td>
               </tr>
-              <tr scope="row">
+              <tr th:scope="row">
                 <th class="fw-semibold fs-sm"><input type = "checkbox"></th>
                 <td class="fw-semibold fs-sm">014-124357</td>
                 <td class="fw-semibold fs-sm">최규완</td>
@@ -231,11 +203,12 @@
       </div>
     </div>
   </div>
-  <script src="assets/js/oneui.app.min.js"></script>
-  <script src="assets/js/lib/jquery.min.js"></script>
+  </div>
+  </main>
+  <script src="@{/resources/assets/js/lib/jquery.min.js}"></script>
 
   <!-- Page JS Plugins -->
-  <script src="assets/js/plugins/flatpickr/flatpickr.min.js"></script>
+  <script src="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.js}"></script>
 
   <!-- Page JS Helpers (Flatpickr + BS Datepicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider + BS Colorpicker plugins) -->
   <script>One.helpersOnLoad(['js-flatpickr']);</script>

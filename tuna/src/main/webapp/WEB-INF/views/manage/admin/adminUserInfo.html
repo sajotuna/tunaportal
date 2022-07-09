@@ -1,45 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
     <title>사용자 상세정보</title>
 
-    <meta name="description" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-    <meta name="author" content="pixelcave">
-    <meta name="robots" content="noindex, nofollow">
-
-    <!-- Open Graph Meta -->
-    <meta property="og:title" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework">
-    <meta property="og:site_name" content="OneUI">
-    <meta property="og:description" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-
-    <!-- Icons -->
-    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-    <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/media/favicons/favicon-192x192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
-    <!-- END Icons -->
-
-    <!-- Stylesheets -->
-    <!-- Fonts and OneUI framework -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" id="css-main" href="assets/css/oneui.min.css">
-
-    <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-    <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/amethyst.min.css"> -->
-    <!-- END Stylesheets -->
-    <style>
-  </style>
-    
   </head>
   <body>
+  <main layout:fragment="main">
     <div class="bg-body-light">
       <div class="content content-full content-boxed">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
@@ -133,9 +102,7 @@
       </div>
     </div>
   </div>
-    
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="assets/js/oneui.app.min.js"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  </div>
+  </main>
   </body>
 </html>
