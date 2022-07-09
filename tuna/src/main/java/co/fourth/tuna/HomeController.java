@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import co.fourth.tuna.usertest.captcha.CaptchaUtil;
+import co.fourth.tuna.legacy.usertest.captcha.CaptchaUtil;
 import nl.captcha.Captcha;
 
 /**
