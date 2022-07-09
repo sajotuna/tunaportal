@@ -1,4 +1,4 @@
-package co.fourth.tuna.admin.vo;
+package co.fourth.tuna.legacy.admin.vo;
 
 import lombok.Getter;
 import lombok.Setter;
