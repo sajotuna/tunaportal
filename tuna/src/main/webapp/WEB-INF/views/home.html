@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=, initial-scale=1.0">
@@ -51,7 +52,6 @@
 </head>
 <body>
 
-<sec:authentication property="principal" var = "user"/>
 <div id="page-container">
 	<!-- Main Container -->
 	<main id="main-container">
@@ -63,31 +63,31 @@
 	            <h1 class="h1 fw-bold mb-2">
 	                TUNA Portal
 	            </h1>
-	           <sec:authorize access="isAuthenticated()">
+	           <div sec:authorize="isAuthenticated()">
 	            
 	            <h2 class="h6 fw-medium fw-medium text-muted mb-0">
-	                <a class="fw-semibold" href="#">${user.username }</a> 님, 환영합니다. 
+	                <a class="fw-semibold" href="#" th:text = "${vo.name }"></a> 님, 환영합니다. 
 	            </h2>
-	            </sec:authorize>
+	            </div>
 	            </div>
 	            
 	            <div class="mt-3 mt-md-0 ms-md-3 space-x-1">
-	            <sec:authorize access="isAnonymous()">
-	            <a class="btn btn-sm btn-dark space-x-1" th:href="@{/custom/login}">
-	                <i class="far fa-user opacity-50"></i>
-	                <span>로그인</span>
-	            </a>
-	            </sec:authorize>
-	            <sec:authorize access="isAuthenticated()">
+	            <div sec:authorize="isAnonymous()">
+		            <a class="btn btn-sm btn-dark space-x-1" th:href="@{/custom/login}">
+		                <i class="far fa-user opacity-50"></i>
+		                <span>로그인</span>
+		            </a>
+	            </div>
+	            <div sec:authorize="isAuthenticated()">
 	            <div class="dropdown d-inline-block">
 	                <button type="button" class="btn btn-sm btn-dark space-x-1" id="dropdown-analytics-overview" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                <i class="far fa-user opacity-50"></i>
-	                <span>${user.username}</span>
+	                <span th:text = "${vo.name }"></span>
 	                <i class="fa fa-fw fa-angle-down"></i>
 	                </button>
 	                <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
 	                    <div class="p-3 text-center bg-body-light border-bottom rounded-top">
-	                      <p class="mt-2 mb-0 fw-medium">지수빈</p>
+	                      <p class="mt-2 mb-0 fw-medium" th:text = "${vo.name }"></p>
 	                      <p class="mb-0 text-muted fs-sm fw-medium">시각디자인학과</p>
 	                    </div>
 	                    <div class="p-2">
@@ -95,29 +95,28 @@
 	                        <span class="fs-sm fw-medium">내 정보 수정</span>
 	                      </a>
 	                    </div>
-	                    <sec:authorize access="hasAuthority('ROLE_ADMIN')">
+	                    <div sec:authorize="hasAuthority('ROLE_ADMIN')">
 	                    <div class="p-2">
 	                      <a class="dropdown-item d-flex align-items-center justify-content-between" th:href="@{/admin/adminUserInfo}">
 	                        <span class="fs-sm fw-medium">관리자 페이지</span>
 	                      </a>
 	                    </div>
-	                    </sec:authorize>
+	                    </div>
 	                    <div role="separator" class="dropdown-divider m-0"></div>
 	                    <div class="p-2">
 	                    <form method = "post" th:action = "@{/logout}">
-	                    	<sec:csrfInput/>
+	                    	<input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
 								<button class=" dropdown-item d-flex align-items-center justify-content-between fs-sm fw-medium" >로그아웃</button>
 	                    </form>
 	                    </div>
 	                  </div>
 	            </div>
-	            </sec:authorize>
+	            </div>
 	            </div>
 	        </div>
 	        </div>
 	    </div>
 	    <!-- END Hero -->
-	    
 	    <!-- Main Navigation -->
 	    <div class="bg-primary-darker">
 		<div id="main-navigation" class="d-md-none mt-2 mt-lg-0">
@@ -161,11 +160,11 @@
 					aria-haspopup="true" aria-expanded="false" href="#"><span
 						class="nav-main-link-name">강의</span>
 				</a>
-					<ul class="nav-main-submenu">
+					<ul class="nav-main-submenu" sec:authorize="hasRole('ROLE_STUDENT')">
 						<li class="nav-main-item"><a class="nav-main-link"
 							href="#"> <span class="nav-main-link-name">e-class</span>
 						</a></li>
-						<li class="nav-main-item"><a class="nav-main-link"
+						<li sec:authorize="hasRole('ROLE_STAFF')" class="nav-main-item"><a class="nav-main-link"
 							href="#"> <span class="nav-main-link-name">e-class 교수</span>
 						</a></li>
 						<li class="nav-main-item"><a class="nav-main-link"
