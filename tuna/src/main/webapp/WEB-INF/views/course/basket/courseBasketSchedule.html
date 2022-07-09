@@ -1,42 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+data-layout-decorate="~{layouts/lecApplyLayout}">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>수강꾸러미 시간표</title>
-  <meta name="description"
-    content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-  <meta name="author" content="pixelcave">
-  <meta name="robots" content="noindex, nofollow">
 
-  <!-- Open Graph Meta -->
-  <meta property="og:title" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework">
-  <meta property="og:site_name" content="OneUI">
-  <meta property="og:description"
-    content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-
-  <!-- Icons -->
-  <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-  <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/media/favicons/favicon-192x192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
-  <!-- END Icons -->
-
-  <!-- Stylesheets -->
-  <!-- Fonts and OneUI framework -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-  <link rel="stylesheet" id="css-main" href="assets/css/oneui.min.css">
-
-  <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-  <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/amethyst.min.css"> -->
-  <!-- END Stylesheets -->
   <style>
     /* https://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -1014,7 +985,7 @@ xcarbonads
 </head>
 
 <body>
-
+<main layout:fragment="main">
   <div id="section">
     <div class="content content-boxed">
       <h3 class="h3 fw-bold mb-2">수강꾸러미 시간표</h3>
@@ -1208,7 +1179,7 @@ xcarbonads
       </div>
     </div>
   </div>
-  </div>
+  </main>
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script>
     jQuery(document).ready(function ($) {
@@ -1606,7 +1577,6 @@ xcarbonads
       }
     });
   </script>
-  <script src="assets/js/oneui.app.min.js"></script>
 </body>
 
 </html>
