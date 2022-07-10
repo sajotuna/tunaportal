@@ -25,14 +25,6 @@ public class StudentController {
 		return "home";
 	}
 
-	@RequestMapping("/userUpdate")
-	public String userUpdate() {
-		return "manage/user/userUpdate";
-	}
-	@RequestMapping("/pwdUpdate")
-	public String pwdUpdate() {
-		return "manage/user/pwdUpdate";
-	}
 	@RequestMapping("/admin/adminUserSearch")
 	public String adminUserSearch() {
 		return "manage/admin/adminUserSearch";

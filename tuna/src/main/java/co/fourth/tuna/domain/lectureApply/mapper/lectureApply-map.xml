@@ -2,4 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper">
+
+<select id="SubjectFind" resultType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
+
+SELECT S.NO no, S.NAME name, S.TARGET target, S.POINT point, S.LIMIT limit, P.NAME PRONAME,
+(SELECT CODENAME FROM PUBLICCODE WHERE NO = S.TYPE) AS TYPE,  
+(SELECT CODENAME FROM PUBLICCODE WHERE NO = S.DEPTCODE) AS DEPTCODE,
+(SELECT CODENAME FROM PUBLICCODE WHERE NO = L.ROOMCODE) AS ROOMCODE, 
+(SELECT CODENAME FROM PUBLICCODE WHERE NO = S.SEASONCODE) AS SEASONCODE,
+(SELECT CODENAME FROM PUBLICCODE WHERE NO = L.TIMECODE) AS TIMECODE, 
+(SELECT CODENAME FROM PUBLICCODE WHERE NO = L.DAYCODE) AS DAYCODE
+FROM SUBJECT S, LECTURESCHEDULE L, PROFESSOR P
+WHERE S.NO = L.SBJNO AND S.PFNO = P.NO
+
+</select>
+
+
 </mapper>

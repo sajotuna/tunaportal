@@ -91,16 +91,15 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
     <script>
-      function showPopup(){
-          window.open("/tuna/stud/lectureEvaluation","강의평가","width=1000, height=800, top=10, left=10");
-      }
 
-        let btns = document.querySelectorAll('button')
-        btns.forEach(btn =>{
-          btn.addEventListener('click',function(){
-            showPopup();
-          })
+      let btns = document.querySelectorAll('button')
+      btns.forEach(btn =>{
+        btn.addEventListener('click',function(){
+          
+          let sbjcode = btn.parentElement.parentElement.children[0].innerHTML
+          window.open("/tuna/stud/lectureEvaluation?sbjcode="+ sbjcode,"강의평가","width=1000, height=800, top=10, left=10");
         })
+      })
     </script>
     
   </body>
