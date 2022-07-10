@@ -6,22 +6,20 @@
 	<meta charset="UTF-8">
 	<title>basicBannerManagm</title>
 	<style>
-		.shortcut-banner {
+		.img-section {
 			width: 100%;
 			height: 300px;
 			background: gray;
 			position:relative;
 		}
-
+        .img {
+            height:100%;
+            width:auto;
+        }
         .shortcut-btn {
             position:absolute;
             left:2rem!important;
             top:2rem!important;
-        }
-        
-        .banner-img {
-            height:100%;
-            width:auto;
         }
 	</style>
 </head>
@@ -37,40 +35,43 @@
 						<div class="m-3">
 							<div class="row justify-content-center">
 							
-								<div class="col-xl-6">
+								<div class="col-xl-10">
 									<!-- Banner Preview -->
 									<h2 class="content-heading mb-2 pb-2">배너 미리보기</h2>
-									<div class="mb-4 box banner shortcut-banner">
-										<button id="btn" class="btn btn-alt-secondary shortcut-btn">바로가기</button>
-										<img id="bnImg" class="banner-img" src="#" alt="">
+									<div class="mb-4 img-section">
+										<!-- <button id="btn" class="btn btn-alt-secondary shortcut-btn">바로가기</button>  -->
+										<img id="bnImg" class="img" src="#" alt="">
 									</div> 
 									<!-- END Banner Preview -->
 								
 									<!-- Basic Banner Form -->
-									<form id="basicBnFrm" onsubmit="return urlInputCheck(this)">
-										<h2 class="content-heading border-bottom mb-2 pb-2">배너 업로드</h2>
-							                <div class="row items-push">
+									<form id="basicBnFrm">
+										<h2 class="content-heading border-bottom mb-2 pb-2">배너 정보</h2>
+							                <div class="row">
 							                    <p class="fs-sm text-muted">
 							                      5MB 이하의 사진 파일(jpg, jpeg, png)을 업로드하세요.
 							                    </p>
-												<div class="mb-4">
+												<div class="col-xl-6">
 							                      <label class="form-label" for="file">사진 올리기 <span class="text-danger">*</span></label>
-							                      <input class="form-control" type="file" id="file"
-							                      		accept="image/jpg, image/jpeg, image/png"
-							                      		required>
+							                      <div id="fileShake">
+								                      <input class="form-control" type="file" id="file"
+								                      		accept="image/jpg, image/jpeg, image/png">
+							                      </div>
 							                    </div>
-												<div class="mb-4">
+												<div class="col-xl-6">
 							                      <label class="form-label" for="urlInput">버튼 URL <span class="text-danger">*</span></label>
-							                      <input type="text" class="form-control" id="urlInput" name="url" placeholder="URL Input">
+							                      <div id="inputTxtShake">
+								                      <input type="text" class="form-control" id="inputTxt" name="url" 
+								                      		placeholder="URL Input" >
+							                      </div>
 							                    </div>
 									    		<div class="d-flex justify-content-center mt-5">
-										    		<button id="basicBnModBtn" type="submit" class="btn btn-sm btn-dark m-1">배너 수정</button>
-								      				<button id="basicBnInsBtn" type="submit" class="btn btn-sm btn-dark m-1">배너 등록</button>
+										    		<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="modify">배너 수정</button>
+								      				<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="insert">배너 등록</button>
 							      				</div>
 							      			</div>
 							    	</form>
 							    	<!-- END Basic Banner Form -->
-							    	
 		      					</div>
 							</div>
 						</div>
@@ -80,11 +81,69 @@
 			</div>
 		</div>
 		<!-- END Page Content -->
-
+		
+	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 	<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
-	
 	<script type="text/javascript">
 	
+	$(function() {
+		basicBnSubmit();
+	})
+	
+	function basicBnSubmit() {
+		$('.submit-btn').on('click', function () {
+			let file = $('#file');
+			let inputTxt = $('#inputTxt');
+			const job = $(this).data('job');
+			
+			if (!file.val()) {
+				shake(file);
+				cautionIn(file, '사진 파일을 업로드해 주세요.');
+			} else {
+				cautionOut(file);
+			}
+			
+			if (!inputTxt.val()) {
+				shake(inputTxt);
+				cautionIn(inputTxt, 'url을 입력해 주세요.');
+			} else {
+				cautionOut(inputTxt);
+			}
+			
+			if (job === 'insert') {
+				
+			} else if (job === 'modify') {
+				
+			}
+		}) 
+	}
+	
+	// 인풋 미입력 상태 시 경고 텍스트 in
+	function cautionIn(target, txt) {
+		let cautionId = `${target.attr('id')}Check`;
+		
+		target.addClass('is-invalid');
+		$(`#${cautionId}`).remove();
+		target.parent().append($('<div>').addClass('invalid-feedback')
+									  	 .attr('id', cautionId)
+									  	 .text(txt));
+	}
+	
+	// 인풋 미입력 상태 시 shake
+	function shake(target) {
+		let shakeObjId = `#${target.attr('id')}Shake`;
+		$(shakeObjId).addClass('js-animation-object animated shake');
+	}
+	
+	// 인풋 입력 상태 시 경고 텍스트 out
+	function cautionOut(target) {
+		let cautionId = `#${target.attr('id')}Check`;
+		
+		target.removeClass('is-invalid');
+		$(cautionId).remove();
+	}
+	
+
 	// 배너 미리보기
 	$('#file').on('change', changeEvent => {
 		const reader = new FileReader();
@@ -95,20 +154,6 @@
 		const img = changeEvent.target.files[0];
 		reader.readAsDataURL(img);
 	})
-	
-	// form submit 시 url input check
-	function urlInputCheck(frm) {
-		let urlInput = frm.urlInput;
-		if (!$(urlInput).val()) {
-			$(urlInput).addClass('form-control-alt is-invalid');
-			$(urlInput).parent().append($('<div>').addClass('invalid-feedback').attr('id', 'urlCheckInfo').text('url을 입력해 주세요.'));
-			return false;
-		} else {
-			$(urlInput).removeClass('form-control-alt is-invalid');
-			$('#urlCheckInfo').remove();
-			return true;
-		}
-	}
 
 	</script>
 	
