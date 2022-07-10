@@ -1,0 +1,9 @@
+package co.fourth.tuna.domain.lectureApply.mapper;
+
+import java.util.List;
+
+import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
+
+public interface LectureApplyMapper {
+	public List<LectureApplyVO> SubjectFind();
+}
