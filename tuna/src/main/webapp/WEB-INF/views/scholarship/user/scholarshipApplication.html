@@ -32,29 +32,35 @@
         <div class="row">
           <div class="col-lg-12 col-xl-12 bg-body-extra-light "style="padding: 10px;">
             <div class="m-4">
-              <form th:action="@{/scolarShipApply}" method="post">
+              <form th:action="@{/}" method="post">
                 <div class="mb-4">
                   <div class="input-group">
                     <span class="input-group-text">소속</span>
-                    <input type="text" class="form-control" th:value="${vo.deptCode}" id="deptcode" name="deptcode" readonly>
+                    <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
                   </div>
                 </div>
                 <div class="mb-4">
                   <div class="input-group">
                     <span class="input-group-text">이름</span>
-                    <input type="text" class="form-control" th:value= "${vo.name}" id="name" name="name" readonly>
+                    <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
                   </div>
                 </div>
                 <div class="mb-4">
                   <div class="input-group">
                     <span class="input-group-text">생년월일</span>
-                    <input type="text" class="form-control" th:value= "${vo.birth}" id="birth" name="birth" readonly>
+                    <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="input-group">
+                    <span class="input-group-text">전화번호</span>
+                    <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
                   </div>
                 </div>
                 <div class="mb-4">
                   <div class="input-group">
                     <span class="input-group-text">휴대전화</span>
-                    <input type="text" class="form-control" th:value= "${vo.tel}" id="tel" name="tel" readonly>
+                    <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
                   </div>
                 </div>
                 <div class="row">
@@ -64,7 +70,7 @@
                       <span class="input-group-text">은행</span>
                       <div class="col-md-3 col-xl-2">
                         <select class="form-select" id="example-select" name="example-select">
-                          <option th:value="${vo.bacc}" th:text="${vo.bacc}"></option>
+                          <option value="">은행명을 선택하세요</option>
                           <option value="35">경남은행</option>
                           <option value="29">광주은행</option>
                           <option value="7">국민은행</option>
@@ -95,9 +101,9 @@
                         </select>
                       </div>
                       <span class="input-group-text">계좌 번호</span>
-                      <input type="text" class="form-control" th:value ="${vo.bank}" id="bank" name="bank">
+                      <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
                       <span class="input-group-text">예금주</span>
-                      <input type="text" class="form-control" th:value ="${vo.name}" id="accname" name="accname">
+                      <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
                     </div>
                   </div>
                 </div>
@@ -105,7 +111,7 @@
                 <table class="table table-striped table-vcenter table-bordered">
                   <thead>
                     <tr>
-                      <th class="fw-semibold fs-sm" rowspan="2"><input type="radio" name = "scol" value = "학업성적우수"><br>학업성적우수장학금</th>
+                      <th class="fw-semibold fs-sm" rowspan="2"><input type="radio"><br>학업성적우수장학금</th>
                       <th class="fw-semibold fs-sm">안내사항</th>
                       <td class="fw-semibold fs-sm">직전학기 과락없이 수강신청 기준학점(단, 모든 학부(과)의 최종학기 직전학기는 14학점) 이상 취득하고, 직전학기 학업성적
                         평점평균이 B(3.0) 이상이며 품행이 단정한 자로서 학부(과)장이 추천한 자. 단, 시행에 관한 사항은 별도로 정한다.</td>
@@ -115,7 +121,7 @@
                       <td class="fw-semibold fs-sm">없음</td>
                     </tr>
                     <tr>
-                      <th class="fw-semibold fs-sm" rowspan="2"><input type="radio" name = "scol" value = "가족장학금"><br>가족 장학금</th>
+                      <th class="fw-semibold fs-sm" rowspan="2"><input type="radio"><br>가족 장학금</th>
                       <th class="fw-semibold fs-sm">안내사항</th>
                       <td class="fw-semibold fs-sm">친가족 2명 이상 본 대학교(학부과정)에 재학하고 있는 자 중 1인에게 지원(단, 모든 학부(과)의 직전학기는 12학점.
                         4학년은 8학점)이상 취득하고, 직전학기 학업성적 평점평균이 C+(2.5)이상 </td>
@@ -126,7 +132,7 @@
                       <td class="fw-semibold fs-sm">가족관계증명서</td>
                     </tr>
                     <tr>
-                      <th class="fw-semibold fs-sm" rowspan="2"><input type="radio" name = "scol" value = "교직원가족"><br>교직원가족 장학금</th>
+                      <th class="fw-semibold fs-sm" rowspan="2"><input type="radio"><br>교직원가족 장학금</th>
                       <th class="fw-semibold fs-sm">안내사항</th>
                       <td class="fw-semibold fs-sm">대학 교직원 가족 또는 법인 소속 교직원 가족이며, 직전학기 17학점(졸업예정 학생은 12학점) 이상 취득하고, 직전학기
                         학업성적 평점평균이 C(2.0)이상 </td>

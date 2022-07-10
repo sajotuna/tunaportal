@@ -99,15 +99,15 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:scope="row" th:each="sub : ${list}">
-                      <th class="fw-semibold fs-sm" th:text ="${sub.type}"></th>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.no}"></td>
-                      <td class="fw-semibold fs-sm"th:text = "${sub.name}"></td>
-                      <td class="fw-semibold fs-sm"><a href="#" th:text = "${sub.proname}"></a></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.roomcode}"></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.daycode}"></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.point}"></td>
-                      <td class="fw-semibold fs-sm"th:text = "${sub.limit}"></td>
+                    <tr scope="row">
+                      <th class="fw-semibold fs-sm">전공/필수</th>
+                      <td class="fw-semibold fs-sm">014-124357</td>
+                      <td class="fw-semibold fs-sm">컴퓨터 그래픽스</td>
+                      <td class="fw-semibold fs-sm"><a href="#">최규완</a></td>
+                      <td class="fw-semibold fs-sm">참치관 103호</td>
+                      <td class="fw-semibold fs-sm">13:00~14:00 월/수</td>
+                      <td class="fw-semibold fs-sm">3</td>
+                      <td class="fw-semibold fs-sm">12/45</td>
                     </tr>
                   </tbody>
                 </table>
@@ -162,7 +162,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:scope="row">
+                    <tr scope="row">
                       <th class="fw-semibold fs-sm">전공/필수</th>
                       <td class="fw-semibold fs-sm">014-124357</td>
                       <td class="fw-semibold fs-sm">컴퓨터 그래픽스</td>
@@ -238,7 +238,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:scope="row">
+                    <tr scope="row">
                       <th class="fw-semibold fs-sm">전공/필수</th>
                       <td class="fw-semibold fs-sm">014-124357</td>
                       <td class="fw-semibold fs-sm">컴퓨터 그래픽스</td>
