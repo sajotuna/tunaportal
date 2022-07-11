@@ -63,16 +63,16 @@ xmlns:th="http://www.thymeleaf.org"
                 <div class="block-header block-header-default">
                   <h3 class="block-title">강의 목록</h3>
                   <div class="block-options">
-                    <button type="button" class="btn btn-sm rounded-pill btn-alt-secondary">
+                    <a class="btn btn-sm rounded-pill btn-alt-secondary" th:href="@{/eclass/professor/subjectList}">
                       <i class="fa fa-ellipsis"></i>
-                    </button>
+                    </a>
                   </div>
                 </div>
                 <div class="block-content p-0">
                   <ul class="nav-items push">
                     <!-- TODO remove id -->
                     <li id="test-li">
-                      <a class="d-flex flex-row justify-content-between p-3" href="javascript:void(0)">
+                      <a class="d-flex flex-row justify-content-between p-3" th:href="@{/eclass/professor/subject}">
                         
                         <div class="flex-column">
                           <!--19자 제한 (19자 넘으면 19자 부터 ...)-->
@@ -116,9 +116,9 @@ xmlns:th="http://www.thymeleaf.org"
                 <div class="block-header block-header-default">
                   <h3 class="block-title">수강생 문의</h3>
                   <div class="block-options">
-                    <button type="button" class="btn btn-sm rounded-pill btn-alt-secondary">
+                    <a class="btn btn-sm rounded-pill btn-alt-secondary" th:href="@{/eclass/professor/qnaList}">
                       <i class="fa fa-ellipsis"></i>
-                    </button>
+                    </a>
                   </div>
                 </div>
                 <div class="block-content p-0">
@@ -158,9 +158,9 @@ xmlns:th="http://www.thymeleaf.org"
               <div class="block-header block-header-default">
                 <h3 class="block-title">전체 공지</h3>
                 <div class="block-options">
-                  <button type="button" class="btn btn-sm rounded-pill btn-alt-secondary">
+                  <a class="btn btn-sm rounded-pill btn-alt-secondary" th:href="@{/eclass/professor/noticeList}">
                     <i class="fa fa-ellipsis"></i>
-                  </button>
+                  </a>
                 </div>
               </div>
               <div class="block-content p-0">

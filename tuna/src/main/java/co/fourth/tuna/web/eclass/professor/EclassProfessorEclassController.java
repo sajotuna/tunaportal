@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/eclass/professor")
 public class EclassProfessorEclassController {
 	
-	//private String profPath = "/eclass/professor";
+	private String profPath = "/eclass/professor";
 	
 	private static final Logger logger = LoggerFactory.getLogger(EclassProfessorEclassController.class);
 	
@@ -23,7 +23,7 @@ public class EclassProfessorEclassController {
 //		logger.info(req.getRequestURI()); //tuna/eclass/professor/notice
 //		logger.info(req.getRequestURL().toString()); //http://localhost/tuna/eclass/professor/notice
 //		logger.info(req.getServletPath()); //eclass/professor/notice
-		return req.getServletPath();
+		return profPath + "/home";
 	}
 	
 	@GetMapping("/notice")
