@@ -1,10 +1,10 @@
 package co.fourth.tuna.domain.scholar.vo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class ScholarVO {
 	private int no;
 	private int name;

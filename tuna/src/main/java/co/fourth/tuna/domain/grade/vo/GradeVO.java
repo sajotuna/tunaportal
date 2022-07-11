@@ -1,10 +1,11 @@
 package co.fourth.tuna.domain.grade.vo;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class GradeVO {
 	private int no;
 	private int middle;

@@ -1,10 +1,10 @@
 package co.fourth.tuna.domain.lectureBasket.vo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class LectureBasketVO {
 	private int no;
 	private String stateCode;
