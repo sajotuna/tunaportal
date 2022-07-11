@@ -1,58 +1,164 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
 <head>
 	<meta charset="UTF-8">
 	<title>basicBannerManagm</title>
+	<style>
+		.img-section {
+			width: 100%;
+			height: 300px;
+			background: gray;
+			position:relative;
+		}
+        .img {
+            height:100%;
+            width:auto;
+        }
+        .shortcut-btn {
+            position:absolute;
+            left:2rem!important;
+            top:2rem!important;
+        }
+	</style>
 </head>
 <body>
-	
-	<!-- Page Content -->
-	<div class="mt-3">
-	<div class="content">
-		<!-- Block -->
-		<p class="h3 fw-bold">기본 바로가기 배너 수정 및 등록</p>
-		<div class="block block-rounded justify-content-center">
-			<div class="block-content block-content-full">
-				<div class="m-3">
-					<div class="row justify-content-center">
-					
-						<div class="col-xl-6">
-							<!-- Banner Preview -->
-							<div id="shortcut-banner" class="block-content box banner">
-								<button id="shortcut-btn" class="btn btn-alt-secondary" th:href="#">바로가기</button>
-								<img class="banner-img" th:src="#" alt="">
-							</div> 
-							<!-- END Banner Preview -->
-						
-							<!-- Basic Banner Form -->
-							<form id="basicBnFrm">
-		          				<h2 class="content-heading">사진 올리기 <span class="text-danger">*</span></h2>
-					            <div class="mb-2">
-					              <input class="form-control" type="file" id="example-file-input">
-					            </div>
-	          					<h2 class="content-heading">바로가기 URL <span class="text-danger">*</span></h2>
-					            <input type="text" class="form-control" id="val-website" name="val-website" placeholder="http://example.com">
-					            <div id="val-website-error" class="invalid-feedback animated fadeIn">정확한 URL을 입력해 주세요.</div>
-					    		<div class="d-flex justify-content-center mt-5">
-						    		<button id="basicBnModBtn" type="button" class="btn btn-sm btn-dark m-1">배너 수정</button>
-				      				<button id="basicBnInsBtn" type="button" class="btn btn-sm btn-dark m-1">배너 등록</button>
-			      				</div>
-					    	</form>
-					    	<!-- END Basic Banner Form -->
-					    	
-      					</div>
+	<main layout:fragment="main">
+		<!-- Page Content -->
+		<div class="mt-3" >
+			<div class="content">
+				<!-- Block -->
+				<p class="h3 fw-bold">기본 바로가기 배너 수정 및 등록</p>
+				<div class="block block-rounded">
+					<div class="block-content block-content-full">
+						<div class="m-3">
+							<div class="row justify-content-center">
+							
+								<div class="col-xl-10">
+									<!-- Banner Preview -->
+									<h2 class="content-heading mb-2 pb-2">배너 미리보기</h2>
+									<div class="mb-4 img-section">
+										<!-- <button id="btn" class="btn btn-alt-secondary shortcut-btn">바로가기</button>  -->
+										<img id="bnImg" class="img" src="#" alt="">
+									</div> 
+									<!-- END Banner Preview -->
+								
+									<!-- Basic Banner Form -->
+									<form id="basicBnFrm">
+										<h2 class="content-heading border-bottom mb-2 pb-2">배너 정보</h2>
+							                <div class="row">
+							                    <p class="fs-sm text-muted">
+							                      5MB 이하의 사진 파일(jpg, jpeg, png)을 업로드하세요.
+							                    </p>
+												<div class="col-xl-6">
+							                      <label class="form-label" for="file">사진 올리기 <span class="text-danger">*</span></label>
+							                      <div id="fileShake">
+								                      <input class="form-control" type="file" id="file"
+								                      		accept="image/jpg, image/jpeg, image/png">
+							                      </div>
+							                    </div>
+												<div class="col-xl-6">
+							                      <label class="form-label" for="urlInput">버튼 URL <span class="text-danger">*</span></label>
+							                      <div id="inputTxtShake">
+								                      <input type="text" class="form-control" id="inputTxt" name="url" 
+								                      		placeholder="URL Input" >
+							                      </div>
+							                    </div>
+									    		<div class="d-flex justify-content-center mt-5">
+										    		<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="modify">배너 수정</button>
+								      				<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="insert">배너 등록</button>
+							      				</div>
+							      			</div>
+							    	</form>
+							    	<!-- END Basic Banner Form -->
+		      					</div>
+							</div>
+						</div>
 					</div>
 				</div>
+				<!-- END Block -->
 			</div>
 		</div>
-		<!-- END Block -->
-	</div>
-	</div>
-	<!-- END Page Content -->
+		<!-- END Page Content -->
+		
+	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+	<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
+	<script type="text/javascript">
 	
-	<!-- Script -->
-	<script th:src="@{/resources/assets/js/plugins/jquery-validation/jquery.validate.min.js}"></script>
-	<script th:src="@{/resources/assets/js/pages/be_forms_validation.min.js}"></script>
-	<!-- END Script -->
+	$(function() {
+		basicBnSubmit();
+	})
+	
+	function basicBnSubmit() {
+		$('.submit-btn').on('click', function () {
+			let file = $('#file');
+			let inputTxt = $('#inputTxt');
+			const job = $(this).data('job');
+			
+			if (!file.val()) {
+				shake(file);
+				cautionIn(file, '사진 파일을 업로드해 주세요.');
+			} else {
+				cautionOut(file);
+			}
+			
+			if (!inputTxt.val()) {
+				shake(inputTxt);
+				cautionIn(inputTxt, 'url을 입력해 주세요.');
+			} else {
+				cautionOut(inputTxt);
+			}
+			
+			if (job === 'insert') {
+				
+			} else if (job === 'modify') {
+				
+			}
+		}) 
+	}
+	
+	// 인풋 미입력 상태 시 경고 텍스트 in
+	function cautionIn(target, txt) {
+		let cautionId = `${target.attr('id')}Check`;
+		
+		target.addClass('is-invalid');
+		$(`#${cautionId}`).remove();
+		target.parent().append($('<div>').addClass('invalid-feedback')
+									  	 .attr('id', cautionId)
+									  	 .text(txt));
+	}
+	
+	// 인풋 미입력 상태 시 shake
+	function shake(target) {
+		let shakeObjId = `#${target.attr('id')}Shake`;
+		$(shakeObjId).addClass('js-animation-object animated shake');
+	}
+	
+	// 인풋 입력 상태 시 경고 텍스트 out
+	function cautionOut(target) {
+		let cautionId = `#${target.attr('id')}Check`;
+		
+		target.removeClass('is-invalid');
+		$(cautionId).remove();
+	}
+	
+
+	// 배너 미리보기
+	$('#file').on('change', changeEvent => {
+		const reader = new FileReader();
+		$(reader).on('load', readerEvent => {
+ 			$('#bnImg').attr("src", readerEvent.target.result); 
+		})
+		
+		const img = changeEvent.target.files[0];
+		reader.readAsDataURL(img);
+	})
+
+	</script>
+	
+	
+</main>
+
 </body>
 </html>
