@@ -46,4 +46,6 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
+	<beans:bean id="codeList" class="co.fourth.tuna.domain.common.web.CodeController" />
+	
 </beans:beans>
