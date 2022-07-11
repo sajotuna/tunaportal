@@ -14,7 +14,6 @@ public class LectureApplyVO {
 	private String seasonCode;
 	private int stNo;
 	private int sbjNo;
-	private String proname;
 	
 //	private SubjectVO subject;
 	private String group;

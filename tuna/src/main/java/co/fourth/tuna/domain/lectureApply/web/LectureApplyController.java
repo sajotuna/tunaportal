@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
-
-import co.fourth.tuna.usertest.captcha.CaptchaUtil;
+import co.fourth.tuna.util.captcha.CaptchaUtil;
 import nl.captcha.Captcha;
 
 @Controller

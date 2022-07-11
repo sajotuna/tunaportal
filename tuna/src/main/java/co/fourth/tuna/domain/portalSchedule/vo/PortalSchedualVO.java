@@ -2,11 +2,11 @@ package co.fourth.tuna.domain.portalSchedule.vo;
 
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class PortalSchedualVO {
 	private int no;
 	private Date startDate;

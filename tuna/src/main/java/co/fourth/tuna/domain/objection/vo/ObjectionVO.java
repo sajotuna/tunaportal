@@ -2,14 +2,14 @@ package co.fourth.tuna.domain.objection.vo;
 
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class ObjectionVO {
 	private int no;
-	private Date date;
+	private Date enrollDate;
 	private String content;
 	private String answer;
 	private Date answerDate;
