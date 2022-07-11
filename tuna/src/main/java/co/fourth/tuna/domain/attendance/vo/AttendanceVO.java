@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class AttendanceVO {
 	private int no;
-	private String state;
+	private String stateCode;
 	private Date classDate;
 	private int stNo;
 	private int sbjNo;
