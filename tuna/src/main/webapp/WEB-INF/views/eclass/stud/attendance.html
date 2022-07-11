@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>출석현황</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+  </head>
+  <body>
+    <div
+      id="page-container"
+      class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow"
+    >
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header"></div>
+        <div class="content-side"></div>
+      </aside>
+
+      <!--
+███████ ██ ██████  ███████     ██████   █████  ██████  
+██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██   ██ █████       ██████  ███████ ██████  
+     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
+      -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header"></div>
+        <div class="js-sidebar-scroll"></div>
+      </nav>
+      <!-- SIDE BAR END -->
+
+      <!--
+██   ██ ███████  █████  ██████  ███████ ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██   ██ █████   ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
+      -->
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+      <!--HEADER END-->
+
+      <!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  E-class 홈 화면 입니다.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+        <div class="content">
+          <div class="row">
+            <div class="col-12">
+              <h3 class="h3 fw-bold mb-2">출석현황</h3>
+            </div>
+            <div class="block block-rounded">
+              <div class="block-content block-content-full">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <table class="mb-2">
+                        <thead>
+                          <tr>
+                              <td class="col-6">
+                              <td class="col-2 text-center fw-bold bg-success-light text-success">출석</td>
+                              <td class="col-2 text-center fw-bold bg-danger-light text-danger">결석</td>
+                              <td class="col-2 text-center fw-bold bg-warning-light text-warning">지각</td>
+                            <div>
+                            </tr>
+                        </thead>
+                      </table>
+                    </div>
+                    <table class="text-center table table-bordered table-vcenter js-dataTable-full dataTable no-footer" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+                      <thead>
+                        <tr>                          
+                          <th>1주차
+                            <th class="p-3 fw-bold bg-success-light text-success">3월 2일</th>
+                            <th class="p-3 fw-bold bg-danger-light text-danger">3월 4일</th>
+                          </th>
+                          </tr>
+                          <tr>
+                          <th>2주차
+                            <th>3월 9일</th>
+                            <th class="p-3 fw-bold bg-warning-light text-warning">3월 11일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>3주차
+                            <th>3월 16일</th>
+                            <th>3월 18일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>4주차
+                            <th>3월 23일</th>
+                            <th>3월 25일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>5주차
+                            <th>3월 30일</th>
+                            <th>4월 1일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>6주차
+                            <th>4월 6일</th>
+                            <th>4월 8일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>7주차
+                            <th>4월 13일</th>
+                            <th>4월 15일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>8주차
+                            <th>4월 20일</th>
+                            <th>4월 22일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>9주차
+                            <th>4월 27일</th>
+                            <th>4월 29일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>10주차
+                            <th>5월 4일</th>
+                            <th>5월 6일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>11주차
+                            <th>5월 11일</th>
+                            <th>5월 13일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>12주차
+                            <th>5월 18일</th>
+                            <th>5월 20일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>13주차
+                            <th>5월 25일</th>
+                            <th>5월 27일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>14주차
+                            <th>6월 1일</th>
+                            <th>6월 3일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>15주차
+                            <th>6월 8일</th>
+                            <th>6월 10일</th>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>16주차
+                            <th>6월 15일</th>
+                            <th>6월 17일</th>
+                          </th>
+                        </tr>
+                    </table>
+                   </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+          <div class="col-xxl-12"></div>
+          <!-- col-12 end -->
+        </div>
+        <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              Hello
+            </div>
+          </div>
+        </div> -->
+        <!-- 모달 리스트 END -->
+      </main>
+
+      <!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+
+    <script src="../assets/js/oneui.app.min.js"></script>
+  </body>
+</html>
