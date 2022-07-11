@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko"
+xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/eclassLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>E-Class 강의 정보 입력</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+    <link rel="stylesheet" href="../assets/js/plugins/simplemde/simplemde.min.css">
+  </head>
+  <body>
+
+    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header">
+        </div>
+        <div class="content-side">
+        </div>
+      </aside>
+
+      <!--
+███████ ██ ██████  ███████     ██████   █████  ██████  
+██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██   ██ █████       ██████  ███████ ██████  
+     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
+      -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header">
+
+        </div>
+        <div class="js-sidebar-scroll">
+        </div>
+      </nav>
+      <!-- SIDE BAR END -->
+      
+      <!--
+██   ██ ███████  █████  ██████  ███████ ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██   ██ █████   ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
+      -->
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+      <!--HEADER END-->
+
+<!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  E-class 홈 화면 입니다.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+
+        <div class="content">
+          <div class="col-xxl-12">
+            <h3 class="h3 fw-bold ms-3">
+              강의 정보 입력
+            </h3>
+            <div class="row">
+              <div class="col-xxl-3">
+                <div class="block block-rounded">
+                  <div class="block-content">
+                    <div>2022년 1학기</div>
+                    <div>(수)</div>
+                    <div>4교시 (14:00)</div>
+                    <div>3시간</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-9">
+                <div class="block block-rounded">
+                  <div class="block-content">
+                    <div class="row">
+                      <p class="col-xxl-2">강의 명</p>
+                      <div class="col fw-bold">참치 민족의 역사와 문화</div>
+                    </div>
+                    <div class="row">
+                      <p class="col-xxl-2">강의 주제 및 방향</p>
+                      <div class="col">
+                        <textarea class="js-maxlength form-control js-maxlength-enabled" id="example-maxlength10" name="example-maxlength10" rows="5" maxlength="100" placeholder="" data-always-show="true"></textarea>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <p class="col-xxl-2">평가기준</p>
+                      <div class="col-xxl-10">
+                        <div class="row">
+                          <label class="col" for="atten">출결</label>
+                          <div class="col-2">
+                            <input class="form-control" name="atten" type="number">
+                          </div>
+                          <label class="col" for="middle">중간</label>
+                          <div class="col-2">
+                            <input class="form-control" name="middle" type="number">
+                          </div>
+                          <label class="col" for="final">기말</label>
+                          <div class="col-2">
+                            <input class="form-control" name="final" type="number">
+                          </div>
+                          <label class="col" for="task">과제</label>
+                          <div class="col-2">
+                            <input class="form-control" name="task" type="number">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> <!-- block END-->
+              </div>
+            </div> <!-- row END-->
+            <div class="row">
+              <div class="col-12">
+                <div class="block block-rounded block-themed">
+                  <div class="block-header bg-primary-darker">
+                    <div class="block-title">
+                      주차별 강의 내용
+                    </div>
+                  </div>
+                  <div class="block-content">
+                    <table class="table table-hover table-vcenter text-center">
+                      <thead class="">
+                        <tr>
+                          <th style="width: 10%;">차시</th>
+                          <th style="width: 15%;">일자</th>
+                          <th>강의주제 및 강의내용</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>2022-07-08</td>
+                          <td>
+                            <input class="form-control" type="text">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td>2022-07-08</td>
+                          <td>
+                            <input class="form-control" type="text">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>3</td>
+                          <td>2022-07-08</td>
+                          <td>
+                            <input class="form-control" type="text">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>4</td>
+                          <td>2022-07-08</td>
+                          <td>
+                            <input class="form-control" type="text">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>5</td>
+                          <td>2022-07-08</td>
+                          <td>
+                            <input class="form-control" type="text">
+                          </td>
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- col-12 end -->
+
+        </div> <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              Hello
+            </div>
+          </div>
+        </div> -->
+        <!-- 모달 리스트 END -->
+        
+      </main>
+
+<!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+    <script src="../assets/js/oneui.app.min.js"></script>
+    <script src="../assets/js/plugins/simplemde/simplemde.min.js"></script>
+    <script>One.helpersOnLoad(['js-simplemde']);</script>
+  </body>
+</html>
