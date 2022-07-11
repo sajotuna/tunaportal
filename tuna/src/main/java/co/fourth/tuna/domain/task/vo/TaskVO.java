@@ -2,11 +2,11 @@ package co.fourth.tuna.domain.task.vo;
 
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class TaskVO {
 	private int no;
 	private String title;

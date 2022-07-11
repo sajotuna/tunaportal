@@ -2,16 +2,16 @@ package co.fourth.tuna.domain.portalNotice.vo;
 
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class PortalNoticeVO {
 	private int no;
 	private String title;
 	private String content;
-	private Date date;
+	private Date enrollDate;
 	private String visible;
 	private int adNo;
 }

@@ -1,10 +1,10 @@
 package co.fourth.tuna.domain.tuition.vo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class TuitionVO {
 	private int no;
 	private String seasonCode;
