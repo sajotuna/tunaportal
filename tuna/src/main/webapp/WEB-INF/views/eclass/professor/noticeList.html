@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko"
+xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/eclassLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>E-Class 전체 공지</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+  </head>
+  <body>
+
+    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header">
+        </div>
+        <div class="content-side">
+        </div>
+      </aside>
+
+      <!--
+███████ ██ ██████  ███████     ██████   █████  ██████  
+██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██   ██ █████       ██████  ███████ ██████  
+     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
+      -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header">
+
+        </div>
+        <div class="js-sidebar-scroll">
+        </div>
+      </nav>
+      <!-- SIDE BAR END -->
+      
+      <!--
+██   ██ ███████  █████  ██████  ███████ ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██   ██ █████   ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
+      -->
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+      <!--HEADER END-->
+
+<!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  제목
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+
+        <div class="content">
+
+          
+
+          <div class="col-xxl-12">
+            <div class="block block-rounded">
+              <div class="block-header block-header-default">
+                <h3 class="block-title">전체 공지</h3>
+              </div>
+              <div class="block-content">
+
+                <table class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
+                  <tbody>
+                    <!-- <tr>
+                      <th style="width: 100px">번호</th>
+                      <th>제목</th>
+                      <th style="width: 15%">작성</th>
+                      <th style="width: 15%">등록일시</th>
+                    </tr> -->
+                    <tr class="fw-bold">
+                      <td style="width: 100px">1</td>
+                      <td class="text-start">내용</td>
+                      <td style="width: 15%">교육지원팀</td>
+                      <td style="width: 15%">2022-07-03</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td class="text-start">내용</td>
+                      <td>교육지원팀</td>
+                      <td>2022-07-03</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td class="text-start">내용</td>
+                      <td>교육지원팀</td>
+                      <td>2022-07-03</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td class="text-start">내용</td>
+                      <td>교육지원팀</td>
+                      <td>2022-07-03</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td class="text-start">내용</td>
+                      <td>교육지원팀</td>
+                      <td>2022-07-03</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <nav aria-label="Page navigation">
+                  <ul class="pagination pagination-sm justify-content-center">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="javascript:void(0)" aria-label="Previous">
+                        <span aria-hidden="true">
+                          <i class="fa fa-angle-left"></i>
+                        </span>
+                        <span class="visually-hidden">Previous</span>
+                      </a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="javascript:void(0)">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="javascript:void(0)">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="javascript:void(0)">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="javascript:void(0)" aria-label="Next">
+                        <span aria-hidden="true">
+                          <i class="fa fa-angle-right"></i>
+                        </span>
+                        <span class="visually-hidden">Next</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+
+            </div> <!-- block end-->
+
+          </div> <!-- col-12 end -->
+
+        </div> <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              Hello
+            </div>
+          </div>
+        </div> -->
+        <!-- 모달 리스트 END -->
+        
+      </main>
+
+<!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+    
+    <script src="../assets/js/oneui.app.min.js"></script>
+  </body>
+</html>

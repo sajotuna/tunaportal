@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko"
+xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/eclassLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>E-Class 공지 상세</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+  </head>
+  <body>
+
+    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header">
+        </div>
+        <div class="content-side">
+        </div>
+      </aside>
+
+      <!--
+███████ ██ ██████  ███████     ██████   █████  ██████  
+██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██   ██ █████       ██████  ███████ ██████  
+     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
+      -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header">
+
+        </div>
+        <div class="js-sidebar-scroll">
+        </div>
+      </nav>
+      <!-- SIDE BAR END -->
+      
+      <!--
+██   ██ ███████  █████  ██████  ███████ ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██   ██ █████   ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
+      -->
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+      <!--HEADER END-->
+
+<!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  E-class 홈 화면 입니다.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+
+        <div class="content">
+          <h2 class="h3 fw-bold">공지 사항</h2>
+          <div class="col-xxl-12">
+            <div class="block block-rounded">
+              <div class="block-content">
+                <!-- <table class="table table-vcenter">
+                </table> -->
+                <div class="row mt-2">
+                  <div class="col-1 d-none d-xl-block">
+                    <p>제목</p>
+                  </div>
+                  <div class="h4 col-11 mb-1">
+                    <p>2022년도 문화재위원회(건축사적분과 제3회)개최결과</p>
+                  </div>
+                </div>
+                <div class="d-none d-lg-block">
+                  <div class="row">
+                    <div class="col-6 d-flex">
+                      <div class="text-start" style="width: 80px">작성자 :</div>
+                      <div class="wrap fw-bold me-5">교육지원</div>
+                    </div>
+                    <div class="col-6 d-flex">
+                      <div class="wrap text-start" style="width: 80px">작성일 :</div>
+                      <div class="wrap fw-bold">2022-07-05</div>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <p class="col-12 px-5">
+                    내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
+                  </p>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-2 text-start">
+                    <p>첨부파일</p>
+                  </div>
+                  <div class="col-10">
+                    파일 파일 파일
+                  </div>
+                  <div>
+                    <button class="btn btn-primary">삭제</button>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- block end-->
+            
+          </div> <!-- col-12 end -->
+
+        </div> <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              Hello
+            </div>
+          </div>
+        </div> -->
+        <!-- 모달 리스트 END -->
+        
+      </main>
+
+<!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+    
+    <script src="../assets/js/oneui.app.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ko"
+xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/eclassLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--
+████████ ██ ████████ ██      ███████ 
+   ██    ██    ██    ██      ██      
+   ██    ██    ██    ██      █████   
+   ██    ██    ██    ██      ██      
+   ██    ██    ██    ███████ ███████ 
+-->
+    <title>E-class 강의 상세</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+  </head>
+  <body>
+
+    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header">
+        </div>
+        <div class="content-side">
+        </div>
+      </aside>
+
+      <!--
+███████ ██ ██████  ███████     ██████   █████  ██████  
+██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██   ██ █████       ██████  ███████ ██████  
+     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
+      -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header">
+
+        </div>
+        <div class="js-sidebar-scroll">
+        </div>
+      </nav>
+      <!-- SIDE BAR END -->
+      
+      <!--
+██   ██ ███████  █████  ██████  ███████ ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██   ██ █████   ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
+      -->
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+      <!--HEADER END-->
+
+<!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  E-class 홈 화면 입니다.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+
+        <div class="content">
+
+          <div class="row">
+            <div class="col-xxl-7">
+              <h2 class="h3 fw-bold ms-3">강의 상세 내용</h2>
+              <div class="block block-rounded">
+                <div class="block-content">
+                  <h5 class="h5">일이삼사오륙칠팔구십일이삼사오륙<small class="text-muted"> [2022년1학기]</small></h5>
+                  <p>
+                    <div>수강생  : <strong>30명</strong></div>
+                    <div>학점 : <strong>3</strong></div>
+                    <div>주차 : <strong>13 / 16</strong></div>
+                    <div>기간 : <strong>2022-03-02 ~ 2022-08-31</strong></div>
+                    <div>문의 : <strong class="text-danger">3</strong></div>
+                    <div>평가 항목 : <strong>중간고사(30), 기말고사(30), 출석(10), 과제(30)</strong></div>
+                    <div class="pt-3 row">
+                      <div class="col-10 offset-1 pb-2 col-xxl-3 offset-xxl-6 pb-xxl-0">
+                        <button class="col-12 btn btn-dark">
+                          상세보기
+                        </button>
+                      </div>
+                      <div class="col-10 offset-1 col-xxl-3 offset-xxl-0">
+                        <button class="col-12 btn btn-primary">
+                          수정 
+                        </button>
+                      </div>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xxl-5">
+              <h2 class="h3 fw-bold ms-3">강의 자료</h2>
+              <div class="block block-rounded">
+                <div class="block-content p-1">
+                  <div class="" id="subject_files" style="height: 222px; overflow-y: scroll;">
+                    <ul class="nav-items push">
+                      <li><a class="d-flex fs-sm text-primary-dark" href="javascript:void(0)">
+                        <div class=" flex-grow-1 p-2 m-0 row">
+                          <div class="col-xxl">1주차 강의 자료</div>
+                          <div class="col-xxl-2"><i class="far fa- fa-file"></i> (2)</div>
+                          <div class="col-xxl-auto">2022-07-06</div>
+                        </div>
+                      </a></li>
+                      
+                    </ul>
+                  </div>
+                  <div class="col-10 offset-1 col-xxl-4 offset-xxl-8 px-3 pb-3">
+                    <button class="col-12 btn btn-primary">
+                      업로드
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- row end-->
+
+          <div class="row">
+            <div class="col-12">
+              <div class="block block-rounded">
+                <ul class="nav nav-tabs nav-tabs-block" role="tablistr">
+                  <li class="nav-item">
+                    <button class="nav-link" id="btabs-static-progress-tab" data-bs-toggle="tab" 
+                    data-bs-target="#btabs-static-progress">강의 진도</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link active" id="btabs-static-student-tab" data-bs-toggle="tab" data-bs-target="#btabs-static-student">수강생/출결</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link" id="btabs-static-task-tab" data-bs-toggle="tab"
+                    data-bs-target="#btabs-static-task">과제</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link" id="btabs-static-qna-tab" 
+                    data-bs-toggle="tab"
+                    data-bs-target="#btabs-static-qna">문의</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link" id="btabs-static-notice-tab" 
+                    data-bs-toggle="tab"
+                    data-bs-target="#btabs-static-notice">공지사항</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link" id="btabs-static-objection-tab" 
+                    data-bs-toggle="tab"
+                    data-bs-target="#btabs-static-objection">이의신청</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link" id="btabs-static-grade-tab" 
+                    data-bs-toggle="tab"
+                    data-bs-target="#btabs-static-grade">성적등록</button>
+                  </li>
+                </ul>
+<!--
+      ██████  ██████   ██████   ██████  ██████  ███████ ███████ ███████ 
+▄ ██ ▄██   ██ ██   ██ ██    ██ ██       ██   ██ ██      ██      ██      
+ ████ ██████  ██████  ██    ██ ██   ███ ██████  █████   ███████ ███████ 
+▀ ██ ▀██      ██   ██ ██    ██ ██    ██ ██   ██ ██           ██      ██ 
+      ██      ██   ██  ██████   ██████  ██   ██ ███████ ███████ ███████ 
+-->
+                <div class="block-content tab-content">
+                  <div class="tab-pane" id="btabs-static-progress" role="tabpanel" aria-labelledby="btabs-static-progress-tab">
+                    <div class="row">
+                      <div class="col-xxl-7">
+                        <div class="block block-rounded block-themed block-bordered">
+                          <div class="block-header bg-primary-darker">
+                            <h3 class="block-title">강의정보</h3>
+                          </div>
+                          <div class="block-content">
+                            <div>13주차 <span class="text-muted">[2022-06-17]</span><h5> 참치 민족의 부흥</h5></div>
+                            <p>
+                              <div>학습목표: 참치 문명의 발생과 생활 양식을 알 수 있다.</div>
+                              <div>과제: <span>멸치민족 조사하기</span></div>
+                              <div>2022-06-23 까지</div>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xxl-5">
+                        <div class="block block-rounded block-themed block-bordered">
+                          <div class="block-header bg-primary-darker">
+                            <h3 class="block-title">강의 진도</h3>
+                          </div>
+                          <div class="block-content p-0" id="subject-progress" style="height: 300px; overflow-y: scroll;">
+                            <ul class="nav-items push">
+                              <li>
+                                <a class="d-flex text-gray" id="progress-week1" href="javascript:void(0)">
+                                  <div class="d-flex py-3 bg-gray" style="width: 15px;"></div>
+                                  <div class="d-flex p-3 align-items-center">1 주차
+                                  </div>
+                                  <div class="py-1 fs-sm">
+                                    <div>참치 민족의 부흥</div>
+                                    <div>2022-06-17</div>
+                                    <div>참치역사관 402호</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li>
+                                <a class="d-flex text-primary-dark fw-semibold" id = "progress-week2"href="javascript:void(0)">
+                                  <div class="d-flex py-3 bg-default" style="width: 15px;"></div>
+                                  <div class="d-flex p-3 align-items-center">2 주차
+                                  </div>
+                                  <div class="py-1 small">
+                                    <div>참치 민족의 부흥</div>
+                                    <div>2022-06-17</div>
+                                    <div>참치역사관 402호</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li>
+                                <a class="d-flex text-primary-dark" href="javascript:void(0)">
+                                  <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
+                                  <div class="d-flex p-3 align-items-center">3 주차
+                                  </div>
+                                  <div class="py-1 small">
+                                    <div>참치 민족의 부흥</div>
+                                    <div>2022-06-17</div>
+                                    <div>참치역사관 402호</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li>
+                                <a class="d-flex text-primary-dark" href="javascript:void(0)">
+                                  <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
+                                  <div class="d-flex p-3 align-items-center">4 주차
+                                  </div>
+                                  <div class="py-1 small">
+                                    <div>참치 민족의 부흥</div>
+                                    <div>2022-06-17</div>
+                                    <div>참치역사관 402호</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li>
+                                <a class="d-flex text-primary-dark" href="javascript:void(0)">
+                                  <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
+                                  <div class="d-flex p-3 align-items-center">5 주차
+                                  </div>
+                                  <div class="py-1 small">
+                                    <div>참치 민족의 부흥</div>
+                                    <div>2022-06-17</div>
+                                    <div>참치역사관 402호</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li>
+                                <a class="d-flex text-primary-dark" href="javascript:void(0)">
+                                  <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
+                                  <div class="d-flex p-3 align-items-center">5 주차
+                                  </div>
+                                  <div class="py-1 small">
+                                    <div>참치 민족의 부흥</div>
+                                    <div>2022-06-17</div>
+                                    <div>참치역사관 402호</div>
+                                  </div>
+                                </a>
+                              </li>
+                            </ul>
+                            <!-- 강의 진도 list NED-->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> <!-- progress TAB END-->
+<!--
+      ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ 
+▄ ██ ▄██         ██    ██    ██ ██   ██ ██      ████   ██    ██    
+ ████ ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    
+▀ ██ ▀     ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██    
+      ███████    ██     ██████  ██████  ███████ ██   ████    ██  
+-->
+                  <div class="tab-pane active pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
+                    <div style="overflow-y:scroll; height: 310px;">
+                      <table class="table table-hover table-vcenter">
+                        <tbody>
+                          <tr class="m-0">
+                            <td class="table-cell" style="width: 54px;">
+                              <i class="fa fa-2x fa-circle-user"></i>
+                            </td>
+                            <td class="table-cell">
+                              <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);">김철수</a>
+                            </td>
+                            <td class="table-cell">
+                                참치공학
+                            </td>
+                            <td class="table-cell">
+                              1053099
+                            </td>
+                            <td class="table-cell">
+                              <div class="space-x-4">
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" id="example-radios-inline1" name="example-radios-inline" value="1">
+                                  <label class="form-check-label" for="example-radios-inline1">출석</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" id="example-radios-inline2" name="example-radios-inline" value="2">
+                                  <label class="form-check-label" for="example-radios-inline2">결석</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" id="example-radios-inline3" name="example-radios-inline" value="3">
+                                  <label class="form-check-label" for="example-radios-inline3">지각</label>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="pt-2 row">
+                      <div class="col-xl-2">
+                        <button class="col-12 btn btn-dark">상세보기</button>
+                      </div>
+                      <div class="offset-xxl-6 col-xl-2">
+                        <button class="col-12 btn btn-dark">전체 출석</button>
+                      </div>
+                      <div class="col-xl-2">
+                        <button class="col-12 btn btn-primary">적용</button>
+                      </div>
+                    </div>
+                    
+                  </div> <!-- student TAB CONTENT END -->
+
+<!--
+      ████████  █████  ███████ ██   ██ 
+▄ ██ ▄   ██    ██   ██ ██      ██  ██  
+ ████    ██    ███████ ███████ █████   
+▀ ██ ▀   ██    ██   ██      ██ ██  ██  
+         ██    ██   ██ ███████ ██   ██ 
+-->
+                  <div class="tab-pane pb-3" id="btabs-static-task" role="tabpanel" aria-labelledby="btabs-static-task-tab">
+                    <div style="overflow-y:scroll; height: 310px;">
+                      <table class="table table-hover table-vcenter ">
+                        <tbody>
+                          <tr class="m-0">
+                            
+                            <td class="table-cell">
+                              <a class="" href="javascript:void(0);">김철수</a>
+                            </td>
+                            <td class="table-cell">
+                                참치공학
+                            </td>
+                            <td class="table-cell">
+                              1053099
+                            </td>
+                            <td class="table-cell">
+                              <i class="fa fa-2x fa-file-arrow-down"></i>
+                            </td>
+                            <td class="text-primary">
+                              <a href="javascript:void(0);">김철수_멸치족의 역사.zip (925 kb)</a>
+                            </td>
+                            <td class="">
+                              2022-07-06 16:14
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="pt-2 row">
+                      <div class="col-4">
+                        <select class="form-select" id="example-select" name="example-select">
+                          <option value="1">과제 #1</option>
+                          <option value="2">과제 #2</option>
+                          <option value="3">과제 #3</option>
+                        </select>
+                      </div>
+                      <div class="offset-xl-6 col-xl-2">
+                        <button class="col-12 btn btn-dark">전체 다운로드</button>
+                      </div>
+                    </div>
+                  </div> <!-- task TAB END -->
+<!--
+       ██████  ███    ██  █████  
+▄ ██ ▄██    ██ ████   ██ ██   ██ 
+ ████ ██    ██ ██ ██  ██ ███████ 
+▀ ██ ▀██ ▄▄ ██ ██  ██ ██ ██   ██ 
+       ██████  ██   ████ ██   ██ 
+          ▀▀                    
+-->
+                  <div class="tab-pane pb-3" id="btabs-static-qna" role="tabpanel" aria-labelledby="btabs-static-qna-tab">
+                    <div class="" style="height: 310px; overflow-y: scroll;">
+                      <ul class="nav-items push">
+                        <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                          <div class="col-1 d-none d-lg-block text-center text-danger">대기</div>
+                          <div class="col-1 d-none d-lg-block text-center text-gray">비공개</div>
+                          <div class="col-6">안녕하세요 교수님? 궁금한게 있는데요</div>
+                          <div class="col-2 fw-bold text-end">김철수</div>
+                          <div class="col text-center">07-06</div>
+                        </a></li>
+                        <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                          <div class="col-1 d-none d-lg-block text-center text-success">완료</div>
+                          <div class="col-1 d-none d-lg-block text-center text-gray">비공개</div>
+                          <div class="col-6">안녕하세요 교수님? 궁금한게 있는데요</div>
+                          <div class="col-2 fw-bold text-end">김철수</div>
+                          <div class="col text-center">07-06</div>
+                        </a></li>
+                        <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                          <div class="col-1 d-none d-lg-block text-center text-danger">대기</div>
+                          <div class="col-1 d-none d-lg-block text-center">공개</div>
+                          <div class="col-6">안녕하세요 교수님? 궁금한게 있는데요</div>
+                          <div class="col-2 fw-bold text-end">김철수</div>
+                          <div class="col text-center">07-06</div>
+                        </a></li>
+                      </ul>
+                    </div>
+                    <div class="pt-2 row">
+                      <div class="col-xl-2">
+                        <button class="col-12 btn btn-dark">전체보기</button>
+                      </div>
+                    </div>
+                  </div> <!-- qna TAB END -->
+<!--
+      ███    ██  ██████  ████████ ██  ██████ ███████ 
+▄ ██ ▄████   ██ ██    ██    ██    ██ ██      ██      
+ ████ ██ ██  ██ ██    ██    ██    ██ ██      █████   
+▀ ██ ▀██  ██ ██ ██    ██    ██    ██ ██      ██      
+      ██   ████  ██████     ██    ██  ██████ ███████
+-->
+                  <div class="tab-pane" id="btabs-static-notice" role="tabpanel" aria-labelledby="btabs-static-notice-tab">
+                    <table class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
+                      <tbody>
+                        <!-- <tr>
+                          <th style="width: 100px">번호</th>
+                          <th>제목</th>
+                          <th style="width: 15%">작성</th>
+                          <th style="width: 15%">등록일시</th>
+                        </tr> -->
+                        <tr class="fw-bold">
+                          <td style="width: 100px">1</td>
+                          <td class="text-start">내용</td>
+                          <td style="width: 15%">참치분해1</td>
+                          <td style="width: 15%">2022-07-03</td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td class="text-start">내용</td>
+                          <td>참치분해2</td>
+                          <td>2022-07-03</td>
+                        </tr>
+                        <tr>
+                          <td>3</td>
+                          <td class="text-start">내용</td>
+                          <td>참치분해3</td>
+                          <td>2022-07-03</td>
+                        </tr>
+                        <tr>
+                          <td>4</td>
+                          <td class="text-start">내용</td>
+                          <td>참치분해4</td>
+                          <td>2022-07-03</td>
+                        </tr>
+                        <tr>
+                          <td>5</td>
+                          <td class="text-start">내용</td>
+                          <td>참치분해5</td>
+                          <td>2022-07-03</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="col-xl-2">
+                      <button class="col-12 btn btn-dark"> 공지 작성 </button>
+                    </div>
+                    <p></p>
+                  </div> <!-- notice TAB END -->
+<!--
+       ██████  ██████       ██ ███████  ██████ ████████ ██  ██████  ███    ██ 
+▄ ██ ▄██    ██ ██   ██      ██ ██      ██         ██    ██ ██    ██ ████   ██ 
+ ████ ██    ██ ██████       ██ █████   ██         ██    ██ ██    ██ ██ ██  ██ 
+▀ ██ ▀██    ██ ██   ██ ██   ██ ██      ██         ██    ██ ██    ██ ██  ██ ██ 
+       ██████  ██████   █████  ███████  ██████    ██    ██  ██████  ██   ████
+-->
+                  <div class="tab-pane" id="btabs-static-objection" role="tabpanel" aria-labelledby="btabs-static-objection-tab">
+                    이의신청 내용
+                  </div>  <!-- objection TAB END -->
+<!-- *GRADE
+       ██████  ██████   █████  ██████  ███████ 
+▄ ██ ▄██       ██   ██ ██   ██ ██   ██ ██      
+ ████ ██   ███ ██████  ███████ ██   ██ █████   
+▀ ██ ▀██    ██ ██   ██ ██   ██ ██   ██ ██      
+       ██████  ██   ██ ██   ██ ██████  ███████
+-->
+                  <div class="tab-pane" id="btabs-static-grade" role="tabpanel" aria-labelledby="btabs-static-grade-tab">
+                    <div style="overflow-y:scroll; height: 310px;">
+                      <table class="table table-hover table-vcenter text-center">
+                        <thead>
+                          <tr>
+                            <th style="width:10%">이름</th>
+                            <th style="width:10%">전공</th>
+                            <th style="width:10%">학번</th>
+                            <th style="width:10%">출결</th>
+                            <th style="width:10%">중간고사</th>
+                            <th style="width:10%">기말고사</th>
+                            <th style="width:10%">과제평균</th>
+                            <th style="width:10%">총점</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="m-0">
+                            
+                            <td class="table-cell">
+                              김철수
+                            </td>
+                            <td class="table-cell">
+                                참치공학
+                            </td>
+                            <td class="table-cell">
+                              1053099
+                            </td>
+                            <td><input type="number" class="form-control" placeholder="10" disabled></td>
+                            <td><input type="number" class="form-control" placeholder=""></td>
+                            <td><input type="number" class="form-control" placeholder=""></td>
+                            <td><input type="number" class="form-control" placeholder="100" disabled></td>
+                            <td><input type="number" class="form-control" placeholder="100" disabled></td>
+                          </tr>
+                          <tr class="m-0">
+                            
+                            <td class="table-cell">
+                              김철수
+                            </td>
+                            <td class="table-cell">
+                                참치공학
+                            </td>
+                            <td class="table-cell">
+                              1053099
+                            </td>
+                            <td><input type="number" class="form-control" placeholder="10" disabled></td>
+                            <td><input type="number" class="form-control" placeholder=""></td>
+                            <td><input type="number" class="form-control" placeholder=""></td>
+                            <td><input type="number" class="form-control" placeholder="100" disabled></td>
+                            <td><input type="number" class="form-control" placeholder="100" disabled></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="pt-2 row">
+                      <div class="offset-xl-10 col-xl-2">
+                        <button class="col-12 btn btn-dark">저장</button>
+                      </div>
+                    </div>
+                    <p></p>
+                  </div><!-- grade TAB END-->
+                </div> <!-- tab content END-->
+
+              </div>
+            </div>
+          </div>
+        </div> <!-- content END -->
+<!--
+███    ███  ██████  ██████   █████  ██      
+████  ████ ██    ██ ██   ██ ██   ██ ██      
+██ ████ ██ ██    ██ ██   ██ ███████ ██      
+██  ██  ██ ██    ██ ██   ██ ██   ██ ██      
+██      ██  ██████  ██████  ██   ██ ███████
+-->
+        <!-- 모달 리스트 -->
+        <div class="modal" id="modal-block-tabs" tabindex="-1" role="dialog" aria-labelledby="modal-block-tabs" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="block block-rounded block-transparent mb-0">
+                <ul class="nav nav-tabs nav-tabs-block" role="tablist">
+                  <li class="nav-item">
+                    <button type="button" class="nav-link active" id="btabs-info-tab" data-bs-toggle="tab" data-bs-target="#btabs-info" role="tab" aria-controls="btabs-info" aria-selected="true">학생정보</button>
+                  </li>
+                  <li class="nav-item">
+                    <button type="button" class="nav-link" id="btabs-attendance-tab" data-bs-toggle="tab" data-bs-target="#btabs-attendance" role="tab" aria-controls="btabs-attendance" aria-selected="false">출결관리</button>
+                  </li>
+                  <li class="nav-item">
+                    <button type="button" class="nav-link" id="btabs-grade-tab" data-bs-toggle="tab" data-bs-target="#btabs-grade" role="tab" aria-controls="btabs-grade" aria-selected="false">성적관리</button>
+                  </li>
+                </ul>
+<!--
+███    ███        ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+████  ████       ██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██ ████ ██ █████ ██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██  ██  ██       ██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+██      ██        ██████  ██████  ██   ████    ██    ███████ ██   ████    ██
+-->
+                <div class="block-content tab-content">
+                  <div class="tab-pane active" id="btabs-info" role="tabpanel" aria-labelledby="btabs-info-tab">
+                    <div class="row row-cols-auto">
+                      <div class="col">
+                        <img class="img-avatar64" src="../assets/media/avatars/avatar1.jpg">
+                      </div>
+                      <div class="col-1 d-none d-lg-block text-end">
+                        <div>이름</div>
+                        <div>학번</div>
+                        <div>연락처</div>
+                      </div>
+                      <div class="col-3 fw-bold">
+                        <div class="align-items-center">
+                          <div>김철수</div>
+                          <div>10530999</div>
+                          <div>010-3333-4444</div>
+                        </div>
+                      </div>
+                      <div class="col-1 d-none d-lg-block text-end">
+                        <div>email</div>
+                        <div>생년월일</div>
+                        <div>주소</div>
+                      </div>
+                      <div class="col fw-bold">
+                        <div>abc@gmail.com</div>
+                        <div>990505</div>
+                        <div>대구광역시 중구 남일동 중앙대로 403</div>
+                      </div>
+                    </div>
+                    <p></p>
+                    <!-- 학생 정보 TOP  END-->
+
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="block block-rounded block-themed block-bordered bg-black-5">
+                          <div class="block-header bg-primary-darker">
+                            <div class="block-title">과제제출</div>
+                          </div>
+                          <div class="block-content py-0" style="overflow-y:scroll; height: 200px;">
+                            <table class="table table-hover table-vcenter fs-sm">
+                              <tbody>
+                                <tr>
+                                  <td>참치공학</td>
+                                  <td>과제#1</td>
+                                  <td class="table-cell">
+                                    <i class="fa fa-file-arrow-down"></i>
+                                  </td>
+                                  <td class="text-primary">
+                                    <a href="javascript:void(0);">김철수_멸치족의 역사.zip (925 kb)</a>
+                                  </td>
+                                  <td>22-07-06 16:14</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="block block-rounded block-themed block-bordered bg-black-5">
+                          <div class="block-header bg-primary-darker">
+                            <div class="block-title">문의내역</div>
+                          </div>
+                          <div class="block-content py-0" style="overflow-y:scroll; height: 200px;">
+                            <ul class="nav-items push fs-sm">
+                              <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                                <div class="col-2 text-center">참치공학</div>
+                                <div class="col-1 d-none d-lg-block text-center text-danger">대기</div>
+                                <div class="col-1 d-none d-lg-block text-center text-gray">비공개</div>
+                                <div class="col-7">안녕하세요 교수님? 궁금한게 있는데요</div>
+                                <div class="col-1 d-none d-lg-block text-center">07-06</div>
+                              </a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div> <!-- 학생정보 BOT END-->
+                  </div> <!-- 학생정보 탭 END -->
+
+                  <div class="tab-pane" id="btabs-attendance" role="tabpanel" aria-labelledby="btabs-attendance-tab">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="block block-rounded block-themed block-bordered border-1">
+                          <div class="block-header bg-primary-darker">
+                            <div class="block-title">참치 분해학</div>
+                          </div>
+                          <div class="block-content p-0" style="overflow-x: scroll;">
+                            <table class="table table-vcenter table-bordered text-center mb-0 table-bordered border-dark border-2">
+                              <thead>
+                                <tr>
+                                  <th class="p-1" style="min-width: 50px;">종합</th>
+                                  <th class="p-0">03/01</th>
+                                  <th class="p-0">03/08</th>
+                                  <th class="p-0">03/15</th>
+                                  <th class="p-0">03/22</th>
+                                  <th class="p-0">03/29</th>
+                                  <th class="p-0">04/05</th>
+                                  <th class="p-0">04/12</th>
+                                  <th class="p-0">04/19</th>
+                                  <th class="p-0">04/26</th>
+                                  <th class="p-0">03/01</th>
+                                  <th class="p-0">03/08</th>
+                                  <th class="p-0">03/15</th>
+                                  <th class="p-0">03/22</th>
+                                  <th class="p-0">03/29</th>
+                                  <th class="p-0">04/05</th>
+                                  <th class="p-0">04/12</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="m-0">
+                                  <td class="p-0">
+                                    <div class="p-1">35</div>
+                                    <div class="p-1">2</div>
+                                    <div class="p-1">0</div>
+                                  </td>
+                                  <td class="p-0">
+                                    <div>
+                                      <input type="radio" class="btn-check" name="atten0301" id="atten0301-1" autocomplete="off" checked />
+                                      <label class="btn btn-outline-success p-1" for="atten0301-1">출석</label>
+                                    </div>
+                                    <div>
+                                      <input type="radio" class="btn-check" name="atten0301" id="atten0301-2" autocomplete="off" />
+                                      <label class="btn btn-outline-warning p-1" for="atten0301-2">지각</label>
+                                    </div>
+                                    <div>
+                                      <input type="radio" class="btn-check" name="atten0301" id="atten0301-3" autocomplete="off" />
+                                      <label class="btn btn-outline-danger p-1" for="atten0301-3">결석</label> 
+                                    </div>
+                                  </td>
+                                  <td class="p-0">
+                                    <div>
+                                      <input type="radio" class="btn-check" name="atten0308" id="atten0308-1" autocomplete="off" checked />
+                                      <label class="btn btn-outline-success p-1" for="atten0308-1">출석</label>
+                                    </div>
+                                    <div>
+                                      <input type="radio" class="btn-check" name="atten0308" id="atten0308-2" autocomplete="off" />
+                                      <label class="btn btn-outline-warning p-1" for="atten0308-2">지각</label>
+                                    </div>
+                                    <div>
+                                      <input type="radio" class="btn-check" name="atten0308" id="atten0308-3" autocomplete="off" />
+                                      <label class="btn btn-outline-danger p-1" for="atten0308-3">결석</label> 
+                                    </div>
+                                  </td>
+                                  <td class="p-0">
+                                    <div>
+                                      <input type="radio" class="btn-check" name="atten0315" id="atten0315-1" autocomplete="off" checked />
+                                      <label class="btn btn-outline-success p-1" for="atten0315-1">출석</label>
+                                    </div>
+                                    <div>
+                                      <input type="radio" class="btn-check" name="atten0315" id="atten0315-2" autocomplete="off" />
+                                      <label class="btn btn-outline-warning p-1" for="atten0315-2">지각</label>
+                                    </div>
+                                    <div>
+                                      <input type="radio" class="btn-check" name="atten0315" id="atten0315-3" autocomplete="off" />
+                                      <label class="btn btn-outline-danger p-1" for="atten0315-3">결석</label> 
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        
+                      </div>
+                    </div> 
+                    
+                  </div> <!-- 출결관리 탭 END -->
+
+                  <div class="tab-pane" id="btabs-grade" role="tabpanel" aria-labelledby="btabs-grade-tab">
+                    <div class="col-12">
+
+                      <div class="block block-rounded block-themed block-bordered border-1">
+                        <div class="block-header bg-primary-darker">
+                          <div class="block-title">
+                            참치 분해학
+                          </div>
+                        </div>
+                        <div class="block-content p-0" style="overflow-x: scroll;">
+                          <table class="table table-hover table-vcenter text-center m-0">
+                            <thead>
+                              <tr>
+                                <th style="min-width: 90px;">출결</th>
+                                <th style="min-width: 110px;">중간고사</th>
+                                <th style="min-width: 110px;">기말고사</th>
+                                <th style="min-width: 160px;">과제과제과제과#1</th>
+                                <th style="min-width: 160px;">과제 #2</th>
+                                <th style="min-width: 160px;">과제 #3</th>
+                                <th style="min-width: 110px;">과제평균</th>
+                                <th style="min-width: 110px;">총점</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="m-0">
+                                <td><input type="number" class="form-control" placeholder="10" disabled></td>
+                                <td><input type="number" class="form-control" placeholder=""></td>
+                                <td><input type="number" class="form-control" placeholder=""></td>
+                                <td><input type="number" class="form-control" placeholder=""></td>
+                                <td><input type="number" class="form-control" placeholder=""></td>
+                                <td><input type="number" class="form-control" placeholder=""></td>
+                                <td><input type="number" class="form-control" placeholder="100" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="100" disabled></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div> <!-- block END-->
+                    </div>
+
+                  </div> <!-- 성적관리 탭 END-->
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- 모달 리스트 END -->
+        <!-- 
+          <div class="col px-0 mx-0">
+            <div class="item item-circle bg-success py-1 my-1 mx-auto px-0">
+              <span class="fs-lg fw-bold text-white-75">35</span>
+            </div>
+            <div>출석</div>
+          </div>
+          <div class="col px-0 mx-0">
+            <div class="item item-circle bg-warning py-1 my-1 mx-auto px-0">
+              <span class="fs-lg fw-bold text-white-75">2</span>
+            </div>
+            <div>지각</div>
+          </div>
+          <div class="col px-0 mx-0">
+            <div class="item item-circle bg-danger py-1 my-1 mx-auto px-0">
+              <span class="fs-lg fw-bold text-white-75">0</span>
+            </div>
+            <div>결석</div>
+          </div>
+         -->
+      </main>
+
+<!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+    <script src="../assets/js/lib/jquery.min.js"></script>
+
+    <script src="../assets/js/oneui.app.min.js"></script>
+    <script src="../assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="../assets/js/pages/be_forms_validation.min.js"></script>
+    <script>
+      let objDiv = document.getElementById("subject-progress");
+      objDiv.scrollTop = 72; // 스크롤 이동
+    </script>
+  </body>
+</html>
