@@ -12,6 +12,11 @@ WHERE
 <if test="state==3">content like '%'|| #{key} ||'%'</if>
 </select>
 
+<select id="noticeSelect" resultMap="portalNotice">
+SELECT * FROM PORTALNOTICE
+WHERE ID = #{id}
+</select>
+
 <insert id="noticeInsert">
 <selectKey resultType="int" keyProperty="id" order="BEFORE">
 			SELECT CASE WHEN MAX(NO)!= 0 THEN MAX(NO) + 1 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    data-layout-decorate="~{layouts/asideLayout}">
+    data-layout-decorate="~{layouts/adminLayout}">
 <head>
 <meta charset="UTF-8">
   <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
@@ -42,12 +42,13 @@
                     </div>
 
             </div>
-    </main>
-    <script th:src="@{resources/assets/js/oneui.app.min.js}"></script>
+   
+ 
     <script th:src="@{resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
     
     <script>
         One.helpersOnLoad(['js-simplemde']);
     </script>
+     </main>
 </body>
 </html>

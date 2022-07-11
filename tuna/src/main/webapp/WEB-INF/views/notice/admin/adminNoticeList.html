@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    data-layout-decorate="~{layouts/asideLayout}">
+    data-layout-decorate="~{layouts/adminLayout}">
 <head>
 <meta charset="UTF-8">
 <title>adminNoticeList</title>
@@ -19,8 +19,9 @@
                                 <form class="row d-flex justify-content-end" action="" method="POST">
                                     <div class="col-2">
                                         <select class="form-select">
-                                            <option value="1">제목</option>
-                                            <option value="2">내용</option>
+                                            <option value="1">전체</option>
+                                            <option value="2">제목</option>
+                                            <option value="3">내용</option>
                                         </select>
                                     </div>
                                     <div class="col-3 p-0">
@@ -54,213 +55,30 @@
                                         <th class="d-none d-sm-table-cell" style="text-align: center; width: 20%;">Date
                                         </th>
                                     </tr>
+                                    
                                 </thead>
                                 <!--tbody 표 내용-->
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value="" id="row_1"
-                                                    name="row_1">
-                                                <label class="form-check-label" for="row_1"></label>
-                                            </div>
-                                        </td>
-                                        <th class="text-center" scope="row">1</th>
-                                        <td class="fs-sm">
-                                            <p class="fw-semibold mb-1">
-                                                <a href="be_pages_generic_profile.html"> 2022-2 생활관 2차 입사 신청 안내</a>
-                                            </p>
-
-                                        </td>
-                                        <td> </td>
-                                        <td class="d-none d-sm-table-cell" style="text-align:center;">
-                                            <em class="fs-sm text-muted">November 16, 2018</em>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value="" id="row_2"
-                                                    name="row_2">
-                                                <label class="form-check-label" for="row_2"></label>
-                                            </div>
-                                        </td>
-                                        <th class="text-center" scope="row">2</th>
-                                        <td class="fs-sm">
-                                            <p class="fw-semibold mb-1">
-                                                <a href="be_pages_generic_profile.html">학사 공지</a>
-                                            </p>
-
-                                        </td>
-                                        <td> </td>
-                                        <td class="d-none d-sm-table-cell" style="text-align: center;">
-                                            <em class="fs-sm text-muted">November 19, 2018</em>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value="" id="row_3"
-                                                    name="row_3">
-                                                <label class="form-check-label" for="row_3"></label>
-                                            </div>
-                                        </td>
-                                        <th class="text-center" scope="row">3</th>
-                                        <td class="fs-sm">
-                                            <p class="fw-semibold mb-1">
-                                                <a href="be_pages_generic_profile.html">학사 공지</a>
-                                            </p>
-
-                                        </td>
-                                        <td> </td>
-                                        <td class="d-none d-sm-table-cell" style="text-align: center;">
-                                            <em class="fs-sm text-muted">November 23, 2018</em>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value="" id="row_4"
-                                                    name="row_4">
-                                                <label class="form-check-label" for="row_4"></label>
-                                            </div>
-                                        </td>
-                                        <th class="text-center" scope="row">4</th>
-                                        <td class="fs-sm">
-                                            <p class="fw-semibold mb-1">
-                                                <a href="be_pages_generic_profile.html">학사 공지</a>
-                                            </p>
-
-                                        </td>
-                                        <td> </td>
-                                        <td class="d-none d-sm-table-cell" style="text-align: center;">
-                                            <em class="fs-sm text-muted">November 5, 2018 </em>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value="" id="row_5"
-                                                    name="row_5">
-                                                <label class="form-check-label" for="row_5"></label>
-                                            </div>
-                                        </td>
-                                        <th class="text-center" scope="row">5</th>
-                                        <td class="fs-sm">
-                                            <p class="fw-semibold mb-1">
-                                                <a href="be_pages_generic_profile.html">학사 공지</a>
-                                            </p>
-
-                                        </td>
-                                        <td> </td>
-                                        <td class="d-none d-sm-table-cell" style="text-align: center;">
-                                            <em class="fs-sm text-muted">November 4, 2018 </em>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value="" id="row_6"
-                                                    name="row_6">
-                                                <label class="form-check-label" for="row_6"></label>
-                                            </div>
-                                        </td>
-                                        <th class="text-center" scope="row">6</th>
-                                        <td class="fs-sm">
-                                            <p class="fw-semibold mb-1">
-                                                <a href="be_pages_generic_profile.html">학사 공지</a>
-                                            </p>
-                                        </td>
-                                        <td> </td>
-                                        <td class="d-none d-sm-table-cell" style="text-align: center;">
-                                            <em class="fs-sm text-muted">November 26, 2018</em>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value="" id="row_6"
-                                                    name="row_6">
-                                                <label class="form-check-label" for="row_6"></label>
-                                            </div>
-                                        </td>
-                                        <th class="text-center" scope="row">7</th>
-                                        <td class="fs-sm">
-                                            <p class="fw-semibold mb-1">
-                                                <a href="be_pages_generic_profile.html">학사 공지</a>
-                                            </p>
-                                        </td>
-                                        <td> </td>
-                                        <td class="d-none d-sm-table-cell" style="text-align: center;">
-                                            <em class="fs-sm text-muted">November 26, 2018</em>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value="" id="row_6"
-                                                    name="row_6">
-                                                <label class="form-check-label" for="row_6"></label>
-                                            </div>
-                                        </td>
-                                        <th class="text-center" scope="row">8</th>
-                                        <td class="fs-sm">
-                                            <p class="fw-semibold mb-1">
-                                                <a href="be_pages_generic_profile.html">학사 공지</a>
-                                            </p>
-                                        </td>
-                                        <td> </td>
-                                        <td class="d-none d-sm-table-cell" style="text-align: center;">
-                                            <em class="fs-sm text-muted">November 26, 2018</em>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value="" id="row_6"
-                                                    name="row_6">
-                                                <label class="form-check-label" for="row_6"></label>
-                                            </div>
-                                        </td>
-                                        <th class="text-center" scope="row">9</th>
-                                        <td class="fs-sm">
-                                            <p class="fw-semibold mb-1">
-                                                <a href="be_pages_generic_profile.html">학사 공지</a>
-                                            </p>
-                                        </td>
-                                        <td> </td>
-                                        <td class="d-none d-sm-table-cell" style="text-align: center;">
-                                            <em class="fs-sm text-muted">November 26, 2018</em>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value="" id="row_6"
-                                                    name="row_6">
-                                                <label class="form-check-label" for="row_6"></label>
-                                            </div>
-                                        </td>
-                                        <th class="text-center" scope="row">10</th>
-                                        <td class="fs-sm">
-                                            <p class="fw-semibold mb-1">
-                                                <a href="be_pages_generic_profile.html">학사 공지</a>
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <p style=" text-align: center; margin:0 0 0 0"><i
-                                                        class="far fa fa-file"></i></p>
-                                            </div>
-                                        </td>
-                                        <td class="d-none d-sm-table-cell" style="text-align: center;">
-                                            <em class="fs-sm text-muted">November 26, 2018</em>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                
+                              <th:block class="text-center" scope="row" th:if ="${not #strings.isEmpty(notices)}"> 
+                                <tr th:each="notices, i:${notices}">
+                                <td>
+                                  <input class="form-check-input text-center" type="checkbox" value="" >
+                                 <label class="form-check-label" ></label>          
+                                </td>
+                                <td class="text-center">[[${notices.no}]]</td>
+                                <td>
+                                <a th:href="@{portalNoticeSelect?no=${notices.no}}" >[[${notices.title}]]</a></td>                               
+                                <td class=""></td>
+                                <td class="fs-sm text-muted text-center">[[${notices.enrollDate}]]</td>
+                                </tr>
+                                
+                                
+                                
+                                    
                             </table>
                             <div class="p-1 d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-secondary m-1">등록</button>
+                                <button type="button" class="btn btn-outline-secondary m-1" onclick="location.href='adminNoticeInsert'">등록</button>
                                 <button type="button" class="btn btn-outline-secondary m-1 push" data-bs-toggle="modal" data-bs-target="#modal-block-popout">삭제</button>
                             </div>
 
@@ -288,7 +106,11 @@
                                 </div>
                               </div>
 
-
+                <div>
+                	<form id = "frm" action="" method="post">
+                	<input type="hidden" id="no" name="no">
+                	</form>
+                </div>
 
                         <div class="block-content d-flex justify-content-center ">
                             <nav aria-label="Page navigation">
@@ -325,11 +147,20 @@
 
                     </div>
                 </div>
-            </div>
-            </main>
-</body>
-  <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-    <script th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
-<script>One.helpersOnLoad(['one-table-tools-checkable', 'one-table-tools-sections']);</script>
 
+            </div>
+            
+<script>
+function eventList(data){
+	frm.no.value= data;
+	frm.action="noticeSelect";
+	frm.submit();
+}
+</script>
+<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+<script>
+One.helpersOnLoad(['one-table-tools-checkable', 'one-table-tools-sections']);
+</script>
+</main>
+</body>
 </html>
