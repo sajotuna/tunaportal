@@ -6,4 +6,7 @@ import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
 
 public interface LectureApplyService {
 	public List<LectureApplyVO> SubjectFind();
+
+public interface LectureApplyService {
+
 }

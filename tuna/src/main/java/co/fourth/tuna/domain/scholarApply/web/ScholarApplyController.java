@@ -29,9 +29,4 @@ public class ScholarApplyController {
 		
 		return "scholarship/user/scholarshipApplicationStatus";
 	}
-	
-	
-	
-	
-	
 }

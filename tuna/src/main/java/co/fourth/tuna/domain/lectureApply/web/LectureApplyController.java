@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
+
 import co.fourth.tuna.usertest.captcha.CaptchaUtil;
 import nl.captcha.Captcha;
 
 @Controller
 public class LectureApplyController {
-	
+
 	@Autowired
 	private LectureApplyService LectureApplyDao;
 	
@@ -34,7 +39,6 @@ public class LectureApplyController {
 		List<LectureApplyVO> lists = LectureApplyDao.SubjectFind();
 		
 		model.addAttribute("list", lists);
-		
 		return "course/apply/courseApplication";
 	}
 	

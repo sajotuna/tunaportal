@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+
 import org.springframework.security.core.Authentication;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -84,6 +86,7 @@ public class HomeController {
 		return "custom/pwdfind";
 	}
 	
+
 	@RequestMapping("/userUpdate")
 	public String userUpdate(Authentication authentication) {
 		return "manage/user/userUpdate";
@@ -92,7 +95,7 @@ public class HomeController {
 	public String pwdUpdate() {
 		return "manage/user/pwdUpdate";
 	}
-	
+
 	@RequestMapping("/custom/navExample")
 	public String navExample() {
 		return "custom/navExample";

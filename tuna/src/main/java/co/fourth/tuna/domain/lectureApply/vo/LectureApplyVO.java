@@ -30,5 +30,5 @@ public class LectureApplyVO {
 	private String dayCode;
 	private String roomCode;
 	private String timeCode;
-	
+
 }
