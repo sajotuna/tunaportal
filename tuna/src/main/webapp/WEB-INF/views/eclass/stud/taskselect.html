@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>과제상세</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+  </head>
+  <body>
+    <div
+      id="page-container"
+      class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow"
+    >
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header"></div>
+        <div class="content-side"></div>
+      </aside>
+
+      <!--
+███████ ██ ██████  ███████     ██████   █████  ██████  
+██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██   ██ █████       ██████  ███████ ██████  
+     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
+      -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header"></div>
+        <div class="js-sidebar-scroll"></div>
+      </nav>
+      <!-- SIDE BAR END -->
+
+      <!--
+██   ██ ███████  █████  ██████  ███████ ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██   ██ █████   ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
+      -->
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+      <!--HEADER END-->
+
+      <!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  E-class 홈 화면 입니다.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+          <div class="content">
+            <div class="row">
+              <div class="col-12">
+                <h3 class="h3 fw-bold mb-2">과제</h3>
+              </div>
+            </div>
+            <div class="block block-rounded">
+              <div class="block-content block-content-full">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <table class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                          <tr>                          
+                            <th class="text-center" tabindex="0" colspan="2">제목</th>
+                            <th colspan="7">JAVA 실습 파일 제출</th>
+                          </tr>
+                          <tr>                          
+                            <th class="text-center" tabindex="0" colspan="2">작성일자</th>
+                            <th colspan="7">2000-00-00</th>
+                          </tr>
+                          <tr>                          
+                            <th class="text-center" tabindex="0" colspan="2">마감일자</th>
+                            <th colspan="7">2000-00-00</th>
+                          </tr>
+                          <tr>                          
+                            <th class="text-center" tabindex="0" colspan="2">내용</th>
+                            <th colspan="7">제출내용 : JAVA 실행 화면 제출<br>
+                                            조건 : 화면 캡쳐 5장(확장자 무관)</th>
+                          </tr>
+                          <tr>                          
+                            <th class="text-center" tabindex="0" colspan="2">파일</th>
+                            <th colspan="7"><input class="form-control fw-semibold fs-sm"  id="example-file-input" type="file"></th>
+                          </tr>
+                        </thead>
+                      </table>
+                      <div class="d-flex justify-content-center">
+                        <button type="button" onclick="location.href='과제.html'" class="btn btn-primary m-2">등록</button>
+                      <button type="button" onclick="location.href='과제.html'" class="btn btn-dark m-2"><a href="#" style="color:white">취소</a></button>
+                    </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-xxl-12"></div>
+          <!-- col-12 end -->
+        </div>
+        <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              Hello
+            </div>
+          </div>
+        </div> -->
+        <!-- 모달 리스트 END -->
+      </main>
+
+      <!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+
+    <script src="../assets/js/oneui.app.min.js"></script>
+  </body>
+</html>

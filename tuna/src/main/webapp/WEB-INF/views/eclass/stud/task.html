@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <title>과제</title>
+  </head>
+  <body>
+    <div
+      id="page-container"
+      class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow"
+    >
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header"></div>
+        <div class="content-side"></div>
+      </aside>
+
+      <!--
+███████ ██ ██████  ███████     ██████   █████  ██████  
+██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██   ██ █████       ██████  ███████ ██████  
+     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
+      -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header"></div>
+        <div class="js-sidebar-scroll"></div>
+      </nav>
+      <!-- SIDE BAR END -->
+
+      <!--
+██   ██ ███████  █████  ██████  ███████ ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██   ██ █████   ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
+      -->
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+      <!--HEADER END-->
+
+      <!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  E-class 홈 화면 입니다.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+        <div class="content">
+          <div class="row">
+            <div class="col-12">
+              <h3 class="h3 fw-bold mb-2">과제</h3>
+            </div>
+          </div>
+            <div class="block">
+                <div class="row">
+                <div class="col-12">
+                  <div class="row block-content">
+                  <h4 class="h4 fw-bold mb-2 col-2 text-center">[진행중]</h3>
+                  <h4 class="h4 mb-2 col-7 text-center"><a href="과제상세.html" style="color:black">부트스트랩 적용 파일 제출</a></h3>
+                  <h4 class="h4 text-center col-3">마감일 : ~00/00</h4>
+                </div>
+                </div>
+                </div>
+              </div>
+              <div class="block">
+                <div class="row">
+                <div class="col-12">
+                  <div class="row block-content">
+                  <h3 class="h4 fw-bold mb-2 col-2 text-center">[마감]</h3>
+                  <h3 class="h4 mb-2 col-7 text-center"><a href="과제상세.html" style="color:black">JAVA 프로그래밍 실습 파일 제출</a></h3>
+                  <h4 class="h4 text-center col-3">마감일 : ~00/00</h4>
+                </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="col-xxl-12"></div>
+          <!-- col-12 end -->
+        </div>
+        <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              Hello
+            </div>
+          </div>
+        </div> -->
+        <!-- 모달 리스트 END -->
+      </main>
+
+      <!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+
+    <script src="../assets/js/oneui.app.min.js"></script>
+  </body>
+</html>

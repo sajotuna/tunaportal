@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <title>자료실</title>
+  <body>
+    <div
+      id="page-container"
+      class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow"
+    >
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header"></div>
+        <div class="content-side"></div>
+      </aside>
+      <!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+         <div class="content">
+          <div class="row">
+            <div class="col-12">
+              <h4 class="h3 fw-bold mb-2">강의자료실</h4>
+            </div>
+            <div class="block">
+              <div class="row">
+              <div class="col-12">
+                <div class="row block-content">
+                <h3 class="h4 col-7 text-center">4주차 강의 자료</h3>
+                <div class="container col-3">
+                <button type="button" class="btn js-bs-popover-enabled my-popover" data-bs-html="true" data-bs-toggle="popover" data-bs-animation="true" data-bs-placement="bottom" data-bs-content="<div class='text-center'><a href='#'>java.pdf</a></div>"><i class="fa fa-2x fa-square-caret-down"></i></button>
+              </div>
+              </div>
+              
+              </div>
+              </div>
+            </div>
+            <div class="block">
+              <div class="row">
+              <div class="col-12">
+                <div class="row block-content">
+                <h3 class="h4 col-7 text-center">3주차 강의 자료</h3>
+                <div class="container col-3">
+                  <button type="button" class="btn js-bs-popover-enabled my-popover" data-bs-toggle="popover" data-bs-animation="true" data-bs-placement="bottom" data-bs-content="This is example content. You can put a description or more info here."><i class="fa fa-2x fa-square-caret-down"></i></button>
+                </div>
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="block">
+              <div class="row">
+              <div class="col-12">
+                <div class="row block-content">
+                <h3 class="h4 col-7 text-center">2주차 강의 자료</h3>
+                <div class="container col-3">
+                  <button type="button" class="btn js-bs-popover-enabled my-popover" data-bs-toggle="popover" data-bs-animation="true" data-bs-placement="bottom" data-bs-content="This is example content. You can put a description or more info here."><i class="fa fa-2x fa-square-caret-down"></i></button>
+                </div>
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="block">
+              <div class="row">
+              <div class="col-12">
+                <div class="row block-content">
+                <h3 class="h4 col-7 text-center">1주차 강의 자료</h3>
+                <div class="container col-3">
+                  <button type="button" class="btn js-bs-popover-enabled my-popover" data-bs-toggle="popover" data-bs-animation="true" data-bs-placement="bottom" data-bs-content="This is example content. You can put a description or more info here."><i class="fa fa-2x fa-square-caret-down"></i></button>
+                </div>
+              </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="col-xxl-12"></div>
+          <!-- col-12 end -->
+        </div>
+        <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              Hello
+            </div>
+          </div>
+        </div> -->
+        <!-- 모달 리스트 END -->
+      </main>
+
+      <!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+
+    <script src="../assets/js/oneui.app.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+      $('.my-popover').popover({
+        container: '.container'
+      });
+    });
+    </script>
+  </body>
+</html>

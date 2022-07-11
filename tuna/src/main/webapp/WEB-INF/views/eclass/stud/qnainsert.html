@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <title>질의응답작성</title>
+  </head>
+  <body>
+    <div
+      id="page-container"
+      class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow"
+    >
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header"></div>
+        <div class="content-side"></div>
+      </aside>
+
+      <!--
+███████ ██ ██████  ███████     ██████   █████  ██████  
+██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██   ██ █████       ██████  ███████ ██████  
+     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
+      -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header"></div>
+        <div class="js-sidebar-scroll"></div>
+      </nav>
+      <!-- SIDE BAR END -->
+
+      <!--
+██   ██ ███████  █████  ██████  ███████ ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██   ██ █████   ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
+      -->
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+      <!--HEADER END-->
+
+      <!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  E-class 홈 화면 입니다.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+        <div class="content">
+          <div class="row">
+            <div class="col-12">
+              <h3 class="h3 fw-bold mb-2">Q&A</h3>
+            </div>
+          </div>
+          <div class="block block-rounded">
+              <div class="block-content block-content-full">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <table class="table table-vcenter js-dataTable-full dataTable no-footer" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                          <tr>
+                            <th class="text-center">제목</th>
+                            <th class="text-center"><input class="form-control"></th>
+                            <th class="text-center"><input class="private" type="checkbox" value="private"><label for="private">비공개</label></th>
+                          </tr>
+                        </thead>
+                      </table>
+                      <form action="be_forms_editors.html" method="POST" onsubmit="return false;">
+                        <textarea class="js-simplemde" id="simplemde" name="simplemde"></textarea>
+                      </form>
+                      <div class="d-flex justify-content-center">
+                        <button onclick="location.href='질의응답상세.html'" type="button" class="btn btn-primary m-2">등록</button>
+                        <button onclick="location.href='질의응답.html'" type="button" class="btn btn-dark  m-2">취소</button>
+                      </div>
+                    </div>
+                  </div>
+          <div class="col-xxl-12"></div>
+          <!-- col-12 end -->
+        </div>
+        <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              Hello
+            </div>
+          </div>
+        </div> -->
+        <!-- 모달 리스트 END -->
+      </main>
+
+      <!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+
+    <script src="../assets/js/oneui.app.min.js"></script>
+
+    <script src="../assets/js/plugins/simplemde/simplemde.min.js"></script>
+
+    <!-- Page JS Helpers (CKEditor + SimpleMDE plugins) -->
+    <script>One.helpersOnLoad(['js-simplemde']);</script>
+  </body>
+</html>

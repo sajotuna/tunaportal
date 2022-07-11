@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <title>질의응답</title>
+  </head>
+  <body>
+    <div
+      id="page-container"
+      class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow"
+    >
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header"></div>
+        <div class="content-side"></div>
+      </aside>
+
+      <!--
+███████ ██ ██████  ███████     ██████   █████  ██████  
+██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██   ██ █████       ██████  ███████ ██████  
+     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
+      -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header"></div>
+        <div class="js-sidebar-scroll"></div>
+      </nav>
+      <!-- SIDE BAR END -->
+
+      <!--
+██   ██ ███████  █████  ██████  ███████ ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██   ██ █████   ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
+      -->
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+      <!--HEADER END-->
+
+      <!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  E-class 홈 화면 입니다.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+          <div class="content">
+            <div class="row">
+              <div class="col-12">
+                <h3 class="h3 fw-bold mb-2">Q&A</h3>
+              </div>
+            </div>
+            <div class="block block-rounded">
+              <div class="block-content block-content-full">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <table class="table table-bordered  table-vcenter js-dataTable-full dataTable no-footer" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                          <tr>
+                            <th class="text-center" style="width: 80px;" tabindex="0" rowspan="1">번호</th>
+                            <th class="text-center" tabindex="0" colspan="7">제목</th>
+                            <th class="text-center" tabindex="0" colspan="2">작성자</th>
+                            <th class="text-center" rowspan="1" colspan="2">작성일자</th>
+                            <th class="text-center" rowspan="1" colspan="2">답변여부</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="text-center">5</td>
+                            <td class="text-center" colspan="7">조 바꿔주세요</td>
+                            <td class="text-center" colspan="2">김철수</td>
+                            <td class="text-center" colspan="2">2000/00/00</td>
+                            <td class="text-center" colspan="2">미답변</td>
+                          </tr>
+                          <tr>
+                            <td class="text-center">4</td>
+                            <td class="text-center" colspan="7">중간고사를 못 쳤는데요</td>
+                            <td class="text-center" colspan="2">박지연</td>
+                            <td class="text-center" colspan="2">2000/00/00</td>
+                            <td class="text-center" colspan="2">미답변</td>
+                          </tr>
+                          <tr>
+                            <td class="text-center">3</td>
+                            <td class="text-center" colspan="7">과제가 이게 뭐죠</td>
+                            <td class="text-center" colspan="2">최명한</td>
+                            <td class="text-center" colspan="2">2000/00/00</td>
+                            <td class="text-center" colspan="2">답변</td>
+                          </tr>
+                          <tr>
+                            <td class="text-center">2</td>
+                            <td class="text-center" colspan="7">온라인강의 지원하나요?</td>
+                            <td class="text-center" colspan="2">권안민</td>
+                            <td class="text-center" colspan="2">2000/00/00</td>
+                            <td class="text-center" colspan="2">답변</td>
+                          </tr>
+                          <tr>
+                            <td class="text-center">1</td>
+                            <td class="text-center" colspan="7">어디서 수업 듣죠?</td>
+                            <td class="text-center" colspan="2">나가라</td>
+                            <td class="text-center" colspan="2">2000/00/00</td>
+                            <td class="text-center" colspan="2">답변</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <button type="button" onclick="location.href='질의응답작성.html'" class="btn btn-primary m-2">등록</button>
+                    </div>
+                  <div class="row">
+                    <div class="col-sm-12 com-md-7">
+                      <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                        <ul class="pagination">
+                          <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
+                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">
+                              <i class="fa fa-angle-left"></i>
+                            </a>
+                          </li>
+                          <li class="paginate_button page-item active">
+                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">
+                              1
+                            </a>
+                          </li>
+                          <li class="paginate_button page-item next" id="DataTables_Table_0_next">
+                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="5" tabindex="0" class="page-link">
+                              <i class="fa fa-angle-right"></i>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-xxl-12"></div>
+          <!-- col-12 end -->
+        </div>
+        <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              Hello
+            </div>
+          </div>
+        </div> -->
+        <!-- 모달 리스트 END -->
+      </main>
+
+      <!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+
+    <script src="../assets/js/oneui.app.min.js"></script>
+  </body>
+</html>

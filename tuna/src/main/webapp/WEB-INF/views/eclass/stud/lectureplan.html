@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
+  <head>
+    <meta charset="UTF-8" />
+     <title>강의계획서</title>
+    <style>
+      td {
+        text-align: center;
+      }
+      tr {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="page-container"
+      class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow"
+    >
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header"></div>
+        <div class="content-side"></div>
+      </aside>
+
+      <!--
+███████ ██ ██████  ███████     ██████   █████  ██████  
+██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██   ██ █████       ██████  ███████ ██████  
+     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
+███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
+      -->
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header"></div>
+        <div class="js-sidebar-scroll"></div>
+      </nav>
+      <!-- SIDE BAR END -->
+
+      <!--
+██   ██ ███████  █████  ██████  ███████ ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██   ██ █████   ██████  
+██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
+      -->
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+      <!--HEADER END-->
+
+      <!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+      <main id="main-container">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  E-class 홈 화면 입니다.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+        <div class="content">
+          <div class="row">
+            <div class="col-12">
+              <h3 class="h3 fw-bold ms-3">강의계획서</h3>
+            </div>
+            <div class="content content-boxed bg-body-extra-light">
+              <div id="page-container">
+                <div class="row">
+                  <div class="col-lg-12 col-xl-12">
+                    <table class="table table-vcenter table-bordered">
+                      <tbody>
+                        <tr>
+                          <th class="fw-semibold fs-sm" rowspan="2">
+                            교과목명
+                          </th>
+                          <th class="fw-semibold fs-sm">국 문</th>
+                          <th class="fw-semibold fs-sm" colspan="8"></th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm">영문</th>
+                          <th class="fw-semibold fs-sm" colspan="8"></th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm">교수명</th>
+                          <th class="fw-semibold fs-sm" colspan="4"></th>
+                          <th class="fw-semibold fs-sm">소속학과</th>
+                          <th class="fw-semibold fs-sm" colspan="4"></th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm">연구실</th>
+                          <th class="fw-semibold fs-sm" colspan="4"></th>
+                          <th class="fw-semibold fs-sm">연락처</th>
+                          <th class="fw-semibold fs-sm" colspan="4"></th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm">과목코드</th>
+                          <th class="fw-semibold fs-sm" colspan="4"></th>
+                          <th class="fw-semibold fs-sm">개설년도/학기</th>
+                          <th class="fw-semibold fs-sm" colspan="4"></th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm">수강대상</th>
+                          <th class="fw-semibold fs-sm" colspan="4"></th>
+                          <th class="fw-semibold fs-sm">강의실</th>
+                          <th class="fw-semibold fs-sm" colspan="4"></th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm">요일/교시</th>
+                          <th class="fw-semibold fs-sm" colspan="4"></th>
+                          <th class="fw-semibold fs-sm">학점</th>
+                          <th class="fw-semibold fs-sm" colspan="4"></th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm">강의개요 및 목표</th>
+                          <th class="fw-semibold fs-sm" colspan="9"></th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm" colspan="2" rowspan="2">
+                            평가기준
+                          </th>
+                          <th class="fw-semibold fs-sm" colspan="2">출 석</th>
+                          <th class="fw-semibold fs-sm" colspan="2">
+                            중간고사
+                          </th>
+                          <th class="fw-semibold fs-sm" colspan="2">
+                            기말고사
+                          </th>
+                          <th class="fw-semibold fs-sm" colspan="2">과제</th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm" colspan="2">%</th>
+                          <th class="fw-semibold fs-sm" colspan="2">%</th>
+                          <th class="fw-semibold fs-sm" colspan="2">%</th>
+                          <th class="fw-semibold fs-sm" colspan="2">%</th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm" colspan="9">주차별 강의계획</th>
+                        </tr>
+                        <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">1주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">1주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">2주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">2주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">3주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">3주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">4주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">4주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">5주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">5주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">6주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">6주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">7주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">7주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">8주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">8주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">9주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">9주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">10주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">10주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">11주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">11주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">12주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">12주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">13주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">13주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">14주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">14주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">15주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">15주차 강의 계획</th>
+                         </tr>
+                         <tr>
+                          <th class="fw-semibold fs-sm"  colspan="2">16주차</th>
+                          <th class="fw-semibold fs-sm"  colspan="7">16주차 강의 계획</th>
+                         </tr>
+                         </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <script src="../assets/js/oneui.app.min.js"></script>
+
+          <div class="col-xxl-12"></div>
+          <!-- col-12 end -->
+        </div>
+        <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              Hello
+            </div>
+          </div>
+        </div> -->
+        <!-- 모달 리스트 END -->
+      </main>
+
+      <!--
+███████  ██████   ██████  ████████ ███████ ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+█████   ██    ██ ██    ██    ██    █████   ██████  
+██      ██    ██ ██    ██    ██    ██      ██   ██ 
+██       ██████   ██████     ██    ███████ ██   ██ 
+-->
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+
+    <script src="../assets/js/oneui.app.min.js"></script>
+  </body>
+</html>
