@@ -25,6 +25,7 @@ public class StudentController {
 		return "home";
 	}
 
+
 	@RequestMapping("/userUpdate")
 	public String userUpdate() {
 		return "manage/user/userUpdate";

@@ -23,7 +23,5 @@ public class AdminController {
 		model.addAttribute("vo", vo);
 		return "home";
 	}
-	
-	
 
 }
