@@ -11,9 +11,9 @@
 </head>
 <body>
 	<div id="page-container" class="page-header-dark main-content-boxed">
-		<header th:replace="layouts/nav/header"></header>
+		<header th:replace="layouts/nav/header :: header"></header>
 		<main id="main-container" layout:fragment="main"></main>
-		<footer th:replace="layouts/nav/footer"></footer>
+		<footer th:replace="layouts/nav/footer :: footer"></footer>
 	</div>
 </body>
 </html>
