@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+
 @Data
 @AllArgsConstructor
 public class PortalNoticeVO {
@@ -14,7 +15,7 @@ public class PortalNoticeVO {
 	private String title;
 	private String content;
 	private String visible;
-	private int adNo;	
+	private String adNo;	
 		
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	private Date enrollDate;
