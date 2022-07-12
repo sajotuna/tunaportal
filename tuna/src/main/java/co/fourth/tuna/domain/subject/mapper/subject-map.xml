@@ -21,20 +21,12 @@
 						ON ls.sbjno = s.no
 	    ORDER BY S.no ASC
 	) WHERE rn 
-			BETWEEN (#{start}-1)*#{size}
-   		AND #{start}*#{size}
+			BETWEEN (#{pageNum}-1)*#{size}
+   		AND #{pageNum}*#{size}
 	</select>
 	
 	<select id="findListForLectureScheduleByProf" resultMap="subjectMap">
-		SELECT * 
-		FROM
-		(
-		    SELECT ROWNUM rn, s.* 
-		    FROM subject s 
-		    ORDER BY no ASC
-		) WHERE rn 
-			BETWEEN (#{pageNum}-1)*#{size}
-    	AND #{pageNum}*#{size}
+		
 	</select>
 	
 </mapper>
