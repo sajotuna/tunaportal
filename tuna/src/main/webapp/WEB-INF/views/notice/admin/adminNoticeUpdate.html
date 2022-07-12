@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
     data-layout-decorate="~{layouts/lecApplyLayout}">
 <head>
 <meta charset="UTF-8">
@@ -24,7 +25,7 @@
                             <hr>
                             <div class="row mb-3">
                                 <div class="col-6">
-                                    <input class="form-control" type="file" id="example-file-input-multiple" multiple="">
+                                    <input class="form-control" type="file" id="example-file-input-multiple" multiple="multiple">
                                 </div>
                                 <div class="col-6">
                                     <select class="form-select">

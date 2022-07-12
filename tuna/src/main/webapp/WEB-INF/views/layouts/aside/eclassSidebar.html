@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 <th:block th:fragment="sidebar">
+			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+			<script th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
+			<script th:src="@{https://code.jquery.com/jquery-3.6.0.js}"></script>
 	<!-- Sidebar -->
 	 <nav id="sidebar" aria-label="Main Navigation">
 	   <!-- Side Header -->
@@ -22,9 +26,9 @@
 	     <div class="content-side">
 	       <ul class="nav-main">
 			<li class="nav-main-item">
-	           <a class="nav-main-link" href="#">
+	           <a class="nav-main-link" th:href="@{/eclass/student/home}">
 	             <i class="nav-main-link-icon si si-speedometer"></i>
-	             <span class="nav-main-link-name fw-bold">e-Class 대시보드</span>
+	             <span class="nav-main-link-name fw-bold">강의 홈</span>
 	           </a>
 	        </li>
 		 	<li class="nav-main-item">
@@ -34,37 +38,37 @@
 	           </a>
 	           <ul class="nav-main-submenu">
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" th:href="@{/eclass/student/lectureHome}">
 	                 <span class="nav-main-link-name">홈</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" th:href="@{/eclass/student/lectureNotice}">
 	                 <span class="nav-main-link-name">공지사항</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" th:href="@{/eclass/student/lecturePlan}">
 	                 <span class="nav-main-link-name">강의계획서</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" th:href="@{/eclass/student/download}">
 	                 <span class="nav-main-link-name">자료실</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" th:href="@{/eclass/student/taskList}">
 	                 <span class="nav-main-link-name">과제</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" th:href="@{/eclass/student/qnaList}">
 	                 <span class="nav-main-link-name">Q&A</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
+	               <a class="nav-main-link" th:href="@{/eclass/student/attendance}">
 	                 <span class="nav-main-link-name">출석</span>
 	               </a>
 	             </li>

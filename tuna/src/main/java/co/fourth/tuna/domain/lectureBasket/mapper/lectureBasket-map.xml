@@ -3,15 +3,29 @@
 <mapper
 	namespace="co.fourth.tuna.domain.lectureBasket.mapper.LectureBasketMapper">
 
-<insert id = "baskInsert" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
+ <insert id = "baskInsert" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
 	<selectKey order="BEFORE" keyProperty="no" resultType="string">
-		SELECT NVL(MAX(no)+1,0) FROM LECTURESCHEDULE
+		SELECT NVL(MAX(no)+1,0) no FROM LECTUREBASKET
 	</selectKey>
 
-insert into lecturebasket values (#{no}, #{stateCode}, #{seasonCode}, #{sbjNo}, #{stNo});
+insert into LECTUREBASKET values (#{no}, 'y', #{seasonCode}, #{sbjNo}, #{stNo})
 
+</insert> 
+<!-- <parameterMap type="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO" id="basketParam">
+	<parameter property="sbjNo" mode="IN" jdbcType="VARCHAR" javaType="string"/>
+	<parameter property="seasonCode" mode="IN" jdbcType="VARCHAR" javaType="string"/>
+	<parameter property="stNo" mode="IN" jdbcType="VARCHAR" javaType="string"/>
+</parameterMap>
+<insert id="baskInsert" statementType="CALLABLE" parameterMap="basketParam">
+	{ call courseBasket(?,?,?) }
 </insert>
-
+<insert id="baskInsert" statementType="CALLABLE" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
+	{ call courseBasket( 
+		#{seasonCode}, 
+		#{sbjNo}, 
+		#{stNo}) 
+	}
+</insert> -->
 
 
 </mapper>

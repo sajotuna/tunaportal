@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PortalScheduleController {
 
+	//student
 	@RequestMapping("/portalSchedule")
 	public String portalSchedule() {
 		return "schedule/user/portalSchedule";
 	}
 	
-	@RequestMapping("/adminSchedule")
+	//admin
+	@RequestMapping("/admin/adminSchedule")
 	public String adminSchedule() {
 		return "schedule/admin/adminSchedule";
 	}

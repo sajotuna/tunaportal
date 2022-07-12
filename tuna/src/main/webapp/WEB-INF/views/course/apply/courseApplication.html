@@ -93,24 +93,40 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <th class="d-none d-sm-table-cell" style="width: 100px;">과목명</th>
                       <th class="d-none d-sm-table-cell" style="width: 100px;">교수명</th>
                       <th class="d-none d-sm-table-cell" style="width: 110px;">강의실</th>
-                      <th class="d-none d-sm-table-cell" style="width: 120px;">강의시간</th>
                       <th class="d-none d-sm-table-cell" style="width: 50px;">학점</th>
-                      <th class="d-none d-sm-table-cell" style="width: 50px;">인원수</th>
+                      <th class="d-none d-sm-table-cell" style="width: 50px;">정원</th>
+                      <th class="d-none d-sm-table-cell" rowspan = "2" style="width: 120px;">강의시간</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr th:scope="row" th:each="sub : ${list}">
-                      <th class="fw-semibold fs-sm" th:text ="${sub.TYPE}"></th>
+                  <tbody id = "courlist">
+                  	
+                    <tr th:scope="row" th:each="sub, status : ${list}">
+                    <th:block th:if = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
+                      <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
-                      <td class="fw-semibold fs-sm"th:text = "${sub.NAME}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
                       <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.ROOMCODE}"></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.DAYCODE}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
-                      <td class="fw-semibold fs-sm"th:text = "${sub.LIMIT}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
+                     </th:block>
+                    <th:block th:unless = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
+                      <th class="fw-semibold fs-sm" ></th>
+                      <td class="fw-semibold fs-sm" ></td>
+                      <td class="fw-semibold fs-sm" ></td>
+                      <td class="fw-semibold fs-sm"></td>
+                      <td class="fw-semibold fs-sm"></td>
+                      <td class="fw-semibold fs-sm"></td>
+                      <td class="fw-semibold fs-sm"></td>
+                    </th:block>
+                      <td class="fw-semibold fs-sm" >
+	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
+                      </td>
                     </tr>
+                    
                   </tbody>
                 </table>
+                
                 <ul class="pagination justify-content-center">
                   <li class="page-item">
                     <a class="page-link" href="javascript:void(0)" tabindex="-1" aria-label="Previous">
@@ -156,21 +172,34 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <th class="d-none d-sm-table-cell" style="width: 100px;">과목명</th>
                       <th class="d-none d-sm-table-cell" style="width: 100px;">교수명</th>
                       <th class="d-none d-sm-table-cell" style="width: 110px;">강의실</th>
-                      <th class="d-none d-sm-table-cell" style="width: 120px;">강의시간</th>
                       <th class="d-none d-sm-table-cell" style="width: 50px;">학점</th>
-                      <th class="d-none d-sm-table-cell" style="width: 50px;">인원수</th>
+                      <th class="d-none d-sm-table-cell" style="width: 50px;">정원</th>
+                      <th class="d-none d-sm-table-cell" rowspan = "2" style="width: 120px;">강의시간</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr th:scope="row" th:each="sub : ${baskLists}">
-                      <th class="fw-semibold fs-sm" th:text ="${sub.TYPE}"></th>
+                  <tbody id = "courlist">
+                    <tr th:scope="row" th:each="sub, status : ${baskList}">
+                    <th:block th:if = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
+                      <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
-                      <td class="fw-semibold fs-sm"th:text = "${sub.NAME}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
                       <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.ROOMCODE}"></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.DAYCODE}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
-                      <td class="fw-semibold fs-sm"th:text = "${sub.LIMIT}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
+                     </th:block>
+                    <th:block th:unless = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
+                      <th class="fw-semibold fs-sm" ></th>
+                      <td class="fw-semibold fs-sm" ></td>
+                      <td class="fw-semibold fs-sm" ></td>
+                      <td class="fw-semibold fs-sm"></td>
+                      <td class="fw-semibold fs-sm"></td>
+                      <td class="fw-semibold fs-sm"></td>
+                      <td class="fw-semibold fs-sm"></td>
+                    </th:block>
+                      <td class="fw-semibold fs-sm" >
+	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -250,21 +279,34 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <th class="d-none d-sm-table-cell" style="width: 100px;">과목명</th>
                       <th class="d-none d-sm-table-cell" style="width: 100px;">교수명</th>
                       <th class="d-none d-sm-table-cell" style="width: 110px;">강의실</th>
-                      <th class="d-none d-sm-table-cell" style="width: 120px;">강의시간</th>
                       <th class="d-none d-sm-table-cell" style="width: 50px;">학점</th>
-                      <th class="d-none d-sm-table-cell" style="width: 50px;">인원수</th>
+                      <th class="d-none d-sm-table-cell" style="width: 50px;">정원</th>
+                      <th class="d-none d-sm-table-cell" rowspan = "2" style="width: 120px;">강의시간</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr th:scope="row" th:each="sub : ${courLists}">
-                      <th class="fw-semibold fs-sm" th:text ="${sub.TYPE}"></th>
+                  <tbody id = "courlist">
+                    <tr th:scope="row" th:each="sub, status : ${courList}">
+                    <th:block th:if = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
+                      <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
-                      <td class="fw-semibold fs-sm"th:text = "${sub.NAME}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
                       <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.ROOMCODE}"></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.DAYCODE}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
-                      <td class="fw-semibold fs-sm"th:text = "${sub.LIMIT}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
+                     </th:block>
+                    <th:block th:unless = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
+                      <th class="fw-semibold fs-sm" ></th>
+                      <td class="fw-semibold fs-sm" ></td>
+                      <td class="fw-semibold fs-sm" ></td>
+                      <td class="fw-semibold fs-sm"></td>
+                      <td class="fw-semibold fs-sm"></td>
+                      <td class="fw-semibold fs-sm"></td>
+                      <td class="fw-semibold fs-sm"></td>
+                    </th:block>
+                      <td class="fw-semibold fs-sm" >
+	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -279,6 +321,20 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script>
   
+  document.addEventListener('DOMContentLoaded', function(){
+		let courlist = document.querySelectorAll("#courlist > tr")
+		courlist.forEach((trList,idx) =>{
+			
+			if(trList.children[0].innerHTML == ''){
+				
+			courlist[idx-1].lastElementChild.innerHTML = courlist[idx-1].lastElementChild.innerHTML + '</br>' + trList.lastElementChild.innerHTML;
+			trList.remove();
+			}
+
+		})
+	})
+  
+  
     function showPopup() {
       window.open("/tuna/stud/lectureEvaluationSearch", "강의평가조회", "width=650, height=600, top=10, left=10");
     }
@@ -291,7 +347,6 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 			document.querySelector('#check').addEventListener(
 					'click',
 					function() {
-						console.log("버ㅏ튼")
 						$.ajax(
 								{
 									url:'chkAnswer.do', 
