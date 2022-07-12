@@ -1,3 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.fourth.tuna.domain.banner.mapper.BannerMapper"></mapper>
+<mapper namespace="co.fourth.tuna.domain.banner.mapper.BannerMapper">
+
+	<select id="bannerSelect" 
+		resultType="co.fourth.tuna.domain.banner.vo.BannerVO">
+		SELECT *
+		FROM BANNER
+		WHERE NO = (
+						SELECT MAX(NO) 
+						FROM BANNER 
+						WHERE BANNERCODE = #{bannerCode}
+					)
+	</select>
+	
+	<insert id="bannerInsert"
+		parameterType="co.fourth.tuna.domain.banner.vo.BannerVO">
+		
+		<selectKey resultType="int" keyProperty="no" order="BEFORE">
+			SELECT CASE WHEN MAX(NO) != 0
+						THEN MAX(NO) + 1 
+						ELSE 1 END
+						AS ID
+			FROM BANNER 
+			WHERE BANNERCODE = #{bannerCode}
+		</selectKey>
+		
+		INSERT INTO BANNER
+		VALUES (
+					#{no}, 
+					#{bannerCode},
+					#{startDate},
+					#{endDate},
+					#{fileName},
+					#{adNo},
+					#{uri},
+					SYSDATE,
+					#{sequence},
+					#{url}
+				)
+	</insert>
+
+</mapper>

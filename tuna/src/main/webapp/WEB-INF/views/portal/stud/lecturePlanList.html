@@ -5,26 +5,21 @@
 <title>subjectSelect</title>
 </head>
 <body>
+
+
+
 	<div class="tab-pane active" id="btabs-static-subject"
 		role="tabpanel" aria-labelledby="btabs-static-subject-tab">
 		<!-- Form -->
 		<form class="row" id="sbjSelFrm">
-			<div class="col-md-6 col-xl-2">
-				<div class="mb-2">
+			<div class="col-xl-4">
+				<div class="mb-3 mb-xl-2 ">
 					<select class="form-select" id="year" name="year">
-						<option selected>연도</option>
-						<option value="1">2022</option>
-						<option value="2">2021</option>
-						<option value="3">2020</option>
-					</select>
-				</div>
-			</div>
-			<div class="col-md-6 col-xl-2">
-				<div class="mb-2">
-					<select class="form-select" id="semester" name="semester">
-						<option selected>학기</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
+						<option selected>연도/학기</option>
+						
+						<option value="1">[[${@codeList.getName('3')}]]</option>
+						<option value="2">[[${@codeList.getName('3')}]]</option>
+						<option value="3">[[${@codeList.getName('3')}]]</option>
 					</select>
 				</div>
 			</div>

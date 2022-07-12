@@ -4,6 +4,8 @@
     data-layout-decorate="~{layouts/adminLayout}">
 <head>
 	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}">
+  	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 	<title>basicBannerManagm</title>
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
 	<style>
@@ -26,19 +28,8 @@
 </head>
 <body>
 <main layout:fragment="main">
-<div class="col-lg-8 col-xl-6">
-  <div class="mb-4">
-    <div class="input-daterange input-group" data-date-format="mm/dd/yyyy" data-week-start="1" data-autoclose="true" data-today-highlight="true">
-      <input type="text" class="form-control" id="example-daterange1" name="example-daterange1" placeholder="From" data-week-start="1" data-autoclose="true" data-today-highlight="true">
-      <span class="input-group-text fw-semibold">
-        <i class="fa fa-fw fa-arrow-right"></i>
-      </span>
-      <input type="text" class="form-control" id="example-daterange2" name="example-daterange2" placeholder="To" data-week-start="1" data-autoclose="true" data-today-highlight="true">
-    </div>
-  </div>
-</div>
-	<!-- Page Content -->
 
+	<!-- Page Content -->
 	<div class="mt-3" >
 		<div class="content">
 			<!-- Block -->
@@ -52,13 +43,14 @@
 								<!-- Banner Preview -->
 								<h2 class="content-heading mb-2 pb-2">배너 미리보기</h2>
 								<div class="mb-4 img-section">
-									<!-- <button id="btn" class="btn btn-alt-secondary shortcut-btn">바로가기</button>  -->
-									<img id="bnImg" class="img" src="#" alt="">
+									<button id="shoutcutBtn" class="btn btn-alt-secondary shortcut-btn" style="display:none;">바로가기</button>
+									<img id="basicBnImg" class="img" alt="">
 								</div> 
 								<!-- END Banner Preview -->
 							
 								<!-- Basic Banner Form -->
 								<form id="basicBnFrm">
+									<input type="hidden" name="adNo" value="139341">
 									<h2 class="content-heading border-bottom mb-2 pb-2">배너 정보</h2>
 						                <div class="row">
 						                    <p class="fs-sm text-muted">
@@ -67,7 +59,7 @@
 											<div class="col-xl-6">
 						                      <label class="form-label" for="file">사진 올리기 <span class="text-danger">*</span></label>
 						                      <div id="fileShake">
-							                      <input class="form-control" type="file" id="file"
+							                      <input class="form-control" type="file" id="file" name="file"
 							                      		accept="image/jpg, image/jpeg, image/png">
 						                      </div>
 						                    </div>
@@ -79,8 +71,8 @@
 						                      </div>
 						                    </div>
 								    		<div class="d-flex justify-content-center mt-5">
-									    		<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="modify">배너 수정</button>
-							      				<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="insert">배너 등록</button>
+							      				<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" 
+							      						data-job="basic">배너 수정</button>
 						      				</div>
 						      			</div>
 						    	</form>
@@ -94,13 +86,60 @@
 		</div>
 	</div>
 	<!-- END Page Content -->
-	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-	<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
+	
 	<script th:src="@{/resources/assets/js/banner.js}"></script>
 	<script th:src="@{/resources/assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
 	<script>One.helpersOnLoad(['jq-datepicker']);</script>
 	<script type="text/javascript">
-	
+
+	    var header = $("meta[name='_csrf_header']").attr('content');
+	    var token = $("meta[name='_csrf']").attr('content');
+		
+		$(function() {
+			banner();
+		})
+		
+		// 등록된 기본 배너를 체크하여 화면에 띄우기
+		function banner() {
+			$.ajax({
+				url: getPathRootJump() + 'admin/basicBanner',
+				type: 'GET',
+				dataType: 'json'
+			}).done(function(basicBn) {
+				$('#basicBnImg').attr('src', getPathRootJump()+`resources/assets/media/photos/${basicBn.fileName}`);
+				$('#shoutcutBtn').css('display', 'inline-block');
+			})
+		}
+		
+		// 배너 등록
+		function basicBannerInsert() {
+			var formData = new FormData();
+			
+			formData.append("file", $('input[type=file]').get(0).files[0]);
+			formData.append("adNo", $('input[type=hidden]').val());
+			formData.append("url", $('input[type=text]').val());			
+			
+			$.ajax({
+						url: getPathRootJump() + 'admin/basicBanner',
+						method:'POST',
+						data: formData,
+						contentType: false,
+						processData: false,
+						beforeSend: function (xhr) {
+					       xhr.setRequestHeader(header, token);
+						}
+					}
+			).done(function() {
+				alert('success')
+			})
+		}
+		
+		function getPathRootJump() {
+			var pathName = window.location.pathname.substring(1);
+			var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+			var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+			return path_root;
+		}
 	</script>
 	
 </main>

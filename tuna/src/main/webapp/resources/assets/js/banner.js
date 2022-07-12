@@ -74,10 +74,9 @@ function submit() {
 		
 		const job = $(this).data('job');
 		// ajax
-		if (job === 'insert') {
-			console.log('insert');
-		} else if (job === 'modify') {
-			console.log('modify');
+		if (job === 'basic') {
+			basicBannerInsert();
+		} else if (job === 'option') {
 		}
 		
 	}) 

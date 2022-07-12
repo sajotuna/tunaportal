@@ -4,8 +4,10 @@ import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class BannerVO {
 	private int no;
@@ -15,5 +17,7 @@ public class BannerVO {
 	private Date endDate;
 	private String fileName;
 	private String uri;
-	private int adNo;
+	private String url;
+	private int sequence;
+	private String adNo;
 }
