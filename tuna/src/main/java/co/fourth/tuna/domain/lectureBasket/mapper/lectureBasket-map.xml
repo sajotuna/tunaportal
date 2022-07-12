@@ -2,4 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="co.fourth.tuna.domain.lectureBasket.mapper.LectureBasketMapper">
+
+<insert id = "baskInsert" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
+	<selectKey order="BEFORE" keyProperty="no" resultType="string">
+		SELECT NVL(MAX(no)+1,0) FROM LECTURESCHEDULE
+	</selectKey>
+
+insert into lecturebasket values (#{no}, #{stateCode}, #{seasonCode}, #{sbjNo}, #{stNo});
+
+</insert>
+
+
+
 </mapper>

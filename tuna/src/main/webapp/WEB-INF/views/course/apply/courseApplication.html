@@ -100,14 +100,14 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </thead>
                   <tbody>
                     <tr th:scope="row" th:each="sub : ${list}">
-                      <th class="fw-semibold fs-sm" th:text ="${sub.type}"></th>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.no}"></td>
-                      <td class="fw-semibold fs-sm"th:text = "${sub.name}"></td>
-                      <td class="fw-semibold fs-sm"><a href="#" th:text = "${sub.proname}"></a></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.roomcode}"></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.daycode}"></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.point}"></td>
-                      <td class="fw-semibold fs-sm"th:text = "${sub.limit}"></td>
+                      <th class="fw-semibold fs-sm" th:text ="${sub.TYPE}"></th>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
+                      <td class="fw-semibold fs-sm"th:text = "${sub.NAME}"></td>
+                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.ROOMCODE}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.DAYCODE}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
+                      <td class="fw-semibold fs-sm"th:text = "${sub.LIMIT}"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -162,60 +162,78 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:scope="row">
-                      <th class="fw-semibold fs-sm">전공/필수</th>
-                      <td class="fw-semibold fs-sm">014-124357</td>
-                      <td class="fw-semibold fs-sm">컴퓨터 그래픽스</td>
-                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();">최규완</a></td>
-                      <td class="fw-semibold fs-sm">참치관 103호</td>
-                      <td class="fw-semibold fs-sm">13:00~14:00 월/수</td>
-                      <td class="fw-semibold fs-sm">3</td>
-                      <td class="fw-semibold fs-sm">12/45</td>
+                    <tr th:scope="row" th:each="sub : ${baskLists}">
+                      <th class="fw-semibold fs-sm" th:text ="${sub.TYPE}"></th>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
+                      <td class="fw-semibold fs-sm"th:text = "${sub.NAME}"></td>
+                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.ROOMCODE}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.DAYCODE}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
+                      <td class="fw-semibold fs-sm"th:text = "${sub.LIMIT}"></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </div>
+           </div>
             <div class="mb-5 ">
               <div class="block-contents">
-              <form th:action = "@{/}" method="post">
-                <div class="row">
-                  <div class="col-md-2 col-xl-1 mt-4">
-                    <label class="form-label" for="example-flatpickr-time-standalone-24">과목코드</label>
-                  </div>
-                  <div class="col-md-3 col-xl-2 mt-4">
-                    <input type="text" class="form-control" id="example-flatpickr-time-standalone-24"
-                      name="example-flatpickr-time-standalone-24">
-                  </div>
-                  <div class="col-md-2 col-xl-1 mt-4">
-                    <button type="button" class="btn btn-info col-12">신청</button>
-                  </div>
+                <form th:action="@{/}" method="post">
+                  <div class="row">
+                    <div class="col-md-2 col-xl-1 mt-4">
+                      <label class="form-label" for="example-flatpickr-time-standalone-24">과목코드</label>
+                    </div>
+                    <div class="col-md-4 col-xl-3 mt-3">
+                      <input type="text" class="form-control" id="example-flatpickr-time-standalone-24"
+                        name="example-flatpickr-time-standalone-24">
+                    </div>
+                    <div class="col-md-2 col-xl-1 mt-3">
+                      <button type="button" class="btn btn-info col-12">신청</button>
+                    </div>
 
-                  <div class ="col-md-3 col-xl-3">
-                    <span style="display: block; text-align : center;">자동 로그인 방지</span>
-                    <div style="overflow: hidden">
-                      <div class = "d-flex justify-content-center">
-                        <img title="캡차이미지" src="${pageContext.request.contextPath }/stud/captchaImg.do" alt="캡차이미지" />
-                        <div id="ccaudio" style="display: none"></div>
+                    <div class="col-md-3 col-xl-3">
+                      <div style="overflow: hidden">
+                        <div class="d-flex justify-content-center">
+                          <img title="캡차이미지" th:src="@{/stud/captchaImg.do}" alt="캡차이미지" />
+                          <div id="ccaudio" style="display: none"></div>
+                            <div class="block-contents">
+                              <div class="col-12">
+                              <button id="reload" type="button" onclick="javaScript:getImage()" class=" btn "><svg
+                                  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                  class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                  <path fill-rule="evenodd"
+                                    d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                                  <path
+                                    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                                </svg></button>
+                              </div>
+                              <div class="col-12">
+                              <button id="soundOn" type="button" class=" btn" style="margin: 0 auto;"
+                                onclick="javaScript:audio()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                  fill="currentColor" class="bi bi-volume-up" viewBox="0 0 16 16">
+                                  <path
+                                    d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
+                                  <path
+                                    d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
+                                  <path
+                                    d="M10.025 8a4.486 4.486 0 0 1-1.318 3.182L8 10.475A3.489 3.489 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.486 4.486 0 0 1 10.025 8zM7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12V4zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11z" />
+                                </svg></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-xl-3 mt-3">
+                        <input id="answer" type="text" class="form-control" value="">
+                      </div>
+                      <div class="col-md-2 col-xl-1 mt-3">
+                        <input id="check" class="btn btn-info col-12" type="button" value="확인" />
                       </div>
                     </div>
-                  </div>
-                  <div class ="col-md-2 col-xl-2">
-                    <input id="reload" type="button" onclick="javaScript:getImage()" class="col-12 btn btn-outline-secondary"
-                      value="새로고침" /> 
-                      <input id="soundOn" type="button" class="col-12 btn btn-outline-secondary" style="margin: 0 auto;"
-                      onclick="javaScript:audio()" value="음성듣기" />
+
                     
-                  </div>
-                  <div class ="col-md-3 col-xl-2 mt-4">
-                    <input id="answer" type="text" class="form-control" value=""> 
-                  </div>
-                  <div class ="col-md-2 col-xl-1 mt-4">
-                    <input id="check" class="btn btn-info col-12" type="button" value="확인" />
-                  </div>
-                </div>
-              </form>
-            </div>
+                </form>
+              </div>
             </div>
 
 
@@ -238,15 +256,15 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:scope="row">
-                      <th class="fw-semibold fs-sm">전공/필수</th>
-                      <td class="fw-semibold fs-sm">014-124357</td>
-                      <td class="fw-semibold fs-sm">컴퓨터 그래픽스</td>
-                      <td class="fw-semibold fs-sm">최규완</td>
-                      <td class="fw-semibold fs-sm">참치관 103호</td>
-                      <td class="fw-semibold fs-sm">13:00~14:00 월/수</td>
-                      <td class="fw-semibold fs-sm">3</td>
-                      <td class="fw-semibold fs-sm">12/45</td>
+                    <tr th:scope="row" th:each="sub : ${courLists}">
+                      <th class="fw-semibold fs-sm" th:text ="${sub.TYPE}"></th>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
+                      <td class="fw-semibold fs-sm"th:text = "${sub.NAME}"></td>
+                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.ROOMCODE}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.DAYCODE}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
+                      <td class="fw-semibold fs-sm"th:text = "${sub.LIMIT}"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -257,9 +275,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
       </div>
     </div>
   </div>
-  </main>
-  <script src="assets/js/oneui.app.min.js"></script>
-  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+  
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script>
   
     function showPopup() {
@@ -274,9 +291,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 			document.querySelector('#check').addEventListener(
 					'click',
 					function() {
+						console.log("버ㅏ튼")
 						$.ajax(
 								{
-									url:'/tuna/stud/chkAnswer.do', 
+									url:'chkAnswer.do', 
 									method:'POST',
 									data: {'answer':document.querySelector('#answer').value},
 									beforeSend: function (xhr) {
@@ -303,7 +321,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		function audio() {
 			var rand = Math.random();
 			var uAgent = navigator.userAgent;
-			var soundUrl = '/tuna/stud/captchaAudio.do?rand=' + rand;
+			var soundUrl = 'captchaAudio.do?rand=' + rand;
 			if (uAgent.indexOf('Trident') > -1 || uAgent.indexOf('MISE') > -1) { /*IE 경우 */
 				audioPlayer(soundUrl);
 			} else if (!!document.createElement('audio').canPlayType) { /*Chrome 경우 */
@@ -318,11 +336,12 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		}
 		function getImage() {
 			var rand = Math.random();
-			var url = '/tuna/stud/captchaImg.do?rand=' + rand;
+			var url = 'captchaImg.do?rand=' + rand;
 			document.querySelector('img').setAttribute('src', url);
 		}
 		function audioPlayer(objUrl) {
 			document.querySelector('#ccaudio').innerHTML = '<bgsoun src="' +objUrl +'">';
 		}
   </script>
+  </main>
 </body>
