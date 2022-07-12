@@ -11,12 +11,10 @@
 </head>
 <body>
 	<div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow side-trans-enabled">
-		<th:block th:replace="layouts/aside/adminSidebar"></th:block>	
-		<header th:replace="layouts/aside/header"></header>
+		<th:block th:replace="layouts/aside/adminSidebar :: sidebar"></th:block>	
+		<header th:replace="layouts/aside/header :: header"></header>
 		<main id="main-container" layout:fragment="main"></main>
 	</div>
-	
-	<!-- Script -->
-	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+
 </body>
 </html>
