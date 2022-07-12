@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.fourth.tuna.domain.common.mapper.CodeMapper">
+
+<resultMap type="co.fourth.tuna.domain.common.vo.code.CodeVO"
+	id = "CodeMap">
+	<id property="no" column="no" />
+	<result property="codeName" column="codename" />
+	
+</resultMap>
+
+<resultMap type="co.fourth.tuna.domain.common.vo.code.CodeMasterVO"
+ id = "CodeMasterMap">
+ 	<id property="no" column="no" />
+ 	<result property="codeName" column="codename" />
+ 	<collection property="children" column="children" resultMap="CodeMap" />
+ </resultMap>
+
+	<select id="getCodeList" resultMap="CodeMap">
+		SELECT rownum id, p.*
+		FROM publiccode p
+		WHERE p.codedivision IS NOT NULL
+	</select>
+	
+	
+	<select id="getCodeMasterList" resultMap="CodeMasterMap">
+		SELECT rownum id, p.*
+	FROM publiccode P
+	WHERE p.codedivision IS NULL
+	</select>
+	
+</mapper>
