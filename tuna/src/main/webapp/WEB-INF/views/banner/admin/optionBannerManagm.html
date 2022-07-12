@@ -6,16 +6,23 @@
 	<meta charset="UTF-8">
 	<title>optionBannerManagm</title>
  	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
+ 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
  	<style>
+ 		.preview {
+			background: rgb(100,100,100);
+		}
 		.img-section {
-			width: 100%;
+			width: 450px;
 			height: 300px;
 			background: gray;
+			overflow:hidden;
 			position:relative;
 		}
+
         .img {
+            width:100%;
             height:100%;
-            width:auto;
+            object-fit: cover;
         }
         .shortcut-btn {
             position:absolute;
@@ -37,10 +44,12 @@
 							<div class="col-xl-10">
 								<!-- Banner Preview -->
 								<h2 class="content-heading mb-2 pb-2">배너 미리보기</h2>
-								<div class="mb-4 img-section">
-									<!-- <button id="btn" class="btn btn-alt-secondary shortcut-btn">바로가기</button>  -->
-									<img id="bnImg" class="img" src="#" alt="">
-								</div> 
+								<div class="mb-4 d-flex justify-content-center preview">
+									<div class="img-section">
+										<button id="shortCutBtn" class="btn btn-alt-secondary shortcut-btn" style="display:none;">바로가기</button>
+										<img id="shortcutImg" class="img" alt="">
+									</div> 
+								</div>
 								<!-- END Banner Preview -->
 								<!-- Option Banner Form -->
 								<form id="optionBnFrm">
@@ -70,15 +79,16 @@
 							        <label class="form-label" for="startDate">게시일자 <span class="text-danger">*</span></label>
 						            <div class="mb-4">
 						              	<div id="dateShake" class="input-daterange input-group">
-							                <input type="date" class="form-control date" id="date" name="" required="required">
-							                <span class="input-group-text fw-semibold">
-							                  <i class="fa fa-fw fa-arrow-right"></i>
-							                </span>
-							                <input type="date" class="form-control date" id="endDate" name="" required="required">
+										    <div class="input-daterange input-group" data-date-format="mm/dd/yyyy" data-week-start="1" data-autoclose="true" data-today-highlight="true">
+										      <input type="text" class="form-control date" id="date" name="" placeholder="From" data-week-start="1" data-autoclose="true" data-today-highlight="true">
+										      <span class="input-group-text fw-semibold">
+										        <i class="fa fa-fw fa-arrow-right"></i>
+										      </span>
+										      <input type="text" class="form-control date" id="endDate" name="" placeholder="To" data-week-start="1" data-autoclose="true" data-today-highlight="true">
+										    </div>
 						              	</div>
 					                  	<div class="d-flex justify-content-center mt-5">
-											<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="modify">배너 수정</button>
-											<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="insert">배너 등록</button>
+											<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="option">배너 등록</button>
 					      			  	</div>
 						            </div>
 					            </form>
@@ -91,9 +101,18 @@
 		</div>
 	</div>
 	<!-- END Page Content -->
-	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-	<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
+	<script th:src="@{/resources/assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+	<script>One.helpersOnLoad(['jq-datepicker']);</script>
+	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	<script th:src="@{/resources/assets/js/banner.js}"></script>
+	
+	<script type="text/javascript">
+
+		function optionBannerInsert() {
+			pageDialogs.dialog();
+		}
+	
+	</script>
 </main>
 </body>
 </html>

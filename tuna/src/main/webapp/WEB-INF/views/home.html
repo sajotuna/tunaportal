@@ -17,24 +17,25 @@
             height: 136px;
             padding:0;
         }
-
         .banner {
             overflow:hidden;
             padding:0;   
         }
         .banner-img {
+            width:100%;
             height:100%;
-            width:auto;
+            object-fit: cover;
         }
-        #shortcut-banner {
+        .shortcut-banner {
             position:relative;
+            overflow:hidden;
         }
-        #shortcut-btn {
+        .shortcut-btn {
             position:absolute;
             left:2rem!important;
             top:2rem!important;
         }
-        #slogan-banner {
+        .slogan-banner {
             padding:30px;
         }
         .img-fluid {
@@ -261,7 +262,7 @@
 	                    </div>
 	                </div>
 	                <div class="block block-rounded">
-	                    <div id="slogan-banner" class="block-content short-box banner bg-muted">
+	                    <div class="block-content short-box banner bg-muted slogan-banner">
 	                        <h4 class="text-gray-lighter">TUNA, <br>세계의 중심에서 세상을 바꾸라.</h4>
 	                        
 	                    </div>
@@ -287,9 +288,9 @@
 	            <!-- Shortcut Banner -->
 	            <div class="col-xl-5">
 	                <div class="block block-rounded">
-	                    <div id="shortcut-banner" class="block-content box banner">
-	                        <button id="shortcut-btn" class="btn btn-alt-secondary" onclick="javascript:void(0)">바로가기</button>
-							<img class="banner-img" src="" alt="">
+	                    <div class="block-content box banner shortcut-banner">
+	                        <button id="shortcutBtn" class="btn btn-alt-secondary shortcut-btn" onclick="javascript:void(0)">바로가기</button>
+							<img id="shortcutImg" class="banner-img" alt="">
 						</div>
 	                </div>
 	            </div>
@@ -316,11 +317,33 @@
 	 <!-- END Footer -->
 </div>
  
-	<!-- Script -->
 	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
     <script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
     <script th:src="@{/resources/assets/js/plugins/slick-carousel/slick.min.js}"></script>
     <script>One.helpersOnLoad(['jq-slick']);</script>
-	<!-- END Script -->
+   	<script type="text/javascript">
+   		
+	   	$(function() {
+	   		shortcutBanner();
+		})
+		
+		// 기본 배너
+		function shortcutBanner() {
+			$.ajax({
+				
+				url: 'admin/basicBanner',
+				type: 'GET',
+				dataType: 'json'
+				
+				}).done(function(basicBn) {
+					
+					$('#shortcutImg').attr('src', `resources/assets/media/photos/${basicBn.fileName}`);
+					$('#shortcutBtn').attr('onclick', `location.href='${basicBn.url}'`);
+					
+				})
+		}
+   	
+   	</script>
+   	
 </body>
 </html>

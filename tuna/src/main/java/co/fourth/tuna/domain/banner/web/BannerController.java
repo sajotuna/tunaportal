@@ -1,9 +1,15 @@
 package co.fourth.tuna.domain.banner.web;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +22,8 @@ import co.fourth.tuna.domain.banner.vo.BannerVO;
 
 @Controller
 public class BannerController {
+	
+	private static Logger logger = LoggerFactory.getLogger(BannerController.class); 
 	
 	@Autowired BannerService bannerDao;
 	
@@ -31,21 +39,40 @@ public class BannerController {
 		return bannerDao.bannerSelect("1302");
 	}
 	
+	@Autowired String saveDir;
+	
 	// 기본 배너 등록
 	@PostMapping("/admin/basicBanner")
 	@ResponseBody
 	public int basicBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile file, HttpServletRequest request) {
-		vo.setBannerCode("1302");
+		
+		// 이 경로는 톰캣 서버에 올라간다. 서버 꺼지면 바로 사라짐.
+		//String savePath = request.getSession().getServletContext().getRealPath("/WEB-INF/files");
+		
+		logger.info("path :: "+request.getServletContext().getRealPath("/WEB-INF/files"));
+		// /Users/binggla/apache-tomcat-9.0.63/wtpwebapps/tuna/WEB-INF/files
+		
+		File dir = new File(saveDir);
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
 		
 		String fileName = file.getOriginalFilename();
-//		String uid = UUID.randomUUID().toString();
-//		String saveFileName = uid + fileName.substring(fileName.indexOf("."));
-//		
-//		Set path = request.getSession().getServletContext().getResourcePaths("/");
-//		File target = new File(path+"/WEB-INF/files/"+saveFileName);
-//		
-//		vo.setFileName(fileName);
-//		vo.setUri(saveFileName);
+		String uid = UUID.randomUUID().toString();
+		String saveFileName = uid + fileName.substring(fileName.indexOf("."));
+		
+		
+		File target = new File(saveDir,saveFileName);
+		
+		try {
+			FileCopyUtils.copy(file.getBytes(), target);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		vo.setFileName(fileName);
+		vo.setUri(saveFileName);
+		vo.setBannerCode("1302");
 		
 		return bannerDao.bannerInsert(vo);
 	}
