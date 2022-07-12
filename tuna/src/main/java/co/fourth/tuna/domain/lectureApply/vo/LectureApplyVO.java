@@ -15,19 +15,7 @@ public class LectureApplyVO {
 	private int stNo;
 	private int sbjNo;
 	
-//	private SubjectVO subject;
-	private String group;
-	private String name;
-	private int target;
-	private String type;
-	private int point;
-	private int limit;
-	private String deptCode;
-	private int pfNo;
-//	private LectureScheduleVO Schedule;
+	private String stateCode;
 	
-	private String dayCode;
-	private String roomCode;
-	private String timeCode;
 
 }

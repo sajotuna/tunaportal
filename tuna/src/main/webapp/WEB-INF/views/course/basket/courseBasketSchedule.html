@@ -495,6 +495,14 @@ Main Components
     .cd-schedule .single-event[data-event="event-4"]:hover {
       background: #f7bd7f;
     }
+    .cd-schedule .single-event[data-event="event-5"],
+    .cd-schedule [data-event="event-5"] .header-bg {
+      background: #f64213;
+    }
+
+    .cd-schedule .single-event[data-event="event-5"]:hover {
+      background: #f64213;
+    }
 
     .cd-schedule .event-modal {
       position: fixed;
@@ -1019,167 +1027,76 @@ xcarbonads
             </div> <!-- .timeline -->
 
             <div class="events">
-              <ul>
-                <li class="events-group">
-                  <div class="top-info"><span>Monday</span></div>
+              <ul th:each = "sub : ${baskList}">
+                <li class="events-group" th:if = "${@codeList.getName(sub.DAYCODE) == '월요일'}">
+                  <div class="top-info"><span>월요일</span></div>
+					<ul>
+						<li class="single-event" th:data-start="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0])}" th:data-end="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}" 
+                        data-event="event-1">
+                        <em class="event-name">[[${sub.NAME}]]</em>
+                      
+                    	</li>
+					</ul>
+                  
+                </li>
+
+                <li class="events-group" th:if = "${@codeList.getName(sub.DAYCODE) == '화요일'}">
+                  <div class="top-info"><span>화요일</span></div>
 
                   <ul>
-                    <li class="single-event" data-start="09:30" data-end="10:30" data-content="event-abs-circuit"
-                      data-event="event-1">
-                        <em class="event-name">Abs Circuit</em>
-                     
-                    </li>
-
-                    <li class="single-event" data-start="11:00" data-end="12:30" data-content="event-rowing-workout"
-                      data-event="event-2">
-                        <em class="event-name">Rowing Workout</em>
-                     
-                    </li>
-
-                    <li class="single-event" data-start="14:00" data-end="15:15" data-content="event-yoga-1"
-                      data-event="event-3">
-                        <em class="event-name">Yoga Level 1</em>
+						<li class="single-event" th:data-start="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0])}" th:data-end="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}" 
+                        data-event="event-2">
+                        <em class="event-name">[[${sub.NAME}]]</em>
                       
-                    </li>
+                    	</li>
+					</ul>
+                </li>
+
+                <li class="events-group" th:if = "${@codeList.getName(sub.DAYCODE) == '수요일'}">
+                  <div class="top-info"><span>수요일</span></div>
+
+                  <ul>
+                    <li class="single-event" th:data-start="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0])}" th:data-end="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}" 
+                        data-event="event-3">
+                        <em class="event-name">[[${sub.NAME}]]</em>
+                      
+                    	</li>
                   </ul>
                 </li>
 
-                <li class="events-group">
-                  <div class="top-info"><span>Tuesday</span></div>
+                <li class="events-group" th:if = "${@codeList.getName(sub.DAYCODE) == '목요일'}">
+                  <div class="top-info"><span>목요일</span></div>
 
                   <ul>
-                    <li class="single-event" data-start="10:00" data-end="11:00" data-content="event-rowing-workout"
-                      data-event="event-2">
-                        <em class="event-name">Rowing Workout</em>
+                    <li class="single-event" th:data-start="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0])}" th:data-end="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}" 
+                        data-event="event-4">
+                        <em class="event-name">[[${sub.NAME}]]</em>
                       
-                    </li>
-
-                    <li class="single-event" data-start="11:30" data-end="13:00" data-content="event-restorative-yoga"
-                      data-event="event-4">
-                        <em class="event-name">Restorative Yoga</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="13:30" data-end="15:00" data-content="event-abs-circuit"
-                      data-event="event-1">
-                     
-                        <em class="event-name">Abs Circuit</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="15:45" data-end="16:45" data-content="event-yoga-1"
-                      data-event="event-3">
-                     
-                        <em class="event-name">Yoga Level 1</em>
-                      
-                    </li>
+                    	</li>
                   </ul>
                 </li>
 
-                <li class="events-group">
-                  <div class="top-info"><span>Wednesday</span></div>
+                <li class="events-group" th:if = "${@codeList.getName(sub.DAYCODE) == '금요일'}">
+                  <div class="top-info"><span>금요일</span></div>
 
                   <ul>
-                    <li class="single-event" data-start="09:00" data-end="10:15" data-content="event-restorative-yoga"
-                      data-event="event-4">
-                     
-                        <em class="event-name">Restorative Yoga</em>
+                    <li class="single-event" th:data-start="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0])}" th:data-end="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}" 
+                        data-event="event-5">
+                        <em class="event-name">[[${sub.NAME}]]</em>
                       
-                    </li>
-
-                    <li class="single-event" data-start="10:45" data-end="11:45" data-content="event-yoga-1"
-                      data-event="event-3">
-                     
-                        <em class="event-name">Yoga Level 1</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="12:00" data-end="13:45" data-content="event-rowing-workout"
-                      data-event="event-2">
-                      
-                        <em class="event-name">Rowing Workout</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="13:45" data-end="15:00" data-content="event-yoga-1"
-                      data-event="event-3">
-                      
-                        <em class="event-name">Yoga Level 1</em>
-                     
-                    </li>
-                  </ul>
-                </li>
-
-                <li class="events-group">
-                  <div class="top-info"><span>Thursday</span></div>
-
-                  <ul>
-                    <li class="single-event" data-start="09:30" data-end="10:30" data-content="event-abs-circuit"
-                      data-event="event-1">
-                     
-                        <em class="event-name">Abs Circuit</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="12:00" data-end="13:45" data-content="event-restorative-yoga"
-                      data-event="event-4">
-                      
-                        <em class="event-name">Restorative Yoga</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="15:30" data-end="16:30" data-content="event-abs-circuit"
-                      data-event="event-1">
-                     
-                        <em class="event-name">Abs Circuit</em>
-                     
-                    </li>
-
-                    <li class="single-event" data-start="17:00" data-end="18:30" data-content="event-rowing-workout"
-                      data-event="event-2">
-                      
-                        <em class="event-name">Rowing Workout</em>
-                     
-                    </li>
-                  </ul>
-                </li>
-
-                <li class="events-group">
-                  <div class="top-info"><span>Friday</span></div>
-
-                  <ul>
-                    <li class="single-event" data-start="10:00" data-end="11:00" data-content="event-rowing-workout"
-                      data-event="event-2">
-                      
-                        <em class="event-name">Rowing Workout</em>
-                     
-                    </li>
-
-                    <li class="single-event" data-start="12:30" data-end="14:00" data-content="event-abs-circuit"
-                      data-event="event-1">
-                     
-                        <em class="event-name">Abs Circuit</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="15:45" data-end="16:45" data-content="event-yoga-1"
-                      data-event="event-3">
-                      
-                        <em class="event-name">Yoga Level 1</em>
-                      
-                    </li>
+                    	</li>
                   </ul>
                 </li>
               </ul>
             </div>
-
+			
 
           </div> <!-- #carbonads-container -->
         </div>
       </div>
     </div>
   </div>
-  </main>
+
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script>
     jQuery(document).ready(function ($) {
@@ -1577,6 +1494,7 @@ xcarbonads
       }
     });
   </script>
+  </main>
 </body>
 
 </html>
