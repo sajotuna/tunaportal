@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layouts/eclassLayout}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>과제</title>
+<link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
+</head>
+<body>
+	<div id="page-container"
+		class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+		<!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+		<main layout:fragment="main">
+			<div class="content">
+				<div class="row">
+					<div class="col-12">
+						<h3 class="h3 fw-bold mb-2">과제</h3>
+					</div>
+				</div>
+				<div class="block">
+					<div class="row">
+						<div class="col-12">
+							<div class="row block-content">
+								<h4 class="h4 fw-bold mb-2 col-2 text-center">[진행중]</h4>
+								<h4 class="h4 mb-2 col-7 text-center">
+									<a th:href="@{/eclass/student/taskSelect}" style="color: black">부트스트랩 적용 파일 제출</a>
+								</h4>
+								<h4 class="h4 text-center col-3">마감일 : ~00/00</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block">
+					<div class="row">
+						<div class="col-12">
+							<div class="row block-content">
+								<h3 class="h4 fw-bold mb-2 col-2 text-center">[마감]</h3>
+								<h3 class="h4 mb-2 col-7 text-center">
+									<a th:href="@{/eclass/student/taskSelect}" style="color: black">JAVA 프로그래밍 실습 파일
+										제출</a>
+								</h3>
+								<h4 class="h4 text-center col-3">마감일 : ~00/00</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+
+		</main>
+	</div>
+</body>
+</html>

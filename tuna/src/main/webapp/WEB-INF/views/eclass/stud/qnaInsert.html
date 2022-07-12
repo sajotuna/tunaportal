@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layouts/eclassLayout}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>질의응답작성</title>
+<link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
+</head>
+<body>
+	<div id="page-container"
+		class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+		<!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+		<main layout:fragment="main">
+			<div class="content">
+				<div class="row">
+					<div class="col-12">
+						<h3 class="h3 fw-bold mb-2">Q&A</h3>
+					</div>
+				</div>
+				<div class="block block-rounded">
+					<div class="block-content block-content-full">
+						<div id="DataTables_Table_0_wrapper"
+							class="dataTables_wrapper dt-bootstrap5 no-footer">
+							<div class="row">
+								<div class="col-sm-12">
+									<table
+										class="table table-vcenter js-dataTable-full dataTable no-footer"
+										id="DataTables_Table_0"
+										aria-describedby="DataTables_Table_0_info">
+										<thead>
+											<tr>
+												<th class="text-center">제목</th>
+												<th class="text-center"><input class="form-control"></th>
+												<th class="text-center"><input class="private"
+													type="checkbox" value="private"><label
+													for="private">비공개</label></th>
+											</tr>
+										</thead>
+									</table>
+									<form action="be_forms_editors.html" method="POST"
+										onsubmit="return false;">
+										<textarea class="js-simplemde" id="simplemde" name="simplemde"></textarea>
+									</form>
+									<div class="d-flex justify-content-center">
+										<button th:onclick="|location.href='@{/eclass/student/qnaForm}'|" type="button"
+											class="btn btn-primary m-2">등록</button>
+										<button th:onclick="|location.href='@{/eclass/student/qnaList}'|" type="button"
+											class="btn btn-dark  m-2">취소</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-xxl-12"></div>
+							<!-- col-12 end -->
+						</div>
+
+					</div>
+					<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+					<script
+						th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
+					<!-- Page JS Helpers (CKEditor + SimpleMDE plugins) -->
+					<script>
+						One.helpersOnLoad([ 'js-simplemde' ]);
+				</script>
+		</main>
+	</div>
+</body>
+</html>
