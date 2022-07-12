@@ -1,272 +1,198 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    data-layout-decorate="~{layouts/eclassLayout}">
-  <head>
-    <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layouts/eclassLayout}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>대시보드</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-    />
-    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
-  </head>
-  <body>
-    <div
-      id="page-container"
-      class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow"
-    >
-      <div id="page-overlay"></div>
-
-      <aside id="side-overlay">
-        <div class="content-header"></div>
-        <div class="content-side"></div>
-      </aside>
-
-      <!--
-███████ ██ ██████  ███████     ██████   █████  ██████  
-██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██   ██ █████       ██████  ███████ ██████  
-     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
-      -->
-      <nav id="sidebar" aria-label="Main Navigation">
-        <div class="content-header"></div>
-        <div class="js-sidebar-scroll"></div>
-      </nav>
-      <!-- SIDE BAR END -->
-
-      <!--
-██   ██ ███████  █████  ██████  ███████ ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-███████ █████   ███████ ██   ██ █████   ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
-      -->
-      <header id="page-header">
-        <div class="content-header">page-header</div>
-      </header>
-      <!--HEADER END-->
-
-      <!--
+<title>대시보드</title>
+<link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
+</head>
+<body>
+	<div id="page-container"
+		class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+		<!--
  ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
 ██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
 ██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
 ██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
  ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
 -->
-      <main id="main-container">
-        <!-- <div class="bg-body-light">
-          <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-              <div class="flex-grow-1">
-                <h1 class="h3 fw-bold mb-2">
-                  Main
-                </h1>
-                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                  E-class 홈 화면 입니다.
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div> content header END -->
+		<main layout:fragment="main">
+			<div class="content">
+				<div class="row d-flex justify-content-sm-between">
+					<div class="col-8">
+						<h3 class="h3 fw-bold mb-2">강의목록</h3>
+					</div>
+					<div class="col-1"></div>
+					<div class="col-3">
+						<h3 class="h3 fw-bold mb-2">과제</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-8">
+						<div class="row">
+							<div class="col-6">
+								<div class="block">
+									<div class="block-header block-header-default text-center">
+										<h3 class="block-title">A과목</h3>
+									</div>
+									<div class="block-content text-center bg-white">
+										<div class="row d-flex justify-content-center">
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" th:href="@{/eclass/student/lectureNotice}"
+													style="color: black"> <i class="far fa-2x fa-bell m-2"></i>
+													<p class="" style="font-size: 8pt">공지</p>
+												</a>
+											</div>
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" th:href="@{/eclass/student/qnaList}"
+													style="color: black"> <i
+													class="far fa-2x fa-circle-question m-2"></i>
+													<p class="" style="font-size: 8pt">QnA</p>
+												</a>
+											</div>
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" th:href="@{/eclass/student/taskList}"
+													style="color: black"> <i
+													class="fa fa-2x fa-book-open m-2"></i>
+													<p class="" style="font-size: 8pt">과제</p>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="block">
+									<div class="block-header block-header-default text-center">
+										<h3 class="block-title">B과목</h3>
+									</div>
+									<div class="block-content text-center bg-white">
+										<div class="row d-flex justify-content-center">
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" href="공지사항.html" style="color: black"> <i
+													class="far fa-2x fa-bell m-2"></i>
+													<p class="" style="font-size: 8pt">공지</p>
+												</a>
+											</div>
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" href="질의응답.html" style="color: black"> <i
+													class="far fa-2x fa-circle-question m-2"></i>
+													<p class="" style="font-size: 8pt">QnA</p>
+												</a>
+											</div>
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" href="과제.html" style="color: black"> <i
+													class="fa fa-2x fa-book-open m-2"></i>
+													<p class="" style="font-size: 8pt">과제</p>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="block">
+									<div class="block-header block-header-default text-center">
+										<h3 class="block-title">C과목</h3>
+									</div>
+									<div class="block-content text-center bg-white">
+										<div class="row d-flex justify-content-center">
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" href="공지사항.html" style="color: black"> <i
+													class="far fa-2x fa-bell m-2"></i>
+													<p class="" style="font-size: 8pt">공지</p>
+												</a>
+											</div>
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" href="질의응답.html" style="color: black"> <i
+													class="far fa-2x fa-circle-question m-2"></i>
+													<p class="" style="font-size: 8pt">QnA</p>
+												</a>
+											</div>
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" href="과제.html" style="color: black"> <i
+													class="fa fa-2x fa-book-open m-2"></i>
+													<p class="" style="font-size: 8pt">과제</p>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="block">
+									<div class="block-header block-header-default text-center">
+										<h3 class="block-title">D과목</h3>
+									</div>
+									<div class="block-content text-center bg-white">
+										<div class="row d-flex justify-content-center">
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" href="공지사항.html" style="color: black"> <i
+													class="far fa-2x fa-bell m-2"></i>
+													<p class="" style="font-size: 8pt">공지</p>
+												</a>
+											</div>
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" href="질의응답.html" style="color: black"> <i
+													class="far fa-2x fa-circle-question m-2"></i>
+													<p class="" style="font-size: 8pt">QnA</p>
+												</a>
+											</div>
+											<div class="d-flex justify-content-center"
+												style="width: 50px">
+												<a class="" href="과제.html" style="color: black"> <i
+													class="fa fa-2x fa-book-open m-2"></i>
+													<p class="" style="font-size: 8pt">과제</p>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-1"></div>
+					<div class="col-3">
+						<div class="block">
+							<div class="block-header block-header-default text-center">
+								<h3 class="block-title">A과목</h3>
+							</div>
+							<div class="block-content text-lg-center bg-white">
+								<a href="과제상세.html" style="color: black">JAVA 실습</a>
+								<p class="text-danger fw-bold">~00/00</p>
+							</div>
+						</div>
+						<div class="block">
+							<div class="block-header block-header-default text-center">
+								<h3 class="block-title">A과목</h3>
+							</div>
+							<div class="block-content text-lg-center bg-white">
+								<a href="과제상세.html" style="color: black">BOOTSTRAP 실습</a>
+								<p class="text-danger fw-bold">~00/00</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xxl-12"></div>
+			<!-- col-12 end -->
+	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+	</main>
+	</div>
 
-        <div class="content">
-          <div class="row d-flex justify-content-sm-between">
-            <div class="col-8">
-              <h3 class="h3 fw-bold mb-2">강의목록</h3>
-            </div>
-            <div class="col-1"></div>
-            <div class="col-3">
-              <h3 class="h3 fw-bold mb-2">과제</h3>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-8">
-            <div class="row">
-              <div class="col-6">
-              <div class="block">
-                <div class="block-header block-header-default text-center">
-                  <h3 class="block-title">
-                    A과목
-                  </h3>
-                </div>
-                <div class="block-content text-center bg-white">
-                  <div class="row d-flex justify-content-center">
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="공지사항.html" style="color:black">
-                        <i class="far fa-2x fa-bell m-2"></i>
-                        <p class="" style="font-size:8pt">공지</p>
-                      </a>
-                    </div>
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="질의응답.html" style="color:black">
-                        <i class="far fa-2x fa-circle-question m-2"></i>
-                        <p class="" style="font-size:8pt">QnA</p>
-                      </a>
-                    </div>
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="과제.html" style="color:black">
-                        <i class="fa fa-2x fa-book-open m-2"></i>
-                        <p class="" style="font-size:8pt">과제</p>
-                      </a>
-                  </div>
-                </div>
-              </div>
-              </div>
-              </div>
-              <div class="col-6">
-              <div class="block">
-                <div class="block-header block-header-default text-center">
-                  <h3 class="block-title">
-                    B과목
-                  </h3>
-                </div>
-                <div class="block-content text-center bg-white">
-                  <div class="row d-flex justify-content-center">
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="공지사항.html" style="color:black">
-                        <i class="far fa-2x fa-bell m-2"></i>
-                        <p class="" style="font-size:8pt">공지</p>
-                      </a>
-                    </div>
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="질의응답.html" style="color:black">
-                        <i class="far fa-2x fa-circle-question m-2"></i>
-                        <p class="" style="font-size:8pt">QnA</p>
-                      </a>
-                    </div>
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="과제.html" style="color:black">
-                        <i class="fa fa-2x fa-book-open m-2"></i>
-                        <p class="" style="font-size:8pt">과제</p>
-                      </a>
-                  </div>
-                </div>
-              </div>
-              </div>
-              </div>
-              <div class="col-6">
-              <div class="block">
-                <div class="block-header block-header-default text-center">
-                  <h3 class="block-title">
-                    C과목
-                  </h3>
-                </div>
-                <div class="block-content text-center bg-white">
-                  <div class="row d-flex justify-content-center">
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="공지사항.html" style="color:black">
-                        <i class="far fa-2x fa-bell m-2"></i>
-                        <p class="" style="font-size:8pt">공지</p>
-                      </a>
-                    </div>
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="질의응답.html" style="color:black">
-                        <i class="far fa-2x fa-circle-question m-2"></i>
-                        <p class="" style="font-size:8pt">QnA</p>
-                      </a>
-                    </div>
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="과제.html" style="color:black">
-                        <i class="fa fa-2x fa-book-open m-2"></i>
-                        <p class="" style="font-size:8pt">과제</p>
-                      </a>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="block">
-                <div class="block-header block-header-default text-center">
-                  <h3 class="block-title">
-                    D과목
-                  </h3>
-                </div>
-                <div class="block-content text-center bg-white">
-                  <div class="row d-flex justify-content-center">
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="공지사항.html" style="color:black">
-                        <i class="far fa-2x fa-bell m-2"></i>
-                        <p class="" style="font-size:8pt">공지</p>
-                      </a>
-                    </div>
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="질의응답.html" style="color:black">
-                        <i class="far fa-2x fa-circle-question m-2"></i>
-                        <p class="" style="font-size:8pt">QnA</p>
-                      </a>
-                    </div>
-                    <div class="d-flex justify-content-center" style="width:50px">
-                      <a class="" href="과제.html" style="color:black">
-                        <i class="fa fa-2x fa-book-open m-2"></i>
-                        <p class="" style="font-size:8pt">과제</p>
-                      </a>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
-            </div>
-          </div>
-            <div class="col-1"></div>
-            <div class="col-3">
-              <div class="block">
-                <div class="block-header block-header-default text-center">
-                  <h3 class="block-title">
-                    A과목
-                  </h3>
-                </div>
-                <div class="block-content text-lg-center bg-white">
-                  <a href="과제상세.html" style="color:black">JAVA 실습</a>
-                  <p class="text-danger fw-bold">~00/00</p>
-                </div>
-              </div>
-              <div class="block">
-                <div class="block-header block-header-default text-center">
-                  <h3 class="block-title">
-                    A과목
-                  </h3>
-                </div>
-                <div class="block-content text-lg-center bg-white">
-                  <a href="과제상세.html" style="color:black">BOOTSTRAP 실습</a>
-                  <p class="text-danger fw-bold">~00/00</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-          <div class="col-xxl-12"></div>
-          <!-- col-12 end -->
-        </div>
-        <!-- content END -->
-
-        <!-- 모달 리스트 -->
-        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              Hello
-            </div>
-          </div>
-        </div> -->
-        <!-- 모달 리스트 END -->
-      </main>
-
-      <!--
-███████  ██████   ██████  ████████ ███████ ██████  
-██      ██    ██ ██    ██    ██    ██      ██   ██ 
-█████   ██    ██ ██    ██    ██    █████   ██████  
-██      ██    ██ ██    ██    ██    ██      ██   ██ 
-██       ██████   ██████     ██    ███████ ██   ██ 
--->
-      <!-- <footer id="page-footer" class="bg-flat-lighter">
-        <div class="content">footer</div>
-      </footer> -->
-    </div>
-
-    <script src="../assets/js/oneui.app.min.js"></script>
-  </body>
+</body>
 </html>

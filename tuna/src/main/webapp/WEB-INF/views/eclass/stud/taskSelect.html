@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layouts/eclassLayout}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>과제상세</title>
+<link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
+</head>
+<body>
+	<div id="page-container"
+		class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+		<!--
+ ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+ ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
+-->
+		<main layout:fragment="main">
+			<div class="content">
+				<div class="row">
+					<div class="col-12">
+						<h3 class="h3 fw-bold mb-2">과제</h3>
+					</div>
+				</div>
+				<div class="block block-rounded">
+					<div class="block-content block-content-full">
+						<div id="DataTables_Table_0_wrapper"
+							class="dataTables_wrapper dt-bootstrap5 no-footer">
+							<div class="row">
+								<div class="col-sm-12">
+									<table
+										class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
+										id="DataTables_Table_0"
+										aria-describedby="DataTables_Table_0_info">
+										<thead>
+											<tr>
+												<th class="text-center" tabindex="0" colspan="2">제목</th>
+												<th colspan="7">JAVA 실습 파일 제출</th>
+											</tr>
+											<tr>
+												<th class="text-center" tabindex="0" colspan="2">작성일자</th>
+												<th colspan="7">2000-00-00</th>
+											</tr>
+											<tr>
+												<th class="text-center" tabindex="0" colspan="2">마감일자</th>
+												<th colspan="7">2000-00-00</th>
+											</tr>
+											<tr>
+												<th class="text-center" tabindex="0" colspan="2">내용</th>
+												<th colspan="7">제출내용 : JAVA 실행 화면 제출<br> 조건 : 화면
+													캡쳐 5장(확장자 무관)
+												</th>
+											</tr>
+											<tr>
+												<th class="text-center" tabindex="0" colspan="2">파일</th>
+												<th colspan="7"><input
+													class="form-control fw-semibold fs-sm"
+													id="example-file-input" type="file"></th>
+											</tr>
+										</thead>
+									</table>
+									<div class="d-flex justify-content-center">
+										<button type="button"
+											th:onclick="|location.href='@{/eclass/student/taskSelect}'|"
+											class="btn btn-primary m-2">등록</button>
+										<button type="button"
+											th:onclick="|location.href='@{/eclass/student/taskList}'|"
+											class="btn btn-dark m-2">취소</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xxl-12"></div>
+			<!-- col-12 end -->
+			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+		</main>
+	</div>
+</body>
+</html>

@@ -162,7 +162,7 @@
 				</a>
 					<ul class="nav-main-submenu" sec:authorize="hasRole('ROLE_STUDENT')">
 						<li class="nav-main-item"><a class="nav-main-link"
-							href="#"> <span class="nav-main-link-name">e-class</span>
+							th:href="@{/eclass/student/home}"> <span class="nav-main-link-name">e-class</span>
 						</a></li>
 						<li sec:authorize="hasRole('ROLE_STAFF')" class="nav-main-item"><a class="nav-main-link"
 							href="#"> <span class="nav-main-link-name">e-class 교수</span>
@@ -268,11 +268,11 @@
 	                </div>
 	                
 	            </div>
-	            <div class="col-xl-3 col-md-6 d-none d-md-block">
+	            <div class="col-xl-3 col-md-6 d-none d-md-block"> 
 	                <div class="block block-rounded">
 	                    <div class="block-content box">
 	                        <button class="box-btn btn btn-outline-light 
-	                                    text-primary-darker fw-bold" onclick="javascript:void(0)">e-Class</button>
+	                                    text-primary-darker fw-bold" th:onclick="|location.href='@{/eclass/student/home}'|">e-Class</button>
 	                    </div>
 	                </div>
 	            </div>
