@@ -45,7 +45,7 @@ SELECT S.NO         NO,
    AND S.PFNO = P.NO 
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO 
-   AND STNO = #{STNO}
+   AND L2.STNO = #{stNo}
 </select>
 
 <select id = "CourseBasket" resultType="map" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
@@ -69,7 +69,10 @@ SELECT S.NO         NO,
    AND S.PFNO = P.NO 
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO
-   AND STNO = ${STNO}
+   AND L2.STNO = ${stNo}
+    <if test="stateCode == '401'">
+    	AND L2.STATECODE = #{stateCode}
+    </if>
  ORDER BY S.NO ASC
 
 </select>

@@ -38,10 +38,10 @@ public class LectureApplyController {
 	@RequestMapping("/stud/courseApplication")
 	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication) {
 		vo.setStNo(Integer.parseInt(authentication.getName()));
+		vo.setStateCode("401");
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind");
 		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo.getStNo());
-		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo.getStNo());
-		
+		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo);
 		model.addAttribute("list", lists);
 		model.addAttribute("courList", courLists);
 		model.addAttribute("baskList", baskLists);

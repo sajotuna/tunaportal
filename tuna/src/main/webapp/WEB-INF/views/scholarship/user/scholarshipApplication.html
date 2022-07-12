@@ -36,7 +36,7 @@
                 <div class="mb-4">
                   <div class="input-group">
                     <span class="input-group-text">소속</span>
-                    <input type="text" class="form-control" th:value="${vo.deptCode}" id="deptcode" name="deptcode" readonly>
+                    <input type="text" class="form-control" th:value="${@codeList.getName(vo.deptCode)}" id="deptcode" name="deptcode" readonly>
                   </div>
                 </div>
                 <div class="mb-4">
@@ -64,7 +64,7 @@
                       <span class="input-group-text">은행</span>
                       <div class="col-md-3 col-xl-2">
                         <select class="form-select" id="example-select" name="example-select">
-                          <option th:value="${vo.bacc}" th:text="${vo.bacc}"></option>
+                          <option th:value="${vo.bacc}" th:text="${@codeList.getName(vo.bacc)}"></option>
                           <option value="35">경남은행</option>
                           <option value="29">광주은행</option>
                           <option value="7">국민은행</option>

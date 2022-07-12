@@ -15,5 +15,7 @@ public class LectureApplyVO {
 	private int stNo;
 	private int sbjNo;
 	
+	private String stateCode;
+	
 
 }

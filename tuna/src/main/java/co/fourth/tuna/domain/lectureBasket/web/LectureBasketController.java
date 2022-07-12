@@ -50,12 +50,22 @@ public class LectureBasketController {
 	}
 	
 	@RequestMapping("/stud/courseBasketLectureList")
-	public String courseBasketLectureList() {
+	public String courseBasketLectureList(Model model,LectureBasketVO vo, Authentication authentication) {
+		vo.setStNo(authentication.getName());
+		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo.getStNo());
+		model.addAttribute("baskList", baskLists);
+		
 		return "course/basket/courseBasketLectureList";
 	}
 	
 	@RequestMapping("/stud/courseBasketSchedule")
-	public String courseBasketSchedule() {
+	public String courseBasketSchedule(Model model,LectureBasketVO vo, Authentication authentication) {
+		vo.setStNo(authentication.getName());
+		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo.getStNo());
+		model.addAttribute("baskList", baskLists);
+		
 		return "course/basket/courseBasketSchedule";
+	
+	
 	}
 }
