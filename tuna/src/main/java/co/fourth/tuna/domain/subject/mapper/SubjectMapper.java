@@ -11,6 +11,7 @@ public interface SubjectMapper {
 	public ArrayList<SubjectVO>findListForLectureSchedule(@Param("pageNum")int start, @Param("size")int size);
 	public ArrayList<SubjectVO>findListForLectureScheduleByProf(@Param("prof")ProfessorVO prof, @Param("pageNum")int pageNum, @Param("size")int size);
 	
+	
 	public SubjectVO findOne();
 	
 }

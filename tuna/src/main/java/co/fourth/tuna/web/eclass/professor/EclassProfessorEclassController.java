@@ -86,6 +86,7 @@ public class EclassProfessorEclassController {
 	
 	@GetMapping("/studentList")
 	public String studentListView(Model model, HttpServletRequest req) {
+		
 		return req.getServletPath();
 	}
 	

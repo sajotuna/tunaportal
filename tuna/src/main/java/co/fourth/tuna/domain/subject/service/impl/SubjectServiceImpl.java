@@ -40,7 +40,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	public List<Map<String, Object>> getMapsForLectureSchedule(int pageNum, int size) {
-		HashMap params = new HashMap();
+		Map<String, Object> params = new HashMap<>();
 		
 		params.put("pageNum", pageNum);
 		params.put("size", size);
@@ -53,7 +53,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	public List<Map<String, Object>> getMapsForLectureScheduleByProf(ProfessorVO prof, int pageNum, int size) {
-		HashMap params = new HashMap();
+		Map<String, Object> params = new HashMap<>();
 		
 		params.put("pageNum", pageNum);
 		params.put("size", size);

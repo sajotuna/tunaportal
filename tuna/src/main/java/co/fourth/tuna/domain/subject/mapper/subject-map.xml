@@ -15,7 +15,8 @@
 	    ls.no lsno,
 	    ls.daycode, ls.roomcode,
 	    ls.timecode, ls.sbjno,
-	    (SELECT COUNT(*) FROM lectureapply WHERE sbjno = s.no) AS student_count
+	    (SELECT COUNT(*) FROM lectureapply WHERE sbjno = s.no) AS student_count,
+	    (SELECT COUNT(*) FROM lectureqna WHERE sbjno = s.no) AS qna_count
 	    FROM subject s
 				JOIN lectureschedule ls
 						ON ls.sbjno = s.no
