@@ -27,6 +27,7 @@ public class PortalNoticeController {
 		return "notice/user/portalNoticeSelect";
 	}
 	
+	
 	@RequestMapping("/adminNoticeList")
 	public String adminNoticeList(Model model) {
 		model.addAttribute("notices", noticeDao.noticeList(1, "전체"));
