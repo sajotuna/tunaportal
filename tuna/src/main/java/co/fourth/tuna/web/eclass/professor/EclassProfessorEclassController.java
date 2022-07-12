@@ -1,18 +1,31 @@
 package co.fourth.tuna.web.eclass.professor;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import co.fourth.tuna.domain.common.service.PagingService;
+import co.fourth.tuna.domain.subject.service.SubjectService;
+
 
 @Controller
 @RequestMapping("/eclass/professor")
 public class EclassProfessorEclassController {
+	
+	@Autowired
+	PagingService pagingService;
+	
+	@Autowired
+	SubjectService subjectService;
 	
 	private String profPath = "/eclass/professor";
 	
@@ -23,6 +36,21 @@ public class EclassProfessorEclassController {
 //		logger.info(req.getRequestURI()); //tuna/eclass/professor/notice
 //		logger.info(req.getRequestURL().toString()); //http://localhost/tuna/eclass/professor/notice
 //		logger.info(req.getServletPath()); //eclass/professor/notice
+		
+//		PagingVO paging = new PagingVO();
+//		System.out.println("!! here");
+//		paging.setTableName("subject");
+//		paging.setSizePerPage(10);
+//		paging = pagingService.getPaging(paging);
+//		System.out.println(paging.getLength());
+		
+		// TODO 교수 데이터 추가해야함
+		List<Map<String,Object>> subList = subjectService.getMapsForLectureSchedule(1, 5);
+		
+		
+		
+		System.out.println(subList.get(0));
+		
 		return profPath + "/home";
 	}
 	
@@ -75,8 +103,6 @@ public class EclassProfessorEclassController {
 	public String subjectListView(Model model, HttpServletRequest req) {
 		return req.getServletPath();
 	}
-	
-	
 	
 	
 	
