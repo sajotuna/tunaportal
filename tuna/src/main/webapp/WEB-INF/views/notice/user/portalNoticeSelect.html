@@ -27,32 +27,35 @@
         <!--title end-->
 
         <div class="content content-boxed">
-          <form action="">
+          <form action="adminNoticeSelect" method="post">
+
             <div class="block block-rounded">
           
                 <div class="block-content">
                 
                         <div class="row d-flex justify-content-center py-sm-3">
-                            <div class="text-center fs-sm push">
-                                <h2 class="mt-3">${content.title }</h2>
+                            <div th:each="content, i:${content}"class="text-center fs-sm push">
+                                <h2 class="mt-3">[[${content.title }]]</h2>
                                 <div class="d-flex justify-content-end">
                                     <span class="py-2 px-2 bg-body-light col-2 rounded">
-                                       ${content.enrollDate }
+                                       [[${content.enrollDate }]]
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <!--제목 end-->
                         <hr>
-								${content.content}
-                           
+                        <div th:each="content, i:${content}">
+								[[${content.content}]]
+								
+                        </div>
                             <hr>
                             <div class="col-5">
                                 첨부된 파일
                             </div>
                             <hr>
                             <div class="p-1 d-flex justify-content-end">
-                                <button type="button" class="btn btn-outline-secondary m-1" onclick="location.href='portalNoticeList'">목록</button>
+                                <button type="button" class="btn btn-outline-secondary m-1" th:onclick="|location.href='@{/PortalNoticeList}'|">목록</button>
                             </div>
 
                         </div>
@@ -60,6 +63,8 @@
                 </form>
 
             </div>
+
+<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 </main>
 </body>
 </html>

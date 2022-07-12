@@ -40,8 +40,9 @@ public class PortalNoticeController {
 		return "notice/user/portalNoticeSelect";
 	}
 
-	// admin
-	@RequestMapping("/admin/adminNoticeList")
+	
+	
+	@RequestMapping("/adminNoticeList")
 	public String adminNoticeList(Model model) {
 		model.addAttribute("notices", noticeDao.noticeList(1, "전체"));
 		return "notice/admin/adminNoticeList";
