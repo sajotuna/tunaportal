@@ -2,4 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="co.fourth.tuna.domain.portalSchedule.mapper.PortalScheduleMapper">
+	<resultMap type="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO" id="portalSchedule"></resultMap>
+
+<select id="scheduleList" resultMap="portalSchedule">
+SELECT * FROM PORTALNOTICE
+WHERE
+<if test="state==1">1 = 1 </if>
+<if test="state==2">content like '%'|| #{key} ||'%'</if>
+</select>
+
 </mapper>
+
