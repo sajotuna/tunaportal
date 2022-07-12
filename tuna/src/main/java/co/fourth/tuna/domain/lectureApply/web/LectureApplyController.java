@@ -1,17 +1,16 @@
 package co.fourth.tuna.domain.lectureApply.web;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,16 +27,24 @@ public class LectureApplyController {
 	@Autowired
 	private LectureApplyService LectureApplyDao;
 	
+	@Autowired
+	private SqlSession SqlSession;
+	
 	@RequestMapping("/stud/courseWarning")
 	public String courseWarning() {
 		return "course/apply/courseWarning";
 	}
 	
 	@RequestMapping("/stud/courseApplication")
-	public String courseApplication(Model model) {
-		List<LectureApplyVO> lists = LectureApplyDao.SubjectFind();
+	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication) {
+		vo.setStNo(Integer.parseInt(authentication.getName()));
+		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind");
+		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo.getStNo());
+		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo.getStNo());
 		
 		model.addAttribute("list", lists);
+		model.addAttribute("courList", courLists);
+		model.addAttribute("baskList", baskLists);
 		return "course/apply/courseApplication";
 	}
 	

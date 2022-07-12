@@ -21,4 +21,16 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 		return mapper.SubjectFind();
 	}
 
+	@Override
+	public List<LectureApplyVO> CourseFind(List<LectureApplyVO> vo) {
+		// TODO Auto-generated method stub
+		return mapper.CourseFind(vo);
+	}
+
+	@Override
+	public List<LectureApplyVO> CourseBasket(List<LectureApplyVO> vo) {
+		// TODO Auto-generated method stub
+		return mapper.CourseBasket(vo);
+	}
+
 }
