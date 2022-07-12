@@ -24,7 +24,7 @@ public class LectureBasketController {
 	
 	@RequestMapping("/stud/courseBasket")
 	public String courseBasket(Model model,LectureBasketVO vo, Authentication authentication) {
-		vo.setStNo(Integer.parseInt(authentication.getName()));
+		vo.setStNo(authentication.getName());
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind");
 		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo.getStNo());
 		
@@ -37,13 +37,15 @@ public class LectureBasketController {
 	@RequestMapping("/stud/basketInsert")
 	public String basketInsert(Model model,@RequestParam List<String> courcheck, LectureBasketVO vo, Authentication authentication) {
 		System.out.println(courcheck);
-		
+		vo.setStNo(authentication.getName());
 		for (String sbj : courcheck) {
 			String[] sbjarr = sbj.split(",");
-			vo.setSbjNo(Integer.parseInt(sbjarr[0]));
-			vo.setSeasonCode(Integer.parseInt(sbjarr[1]));
+			vo.setSbjNo(sbjarr[0]);
+			vo.setSeasonCode(sbjarr[1]);
 			LectureBasketDao.baskInsert(vo);
         }
+		
+		
 		return "redirect:/stud/courseBasket";
 	}
 	

@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LectureBasketVO {
-	private int no;
+	private String no;
 	private String stateCode;
-	private int seasonCode;
-	private int sbjNo;
-	private int stNo;
+	private String seasonCode;
+	private String sbjNo;
+	private String stNo;
 }
