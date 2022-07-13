@@ -12,7 +12,9 @@ public interface SubjectService {
 	ArrayList<SubjectVO> getList(int pageNum, int size);
 	ArrayList<SubjectVO> getListByProf(ProfessorVO prof, int pageNum, int size);
 	
+	
 	List<Map<String, Object>> getMapsForLectureSchedule(int pageNum, int size);
 	List<Map<String, Object>> getMapsForLectureScheduleByProf(ProfessorVO prof, int pageNum, int size);
+	
 	
 }

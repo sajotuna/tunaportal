@@ -25,7 +25,7 @@ public class SubjectServiceImpl implements SubjectService {
 	
 	@Override
 	public SubjectVO findOne(SubjectVO vo) {
-		return null;
+		return map.findOne(vo);
 	}
 
 
@@ -45,7 +45,7 @@ public class SubjectServiceImpl implements SubjectService {
 		params.put("pageNum", pageNum);
 		params.put("size", size);
 		
-		List<Map<String, Object>> result = sqlSession.selectList(SubjectMapper.class.getName()+".findListForLectureSchedule", params); 
+		List<Map<String, Object>> result = sqlSession.selectList(SubjectMapper.class.getName()+".findListForLectureSchedule", params);
 		
 		return result;
 	}
@@ -63,7 +63,6 @@ public class SubjectServiceImpl implements SubjectService {
 		
 		return result;
 	}
-	
 	
 	
 }

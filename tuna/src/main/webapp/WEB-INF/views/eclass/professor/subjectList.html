@@ -74,35 +74,39 @@ xmlns:th="http://www.thymeleaf.org"
           </div>
         </div> content header END -->
 
-        <div class="content">
+        <div class="content" hidden="true">
           <h2 class="h3 fw-bold">전체 강의</h2>
           
-          <!-- block start -->
-          <a class="block block-rounded block-link-pop border-start border-primary border-4" href="javscript:void(0)">
-            <div class="block-header block-header-default">
-              <h3 class="block-title">참치 분해 <small>[2022년 1학기]</small></h3>
-            </div>
-            <div class="block-content">
-              <div class="row">
-                <div class="col-6">
-                  <p>
-                    수강생: 30명 <br>
-                    학점: 3 <br>
-                    주차: 6/16 <br>
-                    기간: 2022-03-02 ~ 2022-08-31 <br>
-                  </p>
-                </div>
-                <div class="col-6">
-                  <p>
-                    문의: 3 <br>
-                    장소: 참치역사관 4002호 <br>
-                    시간: (수) 14:00~18:00
-                  </p>
+          <div th:if="${not #lists.isEmpty(subList)}">
+
+            <!-- block start -->
+            <a th:each="sub : $(subList)"
+             class="block block-rounded block-link-pop border-start border-primary border-4" th:href="@{/eclass/professor/subject}">
+              <div class="block-header block-header-default">
+                <h3 class="block-title" th:text="${sub.name}"> 데이터없음 <small th:text="${'['+@codeList.getName(sub.seasoncode)+']'}">[데이터없음]</small></h3>
+              </div>
+              <div class="block-content">
+                <div class="row">
+                  <div class="col-6">
+                    <p>
+                      수강생: <span th:text="${sub.student_count}">데이터없음</span>명 <br>
+                      학점: <span th:text="${sub.point}">데이터없음</span> <br>
+                      주차: <span>데이터없음</span> <br>
+                      기간: <span>데이터없음</span> <br>
+                    </p>
+                  </div>
+                  <div class="col-6">
+                    <p>
+                      문의: <span th:text="${sub.qna_count}">데이터없음</span> <br>
+                      장소: <span th:text="${@codeList.getName(sub.roomcode)}">데이터없음</span><br>
+                      시간: <span></span>(수) 14:00~18:00
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-
-          </a> <!-- block end-->
+  
+            </a> <!-- block end-->
+          </div>
           
         </div> <!-- content END -->
 

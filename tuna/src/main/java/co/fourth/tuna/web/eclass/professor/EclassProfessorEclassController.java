@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.fourth.tuna.domain.common.service.PagingService;
 import co.fourth.tuna.domain.subject.service.SubjectService;
+import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 
 @Controller
@@ -45,11 +47,16 @@ public class EclassProfessorEclassController {
 //		System.out.println(paging.getLength());
 		
 		// TODO 교수 데이터 추가해야함
-		List<Map<String,Object>> subList = subjectService.getMapsForLectureSchedule(1, 5);
+		ProfessorVO prof = new ProfessorVO();
+		prof.setNo(61275);
+		List<Map<String,Object>> subList = subjectService.getMapsForLectureScheduleByProf(prof,1, 5);
 		
-		
-		
-		System.out.println(subList.get(0));
+		SubjectVO subject = new SubjectVO();
+		subject.setNo(18011);
+		subject = subjectService.findOne(subject);
+		System.out.println("!!!here!!!");
+		System.out.println(subject.getAttendanceList());
+		//System.out.println(subList.get(0));
 		
 		return profPath + "/home";
 	}
@@ -67,7 +74,7 @@ public class EclassProfessorEclassController {
 	@GetMapping("/noticeList")
 	public String noticeListView(Model model, HttpServletRequest req) {
 		
-		List<Map<String,Object>> subList = subjectService.getMapsForLectureSchedule(1, 5);
+		
 		
 		return req.getServletPath();
 	}
@@ -105,6 +112,11 @@ public class EclassProfessorEclassController {
 	
 	@GetMapping("/subjectList")
 	public String subjectListView(Model model, HttpServletRequest req) {
+		//TODO 교수 데이터 추가해야함
+		ProfessorVO prof = new ProfessorVO();
+		prof.setNo(61275);
+		List<Map<String,Object>> subList = subjectService.getMapsForLectureScheduleByProf(prof, 1, 999);
+		model.addAttribute("subList", subList);
 		return req.getServletPath();
 	}
 	
