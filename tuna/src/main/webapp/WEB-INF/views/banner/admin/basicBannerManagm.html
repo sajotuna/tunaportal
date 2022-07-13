@@ -6,32 +6,9 @@
 	<meta charset="UTF-8">
 	<meta name="_csrf" th:content="${_csrf.token}">
   	<meta name="_csrf_header" th:content="${_csrf.headerName}">
-
 	<title>basicBannerManagm</title>
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-	<style>
- 		.preview {
-			background: rgb(100,100,100);
-		}
-		.img-section {
-			width: 450px;
-			height: 300px;
-			background: gray;
-			overflow:hidden;
-			position:relative;
-		}
-
-        .img {
-            width:100%;
-            height:100%;
-            object-fit: cover;
-        }
-        .shortcut-btn {
-            position:absolute;
-            left:2rem!important;
-            top:2rem!important;
-        }
-	</style>
+	<link rel="stylesheet" th:href="@{/resources/assets/css/bn-preview.css}">
 </head>
 <body>
 <main layout:fragment="main">
@@ -56,38 +33,35 @@
 								</div>
 								<div>
 									<a id="imgDownload">다운로드</a>
-									<button id="bnDelete">배너 삭제</button>
 								</div>
 								<!-- END Banner Preview -->
 							
-								<!-- Basic Banner Form -->
-								<form id="basicBnFrm">
-									<input type="hidden" name="adNo" value="139341">
-									<h2 class="content-heading border-bottom mb-2 pb-2">배너 정보</h2>
-						                <div class="row">
-						                    <p class="fs-sm text-muted">
-						                      5MB 이하의 사진 파일(jpg, jpeg, png)을 업로드하세요.
-						                    </p>
-											<div class="col-xl-6">
-						                      <label class="form-label" for="file">사진 올리기 <span class="text-danger">*</span></label>
-						                      <div id="fileShake">
-							                      <input class="form-control" type="file" id="file" name="file"
-							                      		accept="image/jpg, image/jpeg, image/png">
-						                      </div>
-						                    </div>
-											<div class="col-xl-6">
-						                      <label class="form-label" for="urlInput">버튼 URL <span class="text-danger">*</span></label>
-						                      <div id="inputTxtShake">
-							                      <input type="text" class="form-control" id="inputTxt" name="url" 
-							                      		placeholder="URL Input" >
-						                      </div>
-						                    </div>
-								    		<div class="d-flex justify-content-center mt-5">
-							      				<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="basic">배너 등록</button>
-						      				</div>
-						      			</div>
-						    	</form>
-						    	<!-- END Basic Banner Form -->
+								<!-- Basic Banner Input -->
+								<input type="hidden" name="adNo" value="139341">
+								<h2 class="content-heading border-bottom mb-2 pb-2">배너 정보</h2>
+				                <div class="row">
+				                    <p class="fs-sm text-muted">
+				                      5MB 이하의 사진 파일(jpg, jpeg, png)을 업로드하세요.
+				                    </p>
+									<div class="col-xl-6 mb-4 mb-xl-0">
+				                      <label class="form-label" for="file">사진 올리기 <span class="text-danger">*</span></label>
+				                      <div id="fileShake">
+					                      <input class="form-control" type="file" id="file" name="file"
+					                      		accept="image/jpg, image/jpeg, image/png">
+				                      </div>
+				                    </div>
+									<div class="col-xl-6">
+				                      <label class="form-label" for="urlInput">버튼 URL <span class="text-danger">*</span></label>
+				                      <div id="inputTxtShake">
+					                      <input type="text" class="form-control" id="inputTxt" name="url" 
+					                      		placeholder="URL Input" >
+				                      </div>
+				                    </div>
+						    		<div class="d-flex justify-content-center mt-5">
+					      				<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="basic">배너 등록</button>
+				      				</div>
+				      			</div>
+						    	<!-- END Basic Banner Input -->
 	      					</div>
 						</div>
 					</div>
@@ -99,91 +73,15 @@
 	<!-- END Page Content -->
 	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	<script th:src="@{/resources/assets/js/banner.js}"></script>
+	<script th:src="@{/resources/assets/js/bn-ajax.js}"></script>
+	
 	<script type="text/javascript">
 
-	    var header = $("meta[name='_csrf_header']").attr('content');
-	    var token = $("meta[name='_csrf']").attr('content');
-		
 		$(function() {
-			banner();
+			banner('basicBanner');
 			basicBannerDelete();
 		})
 		
-		// 배너 미리보기
-		function banner() {
-			$.ajax({
-				
-					url: getPathRootJump() + 'admin/basicBanner',
-					type: 'GET',
-					dataType: 'json'
-					
-					}).done(function(basicBn) {
-						$('#shortcutImg').attr('src', getPathRootJump() + `display?fileName=${basicBn.uri}&folder=banner`)
-										.attr('data-no', `${basicBn.no}`)
-										.attr('data-uri', `${basicBn.uri}`);
-						$('#shortcutBtn').css('display', 'inline-block');
-						$('#imgDownload').attr('href', getPathRootJump() + `download?fileName=${basicBn.uri}&originName=${basicBn.fileName}&folder=banner`)
-					})
-		}
-		
-		// 배너 삭제
-		function basicBannerDelete() {
-			$('#bnDelete').on('click', function() {
-				let uri = $('#shortcutImg').data('uri');
-				let no = $('#shortcutImg').data('no');
-				
-				$.ajax({
-					
-					url: getPathRootJump() + 'admin/banner',
-					method:'DELETE',
-					data: JSON.stringify({uri,no}),
-					contentType : 'application/json; charset=utf-8',
-					beforeSend: function (xhr) {
-				       xhr.setRequestHeader(header, token);
-					}
-			
-					}).done(function(success) {
-						if(success) {
-							alert('삭제 완료');
-							location.reload();
-						}
-					})
-			
-			})
-		}
-		
-		// 배너 등록
-		function basicBannerInsert() {
-			let formData = new FormData();
-			
-			formData.append("file", $('input[name=file]').get(0).files[0]);
-			formData.append("adNo", $('input[name=adNo]').val());
-			formData.append("url", $('input[name=url]').val());			
-			
-			$.ajax({
-				
-					url: getPathRootJump() + 'admin/basicBanner',
-					method:'POST',
-					data: formData,
-					contentType: false,
-					processData: false,
-					beforeSend: function (xhr) {
-				       xhr.setRequestHeader(header, token);
-					}
-			
-					}).done(function(success) {
-						if(success) {
-							pageDialogs.dialog();
-						}
-					})
-			}
-		
-		function getPathRootJump() {
-			var pathName = window.location.pathname.substring(1);
-			var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
-			var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
-			return path_root;
-		}
 	</script>
 	
 </main>

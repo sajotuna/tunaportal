@@ -9,29 +9,7 @@
 	<title>optionBannerManagm</title>
  	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
  	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
- 	<style>
- 		.preview {
-			background: rgb(100,100,100);
-		}
-		.img-section {
-			width: 450px;
-			height: 300px;
-			background: gray;
-			overflow:hidden;
-			position:relative;
-		}
-
-        .img {
-            width:100%;
-            height:100%;
-            object-fit: cover;
-        }
-        .shortcut-btn {
-            position:absolute;
-            left:2rem!important;
-            top:2rem!important;
-        }
-	</style>
+ 	<link rel="stylesheet" th:href="@{/resources/assets/css/bn-preview.css}">
 </head>
 <body>
 <main layout:fragment="main">
@@ -54,52 +32,49 @@
 								</div>
 								<div>
 									<a id="imgDownload">다운로드</a>
-									<button id="bnDelete">배너 삭제</button>
 								</div>
 								<!-- END Banner Preview -->
-								<!-- Option Banner Form -->
-								<form id="optionBnFrm">
-									<input type="hidden" name="adNo" value="139341">
-						            <div class="row mb-4">
-										<h2 class="content-heading border-bottom mb-2 pb-2">배너 정보</h2>
-										<p class="fs-sm text-muted">
-								                      5MB 이하의 사진 파일(jpg, jpeg, png)을 업로드하세요.
-								        </p>
-										<div class="col-xl-6 mb-4 mb-xl-0">
-											<label class="form-label" for="file">사진 올리기 <span class="text-danger">*</span></label>
-						                    <div id="fileShake">
-							                	<input class="form-control file" type="file" id="file" name="file"
-							                      		accept="image/jpg, image/jpeg, image/png">
-						                    </div>
-										</div>
-										<div class="col-xl-6">
-											<label class="form-label" for="urlInput">URL 옵션 <span class="text-danger">*</span></label>
-					                        <div id="selectShake">
-						                        <select class="form-select" id="select" name="url" required="required">
-								                    <option value="noSelect" selected>옵션 선택</option>
-								                    <option value="/stud/currentSemesterGrade">당해학기 성적 조회</option>
-								                    <option value="/stud/lectureEvaluation">강의평가</option>
-						                  		</select>
-					                        </div>
-							            </div>
-							        </div>
-							        <label class="form-label" for="startDate">게시일자 <span class="text-danger">*</span></label>
-						            <div class="mb-4">
-						              	<div id="dateShake" class="input-daterange input-group">
-										    <div class="input-daterange input-group" data-date-format="yyyy-mm-dd" data-week-start="1" data-autoclose="true" data-today-highlight="true">
-										      <input type="text" class="form-control date" id="date" name="startDate" placeholder="From" data-week-start="1" data-autoclose="true" data-today-highlight="true">
-										      <span class="input-group-text fw-semibold">
-										        <i class="fa fa-fw fa-arrow-right"></i>
-										      </span>
-										      <input type="text" class="form-control date" id="endDate" name="endDate" placeholder="To" data-week-start="1" data-autoclose="true" data-today-highlight="true">
-										    </div>
-						              	</div>
-					                  	<div class="d-flex justify-content-center mt-5">
-											<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="option">배너 등록</button>
-					      			  	</div>
+								<!-- Option Banner Input -->
+								<input type="hidden" name="adNo" value="139341">
+					            <div class="row mb-4">
+									<h2 class="content-heading border-bottom mb-2 pb-2">배너 정보</h2>
+									<p class="fs-sm text-muted">
+							                      5MB 이하의 사진 파일(jpg, jpeg, png)을 업로드하세요.
+							        </p>
+									<div class="col-xl-6 mb-4 mb-xl-0">
+										<label class="form-label" for="file">사진 올리기 <span class="text-danger">*</span></label>
+					                    <div id="fileShake">
+						                	<input class="form-control file" type="file" id="file" name="file"
+						                      		accept="image/jpg, image/jpeg, image/png">
+					                    </div>
+									</div>
+									<div class="col-xl-6">
+										<label class="form-label" for="urlInput">URL 옵션 <span class="text-danger">*</span></label>
+				                        <div id="selectShake">
+					                        <select class="form-select" id="select" name="url" required="required">
+							                    <option value="noSelect" selected>옵션 선택</option>
+							                    <option value="/stud/currentSemesterGrade">당해학기 성적 조회</option>
+							                    <option value="/stud/lectureEvaluation">강의평가</option>
+					                  		</select>
+				                        </div>
 						            </div>
-					            </form>
-					            <!-- END Option Banner Form -->
+						        </div>
+						        <label class="form-label" for="startDate">게시일자 <span class="text-danger">*</span></label>
+					            <div class="mb-4">
+					              	<div id="dateShake" class="input-daterange input-group">
+									    <div class="input-daterange input-group" data-date-format="yyyy-mm-dd" data-week-start="1" data-autoclose="true" data-today-highlight="true">
+									      <input type="text" class="form-control date" id="date" name="startDate" placeholder="From" data-week-start="1" data-autoclose="true" data-today-highlight="true">
+									      <span class="input-group-text fw-semibold">
+									        <i class="fa fa-fw fa-arrow-right"></i>
+									      </span>
+									      <input type="text" class="form-control date" id="endDate" name="endDate" placeholder="To" data-week-start="1" data-autoclose="true" data-today-highlight="true">
+									    </div>
+					              	</div>
+				                  	<div class="d-flex justify-content-center mt-5">
+										<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="option">배너 등록</button>
+				      			  	</div>
+					            </div>
+					            <!-- END Option Banner Input -->
 							</div>
 						</div>
 					</div>
@@ -113,94 +88,15 @@
 	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	<script th:src="@{/resources/assets/js/banner.js}"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	<script th:src="@{/resources/assets/js/bn-ajax.js}"></script>
 	
 	<script type="text/javascript">
-	
-		var header = $("meta[name='_csrf_header']").attr('content');
-	    var token = $("meta[name='_csrf']").attr('content');
 		
 		$(function() {
-			banner();
+			banner('optionBanner');
 			basicBannerDelete();
 		})
-		
-		// 배너 미리보기
-		function banner() {
-			$.ajax({
-					url: getPathRootJump() + 'admin/optionBanner',
-					type: 'GET',
-					dataType: 'json'
-					
-					}).done(function(basicBn) {
-						$('#shortcutImg').attr('src', getPathRootJump() + `display?fileName=${basicBn.uri}&folder=banner`)
-										.attr('data-no', `${basicBn.no}`)
-										.attr('data-uri', `${basicBn.uri}`);
-						$('#shortcutBtn').css('display', 'inline-block');
-						$('#imgDownload').attr('href', getPathRootJump() + `download?fileName=${basicBn.uri}&originName=${basicBn.fileName}&folder=banner`)
-					})
-		}
-	
-		// 배너 삭제
-		function basicBannerDelete() {
-			$('#bnDelete').on('click', function() {
-				let uri = $('#shortcutImg').data('uri');
-				let no = $('#shortcutImg').data('no');
-				
-				$.ajax({
-					
-					url: getPathRootJump() + 'admin/banner',
-					method:'DELETE',
-					data: JSON.stringify({uri,no}),
-					contentType : 'application/json; charset=utf-8',
-					beforeSend: function (xhr) {
-				       xhr.setRequestHeader(header, token);
-					}
-			
-					}).done(function(success) {
-						if(success) {
-							alert('삭제 완료');
-							location.reload();
-						}
-					})
-			
-			})
-		}
-	
-		// 배너 등록
-		function optionBannerInsert() {
-			let formData = new FormData();
-			
-			formData.append("file", $('input[name=file]').get(0).files[0]);
-			formData.append("adNo", $('input[name=adNo]').val());
-			formData.append("url", $('select[name=url]').val());
-			formData.append("startDate", moment($('input[name=startDate]').val()).format('YYYY-MM-DD'));
-			formData.append("endDate", moment($('input[name=endDate]').val()).format('YYYY-MM-DD'));
-			
-			$.ajax({
-				
-					url: getPathRootJump() + 'admin/optionBanner',
-					method:'POST',
-					data: formData,
-					contentType: false,
-					processData: false,
-					beforeSend: function (xhr) {
-				       xhr.setRequestHeader(header, token);
-					}
-			
-					}).done(function(success) {
-						if(success) {
-							pageDialogs.dialog();
-						}
-					})
-		}
-		
-		function getPathRootJump() {
-			var pathName = window.location.pathname.substring(1);
-			var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
-			var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
-			return path_root;
-		}
-	
+
 	</script>
 </main>
 </body>

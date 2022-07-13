@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -19,32 +20,41 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * @brief 파일 다운로드, 이미지 보여주기 맵핑
+ * @author 지수빈
+ * @date 2022/07/13
+ * @details
+ * 1. download() - 파일 다운로드
+ *   Parameter : fileName(변환되어 저장된 파일명), originName(실제 파일명), folder(WEB-INF/files/* 폴더명)
+ * 2. display() - 이미지 보여주기
+ *   Parameter : fileName(변환되어 저장된 파일명), folder(WEB-INF/files/* 폴더명)
+ */
+
 @Controller
 public class FileController {
 	
+	@Autowired String fileDir;
+	
 	// 파일 다운로드
 	@RequestMapping("/download")
-	public static void download(
+	public void download(
 			@Param("fileName") String fileName,
 			@Param("originName") String originName,
 			@Param("folder") String folder, HttpServletResponse response) {
 		
-		String path = "C:\\Dev\\tunaportal\\tuna\\src\\main\\webapp\\WEB-INF\\files\\";
-		String filePath = path + folder + "\\" + fileName;
+		String filePath = fileDir + folder + File.separator + fileName;
 		
 		try {
+			
 			byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File(filePath));
 			
-			// 모든 타입의 데이터를 전송
 			response.setContentType("application/octet-stream");
-			// 파일 길이만큼 사이즈 설정
 			response.setContentLength(fileByte.length);
-			// 파일을 다운받기 위한 설정으로, 업로드 시 실제 파일명으로 다운받을 수 있도록 한다.
 			response.setHeader("Content-Disposition", "attachment; fileName=\""
 				+ URLEncoder.encode(originName, "UTF-8") + "\";");
 		
-			// 입출력 스트림
-			response.getOutputStream().write(fileByte);	// 파일 저장
+			response.getOutputStream().write(fileByte);
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
 			
@@ -55,16 +65,17 @@ public class FileController {
 	}
 	
 	// 이미지 파일 가져오기
-	@GetMapping("/display")
+	@RequestMapping("/display")
 	public ResponseEntity<Resource> display(
 			@Param("fileName") String fileName,
 			@Param("folder") String folder) {
-		String path = "C:\\Dev\\tunaportal\\tuna\\src\\main\\webapp\\WEB-INF\\files\\";
-		String file = path + folder + "\\" + fileName;
+		
+		String file = fileDir + folder + File.separator + fileName;
+		
 		Resource resource = new FileSystemResource(file);
 		
-		if(! resource.exists()) {
-			// 파일이 존재하지 않으면 404 error
+		// 파일이 존재하지 않으면 404 error
+		if(!resource.exists()) {
 			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
 		}
 			
@@ -72,10 +83,8 @@ public class FileController {
 		Path filePath = null;
 		
 		try {
-			
 			filePath = Paths.get(file);
 			header.add("Content-Type", Files.probeContentType(filePath));
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
