@@ -120,7 +120,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm"></td>
                     </th:block>
                       <td class="fw-semibold fs-sm" >
-	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
+                      [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
                       </td>
                     </tr>
                     
@@ -198,7 +198,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm"></td>
                     </th:block>
                       <td class="fw-semibold fs-sm" >
-	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
+                      [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
                       </td>
                     </tr>
                   </tbody>
@@ -305,7 +305,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm"></td>
                     </th:block>
                       <td class="fw-semibold fs-sm" >
-	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
+                      [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
                       </td>
                     </tr>
                   </tbody>

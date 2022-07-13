@@ -6,7 +6,6 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 <head>
   <meta charset="utf-8">
   <title>수강꾸러미</title>
-
   <style>
     h5 {
       margin-top: 50px;
@@ -126,8 +125,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm"></td>
                     </th:block>
                     <td class="fw-semibold fs-sm" >
-	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
-                      </td>
+                    	[[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
+                     </td>
                     </tr>
                   </tbody>
 
@@ -140,27 +139,27 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 			</form>
               <ul class="pagination justify-content-center">
                 <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)" tabindex="-1" aria-label="Previous">
+                  <a class="page-link" href="javascript:void(0)" tabindex="-1" aria-label="Previous" id = "prev">
                     <span aria-hidden="true">
                       <i class="fa fa-angle-double-left"></i>
                     </span>
                     <span class="visually-hidden">Previous</span>
                   </a>
                 </li>
-                <li class="page-item active">
-                  <a class="page-link" href="javascript:void(0)">1</a>
+                <li class="page-item">
+                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">1</a>
                 </li>
                 <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)">2</a>
+                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">2</a>
                 </li>
                 <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)">3</a>
+                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">3</a>
                 </li>
                 <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)">4</a>
+                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">4</a>
                 </li>
                 <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)" aria-label="Next">
+                  <a class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
                     <span aria-hidden="true">
                       <i class="fa fa-angle-double-right"></i>
                     </span>
@@ -208,7 +207,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm"></td>
                     </th:block>
                       <td class="fw-semibold fs-sm" >
-	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
+	                      [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
                       </td>
                     </tr>
                   </tbody>
@@ -233,6 +232,36 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 			}
 
 		})
+		
+		let nextBtn = document.querySelector("#next")
+		let prevBtn = document.querySelector("#prev")
+		let pageingBtn = document.querySelectorAll("#pageingBtn");
+		nextBtn.addEventListener('click', function(){
+			pageingBtn.forEach(btn =>{
+				let a = btn.innerHTML
+				btn.innerHTML = parseInt(a)+4;
+			})
+		})
+		
+		prevBtn.addEventListener('click', function(){
+			pageingBtn.forEach(btn =>{
+				let a = btn.innerHTML
+				if (parseInt(a) > 4){
+					btn.innerHTML = parseInt(a)-4;
+				}
+				
+			})
+		})
+		
+		pageingBtn.forEach(btn =>{
+			btn.addEventListener('click',function(){
+				let a = btn.innerHTML
+				console.log(parseInt(a))
+				location.href = '/tuna/stud/courseBasket?pageNum='+parseInt(a)
+			})
+		})
+		
+		
 	})
   function showPopup() {
       window.open("/tuna/stud/lectureEvaluationSearch", "강의평가조회", "width=650, height=600, top=10, left=10");

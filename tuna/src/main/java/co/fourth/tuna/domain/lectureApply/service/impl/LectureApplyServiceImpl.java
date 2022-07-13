@@ -16,9 +16,9 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	private LectureApplyMapper mapper;
 	
 	@Override
-	public List<LectureApplyVO> SubjectFind() {
+	public List<LectureApplyVO> SubjectFind(int pageNum, int size) {
 		// TODO Auto-generated method stub
-		return mapper.SubjectFind();
+		return mapper.SubjectFind(pageNum, size);
 	}
 
 	@Override
