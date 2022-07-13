@@ -103,10 +103,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <th class="d-none d-sm-table-cell" rowspan = "2" style="width: 120px;">강의시간</th>
                   </tr>
                 </thead>
-                  <tbody id = "courlist">
+                  <tbody>
                     <tr th:scope="row" th:each="sub, status : ${list}">
                       <th:block th:if = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
-                      <th class="fw-semibold fs-sm"><input type="checkbox" name = "courcheck" th:value = "${sub.NO}+','+${sub.SEASONCODE}"></th>
+                      <th class="fw-semibold fs-sm"><input type="checkbox" name = "courcheck" th:value = "${sub.NO}+','+${sub.SEASONCODE} +','+ ${sub.DAYCODE} +','+ ${sub.TIMECODE}"></th>
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
@@ -115,15 +115,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
                      </th:block>
-                    <th:block th:unless = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
-                      <th class="fw-semibold fs-sm" ></th>
-                      <td class="fw-semibold fs-sm" ></td>
-                      <td class="fw-semibold fs-sm" ></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                    </th:block>
+                    
                     <td class="fw-semibold fs-sm" >
                     	[[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
                      </td>
@@ -176,6 +168,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
               <table class="table table-striped table-vcenter">
                   <thead>
                     <tr>
+                    
                       <th class="d-none d-sm-table-cell" style="width: 100px;">이수구분</th>
                       <th class="d-none d-sm-table-cell" style="width: 100px;">과목코드</th>
                       <th class="d-none d-sm-table-cell" style="width: 100px;">과목명</th>
@@ -184,11 +177,13 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <th class="d-none d-sm-table-cell" style="width: 50px;">학점</th>
                       <th class="d-none d-sm-table-cell" style="width: 50px;">정원</th>
                       <th class="d-none d-sm-table-cell" rowspan = "2" style="width: 120px;">강의시간</th>
+                    <th class="d-none d-sm-table-cell" style="width: 100px;">삭제</th>
                     </tr>
                   </thead>
-                  <tbody id = "courlist">
+                  <tbody>
                     <tr th:scope="row" th:each="sub, status : ${baskList}">
                     <th:block th:if = "${ status.index == 0 || (status.index != 0 && baskList[status.index-1].NO != sub.NO)}">
+                     
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
@@ -196,19 +191,13 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
-                     </th:block>
-                    <th:block th:unless = "${ status.index == 0 || (status.index != 0 && baskList[status.index-1].NO != sub.NO)}">
-                      <th class="fw-semibold fs-sm" ></th>
-                      <td class="fw-semibold fs-sm" ></td>
-                      <td class="fw-semibold fs-sm" ></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                    </th:block>
                       <td class="fw-semibold fs-sm" >
 	                      [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
                       </td>
+                      <th class="fw-semibold fs-sm"><a class = "btn" th:href = "@{/stud/basketDelete(sbjNo=${sub.NO})}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+</svg></a></th>
+                     </th:block>
                     </tr>
                   </tbody>
                 </table>
@@ -222,16 +211,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   </div>
   <script>
   document.addEventListener('DOMContentLoaded', function(){
-		let courlist = document.querySelectorAll("#courlist > tr")
-		courlist.forEach((trList,idx) =>{
-			
-			if(trList.children[1].innerHTML == ''){
-				
-			courlist[idx-1].lastElementChild.innerHTML = courlist[idx-1].lastElementChild.innerHTML + '</br>' + trList.lastElementChild.innerHTML;
-			trList.remove();
-			}
-
-		})
+		
 		
 		let nextBtn = document.querySelector("#next")
 		let prevBtn = document.querySelector("#prev")

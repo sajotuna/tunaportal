@@ -57,12 +57,49 @@ public class LectureBasketController {
 			String[] sbjarr = sbj.split(",");
 			vo.setSbjNo(sbjarr[0]);
 			vo.setSeasonCode(sbjarr[1]);
-			LectureBasketDao.baskInsert(vo);
+			if(sbjarr[2].indexOf("/") != -1) {
+				String stNo = authentication.getName();
+				String[] day = sbjarr[2].split("/");
+				String[] dayTime = sbjarr[3].split(" ");
+				String[] time = null;
+				
+				System.out.println(day[0] + "||||||" +day[1]);
+				
+				
+				
+				for(int i =0; i<day.length-1; i++) {
+					time = dayTime[i].split("~");
+					System.out.println("day "+i+":" + day[i]);
+					System.out.println("dayTime : " + dayTime[i]);
+				}
+				for(int i=0; i<time.length-1; i++) {
+					System.out.println("time:" + time[i]);
+				}
+				
+				
+				for(int i =0; i<day.length-1; i++) {
+					
+					System.out.println(stNo + day[i] + time[i+i] + time[i+i+1]);
+					
+					//boolean tf = LectureBasketDao.FindRoom(stNo,day[i], time[i+i], time[i+i+1]);
+					//System.out.println(tf);
+				}
+				
+			}
+			//LectureBasketDao.baskInsert(vo);
         }
 		
 		
 		return "redirect:/stud/courseBasket";
 	}
+	
+	@RequestMapping("/stud/basketDelete")
+	public String basketDelete(Model model, LectureBasketVO vo) {
+		
+		LectureBasketDao.baskDelete(vo);
+		return "redirect:/stud/courseBasket";
+	}
+	
 	
 	@RequestMapping("/stud/courseBasketLectureList")
 	public String courseBasketLectureList(Model model,LectureBasketVO vo, Authentication authentication) {
