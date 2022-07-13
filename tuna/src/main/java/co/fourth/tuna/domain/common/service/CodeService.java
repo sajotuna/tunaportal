@@ -22,4 +22,5 @@ public class CodeService {
 	public ArrayList<CodeVO> getCodeList() {
 		return map.getCodeList();
 	}
+
 }
