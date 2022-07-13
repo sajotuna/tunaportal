@@ -14,22 +14,24 @@
 		<button id="multiTest" type="button">등록</button>
 	</div>
 	
-	<form th:action="@{/admin/multiTest(${_csrf.parameterName}=${_csrf.token})}" method="post" enctype="multipart/form-data" >
+	<form th:action="@{/admin/multiTest(${_csrf.parameterName}=${_csrf.token})}" 
+			method="post" enctype="multipart/form-data" >
 		다중 업로드 form
 		<input type="file" name="file[]" multiple>
-		<button id="multiTest" type="submit">등록</button>
+		<button type="submit">등록</button>
 	</form>
 	
 	<div>
 		1건 업로드 ajax
 		<input type="file" id="single" name="file">
-		<button id="singleTest" type="button">등록</button>
+		<button id="multiTest" type="button">등록</button>
 	</div>
 	
-	<form th:action="@{/admin/singleTest(${_csrf.parameterName}=${_csrf.token})}" method="post" enctype="multipart/form-data" >
+	<form th:action="@{/admin/singleTest(${_csrf.parameterName}=${_csrf.token})}" 
+			method="post" enctype="multipart/form-data" >
 		1건 업로드 form
-		<input type="file" name="file" multiple>
-		<button id="multiTest" type="submit">등록</button>
+		<input type="file" name="file">
+		<button type="submit">등록</button>
 	</form>
 
 	<script type="text/javascript">

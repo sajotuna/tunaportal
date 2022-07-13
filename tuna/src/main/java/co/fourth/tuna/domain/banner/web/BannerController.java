@@ -65,7 +65,7 @@ public class BannerController {
 	// 옵션 배너 등록
 	@PostMapping("/admin/optionBanner")
 	@ResponseBody
-	public int optionBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile[] file, HttpServletRequest request) {
+	public int optionBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile file, HttpServletRequest request) {
 		
 		String[] fileInfo = fileService.upload(file, "banner");
 		
@@ -86,7 +86,7 @@ public class BannerController {
 	// 기본 배너 등록
 	@PostMapping("/admin/basicBanner")
 	@ResponseBody
-	public int basicBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile[] file, HttpServletRequest request) {
+	public int basicBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile file, HttpServletRequest request) {
 		
 		String[] fileInfo = fileService.upload(file, "banner");
 		

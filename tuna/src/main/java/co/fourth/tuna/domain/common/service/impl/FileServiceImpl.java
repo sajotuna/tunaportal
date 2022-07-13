@@ -35,7 +35,7 @@ public class FileServiceImpl implements FileService {
 	String fileDir;
 
 	@Override
-	public String[] upload(MultipartFile[] files, String folder) {
+	public String[] upload(MultipartFile file, String folder) {
 		
 		String saveDir = fileDir + File.separator + folder;
 		File dir = new File(saveDir);
@@ -45,21 +45,19 @@ public class FileServiceImpl implements FileService {
 		
 		String[] fileInfo = new String[2];
 		
-		for (MultipartFile file : files) {
-			String originName = file.getOriginalFilename();
-			String uid = UUID.randomUUID().toString();
-			String fileName = uid + originName.substring(originName.indexOf("."));
-			
-			File target = new File(saveDir,fileName);
-			
-			fileInfo[0] = originName;
-			fileInfo[1] = fileName;
-			
-			try {
-				FileCopyUtils.copy(file.getBytes(), target);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+		String originName = file.getOriginalFilename();
+		String uid = UUID.randomUUID().toString();
+		String fileName = uid + originName.substring(originName.indexOf("."));
+		
+		File target = new File(saveDir,fileName);
+		
+		fileInfo[0] = originName;
+		fileInfo[1] = fileName;
+		
+		try {
+			FileCopyUtils.copy(file.getBytes(), target);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		
 		return fileInfo;
