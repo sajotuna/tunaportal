@@ -3,9 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-<bean id="saveDir" class="java.lang.String">
-	<constructor-arg value="C:/temp">
-	</constructor-arg>
-</bean>
+	<bean id="fileDir" class="java.lang.String">
+		<constructor-arg value="C:\Users\admin\git\tunaportal\tuna\src\main\webapp\WEB-INF\files">
+		</constructor-arg>
+	</bean>
+	
+	<!-- Server Real Path -->
+	<!-- String savePath = request.getSession().getServletContext().getRealPath("/WEB-INF/files"); -->
 
 </beans>

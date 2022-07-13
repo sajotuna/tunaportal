@@ -112,7 +112,7 @@
 					dataType: 'json'
 					
 					}).done(function(basicBn) {
-						$('#shortcutImg').attr('src', getPathRootJump() + `resources/assets/media/photos/${basicBn.fileName}`);
+						$('#shortcutImg').attr('src', getPathRootJump() + `display?fileName=${basicBn.uri}&folder=banner`);
 						$('#shoutcutBtn').css('display', 'inline-block');
 					})
 		}

@@ -39,19 +39,14 @@ public class BannerController {
 		return bannerDao.bannerSelect("1302");
 	}
 	
-	@Autowired String saveDir;
+	@Autowired String fileDir;
 	
 	// 기본 배너 등록
 	@PostMapping("/admin/basicBanner")
 	@ResponseBody
 	public int basicBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile file, HttpServletRequest request) {
 		
-		// 이 경로는 톰캣 서버에 올라간다. 서버 꺼지면 바로 사라짐.
-		//String savePath = request.getSession().getServletContext().getRealPath("/WEB-INF/files");
-		
-		logger.info("path :: "+request.getServletContext().getRealPath("/WEB-INF/files"));
-		// /Users/binggla/apache-tomcat-9.0.63/wtpwebapps/tuna/WEB-INF/files
-		
+		String saveDir = fileDir + File.separator + "banner";
 		File dir = new File(saveDir);
 		if(!dir.exists()) {
 			dir.mkdirs();
@@ -60,7 +55,6 @@ public class BannerController {
 		String fileName = file.getOriginalFilename();
 		String uid = UUID.randomUUID().toString();
 		String saveFileName = uid + fileName.substring(fileName.indexOf("."));
-		
 		
 		File target = new File(saveDir,saveFileName);
 		

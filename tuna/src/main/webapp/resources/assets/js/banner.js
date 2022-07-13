@@ -53,7 +53,6 @@ class pageDialogs {
 function submit() {
 	$('.submit-btn').on('click', function () {
 		
-		
 		// value check
 		let elemAry = [{'element':$('#file'), 'message':'파일을 업로드해 주세요.'}, 
 						{'element':$('#inputTxt'), 'message':'빈 칸을 입력해 주세요.'}, 
