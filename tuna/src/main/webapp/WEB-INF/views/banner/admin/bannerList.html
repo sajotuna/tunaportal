@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    data-layout-decorate="~{layouts/adminLayout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<main layout:fragment="main">
+	<th:block th:each="bn, i:${bnList}">
+		<img th:src="@{/display(fileName=${bn.uri}, folder=banner)}">
+		<a th:href="@{/download(fileName=${bn.uri}, originName=${bn.fileName}, folder=banner)}">
+			[[${bn.fileName}]] 
+		</a>
+		<a th:href="@{/delete(fileName=${bn.uri}, folder=banner)}" style="color:red;"> X</a>
+	</th:block>
+
+</main>
+<script type="text/javascript">
+
+//@{/delete(fileName=${bn.uri}, folder=banner)}
+	
+</script>
+</body>
+
+</html>

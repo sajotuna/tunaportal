@@ -116,7 +116,7 @@ $('#file').on('change', changeEvent => {
 	const reader = new FileReader();
 	$(reader).on('load', readerEvent => {
 		$('#shortcutImg').attr('src', readerEvent.target.result); 
-		$('#shortCutBtn').css('display', 'inline-block');
+		$('#shortcutBtn').css('display', 'inline-block');
 	})
 	
 	const img = changeEvent.target.files[0];

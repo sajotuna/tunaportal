@@ -331,12 +331,12 @@
 		function shortcutBanner() {
 			$.ajax({
 				
-				url: 'admin/basicBanner',
+				url: getPathRootJump() + 'admin/basicBanner',
 				type: 'GET',
 				dataType: 'json',
 				
 				}).done(function(basicBn) {
-					$('#shortcutImg').attr('src', `display?fileName=${basicBn.uri}&folder=banner`);
+					$('#shortcutImg').attr('src', getPathRootJump() + `display?fileName=${basicBn.uri}&folder=banner`);
 					$('#shortcutBtn').attr('onclick', `location.href='${basicBn.url}'`);
 				})
 		}

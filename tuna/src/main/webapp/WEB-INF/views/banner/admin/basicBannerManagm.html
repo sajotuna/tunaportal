@@ -6,6 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="_csrf" th:content="${_csrf.token}">
   	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+
 	<title>basicBannerManagm</title>
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 	<style>
@@ -49,9 +50,13 @@
 								<h2 class="content-heading mb-2 pb-2">배너 미리보기</h2>
 								<div class="mb-4 d-flex justify-content-center preview">
 									<div class="img-section">
-										<button id="shoutcutBtn" class="btn btn-alt-secondary shortcut-btn" style="display:none;">바로가기</button>
+										<button id="shortcutBtn" class="btn btn-alt-secondary shortcut-btn" style="display:none;">바로가기</button>
 										<img id="shortcutImg" class="img" alt="">
 									</div>
+								</div>
+								<div>
+									<a id="imgDownload">다운로드</a>
+									<button id="bnDelete">배너 삭제</button>
 								</div>
 								<!-- END Banner Preview -->
 							
@@ -101,6 +106,7 @@
 		
 		$(function() {
 			banner();
+			basicBannerDelete();
 		})
 		
 		// 배너 미리보기
@@ -112,9 +118,38 @@
 					dataType: 'json'
 					
 					}).done(function(basicBn) {
-						$('#shortcutImg').attr('src', getPathRootJump() + `display?fileName=${basicBn.uri}&folder=banner`);
-						$('#shoutcutBtn').css('display', 'inline-block');
+						$('#shortcutImg').attr('src', getPathRootJump() + `display?fileName=${basicBn.uri}&folder=banner`)
+										.attr('data-no', `${basicBn.no}`)
+										.attr('data-uri', `${basicBn.uri}`);
+						$('#shortcutBtn').css('display', 'inline-block');
+						$('#imgDownload').attr('href', getPathRootJump() + `download?fileName=${basicBn.uri}&originName=${basicBn.fileName}&folder=banner`)
 					})
+		}
+		
+		// 배너 삭제
+		function basicBannerDelete() {
+			$('#bnDelete').on('click', function() {
+				let uri = $('#shortcutImg').data('uri');
+				let no = $('#shortcutImg').data('no');
+				
+				$.ajax({
+					
+					url: getPathRootJump() + 'admin/banner',
+					method:'DELETE',
+					data: JSON.stringify({uri,no}),
+					contentType : 'application/json; charset=utf-8',
+					beforeSend: function (xhr) {
+				       xhr.setRequestHeader(header, token);
+					}
+			
+					}).done(function(success) {
+						if(success) {
+							alert('삭제 완료');
+							location.reload();
+						}
+					})
+			
+			})
 		}
 		
 		// 배너 등록

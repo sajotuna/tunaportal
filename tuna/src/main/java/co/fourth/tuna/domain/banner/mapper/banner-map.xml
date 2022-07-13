@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.banner.mapper.BannerMapper">
 
+	<delete id="bannerDelete">
+	
+		DELETE BANNER 
+		WHERE NO = #{no}
+	
+	</delete>
+
+	<select id="bannerListSelect"
+		resultType="co.fourth.tuna.domain.banner.vo.BannerVO">
+		SELECT *
+		FROM BANNER
+	
+	</select>
+
 	<select id="bannerSelect" 
 		resultType="co.fourth.tuna.domain.banner.vo.BannerVO">
 		SELECT *
@@ -22,7 +36,6 @@
 						ELSE 1 END
 						AS ID
 			FROM BANNER 
-			WHERE BANNERCODE = #{bannerCode}
 		</selectKey>
 		
 		INSERT INTO BANNER
