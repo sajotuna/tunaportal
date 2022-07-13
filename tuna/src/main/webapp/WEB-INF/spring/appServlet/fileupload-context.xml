@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 <bean id="saveDir" class="java.lang.String">
-	<constructor-arg value="/Users/binggla/desktop">
+	<constructor-arg value="C:/temp">
 	</constructor-arg>
 </bean>
 
