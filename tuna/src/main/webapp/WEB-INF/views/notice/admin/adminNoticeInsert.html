@@ -15,7 +15,7 @@
 
                 <h3 class="fw-bold">학사공지 등록</h3>
                 <div class="block block-rounded">
-                            <form th:action="@{/admin/adminNoticeInsert}" class="block-content block-content-full" method="post" enctype="multipart/form-data">
+                            <form th:action="@{/admin/adminNoticeInsert?${_csrf.parameterName}=${_csrf.token}}" class="block-content block-content-full" method="post" enctype="multipart/form-data">
                             <div>
                                 <input type="text" name="title"class="mb-4 form-control" id="title"
                                     placeholder="학사공지 등록">
@@ -44,7 +44,6 @@
 
             </div>
    
-    <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
     <script th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
     <script>
         One.helpersOnLoad(['js-simplemde']);
