@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PortalSchedualVO {
+public class PortalScheduleVO {
 	private int no;
 	private Date startDate;
 	private Date endDate;
