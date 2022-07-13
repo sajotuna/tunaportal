@@ -64,12 +64,13 @@
 		ORDER BY no
 	</select>
 	
-	<select id="findListForProfessorMainByProf"
+	<select id="findListForProfessorMainByProfAndSeason"
 		parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO"
 		resultMap="subjectListDataMap">
 		SELECT * 
 		FROM subject
-		WHERE pfno = #{no}
+		WHERE pfno = #{prof.no}
+			AND seasoncode = #{seasonCode}
 		ORDER BY no ASC
 	</select>
 	

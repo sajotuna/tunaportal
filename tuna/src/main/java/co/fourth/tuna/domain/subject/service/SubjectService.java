@@ -10,7 +10,7 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 public interface SubjectService {
 	SubjectVO findOne(SubjectVO vo);
 	
-	ArrayList<SubjectVO> findListForProfessorMainByProf(ProfessorVO prof);
+	ArrayList<SubjectVO> findListForProfessorMainByProfAndSeason(ProfessorVO prof, int seasonCode);
 	
 	
 //	ArrayList<SubjectVO> getList(int pageNum, int size);

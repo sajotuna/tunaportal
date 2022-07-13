@@ -120,9 +120,11 @@ public class EclassProfessorEclassController {
 	public String subjectListView(Model model, HttpServletRequest req) {
 		//TODO 교수 데이터 추가해야함
 		ProfessorVO prof = new ProfessorVO();
+		int seasonCode = 106;
 		prof.setNo(61275);
 		
-		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMainByProf(prof);
+		
+		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMainByProfAndSeason(prof, seasonCode);
 		
 		model.addAttribute("subList", subList);
 		return req.getServletPath();
