@@ -1,5 +1,7 @@
 package co.fourth.tuna.domain.banner.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,5 +33,16 @@ public class BannerServiceImpl implements BannerService {
 	public int sliderBannerDelete(BannerVO vo) {
 		return map.sliderBannerDelete(vo);
 	}
+
+	@Override
+	public List<BannerVO> bannerListSelect() {
+		return map.bannerListSelect();
+	}
+	
+	@Override
+	public int bannerDelete(BannerVO vo) {
+		return map.bannerDelete(vo);
+	}
+
 
 }
