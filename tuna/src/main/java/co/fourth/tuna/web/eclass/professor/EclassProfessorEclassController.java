@@ -56,6 +56,8 @@ public class EclassProfessorEclassController {
 		subject = subjectService.findOne(subject);
 		System.out.println("!!!here!!!");
 		System.out.println(subject.getAttendanceList());
+		System.out.println(subject.getLectureScheduleList().get(0).getNo());
+		System.out.println(subject.getLectureScheduleList().get(1).getNo());
 		//System.out.println(subList.get(0));
 		
 		return profPath + "/home";

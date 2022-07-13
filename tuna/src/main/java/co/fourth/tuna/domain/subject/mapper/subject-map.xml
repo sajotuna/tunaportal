@@ -20,9 +20,23 @@
 		</collection>
 		
 		<collection
-			property=""
+			property="lectureApplyList"
+			ofType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO"
+			javaType="java.util.ArrayList"
+			column="no"
+			select=""
+		></collection>
+		
+		
+		<collection
+			property="lectureScheduleList"
+			ofType="co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO"
+			javaType="java.util.ArrayList"
+			column="no"
+			select="co.fourth.tuna.domain.common.mapper.LectureScheduleMapper.findLectureScheduleForSubject"
 		>
 		</collection>
+		
 	</resultMap>
 	
 	<select id="findOne"
@@ -31,6 +45,7 @@
 		SELECT * 
 		FROM subject
 		WHERE no = #{no}
+		ORDER BY no
 	</select>
 	
 	<select id="findListForLectureSchedule" resultType="map">
