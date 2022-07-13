@@ -10,9 +10,10 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 public interface SubjectMapper {
 	public SubjectVO findOne(SubjectVO vo);
-
-	public ArrayList<SubjectVO>findListForLectureSchedule(@Param("pageNum")int start, @Param("size")int size);
+	public ArrayList<SubjectVO> findListForProfessorMainByProf(ProfessorVO vo);
 	
-	public ArrayList<Map<String, Object>>findListForLectureScheduleByProf(@Param("prof")ProfessorVO prof, @Param("pageNum")int pageNum, @Param("size")int size);
+	
+	//public ArrayList<SubjectVO>findListForLectureSchedule(@Param("pageNum")int start, @Param("size")int size);
+	//public ArrayList<Map<String, Object>>findListForLectureScheduleByProf(@Param("prof")ProfessorVO prof, @Param("pageNum")int pageNum, @Param("size")int size);
 	
 }

@@ -1,5 +1,10 @@
 package co.fourth.tuna.domain.lectureQna.mapper;
 
+import java.util.ArrayList;
+
+import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
+import co.fourth.tuna.domain.subject.vo.SubjectVO;
+
 public interface LectureQnaMapper {
 
 	//질문목록
@@ -10,4 +15,7 @@ public interface LectureQnaMapper {
 	
 	//질문작성
 	
+
+	// ckw 서브젝트로 목록 조회
+	public ArrayList<LectureQnaVO> findBySubject(SubjectVO vo);
 }

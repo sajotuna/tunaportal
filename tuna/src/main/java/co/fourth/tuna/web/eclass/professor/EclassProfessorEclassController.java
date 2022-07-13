@@ -1,7 +1,6 @@
 package co.fourth.tuna.web.eclass.professor;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,18 +46,23 @@ public class EclassProfessorEclassController {
 //		System.out.println(paging.getLength());
 		
 		// TODO 교수 데이터 추가해야함
-		ProfessorVO prof = new ProfessorVO();
-		prof.setNo(61275);
-		List<Map<String,Object>> subList = subjectService.getMapsForLectureScheduleByProf(prof,1, 5);
 		
-		SubjectVO subject = new SubjectVO();
-		subject.setNo(18011);
-		subject = subjectService.findOne(subject);
-		System.out.println("!!!here!!!");
-		System.out.println(subject.getAttendanceList());
-		System.out.println(subject.getLectureScheduleList().get(0).getNo());
-		System.out.println(subject.getLectureScheduleList().get(1).getNo());
-		//System.out.println(subList.get(0));
+		//List<Map<String,Object>> subList = subjectService.getMapsForLectureScheduleByProf(prof,1, 5);
+		
+//		SubjectVO subject = new SubjectVO();
+//		subject.setNo(18011);
+//		subject = subjectService.findListForProfessorMainByProf(prof);
+//		System.out.println("!!!here!!!");
+//		System.out.println(subject.getLectureScheduleList().get(0).getNo());
+//		System.out.println(subject.getLectureScheduleList().get(1).getNo());
+//		
+//		System.out.println("!!!lectureApply!!!");
+//		System.out.println(subject.getLectureApplyList().get(0).getNo());
+//		System.out.println(subject.getLectureApplyList().get(1).getNo());
+//		//System.out.println(subList.get(0));
+//		System.out.println("!!!lectureQna!!!");
+//		System.out.println(subject.getLectureQnaList().get(0).getNo());
+		
 		
 		return profPath + "/home";
 	}
@@ -117,7 +121,9 @@ public class EclassProfessorEclassController {
 		//TODO 교수 데이터 추가해야함
 		ProfessorVO prof = new ProfessorVO();
 		prof.setNo(61275);
-		List<Map<String,Object>> subList = subjectService.getMapsForLectureScheduleByProf(prof, 1, 999);
+		
+		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMainByProf(prof);
+		
 		model.addAttribute("subList", subList);
 		return req.getServletPath();
 	}

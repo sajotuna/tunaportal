@@ -17,7 +17,7 @@ public class PortalScheduleServiceImpl implements PortalScheduleService {
 	
 	@Override
 	public List<PortalScheduleVO> scheduleList(String key){
-		return 
+		return null;
 	}
 	
 }
