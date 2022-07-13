@@ -66,6 +66,9 @@ public class EclassProfessorEclassController {
 	
 	@GetMapping("/noticeList")
 	public String noticeListView(Model model, HttpServletRequest req) {
+		
+		List<Map<String,Object>> subList = subjectService.getMapsForLectureSchedule(1, 5);
+		
 		return req.getServletPath();
 	}
 	
