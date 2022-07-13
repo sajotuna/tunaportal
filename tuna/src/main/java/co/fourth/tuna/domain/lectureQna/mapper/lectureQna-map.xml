@@ -3,18 +3,18 @@
 <mapper namespace="co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper">
 
 <!-- 질문목록 -->
+<!-- <select id="" resultType="" parameterType="">
+
+</select>
+
+질문단건조회
 <select id="" resultType="" parameterType="">
 
 </select>
 
-<!-- 질문단건조회 -->
-<select id="" resultType="" parameterType="">
-
-</select>
-
-<!-- 질문작성 -->
+질문작성
 <insert id="" parameterType="">
 
 </insert>
-
+ -->
 </mapper>
