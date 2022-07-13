@@ -12,4 +12,6 @@ public interface PortalNoticeMapper {
 	PortalNoticeVO noticeSelect(PortalNoticeVO vo);
 	int noticeInsert(PortalNoticeVO vo);
 	int fileInsert(PortalNoticeFileVO vo);
+	int noticeDelete(PortalNoticeVO vo);
+	int fileDelete(PortalNoticeFileVO vo);
 }

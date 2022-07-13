@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +43,8 @@ public class PortalNoticeController {
 
 	
 	
-	@RequestMapping("/adminNoticeList")
+	//admin
+	@RequestMapping("/admin/adminNoticeList")
 	public String adminNoticeList(Model model) {
 		model.addAttribute("notices", noticeDao.noticeList(1, "전체"));
 		return "notice/admin/adminNoticeList";
@@ -84,15 +86,20 @@ public class PortalNoticeController {
 		}
 		return "redirect:/admin/adminNoticeList";
 	}
-
+	
+	@RequestMapping("/admin/adminNoticeDelete")
+	public String adminNoticeDelete() {
+		return null;
+	}
+	
 	@RequestMapping("/admin/adminNoticeUpdate")
 	public String adminNoticeUpdate() {
 		return "notice/admin/adminNoticeUpdate";
 	}
 
-	@PostMapping("/admin/adminSearch")
+	@GetMapping("/admin/adminSearch")
 	@ResponseBody
-	public List<PortalNoticeVO> ajaxSearchList(@RequestParam("state") int state, @RequestParam("key") String key) {
+	public List<PortalNoticeVO> adminSearch(@RequestParam("state") int state, @RequestParam("key") String key) {
 		return noticeDao.noticeList(state, key);
 	}
 

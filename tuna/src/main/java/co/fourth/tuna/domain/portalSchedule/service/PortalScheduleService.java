@@ -5,7 +5,7 @@ import java.util.List;
 import co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO;
 
 public interface PortalScheduleService {
+	List<PortalScheduleVO> scheduleList(PortalScheduleVO vo);
 
-	List<PortalScheduleVO> scheduleList(String key);
 	
 }

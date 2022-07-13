@@ -26,8 +26,6 @@
     <!--title end-->
     <div class="content content-boxed">
 
-
-      <!--search end-->
       <div class="block block-rounded">
         <div class="block-header block-header-default">
           <div class="block-title">
@@ -35,14 +33,15 @@
             <button type="button" class="btn btn-outline-secondary"
               style="border:none; height:38px; width: 40px;"><i class="fa fa-arrow-left"></i></button>
               <div class="col-3">
-                <select class="form-select">
-                    <option value="102">2020 2학기</option>
-                    <option value="103">2021 1학기</option>
-                    <option value="104">2021 1학기</option>
-                    <option value="105">2022 1학기</option>
-                    <option value="106">2022 2학기</option>
-                    <option value="107">2023 1학기</option>
-                </select>
+                <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+	                <select id="seasonCode" name="seasonCode" class="form-select">
+	                    <option value="102">2023 1학기</option>
+	                    <option value="103">2022 2학기</option>
+	                    <option value="104">2022 1학기</option>
+	                    <option value="105">2021 2학기</option>
+	                    <option value="106">2021 1학기</option>
+	                    <option value="107">2020 2학기</option>
+	                </select>
             </div>
             <button type="button" class="btn btn-outline-secondary" style="border:none; height:38px;  width: 40px;"><i
                 class="fa fa-arrow-right"></i></button>
@@ -92,25 +91,19 @@
                   수강신청 확인 및 정정
                 </td>
               </tr>
-              <tr class="odd">
-                <td class="text-center fs-sm sorting_1 col-2" rowspan="3">3</td>
-                <td class="fw-semibold fs-sm text-center">03. 01</td>
-                <td class="d-none d-sm-table-cell fs-sm">
-                  삼일절 (공휴일)
-                </td>
-              </tr>
-              <tr class="even">
-                <td class="fw-semibold fs-sm  text-center col-2">03. 18</td>
-                <td class="d-none d-sm-table-cell fs-sm">
-                  수업일수 1/4선, 연계진학자 학점이월신청 마감
-                </td>
-              </tr>
-
             </tbody>
           </table>
         </div>
       </div>
     </div>
+<script>
+$('#sesonCode').on('change', function(){
+	let seasonCode = $(this).selected.val()
+	alert("seasonCode")
+})
+
+</script>    
+    
 </main>
 </body>
 </html>
