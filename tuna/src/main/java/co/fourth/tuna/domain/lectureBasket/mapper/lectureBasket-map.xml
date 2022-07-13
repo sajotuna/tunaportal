@@ -26,7 +26,7 @@ DELETE FROM LECTUREBASKET WHERE SBJNO = #{sbjNo}
 
 </delete>
 
-<select id ="FindRoom" parameterType="String" resultType="boolean">
+<select id ="FindRoom" parameterType="map" resultType="boolean">
 
 select case when count(*) >= 1 then 1 else 0 end as truefalse
 from lecturebasket l, lectureschedule ls

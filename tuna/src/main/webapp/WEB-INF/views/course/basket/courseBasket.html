@@ -29,6 +29,14 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 
 <body>
 <main layout:fragment="main">
+
+<th:block th:if = "${error != null && error != ''}">
+	<script th:inline="javascript">
+		let error = /*[[${error}]]*/ 'default';
+		alert(error);
+	</script>
+</th:block>
+
   <div id="section">
 
     <div id="page-container">
