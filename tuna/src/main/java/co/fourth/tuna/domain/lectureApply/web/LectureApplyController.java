@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.lectureApply.web;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,13 @@ public class LectureApplyController {
 	
 	@RequestMapping("/stud/courseApplication")
 	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication) {
+		Map<String, Object> params = new HashMap<>();
+		
+		
+		params.put("pageNum", 1);
+		params.put("size", 10);
+		
+		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		vo.setStateCode("401");
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind");

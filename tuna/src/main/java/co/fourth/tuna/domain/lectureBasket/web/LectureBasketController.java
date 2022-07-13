@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.lectureBasket.web;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +24,21 @@ public class LectureBasketController {
 	private LectureBasketService LectureBasketDao;
 	
 	@RequestMapping("/stud/courseBasket")
-	public String courseBasket(Model model,LectureBasketVO vo, Authentication authentication) {
+	public String courseBasket(Model model,LectureBasketVO vo, Authentication authentication, String pageNum) {
+		Map<String, Object> params = new HashMap<>();
+		
+		if(pageNum == null )
+		{
+			params.put("pageNum", 1);
+		}else {
+			params.put("pageNum", pageNum);
+		}
+		params.put("size", 10);
+		
+		
+		
 		vo.setStNo(authentication.getName());
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind");
+		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind",params);
 		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo.getStNo());
 		
 		model.addAttribute("list", lists);
@@ -33,6 +46,8 @@ public class LectureBasketController {
 		
 		return "course/basket/courseBasket";
 	}
+	
+	
 	
 	@RequestMapping("/stud/basketInsert")
 	public String basketInsert(Model model,@RequestParam List<String> courcheck, LectureBasketVO vo, Authentication authentication) {
