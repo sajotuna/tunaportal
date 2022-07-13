@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.fourth.tuna.domain.common.mapper.PagingMapper">
+	
+	<resultMap id="pagingMap" type="co.fourth.tuna.domain.common.vo.PagingVO">
+		<result property="length" column="length" />
+		<result property="pageCount" column="page" />
+		<result property="tableName" column="name" />
+		<result property="sizePerPage" column="page_size" />
+	</resultMap>
+	
+	<select id="getPaging" resultMap="pagingMap" parameterType="co.fourth.tuna.domain.common.vo.PagingVO">
+		SELECT 
+			MAX(ROWNUM) AS length, 
+			FLOOR( MAX(ROWNUM)/ #{sizePerPage}) AS page,
+			'${tableName}' as name,
+			#{sizePerPage} as page_size
+		FROM 
+			${tableName}
+	</select>
+</mapper>

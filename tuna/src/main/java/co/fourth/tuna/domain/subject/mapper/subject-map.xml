@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.fourth.tuna.domain.subject.mapper.SubjectMapper">
+	
+	<resultMap id="subjectMap" type="co.fourth.tuna.domain.subject.vo.SubjectVO">
+		<association property="pfNo" column="pfno" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
+	</resultMap>
+	
+	<select id="findListForLectureSchedule" resultType="map">
+		SELECT *
+		FROM (
+	    SELECT
+	    ROWNUM rn,
+	    s.*,
+	    ls.no lsno,
+	    ls.daycode, ls.roomcode,
+	    ls.timecode, ls.sbjno,
+	    (SELECT COUNT(*) FROM lectureapply WHERE sbjno = s.no) AS student_count,
+	    (SELECT COUNT(*) FROM lectureqna WHERE sbjno = s.no) AS qna_count
+	    FROM subject s
+				JOIN lectureschedule ls
+						ON ls.sbjno = s.no
+	    ORDER BY S.no ASC
+	) WHERE rn 
+			BETWEEN (#{pageNum}-1)*#{size}
+   		AND #{pageNum}*#{size}
+	</select>
+	
+	<select id="findListForLectureScheduleByProf" resultMap="subjectMap">
+		
+	</select>
+	
+</mapper>

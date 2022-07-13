@@ -1,5 +1,6 @@
-package co.fourth.tuna.domain.common.vo.subject;
+package co.fourth.tuna.domain.subject.vo;
 
+import co.fourth.tuna.domain.user.vo.ProfessorVO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,7 @@ public class SubjectVO {
 	private int limit;
 	private String deptCode;
 	private String seasonCode;
-	private int pfNo;
+	
+	private ProfessorVO pfNo;
+	
 }
