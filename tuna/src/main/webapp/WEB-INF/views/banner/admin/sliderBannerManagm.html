@@ -66,6 +66,7 @@
 						</thead>
 						<tbody id="tb">
 							<th:block th:each="bn, i:${bnList}">
+								<input type="hidden" th:data-adNo="139341" >
 								<tr th:data-no="${bn.no}" 
 									th:data-uri="${bn.uri}" th:data-filename="${bn.fileName}" style="cursor:pointer;">
 									<td scope="row" class="fw-semibold fs-sm">
@@ -77,7 +78,7 @@
 						</tbody>
 					</table>
 					<div class="d-flex justify-content-center mt-5">
-						<button type="button"id="bnPreview" class="btn btn-sm btn-light me-2"
+						<button type="button"id="sliderPreview" class="btn btn-sm btn-light me-2"
 							data-bs-toggle="modal" data-bs-target="#modal-block-vcenter">배너 미리보기</button>
 						<button type="button" class="btn btn-sm btn-dark submit-btn" data-job="submit" data-bs-dismiss="modal">순서 등록</button>
             		</div>
@@ -106,12 +107,12 @@
 						</div>
 					</div>
 					<div class="block-content block-content-full text-end bg-body">
-						<div class="js-slider slick-dotted-inner slick-dotted-white slider-section"
+						<div class="js-slider slick-dotted-inner slick-dotted-white"
 							data-dots="true" data-autoplay="true" data-autoplay-speed="1000">
-							<th:div th:each="bn, i:${bnList}">
+							<th:div th:each="bn, i:${bnList}" class="img-section">
 								<img class="img-fluid img" alt="">
 							</th:div>
-					</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -128,13 +129,13 @@
 		
 		$(function() {
 			preview();
-			bnPreview();
+			sliderPreview();
 			submit();
 		})
 		
-		function bnPreview() {
+		function sliderPreview() {
 			
-			$('#bnPreview').on('click', function() {
+			$('#sliderPreview').on('click', function() {
 				
 				$('#tb tr').each(function(idx) {
 					let uri = $('#tb tr').eq(idx).data('uri');
@@ -151,7 +152,8 @@
 		$('#file').on('change', changeEvent => {
 			
 			let formData = new FormData();
-			formData.append('file', $('input[name=file]').prop('files')[0]);		
+			formData.append('file', $('input[name=file]').prop('files')[0]);
+			formData.append('adNo', $('#adNo').val());
 			
 			$.ajax({
 			
@@ -348,11 +350,6 @@
 			let tr = $('#tb input:radio:checked').closest('tr');
 			let prevTr = tr.prev();
 			tr.insertBefore(prevTr);
-			
-			for (let i=0; i<$('#tb tr').length; i++) {
-				$('#tb tr').eq(i).attr('data-order', i+1)
-			}
-			
 		})
 		
 		// 아래로 이동
@@ -360,10 +357,6 @@
 			let tr = $('#tb input:radio:checked').closest('tr');
 			let nextTr = tr.next();
 			tr.insertAfter(nextTr);
-			
-			for (let i=0; i<$('#tb tr').length; i++) {
-				$('#tb tr').eq(i).attr('data-order', i+1)
-			}
 		})
 	
 	function getContextPath() {

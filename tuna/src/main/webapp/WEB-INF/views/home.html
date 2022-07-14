@@ -189,21 +189,7 @@
 	        	<!-- Slide Banner -->
 	            <div class="col-xl-5">
 	                <div class="block block-rounded">
-	                    <div class="block-content box banner">
-	                        <div class="js-slider slick-dotted-inner slick-dotted-white box" data-dots="true" data-autoplay="true" data-autoplay-speed="1800">
-	                            <div>
-	                              <img class="img-fluid" src="" alt="">
-	                            </div>
-	                            <div>
-	                              <img class="img-fluid" src="" alt="">
-	                            </div>
-	                            <div>
-	                              <img class="img-fluid" src="" alt="">
-	                            </div>
-	                            <div>
-	                              <img class="img-fluid" src="" alt="">
-	                            </div>
-	                          </div>
+	                    <div id="slider" class="block-content box banner">
 	                    </div>
 	                </div>
 	            </div>
@@ -325,38 +311,61 @@
    		
 	   	$(function() {
 	   		shortcutBanner();
+	   		//sliderBanner();
 		})
 		
-		// 슬라이드 배너
-		function sliderBanner() {
-			$.ajax({
+		
+		 // 슬라이드 배너
+		/*function sliderBanner() {
+	   		 $.ajax({
 				
-				url: getPathRootJump() + 'sliderBanner',
+				url: getContextPath() + 'sliderBanner',
 				type: 'GET',
+				async: false,
 				dataType: 'json'
 				
 			}).done(function(sliderBn) {
 				
+				for (bn of sliderBn) {
+					console.log(bn.fileName);
+					
+					$('#slider').append($('<div>').addClass('js-slider slick-dotted-inner slick-dotted-white box')
+         				          				  .data('dots', 'true')
+         				          				  .data('autoplay', 'true')
+         				          				  .data('autoplay-speed', '1500')
+         				          				  .append($('<div>')
+         				          						  .append($('<img>').addClass('img-fluid')
+                 				        		 		  .attr('src', getContextPath() + `display?fileName=${bn.uri}&folder=banner`))))
+         				        
+         				        
+					
+					
+					 $('<img>').addClass('img-fluid')
+					          .attr('src', getContextPath() + `display?fileName=${bn.uri}&folder=banner`)	
+					          .appendTo($('<div>'))
+					          .appendTo($('<div>')).addClass('js-slider slick-dotted-inner slick-dotted-white box')
+					         				    .data('dots', 'true').data('autoplay', 'true'). data('autoplay-speed', '1500')
+					          .appendTo('#slider'); 
+				}
 				
-				
-			})
-	   	}
+			})  
+	   	}*/
 		
 		// 기본 배너
 		function shortcutBanner() {
 			$.ajax({
 				
-				url: getPathRootJump() + 'basicBanner',
+				url: getContextPath() + 'basicBanner',
 				type: 'GET',
 				dataType: 'json'
 				
 			}).done(function(basicBn) {
-				$('#shortcutImg').attr('src', getPathRootJump() + `display?fileName=${basicBn.uri}&folder=banner`);
+				$('#shortcutImg').attr('src', getContextPath() + `display?fileName=${basicBn.uri}&folder=banner`);
 				$('#shortcutBtn').attr('onclick', `location.href='${basicBn.url}'`);
 			})
 		}
 	   	
-	   	function getPathRootJump() {
+	   	function getContextPath() {
 			var pathName = window.location.pathname.substring(1);
 			var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
 			var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';

@@ -1,6 +1,5 @@
 package co.fourth.tuna.domain.banner.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +15,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.fourth.tuna.domain.banner.service.BannerService;
 import co.fourth.tuna.domain.banner.vo.BannerVO;
 import co.fourth.tuna.domain.common.service.FileService;
 
-@Controller
+@RestController
 public class BannerController {
 	
 	private static Logger logger = LoggerFactory.getLogger(BannerController.class); 
@@ -35,25 +33,33 @@ public class BannerController {
 	
 	// 슬라이드 배너 조회
 	@RequestMapping("/sliderBanner")
-	@ResponseBody
 	public List<BannerVO> sliderBanner(Model model) {
 		return bannerDao.sliderBannerSelect();
 	}
 	
+	// 옵션 배너 1건 조회
+	@GetMapping("/optionBanner")
+	public BannerVO optionBannerSelect() {
+		return bannerDao.bannerSelect("1303");
+	}
+	
+	// 기본 배너 1건 조회
+	@GetMapping("/basicBanner")
+	public BannerVO basicBannerSelect() {
+		return bannerDao.bannerSelect("1302");
+	}
+	
 	// 슬라이드 배너 순서 변경
 	@PutMapping("/admin/sliderBanner")
-	@ResponseBody
 	public int sliderBannerUpdate(@RequestBody BannerVO vo) {
 		return bannerDao.sliderBannerUpdate(vo);
 	}
 	
 	// 슬라이드 배너 등록
 	@PostMapping("/admin/sliderBanner")
-	@ResponseBody
-	public int sliderBannerInsert(@RequestParam(value = "file")MultipartFile file) {
+	public int sliderBannerInsert(@RequestParam(value = "file")MultipartFile file, BannerVO vo) {
 		
 		String[] fileInfo = fileService.upload(file, "banner");
-		BannerVO vo = new BannerVO();
 		
 		vo.setFileName(fileInfo[0]);
 		vo.setUri(fileInfo[1]);
@@ -62,22 +68,8 @@ public class BannerController {
 		return bannerDao.bannerInsert(vo);
 	}
 	
-	// 배너 전체 리스트 조회
-	@GetMapping("/admin/bannerList")
-	public String bannerList(Model model) {
-		
-		List<BannerVO> list = new ArrayList<>();
-		list = bannerDao.bannerListSelect();
-		
-		model.addAttribute("bnList", list);
-		
-		return "banner/admin/bannerList";
-		
-	}
-	
 	// 배너 삭제
 	@DeleteMapping("/admin/banner")
-	@ResponseBody
 	public int bannerDelete(@RequestBody BannerVO vo) {
 		
 		fileService.delete(vo.getUri(), "banner");
@@ -85,16 +77,8 @@ public class BannerController {
 		
 	}
 	
-	// 옵션 배너 1건 조회
-	@GetMapping("/optionBanner")
-	@ResponseBody
-	public BannerVO optionBannerSelect() {
-		return bannerDao.bannerSelect("1303");
-	}
-	
 	// 옵션 배너 등록
 	@PostMapping("/admin/optionBanner")
-	@ResponseBody
 	public int optionBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile file) {
 		
 		String[] fileInfo = fileService.upload(file, "banner");
@@ -106,16 +90,8 @@ public class BannerController {
 		return bannerDao.bannerInsert(vo);
 	}
 	
-	// 기본 배너 1건 조회
-	@GetMapping("/basicBanner")
-	@ResponseBody
-	public BannerVO basicBannerSelect() {
-		return bannerDao.bannerSelect("1302");
-	}
-	
 	// 기본 배너 등록
 	@PostMapping("/admin/basicBanner")
-	@ResponseBody
 	public int basicBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile file, HttpServletRequest request) {
 		
 		String[] fileInfo = fileService.upload(file, "banner");
@@ -125,23 +101,6 @@ public class BannerController {
 		vo.setBannerCode("1302");
 		
 		return bannerDao.bannerInsert(vo);
-	}
-	
-	// 페이지 맵핑
-	@RequestMapping("/admin/basicBannerManagm")
-	public String basicBannerManagm() {
-		return "banner/admin/basicBannerManagm";
-	}
-
-	@RequestMapping("/admin/optionBannerManagm")
-	public String optionBannerManagm() {
-		return "banner/admin/optionBannerManagm";
-	}
-	
-	@RequestMapping("/admin/sliderBannerManagm")
-	public String sliderBannerManagm(Model model) {
-		model.addAttribute("bnList", bannerDao.sliderBannerSelect());
-		return "banner/admin/sliderBannerManagm";
 	}
 	
 }
