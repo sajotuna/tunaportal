@@ -27,6 +27,6 @@ AND Q.NO = 1
 <!-- 질문작성 -->
 <insert id="qnsInsert" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 INSERT INTO LECTUREQNA
-VALUES(?, ?, ?, ?, ?, ?, ?, ?);
+VALUES(?, ?, ?, ?, ?, ?, ?, ?)
 </insert>
 </mapper>
