@@ -7,4 +7,6 @@ public interface LecturePlanMapper {
 
 	public LecturePlanVO selectPlan(LecturePlanVO vo);
 	
+	public LecturePlanVO selectSc(LecturePlanVO vo);
+	
 }
