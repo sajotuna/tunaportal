@@ -29,4 +29,13 @@ AND Q.NO = 1
 INSERT INTO LECTUREQNA
 VALUES(?, ?, ?, ?, ?, ?, ?, ?)
 </insert> -->
+
+<!-- 목록 subject으로 찾기 -->
+	<select id="findBySubject"
+		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+		SELECT *
+		FROM lectureqna
+		WHERE sbjno = #{no}
+	</select>
+
 </mapper>

@@ -3,8 +3,77 @@
 <mapper namespace="co.fourth.tuna.domain.subject.mapper.SubjectMapper">
 	
 	<resultMap id="subjectMap" type="co.fourth.tuna.domain.subject.vo.SubjectVO">
-		<association property="pfNo" column="pfno" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
+		<association property="professorVO" column="pfno" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
+			select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
 	</resultMap>
+	
+	<resultMap id="subjectListDataMap" type="co.fourth.tuna.domain.subject.vo.SubjectVO">
+		<association property="professorVO" column="professorVO" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
+			select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
+		<!-- <collection 
+			property="attendanceList" 
+			ofType="co.fourth.tuna.domain.attendance.vo.AttendanceVO"
+			javaType="java.util.ArrayList"
+			column="no"
+			select="co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.selectAttendancesForSubject"
+			>
+		</collection> -->
+		
+		<collection
+			property="lectureApplyList"
+			ofType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO"
+			javaType="java.util.ArrayList"
+			column="no"
+			select="co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.findBySubject"
+		></collection>
+		
+		<collection
+			property="lectureQnaList"
+			ofType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO"
+			javaType="java.util.ArrayList"
+			column="no"
+			select="co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.findBySubject"
+		></collection>
+		
+		<collection
+			property="objectionList"
+			ofType="co.fourth.tuna.domain.objection.vo.ObjectionVO"
+			javaType="java.util.ArrayList"
+			column="no"
+			select="co.fourth.tuna.domain.objection.mapper.ObjectionMapper.findBySubject">
+		</collection>
+		
+		<collection
+			property="lectureScheduleList"
+			ofType="co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO"
+			javaType="java.util.ArrayList"
+			column="no"
+			select="co.fourth.tuna.domain.common.mapper.LectureScheduleMapper.findLectureScheduleForSubject"
+		>
+		</collection>
+		
+	</resultMap>
+
+
+	<select id="findOne"
+		parameterType="co.fourth.tuna.domain.subject.vo.SubjectVO"
+		>
+		SELECT * 
+		FROM subject
+		WHERE no = #{no}
+		ORDER BY no
+	</select>
+	
+	<select id="findListForProfessorMainByProfAndSeason"
+		parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO"
+		resultMap="subjectListDataMap">
+		SELECT * 
+		FROM subject
+		WHERE pfno = #{prof.no}
+			AND seasoncode = #{seasonCode}
+		ORDER BY no ASC
+	</select>
+	
 	
 	<select id="findListForLectureSchedule" resultType="map">
 		SELECT *
@@ -26,8 +95,25 @@
    		AND #{pageNum}*#{size}
 	</select>
 	
-	<select id="findListForLectureScheduleByProf" resultMap="subjectMap">
-		
+	<select id="findListForLectureScheduleByProf" resultType="map">
+		SELECT *
+		FROM (
+	    SELECT
+	    ROWNUM rn,
+	    s.*,
+	    ls.no lsno,
+	    ls.daycode, ls.roomcode,
+	    ls.timecode, ls.sbjno,
+	    (SELECT COUNT(*) FROM lectureapply WHERE sbjno = s.no) AS student_count,
+	    (SELECT COUNT(*) FROM lectureqna WHERE sbjno = s.no) AS qna_count
+	    FROM subject s
+				JOIN lectureschedule ls
+						ON ls.sbjno = s.no
+			WHERE s.pfno = #{prof.no}
+	    ORDER BY S.no ASC
+	) WHERE rn 
+			BETWEEN (#{pageNum}-1)*#{size}
+   		AND #{pageNum}*#{size}
 	</select>
 	
 </mapper>

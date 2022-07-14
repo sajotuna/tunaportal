@@ -25,45 +25,51 @@ public class SubjectServiceImpl implements SubjectService {
 	
 	@Override
 	public SubjectVO findOne(SubjectVO vo) {
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<SubjectVO> getList(int start, int size) {
-		return null;
-	}
-	@Override
-	public ArrayList<SubjectVO> getListByProf(ProfessorVO prof, int start, int size) {
-		return null;
+		return map.findOne(vo);
 	}
 
 	@Override
-	public List<Map<String, Object>> getMapsForLectureSchedule(int pageNum, int size) {
-		Map<String, Object> params = new HashMap<>();
-		
-		params.put("pageNum", pageNum);
-		params.put("size", size);
-		
-		List<Map<String, Object>> result = sqlSession.selectList(SubjectMapper.class.getName()+".findListForLectureSchedule", params); 
-		
-		return result;
-	}
-
-
-	@Override
-	public List<Map<String, Object>> getMapsForLectureScheduleByProf(ProfessorVO prof, int pageNum, int size) {
-		Map<String, Object> params = new HashMap<>();
-		
-		params.put("pageNum", pageNum);
-		params.put("size", size);
-		params.put("prof", prof);
-		
-		List<Map<String, Object>> result = sqlSession.selectList(SubjectMapper.class.getName()+".findListForLectureScheduleByProf", params); 
-		
-		return result;
+	public ArrayList<SubjectVO> findListForProfessorMainByProfAndSeason(ProfessorVO prof, int seasonCode) {
+		return map.findListForProfessorMainByProfAndSeason(prof, seasonCode);
 	}
 	
+	
+	
+//	
+//	@Override
+//	public ArrayList<SubjectVO> getList(int start, int size) {
+//		return null;
+//	}
+//	@Override
+//	public ArrayList<SubjectVO> getListByProf(ProfessorVO prof, int start, int size) {
+//		return null;
+//	}
+//
+//	@Override
+//	public List<Map<String, Object>> getMapsForLectureSchedule(int pageNum, int size) {
+//		Map<String, Object> params = new HashMap<>();
+//		
+//		params.put("pageNum", pageNum);
+//		params.put("size", size);
+//		
+//		List<Map<String, Object>> result = sqlSession.selectList(SubjectMapper.class.getName()+".findListForLectureSchedule", params);
+//		
+//		return result;
+//	}
+//
+//
+//	@Override
+//	public List<Map<String, Object>> getMapsForLectureScheduleByProf(ProfessorVO prof, int pageNum, int size) {
+//		Map<String, Object> params = new HashMap<>();
+//		
+//		params.put("pageNum", pageNum);
+//		params.put("size", size);
+//		params.put("prof", prof);
+//		
+//		List<Map<String, Object>> result = sqlSession.selectList(SubjectMapper.class.getName()+".findListForLectureScheduleByProf", params); 
+//		
+//		return result;
+//	}
 	
 	
 }

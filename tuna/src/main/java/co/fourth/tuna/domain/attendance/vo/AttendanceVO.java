@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AttendanceVO {
-	private int no;
 	private String stateCode;
-	private Date classDate;
 	private int stNo;
+	private int no;
 	private int sbjNo;
+	private Date classDate;
 }

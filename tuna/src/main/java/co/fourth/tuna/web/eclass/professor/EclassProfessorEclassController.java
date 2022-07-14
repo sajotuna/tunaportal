@@ -1,7 +1,6 @@
 package co.fourth.tuna.web.eclass.professor;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.fourth.tuna.domain.common.service.PagingService;
 import co.fourth.tuna.domain.subject.service.SubjectService;
+import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 
 @Controller
@@ -45,11 +46,23 @@ public class EclassProfessorEclassController {
 //		System.out.println(paging.getLength());
 		
 		// TODO 교수 데이터 추가해야함
-		List<Map<String,Object>> subList = subjectService.getMapsForLectureSchedule(1, 5);
 		
+		//List<Map<String,Object>> subList = subjectService.getMapsForLectureScheduleByProf(prof,1, 5);
 		
+//		SubjectVO subject = new SubjectVO();
+//		subject.setNo(18011);
+//		subject = subjectService.findListForProfessorMainByProf(prof);
+//		System.out.println("!!!here!!!");
+//		System.out.println(subject.getLectureScheduleList().get(0).getNo());
+//		System.out.println(subject.getLectureScheduleList().get(1).getNo());
+//		
+//		System.out.println("!!!lectureApply!!!");
+//		System.out.println(subject.getLectureApplyList().get(0).getNo());
+//		System.out.println(subject.getLectureApplyList().get(1).getNo());
+//		//System.out.println(subList.get(0));
+//		System.out.println("!!!lectureQna!!!");
+//		System.out.println(subject.getLectureQnaList().get(0).getNo());
 		
-		System.out.println(subList.get(0));
 		
 		return profPath + "/home";
 	}
@@ -67,7 +80,7 @@ public class EclassProfessorEclassController {
 	@GetMapping("/noticeList")
 	public String noticeListView(Model model, HttpServletRequest req) {
 		
-		List<Map<String,Object>> subList = subjectService.getMapsForLectureSchedule(1, 5);
+		
 		
 		return req.getServletPath();
 	}
@@ -105,6 +118,15 @@ public class EclassProfessorEclassController {
 	
 	@GetMapping("/subjectList")
 	public String subjectListView(Model model, HttpServletRequest req) {
+		//TODO 교수 데이터 추가해야함
+		ProfessorVO prof = new ProfessorVO();
+		int seasonCode = 106;
+		prof.setNo(61275);
+		
+		
+		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMainByProfAndSeason(prof, seasonCode);
+		
+		model.addAttribute("subList", subList);
 		return req.getServletPath();
 	}
 	

@@ -84,4 +84,11 @@ SELECT DISTINCT
 
 </select>
 
+	<select id = "findBySubject"
+		resultType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
+		SELECT *
+		FROM lectureapply
+		WHERE sbjno = #{no}
+	</select>
+
 </mapper>

@@ -8,11 +8,17 @@ import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 public interface SubjectService {
-	SubjectVO findOne(SubjectVO vo); 
-	ArrayList<SubjectVO> getList(int pageNum, int size);
-	ArrayList<SubjectVO> getListByProf(ProfessorVO prof, int pageNum, int size);
+	SubjectVO findOne(SubjectVO vo);
 	
-	List<Map<String, Object>> getMapsForLectureSchedule(int pageNum, int size);
-	List<Map<String, Object>> getMapsForLectureScheduleByProf(ProfessorVO prof, int pageNum, int size);
+	ArrayList<SubjectVO> findListForProfessorMainByProfAndSeason(ProfessorVO prof, int seasonCode);
+	
+	
+//	ArrayList<SubjectVO> getList(int pageNum, int size);
+//	ArrayList<SubjectVO> getListByProf(ProfessorVO prof, int pageNum, int size);
+//	
+//	
+//	List<Map<String, Object>> getMapsForLectureSchedule(int pageNum, int size);
+//	List<Map<String, Object>> getMapsForLectureScheduleByProf(ProfessorVO prof, int pageNum, int size);
+	
 	
 }
