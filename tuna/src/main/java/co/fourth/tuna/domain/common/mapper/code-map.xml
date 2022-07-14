@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.common.mapper.CodeMapper">
 
-<resultMap type="co.fourth.tuna.domain.common.vo.code.CodeVO"
-	id = "CodeMap">
+<resultMap id = "CodeMap" 
+	type="co.fourth.tuna.domain.common.vo.code.CodeVO">
 	<id property="no" column="no" />
 	<result property="codeName" column="codename" />
 	
@@ -13,7 +13,11 @@
  id = "CodeMasterMap">
  	<id property="no" column="no" />
  	<result property="codeName" column="codename" />
- 	<collection property="children" column="children" resultMap="CodeMap" />
+ 	<collection 
+ 		property="children" 
+ 		column="no" 
+ 		select="findCodeByDivision"
+ 		/>
  </resultMap>
 
 	<select id="getCodeList" resultMap="CodeMap">
@@ -29,6 +33,23 @@
 		WHERE p.codedivision IS NULL
 	</select>
 	
+	<select id="findCode" resultMap="CodeMap">
+		SELECT *
+		FROM publiccode
+		WHERE no = #{no}
+	</select>
 	
+	<select id="findCodeByDivision" resultMap="CodeMap">
+		SELECT *
+		FROM publiccode
+		WHERE codedivision = #{division}
+	</select>
+	
+	<select id="findCodeMaster" resultMap="CodeMasterMap">
+		SELECT rownum id, p.*
+		FROM publiccode P
+		WHERE p.codedivision IS NULL
+			AND p.no = #{no}
+	</select>
 	
 </mapper>

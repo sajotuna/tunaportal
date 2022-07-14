@@ -22,5 +22,9 @@ public class CodeService {
 	public ArrayList<CodeVO> getCodeList() {
 		return map.getCodeList();
 	}
+	
+	public CodeMasterVO findById(String no) {
+		return map.findCodeMaster(no);
+	}
 
 }

@@ -11,8 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import co.fourth.tuna.domain.common.service.CodeService;
 import co.fourth.tuna.domain.common.service.PagingService;
+import co.fourth.tuna.domain.common.vo.code.CodeMasterVO;
 import co.fourth.tuna.domain.subject.service.SubjectService;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
@@ -22,11 +25,9 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 @RequestMapping("/eclass/professor")
 public class EclassProfessorEclassController {
 	
-	@Autowired
-	PagingService pagingService;
-	
-	@Autowired
-	SubjectService subjectService;
+	@Autowired PagingService pagingService;
+	@Autowired SubjectService subjectService;
+	@Autowired CodeService codeService;
 	
 	private String profPath = "/eclass/professor";
 	
@@ -81,7 +82,6 @@ public class EclassProfessorEclassController {
 	public String noticeListView(Model model, HttpServletRequest req) {
 		
 		
-		
 		return req.getServletPath();
 	}
 	
@@ -117,16 +117,27 @@ public class EclassProfessorEclassController {
 	}
 	
 	@GetMapping("/subjectList")
-	public String subjectListView(Model model, HttpServletRequest req) {
+	public String subjectListView(
+			Model model, 
+			HttpServletRequest req, 
+			@RequestParam(value="season", required=false, defaultValue= "0" ) int season) {
+
 		//TODO 교수 데이터 추가해야함
 		ProfessorVO prof = new ProfessorVO();
-		int seasonCode = 106;
 		prof.setNo(61275);
 		
+		int seasonCode = 106;
+		if(season != 0) {
+			seasonCode = season;
+		}
+		
+		CodeMasterVO seasonMasterCode = codeService.findById("100");
 		
 		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMainByProfAndSeason(prof, seasonCode);
+
 		
 		model.addAttribute("subList", subList);
+		model.addAttribute("seasonCodes", seasonMasterCode);
 		return req.getServletPath();
 	}
 	
