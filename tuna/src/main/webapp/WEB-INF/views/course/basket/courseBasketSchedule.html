@@ -1027,11 +1027,12 @@ xcarbonads
             </div> <!-- .timeline -->
 
             <div class="events">
-              <ul th:each = "sub : ${baskList}">
-                <li class="events-group" th:if = "${@codeList.getName(sub.DAYCODE) == '월요일'}">
+              <ul >
+              <th:block th:each = "sub : ${baskList}">
+                <li class="events-group" th:if = "${sub.DAYCODE == '월'}">
                   <div class="top-info"><span>월요일</span></div>
 					<ul>
-						<li class="single-event" th:data-start="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0])}" th:data-end="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}" 
+						<li class="single-event" th:data-start="${#strings.arraySplit(sub.TIMECODE,'~')[0]}" th:data-end="${#strings.arraySplit(sub.TIMECODE,'~')[1]}"
                         data-event="event-1">
                         <em class="event-name">[[${sub.NAME}]]</em>
                       
@@ -1040,11 +1041,11 @@ xcarbonads
                   
                 </li>
 
-                <li class="events-group" th:if = "${@codeList.getName(sub.DAYCODE) == '화요일'}">
+                <li class="events-group" th:if = "${sub.DAYCODE == '화'}">
                   <div class="top-info"><span>화요일</span></div>
 
                   <ul>
-						<li class="single-event" th:data-start="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0])}" th:data-end="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}" 
+						<li class="single-event" th:data-start="${#strings.arraySplit(sub.TIMECODE,'~')[0]}" th:data-end="${#strings.arraySplit(sub.TIMECODE,'~')[1]}" 
                         data-event="event-2">
                         <em class="event-name">[[${sub.NAME}]]</em>
                       
@@ -1052,11 +1053,11 @@ xcarbonads
 					</ul>
                 </li>
 
-                <li class="events-group" th:if = "${@codeList.getName(sub.DAYCODE) == '수요일'}">
+                <li class="events-group" th:if = "${sub.DAYCODE == '수'}">
                   <div class="top-info"><span>수요일</span></div>
 
                   <ul>
-                    <li class="single-event" th:data-start="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0])}" th:data-end="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}" 
+                    <li class="single-event" th:data-start="${#strings.arraySplit(sub.TIMECODE,'~')[0]}" th:data-end="${#strings.arraySplit(sub.TIMECODE,'~')[1]}"
                         data-event="event-3">
                         <em class="event-name">[[${sub.NAME}]]</em>
                       
@@ -1064,11 +1065,11 @@ xcarbonads
                   </ul>
                 </li>
 
-                <li class="events-group" th:if = "${@codeList.getName(sub.DAYCODE) == '목요일'}">
+                <li class="events-group" th:if = "${sub.DAYCODE == '목'}">
                   <div class="top-info"><span>목요일</span></div>
 
                   <ul>
-                    <li class="single-event" th:data-start="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0])}" th:data-end="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}" 
+                    <li class="single-event" th:data-start="${#strings.arraySplit(sub.TIMECODE,'~')[0]}" th:data-end="${#strings.arraySplit(sub.TIMECODE,'~')[1]}"
                         data-event="event-4">
                         <em class="event-name">[[${sub.NAME}]]</em>
                       
@@ -1076,17 +1077,18 @@ xcarbonads
                   </ul>
                 </li>
 
-                <li class="events-group" th:if = "${@codeList.getName(sub.DAYCODE) == '금요일'}">
+                <li class="events-group" th:if = "${sub.DAYCODE == '금'}">
                   <div class="top-info"><span>금요일</span></div>
 
                   <ul>
-                    <li class="single-event" th:data-start="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0])}" th:data-end="${@codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}" 
+                    <li class="single-event" th:data-start="${#strings.arraySplit(sub.TIMECODE,'~')[0]}" th:data-end="${#strings.arraySplit(sub.TIMECODE,'~')[1]}"
                         data-event="event-5">
                         <em class="event-name">[[${sub.NAME}]]</em>
                       
                     	</li>
                   </ul>
                 </li>
+                </th:block>
               </ul>
             </div>
 			

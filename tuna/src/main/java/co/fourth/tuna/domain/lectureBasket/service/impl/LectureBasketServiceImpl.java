@@ -33,4 +33,13 @@ public class LectureBasketServiceImpl implements LectureBasketService {
 		return mapper.FindRoom(stNo,day, startTime, endTime);
 	}
 
+	@Override
+	public String FindCourseGrade(LectureBasketVO vo) {
+		return mapper.FindCourseGrade(vo);
+	}
+	@Override
+	public boolean FindSubject(LectureBasketVO vo) {
+		return mapper.FindSubject(vo);
+	}
+
 }

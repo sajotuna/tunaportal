@@ -7,4 +7,6 @@ public interface LectureBasketService {
 	public void baskInsert(LectureBasketVO vo);
 	public void baskDelete(LectureBasketVO vo);
 	public void courDelete(LectureBasketVO vo);
+	public String FindCourseGrade(LectureBasketVO vo);
+	public boolean FindSubject(LectureBasketVO vo);
 }
