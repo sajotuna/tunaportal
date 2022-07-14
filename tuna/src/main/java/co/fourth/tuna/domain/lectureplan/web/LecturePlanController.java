@@ -44,7 +44,7 @@ public class LecturePlanController {
 		 */
 		
 		Map<String,Object> map2 = new HashMap<String,Object>();
-		for(int i=0; i<weekplan.length-1; i++) {
+		for(int i=0; i<weekplan.length; i++) {
 			map2.put((i+1)+"주차", weekplan[i]);
 		}
 		
