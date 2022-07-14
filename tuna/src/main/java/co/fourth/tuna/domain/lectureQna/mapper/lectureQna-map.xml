@@ -3,7 +3,7 @@
 <mapper namespace="co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper">
 
 <!-- 질문목록 -->
-<select id="qnaList" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+<!-- <select id="qnaList" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 
 SELECT Q.*, S.NAME, L.SBJNO
 FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
@@ -13,7 +13,7 @@ AND L.SEASONCODE = 105
 
 </select>
 
-<!-- 질문단건조회 -->
+질문단건조회
 <select id="qnaSelect" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 
 SELECT Q.*, S.NAME, L.SBJNO
@@ -24,9 +24,9 @@ AND L.SEASONCODE = 105
 AND Q.NO = 1
 </select>
 
-<!-- 질문작성 -->
+질문작성
 <insert id="qnsInsert" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 INSERT INTO LECTUREQNA
 VALUES(?, ?, ?, ?, ?, ?, ?, ?)
-</insert>
+</insert> -->
 </mapper>
