@@ -6,12 +6,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class PortalNoticeVO {
-	private int no;
+	private String no;
 	private String title;
 	private String content;
 	private String visible;

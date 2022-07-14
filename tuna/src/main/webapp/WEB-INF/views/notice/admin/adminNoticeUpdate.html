@@ -11,34 +11,36 @@
 <body>     
         <!--폼 시작-->
 <main layout:fragment="main">
-            <div class="content content-boxed">
-
+           <div class="content content-boxed">
                 <h3 class="fw-bold">학사공지 수정</h3>
                 <div class="block block-rounded">
-                            <form class="block-content block-content-full">
-                            <div >
-                                <input type="text" class="mb-4 form-control" id="example-text-input"
-                                    placeholder="학사공지 수정">
+                            <form th:action="@{/admin/adminNoticeupdate(${_csrf.parameterName}=${_csrf.token})}" class="block-content block-content-full" method="post" enctype="multipart/form-data">                          
+                                <input type="hidden" th:value="[[${notice.no}]]">
+                            <div th:each="notice, i:${content}">
+                                <input type="text" name="title"class="mb-4 form-control" id="title"
+                                    th:value="[[${notice.title}]]">
                                 <hr>
-                                <textarea class="js-simplemde" id="simplemde" name="simplemde">내용을 입력하세요</textarea>
+                                <textarea class="js-simplemde" id="content" name="content" th:value="$[[{notice.content}]]"></textarea>
                             </div>
                             <hr>
                             <div class="row mb-3">
-                                <div class="col-6">
-                                    <input class="form-control" type="file" id="example-file-input-multiple" multiple="multiple">
+                                <div class="col-6" th:each="file, i:${files}">
+                                    <input class="form-control" type="file" id="file" name="file" multiple="multiple"
+                                    th:value="$[[{file.name}]]">
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-select">
-                                        <option value="1">공개</option>
-                                        <option value="2">비공개</option>
+                                    <select id="visible" name="visible"class="form-select">
+                                        <option value="y">공개</option>
+                                        <option value="n">비공개</option>
                                     </select>
                                 </div>
                             </div>
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-outline-secondary me-2">수정</button>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='adminNoticeList'">홈으로</button>
+                                    <button type="submit" class="btn btn-outline-secondary me-2">등록</button>
+                                    <button type="button" class="btn btn-outline-secondary" th:onclick="|location.href='@{/admin/adminNoticeList}'|">홈으로</button>
                                 </div>
-
+             
+					</th:block>
                     </form>
                     </div>
 

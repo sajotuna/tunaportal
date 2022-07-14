@@ -15,6 +15,7 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 	@Autowired
 	private PortalNoticeMapper map;
 
+	//공지사항
 	@Override
 	public List<PortalNoticeVO> noticeList(int state, String key) {
 		return map.noticeList(state, key);
@@ -24,19 +25,40 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 		return map.noticeSelect(vo);
 	}
 	
+	
 	public int noticeInsert(PortalNoticeVO vo) {
 		return map.noticeInsert(vo);
 	}
 	
-	public int fileInsert(PortalNoticeFileVO vo) {
-		return map.fileInsert(vo);
+	public int noticeUpdate(PortalNoticeVO vo) {
+		return map.noticeInsert(vo);
 	}
 	
 	public int noticeDelete(PortalNoticeVO vo) {
 		return map.noticeDelete(vo);
 	}
 	
+	
+	//파일
+	public List<PortalNoticeFileVO> fileList(PortalNoticeFileVO fileVo) {
+		 return map.fileList(fileVo);
+	}
+	
+	public List<PortalNoticeFileVO> fileSelect(int pnNo) {
+		return map.fileSelect(pnNo);
+	}
+	
+	public int fileInsert(PortalNoticeFileVO vo) {
+		return map.fileInsert(vo);
+	}
+	
+	public int fileUpdate(PortalNoticeFileVO vo) {
+		return map.fileDelete(vo);
+	}
+	
 	public int fileDelete(PortalNoticeFileVO vo) {
 		return map.fileDelete(vo);
 	}
+
+
 }
