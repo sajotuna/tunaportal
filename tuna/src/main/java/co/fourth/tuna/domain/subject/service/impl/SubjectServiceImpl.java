@@ -20,17 +20,14 @@ public class SubjectServiceImpl implements SubjectService {
 	@Autowired
 	SubjectMapper map;
 	
-	@Autowired
-	private SqlSession sqlSession;
-	
 	@Override
 	public SubjectVO findOne(SubjectVO vo) {
 		return map.findOne(vo);
 	}
 
 	@Override
-	public ArrayList<SubjectVO> findListForProfessorMain(ProfessorVO prof, int seasonCode) {
-		return map.findListForProfessorMain(prof, seasonCode);
+	public ArrayList<SubjectVO> findListForProfessorMain(ProfessorVO prof, int seasonCode, int pageNum, int size) {
+		return map.findListForProfessorMain(prof, seasonCode, pageNum, size);
 	}
 	@Override
 	public List<SubjectVO> SubjectCheck(){

@@ -69,7 +69,7 @@ xmlns:th="http://www.thymeleaf.org"
                   </div>
                 </div>
                 <div class="block-content p-0">
-                  <ul class="nav-items push">
+                  <ul class="nav-items push" th:if="${not #lists.isEmpty(subList)}">
                     <!-- TODO remove id -->
                     <li id="test-li"  th:each="sub:${subList}">
                       <a class="row m-2 pb-2" th:href="@{/eclass/professor/subject}">
@@ -100,6 +100,9 @@ xmlns:th="http://www.thymeleaf.org"
                     </li>
 
                   </ul>
+                  <ul th:unless="${not #lists.isEmpty(subList)}"> 
+                    <li>강의가 없습니다!</li>
+                  </ul>
                 </div><!-- block content END -->
 
               </div>
@@ -119,29 +122,34 @@ xmlns:th="http://www.thymeleaf.org"
                     </a>
                   </div>
                 </div>
-                <div class="block-content p-0">
-
+                <div class="block-content p-0" th:if="${not #lists.isEmpty(qnaList)}">
+                  
                   <table class="js-table-checkable table table-hover table-vcenter">
                     <tbody>
-                      <tr>
+	                    	
+                      <tr th:each="qna : ${qnaList}">
                         <td class="d-flex justify-content-between">
                           <div>
-                            <div><strong>제목 데이터없음</strong></div>
-                            <div>참치의역사</div>
+                            <div><strong th:text="${qna.title}">제목 데이터없음</strong></div>
+                            <div th:text="${qna.sbjNo}">참치의역사</div>
                           </div>
                           <div class="text-end">
-                            <div>과목 데이터없음</div>
+                            <div th:text="${qna.enrollDate}">시각데이터 없음</div>
                             <div data-bs-toggle="modal" data-bs-target="#modal-block-normal">
-                              <a class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title data-bs-original-title="<i class='fa fa-user'></i> 학생정보" 
+                              <a th:text="${qna.stNo}" class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-original-title="<i class='fa fa-user'></i> 학생정보" 
                               href="javascript:void(0)">
                               학생 데이터없음</a>
                             </div>
                           </div>
                         </td>
                       </tr>
+                    </th:block>
                     </tbody>
                   </table>
 
+                </div>
+                <div th:unless="${not #lists.isEmpty(subList)}">
+                  문의가 없습니다!
                 </div>
               </div>
             </div>

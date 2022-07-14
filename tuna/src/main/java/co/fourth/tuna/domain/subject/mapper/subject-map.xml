@@ -65,13 +65,20 @@
 	</select>
 	
 	<select id="findListForProfessorMain"
-		parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO"
 		resultMap="subjectListDataMap">
-		SELECT * 
-		FROM subject
-		WHERE pfno = #{prof.no}
-			AND seasoncode = #{seasonCode}
-		ORDER BY no ASC
+		SELECT *
+		FROM (
+			SELECT
+				ROWNUM rn, 
+				subject.* 
+			FROM subject
+			WHERE pfno = #{prof.no}
+				AND seasoncode = #{seasonCode}
+			ORDER BY no ASC
+		) WHERE rn
+				BETWEEN (#{pageNum}-1)*#{size}
+   			AND #{pageNum}*#{size}
+		
 	</select>
 	
 	<select id = "SubjectCheck" resultType="map">

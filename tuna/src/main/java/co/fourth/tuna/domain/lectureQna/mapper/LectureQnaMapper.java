@@ -2,8 +2,11 @@ package co.fourth.tuna.domain.lectureQna.mapper;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 public interface LectureQnaMapper {
 
@@ -18,4 +21,10 @@ public interface LectureQnaMapper {
 
 	// ckw 서브젝트로 목록 조회
 	public ArrayList<LectureQnaVO> findBySubject(SubjectVO vo);
+	
+	public ArrayList<LectureQnaVO> findByProfessor(
+			@Param("prof")ProfessorVO vo, 
+			@Param("pageNum")int pageNum, 
+			@Param("size")int size
+		);
 }

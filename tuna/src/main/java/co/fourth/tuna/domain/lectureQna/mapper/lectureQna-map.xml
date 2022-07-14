@@ -37,5 +37,21 @@ VALUES(?, ?, ?, ?, ?, ?, ?, ?)
 		FROM lectureqna
 		WHERE sbjno = #{no}
 	</select>
+	
+	<select id="findByProfessor"
+		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+		SELECT *
+		FROM (
+			SELECT
+			ROWNUM rn,
+				l.*
+			FROM lectureqna l
+			JOIN subject s
+				ON	l.sbjno = s.no
+			WHERE s.pfno = #{prof.no}
+		) WHERE rn 
+				BETWEEN (#{pageNum}-1)*#{size}
+				AND #{pageNum}*#{size}
+	</select>
 
 </mapper>

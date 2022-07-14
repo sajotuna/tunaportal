@@ -1,6 +1,7 @@
 package co.fourth.tuna.web.eclass.professor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import co.fourth.tuna.domain.common.service.CodeService;
 import co.fourth.tuna.domain.common.service.PagingService;
 import co.fourth.tuna.domain.common.vo.code.CodeMasterVO;
+import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
+import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
 import co.fourth.tuna.domain.subject.service.SubjectService;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
@@ -27,6 +30,7 @@ public class EclassProfessorEclassController {
 	
 	@Autowired PagingService pagingService;
 	@Autowired SubjectService subjectService;
+	@Autowired LectureQnaService lectureService;
 	@Autowired CodeService codeService;
 	
 	private String profPath = "/eclass/professor";
@@ -46,33 +50,17 @@ public class EclassProfessorEclassController {
 //		paging = pagingService.getPaging(paging);
 //		System.out.println(paging.getLength());
 		
-		// TODO 교수 데이터 추가해야함
-		
-		//List<Map<String,Object>> subList = subjectService.getMapsForLectureScheduleByProf(prof,1, 5);
-		
-//		SubjectVO subject = new SubjectVO();
-//		subject.setNo(18011);
-//		subject = subjectService.findListForProfessorMainByProf(prof);
-//		System.out.println("!!!here!!!");
-//		System.out.println(subject.getLectureScheduleList().get(0).getNo());
-//		System.out.println(subject.getLectureScheduleList().get(1).getNo());
-//		
-//		System.out.println("!!!lectureApply!!!");
-//		System.out.println(subject.getLectureApplyList().get(0).getNo());
-//		System.out.println(subject.getLectureApplyList().get(1).getNo());
-//		//System.out.println(subList.get(0));
-//		System.out.println("!!!lectureQna!!!");
-//		System.out.println(subject.getLectureQnaList().get(0).getNo());
-		
 		//TODO 교수 데이터 추가해야함
 		ProfessorVO prof = new ProfessorVO();
 		prof.setNo(61275);
 		//TODO 기준 시즌 필요
 		int season = 105;
 		
-		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season);
+		List<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season, 1, 5);
+		List<LectureQnaVO> qnaList = lectureService.findByProfessor(prof, 1, 5); 
 		
 		model.addAttribute("subList", subList);
+		model.addAttribute("qnaList", qnaList);
 		
 		return profPath + "/home";
 	}
@@ -141,7 +129,7 @@ public class EclassProfessorEclassController {
 		
 		CodeMasterVO seasonMasterCode = codeService.findById("100");
 		
-		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season);
+		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season, 1, 999);
 
 		model.addAttribute("subList", subList);
 		model.addAttribute("seasonCodes", seasonMasterCode);
