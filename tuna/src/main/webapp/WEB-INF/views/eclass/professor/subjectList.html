@@ -82,6 +82,7 @@ xmlns:th="http://www.thymeleaf.org"
         				<option 
                   th:each="season : ${seasonCodes.children}"
                   th:value="${season.no}"
+                  th:selected="${season.no} == ${selectedSeason}"
                 >
         					<span th:text="${season.codeName}">학기 데이터 없음</span>
         				</option>

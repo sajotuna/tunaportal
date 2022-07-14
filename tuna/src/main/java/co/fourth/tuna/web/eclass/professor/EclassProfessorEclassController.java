@@ -64,6 +64,15 @@ public class EclassProfessorEclassController {
 //		System.out.println("!!!lectureQna!!!");
 //		System.out.println(subject.getLectureQnaList().get(0).getNo());
 		
+		//TODO 교수 데이터 추가해야함
+		ProfessorVO prof = new ProfessorVO();
+		prof.setNo(61275);
+		//TODO 기준 시즌 필요
+		int season = 105;
+		
+		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season);
+		
+		model.addAttribute("subList", subList);
 		
 		return profPath + "/home";
 	}
@@ -126,18 +135,17 @@ public class EclassProfessorEclassController {
 		ProfessorVO prof = new ProfessorVO();
 		prof.setNo(61275);
 		
-		int seasonCode = 106;
-		if(season != 0) {
-			seasonCode = season;
+		if(season == 0) {
+			season = 105;
 		}
 		
 		CodeMasterVO seasonMasterCode = codeService.findById("100");
 		
-		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMainByProfAndSeason(prof, seasonCode);
+		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season);
 
-		
 		model.addAttribute("subList", subList);
 		model.addAttribute("seasonCodes", seasonMasterCode);
+		model.addAttribute("selectedSeason", season);
 		return req.getServletPath();
 	}
 	

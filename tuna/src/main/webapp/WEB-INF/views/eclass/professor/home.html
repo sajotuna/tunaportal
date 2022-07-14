@@ -51,7 +51,7 @@ xmlns:th="http://www.thymeleaf.org"
         </div> content header END -->
 
         <div class="content">
-
+          <h2 class="h3 fw-bold">Home</h2>
           <div class="row">
 
             <div class="col-xxl-8">
@@ -59,11 +59,11 @@ xmlns:th="http://www.thymeleaf.org"
                 <h2 class="col-10 mb-1">오늘 강의 목록</h2>
                 <a class="col-2 text-end" href="javascript:void(0)">더보기</a>
               </div> -->
-              <div class="block block-rounded">
-                <div class="block-header block-header-default">
+              <div class="block block-rounded block-themed">
+                <div class="block-header bg-primary-darker">
                   <h3 class="block-title">강의 목록</h3>
                   <div class="block-options">
-                    <a class="btn btn-sm rounded-pill btn-alt-secondary" th:href="@{/eclass/professor/subjectList}">
+                    <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/eclass/professor/subjectList}">
                       <i class="fa fa-ellipsis"></i>
                     </a>
                   </div>
@@ -71,29 +71,27 @@ xmlns:th="http://www.thymeleaf.org"
                 <div class="block-content p-0">
                   <ul class="nav-items push">
                     <!-- TODO remove id -->
-                    <li id="test-li">
-                      <a class="d-flex flex-row justify-content-between p-3" th:href="@{/eclass/professor/subject}">
+                    <li id="test-li"  th:each="sub:${subList}">
+                      <a class="row m-2 pb-2" th:href="@{/eclass/professor/subject}">
                         
-                        <div class="flex-column">
+                        <div class="col-6">
                           <!--19자 제한 (19자 넘으면 19자 부터 ...)-->
-                          <div class="fw-bold fs-4">일이삼사오륙칠팔구십일이삼사오륙</div>
-                          <div class="ps-2 text-muted">[2022년 1학기]</div>
+                          <div class="fw-bold fs-5" th:text="${sub.name}">강의 데이터없음</div>
+                          <div class="ps-2 text-muted" th:text="${'['+ @codeList.getName(sub.seasonCode) +']'}">[학기 데이터없음]</div>
                         </div>
 
-                        <div class="d-flex flex-column justify-content-around text-gray-darker">
-                          <div class="">
-                            <span>CLASSNAME0123</span>
-                            <span>(TUE)</span>
-                            <span>14:00 (3H)</span>
+                        <div class="col-6 text-gray-darker">
+                          <div class="text-end">
+                            <span>...</span>
                           </div>
-                          <div class="d-flex flex-rows justify-content-around">
-                            <div class="">
-                              <span>차수 :</span>
-                              <span>4 / 16</span>
+                          <div class="row justify-content-between">
+                            <div class="col-6">
+                              <span>차수:</span>
+                              <span>데이터 없음</span>
                             </div>
-                            <div class="">
+                            <div class="col-5">
                               <span>수강생 :</span>
-                              <span>18</span>
+                              <span th:text="${#lists.size(sub.lectureApplyList)}">데이터 없음</span>
                             </div>
                           </div>
                           
@@ -112,11 +110,11 @@ xmlns:th="http://www.thymeleaf.org"
                 <h2 class="col-9 mb-1">수강생 문의</h2>
                 <a class="col-3 text-end" href="javascript:void(0)">더보기</a>
               </div> -->
-              <div class="block block-rounded">
-                <div class="block-header block-header-default">
+              <div class="block block-rounded block-themed">
+                <div class="block-header bg-primary-darker">
                   <h3 class="block-title">수강생 문의</h3>
                   <div class="block-options">
-                    <a class="btn btn-sm rounded-pill btn-alt-secondary" th:href="@{/eclass/professor/qnaList}">
+                    <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/eclass/professor/qnaList}">
                       <i class="fa fa-ellipsis"></i>
                     </a>
                   </div>
@@ -128,15 +126,15 @@ xmlns:th="http://www.thymeleaf.org"
                       <tr>
                         <td class="d-flex justify-content-between">
                           <div>
-                            <div><strong>문의제목</strong></div>
+                            <div><strong>제목 데이터없음</strong></div>
                             <div>참치의역사</div>
                           </div>
                           <div class="text-end">
-                            <div>07-03 18:45</div>
+                            <div>과목 데이터없음</div>
                             <div data-bs-toggle="modal" data-bs-target="#modal-block-normal">
                               <a class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title data-bs-original-title="<i class='fa fa-user'></i> 학생정보" 
                               href="javascript:void(0)">
-                              강동원 (참치물리학)</a>
+                              학생 데이터없음</a>
                             </div>
                           </div>
                         </td>
@@ -154,11 +152,11 @@ xmlns:th="http://www.thymeleaf.org"
               <h2 class="col-10 mb-1">전체 공지</h2>
               <a class="col-2 text-end" href="javascript:void(0)">더보기</a>
             </div> -->
-            <div class="block block-rounded table-bordered">
-              <div class="block-header block-header-default">
+            <div class="block block-rounded block-themed table-bordered ">
+              <div class="block-header bg-primary-darker ">
                 <h3 class="block-title">전체 공지</h3>
                 <div class="block-options">
-                  <a class="btn btn-sm rounded-pill btn-alt-secondary" th:href="@{/eclass/professor/noticeList}">
+                  <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/eclass/professor/noticeList}">
                     <i class="fa fa-ellipsis"></i>
                   </a>
                 </div>

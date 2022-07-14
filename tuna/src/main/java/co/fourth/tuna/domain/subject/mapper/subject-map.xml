@@ -52,9 +52,6 @@
 		>
 		</collection>
 		
-		
-		
-		
 	</resultMap>
 
 
@@ -67,7 +64,7 @@
 		ORDER BY no
 	</select>
 	
-	<select id="findListForProfessorMainByProfAndSeason"
+	<select id="findListForProfessorMain"
 		parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO"
 		resultMap="subjectListDataMap">
 		SELECT * 
