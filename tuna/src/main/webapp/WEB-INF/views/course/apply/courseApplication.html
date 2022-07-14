@@ -101,7 +101,6 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   <tbody id = "courlist">
                   	
                     <tr th:scope="row" th:each="sub, status : ${list}">
-                    <th:block th:if = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
@@ -109,18 +108,9 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
-                     </th:block>
-                    <th:block th:unless = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
-                      <th class="fw-semibold fs-sm" ></th>
-                      <td class="fw-semibold fs-sm" ></td>
-                      <td class="fw-semibold fs-sm" ></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                    </th:block>
+                    
                       <td class="fw-semibold fs-sm" >
-	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
+                      [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
                       </td>
                     </tr>
                     
@@ -179,7 +169,6 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </thead>
                   <tbody id = "courlist">
                     <tr th:scope="row" th:each="sub, status : ${baskList}">
-                    <th:block th:if = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
@@ -187,18 +176,9 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
-                     </th:block>
-                    <th:block th:unless = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
-                      <th class="fw-semibold fs-sm" ></th>
-                      <td class="fw-semibold fs-sm" ></td>
-                      <td class="fw-semibold fs-sm" ></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                    </th:block>
+                    
                       <td class="fw-semibold fs-sm" >
-	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
+                      [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
                       </td>
                     </tr>
                   </tbody>
@@ -286,7 +266,6 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </thead>
                   <tbody id = "courlist">
                     <tr th:scope="row" th:each="sub, status : ${courList}">
-                    <th:block th:if = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
@@ -294,18 +273,9 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
-                     </th:block>
-                    <th:block th:unless = "${ status.index == 0 || (status.index != 0 && list[status.index-1].NO != sub.NO)}">
-                      <th class="fw-semibold fs-sm" ></th>
-                      <td class="fw-semibold fs-sm" ></td>
-                      <td class="fw-semibold fs-sm" ></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                      <td class="fw-semibold fs-sm"></td>
-                    </th:block>
+                    
                       <td class="fw-semibold fs-sm" >
-	                      [[${@codeList.getName(sub.DAYCODE) +'  '+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[0]) +'~'+ @codeList.getName(#strings.arraySplit(sub.TIMECODE,'~')[1])}]]
+                      [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
                       </td>
                     </tr>
                   </tbody>
@@ -321,18 +291,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script>
   
-  document.addEventListener('DOMContentLoaded', function(){
-		let courlist = document.querySelectorAll("#courlist > tr")
-		courlist.forEach((trList,idx) =>{
-			
-			if(trList.children[0].innerHTML == ''){
-				
-			courlist[idx-1].lastElementChild.innerHTML = courlist[idx-1].lastElementChild.innerHTML + '</br>' + trList.lastElementChild.innerHTML;
-			trList.remove();
-			}
-
-		})
-	})
+ 
   
   
     function showPopup() {
