@@ -54,7 +54,7 @@ SELECT DISTINCT
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO
    AND S.NO IN ( SELECT NO FROM SUBJECT)
-   AND STNO = #{STNO}
+   AND STNO = #{stNo}
 </select>
 
 <select id = "CourseBasket" resultType="map" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
@@ -80,7 +80,7 @@ SELECT DISTINCT
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO 
    AND S.NO IN ( SELECT NO FROM SUBJECT)
-   AND STNO = #{STNO}
+   AND STNO = #{stNo}
 
 </select>
 

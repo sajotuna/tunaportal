@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LectureApplyVO {
-	private int no;
+	private String no;
 	private String seasonCode;
-	private int stNo;
-	private int sbjNo;
+	private String stNo;
+	private String sbjNo;
 	
 	private String stateCode;
 	
