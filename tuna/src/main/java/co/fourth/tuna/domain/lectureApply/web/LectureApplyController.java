@@ -60,6 +60,8 @@ public class LectureApplyController {
 		return "course/apply/courseApplication";
 	}
 	
+	
+	
 	@RequestMapping("/stud/courseApplicationLectureList")
 	public String courseApplicationLectureList() {
 		return "course/apply/courseApplicationLectureList";

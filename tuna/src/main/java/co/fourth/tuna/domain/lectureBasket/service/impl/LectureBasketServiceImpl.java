@@ -23,6 +23,10 @@ public class LectureBasketServiceImpl implements LectureBasketService {
 		mapper.baskDelete(vo);
 		
 	}
+	@Override
+	public void courDelete(LectureBasketVO vo) {
+		mapper.courDelete(vo);
+	}
 
 	@Override
 	public boolean FindRoom(String stNo, String day, String startTime, String endTime) {

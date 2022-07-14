@@ -25,6 +25,11 @@ insert into LECTUREBASKET values (#{no}, 'y', #{seasonCode}, #{sbjNo}, #{stNo})
 DELETE FROM LECTUREBASKET WHERE SBJNO = #{sbjNo}
 
 </delete>
+<delete id ="courDelete" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
+
+DELETE FROM LECTUREAPPLY WHERE SBJNO = #{sbjNo}
+
+</delete>
 
 <select id ="FindRoom" parameterType="map" resultType="boolean">
 
