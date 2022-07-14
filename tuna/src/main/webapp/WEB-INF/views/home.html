@@ -331,16 +331,21 @@
 		function shortcutBanner() {
 			$.ajax({
 				
-				url: 'admin/basicBanner',
+				url: getPathRootJump() + 'admin/basicBanner',
 				type: 'GET',
-				dataType: 'json'
+				dataType: 'json',
 				
 				}).done(function(basicBn) {
-					
-					$('#shortcutImg').attr('src', `resources/assets/media/photos/${basicBn.fileName}`);
+					$('#shortcutImg').attr('src', getPathRootJump() + `display?fileName=${basicBn.uri}&folder=banner`);
 					$('#shortcutBtn').attr('onclick', `location.href='${basicBn.url}'`);
-					
 				})
+		}
+	   	
+	   	function getPathRootJump() {
+			var pathName = window.location.pathname.substring(1);
+			var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+			var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+			return path_root;
 		}
    	
    	</script>

@@ -4,43 +4,13 @@
     data-layout-decorate="~{layouts/adminLayout}">
 <head>
 	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}">
+  	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 	<title>sliderBannerManagm</title>
-	<!-- Stylesheets -->
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-	<!-- End Stylesheets -->
-	<style>
-		.preview {
-			background: rgb(100,100,100);
-		}
-		.img-section {
-			width: 450px;
-			height: 300px;
-			background: rgb(100,100,100);
-			overflow:hidden;
-			border: none;
-		}
-        .img {
-            width:100%;
-            height:100%;
-            object-fit: scale-down;
-        }
-        #file {
-		    position: absolute;
-		    width: 0;
-		    height: 0;
-		    padding: 0;
-		    overflow: hidden;
-		    border: 0;
-        }
-        .upload-label {
-		    cursor: pointer; 
-		}
-		.upload-btn {
-		    pointer-events: none;
-		}
-	</style>
+	<link rel="stylesheet" th:href="@{/resources/assets/css/bn-preview.css}">
 </head>
 <body>
 <main layout:fragment="main">
@@ -68,7 +38,7 @@
 						<div class="block-options">
 						<button type="button" class="btn btn-sm btn-light submit-btn" data-job="delete" style="margin-right: 10px;">삭제</button>
 						<label class="upload-label" for="file"><button class="btn btn-sm btn-light upload-btn">사진 올리기</button></label>
-						<input class="form-control" type="file" id="file"
+						<input class="form-control" type="file" id="hidden-file"
 							   accept="image/jpg, image/jpeg, image/png">
 						</div>
 					</div>

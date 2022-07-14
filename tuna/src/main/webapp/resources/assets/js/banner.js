@@ -53,7 +53,6 @@ class pageDialogs {
 function submit() {
 	$('.submit-btn').on('click', function () {
 		
-		
 		// value check
 		let elemAry = [{'element':$('#file'), 'message':'파일을 업로드해 주세요.'}, 
 						{'element':$('#inputTxt'), 'message':'빈 칸을 입력해 주세요.'}, 
@@ -117,7 +116,7 @@ $('#file').on('change', changeEvent => {
 	const reader = new FileReader();
 	$(reader).on('load', readerEvent => {
 		$('#shortcutImg').attr('src', readerEvent.target.result); 
-		$('#shortCutBtn').css('display', 'inline-block');
+		$('#shortcutBtn').css('display', 'inline-block');
 	})
 	
 	const img = changeEvent.target.files[0];

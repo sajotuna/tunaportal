@@ -18,4 +18,15 @@ public class LectureBasketServiceImpl implements LectureBasketService {
 		mapper.baskInsert(vo);
 	}
 
+	@Override
+	public void baskDelete(LectureBasketVO vo) {
+		mapper.baskDelete(vo);
+		
+	}
+
+	@Override
+	public boolean FindRoom(String stNo, String day, String startTime, String endTime) {
+		return mapper.FindRoom(stNo,day, startTime, endTime);
+	}
+
 }

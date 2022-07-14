@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.lectureApply.web;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,10 +37,21 @@ public class LectureApplyController {
 	}
 	
 	@RequestMapping("/stud/courseApplication")
-	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication) {
-		vo.setStNo(Integer.parseInt(authentication.getName()));
+	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication, String pageNum) {
+		Map<String, Object> params = new HashMap<>();
+		
+		
+		if (pageNum == null) {
+			params.put("pageNum", 1);
+		} else {
+			params.put("pageNum", pageNum);
+		}
+		params.put("size", 10);
+		
+		
+		vo.setStNo(authentication.getName());
 		vo.setStateCode("401");
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind");
+		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind", params);
 		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo.getStNo());
 		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo);
 		model.addAttribute("list", lists);
