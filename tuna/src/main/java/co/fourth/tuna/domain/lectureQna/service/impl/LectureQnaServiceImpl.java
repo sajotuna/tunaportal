@@ -1,6 +1,8 @@
 package co.fourth.tuna.domain.lectureQna.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,16 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 
 	@Override
 	public List<LectureQnaVO> findByProfessor(ProfessorVO vo, int pageNum, int size) {
-		return mapper.findByProfessor(vo, pageNum, size);
+		List<Map<String, Object>> objs = mapper.findByProfessor(vo, pageNum, size);
+		System.out.println("!!! HERE !!!");
+		List<LectureQnaVO> mList = new ArrayList<LectureQnaVO>();
+		objs.forEach(obj ->{
+			LectureQnaVO qna = new LectureQnaVO();
+			//
+			System.out.println(obj.toString());
+		});
+		System.out.println("!!! END !!!");
+		return null;
 	}
 
 	

@@ -39,7 +39,7 @@ VALUES(?, ?, ?, ?, ?, ?, ?, ?)
 	</select>
 	
 	<select id="findByProfessor"
-		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+		resultType="map">
 		SELECT *
 		FROM (
 			SELECT
