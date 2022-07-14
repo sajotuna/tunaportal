@@ -3,7 +3,9 @@
 <mapper
 	namespace="co.fourth.tuna.domain.portalNotice.mapper.PortalNoticeMapper">
 	
-
+	
+<!-- 공지 -->
+<!-- 전체조회 -->
 <select id="noticeList" parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"
 	resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
 SELECT * FROM PORTALNOTICE
@@ -14,6 +16,7 @@ WHERE
 ORDER BY NO DESC
 </select>
 
+<!-- 단건조회 -->
 <select id="noticeSelect" 
 	parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"
 	resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
@@ -21,30 +24,79 @@ SELECT * FROM PORTALNOTICE
 WHERE no = #{no}
 </select>
 
+<!-- 등록 -->
 <insert id="noticeInsert"
 		parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
 
-<selectKey resultType="int" keyProperty="id" order="BEFORE">
+<selectKey resultType="String" keyProperty="no" order="BEFORE">
 			SELECT CASE WHEN MAX(NO)!= 0 THEN MAX(NO) + 1 
-						ELSE 1 END AS ID FROM PORTALNOTICE;
+						ELSE 1 END AS ID FROM PORTALNOTICE
 </selectKey>
-INSERT INTO PORTALNOTICE(no, content, title, visible, adno, enrolldate)
-VALUES (#{id}, #{CONTENT}, #{TITLE}, #{VISIBLE}, 100482, sysdate)
+INSERT INTO PORTALNOTICE
+VALUES (#{no}, #{content}, #{title}, #{visible}, 100482, sysDate)
 </insert>
 
-<insert id="fileInsert"
-		parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO">
-<selectKey resultType="int" keyProperty="id" order="BEFORE">
-			SELECT CASE WHEN MAX(NO)!= 0 THEN MAX(NO) + 1 
-						ELSE 1 END AS ID FROM PORTALNOTICE</selectKey>
-INSERT INTO PORTALFILE
-VALUES (#{id}, #{name}, #{uri}, #{pnno})	
-</insert>
-
+<!-- 삭제 -->
 <delete id="noticeDelete" parameterType="int">
 DELETE FROM PORTALNOTICE WHERE NO = #{no}
 </delete>
 
+<!-- 수정 -->
+<update id="noticeUpdate"
+parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
+UPDATE PORTALNOTICE
+<set>
+title = #{name}
+content = ${content}
+enrollDate = sysDate
+visible = ${visible}
+</set>
+where no = ${no}
+</update>
+
+
+
+<!-- 파일 -->
+<!-- 전체조회 -->
+<select id ="fileList" 
+parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO"
+resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO">
+SELECT *
+FROM PORTALFILE
+</select>
+
+<!-- 단건조회 -->
+<select id="fileSelect"
+resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO">
+SELECT *
+FROM PORTALFILE
+WHERE pnNo = #{pnNo}
+</select>
+
+<!-- 등록 -->
+<insert id="fileInsert"
+		parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO">
+<selectKey resultType="String" keyProperty="no" order="BEFORE">
+			SELECT CASE WHEN MAX(NO)!= 0 THEN MAX(NO) + 1 
+						ELSE 1 END AS ID FROM PORTALFILE
+</selectKey>
+INSERT INTO PORTALFILE
+VALUES (#{no}, #{name}, #{uri}, #{pnno})	
+</insert>
+
+<!-- 수정 -->
+<update id="fileUpdate"
+parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
+UPDATE PORTALNOTICE
+<set>
+name = #{name}
+URI = #{uri}
+</set>
+where pnNo = ${no}
+</update>
+
+
+<!-- 삭제 -->
 <delete id="fileDelete" parameterType="int">
 DELETE FROM PORTALFILE WHERE NO = #{pnno}
 </delete>

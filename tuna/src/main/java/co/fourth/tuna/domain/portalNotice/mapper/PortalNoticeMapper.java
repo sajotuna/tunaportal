@@ -11,7 +11,13 @@ public interface PortalNoticeMapper {
 	List<PortalNoticeVO> noticeList(@Param("state")int state, @Param("key") String key);
 	PortalNoticeVO noticeSelect(PortalNoticeVO vo);
 	int noticeInsert(PortalNoticeVO vo);
-	int fileInsert(PortalNoticeFileVO vo);
 	int noticeDelete(PortalNoticeVO vo);
-	int fileDelete(PortalNoticeFileVO vo);
+	int noticeUpdate(PortalNoticeVO vo);
+	
+	List<PortalNoticeFileVO> fileList(PortalNoticeFileVO fileVo);
+	List<PortalNoticeFileVO> fileSelect(int pnNo);
+	int fileInsert(PortalNoticeFileVO fileVo);
+	int fileDelete(PortalNoticeFileVO fileVo);
+	int fileUpdate(PortalNoticeFileVO fileVo);
+
 }
