@@ -161,15 +161,17 @@ public class LectureBasketController {
 
 	@RequestMapping("/stud/courseBasketSchedule")
 	public String courseBasketSchedule(Model model, LectureBasketVO vo, Authentication authentication) {
-		vo.setStNo(authentication.getName());
-		List<Map<String, Object>> baskLists = SqlSession
-				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.BasketSchedule", vo);
-		model.addAttribute("baskList", baskLists);
 
 		return "course/basket/courseBasketSchedule";
 
 	}
 	
+	@ResponseBody
+	@RequestMapping("/stud/BasketSchedule")
+	public List<LectureBasketVO> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
+		vo.setStNo(authentication.getName());
+		return SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.BasketSchedule", vo);
+	}
 	
 	
 }

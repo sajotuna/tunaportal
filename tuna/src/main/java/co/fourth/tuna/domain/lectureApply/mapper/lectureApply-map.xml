@@ -92,17 +92,8 @@ SELECT DISTINCT
 
 <select id = "BasketSchedule" resultType = "map" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
 
-SELECT S.NO         NO, 
-       S.NAME       NAME, 
-       S.TARGET     TARGET, 
-       S.POINT      POINT, 
-       S.LIMIT      LIMIT, 
-       S.TYPE       TYPE, 
-	   S.DEPTCODE   DEPTCODE ,
-	   S.SEASONCODE SEASONCODE,
-	   
-       P.NAME       PRONAME,
-        
+SELECT
+       S.NAME       NAME,   
 	   L.ROOMCODE   ROOMCODE, 
 	   L.TIMECODE   TIMECODE, 
 	   L.DAYCODE    DAYCODE
@@ -111,7 +102,6 @@ SELECT S.NO         NO,
    AND S.PFNO = P.NO 
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO 
-   AND S.NO IN ( SELECT NO FROM SUBJECT)
    AND S.SEASONCODE = 106
    AND STNO = #{stNo}
 
