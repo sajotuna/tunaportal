@@ -6,29 +6,29 @@
 <select id="SubjectFind" resultType="map" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
 
 SELECT *
-		FROM (
-	    SELECT DISTINCT 
-        ROWNUM      rn,
-       S.NO         NO, 
-       S.NAME       NAME, 
-       S.TARGET     TARGET, 
-       S.POINT      POINT, 
-       S.LIMIT      LIMIT, 
-       S.TYPE       TYPE, 
-	   S.DEPTCODE   DEPTCODE ,
-	   S.SEASONCODE SEASONCODE,
-	   
-       P.NAME       PRONAME,
-        
-	   L.ROOMCODE   ROOMCODE, 
-	   LISTAGG(L.TIMECODE, ' ') WITHIN GROUP (ORDER BY L.TIMECODE)  OVER (PARTITION BY S.NO) AS TIMECODE,
-       LISTAGG(L.DAYCODE, '/') WITHIN GROUP (ORDER BY L.DAYCODE DESC)  OVER (PARTITION BY S.NO) AS   DAYCODE
-  FROM SUBJECT S, LECTURESCHEDULE L, PROFESSOR P
-  WHERE S.NO = L.SBJNO 
-   AND S.PFNO = P.NO AND S.NO IN ( SELECT NO FROM SUBJECT)
-	) WHERE rn 
-			BETWEEN (#{pageNum}-1)*#{size}
-   		AND #{pageNum}*#{size}
+FROM ( SELECT 
+       ROWNUM rn, bask.*
+	   FROM
+	  (SELECT  DISTINCT 
+		       S.NO         NO, 
+		       S.NAME   NAME, 
+		       S.TARGET     TARGET, 
+		       S.POINT      POINT, 
+		       S.LIMIT      LIMIT, 
+		       S.TYPE       TYPE, 
+			   S.DEPTCODE   DEPTCODE ,
+			   S.SEASONCODE SEASONCODE,
+		       P.NAME       PRONAME,
+			   L.ROOMCODE   ROOMCODE, 
+			   LISTAGG(L.TIMECODE, ' ') WITHIN GROUP (ORDER BY L.TIMECODE)  OVER (PARTITION BY S.NO) AS TIMECODE,
+		       LISTAGG(L.DAYCODE, '/') WITHIN GROUP (ORDER BY L.DAYCODE DESC)  OVER (PARTITION BY S.NO) AS   DAYCODE
+	      FROM SUBJECT S, LECTURESCHEDULE L, PROFESSOR P
+		  WHERE S.NO = L.SBJNO 
+		    AND S.PFNO = P.NO AND S.NO IN ( SELECT NO FROM SUBJECT)
+		) bask
+			) WHERE rn 
+					BETWEEN (#{pageNum}-1)*#{size}
+		   		AND #{pageNum}*#{size}
 
 </select>
 
