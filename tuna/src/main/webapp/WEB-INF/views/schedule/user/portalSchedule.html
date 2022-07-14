@@ -72,23 +72,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="odd">
-                <td class="text-center fs-sm sorting_1 col-1" rowspan="3">2</td>
-                <td class="fw-semibold fs-sm text-center">02. 07 ~ 02. 18</td>
+            	<th:block class="text center" scope="row" th:if="$">
+              <tr th:each="sche, i:${schedules}"class="odd">
+                <td class="text-center fs-sm sorting_1 col-1" rowspan="3">[[${sche.month}]]</td>
+                <td class="fw-semibold fs-sm text-center">[[${sche.startDate}]] ~ [[${sche.endDate}]]</td>
                 <td class="d-none d-sm-table-cell fs-sm">
-                  2022학년도 1학기 전공학과 변경신청 및 복학원 제출
-                </td>
-              </tr>
-              <tr class="even">
-                <td class="fw-semibold fs-sm  text-center col-2">02. 11</td>
-                <td class="d-none d-sm-table-cell fs-sm">
-                  2022년 2월 학위수여 (2021학년도 학위수여일)
-                </td>
-              </tr>
-              <tr class="odd">
-                <td class="fw-semibold fs-sm  text-center col-2">02. 17 ~ 03. 02</td>
-                <td class="d-none d-sm-table-cell fs-sm">
-                  수강신청 확인 및 정정
+                 [[${sche.content}]]
                 </td>
               </tr>
             </tbody>
