@@ -37,17 +37,21 @@ public class LectureApplyController {
 	}
 	
 	@RequestMapping("/stud/courseApplication")
-	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication) {
+	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication, String pageNum) {
 		Map<String, Object> params = new HashMap<>();
 		
 		
-		params.put("pageNum", 1);
+		if (pageNum == null) {
+			params.put("pageNum", 1);
+		} else {
+			params.put("pageNum", pageNum);
+		}
 		params.put("size", 10);
 		
 		
-		vo.setStNo(Integer.parseInt(authentication.getName()));
+		vo.setStNo(authentication.getName());
 		vo.setStateCode("401");
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind");
+		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind", params);
 		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo.getStNo());
 		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo);
 		model.addAttribute("list", lists);

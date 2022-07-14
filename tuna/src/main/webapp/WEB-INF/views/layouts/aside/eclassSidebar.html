@@ -24,6 +24,17 @@
 	   <div class="js-sidebar-scroll">
 	     <!-- Side Navigation -->
 	     <div class="content-side">
+	     <div class="row">
+	     <div class="d-flex justify-content-center">
+	     <select class="form-select" style="width:180px;" id="example-select-floating" name="example-select-folating" aria-label="Floating label select example">
+	     <option selected>연도학기</option>
+	     <option value="104">2021년 2학기</option>
+	     <option value="105">2022년 1학기</option>
+	     <option value="106">2022년 2학기</option>
+	     </select>
+	     </div>
+	     </div>
+	     
 	       <ul class="nav-main">
 			<li class="nav-main-item">
 	           <a class="nav-main-link" th:href="@{/eclass/student/home}">
@@ -81,8 +92,6 @@
 	   <!-- END Sidebar Scrolling -->
 	 </nav>
 	 <!-- END Sidebar -->
-	 <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-	 <script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
 </th:block>
 </body>
 </html>

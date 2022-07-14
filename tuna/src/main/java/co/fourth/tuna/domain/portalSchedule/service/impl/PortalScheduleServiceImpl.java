@@ -14,10 +14,12 @@ public class PortalScheduleServiceImpl implements PortalScheduleService {
 
 	@Autowired
 	private PortalScheduleMapper map;
-	
+
 	@Override
-	public List<PortalScheduleVO> scheduleList(String key){
-		return null;
+	public List<PortalScheduleVO> scheduleList(PortalScheduleVO vo) {
+		return map.scheduleList(vo);
 	}
 	
-}
+
+	}
+

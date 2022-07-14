@@ -1,17 +1,29 @@
 package co.fourth.tuna.domain.portalSchedule.vo;
 
-import java.sql.Date;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class PortalScheduleVO {
-	private int no;
-	private Date startDate;
-	private Date endDate;
+	private String no;
+	private String month;
+	
 	private String content;
 	private String seasonCode;
-	private int adNo;
+	private String adNo;
+	
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone="Asia/Seoul")
+	private Date startDate;
+	
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone="Asia/Seoul")
+	private Date endDate;
 }
