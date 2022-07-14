@@ -41,7 +41,7 @@ tr {
 									<table class="table table-vcenter table-bordered">
 										<tbody>
 											<tr>
-												<th class="fw-semibold fs-sm" rowspan="2">교과목명</th>
+												<th class="fw-semibold fs-sm" >교과목명</th>
 												<th class="fw-semibold fs-sm" colspan="8">기계기초실습</th>
 											</tr>
 
@@ -96,70 +96,11 @@ tr {
 											<tr>
 												<th class="fw-semibold fs-sm" colspan="9">주차별 강의계획</th>
 											</tr>
-											<tr>
+											<tr th:each="m : ${map2}">
 												<th class="fw-semibold fs-sm" colspan="2">1주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">1주차 강의 계획</th>
+												<th class="fw-semibold fs-sm" colspan="7" th:text="${m}"></th>
 											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">2주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">2주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">3주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">3주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">4주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">4주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">5주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">5주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">6주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">6주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">7주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">7주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">8주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">8주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">9주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">9주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">10주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">10주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">11주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">11주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">12주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">12주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">13주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">13주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">14주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">14주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">15주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">15주차 강의 계획</th>
-											</tr>
-											<tr>
-												<th class="fw-semibold fs-sm" colspan="2">16주차</th>
-												<th class="fw-semibold fs-sm" colspan="7">16주차 강의 계획</th>
-											</tr>
+											
 										</tbody>
 									</table>
 								</div>

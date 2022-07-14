@@ -1,4 +1,4 @@
-package co.fourth.tuna.domain.common.vo.subject;
+package co.fourth.tuna.domain.lectureplan.vo;
 
 import lombok.Getter;
 import lombok.Setter;

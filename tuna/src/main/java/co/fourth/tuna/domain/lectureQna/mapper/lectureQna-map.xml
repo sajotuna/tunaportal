@@ -3,18 +3,30 @@
 <mapper namespace="co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper">
 
 <!-- 질문목록 -->
-<!-- <select id="" resultType="" parameterType="">
+<!-- <select id="qnaList" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+
+SELECT Q.*, S.NAME, L.SBJNO
+FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
+WHERE S.NO = 13168019
+AND Q.SBJNO = L.SBJNO
+AND L.SEASONCODE = 105
 
 </select>
 
 질문단건조회
-<select id="" resultType="" parameterType="">
+<select id="qnaSelect" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 
+SELECT Q.*, S.NAME, L.SBJNO
+FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
+WHERE S.NO = 13168019
+AND Q.SBJNO = L.SBJNO
+AND L.SEASONCODE = 105
+AND Q.NO = 1
 </select>
 
 질문작성
-<insert id="" parameterType="">
-
-</insert>
- -->
-</mapper> 
+<insert id="qnsInsert" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+INSERT INTO LECTUREQNA
+VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+</insert> -->
+</mapper>
