@@ -4,12 +4,17 @@
 	namespace="co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper">
 	
 	<select id="selectPlan" resultType="map" parameterType="co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO">
-	SELECT DISTINCT S.*, P.TEL, P.NAME, G.*,
-	LISTAGG(L.SUMMARY, '/') WITHIN GROUP (ORDER BY L.WKCODE ASC) OVER (PARTITION BY S.NO) AS SUMMARY
+	SELECT DISTINCT S.*, P.EMAIL, P.NAME PRONM, P.TEL, G.*,
+	LISTAGG(L.SUMMARY, '/') WITHIN GROUP (ORDER BY L.WKCODE) OVER (PARTITION BY S.NO) AS SUMMARY
 	FROM SUBJECT S, PROFESSOR P, LECTUREPLAN L, GRADERATIO G
 	WHERE S.NO = L.SBJNO
 	AND S.NO = G.NO
 	AND S.PFNO = P.NO
 	AND S.NO IN (SELECT NO FROM SUBJECT WHERE NO = #{sbjNo})
+	</select>
+	
+	<select id="selectSc" resultType="map" parameterType="co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO">
+	SELECT *
+	FROM LECTURESCHEDULE WHERE SBJNO = #{sbjNo}
 	</select>
 </mapper>

@@ -19,6 +19,11 @@ public class LecturePlanServiceImpl implements LecturePlanService{
 		return mapper.selectPlan(vo);
 	}
 
+	@Override
+	public LecturePlanVO selectSc(LecturePlanVO vo) {
+		return mapper.selectSc(vo);
+	}
+
 
 	
 	
