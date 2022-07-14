@@ -11,7 +11,7 @@ public interface SubjectService {
 	SubjectVO findOne(SubjectVO vo);
 	
 	ArrayList<SubjectVO> findListForProfessorMainByProfAndSeason(ProfessorVO prof, int seasonCode);
-	
+	public List<SubjectVO> SubjectCheck();
 	
 //	ArrayList<SubjectVO> getList(int pageNum, int size);
 //	ArrayList<SubjectVO> getListByProf(ProfessorVO prof, int pageNum, int size);

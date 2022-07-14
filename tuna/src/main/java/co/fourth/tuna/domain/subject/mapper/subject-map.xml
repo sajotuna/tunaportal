@@ -74,46 +74,15 @@
 		ORDER BY no ASC
 	</select>
 	
-	
-	<select id="findListForLectureSchedule" resultType="map">
-		SELECT *
-		FROM (
-	    SELECT
-	    ROWNUM rn,
-	    s.*,
-	    ls.no lsno,
-	    ls.daycode, ls.roomcode,
-	    ls.timecode, ls.sbjno,
-	    (SELECT COUNT(*) FROM lectureapply WHERE sbjno = s.no) AS student_count,
-	    (SELECT COUNT(*) FROM lectureqna WHERE sbjno = s.no) AS qna_count
-	    FROM subject s
-				JOIN lectureschedule ls
-						ON ls.sbjno = s.no
-	    ORDER BY S.no ASC
-	) WHERE rn 
-			BETWEEN (#{pageNum}-1)*#{size}
-   		AND #{pageNum}*#{size}
+	<select id = "SubjectCheck" resultType="map">
+
+		SELECT S.DEPTCODE, P.CODENAME 
+		FROM SUBJECT S , PUBLICCODE P
+		WHERE S.DEPTCODE = P.NO
+		GROUP BY S.DEPTCODE, P.CODENAME
+
+
 	</select>
 	
-	<select id="findListForLectureScheduleByProf" resultType="map">
-		SELECT *
-		FROM (
-	    SELECT
-	    ROWNUM rn,
-	    s.*,
-	    ls.no lsno,
-	    ls.daycode, ls.roomcode,
-	    ls.timecode, ls.sbjno,
-	    (SELECT COUNT(*) FROM lectureapply WHERE sbjno = s.no) AS student_count,
-	    (SELECT COUNT(*) FROM lectureqna WHERE sbjno = s.no) AS qna_count
-	    FROM subject s
-				JOIN lectureschedule ls
-						ON ls.sbjno = s.no
-			WHERE s.pfno = #{prof.no}
-	    ORDER BY S.no ASC
-	) WHERE rn 
-			BETWEEN (#{pageNum}-1)*#{size}
-   		AND #{pageNum}*#{size}
-	</select>
 	
 </mapper>

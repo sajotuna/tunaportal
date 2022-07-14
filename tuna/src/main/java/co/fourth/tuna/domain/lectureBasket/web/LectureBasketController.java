@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.lectureBasket.service.LectureBasketService;
@@ -26,7 +27,11 @@ public class LectureBasketController {
 	private LectureBasketService LectureBasketDao;
 
 	@RequestMapping("/stud/courseBasket")
-	public String courseBasket(Model model, LectureBasketVO vo, Authentication authentication, String pageNum) {
+	public String courseBasket(Model model, LectureBasketVO vo, Authentication authentication, String pageNum, 
+							  @RequestParam(value="deptCode", required=false ) String deptCode,
+							  @RequestParam(value="type", required=false) String type,
+							  @RequestParam(value="target", required=false) String target,
+							  @RequestParam(value="name", required=false) String name) {
 		Map<String, Object> params = new HashMap<>();
 
 		if (pageNum == null) {
@@ -34,6 +39,15 @@ public class LectureBasketController {
 		} else {
 			params.put("pageNum", pageNum);
 		}
+		
+		System.out.println(deptCode);
+		System.out.println(type);
+		System.out.println(target);
+		System.out.println(name);
+		params.put("deptCode",deptCode);
+		params.put("type",type);
+		params.put("target",target);
+		params.put("name",name);
 
 		params.put("size", 10);
 
@@ -97,23 +111,21 @@ public class LectureBasketController {
 				String[] dayTime = sbjarr[3].split(" ");
 				for (int i = 0; i < dayTime.length; i++) {
 					time = dayTime[i].split("~");
+					Map<String, Object> params = new HashMap<>();
+					params.put("stNo", vo.getStNo());
+					params.put("day", sbjarr[2]);
+					params.put("startTime", time[0]);
+					params.put("endTime", time[1]);
+					List<Map<String, Object>> tf = SqlSession
+							.selectList("co.fourth.tuna.domain.lectureBasket.mapper.LectureBasketMapper.FindRoom", params);
+					if (tf.toString().equals("[true]")) {
+						ra.addFlashAttribute("error", "강의실 시간 중복입니다.");
+						return "redirect:/stud/courseBasket";
+					} else {
+						LectureBasketDao.baskInsert(vo);
+
+					}
 				}
-				Map<String, Object> params = new HashMap<>();
-				params.put("stNo", vo.getStNo());
-				params.put("day", sbjarr[2]);
-				params.put("startTime", time[0]);
-				params.put("endTime", time[1]);
-
-				List<Map<String, Object>> tf = SqlSession
-						.selectList("co.fourth.tuna.domain.lectureBasket.mapper.LectureBasketMapper.FindRoom", params);
-				if (tf.toString().equals("[true]")) {
-					ra.addFlashAttribute("error", "강의실 시간 중복입니다.");
-					return "redirect:/stud/courseBasket";
-				} else {
-					LectureBasketDao.baskInsert(vo);
-
-				}
-
 			}
 			if(checkCount == 1) {
 				return "redirect:/stud/courseBasket";
@@ -128,6 +140,7 @@ public class LectureBasketController {
 	public String basketDelete(Model model, LectureBasketVO vo) {
 
 		LectureBasketDao.baskDelete(vo);
+		LectureBasketDao.courDelete(vo);
 		return "redirect:/stud/courseBasket";
 	}
 
@@ -151,4 +164,7 @@ public class LectureBasketController {
 		return "course/basket/courseBasketSchedule";
 
 	}
+	
+	
+	
 }

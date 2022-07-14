@@ -25,6 +25,10 @@ FROM ( SELECT
 	      FROM SUBJECT S, LECTURESCHEDULE L, PROFESSOR P
 		  WHERE S.NO = L.SBJNO 
 		    AND S.PFNO = P.NO AND S.NO IN ( SELECT NO FROM SUBJECT)
+		    <if test="deptCode != null">AND S.DEPTCODE = #{deptCode} </if>
+			<if test="type != null"> AND S.TYPE = #{type} </if>
+			<if test="target != null"> AND S.TARGET = #{target} </if>
+			<if test="name != null"> AND S.NAME like '%'||#{name}||'%' </if>
 		) bask
 			) WHERE rn 
 					BETWEEN (#{pageNum}-1)*#{size}

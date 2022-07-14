@@ -32,6 +32,10 @@ public class SubjectServiceImpl implements SubjectService {
 	public ArrayList<SubjectVO> findListForProfessorMainByProfAndSeason(ProfessorVO prof, int seasonCode) {
 		return map.findListForProfessorMainByProfAndSeason(prof, seasonCode);
 	}
+	@Override
+	public List<SubjectVO> SubjectCheck(){
+		return map.SubjectCheck();
+	}
 	
 	
 	
