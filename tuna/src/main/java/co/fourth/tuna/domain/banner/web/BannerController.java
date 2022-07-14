@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,8 +33,37 @@ public class BannerController {
 	@Autowired FileService fileService;
 	@Autowired String fileDir;
 	
-	// 배너 전체 리스트
-	@RequestMapping("/admin/bannerList")
+	// 슬라이드 배너 조회
+	@RequestMapping("/sliderBanner")
+	@ResponseBody
+	public List<BannerVO> sliderBanner(Model model) {
+		return bannerDao.sliderBannerSelect();
+	}
+	
+	// 슬라이드 배너 순서 변경
+	@PutMapping("/admin/sliderBanner")
+	@ResponseBody
+	public int sliderBannerUpdate(@RequestBody BannerVO vo) {
+		return bannerDao.sliderBannerUpdate(vo);
+	}
+	
+	// 슬라이드 배너 등록
+	@PostMapping("/admin/sliderBanner")
+	@ResponseBody
+	public int sliderBannerInsert(@RequestParam(value = "file")MultipartFile file) {
+		
+		String[] fileInfo = fileService.upload(file, "banner");
+		BannerVO vo = new BannerVO();
+		
+		vo.setFileName(fileInfo[0]);
+		vo.setUri(fileInfo[1]);
+		vo.setBannerCode("1301");
+		
+		return bannerDao.bannerInsert(vo);
+	}
+	
+	// 배너 전체 리스트 조회
+	@GetMapping("/admin/bannerList")
 	public String bannerList(Model model) {
 		
 		List<BannerVO> list = new ArrayList<>();
@@ -56,7 +86,7 @@ public class BannerController {
 	}
 	
 	// 옵션 배너 1건 조회
-	@GetMapping("admin/optionBanner")
+	@GetMapping("/optionBanner")
 	@ResponseBody
 	public BannerVO optionBannerSelect() {
 		return bannerDao.bannerSelect("1303");
@@ -65,7 +95,7 @@ public class BannerController {
 	// 옵션 배너 등록
 	@PostMapping("/admin/optionBanner")
 	@ResponseBody
-	public int optionBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile file, HttpServletRequest request) {
+	public int optionBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile file) {
 		
 		String[] fileInfo = fileService.upload(file, "banner");
 		
@@ -77,7 +107,7 @@ public class BannerController {
 	}
 	
 	// 기본 배너 1건 조회
-	@GetMapping("/admin/basicBanner")
+	@GetMapping("/basicBanner")
 	@ResponseBody
 	public BannerVO basicBannerSelect() {
 		return bannerDao.bannerSelect("1302");
@@ -109,7 +139,8 @@ public class BannerController {
 	}
 	
 	@RequestMapping("/admin/sliderBannerManagm")
-	public String sliderBannerManagm() {
+	public String sliderBannerManagm(Model model) {
+		model.addAttribute("bnList", bannerDao.sliderBannerSelect());
 		return "banner/admin/sliderBannerManagm";
 	}
 	

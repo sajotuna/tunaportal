@@ -327,18 +327,33 @@
 	   		shortcutBanner();
 		})
 		
+		// 슬라이드 배너
+		function sliderBanner() {
+			$.ajax({
+				
+				url: getPathRootJump() + 'sliderBanner',
+				type: 'GET',
+				dataType: 'json'
+				
+			}).done(function(sliderBn) {
+				
+				
+				
+			})
+	   	}
+		
 		// 기본 배너
 		function shortcutBanner() {
 			$.ajax({
 				
-				url: getPathRootJump() + 'admin/basicBanner',
+				url: getPathRootJump() + 'basicBanner',
 				type: 'GET',
-				dataType: 'json',
+				dataType: 'json'
 				
-				}).done(function(basicBn) {
-					$('#shortcutImg').attr('src', getPathRootJump() + `display?fileName=${basicBn.uri}&folder=banner`);
-					$('#shortcutBtn').attr('onclick', `location.href='${basicBn.url}'`);
-				})
+			}).done(function(basicBn) {
+				$('#shortcutImg').attr('src', getPathRootJump() + `display?fileName=${basicBn.uri}&folder=banner`);
+				$('#shortcutBtn').attr('onclick', `location.href='${basicBn.url}'`);
+			})
 		}
 	   	
 	   	function getPathRootJump() {
