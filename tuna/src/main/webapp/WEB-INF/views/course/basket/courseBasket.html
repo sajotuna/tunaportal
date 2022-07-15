@@ -32,10 +32,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 <body>
 <main layout:fragment="main">
 
-<th:block th:if = "${error != null && error != ''}">
+<th:block th:if = "${message != null && message != ''}">
 	<script th:inline="javascript">
-		let error = /*[[${error}]]*/ 'default';
-		alert(error);
+		let message = /*[[${message}]]*/ 'default';
+		alert(message);
 	</script>
 </th:block>
 
@@ -111,7 +111,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                 </thead>
                   <tbody>
                     <tr th:scope="row" th:each="sub, status : ${list}">
-                      <th class="fw-semibold fs-sm"><input type="checkbox" name = "courcheck" th:value = "${sub.NO}+','+${sub.SEASONCODE} +','+ ${sub.DAYCODE} +','+ ${sub.TIMECODE} + ',' + ${sub.POINT}"></th>
+                      <th class="fw-semibold fs-sm"><input type="checkbox" name = "courcheck" th:value = "${sub.NO}"></th>
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>

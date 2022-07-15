@@ -33,25 +33,27 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
               <thead>
                 <tr>
                   <th class="d-none d-sm-table-cell" style="width: 100px;">이수구분</th>
-                  <th class="d-none d-sm-table-cell" style="width: 100px;">과목코드</th>
-                  <th class="d-none d-sm-table-cell" style="width: 100px;">과목명</th>
-                  <th class="d-none d-sm-table-cell" style="width: 100px;">교수명</th>
-                  <th class="d-none d-sm-table-cell" style="width: 110px;">강의실</th>
-                  <th class="d-none d-sm-table-cell" style="width: 120px;">강의시간</th>
-                  <th class="d-none d-sm-table-cell" style="width: 50px;">학점</th>
-                  <th class="d-none d-sm-table-cell" style="width: 50px;">인원수</th>
+                      <th class="d-none d-sm-table-cell" style="width: 100px;">과목코드</th>
+                      <th class="d-none d-sm-table-cell" style="width: 100px;">과목명</th>
+                      <th class="d-none d-sm-table-cell" style="width: 100px;">교수명</th>
+                      <th class="d-none d-sm-table-cell" style="width: 110px;">강의실</th>
+                      <th class="d-none d-sm-table-cell" style="width: 50px;">학점</th>
+                      <th class="d-none d-sm-table-cell" style="width: 50px;">정원</th>
+                      <th class="d-none d-sm-table-cell" rowspan = "2" style="width: 120px;">강의시간</th>
                 </tr>
               </thead>
               <tbody>
-                <tr scope="row">
-                  <th class="fw-semibold fs-sm">전공/필수</th>
-                  <td class="fw-semibold fs-sm">014-124357</td>
-                  <td class="fw-semibold fs-sm">컴퓨터 그래픽스</td>
-                  <td class="fw-semibold fs-sm"><a href="#">최규완</a></td>
-                  <td class="fw-semibold fs-sm">참치관 103호</td>
-                  <td class="fw-semibold fs-sm">13:00~14:00 월/수</td>
-                  <td class="fw-semibold fs-sm">3</td>
-                  <td class="fw-semibold fs-sm">12/45</td>
+                <tr th:scope="row" th:each="sub, status : ${courList}">
+                      <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
+                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
+	                  <td class="fw-semibold fs-sm" >
+	                    [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
+	                  </td>
                 </tr>
               </tbody>
             </table>

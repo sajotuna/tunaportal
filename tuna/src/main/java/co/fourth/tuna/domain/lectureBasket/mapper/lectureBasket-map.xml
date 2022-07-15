@@ -20,16 +20,17 @@ insert into LECTUREBASKET values (#{no}, 'y', #{seasonCode}, #{sbjNo}, #{stNo})
 	}
 </insert>
 
-<delete id ="baskDelete" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
+<delete id ="baskDelete" statementType="CALLABLE" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
 
-DELETE FROM LECTUREBASKET WHERE SBJNO = #{sbjNo}
-
-</delete>
-<delete id ="courDelete" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
-
-DELETE FROM LECTUREAPPLY WHERE SBJNO = #{sbjNo}
+	{ 
+		call LectureDelete(#{sbjNo},#{stNo})
+	}
 
 </delete>
+
+<select id = "basketApplyMsg" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO" resultType="String">
+	select BASKETROOMCHECK(#{sbjNo},#{stNo}) FROM dual
+</select>
 
 <select id ="FindRoom" parameterType="map" resultType="boolean">
 
@@ -49,10 +50,10 @@ SELECT case when count(*) >= 1 then 1 else 0 end as truefalse
 		SELECT CourseApplyGrade(#{stNo}) FROM dual
 </select>
 
-<select id = "FindSubject" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO" resultType="boolean">
-	SELECT case when count(*) >= 1 then 1 else 0 end as truefalse 
-	  FROM lecturebasket 
-	 WHERE sbjno = #{sbjNo}
+<select id = "subjectTarget" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO" resultType="int">
+	select target 
+	from subject
+	where no = #{sbjNo}
 </select>	
 
 <!-- <parameterMap type="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO" id="basketParam">

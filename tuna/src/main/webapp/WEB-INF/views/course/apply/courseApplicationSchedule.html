@@ -7,7 +7,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>수강신청 시간표</title>
-
+<meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
   <style>
     /* https://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -494,6 +495,14 @@ Main Components
 
     .cd-schedule .single-event[data-event="event-4"]:hover {
       background: #f7bd7f;
+    }
+    .cd-schedule .single-event[data-event="event-5"],
+    .cd-schedule [data-event="event-5"] .header-bg {
+      background: #f64213;
+    }
+
+    .cd-schedule .single-event[data-event="event-5"]:hover {
+      background: #f64213;
     }
 
     .cd-schedule .event-modal {
@@ -1021,169 +1030,111 @@ xcarbonads
             <div class="events">
               <ul>
                 <li class="events-group">
-                  <div class="top-info"><span>Monday</span></div>
+                  <div class="top-info"><span>월요일</span></div>
 
-                  <ul>
-                    <li class="single-event" data-start="09:30" data-end="10:30" data-content="event-abs-circuit"
-                      data-event="event-1">
-                        <em class="event-name">Abs Circuit</em>
-                     
-                    </li>
-
-                    <li class="single-event" data-start="11:00" data-end="12:30" data-content="event-rowing-workout"
-                      data-event="event-2">
-                        <em class="event-name">Rowing Workout</em>
-                     
-                    </li>
-
-                    <li class="single-event" data-start="14:00" data-end="15:15" data-content="event-yoga-1"
-                      data-event="event-3">
-                        <em class="event-name">Yoga Level 1</em>
-                      
-                    </li>
+                  <ul id = "mon">
+                    
                   </ul>
                 </li>
 
                 <li class="events-group">
-                  <div class="top-info"><span>Tuesday</span></div>
+                  <div class="top-info"><span>화요일</span></div>
 
-                  <ul>
-                    <li class="single-event" data-start="10:00" data-end="11:00" data-content="event-rowing-workout"
-                      data-event="event-2">
-                        <em class="event-name">Rowing Workout</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="11:30" data-end="13:00" data-content="event-restorative-yoga"
-                      data-event="event-4">
-                        <em class="event-name">Restorative Yoga</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="13:30" data-end="15:00" data-content="event-abs-circuit"
-                      data-event="event-1">
-                     
-                        <em class="event-name">Abs Circuit</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="15:45" data-end="16:45" data-content="event-yoga-1"
-                      data-event="event-3">
-                     
-                        <em class="event-name">Yoga Level 1</em>
-                      
-                    </li>
+                  <ul id = "tues">
+                    
                   </ul>
                 </li>
 
                 <li class="events-group">
-                  <div class="top-info"><span>Wednesday</span></div>
+                  <div class="top-info"><span>수요일</span></div>
 
-                  <ul>
-                    <li class="single-event" data-start="09:00" data-end="10:15" data-content="event-restorative-yoga"
-                      data-event="event-4">
-                     
-                        <em class="event-name">Restorative Yoga</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="10:45" data-end="11:45" data-content="event-yoga-1"
-                      data-event="event-3">
-                     
-                        <em class="event-name">Yoga Level 1</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="12:00" data-end="13:45" data-content="event-rowing-workout"
-                      data-event="event-2">
-                      
-                        <em class="event-name">Rowing Workout</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="13:45" data-end="15:00" data-content="event-yoga-1"
-                      data-event="event-3">
-                      
-                        <em class="event-name">Yoga Level 1</em>
-                     
-                    </li>
+                  <ul id = "wen">
+                    
                   </ul>
                 </li>
 
                 <li class="events-group">
-                  <div class="top-info"><span>Thursday</span></div>
+                  <div class="top-info"><span>목요일</span></div>
 
-                  <ul>
-                    <li class="single-event" data-start="09:30" data-end="10:30" data-content="event-abs-circuit"
-                      data-event="event-1">
-                     
-                        <em class="event-name">Abs Circuit</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="12:00" data-end="13:45" data-content="event-restorative-yoga"
-                      data-event="event-4">
-                      
-                        <em class="event-name">Restorative Yoga</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="15:30" data-end="16:30" data-content="event-abs-circuit"
-                      data-event="event-1">
-                     
-                        <em class="event-name">Abs Circuit</em>
-                     
-                    </li>
-
-                    <li class="single-event" data-start="17:00" data-end="18:30" data-content="event-rowing-workout"
-                      data-event="event-2">
-                      
-                        <em class="event-name">Rowing Workout</em>
-                     
-                    </li>
+                  <ul id = "thrs">
+                    
                   </ul>
                 </li>
 
                 <li class="events-group">
-                  <div class="top-info"><span>Friday</span></div>
+                  <div class="top-info"><span>금요일</span></div>
 
-                  <ul>
-                    <li class="single-event" data-start="10:00" data-end="11:00" data-content="event-rowing-workout"
-                      data-event="event-2">
-                      
-                        <em class="event-name">Rowing Workout</em>
-                     
-                    </li>
-
-                    <li class="single-event" data-start="12:30" data-end="14:00" data-content="event-abs-circuit"
-                      data-event="event-1">
-                     
-                        <em class="event-name">Abs Circuit</em>
-                      
-                    </li>
-
-                    <li class="single-event" data-start="15:45" data-end="16:45" data-content="event-yoga-1"
-                      data-event="event-3">
-                      
-                        <em class="event-name">Yoga Level 1</em>
-                      
-                    </li>
+                  <ul id = "fri">
+                    
                   </ul>
                 </li>
               </ul>
             </div>
-
+			
 
           </div> <!-- #carbonads-container -->
         </div>
       </div>
     </div>
   </div>
-  
+
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+  
   <script>
-    jQuery(document).ready(function ($) {
-      var transitionEnd =
+    $(function(){
+      let header = document.querySelector('meta[name="_csrf_header"]').content;
+      let token = document.querySelector('meta[name="_csrf"]').content;
+      
+      fetch('/tuna/stud/CourseSchedule',{
+      	method: "POST",
+    		headers: {
+              'header': header,
+            	'X-Requested-With': 'XMLHttpRequest',
+              "Content-Type": "application/json",
+              'X-CSRF-Token': token	// header에 X-CSRF-Token부분에 토큰값이 들어가 정상적으로 POST값이 넘어가는 것을 볼 수 있다!
+          },
+      }).then(result => result.json())
+        .then(result => {
+      	  
+      	  let montag = document.querySelector("#mon");
+      	  let tuetag = document.querySelector("#tues");
+      	  let wentag = document.querySelector("#wen");
+      	  let thrtag = document.querySelector("#thrs");
+      	  let fritag = document.querySelector("#fri");
+      	  result.forEach(val =>{
+      		  
+      		  console.log(result)
+      		  
+      		  let li = document.createElement('li');
+      		  
+      		  let time = val.TIMECODE.split("~");
+      		  li.setAttribute("class", "single-event")
+      		  li.setAttribute("data-start", time[0])
+      		  li.setAttribute("data-end", time[1])
+      		  li.setAttribute("data-event", "event-3");
+      		  li.setAttribute("data-content", "event-rowing-workout");
+      		  let em = document.createElement('em');
+      		  em.className = "event-name"
+      		  em.innerHTML = val.NAME
+      		  
+      		  li.appendChild(em);
+      		  
+      		  if(val.DAYCODE == '월'){
+      			  montag.appendChild(li);
+      		  }else if(val.DAYCODE == '화'){
+      			  tuetag.appendChild(li);
+      		  }else if(val.DAYCODE == '수'){
+      			  wentag.appendChild(li);
+      		  }else if(val.DAYCODE == '목'){
+      			  thrtag.appendChild(li);
+      		  }else if(val.DAYCODE == '금'){
+      			  fritag.appendChild(li);
+      		  }
+      		  
+      		  
+      	  })
+      	  var transitionEnd =
         'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
       var transitionsSupported = ($('.csstransitions').length > 0);
       //if browser does not support transitions - use a different event to trigger them
@@ -1379,6 +1330,10 @@ xcarbonads
             self.animating = false;
             self.element.addClass('animation-completed');
           });
+          
+          
+          
+          
         }
 
         //if browser do not support transitions -> no need to wait for the end of it
@@ -1575,7 +1530,10 @@ xcarbonads
           'transform': value
         });
       }
+        })
+      
     });
+    
   </script>
   </main>
 </body>

@@ -55,97 +55,35 @@ public class LectureBasketController {
 	public String basketInsert(RedirectAttributes ra, @RequestParam List<String> courcheck, LectureBasketVO vo,
 			Authentication authentication) {
 		vo.setStNo(authentication.getName());
+		vo.setSeasonCode("106");
 		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
 		
-		int applyGrade = grade;
-		
-		vo.setStNo(authentication.getName());
-		int checkCount = 0;
 		for (String sbj : courcheck) {
-			String[] sbjarr = sbj.split(",");
-			
-			if(sbjarr.length <= 2) {
-				System.out.println(courcheck.toString().substring(1, courcheck.toString().length()-1));
-				sbjarr = courcheck.toString().substring(1, courcheck.toString().length()-1).split(",");
-				checkCount +=1;
-			}
-			
-			if((applyGrade - Integer.parseInt(sbjarr[4].trim())) <= 0) {
-				ra.addFlashAttribute("error", "수강신청 가능한 학점이 부족합니다.");
+			vo.setSbjNo(sbj);
+			String message = LectureBasketDao.basketApplyMsg(vo);
+			int target = LectureBasketDao.subjectTarget(vo);
+			grade -= target;
+			if(grade < 0) {
+				ra.addFlashAttribute("message", "수강신청 가능한 학점이 없습니다.");
 				return "redirect:/stud/courseBasket";
 			}
-			vo.setSbjNo(sbjarr[0]);
-			boolean sbjCheck = LectureBasketDao.FindSubject(vo);
-			if(sbjCheck == true) {
-				ra.addFlashAttribute("error", "동일한 과목은 신청이 부족합니다.");
-				return "redirect:/stud/courseBasket";
-			}
-			vo.setSeasonCode(sbjarr[1]);
-			if (sbjarr[2].indexOf("/") != -1) {
-				String[] day = sbjarr[2].split("/");
-				
-				sbjarr[3] = sbjarr[3].trim();
-				
-				String[] dayTime = sbjarr[3].split(" ");
-				String[] time = null;
-				int cnt = 0;
-				for (int i = 0; i < dayTime.length; i++) {
-					time = dayTime[i].split("~");
-					Map<String, Object> params = new HashMap<>();
-					params.put("stNo", vo.getStNo());
-					params.put("day", day[i]);
-					params.put("startTime", time[0]);
-					params.put("endTime", time[1]);
-
-					List<Map<String, Object>> tf = SqlSession.selectList(
-							"co.fourth.tuna.domain.lectureBasket.mapper.LectureBasketMapper.FindRoom", params);
-					if (tf.toString().substring(0, tf.size()).trim().equals("true")) {
-						ra.addFlashAttribute("error", "강의실 시간 중복입니다.");
-						return "redirect:/stud/courseBasket";
-					} else {
-						cnt++;
-					}
-
-					if (cnt == 2) {
-						LectureBasketDao.baskInsert(vo);
-					}
-				}
-
-			} else {
-				String[] time = null;
-				String[] dayTime = sbjarr[3].split(" ");
-				for (int i = 0; i < dayTime.length; i++) {
-					time = dayTime[i].split("~");
-					Map<String, Object> params = new HashMap<>();
-					params.put("stNo", vo.getStNo());
-					params.put("day", sbjarr[2]);
-					params.put("startTime", time[0]);
-					params.put("endTime", time[1]);
-					List<Map<String, Object>> tf = SqlSession
-							.selectList("co.fourth.tuna.domain.lectureBasket.mapper.LectureBasketMapper.FindRoom", params);
-					if (tf.toString().substring(0, tf.size()).trim().equals("true")) {
-						ra.addFlashAttribute("error", "강의실 시간 중복입니다.");
-						return "redirect:/stud/courseBasket";
-					} else {
-						LectureBasketDao.baskInsert(vo);
-
-					}
-				}
-			}
-			if(checkCount == 1) {
+			if(message == null || !message.equals("")) {
+				LectureBasketDao.baskInsert(vo);
+			}else {
+				ra.addFlashAttribute("message", message);
 				return "redirect:/stud/courseBasket";
 			}
 		}
-
+		ra.addFlashAttribute("message", "수강신청이 완료되었습니다.");
 		return "redirect:/stud/courseBasket";
 
 	}
 
 	@RequestMapping("/stud/basketDelete")
-	public String basketDelete(Model model, LectureBasketVO vo) {
-
+	public String basketDelete(Authentication authentication, RedirectAttributes ra, LectureBasketVO vo) {
+		vo.setStNo(authentication.getName());
 		LectureBasketDao.baskDelete(vo);
-		LectureBasketDao.courDelete(vo);
+		ra.addFlashAttribute("message", "삭제가 완료되었습니다.");
 		return "redirect:/stud/courseBasket";
 	}
 
