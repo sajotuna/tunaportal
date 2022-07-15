@@ -6,7 +6,7 @@
 		<association property="professorVO" column="pfno" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
 			select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
 	</resultMap>
-	
+
 	<resultMap id="subjectListDataMap" type="co.fourth.tuna.domain.subject.vo.SubjectVO">
 		<association property="professorVO" column="professorVO" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
 			select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
@@ -88,7 +88,31 @@
 		WHERE S.DEPTCODE = P.NO
 		GROUP BY S.DEPTCODE, P.CODENAME
 
-
+	</select>
+	
+	<!-- 강의 조회 (과목명, 교수명, 검색어) -->
+	<select id="searchSubjectList"
+		resultType="co.fourth.tuna.domain.subject.vo.SubjectVO">
+		
+		<if test="searchKey.equals('lecture')">
+			SELECT S.*, P.NAME AS PFNAME
+			FROM SUBJECT S JOIN PROFESSOR P
+			ON S.PFNO = P.NO
+			WHERE S.SEASONCODE = #{seasonCode}
+			AND S.NAME LIKE '%'||#{key}||'%' ORDER BY S.NO
+		</if>
+		
+		<if test="searchKey.equals('professor')">
+			SELECT S.*, P.NAME AS PFNAME
+			FROM SUBJECT S JOIN PROFESSOR P
+			ON S.PFNO = P.NO
+			WHERE S.PFNO IN ( SELECT NO
+			                  FROM PROFESSOR
+			                  WHERE NAME LIKE '%'||#{key}||'%' )
+			AND S.SEASONCODE = #{seasonCode}
+			ORDER BY S.NO ASC
+		</if>
+		
 	</select>
 	
 	

@@ -4,6 +4,8 @@
     data-layout-decorate="~{layouts/navLayout}">
 <head>
 	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 	<title>subjectAndReport</title>
 	<style>
 	.space-x-2 {
@@ -70,15 +72,15 @@
 				<div class="block-content tab-content">
 				
 					<!-- lecturePlanList Tab -->
-					<th:block th:replace="portal/stud/lecturePlanList"></th:block>	
+					<th:block th:replace="portal/stud/lecturePlanList :: lecturePlan"></th:block>	
 					<!-- END lecturePlanList Tab -->
 
 					<!-- mySubjectList Tab -->
-					<th:block th:replace="portal/stud/mySubjectList"></th:block>	
+					<th:block th:replace="portal/stud/mySubjectList :: mySubject"></th:block>	
 					<!-- END mySubjectList Tab -->
 
 					<!-- Grade Report Tab -->
-					<th:block th:replace="portal/stud/gradeReport"></th:block>	
+					<th:block th:replace="portal/stud/gradeReport :: grade"></th:block>	
 					<!-- END Grade Report Tab -->
 					
 				</div>
@@ -87,7 +89,7 @@
 		</div>
 	</div>
 	<!-- END Page Content -->
-	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+	
 </main>
 
 </body>

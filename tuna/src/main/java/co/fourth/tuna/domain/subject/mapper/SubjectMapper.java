@@ -17,6 +17,9 @@ public interface SubjectMapper {
 			@Param("pageNum")int pageNum,
 			@Param("size")int size );
 	public List<SubjectVO> SubjectCheck();
+	public List<SubjectVO> searchSubjectList(@Param("seasonCode") String seasonCode, 
+											 @Param("searchKey") String searchKey, 
+											 @Param("key") String key);
 	
 	//public ArrayList<SubjectVO>findListForLectureSchedule(@Param("pageNum")int start, @Param("size")int size);
 	//public ArrayList<Map<String, Object>>findListForLectureScheduleByProf(@Param("prof")ProfessorVO prof, @Param("pageNum")int pageNum, @Param("size")int size);
