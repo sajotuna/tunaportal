@@ -178,35 +178,11 @@ xmlns:th="http://www.thymeleaf.org"
                       <th style="width: 15%">작성</th>
                       <th style="width: 15%">등록일시</th>
                     </tr> -->
-                    <tr class="fw-bold">
-                      <td style="width: 100px">1</td>
-                      <td class="text-start">내용</td>
-                      <td style="width: 15%">참치분해1</td>
-                      <td style="width: 15%">2022-07-03</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td class="text-start">내용</td>
-                      <td>참치분해2</td>
-                      <td>2022-07-03</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td class="text-start">내용</td>
-                      <td>참치분해3</td>
-                      <td>2022-07-03</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td class="text-start">내용</td>
-                      <td>참치분해4</td>
-                      <td>2022-07-03</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td class="text-start">내용</td>
-                      <td>참치분해5</td>
-                      <td>2022-07-03</td>
+                    <tr class="" th:each="notice:${noticeList}">
+                      <td style="width: 100px" th:text="${notice.no}">00</td>
+                      <td class="text-start" th:text="${notice.title}">제목 데이터 없음</td>
+                      <td style="width: 15%" th:text="${notice.subjectVO.name}">과목 없음</td>
+                      <td style="width: 15%" th:text="${notice.enrollDate}">날짜 없음</td>
                     </tr>
                   </tbody>
                 </table>

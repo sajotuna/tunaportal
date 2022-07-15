@@ -12,7 +12,7 @@
 	<select id="getPaging" resultMap="pagingMap" parameterType="co.fourth.tuna.domain.common.vo.PagingVO">
 		SELECT 
 			MAX(ROWNUM) AS length, 
-			FLOOR( MAX(ROWNUM)/ #{sizePerPage}) AS page,
+			CEIL( MAX(ROWNUM)/ (#{sizePerPage}+1)) AS page,
 			'${tableName}' as name,
 			#{sizePerPage} as page_size
 		FROM 

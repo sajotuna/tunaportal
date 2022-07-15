@@ -64,7 +64,7 @@
 
 
 	<select id="findOne"
-		parameterType="co.fourth.tuna.domain.subject.vo.SubjectVO"
+		resultType="co.fourth.tuna.domain.subject.vo.SubjectVO"
 		>
 		SELECT * 
 		FROM subject

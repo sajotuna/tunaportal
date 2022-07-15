@@ -3,10 +3,20 @@
 <mapper
 	namespace="co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper">
 	
+	<resultMap id="lectureNoticeMap" 
+		type="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO" >
+		<association 
+			property="subjectVO" 
+			column="sbjno"
+			javaType="co.fourth.tuna.domain.subject.vo.SubjectVO"
+			select="co.fourth.tuna.domain.subject.mapper.SubjectMapper.findOne" 
+		/>
+		
+	</resultMap>
 	
 
 	<select id="findByProfessor"
-		resultType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO" >
+		resultMap="lectureNoticeMap" >
 			SELECT *
 			FROM (
 				SELECT
@@ -14,10 +24,11 @@
 					l.*
 				FROM lecturenotice l
 				JOIN subject s
-					ON l.sbj = s.no
+					ON l.sbjno = s.no
 				WHERE s.pfno = #{prof.no}
+				ORDER BY l.enrolldate DESC
 			) WHERE rn
-				BETWEEN (#{pageNum}-1) * #{size}
-				AND #{pageNum}*#{size}
+					BETWEEN (#{pageNum}-1) * #{size} +1
+					AND #{pageNum}*#{size}
 		</select>
 </mapper>

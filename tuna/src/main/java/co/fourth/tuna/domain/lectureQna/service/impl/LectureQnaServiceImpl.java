@@ -24,17 +24,9 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 	}
 
 	@Override
-	public List<LectureQnaVO> findByProfessor(ProfessorVO vo, int pageNum, int size) {
-		List<Map<String, Object>> objs = mapper.findByProfessor(vo, pageNum, size);
-		System.out.println("!!! HERE !!!");
-		List<LectureQnaVO> mList = new ArrayList<LectureQnaVO>();
-		objs.forEach(obj ->{
-			LectureQnaVO qna = new LectureQnaVO();
-			//
-			System.out.println(obj.toString());
-		});
-		System.out.println("!!! END !!!");
-		return null;
+	public List<LectureQnaVO> findByProfessor(ProfessorVO prof, int pageNum, int size) {
+		return mapper.findByProfessor(prof, pageNum, size);
+		
 	}
 
 	

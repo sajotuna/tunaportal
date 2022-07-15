@@ -10,13 +10,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.fourth.tuna.domain.common.service.CodeService;
 import co.fourth.tuna.domain.common.service.PagingService;
+import co.fourth.tuna.domain.common.vo.PagingVO;
 import co.fourth.tuna.domain.common.vo.code.CodeMasterVO;
+import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
+import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
 import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
 import co.fourth.tuna.domain.subject.service.SubjectService;
@@ -31,9 +35,11 @@ public class EclassProfessorEclassController {
 	@Autowired PagingService pagingService;
 	@Autowired SubjectService subjectService;
 	@Autowired LectureQnaService lectureService;
+	@Autowired LectureNoticeService noticeService;
+	
 	@Autowired CodeService codeService;
 	
-	private String profPath = "/eclass/professor";
+	private String profPath = "eclass/professor";
 	
 	private static final Logger logger = LoggerFactory.getLogger(EclassProfessorEclassController.class);
 	
@@ -58,9 +64,14 @@ public class EclassProfessorEclassController {
 		
 		List<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season, 1, 5);
 		List<LectureQnaVO> qnaList = lectureService.findByProfessor(prof, 1, 5); 
+		List<LectureNoticeVO> noticeList = noticeService.findByProfessor(prof, 1, 5);
+		
+		System.out.println(noticeList.get(0));
+		
 		
 		model.addAttribute("subList", subList);
 		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("noticeList",noticeList);
 		
 		return profPath + "/home";
 	}
@@ -76,8 +87,20 @@ public class EclassProfessorEclassController {
 	}
 	
 	@GetMapping("/noticeList")
-	public String noticeListView(Model model, HttpServletRequest req) {
+	public String noticeListView(
+			Model model, 
+			HttpServletRequest req,
+			@RequestParam(value="pageNum", required=false, defaultValue= "1" ) int pageNum) {
+		//TODO 교수 데이터 추가해야함
+		ProfessorVO prof = new ProfessorVO();
+		prof.setNo(61275);
 		
+		List<LectureNoticeVO> noticeList = noticeService.findByProfessor(prof, pageNum, 20);
+		List<LectureNoticeVO> noticeList2 = noticeService.findByProfessor(prof, pageNum, 999);
+		int pageCount = (int)Math.ceil((double)noticeList2.size()/(20+1));
+		
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("pageCount", pageCount);
 		
 		return req.getServletPath();
 	}

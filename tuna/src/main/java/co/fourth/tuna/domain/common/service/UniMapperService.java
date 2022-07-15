@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface UniMapperService {
 	
-	public List<Object> findByTable(String tableName, Object obj);
+	public Object findByTable(String tableName, Object obj);
 }

@@ -18,10 +18,10 @@ public interface LectureNoticeMapper {
 	LectureNoticeVO noticeSelect(LectureNoticeVO vo);
 
 
-	List<Object> findByProfessor(
+	List<LectureNoticeVO> findByProfessor(
 			@Param("prof")ProfessorVO vo, 
 			@Param("pageNum")int pageNum, 
 			@Param("size")int size);
-
+	
 
 }
