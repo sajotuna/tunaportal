@@ -45,13 +45,11 @@ DELETE FROM PORTALNOTICE WHERE NO = #{no}
 <update id="noticeUpdate"
 parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
 UPDATE PORTALNOTICE
-<set>
-title = #{name}
-content = ${content}
-enrollDate = sysDate
-visible = ${visible}
-</set>
-where no = ${no}
+SET TITLE = #{title},
+    CONTENT = #{content},
+    ENROLLDATE = sysDate,
+    VISIBLE = #{visible}
+WHERE NO = #{no}
 </update>
 
 
@@ -70,7 +68,7 @@ FROM PORTALFILE
 resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO">
 SELECT *
 FROM PORTALFILE
-WHERE pnNo = #{pnNo}
+WHERE PNNO = #{pnno}
 </select>
 
 <!-- 등록 -->
@@ -84,21 +82,11 @@ INSERT INTO PORTALFILE
 VALUES (#{no}, #{name}, #{uri}, #{pnno})	
 </insert>
 
-<!-- 수정 -->
-<update id="fileUpdate"
-parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
-UPDATE PORTALNOTICE
-<set>
-name = #{name}
-URI = #{uri}
-</set>
-where pnNo = ${no}
-</update>
-
 
 <!-- 삭제 -->
-<delete id="fileDelete" parameterType="int">
-DELETE FROM PORTALFILE WHERE NO = #{pnno}
+<delete id="fileDelete">
+DELETE FROM PORTALFILE
+ WHERE NO = #{no}
 </delete>
 
 </mapper>
