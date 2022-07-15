@@ -1,0 +1,18 @@
+package co.fourth.tuna.web.eclass.student.vo;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class EclassStudentHomeVO {
+
+	//학번
+	private int no;
+	//연도학기
+	private int seasonCode;
+	//과목이름
+	private String sbjName;
+	//과목코드
+	private int sbjNo;
+}

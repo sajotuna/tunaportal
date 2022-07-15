@@ -6,7 +6,15 @@
 		<association property="professorVO" column="pfno" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
 			select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
 	</resultMap>
+	<resultMap id="SbjByStudTaskMap" type="co.fourth.tuna.domain.subject.vo.SubjectVO">
+	<collection property="taskList"
+		ofType="co.fourth.tuna.domain.task.vo.TaskVO"
+		javaType="java.util.ArrayList"
+		column="no"
+		select="co.fourth.tuna.domain.task.mapper.TaskMapper.taskList"
+	></collection>
 	
+	</resultMap>
 	<resultMap id="subjectListDataMap" type="co.fourth.tuna.domain.subject.vo.SubjectVO">
 		<association property="professorVO" column="professorVO" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
 			select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
@@ -90,6 +98,21 @@
 
 
 	</select>
+	<!-- 수강중인 과목 전체 과제 조회 -->
+	<select id="findSbjByStud" resultMap="SbjByStudTaskMap">
+	SELECT *
+	FROM SUBJECT S JOIN LECTUREAPPLY L
+	ON(S.NO = L.SBJNO)
+	WHERE L.STNO = #{stud.no}
+	AND S.SEASONCODE = #{seasonCode}
+	</select>
 	
-	
+	<!-- 수강중인 단일 과목 과제 조회 -->
+	<select id="selectOneSubTask" resultMap="SbjByStudTaskMap">
+	SELECT *
+	FROM SUBJECT S JOIN LECTUREAPPLY L
+	ON(S.NO = L.SBJNO)
+	WHERE L.STNO = #{stud.no}
+	AND S.NO = #{sbj.no}
+	</select>
 </mapper>

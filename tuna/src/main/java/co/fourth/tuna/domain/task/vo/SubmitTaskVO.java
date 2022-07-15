@@ -2,11 +2,11 @@ package co.fourth.tuna.domain.task.vo;
 
 import java.sql.Date;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 public class SubmitTaskVO {
 	private int no;
 	private String fileName;
