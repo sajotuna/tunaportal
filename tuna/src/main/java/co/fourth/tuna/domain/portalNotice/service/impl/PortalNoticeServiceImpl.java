@@ -31,7 +31,7 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 	}
 	
 	public int noticeUpdate(PortalNoticeVO vo) {
-		return map.noticeInsert(vo);
+		return map.noticeUpdate(vo);
 	}
 	
 	public int noticeDelete(PortalNoticeVO vo) {
@@ -51,10 +51,7 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 	public int fileInsert(PortalNoticeFileVO vo) {
 		return map.fileInsert(vo);
 	}
-	
-	public int fileUpdate(PortalNoticeFileVO vo) {
-		return map.fileDelete(vo);
-	}
+
 	
 	public int fileDelete(PortalNoticeFileVO vo) {
 		return map.fileDelete(vo);

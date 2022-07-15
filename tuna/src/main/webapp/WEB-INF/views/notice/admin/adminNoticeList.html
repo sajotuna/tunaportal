@@ -6,6 +6,9 @@
 
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 <title>adminNoticeList</title>
 </head>
 <body>
@@ -70,11 +73,12 @@
 							<th:block class="text-center" scope="row"
 								th:if="${not #strings.isEmpty(notices)}">
 
-								<tr th:each="notices, i:${notices}">
+								<tr th:each="notices, i:${notices}" th:data-no=${notices.no}>
 									<td class="text-center"><input
-										class="form-check-input text-center" type="checkbox" value="">
-										<label class="form-check-label"></label></td>
-									<td class="text-center">[[${notices.no}]]</td>
+										class="form-check-input text-center" id="check"
+										type="checkbox" value=""> <label
+										class="form-check-label"></label></td>
+									<td class="text-center" id="nocheck">[[${notices.no}]]</td>
 									<td><a
 										th:href="@{/admin/adminNoticeSelect(no=${notices.no})}">[[${notices.title}]]</a></td>
 									<td class="">
@@ -96,39 +100,10 @@
 					<div class="p-1 d-flex justify-content-center">
 						<button type="button" class="btn btn-outline-secondary m-1"
 							th:onclick="|location.href='@{/admin/adminNoticeInsertForm}'|">등록</button>
-						<button type="button" class="btn btn-outline-secondary m-1 push"
-							data-bs-toggle="modal" data-bs-target="#modal-block-popout">삭제</button>
+						<button type="button" class="btn submit-btn btn-outline-secondary m-1 push"
+							data-job="delete" id="delBtn">삭제</button>
 					</div>
 
-					<div class="modal fade" id="modal-block-popout" tabindex="-1"
-						aria-labelledby="modal-block-popout" style="display: none;"
-						aria-hidden="true">
-						<div class="modal-dialog modal-dialog-popout" role="document">
-							<div class="modal-content">
-								<div class="block block-rounded block-transparent mb-0">
-									<div class="block-header block-header-default">
-										<h3 class="block-title">해당 공지 삭제</h3>
-										<div class="block-options">
-											<button type="button" class="btn-block-option"
-												data-bs-dismiss="modal" aria-label="Close">
-												<i style="color: black" class="fa fa-fw fa-times"></i>
-											</button>
-										</div>
-									</div>
-									<div class="block-content fs-sm">
-										<p>해당 공지를 삭제하시겠습니까 ?</p>
-									</div>
-									<div class="block-content p-2 text-end bg-body">
-										<button type="button"
-											class="btn btn-sm btn-alt-secondary me-1"
-											data-bs-dismiss="modal">Close</button>
-										<button type="button" class="btn btn-sm btn-primary"
-											data-bs-dismiss="modal">delete</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 
 					<div class="block-content d-flex justify-content-center ">
 						<nav aria-label="Page navigation">
@@ -159,57 +134,138 @@
 
 		</div>
 		<script>
+		var header = $("meta[name='_csrf_header']").attr('content');
+		var token = $("meta[name='_csrf']").attr('content');
+		
 
 
-function searchList() {
-	let state= $("#state").val();
-	let key = $("#key").val();
-	
-	$.ajax({
-		url : getPathRootJump() + "admin/adminSearch",
-		type: "get",
-		data : {state:state,key:key},
-		dataType : "json",
-		success : function(rs){
-			htmlConvert(rs);
-		},
-		error : function(){
-			alert('오류')
+		function searchList() {
+			let state= $("#state").val();
+			let key = $("#key").val();
+			
+			$.ajax({
+				url : getPathRootJump() + "admin/adminSearch",
+				type: "get",
+				data : {state:state,key:key},
+				dataType : "json",
+				success : function(rs){
+					htmlConvert(rs);
+				},
+				error : function(){
+					alert('오류')
+				}
+			})	
 		}
-	})	
-}
 
-function htmlConvert(rs){
-	$("tbody").remove();
-	let tbody = $("<tbody/>");
-	$.each(rs,function(index, n){ 
-		var row = $("<tr/>").append(
-				  $("<td/>").addClass("text-center").html(`
-                          <input class="form-check-input text-center" type="checkbox" value="" >
-                          <label class="form-check-label text-center" ></label>          
-                         `),
-				  $("<td/>").addClass("text-center").css("width","10px").html(n.no),
-				  $("<td/>").html(`<a href="adminNoticeSelect?no=${n.no}"> ${n.title} </a>`),
-				  $("<td/>").addClass("text-center").css("width","10px"),
-				  $("<td/>").addClass("fs-sm text-muted text-center").html(n.enrollDate)
-			);
-		tbody.append(row); 
-	})
-	$("#tb").append(tbody);
-}
+		function htmlConvert(rs){
+			$("tbody").remove();
+			let tbody = $("<tbody/>");
+			$.each(rs,function(index, n){ 
+				var row = $("<tr/>").append(
+						  $("<td/>").addClass("text-center").html(`
+		                          <input class="form-check-input text-center" type="checkbox" value="" >
+		                          <label class="form-check-label text-center" ></label>          
+		                         `),
+						  $("<td/>").addClass("text-center").css("width","10px").html(n.no),
+						  $("<td/>").html(`<a href="adminNoticeSelect?no=${n.no}"> ${n.title} </a>`),
+						  $("<td/>").addClass("text-center").css("width","10px"),
+						  $("<td/>").addClass("fs-sm text-muted text-center").html(n.enrollDate)
+					);
+				tbody.append(row); 
+			})
+			$("#tb").append(tbody);
+		}
+		
 
-function getPathRootJump() {
-    var pathName = window.location.pathname.substring(1);
-    var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
-    var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
-    return path_root;
- }
- 
- 
+
+
+			 $('#delBtn').on('click',function(){		 
+				 let job =$(this).data('job');
+
+				 event.preventDefault(); 
+				 
+				 class pageDialogs{
+						static dialog(job, txt){
+							let toast = Swal.mixin({
+							      buttonsStyling: false,
+							      target: '#page-container',
+							      customClass: {
+							        confirmButton: 'btn btn-dark m-1',
+							        cancelButton: 'btn btn-danger m-1',
+							        input: 'form-control'
+							      }
+							    });
+							
+							success();
+							
+							function success(e){	
+								 if( job === 'delete') {							 
+									 toast.fire({
+									 title : '해당공지를 삭제하시겠습니까?',
+									 text: '이 작업은 취소 할 수 없습니다.',
+									 icon: 'warning',
+									 showCancelButton: true,
+									 customClass:{
+										 confirmButton: 'btn btn-danger m-1',
+										 cancelButton: 'btn btn-light m-1' 
+									 },
+									 confirmButtonText:'삭제하기',
+									 cancelButtonText:'취소',
+									 preConfirm: e => {
+										 return new Promise(resolve => {
+											 setTimeout(() => {
+												 resolve();
+											 }, 50);
+										 });
+									 }
+									 	 
+									 }).then(result => {
+										 if(result.value){
+										 let tr = $('#check').hasClass("table-active"===true).parent('tr')
+										 $.ajax({
+											 
+											 url:getContextPath()+'admin/adminNoticeDelete',
+											 method:'DELETE',
+											 data:JSON.stringfy({no:no, pnno:pnno}),
+											 contentType : 'application/json; charset=utf-8',
+											 beforeSend : function(xhr) {
+													xhr.setRequestHeader(header, token);
+												}
+											 
+										 }).done(function(success){
+											 if(success){
+												pageDialogs.dialog('success');
+											 }
+										 }) //done end
+											 
+										 }
+										 
+									 });//then end
+									 
+								 }//function success end
+								 
+							}
+						}//static dialog end 
+					 
+					 }//class end
+				 
+			 })//onclick end
+		
+
+
+
+		function getPathRootJump() {
+		    var pathName = window.location.pathname.substring(1);
+		    var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+		    var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+		    return path_root;
+		 }
+
+
 </script>
-		<script>
-One.helpersOnLoad(['one-table-tools-checkable', 'one-table-tools-sections']);
-</script>
+		<script>One.helpersOnLoad(['one-table-tools-checkable', 'one-table-tools-sections']);</script>
+		<script
+			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	</main>
 </body>
 </html>
