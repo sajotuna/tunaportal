@@ -9,11 +9,11 @@ function banner(job) {
 		type: 'GET',
 		dataType: 'json'
 		
-		}).done(function(basicBn) {
-			$('#shortcutImg').attr('src', getContextPath() + `display?fileName=${basicBn.uri}&folder=banner`)
-			$('#shortcutBtn').css('display', 'inline-block');
-			$('#imgDownload').attr('href', getContextPath() + `download?fileName=${basicBn.uri}&originName=${basicBn.fileName}&folder=banner`)
-		})
+	}).done(function(basicBn) {
+		$('#shortcutImg').attr('src', getContextPath() + `display?fileName=${basicBn.uri}&folder=banner`)
+		$('#shortcutBtn').css('display', 'inline-block');
+		$('#imgDownload').attr('href', getContextPath() + `download?fileName=${basicBn.uri}&originName=${basicBn.fileName}&folder=banner`)
+	})
 }
 
 // 배너 삭제

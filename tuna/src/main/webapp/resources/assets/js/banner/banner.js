@@ -17,7 +17,7 @@ class pageDialogs {
 	    
 	    success();
 	    
-	    function success(e) {
+	    function success() {
 	        toast.fire({
 	          title: '등록 완료',
 	          text: '메인 페이지로 돌아가 배너를 확인해 보세요.',
@@ -29,19 +29,10 @@ class pageDialogs {
 	          },
 	          confirmButtonText: '메인으로 가기',
 	          cancelButtonText: '취소',
-	          preConfirm: e => {
-	            return new Promise(resolve => {
-	              setTimeout(() => {
-	                resolve();
-	              }, 50);
-	            });
-	          }
+
 	        }).then(result => {
-	          if (result.value) {
-	            location.href = '/tuna/admin';
-	          } else if (result.dismiss === 'cancel') {
-	            location.reload();
-	          }
+	          if (result.value) location.href = '/tuna/admin';
+	          else if (result.dismiss === 'cancel') location.reload();
 	        });
 	      };
 

@@ -33,6 +33,11 @@ public class SubjectServiceImpl implements SubjectService {
 	public List<SubjectVO> SubjectCheck(){
 		return map.SubjectCheck();
 	}
+
+	@Override
+	public List<SubjectVO> searchSubjectList(String seasonCode, String searchKey, String key) {
+		return map.searchSubjectList(seasonCode, searchKey, key);
+	}
 	
 	
 	
