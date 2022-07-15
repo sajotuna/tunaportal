@@ -75,7 +75,20 @@ xmlns:th="http://www.thymeleaf.org"
         </div> content header END -->
 
         <div class="content">
-          <h2 class="h3 fw-bold">전체 강의</h2>
+        	<div class="row justify-content-between">
+        		<h2 class="col-9 h3 fw-bold">전체 강의</h2>
+        		<div class="col-3">
+        			<select id="seasonSelector" class="form-select" onchange="if(this.selectedIndex) changeSeasonData(event);">
+        				<option 
+                  th:each="season : ${seasonCodes.children}"
+                  th:value="${season.no}"
+                  th:selected="${season.no} == ${selectedSeason}"
+                >
+        					<span th:text="${season.codeName}">학기 데이터 없음</span>
+        				</option>
+        			</select>
+						</div>
+        	</div>
           
           <div th:if="${not #lists.isEmpty(subList)}">
 
@@ -122,7 +135,34 @@ xmlns:th="http://www.thymeleaf.org"
           </div>
         </div>
         <!-- 모달 리스트 END -->
-        
+        <script>
+          let seasonParam;
+          window.onload = (e)=> {
+            initSelector();
+          }
+
+        	function changeSeasonData(e) {
+            let selectedSeason = e.target.selectedOptions[0].value;
+
+            let url = window.location.origin + window.location.pathname + "?season=" + selectedSeason;
+            
+            window.location.href = url;
+          }
+
+          function initSelector() {
+            let url = new URL(window.location.href);
+            let params = new URLSearchParams(url.searchParams);
+            seasonParam = params.get('season');
+
+            let selector = document.getElementById('seasonSelector');
+            for (let ele of selector.options) {
+              if(ele.value == seasonParam) {
+                ele.selected = true;
+                break;
+              }
+            };
+          }
+        </script>
       </main>
 
 <!--
