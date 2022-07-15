@@ -6,6 +6,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 <head>
   <meta charset="utf-8">
   <title>수강꾸러미</title>
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
   <style>
     h5 {
       margin-top: 50px;
@@ -44,33 +46,29 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
         <h3 class="h3 fw-bold mb-2">수강꾸러미</h3>
         <div class="bg-body-extra-light" style="padding: 10px;">
           <div class="m-4">
-            <form action="" method="post" class="row">
+            <form th:action="@{/stud/courseBasket}" method="post" class="row">
               <div class="col-md-3 col-xl-2 fomrtag">
                 <div class="mb-5">
-                  <select class="form-select" id="example-select" name="example-select">
-                    <option selected>학부(과)</option>
-                    <option value="1">참치과</option>
-                    <option value="1">사조과</option>
-                    <option value="1">컴퓨터공학과</option>
-                    <option value="1">정보통신학과</option>
+                  <select class="form-select" id="deptCode" name="deptCode">
+                    <option selected value = "">학부(과)</option>
                   </select>
                 </div>
               </div>
               <div class="col-md-3 col-xl-2 fomrtag">
                 <div class="mb-2">
-                  <select class="form-select" id="example-select" name="example-select">
-                    <option selected>이수구분</option>
-                    <option value="">전공필수</option>
-                    <option value="">전공선택</option>
-                    <option value="">교양필수</option>
-                    <option value="">교양선택</option>
+                  <select class="form-select" id="type" name="type">
+                    <option selected value = "">이수구분</option>
+                    <option value="701">전공필수</option>
+                    <option value="702">전공선택</option>
+                    <option value="703">교양필수</option>
+                    <option value="704">교양선택</option>
                   </select>
                 </div>
               </div>
               <div class="col-md-3 col-xl-2 fomrtag">
                 <div class="mb-2">
-                  <select class="form-select" id="example-select" name="example-select">
-                    <option selected>학년</option>
+                  <select class="form-select" id="target" name="target">
+                    <option selected value = "">학년</option>
                     <option value="1">1학년</option>
                     <option value="2">2학년</option>
                     <option value="3">3학년</option>
@@ -80,8 +78,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
               </div>
               <div class="col-md-3 col-xl-2 fomrtag">
                 <div class="mb-2">
-                  <input type="number" placeholder="직접입력...." class="form-control"
-                    id="example-flatpickr-time-standalone-24" name="example-flatpickr-time-standalone-24">
+                  <input type="text" placeholder="과목명을 입력..." class="form-control"
+                    id="name" name="name">
                 </div>
               </div>
               <div class="col-md-2 col-xl-1 fomrtag">
@@ -113,7 +111,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                 </thead>
                   <tbody>
                     <tr th:scope="row" th:each="sub, status : ${list}">
-                      <th class="fw-semibold fs-sm"><input type="checkbox" name = "courcheck" th:value = "${sub.NO}+','+${sub.SEASONCODE} +','+ ${sub.DAYCODE} +','+ ${sub.TIMECODE}"></th>
+                      <th class="fw-semibold fs-sm"><input type="checkbox" name = "courcheck" th:value = "${sub.NO}+','+${sub.SEASONCODE} +','+ ${sub.DAYCODE} +','+ ${sub.TIMECODE} + ',' + ${sub.POINT}"></th>
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
@@ -170,6 +168,9 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
               <div class="block block-rounded block-themed">
                 <div class="block-header bg-primary-darker">
                   <h1 class="block-title">[수강꾸러미]</h1>
+                  <div class = "d-flex justify-content-end">
+                  		<h1 class = "block-title">수강신청가능한 학점 : [[${grade}]]</h1>
+                  </div>
                 </div>
               <table class="table table-striped table-vcenter">
                   <thead>
@@ -250,6 +251,37 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   function showPopup() {
       window.open("/tuna/stud/lectureEvaluationSearch", "강의평가조회", "width=650, height=600, top=10, left=10");
     }
+  
+  
+  let header = document.querySelector('meta[name="_csrf_header"]').content;
+  let token = document.querySelector('meta[name="_csrf"]').content;
+  	fetch('/tuna/stud/courseCheck',{
+  		method: "POST",
+  		headers: {
+            'header': header,
+          	'X-Requested-With': 'XMLHttpRequest',
+            "Content-Type": "application/json",
+            'X-CSRF-Token': token	// header에 X-CSRF-Token부분에 토큰값이 들어가 정상적으로 POST값이 넘어가는 것을 볼 수 있다!
+        },
+  	}).then(result => result.json())
+  	  .then(result =>{
+  		  let deptcodes = document.querySelector('#deptCode')
+  		  console.log(result)
+  		  result.forEach(val =>{
+  			let opt = document.createElement('option');
+  			opt.setAttribute('value', val.DEPTCODE)
+  			opt.innerText = val.CODENAME;
+  			deptcodes.appendChild(opt)
+  		  })
+  	  } 
+  	  		
+  	  		
+  	  
+  	  
+  	  
+  	  );
+  
+  
   </script>
   </main>
 </body>

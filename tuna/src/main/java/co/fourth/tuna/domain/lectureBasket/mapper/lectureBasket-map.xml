@@ -25,15 +25,35 @@ insert into LECTUREBASKET values (#{no}, 'y', #{seasonCode}, #{sbjNo}, #{stNo})
 DELETE FROM LECTUREBASKET WHERE SBJNO = #{sbjNo}
 
 </delete>
+<delete id ="courDelete" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
+
+DELETE FROM LECTUREAPPLY WHERE SBJNO = #{sbjNo}
+
+</delete>
 
 <select id ="FindRoom" parameterType="map" resultType="boolean">
 
-select case when count(*) >= 1 then 1 else 0 end as truefalse
-from lecturebasket l, lectureschedule ls
-where ls.sbjno = l.sbjno and l.stno = #{stNo} and (ls.daycode = #{day} and ls.timecode between #{startTime} and #{endTime})
+SELECT case when count(*) >= 1 then 1 else 0 end as truefalse
+  FROM lecturebasket l, lectureschedule ls
+ WHERE ls.sbjno = l.sbjno 
+   AND l.stno = #{stNo} 
+   AND l.seasoncode = 106 
+   AND (ls.daycode = #{day} 
+   AND ls.timecode between #{startTime} 
+   AND #{endTime})
 
 
 </select>
+
+<select id = "FindCourseGrade" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO" resultType="String">
+		SELECT CourseApplyGrade(#{stNo}) FROM dual
+</select>
+
+<select id = "FindSubject" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO" resultType="boolean">
+	SELECT case when count(*) >= 1 then 1 else 0 end as truefalse 
+	  FROM lecturebasket 
+	 WHERE sbjno = #{sbjNo}
+</select>	
 
 <!-- <parameterMap type="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO" id="basketParam">
 	<parameter property="sbjNo" mode="IN" jdbcType="VARCHAR" javaType="string"/>
