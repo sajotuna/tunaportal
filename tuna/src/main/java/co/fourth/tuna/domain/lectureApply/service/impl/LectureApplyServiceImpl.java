@@ -33,4 +33,15 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 		return mapper.CourseBasket(vo);
 	}
 
+	@Override
+	public String FindApplyGrade(LectureApplyVO vo) {
+		return mapper.FindApplyGrade(vo);
+	}
+
+	@Override
+	public void CourseInsert(LectureApplyVO vo) {
+		mapper.CourseInsert(vo);
+		
+	}
+
 }

@@ -11,7 +11,8 @@ public interface LectureApplyMapper {
 	public List<LectureApplyVO> CourseFind(List<LectureApplyVO> vo);
 	public List<LectureApplyVO> CourseBasket(List<LectureApplyVO> vo);
 	
-	
+	public String FindApplyGrade(LectureApplyVO vo);
+	public void CourseInsert(LectureApplyVO vo);
 	
 	public ArrayList<LectureApplyVO> findBySubject(SubjectVO vo);
 }
