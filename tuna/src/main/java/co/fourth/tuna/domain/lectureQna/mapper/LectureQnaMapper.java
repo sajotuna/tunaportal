@@ -24,7 +24,7 @@ public interface LectureQnaMapper {
 	// ckw 서브젝트로 목록 조회
 	public ArrayList<LectureQnaVO> findBySubject(SubjectVO vo);
 	
-	public List<Map<String, Object>> findByProfessor(
+	public List<LectureQnaVO> findByProfessor(
 			@Param("prof")ProfessorVO vo, 
 			@Param("pageNum")int pageNum, 
 			@Param("size")int size
