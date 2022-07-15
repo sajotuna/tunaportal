@@ -11,6 +11,9 @@
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 	<link rel="stylesheet" th:href="@{/resources/assets/css/bn-preview.css}">
+	<style>
+	
+	</style>
 </head>
 <body>
 <main layout:fragment="main">
@@ -27,7 +30,7 @@
 				<h2 class="content-heading mb-2 pb-2">사진 미리보기</h2>
 				<div class="mb-5 d-flex justify-content-center preview">
 					<div class="img-section">
-						<img id="bnImg" class="img" alt="">
+						<img id="previewImg" class="img" th:src="@{/display?fileName=no_image.png&folder=banner}" alt="preview image">
 					</div> 
 				</div>
 				<!-- END Image Preview -->
@@ -37,64 +40,47 @@
 						<h4 class="block-title">배너 사진 목록</h4>
 						<div class="block-options">
 						<button type="button" class="btn btn-sm btn-light submit-btn" data-job="delete" style="margin-right: 10px;">삭제</button>
-						<label class="upload-label" for="file"><button class="btn btn-sm btn-light upload-btn">사진 올리기</button></label>
-						<input class="form-control" type="file" id="hidden-file"
+						<label class="upload-label" for="file">
+							<button id="upload" class="btn btn-sm btn-light upload-btn">사진 올리기</button>
+						</label>
+						<input class="form-control hidden-file" type="file" id="file" name="file"
 							   accept="image/jpg, image/jpeg, image/png">
 						</div>
 					</div>
 					<table class="table table-hover table-vcenter">
 						<thead>
 							<tr>
-								<th class="d-none d-sm-table-cell" style="width: 30px;">
-									<input id="allChecked" class="form-check-input" type="checkbox">
+								<th width=30></th>
+								<th>파일명</th>
+								<th width=30>
+									<button class="btn btn-sm up" type="button">
+										<i class="fa fa-arrow-up"></i>
+									</button>
 								</th>
-								<th class="d-none d-sm-table-cell">파일명</th>
-								<th style="width: 30px;"></th>
-								<th style="width: 30px;"></th>
+								<th width=30>
+									<button class="btn btn-sm down" type="button">
+										<i class="fa fa-arrow-down"></i>
+									</button>
+								</th>
 							</tr>
 						</thead>
 						<tbody id="tb">
-							<tr data-order="1" data-no="1">
-								<td scope="row" class="fw-semibold fs-sm">
-									<input class="form-check-input" type="checkbox">
-								</td>
-								<td class="fw-semibold fs-sm">banner-01.jpg</td>
-								<td class="fs-sm">
-									<button class="btn btn-sm up" type="button"><i class="fa fa-arrow-up"></i></button>
-								</td>
-								<td class="fw-semibold fs-sm">
-									<button class="btn btn-sm down" type="button"><i class="fa fa-arrow-down"></i></button>
-								</td>
-							</tr>
-							<tr data-order="2" data-no="2">
-								<td scope="row" class="fw-semibold fs-sm">
-									<input class="form-check-input" type="checkbox">
-								</td>
-								<td class="fw-semibold fs-sm">banner-02.jpg</td>
-								<td class="fs-sm">
-									<button class="btn btn-sm up" type="button"><i class="fa fa-arrow-up"></i></button>
-								</td>
-								<td class="fw-semibold fs-sm">
-									<button class="btn btn-sm down" type="button"><i class="fa fa-arrow-down"></i></button>
-								</td>
-							</tr>
-							<tr data-order="3" data-no="3">
-								<td scope="row" class="fw-semibold fs-sm">
-									<input class="form-check-input" type="checkbox">
-								</td>
-								<td class="fw-semibold fs-sm">banner-03.jpg</td>
-								<td class="fs-sm">
-									<button class="btn btn-sm up" type="button"><i class="fa fa-arrow-up"></i></button>
-								</td>
-								<td class="fw-semibold fs-sm">
-									<button class="btn btn-sm down" type="button"><i class="fa fa-arrow-down"></i></button>
-								</td>
-							</tr>
+							<th:block th:each="bn, i:${bnList}">
+								<input type="hidden" th:data-adNo="139341" >
+								<tr th:data-no="${bn.no}" 
+									th:data-uri="${bn.uri}" th:data-filename="${bn.fileName}" style="cursor:pointer;">
+									<td scope="row" class="fw-semibold fs-sm">
+										<input class="form-check-input" type="radio" name="check">
+									</td>
+									<td class="fw-semibold fs-sm fileName" colspan="3">[[${bn.fileName}]]</td>
+								</tr>
+							</th:block>
 						</tbody>
 					</table>
 					<div class="d-flex justify-content-center mt-5">
-						<button type="button" class="btn btn-sm btn-dark"
+						<button type="button"id="sliderPreview" class="btn btn-sm btn-light me-2"
 							data-bs-toggle="modal" data-bs-target="#modal-block-vcenter">배너 미리보기</button>
+						<button type="button" class="btn btn-sm btn-dark submit-btn" data-job="submit" data-bs-dismiss="modal">순서 등록</button>
             		</div>
 				</div>
 				<!-- END Image List -->
@@ -120,28 +106,13 @@
 							</button>
 						</div>
 					</div>
-					<div class="block block-rounded">
-						<div class="block-content box banner">
-							<div class="js-slider slick-dotted-inner slick-dotted-white box"
-								data-dots="true" data-autoplay="true" data-autoplay-speed="1800">
-								<div>
-									<img class="img-fluid" src="#" alt="">
-								</div>
-								<div>
-									<img class="img-fluid" src="#" alt="">
-								</div>
-								<div>
-									<img class="img-fluid" src="#" alt="">
-								</div>
-								<div>
-									<img class="img-fluid" src="#" alt="">
-								</div>
-							</div>
-						</div>
-					</div>
 					<div class="block-content block-content-full text-end bg-body">
-						<button type="button" class="btn btn-sm btn-alt-secondary me-1" data-bs-dismiss="modal">닫기</button>
-						<button type="button" class="btn btn-sm btn-dark submit-btn" data-job="submit"  data-bs-dismiss="modal">이 순서대로 등록하기</button>
+						<div class="js-slider slick-dotted-inner slick-dotted-white"
+							data-dots="true" data-autoplay="true" data-autoplay-speed="1000">
+							<th:div th:each="bn, i:${bnList}" class="img-section">
+								<img class="img-fluid img" alt="">
+							</th:div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -153,34 +124,90 @@
 	<script>One.helpersOnLoad([ 'jq-slick' ]);</script>
 	<script type="text/javascript">
 	
+		var header = $("meta[name='_csrf_header']").attr('content');
+		var token = $("meta[name='_csrf']").attr('content');
+		
 		$(function() {
-			allChecked();
 			preview();
+			sliderPreview();
 			submit();
 		})
 		
-		// 전체 선택 
-		function allChecked() {
-			$('#allChecked').on('click', function () {
-				if($('#allChecked').prop('checked')) {
-					$('input[type=checkbox]').prop('checked',true);
-				} else {
-					$('input[type=checkbox]').prop('checked',false);
-				}
-			})
+		function sliderPreview() {
+			
+			$('#sliderPreview').on('click', function() {
+				
+				$('#tb tr').each(function(idx) {
+					let uri = $('#tb tr').eq(idx).data('uri');
+					$('.img-fluid').eq(idx+1).attr('src', 
+											getContextPath() 
+											+ `display?fileName=${uri}&folder=banner`);
+				})
+				
+			})	
+			
 		}
+		
+		// 사진 업로드
+		$('#file').on('change', changeEvent => {
+			
+			let formData = new FormData();
+			formData.append('file', $('input[name=file]').prop('files')[0]);
+			formData.append('adNo', $('#adNo').val());
+			
+			$.ajax({
+			
+				url: getContextPath() + 'admin/sliderBanner',
+				method:'POST',
+				data: formData,
+				contentType: false,
+				processData: false,
+				beforeSend: function (xhr) {
+			       xhr.setRequestHeader(header, token);
+				}
+			}).done(function(success) {
+				pageDialogs.dialog('upload');
+			})
+				
+				
+		})
 		
 		// 클릭 시 1건 미리보기
 		function preview() {
 			$('#tb tr').on('click', function() {
-				// 이미지 소스 걸어주기
+				$('#tb tr').removeClass('table-primary');
+				$(this).closest('tr').addClass('table-primary')
+									 .find('input[type=radio]').prop("checked", true);
+				$('#previewImg').attr('src', 
+								getContextPath() 
+								+ `display?fileName=${$(this).data('uri')}&folder=banner`);
+				
 			})
 		}
 	
 		// 순서 등록 완료 / 삭제 버튼 클릭
 		function submit() {
 			$('.submit-btn').on('click', function () {
-				pageDialogs.dialog($(this).data('job'));
+				let job = $(this).data('job');
+			
+				if (job === 'submit') {
+					$('#tb tr').each(function(idx) {
+						$.ajax({
+							
+							url: getContextPath() + 'admin/sliderBanner',
+							method:'PUT',
+							data: JSON.stringify({sequence:idx+1, no:$(this).data('no')}),
+							contentType : 'application/json; charset=utf-8',
+							beforeSend: function (xhr) {
+						       xhr.setRequestHeader(header, token);
+							}
+						})
+					})
+					pageDialogs.dialog(job);
+					
+				} else if (job === 'delete') {
+					pageDialogs.dialog(job);
+				}
 			})
 		}
 		
@@ -200,7 +227,9 @@
 			    success();
 			    
 			    function success(e) {
+			    	
 			    	if(job === 'upload') {
+			    		
 			    		toast.fire({
 			    			title:'업로드 완료', 
 			    			text:'이제 사진 순서를 변경한 후 미리보기에서 등록할 수 있습니다.', 
@@ -211,8 +240,11 @@
 			  	            	location.reload();
 			  	          	}
 			    		});
+			    		
 			    	} else if (job === 'submit') {
+			    		
 			    		toast.fire({
+			    			
 			  	          title: '등록 완료',
 			  	          text: '메인 페이지로 돌아가 배너를 확인해 보세요.',
 			  	          icon: 'success',
@@ -230,6 +262,7 @@
 			  	              }, 50);
 			  	            });
 			  	          }
+			  	          
 			  	        }).then(result => {
 			  	          if (result.value) {
 			  	            location.href = '/tuna/admin';
@@ -237,18 +270,62 @@
 			  	            location.reload();
 			  	          }
 			  	        });
+			    		
 			    	} else if (job === 'delete') {
+			    		
 			    		toast.fire({
-				  	          title: '정말로 삭제하시겠습니까?',
-				  	          text: '이 작업은 취소할 수 없습니다.',
-				  	          icon: 'warning',
-				  	          showCancelButton: true,
+			    			
+			  	          title: '정말로 삭제하시겠습니까?',
+			  	          text: '이 작업은 취소할 수 없습니다.',
+			  	          icon: 'warning',
+			  	          showCancelButton: true,
+			  	          customClass: {
+			  	            confirmButton: 'btn btn-danger m-1',
+			  	            cancelButton: 'btn btn-light m-1'
+			  	          },
+			  	          confirmButtonText: '삭제하기',
+			  	          cancelButtonText: '취소',
+			  	          preConfirm: e => {
+			  	            return new Promise(resolve => {
+			  	              setTimeout(() => {
+			  	                resolve();
+			  	              }, 50);
+			  	            });
+			  	          }
+					  	          
+			  	       }).then(result => {
+				  	        if (result.value) {
+					  	  		let tr = $('#tb input:radio:checked').closest('tr');
+								
+								$.ajax({
+									
+									url: getContextPath() + 'admin/banner',
+									method:'DELETE',
+									data: JSON.stringify({uri:tr.data('uri'),no:tr.data('no')}),
+									contentType : 'application/json; charset=utf-8',
+									beforeSend: function (xhr) {
+								       xhr.setRequestHeader(header, token);
+									}
+							
+								}).done(function(success) {
+									if(success) {
+										pageDialogs.dialog('success');
+									}
+								})
+				  	        }
+			  	        });
+			    	} else if (job === 'success') {
+			    		
+			    		toast.fire({
+			    			
+				  	          title: '삭제 완료',
+				  	          text: '삭제가 정상적으로 처리되었습니다.',
+				  	          icon: 'success',
+				  	          showCancelButton: false,
 				  	          customClass: {
-				  	            confirmButton: 'btn btn-danger m-1',
-				  	            cancelButton: 'btn btn-light m-1'
+				  	            confirmButton: 'btn btn-dark m-1',
 				  	          },
-				  	          confirmButtonText: '삭제하기',
-				  	          cancelButtonText: '취소',
+				  	          confirmButtonText: '확인',
 				  	          preConfirm: e => {
 				  	            return new Promise(resolve => {
 				  	              setTimeout(() => {
@@ -256,59 +333,40 @@
 				  	              }, 50);
 				  	            });
 				  	          }
-				  	        }).then(result => {
-				  	          if (result.value) {
-				  	        	$('#tb input[type=checkbox]:checked').each(function(){
-									console.log($(this).closest('tr').attr('data-no'));
-									// 삭제 ajax
-								}); 
-				  	        	 
-				  	          }
+						  	          
+				  	       }).then(result => {
+					  	        location.reload();
 				  	        });
+			    		
 			    	}
 			  	}
 			}
 		}
 	
-		// 사진 업로드
-		$('#file').on('change', changeEvent => {
-			const reader = new FileReader();
-			$(reader).on('load', readerEvent => {
-				
-				// ajax로 사진 업로드
-				
-				// 등록 완료 다이얼로그
-				pageDialogs.dialog('upload');
-				
-			})
-			const img = changeEvent.target.files[0];
-			reader.readAsDataURL(img)
-		})
+		
 		
 		// 위로 이동
 		$('.up').on('click', function() {
-			let tr = $(this).closest('tr');
+			let tr = $('#tb input:radio:checked').closest('tr');
 			let prevTr = tr.prev();
 			tr.insertBefore(prevTr);
-			
-			for (let i=0; i<$('#tb tr').length; i++) {
-				$('#tb tr').eq(i).attr('data-order', i+1)
-			}
-			
 		})
 		
 		// 아래로 이동
 		$('.down').on('click', function() {
-			let tr = $(this).closest('tr');
+			let tr = $('#tb input:radio:checked').closest('tr');
 			let nextTr = tr.next();
 			tr.insertAfter(nextTr);
-			
-			for (let i=0; i<$('#tb tr').length; i++) {
-				$('#tb tr').eq(i).attr('data-order', i+1)
-			}
 		})
 	
+	function getContextPath() {
+		var pathName = window.location.pathname.substring(1);
+		var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+		var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+		return path_root;
+	}
 	</script>
+	
 </main>
 </body>
 </html>

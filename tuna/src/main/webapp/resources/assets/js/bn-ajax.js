@@ -5,7 +5,7 @@ var token = $("meta[name='_csrf']").attr('content');
 function banner(job) {
 	$.ajax({
 		
-		url: getContextPath() + `admin/${job}`,
+		url: getContextPath() + `${job}`,
 		type: 'GET',
 		dataType: 'json'
 		
