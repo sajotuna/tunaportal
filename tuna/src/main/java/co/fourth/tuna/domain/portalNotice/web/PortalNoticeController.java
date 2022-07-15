@@ -1,10 +1,12 @@
 package co.fourth.tuna.domain.portalNotice.web;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.portalNotice.service.PortalNoticeService;
 import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO;
 import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO;
@@ -22,76 +25,133 @@ import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO;
 @Controller
 public class PortalNoticeController {
 
+	private static Logger logger = LoggerFactory.getLogger(PortalNoticeController.class);
+
 	@Autowired
 	private PortalNoticeService noticeDao;
 
 	@Autowired
-	private String saveDir;
+	private FileService fileService;
+
+	@Autowired
+	private String fileDir;
 
 	// student
+	// 전체조회
 	@RequestMapping("/stud/portalNoticeList")
-	public String portalnoticeList(Model model) {
+	public String portalnoticeList(Model model, PortalNoticeFileVO fileVo) {
 		model.addAttribute("notices", noticeDao.noticeList(1, "전체"));
+
+		List<PortalNoticeFileVO> list = noticeDao.fileList(fileVo);
+		Set<String> fileYn = new HashSet<>();
+		for (PortalNoticeFileVO vo : list) {
+			fileYn.add(vo.getPnno());
+		}
 		return "notice/user/portalNoticeList";
+
 	}
 
+	// 단건조회
 	@RequestMapping("/stud/portalNoticeSelect")
-	public String portalNoticeSelect(PortalNoticeVO vo, Model model) {
+	public String portalNoticeSelect(PortalNoticeVO vo, PortalNoticeFileVO fileVo, Model model) {
 		model.addAttribute("content", noticeDao.noticeSelect(vo));
 		return "notice/user/portalNoticeSelect";
 	}
 
-	
-	
-	//admin
+	// admin
+	// 전체조회
 	@RequestMapping("/admin/adminNoticeList")
-	public String adminNoticeList(Model model) {
+	public String adminNoticeList(Model model, PortalNoticeFileVO fileVo) {
 		model.addAttribute("notices", noticeDao.noticeList(1, "전체"));
+
+		List<PortalNoticeFileVO> list = noticeDao.fileList(fileVo);
+		Set<String> fileYn = new HashSet<>();
+		for (PortalNoticeFileVO vo : list) {
+			fileYn.add(vo.getPnno());
+		}
+
+		model.addAttribute("files", fileYn);
 		return "notice/admin/adminNoticeList";
 	}
 
+	// 단건조회
 	@RequestMapping("/admin/adminNoticeSelect")
 	public String adminNoticeSelect(PortalNoticeVO vo, Model model) {
 		model.addAttribute("content", noticeDao.noticeSelect(vo));
+
+		model.addAttribute("files", noticeDao.fileSelect(Integer.parseInt(vo.getNo())));
+
 		return "notice/admin/adminNoticeSelect";
 	}
 
+	// 공지등록폼
 	@RequestMapping("/admin/adminNoticeInsertForm")
 	public String adminNoticeInsertForm() {
 		return "notice/admin/adminNoticeInsert";
 	}
 
+	// 공지등록
 	@PostMapping("/admin/adminNoticeInsert")
-	public String adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo, MultipartFile[] files)
-			throws IOException {
+	public String adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo,
+			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
 
 		noticeDao.noticeInsert(vo);
 
 		for (MultipartFile file : files) {
 
-			String fileName = file.getOriginalFilename();
-			if (fileName != null && !fileName.isEmpty() && fileName.length() != 0) {
-				String uid = UUID.randomUUID().toString();
-				String saveFileName = uid + fileName.substring(fileName.indexOf("."));
+			String originName = file.getOriginalFilename();
 
-				File target = new File(saveDir, saveFileName);
+			if (originName != null && originName.length() != 0) {
+				String[] portalFile = fileService.upload(file, "PortalNotice");
 
-				fileVo.setName(fileName);
-				fileVo.setUri(saveFileName);
+				fileVo.setName(portalFile[0]);
+				fileVo.setUri(portalFile[1]);
 				fileVo.setPnno(vo.getNo());
-
 				noticeDao.fileInsert(fileVo);
 			}
 
 		}
 		return "redirect:/admin/adminNoticeList";
 	}
-	
+
+	// 수정폼
+	@PostMapping("/admin/adminNoticeupdateForm")
+	public String adminNoticeUpdateForm(PortalNoticeVO vo, Model model) {
+		model.addAttribute("content", noticeDao.noticeSelect(vo));
+		model.addAttribute("files", noticeDao.fileSelect(Integer.parseInt(vo.getNo())));
+		
+		return "notice/admin/adminNoticeUpdate";
+	}
+
+	@PostMapping("/admin/adminNoticeUpdate")
+	public String adminNoticeUpdate(PortalNoticeVO vo, PortalNoticeFileVO fileVo,
+			@RequestParam(value = "file") MultipartFile[] files) {
+
+		noticeDao.noticeUpdate(vo);
+
+		for (MultipartFile file : files) {
+
+			String originName = file.getOriginalFilename();
+
+			if (originName != null && originName.length() != 0) {
+				String[] portalFile = fileService.upload(file, "PortalNotice");
+
+				fileVo.setName(portalFile[0]);
+				fileVo.setUri(portalFile[1]);
+				fileVo.setPnno(vo.getNo());
+				noticeDao.fileUpdate(fileVo);
+			}
+		}
+
+		return "redirect:/admin/adminNoticeList";
+
+	}
+
 	@RequestMapping("/admin/adminNoticeDelete")
 	public String adminNoticeDelete() {
 		return null;
 	}
-	
+
 	@RequestMapping("/admin/adminNoticeUpdate")
 	public String adminNoticeUpdate() {
 		return "notice/admin/adminNoticeUpdate";

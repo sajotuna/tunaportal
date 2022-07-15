@@ -32,9 +32,8 @@ public class TestContoller {
 	@ResponseBody
 	public void multiTest(@RequestParam(value = "file[]")MultipartFile[] files) {
 		for (MultipartFile file : files) {
-			String[] fileInfo =fileService.upload(file, "test");
-			logger.info("originname " + fileInfo[0] + " :: filename " +fileInfo[1]);
-			
+			String[] fileInfo = fileService.upload(file, "test");
+			logger.info("multiple :: originname " + fileInfo[0] + " :: filename " +fileInfo[1]);
 		}
 	}
 	
@@ -42,7 +41,8 @@ public class TestContoller {
 	@RequestMapping("/admin/singleTest")
 	@ResponseBody
 	public void singleTest(@RequestParam(value = "file")MultipartFile file) {
-		fileService.upload(file, "test");
+		String[] fileInfo = fileService.upload(file, "test");
+		logger.info("single :: originname " + fileInfo[0] + " :: filename " +fileInfo[1]);
 	}
 	
 }

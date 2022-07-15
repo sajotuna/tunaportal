@@ -25,16 +25,6 @@ public class BannerServiceImpl implements BannerService {
 	}
 
 	@Override
-	public int sliderBannerInsert(BannerVO vo) {
-		return map.sliderBannerInsert(vo);
-	}
-
-	@Override
-	public int sliderBannerDelete(BannerVO vo) {
-		return map.sliderBannerDelete(vo);
-	}
-
-	@Override
 	public List<BannerVO> bannerListSelect() {
 		return map.bannerListSelect();
 	}
@@ -42,6 +32,16 @@ public class BannerServiceImpl implements BannerService {
 	@Override
 	public int bannerDelete(BannerVO vo) {
 		return map.bannerDelete(vo);
+	}
+
+	@Override
+	public List<BannerVO> sliderBannerSelect() {
+		return map.sliderBannerSelect();
+	}
+
+	@Override
+	public int sliderBannerUpdate(BannerVO vo) {
+		return map.sliderBannerUpdate(vo);
 	}
 
 

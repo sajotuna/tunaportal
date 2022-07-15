@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.banner.mapper.BannerMapper">
 
+	<update id="sliderBannerUpdate">
+		UPDATE BANNER
+		SET SEQUENCE = #{sequence}
+		WHERE NO = #{no}
+	</update>
+
+	<select id="sliderBannerSelect"
+		resultType="co.fourth.tuna.domain.banner.vo.BannerVO">
+		SELECT *
+		FROM BANNER
+		WHERE BANNERCODE = '1301'
+		ORDER BY SEQUENCE ASC
+	</select>
+
 	<delete id="bannerDelete">
 	
 		DELETE BANNER 

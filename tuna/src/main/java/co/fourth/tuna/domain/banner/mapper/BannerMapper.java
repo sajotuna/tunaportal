@@ -8,9 +8,10 @@ public interface BannerMapper {
 	
 	List<BannerVO> bannerListSelect();
 	BannerVO bannerSelect(String bannerCode);
-	int bannerDelete(BannerVO vo);
 	int bannerInsert(BannerVO vo);
-	int sliderBannerInsert(BannerVO vo);
-	int sliderBannerDelete(BannerVO vo);
+	int bannerDelete(BannerVO vo);
+	
+	List<BannerVO> sliderBannerSelect();
+	int sliderBannerUpdate(BannerVO vo);
 
 }

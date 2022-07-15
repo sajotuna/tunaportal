@@ -20,15 +20,15 @@ FROM ( SELECT
 			   S.SEASONCODE SEASONCODE,
 		       P.NAME       PRONAME,
 			   L.ROOMCODE   ROOMCODE, 
-			   LISTAGG(L.TIMECODE, ' ') WITHIN GROUP (ORDER BY L.TIMECODE)  OVER (PARTITION BY S.NO) AS TIMECODE,
+			   LISTAGG(L.TIMECODE, ' ') WITHIN GROUP (ORDER BY L.TIMECODE DESC)  OVER (PARTITION BY S.NO) AS TIMECODE,
 		       LISTAGG(L.DAYCODE, '/') WITHIN GROUP (ORDER BY L.DAYCODE DESC)  OVER (PARTITION BY S.NO) AS   DAYCODE
 	      FROM SUBJECT S, LECTURESCHEDULE L, PROFESSOR P
 		  WHERE S.NO = L.SBJNO 
-		    AND S.PFNO = P.NO AND S.NO IN ( SELECT NO FROM SUBJECT)
-		    <if test="deptCode != null">AND S.DEPTCODE = #{deptCode} </if>
-			<if test="type != null"> AND S.TYPE = #{type} </if>
-			<if test="target != null"> AND S.TARGET = #{target} </if>
-			<if test="name != null"> AND S.NAME like '%'||#{name}||'%' </if>
+		    AND S.PFNO = P.NO AND S.NO IN ( SELECT NO FROM SUBJECT) AND S.SEASONCODE = 106
+		    <if test="deptCode != null and !deptCode.equals('')">AND S.DEPTCODE = #{deptCode} </if>
+			<if test="type != null and !type.equals('')"> AND S.TYPE = #{type} </if>
+			<if test="target != null and !target.equals('')"> AND S.TARGET = #{target} </if>
+			<if test="name != null and !name.equals('')"> AND (S.NAME like '%'||#{name}||'%' OR S.NAME like '%'||UPPER(#{name})||'%')</if>
 		) bask
 			) WHERE rn 
 					BETWEEN (#{pageNum}-1)*#{size}
@@ -50,7 +50,7 @@ SELECT DISTINCT
        P.NAME       PRONAME,
         
 	   L.ROOMCODE   ROOMCODE, 
-	   LISTAGG(L.TIMECODE, ' ') WITHIN GROUP (ORDER BY L.TIMECODE)  OVER (PARTITION BY S.NO) AS TIMECODE,
+	   LISTAGG(L.TIMECODE, ' ') WITHIN GROUP (ORDER BY L.TIMECODE DESC)  OVER (PARTITION BY S.NO) AS TIMECODE,
        LISTAGG(L.DAYCODE, '/') WITHIN GROUP (ORDER BY L.DAYCODE DESC)  OVER (PARTITION BY S.NO) AS   DAYCODE
   FROM SUBJECT S, LECTURESCHEDULE L, PROFESSOR P, STUDENT S2, LECTUREAPPLY L2
  WHERE S.NO = L.SBJNO 
@@ -58,6 +58,7 @@ SELECT DISTINCT
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO
    AND S.NO IN ( SELECT NO FROM SUBJECT)
+   AND S.SEASONCODE = 106
    AND STNO = #{stNo}
 </select>
 
@@ -76,7 +77,7 @@ SELECT DISTINCT
        P.NAME       PRONAME,
         
 	   L.ROOMCODE   ROOMCODE, 
-	   LISTAGG(L.TIMECODE, ' ') WITHIN GROUP (ORDER BY L.TIMECODE)  OVER (PARTITION BY S.NO) AS TIMECODE,
+	   LISTAGG(L.TIMECODE, ' ') WITHIN GROUP (ORDER BY L.TIMECODE DESC)  OVER (PARTITION BY S.NO) AS TIMECODE,
        LISTAGG(L.DAYCODE, '/') WITHIN GROUP (ORDER BY L.DAYCODE DESC)  OVER (PARTITION BY S.NO) AS   DAYCODE
   FROM SUBJECT S, LECTURESCHEDULE L, PROFESSOR P, STUDENT S2, LECTUREBASKET L2
  WHERE S.NO = L.SBJNO 
@@ -84,9 +85,28 @@ SELECT DISTINCT
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO 
    AND S.NO IN ( SELECT NO FROM SUBJECT)
+   AND S.SEASONCODE = 106
    AND STNO = #{stNo}
 
 </select>
+
+<select id = "BasketSchedule" resultType = "map" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
+
+SELECT
+       S.NAME       NAME,   
+	   L.ROOMCODE   ROOMCODE, 
+	   L.TIMECODE   TIMECODE, 
+	   L.DAYCODE    DAYCODE
+  FROM SUBJECT S, LECTURESCHEDULE L, PROFESSOR P, STUDENT S2, LECTUREBASKET L2
+ WHERE S.NO = L.SBJNO 
+   AND S.PFNO = P.NO 
+   AND S2.NO = L2.STNO 
+   AND L2.SBJNO = S.NO 
+   AND S.SEASONCODE = 106
+   AND STNO = #{stNo}
+
+</select>
+
 
 	<select id = "findBySubject"
 		resultType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
@@ -94,5 +114,14 @@ SELECT DISTINCT
 		FROM lectureapply
 		WHERE sbjno = #{no}
 	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </mapper>

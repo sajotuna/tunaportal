@@ -18,10 +18,9 @@ public class PortalScheduleController {
 	
 	//student
 	@RequestMapping("/portalSchedule")
-	@ResponseBody
 	public String portalSchedule(PortalScheduleVO vo, Model model){
 	model.addAttribute("schedules", scheduleDao.scheduleList(vo));
-	return "schedule/user/portalSchedule.html";
+	return "schedule/user/portalSchedule";
 	}
 	
 	

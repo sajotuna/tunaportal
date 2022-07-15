@@ -27,28 +27,11 @@ public class LectureBasketController {
 	private LectureBasketService LectureBasketDao;
 
 	@RequestMapping("/stud/courseBasket")
-	public String courseBasket(Model model, LectureBasketVO vo, Authentication authentication, String pageNum, 
-							  @RequestParam(value="deptCode", required=false ) String deptCode,
-							  @RequestParam(value="type", required=false) String type,
-							  @RequestParam(value="target", required=false) String target,
-							  @RequestParam(value="name", required=false) String name) {
-		Map<String, Object> params = new HashMap<>();
+	public String courseBasket(Model model, LectureBasketVO vo, Authentication authentication, 
+							 @RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
+							  @RequestParam Map<String, Object> params ) {
 
-		if (pageNum == null) {
-			params.put("pageNum", 1);
-		} else {
-			params.put("pageNum", pageNum);
-		}
-		
-		System.out.println(deptCode);
-		System.out.println(type);
-		System.out.println(target);
-		System.out.println(name);
-		params.put("deptCode",deptCode);
-		params.put("type",type);
-		params.put("target",target);
-		params.put("name",name);
-
+		params.put("pageNum", pageNum);
 		params.put("size", 10);
 
 		vo.setStNo(authentication.getName());
@@ -56,8 +39,13 @@ public class LectureBasketController {
 				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind", params);
 		List<Map<String, Object>> baskLists = SqlSession
 				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket", vo.getStNo());
-
+		
+		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
+		
+		System.out.println(grade);
+		
 		model.addAttribute("list", lists);
+		model.addAttribute("grade", grade);
 		model.addAttribute("baskList", baskLists);
 
 		return "course/basket/courseBasket";
@@ -66,6 +54,10 @@ public class LectureBasketController {
 	@RequestMapping("/stud/basketInsert")
 	public String basketInsert(RedirectAttributes ra, @RequestParam List<String> courcheck, LectureBasketVO vo,
 			Authentication authentication) {
+		vo.setStNo(authentication.getName());
+		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
+		
+		int applyGrade = grade;
 		
 		vo.setStNo(authentication.getName());
 		int checkCount = 0;
@@ -77,10 +69,23 @@ public class LectureBasketController {
 				sbjarr = courcheck.toString().substring(1, courcheck.toString().length()-1).split(",");
 				checkCount +=1;
 			}
+			
+			if((applyGrade - Integer.parseInt(sbjarr[4].trim())) <= 0) {
+				ra.addFlashAttribute("error", "수강신청 가능한 학점이 부족합니다.");
+				return "redirect:/stud/courseBasket";
+			}
 			vo.setSbjNo(sbjarr[0]);
+			boolean sbjCheck = LectureBasketDao.FindSubject(vo);
+			if(sbjCheck == false) {
+				ra.addFlashAttribute("error", "동일한 과목은 신청이 부족합니다.");
+				return "redirect:/stud/courseBasket";
+			}
 			vo.setSeasonCode(sbjarr[1]);
 			if (sbjarr[2].indexOf("/") != -1) {
 				String[] day = sbjarr[2].split("/");
+				
+				sbjarr[3] = sbjarr[3].trim();
+				
 				String[] dayTime = sbjarr[3].split(" ");
 				String[] time = null;
 				int cnt = 0;
@@ -156,15 +161,17 @@ public class LectureBasketController {
 
 	@RequestMapping("/stud/courseBasketSchedule")
 	public String courseBasketSchedule(Model model, LectureBasketVO vo, Authentication authentication) {
-		vo.setStNo(authentication.getName());
-		List<Map<String, Object>> baskLists = SqlSession
-				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket", vo.getStNo());
-		model.addAttribute("baskList", baskLists);
 
 		return "course/basket/courseBasketSchedule";
 
 	}
 	
+	@ResponseBody
+	@RequestMapping("/stud/BasketSchedule")
+	public List<LectureBasketVO> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
+		vo.setStNo(authentication.getName());
+		return SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.BasketSchedule", vo);
+	}
 	
 	
 }

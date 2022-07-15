@@ -4,6 +4,7 @@
 	namespace="co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper">
 	
 	
+
 	<select id="findByProfessor"
 		resultType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO" >
 			SELECT *

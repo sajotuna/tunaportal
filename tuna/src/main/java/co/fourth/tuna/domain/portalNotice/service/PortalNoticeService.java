@@ -10,7 +10,13 @@ public interface PortalNoticeService {
 	List<PortalNoticeVO> noticeList(int state, String key);
 	PortalNoticeVO noticeSelect(PortalNoticeVO vo);
 	int noticeInsert(PortalNoticeVO vo);	
-	int fileInsert(PortalNoticeFileVO vo);
 	int noticeDelete(PortalNoticeVO vo);
-	int fileDelete(PortalNoticeFileVO vo);
+	int noticeUpdate(PortalNoticeVO vo);
+	
+	List<PortalNoticeFileVO> fileList(PortalNoticeFileVO filevo);
+	List<PortalNoticeFileVO> fileSelect(int pnNo);
+	int fileInsert(PortalNoticeFileVO fileVo);
+	int fileDelete(PortalNoticeFileVO fileVo);
+	int fileUpdate(PortalNoticeFileVO fileVo);
+
 }
