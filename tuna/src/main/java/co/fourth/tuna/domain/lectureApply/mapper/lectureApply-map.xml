@@ -104,7 +104,7 @@ SELECT
    AND L2.SBJNO = S.NO 
    AND S.SEASONCODE = 106
    AND STNO = #{stNo}
-
+   <if test="stateCode != null and !stateCode.equals('')">AND STATECODE = #{stateCode}</if>
 </select>
 
 
@@ -115,8 +115,20 @@ SELECT
 		WHERE sbjno = #{no}
 	</select>
 	
-	
-	
+<select id = "FindApplyGrade" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO" resultType="String">
+	SELECT APPLYGRADE(#{stNo}) FROM DUAL
+
+</select>
+
+
+<insert id = "CourseInsert" statementType="CALLABLE" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
+	{
+		call courseApply(
+			#{sbjNo},
+			#{seasonCode}, 
+			#{stNo})
+	}
+</insert>
 	
 	
 	

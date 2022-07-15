@@ -87,41 +87,17 @@ xmlns:th="http://www.thymeleaf.org"
 
                 <table class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
                   <tbody>
-                    <!-- <tr>
+                    <tr>
                       <th style="width: 100px">번호</th>
                       <th>제목</th>
                       <th style="width: 15%">작성</th>
                       <th style="width: 15%">등록일시</th>
-                    </tr> -->
-                    <tr class="fw-bold">
-                      <td style="width: 100px">1</td>
-                      <td class="text-start">내용</td>
-                      <td style="width: 15%">교육지원팀</td>
-                      <td style="width: 15%">2022-07-03</td>
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <td class="text-start">내용</td>
-                      <td>교육지원팀</td>
-                      <td>2022-07-03</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td class="text-start">내용</td>
-                      <td>교육지원팀</td>
-                      <td>2022-07-03</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td class="text-start">내용</td>
-                      <td>교육지원팀</td>
-                      <td>2022-07-03</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td class="text-start">내용</td>
-                      <td>교육지원팀</td>
-                      <td>2022-07-03</td>
+                    <tr th:each="notice:${noticeList}">
+                      <td th:text="${notice.no}">00</td>
+                      <td th:text="${notice.title}" class="text-start">제목데이터 없음</td>
+                      <td th:text="${notice.subjectVO.name}">과목 데이터없음</td>
+                      <td th:text="${notice.enrollDate}">날짜 없음</td>
                     </tr>
                   </tbody>
                 </table>
@@ -135,14 +111,8 @@ xmlns:th="http://www.thymeleaf.org"
                         <span class="visually-hidden">Previous</span>
                       </a>
                     </li>
-                    <li class="page-item active">
-                      <a class="page-link" href="javascript:void(0)">1</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="javascript:void(0)">2</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="javascript:void(0)">3</a>
+                    <li class="page-item" th:each="num : ${#numbers.sequence(1,pageCount)}">
+                      <a class="page-link" href="javascript:void(0)" th:text="${num}">00</a>
                     </li>
                     <li class="page-item">
                       <a class="page-link" href="javascript:void(0)" aria-label="Next">

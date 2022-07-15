@@ -42,10 +42,10 @@
 	             <span class="nav-main-link-name fw-bold">강의 홈</span>
 	           </a>
 	        </li>
-		 	<li class="nav-main-item">
+		 	<li class="nav-main-item" th:each="s : ${list}">
 	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
 	             <i class="nav-main-link-icon fa fa-layer-group"></i>
-	             <span class="nav-main-link-name fw-bold">강의 이름</span>
+	             <span class="nav-main-link-name fw-bold" th:text="${s.NAME}"></span>
 	           </a>
 	           <ul class="nav-main-submenu">
 	             <li class="nav-main-item">

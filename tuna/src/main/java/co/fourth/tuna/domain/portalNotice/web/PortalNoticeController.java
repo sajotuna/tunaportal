@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -114,18 +116,19 @@ public class PortalNoticeController {
 		return "redirect:/admin/adminNoticeList";
 	}
 
-	// 수정폼
+	// 공지수정폼
 	@PostMapping("/admin/adminNoticeupdateForm")
 	public String adminNoticeUpdateForm(PortalNoticeVO vo, Model model) {
 		model.addAttribute("content", noticeDao.noticeSelect(vo));
 		model.addAttribute("files", noticeDao.fileSelect(Integer.parseInt(vo.getNo())));
-		
+
 		return "notice/admin/adminNoticeUpdate";
 	}
 
+	// 공지 수정
 	@PostMapping("/admin/adminNoticeUpdate")
-	public String adminNoticeUpdate(PortalNoticeVO vo, PortalNoticeFileVO fileVo,
-			@RequestParam(value = "file") MultipartFile[] files) {
+	public String adminNoticeUpdate(PortalNoticeVO vo, 
+			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
 
 		noticeDao.noticeUpdate(vo);
 
@@ -135,11 +138,12 @@ public class PortalNoticeController {
 
 			if (originName != null && originName.length() != 0) {
 				String[] portalFile = fileService.upload(file, "PortalNotice");
-
+				PortalNoticeFileVO fileVo = new PortalNoticeFileVO();
+				fileVo.setPnno(vo.getNo());
 				fileVo.setName(portalFile[0]);
 				fileVo.setUri(portalFile[1]);
-				fileVo.setPnno(vo.getNo());
-				noticeDao.fileUpdate(fileVo);
+				
+				noticeDao.fileInsert(fileVo);
 			}
 		}
 
@@ -147,14 +151,23 @@ public class PortalNoticeController {
 
 	}
 
-	@RequestMapping("/admin/adminNoticeDelete")
-	public String adminNoticeDelete() {
-		return null;
+	//파일삭제
+	@DeleteMapping("/fileDel")
+	@ResponseBody
+	public int fileDelete(@RequestBody PortalNoticeFileVO fileVo) {
+		fileService.delete(fileVo.getUri(), "PortalNotice");
+		return noticeDao.fileDelete(fileVo);
 	}
 
-	@RequestMapping("/admin/adminNoticeUpdate")
-	public String adminNoticeUpdate() {
-		return "notice/admin/adminNoticeUpdate";
+	
+	@DeleteMapping("/admin/adminNoticeDelete")
+	public String adminNoticeDelete(@RequestBody PortalNoticeVO vo, PortalNoticeFileVO fileVo) {
+		fileService.delete(fileVo.getUri(), "PortalNotice");
+		noticeDao.noticeDelete(vo);
+		noticeDao.fileDelete(fileVo);
+
+		return "redirect:/admin/adminNoticeList";
+		
 	}
 
 	@GetMapping("/admin/adminSearch")

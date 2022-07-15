@@ -4,7 +4,8 @@
 	data-layout-decorate="~{layouts/adminLayout}">
 <head>
 <meta charset="UTF-8">
-
+	<meta name="_csrf" th:content="${_csrf.token}">
+  	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <title>adminNoticeSelect</title>
 </head>
 <body>
@@ -25,9 +26,7 @@
 		<!--title end-->
 
 		<div class="content content-boxed">
-			<form action="adminNoticeSelect" method="">
 				<div class="block block-rounded">
-
 					<div class="block-content">
 
 						<div class="row d-flex justify-content-center py-sm-3">
@@ -55,17 +54,46 @@
 							<div class="p-1 d-flex justify-content-end">
 								<button type="button" class="btn btn-outline-secondary m-1"
 									th:onclick="|location.href='@{/admin/adminNoticeList}'|">목록</button>
-								<button type="button" class="btn btn-outline-secondary m-1"
-									onclick="location.href='adminNoticeUpdate'">수정하기</button>
+								
+								<form th:action="@{/admin/adminNoticeupdateForm}" method="post">
+								<input type="hidden" id="no" name="no" th:value="${content.no}">
+								<input type="submit" id="modiB" class="btn btn-outline-secondary m-1"
+									value="수정하기">
+								</form>
 							</div>
 
 
 					</div>
 					</div>
-			</form>
+
 
 		</div>
+		<script>
+// 		function modiBtn(){
+// 			var no = $('#no').val()
+// 			var header = $("meta[name='_csrf_header']").attr('content');
+// 			var token = $("meta[name='_csrf']").attr('content');
+// 			$.ajax({
+// 				url: getPathRootJump() + 'admin/adminNoticeupdateForm',
+// 				type:'POST',
+// 				data:{no:no},
+// 				dataType:'json',
+// 				beforeSend: function(xhr){
+// 					xhr.setRequestHeader(header, token);
+// 				},
+// 				success: function(no){
+// 					location.href()
+// 				},
+// 				error: function(){
+// 					console.log(no)
+// 				}
+// 			}) 
+// 		}
+		
 
+		
+		 
+		</script>
 		<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 	</main>
 </body>

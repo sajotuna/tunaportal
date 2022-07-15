@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
@@ -37,27 +38,37 @@ public class LectureApplyController {
 	}
 	
 	@RequestMapping("/stud/courseApplication")
-	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication, String pageNum) {
-		Map<String, Object> params = new HashMap<>();
-		
-		
-		if (pageNum == null) {
-			params.put("pageNum", 1);
-		} else {
-			params.put("pageNum", pageNum);
-		}
+	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication,@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
+			  @RequestParam Map<String, Object> params ) {
+
+		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		
 		
+		
+		
 		vo.setStNo(authentication.getName());
-		vo.setStateCode("401");
+		vo.setStateCode("402");
+		int grade = Integer.parseInt(LectureApplyDao.FindApplyGrade(vo));
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind", params);
 		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo.getStNo());
 		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo);
 		model.addAttribute("list", lists);
 		model.addAttribute("courList", courLists);
+		model.addAttribute("grade", grade);
 		model.addAttribute("baskList", baskLists);
 		return "course/apply/courseApplication";
+	}
+	
+	@RequestMapping("/stud/courseApplyInsert")
+	public String courseApplyInsert(Authentication authentication, LectureApplyVO vo, String sbjno){
+		
+		vo.setStNo(authentication.getName());
+		vo.setSeasonCode("106");
+		vo.setSbjNo(sbjno);
+		LectureApplyDao.CourseInsert(vo);
+		
+		return "redirect:/stud/courseApplication";
 	}
 	
 	

@@ -76,7 +76,7 @@ public class LectureBasketController {
 			}
 			vo.setSbjNo(sbjarr[0]);
 			boolean sbjCheck = LectureBasketDao.FindSubject(vo);
-			if(sbjCheck == false) {
+			if(sbjCheck == true) {
 				ra.addFlashAttribute("error", "동일한 과목은 신청이 부족합니다.");
 				return "redirect:/stud/courseBasket";
 			}
@@ -99,7 +99,7 @@ public class LectureBasketController {
 
 					List<Map<String, Object>> tf = SqlSession.selectList(
 							"co.fourth.tuna.domain.lectureBasket.mapper.LectureBasketMapper.FindRoom", params);
-					if (tf.toString().equals("[true]")) {
+					if (tf.toString().substring(0, tf.size()).trim().equals("true")) {
 						ra.addFlashAttribute("error", "강의실 시간 중복입니다.");
 						return "redirect:/stud/courseBasket";
 					} else {
@@ -123,7 +123,7 @@ public class LectureBasketController {
 					params.put("endTime", time[1]);
 					List<Map<String, Object>> tf = SqlSession
 							.selectList("co.fourth.tuna.domain.lectureBasket.mapper.LectureBasketMapper.FindRoom", params);
-					if (tf.toString().equals("[true]")) {
+					if (tf.toString().substring(0, tf.size()).trim().equals("true")) {
 						ra.addFlashAttribute("error", "강의실 시간 중복입니다.");
 						return "redirect:/stud/courseBasket";
 					} else {
