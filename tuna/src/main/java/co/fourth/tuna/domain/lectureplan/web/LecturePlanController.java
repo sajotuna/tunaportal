@@ -16,7 +16,7 @@ public class LecturePlanController {
 
 	@Autowired private SqlSession sql;
 	
-	@RequestMapping("/student/lecturePlan")
+	@RequestMapping("/eclass/student/lecturePlan")
 	public String lecturePlan(Model model, LecturePlanVO vo) {
 		vo.setSbjNo(18101);
 		List<Map<String,Object>> lists = sql.selectList("co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper.selectPlan", vo.getSbjNo());

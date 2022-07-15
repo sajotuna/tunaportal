@@ -38,7 +38,7 @@ public class SubjectVO {
 	private List<LectureQnaVO> lectureQnaList; // 문의
 //	private List<LectureEvalVO> lectureEvalList; // 강의평가
 	private List<ObjectionVO> objectionList; // 이의
-//	private List<TaskVO> taskList; // 과제
+	private List<TaskVO> taskList; // 과제
 //	private List<LectureFileVO> lectureFileList; //파일
 //	private List<LectureNoticeVO> lectureNoticeList; // 공지
 	private List<LectureScheduleVO> lectureScheduleList;

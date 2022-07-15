@@ -26,29 +26,15 @@
 						<h3 class="h3 fw-bold mb-2">과제</h3>
 					</div>
 				</div>
-				<div class="block">
-					<div class="row">
+				<div class="block" th:each="s : ${sbjli}">
+					<div class="row" th:each="t : ${s.taskList}">
 						<div class="col-12">
 							<div class="row block-content">
-								<h4 class="h4 fw-bold mb-2 col-2 text-center">[진행중]</h4>
+								<h4 class="h4 fw-bold mb-2 col-2 text-center" th:text="${t.no}"></h4>
 								<h4 class="h4 mb-2 col-7 text-center">
-									<a th:href="@{/eclass/student/taskSelect}" style="color: black">부트스트랩 적용 파일 제출</a>
+									<a th:href="@{/eclass/student/taskSelect}" style="color: black" th:text="${t.title}"></a>
 								</h4>
-								<h4 class="h4 text-center col-3">마감일 : ~00/00</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="block">
-					<div class="row">
-						<div class="col-12">
-							<div class="row block-content">
-								<h3 class="h4 fw-bold mb-2 col-2 text-center">[마감]</h3>
-								<h3 class="h4 mb-2 col-7 text-center">
-									<a th:href="@{/eclass/student/taskSelect}" style="color: black">JAVA 프로그래밍 실습 파일
-										제출</a>
-								</h3>
-								<h4 class="h4 text-center col-3">마감일 : ~00/00</h4>
+								<h4 class="h4 text-center col-3" th:text="${t.limitDate}"></h4>
 							</div>
 						</div>
 					</div>
