@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import co.fourth.tuna.domain.common.service.CodeService;
 import co.fourth.tuna.domain.common.service.PagingService;
+import co.fourth.tuna.domain.common.vo.PagingVO;
 import co.fourth.tuna.domain.common.vo.code.CodeMasterVO;
 import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
 import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
@@ -86,8 +87,20 @@ public class EclassProfessorEclassController {
 	}
 	
 	@GetMapping("/noticeList")
-	public String noticeListView(Model model, HttpServletRequest req) {
+	public String noticeListView(
+			Model model, 
+			HttpServletRequest req,
+			@RequestParam(value="pageNum", required=false, defaultValue= "1" ) int pageNum) {
+		//TODO 교수 데이터 추가해야함
+		ProfessorVO prof = new ProfessorVO();
+		prof.setNo(61275);
 		
+		List<LectureNoticeVO> noticeList = noticeService.findByProfessor(prof, pageNum, 20);
+		List<LectureNoticeVO> noticeList2 = noticeService.findByProfessor(prof, pageNum, 999);
+		int pageCount = (int)Math.ceil((double)noticeList2.size()/(20+1));
+		
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("pageCount", pageCount);
 		
 		return req.getServletPath();
 	}
