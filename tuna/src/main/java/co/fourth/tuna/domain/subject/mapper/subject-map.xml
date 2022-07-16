@@ -73,6 +73,14 @@
 		WHERE no = #{no}
 		ORDER BY no
 	</select>
+	<select id="findOneById"
+		resultType="co.fourth.tuna.domain.subject.vo.SubjectVO"
+		>
+		SELECT * 
+		FROM subject
+		WHERE no = #{no}
+		ORDER BY no
+	</select>
 	
 	<select id="findListForProfessorMain"
 		resultMap="subjectListDataMap">
