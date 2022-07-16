@@ -17,17 +17,14 @@
 	
 	</resultMap>
 
-	<resultMap id="subjectListDataMap" type="co.fourth.tuna.domain.subject.vo.SubjectVO">
+
+	<resultMap 
+		id="subjectListDataMap" 
+		type="co.fourth.tuna.domain.subject.vo.SubjectVO">
+		<id property="no" column="no"/>
 		<association property="professorVO" column="professorVO" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
 			select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
-		<!-- <collection 
-			property="attendanceList" 
-			ofType="co.fourth.tuna.domain.attendance.vo.AttendanceVO"
-			javaType="java.util.ArrayList"
-			column="no"
-			select="co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.selectAttendancesForSubject"
-			>
-		</collection> -->
+
 		
 		<collection
 			property="lectureApplyList"
@@ -61,6 +58,15 @@
 			select="co.fourth.tuna.domain.common.mapper.LectureScheduleMapper.findLectureScheduleForSubject"
 		>
 		</collection>
+		
+		<!-- <collection 
+			property="attendanceList" 
+			ofType="co.fourth.tuna.domain.attendance.vo.AttendanceVO"
+			javaType="java.util.ArrayList"
+			column="no"
+			select="co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.selectAttendancesForSubject"
+			>
+		</collection> -->
 		
 	</resultMap>
 

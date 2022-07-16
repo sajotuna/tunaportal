@@ -72,7 +72,7 @@ xmlns:th="http://www.thymeleaf.org"
                   <ul class="nav-items push" th:if="${not #lists.isEmpty(subList)}">
                     <!-- TODO remove id -->
                     <li id="test-li"  th:each="sub:${subList}">
-                      <a class="row m-2 pb-2" th:href="@{/eclass/professor/subject}">
+                      <a class="row m-2 pb-2" th:href="@{/eclass/professor/subject(no=${sub.no})}">
                         
                         <div class="col-6">
                           <!--19자 제한 (19자 넘으면 19자 부터 ...)-->
