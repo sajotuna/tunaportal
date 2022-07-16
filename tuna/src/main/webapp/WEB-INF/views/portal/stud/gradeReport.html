@@ -5,6 +5,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<th:block th:fragment="grade">
 	<div class="tab-pane" id="btabs-static-grade" role="tabpanel"
 		aria-labelledby="btabs-static-grade-tab">
 		<!-- Bar Chart -->
@@ -193,9 +194,6 @@
 	<!-- END PDF Modal -->
 
 	<!-- Script -->
-	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-	<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
-	
 	<script th:src="@{/resources/assets/js/plugins/chart.js/chart.min.js}"></script>
 	<script th:src="@{/resources/assets/js/plugins/easy-pie-chart/jquery.easypiechart.min.js}"></script>
 	<script th:src="@{/resources/assets/js/plugins/jquery-sparkline/jquery.sparkline.min.js}"></script>
@@ -214,5 +212,6 @@
 			pdfFrame.setAttribute('src', tableToPdf(table));
 		});
 	</script>
+</th:block>
 </body>
 </html>
