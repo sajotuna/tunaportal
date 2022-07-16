@@ -112,9 +112,9 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   	
                     <tr th:scope="row" th:each="sub, status : ${list}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
-                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm" id = "sbjNo" th:text = "${sub.NO}"></td>
+                      <td class="fw-semibold fs-sm"><a href = "javascript:planPopup();" id = "subName" th:text = "${sub.NAME}"></a></td>
+                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" id = "proName" th:text = "${sub.PRONAME}"></a></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
@@ -180,7 +180,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   <tbody>
                     <tr th:scope="row" th:each="sub, status : ${baskList}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NO}" ></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
                       <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
@@ -309,9 +309,27 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   
   
     function showPopup() {
-      window.open("/tuna/stud/lectureEvaluationSearch", "강의평가조회", "width=650, height=600, top=10, left=10");
+      let proName = document.querySelectorAll('#proName');
+      
+      proName.forEach(btn =>{
+    	  btn.addEventListener('click',function(){
+    		  window.open("/tuna/stud/lectureEvaluationSearch?proName="+btn.innerHTML, "강의평가조회", "width=650, height=600, top=10, left=10");
+    		    
+    	  })
+      })
     }
-
+    
+    function planPopup(){
+    	let subName = document.querySelectorAll('#subName');
+        let sbjNo = document.querySelectorAll('#sbjNo');
+        subName.forEach( function (btn,idx){
+      	  btn.addEventListener('click',function(){
+      		  window.open("/tuna/stud/CoursePlan?sbjNo="+sbjNo[idx].innerHTML, "강의계획서조회", "width=850, height=1000, top=10, left=10");
+      		    
+      	  })
+        })
+    }
+    
     var header = $("meta[name='_csrf_header']").attr('content');
     var token = $("meta[name='_csrf']").attr('content');
 		window.onload = function() {

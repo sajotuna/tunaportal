@@ -1,5 +1,7 @@
 package co.fourth.tuna.domain.lectureEval.mapper;
 
-public interface LectureEvalMapper {
+import co.fourth.tuna.domain.lectureEval.vo.LectureEvalVO;
 
+public interface LectureEvalMapper {
+	public void EvalSucess(LectureEvalVO vo);
 }

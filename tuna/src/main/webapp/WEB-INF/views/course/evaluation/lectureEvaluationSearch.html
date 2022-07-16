@@ -43,66 +43,26 @@
                   <table class="table table-vcenter scroll">
                     <thead>
                       <tr>
-                        <th class="d-none d-sm-table-cell" style="width: 100px;">교수명</th>
-                        <th class="d-none d-sm-table-cell" style="width: 100px;">과목명</th>
-                        <th class="d-none d-sm-table-cell" style="width: 30px;">분반</th>
-                        <th class="d-none d-sm-table-cell" style="width: 100px;">교과구분</th>
-                        <th class="d-none d-sm-table-cell" style="width: 30px;">학점</th>
-                        <th class="d-none d-sm-table-cell" style="width: 100px;">강의실</th>
-                        <th class="d-none d-sm-table-cell" style="width: 100px;">강의시간</th>
+                      <th class="d-none d-sm-table-cell" style="width: 80px;">학과</th>
+                      <th class="d-none d-sm-table-cell" style="width: 100px;">이수구분</th>
+                      <th class="d-none d-sm-table-cell" style="width: 100px;">과목코드</th>
+                      <th class="d-none d-sm-table-cell" style="width: 100px;">과목명</th>
+                      <th class="d-none d-sm-table-cell" style="width: 100px;">교수명</th>
+                      <th class="d-none d-sm-table-cell" style="width: 110px;">강의실</th>
+                      <th class="d-none d-sm-table-cell" style="width: 50px;">학점</th>
                         <th class="d-none d-sm-table-cell" style="width: 100px;">강의평점</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr th:scope="row">
-                        <td class="fw-semibold fs-sm">최규완</td>
-                        <td class="fw-semibold fs-sm">참치분해학</td>
-                        <td class="fw-semibold fs-sm">A/C</td>
-                        <td class="fw-semibold fs-sm">전공필수</td>
-                        <td class="fw-semibold fs-sm">3</td>
-                        <td class="fw-semibold fs-sm">TU-101</td>
-                        <td class="fw-semibold fs-sm">11:00~12:00 월/수</td>
-                        <td class="fw-semibold fs-sm">3.84</td>
-                      </tr>
-                      <tr th:scope="row">
-                        <td class="fw-semibold fs-sm">최규완</td>
-                        <td class="fw-semibold fs-sm">참치분해학</td>
-                        <td class="fw-semibold fs-sm">A/C</td>
-                        <td class="fw-semibold fs-sm">전공필수</td>
-                        <td class="fw-semibold fs-sm">3</td>
-                        <td class="fw-semibold fs-sm">TU-101</td>
-                        <td class="fw-semibold fs-sm">11:00~12:00 월/수</td>
-                        <td class="fw-semibold fs-sm">3.84</td>
-                      </tr>
-                      <tr th:scope="row">
-                        <td class="fw-semibold fs-sm">최규완</td>
-                        <td class="fw-semibold fs-sm">참치분해학</td>
-                        <td class="fw-semibold fs-sm">A/C</td>
-                        <td class="fw-semibold fs-sm">전공필수</td>
-                        <td class="fw-semibold fs-sm">3</td>
-                        <td class="fw-semibold fs-sm">TU-101</td>
-                        <td class="fw-semibold fs-sm">11:00~12:00 월/수</td>
-                        <td class="fw-semibold fs-sm">3.84</td>
-                      </tr>
-                      <tr th:scope="row">
-                        <td class="fw-semibold fs-sm">최규완</td>
-                        <td class="fw-semibold fs-sm">참치분해학</td>
-                        <td class="fw-semibold fs-sm">A/C</td>
-                        <td class="fw-semibold fs-sm">전공필수</td>
-                        <td class="fw-semibold fs-sm">3</td>
-                        <td class="fw-semibold fs-sm">TU-101</td>
-                        <td class="fw-semibold fs-sm">11:00~12:00 월/수</td>
-                        <td class="fw-semibold fs-sm">3.84</td>
-                      </tr>
-                      <tr th:scope="row">
-                        <td class="fw-semibold fs-sm">최규완</td>
-                        <td class="fw-semibold fs-sm">참치분해학</td>
-                        <td class="fw-semibold fs-sm">A/C</td>
-                        <td class="fw-semibold fs-sm">전공필수</td>
-                        <td class="fw-semibold fs-sm">3</td>
-                        <td class="fw-semibold fs-sm">TU-101</td>
-                        <td class="fw-semibold fs-sm">11:00~12:00 월/수</td>
-                        <td class="fw-semibold fs-sm">3.84</td>
+                      <tr th:scope="row" th:each="sub, status : ${list}">
+                      <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.DEPTCODE)}"></td>
+                      <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.PRONAME}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.AVGSCORE}"></td>
                       </tr>
                     </tbody>
                   </table>
