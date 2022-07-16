@@ -23,5 +23,7 @@ public interface LectureNoticeMapper {
 			@Param("pageNum")int pageNum, 
 			@Param("size")int size);
 	
+	LectureNoticeVO findOneWithSubjectById(LectureNoticeVO vo);
+	LectureNoticeVO findOneWithSubjectById(int id);
 
 }

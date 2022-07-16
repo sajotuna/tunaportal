@@ -3,8 +3,9 @@
 <mapper
 	namespace="co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper">
 	
-	<resultMap id="lectureNoticeMap" 
+	<resultMap id="lectureNoticeMapWithSubject" 
 		type="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO" >
+		<result property="content" column="content" jdbcType="CLOB" javaType="java.lang.String"/>
 		<association 
 			property="subjectVO" 
 			column="sbjno"
@@ -16,7 +17,7 @@
 	
 
 	<select id="findByProfessor"
-		resultMap="lectureNoticeMap" >
+		resultMap="lectureNoticeMapWithSubject" >
 			SELECT *
 			FROM (
 				SELECT
@@ -28,7 +29,18 @@
 				WHERE s.pfno = #{prof.no}
 				ORDER BY l.enrolldate DESC
 			) WHERE rn
-					BETWEEN (#{pageNum}-1) * #{size} +1
-					AND #{pageNum}*#{size}
-		</select>
+				BETWEEN (#{pageNum}-1) * #{size} +1
+				AND #{pageNum}*#{size}
+	</select>
+	
+	<select id="findOneWithSubjectById"
+		resultMap="lectureNoticeMapWithSubject">
+		SELECT
+		ROWNUM rn,
+			l.*
+		FROM lecturenotice l
+		JOIN subject s
+			ON l.sbjno = s.no
+		WHERE l.no = #{no}
+	</select>
 </mapper>
