@@ -1,3 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.fourth.tuna.domain.scholar.mapper.ScholarMapper"></mapper>
+<mapper namespace="co.fourth.tuna.domain.scholar.mapper.ScholarMapper">
+
+
+<!-- <resultMap id="ScholarApplyMap"  -->
+<!-- 		type="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO" > -->
+<!-- 		<association  -->
+<!-- 			property="studentVO"  -->
+<!-- 			column="stno" -->
+<!-- 			javaType="co.fourth.tuna.domain.user.vo.StudentVO" -->
+<!-- 			select="co.fourth.tuna.domain.user.mapper.StudentMapper.findById"  -->
+<!-- 		/> -->
+		
+<!-- 		<association  -->
+<!-- 			property="scholarVO"  -->
+<!-- 			column="schNo" -->
+<!-- 			javaType="co.fourth.tuna.domain.scholar.vo.ScholarVO" -->
+<!-- 			select="co.fourth.tuna.domain.scholar.mapper.ScholarMapper.FindScholar"  -->
+<!-- 		/> -->
+		
+<!-- 	</resultMap> -->
+
+<!-- <select id = "FindScholar" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarVO" resultType="co.fourth.tuna.domain.scholar.vo.ScholarVO"> -->
+
+<!-- 		select* from scholar where no = #{no} -->
+
+<!-- </select> -->
+
+<insert id = "ScholarApply" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
+	<selectKey resultType="String" keyProperty="no" order="BEFORE">
+				SELECT NVL(MAX(no)+1,0)
+	    		  FROM scholarapply
+	</selectKey>
+insert into scholarapply values(#{no}, 501, null, 105, #{stNo}, #{schNo}, null, sysdate, null)
+
+</insert>
+
+
+<select id = "ScholarCheck" resultType = "map" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
+	
+	select sa.seasoncode, s.name, sa.no, sa.stno, st.name stuname, st.deptcode,
+	st.sy, sa.statecode ,sa.uri , sa.filename
+	from scholarapply sa, scholar s, student st
+	where sa.stno = #{stNo} 
+	  and sa.stno = st.no
+	  and sa.schno = s.no
+	  and sa.seasoncode = 105
+
+</select>
+
+<update id = "FileUpLoad" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
+	update scholarapply set uri = #{uri}, filename = #{fileName} where no = #{no}
+</update>
+
+<delete id = "ScholarDelete" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
+	
+	delete from scholarapply where no = #{no}
+
+</delete>
+
+</mapper>

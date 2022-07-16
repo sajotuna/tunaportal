@@ -113,9 +113,9 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     <tr th:scope="row" th:each="sub, status : ${list}">
                       <th class="fw-semibold fs-sm"><input type="checkbox" name = "courcheck" th:value = "${sub.NO}"></th>
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
-                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm" id = "sbjNo" th:text = "${sub.NO}"></td>
+                      <td class="fw-semibold fs-sm"><a href = "javascript:planPopup();" id = "subName" th:text = "${sub.NAME}"></a></td>
+                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" id = "proName" th:text = "${sub.PRONAME}"></a></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
@@ -193,7 +193,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
-                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.PRONAME}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
@@ -241,15 +241,26 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		pageingBtn.forEach(btn =>{
 			btn.addEventListener('click',function(){
 				let a = btn.innerHTML
-				console.log(parseInt(a))
 				location.href = '/tuna/stud/courseBasket?pageNum='+parseInt(a)
 			})
 		})
 		
 		
 	})
-  function showPopup() {
-      window.open("/tuna/stud/lectureEvaluationSearch", "강의평가조회", "width=650, height=600, top=10, left=10");
+	function showPopup() {
+	    let proName = document.querySelectorAll('#proName');
+	    proName.forEach(btn =>{
+	   		window.open("/tuna/stud/lectureEvaluationSearch?proName="+btn.innerHTML, "강의평가조회", "width=650, height=600, top=10, left=10");
+	    })
+	}
+    
+    function planPopup(){
+    	let subName = document.querySelectorAll('#subName');
+        let sbjNo = document.querySelectorAll('#sbjNo');
+        subName.forEach( function (btn,idx){
+      		window.open("/tuna/stud/CoursePlan?sbjNo="+sbjNo[idx].innerHTML, "강의계획서조회", "width=850, height=1000, top=10, left=10");
+      		 
+        })
     }
   
   
@@ -266,19 +277,13 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   	}).then(result => result.json())
   	  .then(result =>{
   		  let deptcodes = document.querySelector('#deptCode')
-  		  console.log(result)
   		  result.forEach(val =>{
   			let opt = document.createElement('option');
   			opt.setAttribute('value', val.DEPTCODE)
   			opt.innerText = val.CODENAME;
   			deptcodes.appendChild(opt)
   		  })
-  	  } 
-  	  		
-  	  		
-  	  
-  	  
-  	  
+  	  }  	  
   	  );
   
   

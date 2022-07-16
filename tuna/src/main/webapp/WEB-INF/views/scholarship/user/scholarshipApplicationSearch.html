@@ -30,12 +30,12 @@
       <div class="content content-boxed">
         <h3 class="h3 fw-bold mb-2">장학금 신청조회</h3>
         <div class="bg-body-extra-light" style="padding: 10px;">
-        <form th:action = "@{/}" method = post>
+        <form th:action = "@{/stud/scholarshipApplicationSearch}" method = post>
             <div class="d-flex justify-content-end">
               
 	            <div class="col-md-3 col-xl-2">
 	              <div class="m-2">
-	                  <select class="form-select" id="example-select" name="example-select" onchange="this.form.submit()">
+	                  <select class="form-select" id="year" name="year" onchange="this.form.submit()">
 	                    <option selected>연도</option>
 	                    <option value="1">2022</option>
 	                    <option value="2">2021</option>
@@ -45,7 +45,7 @@
 	            </div>
 	            <div class="col-md-3 col-xl-2">
 	              <div class="m-2">
-	                  <select class="form-select" id="example-select" name="example-select" onchange="this.form.submit()">
+	                  <select class="form-select" id="semester" name="semester" onchange="this.form.submit()">
 	                    <option selected>학기</option>
 	                    <option value="1">1</option>
 	                    <option value="2">2</option>

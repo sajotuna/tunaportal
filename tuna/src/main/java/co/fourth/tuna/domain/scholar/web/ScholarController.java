@@ -1,11 +1,21 @@
 package co.fourth.tuna.domain.scholar.web;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.fourth.tuna.domain.common.service.FileService;
+import co.fourth.tuna.domain.scholar.service.ScholarService;
+import co.fourth.tuna.domain.scholar.vo.ScholarApplyVO;
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 
@@ -15,8 +25,25 @@ public class ScholarController {
 	@Autowired
 	private StudentService StudentDao;
 
+	@Autowired
+	private SqlSession SqlSession;
+	
+	@Autowired
+	private ScholarService ScholarDao;
+	
+	@Autowired
+	private FileService fileService;
+
+	@Autowired
+	private String fileDir;
+	
+	
 	@RequestMapping("/stud/scholarshipApplicationStatus")
-	public String scholarshipApplicationStatus() {
+	public String scholarshipApplicationStatus(Model model,ScholarApplyVO vo,Authentication authentication) {
+		vo.setStNo(authentication.getName());
+		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.ScholarCheck", vo);
+		
+		model.addAttribute("list", lists);
 		return "scholarship/user/scholarshipApplicationStatus";
 	}
 	
@@ -28,15 +55,38 @@ public class ScholarController {
 		return "scholarship/user/scholarshipApplication";
 	}
 	
-	@RequestMapping("/scolarShipApply")
-	public String ScolarShipApply(Model model, String scol) {
-		System.out.println(scol);
+	@RequestMapping("/stud/scolarShipApply")
+	public String ScolarShipApply(Model model, ScholarApplyVO vo, Authentication authentication) {
+		vo.setStNo(authentication.getName());
+		ScholarDao.ScholarApply(vo);
 		
-		return "scholarship/user/scholarshipApplicationStatus";
+		return "redirect:/stud/scholarshipApplicationStatus";
+	}
+	
+	@RequestMapping("/stud/scholarFileUpload")
+	public String scholarFileUpload(ScholarApplyVO vo,@RequestParam(value = "file") MultipartFile file) {
+		
+		String[] scholarFile = fileService.upload(file, "ScholarFile");
+		vo.setFileName(scholarFile[0]);
+		vo.setUri(scholarFile[1]);
+		ScholarDao.FileUpLoad(vo);
+		
+		return "redirect:/stud/scholarshipApplicationStatus";
+	}
+	
+	@RequestMapping("/stud/scholarDelete")
+	public String scholarDelete(RedirectAttributes ra,ScholarApplyVO vo) {
+		
+		ScholarDao.ScholarDelete(vo);
+		ra.addFlashAttribute("message", "삭제가 완료되었습니다.");
+		return "redirect:/stud/scholarshipApplicationStatus";
 	}
 	
 	@RequestMapping("/stud/scholarshipApplicationSearch")
-	public String scholarshipApplicationSearch() {
+	public String scholarshipApplicationSearch(@RequestParam(value = "year", required = false, defaultValue = "") String year, @RequestParam(value = "semester", required = false, defaultValue = "") String semester) {
+		
+		System.out.println(year + " :::::::" + semester);
+		
 		return "scholarship/user/scholarshipApplicationSearch";
 	}
 	

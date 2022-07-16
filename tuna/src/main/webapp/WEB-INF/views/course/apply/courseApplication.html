@@ -182,7 +182,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}" ></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
-                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.PRONAME}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
@@ -280,7 +280,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
-                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm" th:text = "${sub.PRONAME}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
@@ -312,10 +312,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
       let proName = document.querySelectorAll('#proName');
       
       proName.forEach(btn =>{
-    	  btn.addEventListener('click',function(){
-    		  window.open("/tuna/stud/lectureEvaluationSearch?proName="+btn.innerHTML, "강의평가조회", "width=650, height=600, top=10, left=10");
-    		    
-    	  })
+    	window.open("/tuna/stud/lectureEvaluationSearch?proName="+btn.innerHTML, "강의평가조회", "width=650, height=600, top=10, left=10");
+
       })
     }
     
@@ -323,10 +321,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
     	let subName = document.querySelectorAll('#subName');
         let sbjNo = document.querySelectorAll('#sbjNo');
         subName.forEach( function (btn,idx){
-      	  btn.addEventListener('click',function(){
-      		  window.open("/tuna/stud/CoursePlan?sbjNo="+sbjNo[idx].innerHTML, "강의계획서조회", "width=850, height=1000, top=10, left=10");
-      		    
-      	  })
+      		window.open("/tuna/stud/CoursePlan?sbjNo="+sbjNo[idx].innerHTML, "강의계획서조회", "width=850, height=1000, top=10, left=10");
+      		
         })
     }
     
@@ -436,17 +432,13 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		pageingBtn.forEach(btn =>{
 			btn.addEventListener('click',function(){
 				let a = btn.innerHTML
-				console.log(parseInt(a))
 				location.href = '/tuna/stud/courseApplication?pageNum='+parseInt(a)
 			})
 		})
 		
 		
 	})
-		
-		
-		
-		
+
   </script>
   </main>
 </body>
