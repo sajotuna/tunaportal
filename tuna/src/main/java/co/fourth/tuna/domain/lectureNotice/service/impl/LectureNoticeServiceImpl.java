@@ -30,4 +30,9 @@ public class LectureNoticeServiceImpl implements LectureNoticeService {
 		return map.findByProfessor(prof, pageNum, size);
 	}
 
+	@Override
+	public LectureNoticeVO findById(int no) {
+		return map.findOneWithSubjectById(no);
+	}
+
 }

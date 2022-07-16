@@ -77,7 +77,13 @@ public class EclassProfessorEclassController {
 	}
 	
 	@GetMapping("/notice")
-	public String noticeView(Model model, HttpServletRequest req) {
+	public String noticeView(
+			Model model, 
+			HttpServletRequest req,
+			@RequestParam(value="no")int no){
+		
+		model.addAttribute("notice", noticeService.findById(no));
+		
 		return req.getServletPath();
 	}
 	
