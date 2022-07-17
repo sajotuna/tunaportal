@@ -17,8 +17,8 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 
 	//공지사항
 	@Override
-	public List<PortalNoticeVO> noticeList(int state, String key) {
-		return map.noticeList(state, key);
+	public List<PortalNoticeVO> noticeList(int state, String key, int pageNum, int size) {
+		return map.noticeList(state, key, pageNum, size);
 	}
 	
 	public PortalNoticeVO noticeSelect(PortalNoticeVO vo) {

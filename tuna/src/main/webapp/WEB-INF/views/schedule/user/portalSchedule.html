@@ -34,7 +34,7 @@
               style="border:none; height:38px; width: 40px;"><i class="fa fa-arrow-left"></i></button>
               <div class="col-3">
                 <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
-	                <select id="seasonCode" name="seasonCode" class="form-select">
+	                <select id="seasonSelect" name="seasonCode" class="form-select">
 	                    <option value="102">2023 1학기</option>
 	                    <option value="103">2022 2학기</option>
 	                    <option value="104">2022 1학기</option>
@@ -55,7 +55,11 @@
               </div>
             </form>
           </div>
+          
+         <!-- search End -->
         </div>
+        
+        <!-- content start -->
         <div class="block-content">
           <table class="table table-bordered table-striped table-vcenter js-dataTable-full dataTable no-footer"
             id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
@@ -80,11 +84,14 @@
             </tbody>
           </table>
         </div>
+        <!-- content end -->
       </div>
     </div>
 <script>
 $('#sesonCode').on('change', function(){
 	let seasonCode = $(this).selected.val()
+	
+	console.log(seasonCode)
 	alert("seasonCode")
 })
 
