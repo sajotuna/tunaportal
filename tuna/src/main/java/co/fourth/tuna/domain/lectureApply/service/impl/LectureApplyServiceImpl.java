@@ -46,6 +46,11 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	}
 
 	@Override
+	public List<LectureApplyVO> mySubjectList(LectureApplyVO vo) {
+		return mapper.mySubjectList(vo);
+	}
+  
+  @Override
 	public String ApplyErrorMsg(LectureApplyVO vo) {
 		return mapper.ApplyErrorMsg(vo);
 	}
@@ -62,5 +67,4 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 		return mapper.subjectTarget(vo);
 	}
 	
-
 }

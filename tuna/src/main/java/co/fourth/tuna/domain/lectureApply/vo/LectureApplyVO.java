@@ -14,8 +14,6 @@ public class LectureApplyVO {
 	private String seasonCode;
 	private String stNo;
 	private String sbjNo;
-	
 	private String stateCode;
 	
-
 }

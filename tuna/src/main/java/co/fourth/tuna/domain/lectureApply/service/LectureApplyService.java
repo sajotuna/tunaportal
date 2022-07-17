@@ -12,6 +12,7 @@ public interface LectureApplyService {
 	public String FindApplyGrade(LectureApplyVO vo);
 	public void CourseDelete(LectureApplyVO vo);
 	public void CourseInsert(LectureApplyVO vo);
+	public List<LectureApplyVO> mySubjectList(LectureApplyVO vo);
 	public String ApplyErrorMsg(LectureApplyVO vo);
 	public int subjectTarget(LectureApplyVO vo);
 }
