@@ -26,21 +26,25 @@ public class StudentController {
 	}
 
 
-	@RequestMapping("/userUpdate")
-	public String userUpdate() {
+	@RequestMapping("/stud/userUpdate")
+	public String userUpdate(Model model, StudentVO vo, Authentication authentication) {
+		vo.setNo(Integer.parseInt(authentication.getName()));
+		vo = StudentDao.findById(vo);
+		model.addAttribute("vo", vo);
 		return "manage/user/userUpdate";
 	}
+	
+	@RequestMapping("/stud/userInfoUpdate")
+	public String userInfoUpdate(StudentVO vo, Authentication authentication) {
+		vo.setNo(Integer.parseInt(authentication.getName()));
+		StudentDao.studUpdate(vo);
+		return "redirect:/stud/userUpdate";
+	}
+	
 	@RequestMapping("/pwdUpdate")
 	public String pwdUpdate() {
 		return "manage/user/pwdUpdate";
 	}
-	@RequestMapping("/admin/adminUserSearch")
-	public String adminUserSearch() {
-		return "manage/admin/adminUserSearch";
-	}
-	@RequestMapping("/admin/adminUserInfo")
-	public String adminUserInfo() {
-		return "manage/admin/adminUserInfo";
-	}
+	
 	
 }

@@ -18,4 +18,9 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return mapper.findById(vo);
 	}
 
+	@Override
+	public void profUpdate(ProfessorVO vo) {
+		mapper.profUpdate(vo);
+	}
+
 }

@@ -24,4 +24,13 @@ public class UserController {
 		return "home";
 	}
 
+	@RequestMapping("/admin/adminUserSearch")
+	public String adminUserSearch() {
+		return "manage/admin/adminUserSearch";
+	}
+	@RequestMapping("/admin/adminUserInfo")
+	public String adminUserInfo() {
+		return "manage/admin/adminUserInfo";
+	}
+	
 }
