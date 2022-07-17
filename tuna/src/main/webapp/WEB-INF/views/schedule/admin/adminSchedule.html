@@ -32,11 +32,15 @@
      <!-- title start -->
         <div class="content content-boxed">
                 <h3 class="fw-bold">학사일정 관리</h3>
-
                 <div class="block block-rounded">
                 <!-- calendar 태그 -->
             <div id='calendar-container'>
                 <div id='calendar'></div>
+            </div>
+            <div id='scheduleData' th:eath="sche, i:{schedules}">
+            <input type="hidden" th:data-content=${sche.content}>
+            <input type="hidden" th:data-content=${sche.startDate}>
+            <input type="hidden" th:data-content=${sche.endDate}>
             </div>
         </div>
   
@@ -46,7 +50,8 @@
 
 <script th:inline="javascript">
     (function () {
-        $(function () {
+        $(function calendar() {
+        	
             // calendar element 취득
             var calendarEl = $('#calendar')[0];
             // full-calendar 생성하기
@@ -90,28 +95,36 @@
                     calendar.unselect()
                 },
                 // 이벤트 
-                events: [{
-                        title: '개교기념일',
-                        start: '2022-07-01',
-                    },
-                    {
-                        title: '수강신청',
-                        start: '2022-07-07',
-                        end: '2022-07-10'
-                    },
-                    {
-                        groupId: 999,
-                        title: '과제제출',
-                        start: '2022-07-13T16:00:00'
-                    },
-                ]
+                events: function(){
+                	$.ajax({
+                		url:'/admin/ScheduleList',
+                		dataType:'JSON',
+                		success:
+                			function(result){
+                			
+                			var events = []
+                			if(result!=null){
+                				$.each(result, function(idx, ele){
+                					
+                				})
+                			}
+                		}
+                		
+                	})
+                }
             });
             // 캘린더 랜더링
             calendar.render();
         });
+       
+			    
+			    
+    
     })();
 </script>
+<script>
 
+</script>
         
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>    
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>

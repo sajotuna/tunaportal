@@ -7,7 +7,7 @@ import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO;
 
 public interface PortalNoticeService {
 
-	List<PortalNoticeVO> noticeList(int state, String key);
+	List<PortalNoticeVO> noticeList(int state, String key, int pageNum, int size);
 
 	PortalNoticeVO noticeSelect(PortalNoticeVO vo);
 
@@ -24,5 +24,8 @@ public interface PortalNoticeService {
 	int fileInsert(PortalNoticeFileVO fileVo);
 
 	int fileDelete(PortalNoticeFileVO fileVo);
+
+	
+
 
 }

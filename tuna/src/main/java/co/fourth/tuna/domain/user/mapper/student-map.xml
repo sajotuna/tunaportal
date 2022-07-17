@@ -2,9 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.user.mapper.StudentMapper">
 
-<select id = "findById" parameterType="co.fourth.tuna.domain.user.vo.StudentVO" resultType="co.fourth.tuna.domain.user.vo.StudentVO">
+<select id = "findById" 
+	parameterType="co.fourth.tuna.domain.user.vo.StudentVO" resultType="co.fourth.tuna.domain.user.vo.StudentVO">
 	select* from student where no = #{no}
 </select>
+
+
+<update id = "studUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
+	update student 
+	set tel = #{tel}, email = #{email}, zip = #{zip}, addr = #{addr}
+	where no = #{no}
+
+</update>
+
+<select id="findOneById"
+	resultType="co.fourth.tuna.domain.user.vo.StudentVO">
+	SELECT *
+	FROM student
+	WHERE no = #{no}
+</select>
+
 
 
 </mapper>

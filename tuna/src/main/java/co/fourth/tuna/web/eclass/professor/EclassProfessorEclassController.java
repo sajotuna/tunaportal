@@ -43,7 +43,7 @@ public class EclassProfessorEclassController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(EclassProfessorEclassController.class);
 	
-	@GetMapping(value = {"/", "/home"})
+	@GetMapping(value = {"", "/", "/home"})
 	public String homeView(Model model, HttpServletRequest req) {
 //		logger.info(req.getRequestURI()); //tuna/eclass/professor/notice
 //		logger.info(req.getRequestURL().toString()); //http://localhost/tuna/eclass/professor/notice
@@ -66,8 +66,6 @@ public class EclassProfessorEclassController {
 		List<LectureQnaVO> qnaList = lectureService.findByProfessor(prof, 1, 5); 
 		List<LectureNoticeVO> noticeList = noticeService.findByProfessor(prof, 1, 5);
 		
-		System.out.println(noticeList.get(0));
-		
 		
 		model.addAttribute("subList", subList);
 		model.addAttribute("qnaList", qnaList);
@@ -77,7 +75,13 @@ public class EclassProfessorEclassController {
 	}
 	
 	@GetMapping("/notice")
-	public String noticeView(Model model, HttpServletRequest req) {
+	public String noticeView(
+			Model model, 
+			HttpServletRequest req,
+			@RequestParam(value="no")int no){
+		
+		model.addAttribute("notice", noticeService.findById(no));
+		
 		return req.getServletPath();
 	}
 	
@@ -127,7 +131,20 @@ public class EclassProfessorEclassController {
 	}
 	
 	@GetMapping("/subject")
-	public String subjectView(Model model, HttpServletRequest req) {
+	public String subjectView(
+			Model model, 
+			HttpServletRequest req,
+			@RequestParam(value="no", required = false, defaultValue = "0")int no ) {
+		System.out.println("no??");
+		System.out.println(no);
+		System.out.println(req.getContextPath());
+		System.out.println(req.getServletPath());
+		System.out.println(req.getRequestURI());
+		System.out.println(req.getRequestURL());
+		System.out.println(req.getPathInfo());
+		if(no < 1) {
+			return "redirect:/"+profPath;
+		}
 		return req.getServletPath();
 	}
 	
@@ -152,7 +169,7 @@ public class EclassProfessorEclassController {
 		
 		CodeMasterVO seasonMasterCode = codeService.findById("100");
 		
-		ArrayList<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season, 1, 999);
+		List<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season, 1, 999);
 
 		model.addAttribute("subList", subList);
 		model.addAttribute("seasonCodes", seasonMasterCode);

@@ -8,5 +8,5 @@ import co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO;
 
 public interface PortalScheduleMapper {
 	List<PortalScheduleVO> scheduleList(PortalScheduleVO vo);
-	
+	int scheduleInsert(PortalScheduleVO vo);
 }

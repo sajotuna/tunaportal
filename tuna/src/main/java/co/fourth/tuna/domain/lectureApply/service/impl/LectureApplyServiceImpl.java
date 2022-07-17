@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper;
 import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
+import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
 
 @Service
 public class LectureApplyServiceImpl implements LectureApplyService {
@@ -48,5 +49,22 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	public List<LectureApplyVO> mySubjectList(LectureApplyVO vo) {
 		return mapper.mySubjectList(vo);
 	}
+  
+  @Override
+	public String ApplyErrorMsg(LectureApplyVO vo) {
+		return mapper.ApplyErrorMsg(vo);
+	}
 
+	@Override
+	public void CourseDelete(LectureApplyVO vo) {
+		mapper.CourseDelete(vo);
+		
+	}
+
+	@Override
+	public int subjectTarget(LectureApplyVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.subjectTarget(vo);
+	}
+	
 }

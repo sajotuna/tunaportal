@@ -7,9 +7,22 @@
 <!-- 공지 -->
 <!-- 전체조회 -->
 <select id="noticeList" parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"
-	resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
-SELECT * FROM PORTALNOTICE
-WHERE
+	resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"> 
+SELECT *
+FROM  (SELECT 
+		NO,
+		TITLE,
+		CONTENT,
+		ENROLLDATE,
+		VISIBLE,
+		ADNO,
+		ROWNUM as rnum
+	   FROM PORTALNOTICE
+	   ORDER BY no ASC)
+WHERE rnum
+	  between  (#{pageNum}-1)*#{size}
+	  AND 		#{pageNum}*#{size}
+AND
 <if test="state == 1">1 = 1 </if>
 <if test="state == 2">title like '%'||#{key}||'%' </if>
 <if test="state == 3">content like '%'||#{key}||'%'</if>

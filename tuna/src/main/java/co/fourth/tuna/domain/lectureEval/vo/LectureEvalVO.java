@@ -2,14 +2,16 @@ package co.fourth.tuna.domain.lectureEval.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class LectureEvalVO {
-	private int no;
+	private Integer no;
 	private String content;
-	private int avgScore;
-	private int stNo;
-	private int sbjNo;
-	private String docFlag;
+	private double avgScore;
+	private String stNo;
+	private String sbjNo;
+	private String evalState;
 }

@@ -18,6 +18,8 @@ public class PortalNoticeVO {
 	private String content;
 	private String visible;
 	private String adNo;	
+	private int pageNum;
+	private int size;
 		
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	private Date enrollDate;

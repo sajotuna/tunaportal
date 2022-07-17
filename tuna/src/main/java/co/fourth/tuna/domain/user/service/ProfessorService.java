@@ -5,5 +5,6 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 public interface ProfessorService {
 
 	public ProfessorVO findById(ProfessorVO vo);
+	public void profUpdate(ProfessorVO vo);
 	
 }

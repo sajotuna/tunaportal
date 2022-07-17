@@ -3,12 +3,31 @@
 <mapper
 	namespace="co.fourth.tuna.domain.portalSchedule.mapper.PortalScheduleMapper">
 
-
+<!-- user schedule list -->
 <select id="scheduleList" resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
 SELECT EXTRACT(MONTH FROM STARTDATE)as month,
 STARTDATE, ENDDATE, CONTENT
 FROM PORTALSCHEDULE
 WHERE SEASONCODE =#{seasonCode}
 </select>
+
+
+<!-- admin schedule insert -->
+<insert id="scheduleInsert"
+		parameterType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
+
+<selectKey resultType="String" keyProperty="no" order="BEFORE">
+			SELECT CASE WHEN MAX(NO)!= 0 THEN MAX(NO) + 1 
+						ELSE 1 END AS ID FROM PORTALNOTICE
+</selectKey>
+INSERT INTO
+	 PORTALSCHEDULE(NO,
+					STARTDATE,
+					ENDDATE,
+					CONTENT,
+					SEASONCODE,
+					ADNO)
+VALUES (#{no}, #{STARTDATE}, #{ENDDATE}, #{CONTENT}, #{SEASONCODE}, 100482)
+</insert>
 </mapper>
 

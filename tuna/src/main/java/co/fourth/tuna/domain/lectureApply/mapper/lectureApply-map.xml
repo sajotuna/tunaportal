@@ -107,6 +107,23 @@ SELECT
    <if test="stateCode != null and !stateCode.equals('')">AND STATECODE = #{stateCode}</if>
 </select>
 
+<select id = "CourseSchedule" resultType = "map" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
+
+SELECT
+       S.NAME       NAME,   
+	   L.ROOMCODE   ROOMCODE, 
+	   L.TIMECODE   TIMECODE, 
+	   L.DAYCODE    DAYCODE
+  FROM SUBJECT S, LECTURESCHEDULE L, PROFESSOR P, STUDENT S2, LECTUREAPPLY L2
+ WHERE S.NO = L.SBJNO 
+   AND S.PFNO = P.NO 
+   AND S2.NO = L2.STNO 
+   AND L2.SBJNO = S.NO 
+   AND S.SEASONCODE = 106
+   AND STNO = #{stNo}
+   <if test="stateCode != null and !stateCode.equals('')">AND STATECODE = #{stateCode}</if>
+</select>
+
 
 	<select id = "findBySubject"
 		resultType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
@@ -156,6 +173,25 @@ SELECT
 	AND L.SEASONCODE = #{seasonCode}
 
 </select>
+	
+<select id = "ApplyErrorMsg" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO" resultType="String">
+	select COURSEROOMCHECK(#{sbjNo}, #{stNo}) FROM dual
+</select>
+	
+<delete id ="CourseDelete" statementType="CALLABLE" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
+
+	{ 
+		call LectureDelete(#{sbjNo},#{stNo})
+	}
+
+</delete>	
+
+<select id = "subjectTarget" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO" resultType="int">
+	select target 
+	from subject
+	where no = #{sbjNo}
+</select>		
+
 	
 
 </mapper>

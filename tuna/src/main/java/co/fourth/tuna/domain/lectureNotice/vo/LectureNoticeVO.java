@@ -16,6 +16,8 @@ public class LectureNoticeVO {
 	private String content;
 	private Date enrollDate;
 	private int sbjNo;
+	private int stNo;
+	private int seasonCode;
 	
 	private SubjectVO subjectVO;
 }
