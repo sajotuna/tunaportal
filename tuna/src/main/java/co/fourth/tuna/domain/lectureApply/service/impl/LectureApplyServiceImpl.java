@@ -44,4 +44,9 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 		
 	}
 
+	@Override
+	public List<LectureApplyVO> mySubjectList(LectureApplyVO vo) {
+		return mapper.mySubjectList(vo);
+	}
+
 }

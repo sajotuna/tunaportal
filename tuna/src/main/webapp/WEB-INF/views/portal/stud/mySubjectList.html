@@ -8,37 +8,26 @@
 <th:block th:fragment="mySubject">
 	<div class="tab-pane" id="btabs-static-mysubject" role="tabpanel" aria-labelledby="btabs-static-mysubject-tab">
 		<!-- Input -->
-		<form class="row" id="mySbjSelFrm">
-			<div class="col-md-6 col-xl-4">
-				<div class="mb-2">
-					<select class="form-select" id="year" name="year">
-						<option selected>연도</option>
-						<option value="2022">2022</option>
-						<option value="2021">2021</option>
-						<option value="2020">2020</option>
-					</select>
-				</div>
+		<div class="row">
+			<input type="hidden" name="stNo" value="20142268">
+			<div class="mb-3 mb-xl-2 col-xl-4">
+				<select id="mySubject" class="form-select" name="seasonCode">
+					<option selected value="noSelect">연도/학기</option>
+					<option value="106">2022년도 2학기</option>
+					<option value="105">2022년도 1학기</option>
+				</select>
 			</div>
 			<div class="col-md-6 col-xl-4">
-				<div class="mb-2">
-					<select class="form-select" id="semester" name="semester">
-						<option selected>학기</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-					</select>
-				</div>
-			</div>
-			<div class="col-md-6 col-xl-2">
 				<div class="block block-rounded bg-primary-darker mb-2">
 					<div class="space-x-2 text-center text-gray-light">신청 과목수 0</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-xl-2">
+			<div class="col-md-6 col-xl-4">
 				<div class="block block-rounded bg-primary-darker mb-3">
 					<div class="space-x-2 text-center text-gray-light">신청 학점 0</div>
 				</div>
 			</div>
-		</form>
+		</div>
 		<!-- END Input -->
 		<!-- Table -->
 		<div class="mb-4 scroll-table-div">
@@ -51,25 +40,63 @@
 						<th style="width: 100px;">이수구분</th>
 						<th style="width: 100px;">담당교수</th>
 						<th>강의실/강의시간</th>
-						<th class="d-none d-sm-table-cell">강의평가</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td scope="row" class="fw-semibold fs-sm">49171-01</td>
-						<td class="fw-semibold fs-sm">비주얼인포메이션디자인(2)</td>
-						<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
-						<td class="fw-semibold fs-sm">전공</td>
-						<td class="fw-semibold fs-sm">이설민</td>
-						<td class="fw-semibold fs-sm">808관(조형관) 423호 시각디자인실 /
-							화5,6,7,8</td>
-						<td class="fw-semibold fs-sm">O</td>
-					</tr>
+				<tbody id="mySubjectTb">
+
 				</tbody>
 			</table>
 		</div>
 		<!-- END Table -->
 	</div>
+	<script th:inline="javascript">
+	
+		$(function() {
+			findMySubjectAjax();
+		})
+	
+		
+		function findMySubjectAjax() {
+			
+			$('#mySubject').on('change', function () {
+				
+				let seasonCode = $('select[id=mySubject]').val();
+				let stNo = $('input[name=stNo]').val();
+				
+				$.ajax({
+					
+					url: getContextPath() + 'stud/mySubjectList',
+					type: 'GET',
+					data: {seasonCode:seasonCode,stNo:stNo},
+					dataType: 'json',
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(header, token);
+					}
+
+				}).done(function(subjects) {
+					
+					console.log(subjects);
+					
+					$('#mySubjectTb').html('');
+					
+					for (subject of subjects) {
+
+						$('#mySubjectTb').append($('<tr>')
+										 .append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.SBJNO}`))
+										 .append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.NAME}`))
+										 .append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.DEPTCODE}`))
+										 .append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.TYPE}`))
+										 .append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.PFNAME}`))
+										 .append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.DAYCODE}${subject.TIMECODE}`))
+										);
+						
+					}
+				})
+				
+			}) 
+		}
+	
+	</script>
 </th:block>
 </body>
 </html>

@@ -15,4 +15,5 @@ public interface LectureApplyMapper {
 	public void CourseInsert(LectureApplyVO vo);
 	
 	public ArrayList<LectureApplyVO> findBySubject(SubjectVO vo);
+	public List<LectureApplyVO> mySubjectList(LectureApplyVO vo);
 }

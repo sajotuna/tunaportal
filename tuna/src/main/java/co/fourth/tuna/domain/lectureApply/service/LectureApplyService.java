@@ -10,4 +10,5 @@ public interface LectureApplyService {
 	public List<LectureApplyVO> CourseBasket(List<LectureApplyVO> vo);
 	public String FindApplyGrade(LectureApplyVO vo);
 	public void CourseInsert(LectureApplyVO vo);
+	public List<LectureApplyVO> mySubjectList(LectureApplyVO vo);
 }

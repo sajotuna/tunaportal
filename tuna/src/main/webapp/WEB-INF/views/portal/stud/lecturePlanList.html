@@ -9,11 +9,11 @@
 	<div class="tab-pane active" id="btabs-static-subject"
 		role="tabpanel" aria-labelledby="btabs-static-subject-tab">
 		<!-- Form -->
-		<form class="row" id="searchFrm">
+		<div class="row">
 			<div class="col-xl-4">
 				<div class="mb-3 mb-xl-2 ">
-					<select class="form-select" id="season" name="seasonCode">
-						<option selected>연도/학기</option>
+					<select id="lecturePlan" class="form-select" name="seasonCode">
+						<option selected value="noSelect">연도/학기</option>
 						<option value="106">2022년도 2학기</option>
 						<option value="105">2022년도 1학기</option>
 					</select>
@@ -40,22 +40,22 @@
 			</div>
 			<div class="col-md-6 col-xl-3">
 				<div class="mb-3">
-					<input type="text" class="form-control" id="key" name="key" placeholder="검색어">
+					<input id="inputTxt" type="text" class="form-control" name="key" placeholder="검색어">
 				</div>
 			</div>
 			<div class="col-md-12 col-xl-1">
 				<div class="mb-3">
-					<button type="button" id="search" class="btn btn-primary w-100">조회</button>
+					<button type="button" id="search" class="btn btn-primary w-100 submit-btn">조회</button>
 				</div>
 			</div>
-		</form>
+		</div>
 		<!-- END Form -->
 		<!-- Table -->
 		<div class="mb-4 scroll-table-div">
 			<table class="table table-striped table-vcenter scroll-table">
 				<thead>
 					<tr>
-						<th style="width: 120px;">과목코드</th>
+						<th style="width: 70px;">과목코드</th>
 						<th style="width: 70px;">분반</th>
 						<th style="width: 100px;">개설학과</th>
 						<th style="width: 120px;">이수구분</th>
@@ -124,55 +124,98 @@
 	var token = $("meta[name='_csrf']").attr('content');
 	
 	$(function() {
-		searchSubjectsAjax();
+		search();
 	})
+
+	
+	function search() {
+		$('#search').on('click', function () {
+			
+			// value check
+			let elemAry = [{'element':$('#select'), 'message':'옵션을 선택해 주세요.'},
+						   {'element':$('#inputTxt'), 'message':'빈 칸을 입력해 주세요.'}];
+			
+			for (let obj of elemAry) {
+				
+				let condition = obj.element.length && !obj.element.val();
+				if(obj.element.attr('id') === 'select') {
+					condition = (obj.element.length && obj.element.val() === 'noSelect');
+				}
+				
+				if(condition) {
+					cautionIn(obj.element, obj.message);
+					return;
+				} else {
+					cautionOut(obj.element);
+				}
+			}
+			
+			searchSubjectsAjax();
+			
+		}) 
+	}
+	
+	// form 입력값 없을 때 경고 텍스트 in
+	function cautionIn(target, txt) {
+		let cautionId = `${target.attr('id')}Check`;
+		
+		target.addClass('is-invalid');
+		$(`#${cautionId}`).remove();
+		target.parent().append($('<div>').addClass('invalid-feedback')
+									  	 .attr('id', cautionId)
+									  	 .text(txt));
+	}
+
+	// form 입력값 있을 때 경고 텍스트 out
+	function cautionOut(target) {
+		let caution = `#${target.attr('id')}Check`;
+		
+		target.removeClass('is-invalid');
+		$(caution).remove();
+	}
 	
 	function searchSubjectsAjax() {
-	
-		$('#search').on('click', function() {
 			
-			let seasonCode = $('select[name=seasonCode]').val();
-			let key = $('input[name=key]').val();
-			let searchKey = $('input:radio:checked').val();
-			
-			$.ajax({
-				
-				url: getContextPath() + 'stud/searchSubjectList',
-				type: 'GET',
-				data: {seasonCode:seasonCode,key:key,searchKey:searchKey},
-				dataType: 'json',
-				beforeSend: function (xhr) {
-					xhr.setRequestHeader(header, token);
-				}
-	
-			}).done(function(subjects) {
-				
-				$('#lecturePlanTb').html('');
-				
-				for (subject of subjects) {
-	
-					$('#lecturePlanTb').append($('<tr>')
-												.append($('<td>').addClass('fw-semibold fs-sm').append($('<a>').attr('href', '#')
-																		   		 				.attr('data-bs-toggle', 'modal')
-																		   		 				.attr('data-bs-target', '#lecturePlan')
-																		   		 				.text(`${subject.no}`)))
-												.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.group}`))
-												.append($('<td>').addClass('fw-semibold fs-sm').text(/*[[${@codeList.getName(*/`${subject.deptCode}`/*)}]]*/))
-												.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.type}`))
-												.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.name}`))
-												.append($('<td>').addClass('fw-semibold fs-sm')
-																 .append($('<a>').attr('href', '#')
-																		   		 .attr('data-bs-toggle', 'modal')
-																		   		 .attr('data-bs-target', '#lectureEval')
-																		   		 .text(`${subject.pfName}`)))
-												.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.target}`))
-												.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.point}`))
-												);
-					
-				}
-			})
-		})
+		let seasonCode = $('select[id=lecturePlan]').val();
+		let key = $('input[name=key]').val();
+		let searchKey = $('input:radio:checked').val();
 		
+		$.ajax({
+			
+			url: getContextPath() + 'stud/searchSubjectList',
+			type: 'GET',
+			data: {seasonCode:seasonCode,key:key,searchKey:searchKey},
+			dataType: 'json',
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			}
+
+		}).done(function(subjects) {
+			
+			$('#lecturePlanTb').html('');
+			
+			for (subject of subjects) {
+
+				$('#lecturePlanTb').append($('<tr>')
+											.append($('<td>').addClass('fw-semibold fs-sm').append($('<a>').attr('href', '#')
+																	   		 				.attr('data-bs-toggle', 'modal')
+																	   		 				.attr('data-bs-target', '#lecturePlan')
+																	   		 				.text(`${subject.no}`)))
+											.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.group}`))
+											.append($('<td>').addClass('fw-semibold fs-sm').text(/*[[${@codeList.getName(*/`${subject.deptCode}`/*)}]]*/))
+											.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.type}`))
+											.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.name}`))
+											.append($('<td>').addClass('fw-semibold fs-sm')
+															 .append($('<a>').attr('href', '#')
+																	   		 .attr('data-bs-toggle', 'modal')
+																	   		 .attr('data-bs-target', '#lectureEval')
+																	   		 .text(`${subject.pfName}`)))
+											.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.target}`))
+											.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.point}`))
+											);
+				
+			}
+		})
 	}
 	
 	function getContextPath() {
