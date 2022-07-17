@@ -12,4 +12,5 @@ public interface ScholarMapper {
 	public List<ScholarApplyVO> ScholarCheck(ScholarApplyVO vo);
 	public void FileUpLoad(ScholarApplyVO vo);
 	public void ScholarDelete(ScholarApplyVO vo);
+	public void scholarUpdate(ScholarApplyVO vo);
 }

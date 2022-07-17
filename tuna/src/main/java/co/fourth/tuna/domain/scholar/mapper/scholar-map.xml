@@ -60,4 +60,75 @@ insert into scholarapply values(#{no}, 501, null, 105, #{stNo}, #{schNo}, null, 
 
 </delete>
 
+<select id = "adminScholarCheck" parameterType="map" resultType="map">
+
+SELECT *
+FROM
+    (SELECT ROWNUM rn, 
+           S2.NO, 
+           S2.NAME, 
+           S2.STATECODE, 
+           S2.SY, 
+           (SELECT  NVL(ROUND(SUM((CASE  WHEN G.TOTAL BETWEEN 95 AND 100 THEN 4.5
+                                   WHEN G.TOTAL >= 90                       THEN 4.0
+                                   WHEN G.TOTAL >= 85                       THEN 3.5
+                                   WHEN G.TOTAL >= 80                       THEN 3.0
+                                   WHEN G.TOTAL >= 75                       THEN 2.5
+                                   WHEN G.TOTAL >= 70                       THEN 2.0
+                                   WHEN G.TOTAL >= 65                       THEN 1.5
+                                   WHEN G.TOTAL BETWEEN 60 AND 64  THEN 1.0
+                                   ELSE 0 END ) * S.POINT) / SUM(S.POINT),2),0) AS TOTAL
+              FROM GRADE G, SUBJECT S 
+             WHERE S.SEASONCODE = 105 AND S.NO = G.SBJNO AND STNO = S2.NO) AS AVGSCORE,
+             (SELECT SUM(POINT) FROM LECTUREAPPLY L , SUBJECT S
+              WHERE S.NO = L.SBJNO AND L.STNO = S2.NO) PREVGRADE
+             , S2.DEPTCODE
+             , S2.ENTERDATE
+             , SC.NAME SCHNAME
+             , SC2.NO SCHNO
+             , SC2.STATECODE SCHSTATECODE
+             , SC2.FILENAME
+             , SC2.URI
+             , SC2.APPLYDATE
+    FROM STUDENT S2, SCHOLARAPPLY SC2, SCHOLAR SC
+    WHERE S2.NO IN (SELECT NO FROM STUDENT) 
+      AND S2.NO = SC2.STNO 
+      AND SC2.SCHNO = SC.NO
+      <if test="year != null and !year.equals('')">
+      AND SC2.SEASONCODE = #{year}
+      </if>
+      <if test="schno != null and !schno.equals('')">
+      AND SC2.SCHNO = #{schno}
+      </if>
+      <if test="applydate != null and !applydate.equals('')">
+      AND SC2.APPLYDATE = #{applydate}
+      </if>
+      <if test="no != null and !no.equals('')">
+      AND S2.NO = #{no}
+      </if>
+      <if test="schState != null and !schState.equals('')">
+      AND SC2.STATECODE = #{schState}
+      </if>
+      <if test="sy != null and !sy.equals('')">
+      AND S2.SY = #{sy}
+      </if>
+      )
+WHERE rn 
+BETWEEN (#{pageNum}-1)*#{size}
+    AND #{pageNum}*#{size}
+
+
+</select>
+<update id = "scholarUpdate" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
+	
+	update scholarApply set statecode = #{stateCode} where no = #{no}
+	
+</update>
+
+
+
+
+
+
+
 </mapper>

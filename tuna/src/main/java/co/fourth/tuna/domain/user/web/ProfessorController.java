@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.user.service.ProfessorService;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
@@ -40,6 +41,14 @@ public class ProfessorController {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		professorDao.profUpdate(vo);
 		return "redirect:/staff/userUpdate";
+	}
+	
+	@RequestMapping("/admin/AdminproUpdate")
+	public String AdminproUpdate(ProfessorVO vo,RedirectAttributes ra) {
+		
+		professorDao.AdminProfUpdate(vo);
+		ra.addAttribute("no", vo.getNo());
+		return "redirect:/admin/adminUserInfo";
 	}
 	
 	

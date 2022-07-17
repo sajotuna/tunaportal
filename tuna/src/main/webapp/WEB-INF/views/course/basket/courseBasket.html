@@ -266,7 +266,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   
   let header = document.querySelector('meta[name="_csrf_header"]').content;
   let token = document.querySelector('meta[name="_csrf"]').content;
-  	fetch('/tuna/stud/courseCheck',{
+  	fetch('/tuna/courseCheck',{
   		method: "POST",
   		headers: {
             'header': header,

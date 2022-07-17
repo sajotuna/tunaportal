@@ -23,4 +23,9 @@ public class ProfessorServiceImpl implements ProfessorService {
 		mapper.profUpdate(vo);
 	}
 
+	@Override
+	public void AdminProfUpdate(ProfessorVO vo) {
+		mapper.AdminProfUpdate(vo);
+	}
+
 }

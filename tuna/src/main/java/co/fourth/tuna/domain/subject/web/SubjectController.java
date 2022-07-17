@@ -20,7 +20,7 @@ public class SubjectController {
 	@Autowired SubjectService subjectDao;
 	
 	@ResponseBody
-	@RequestMapping("/stud/courseCheck")
+	@RequestMapping("/courseCheck")
 	public List<SubjectVO> courseCheck(){
 		return SqlSession.selectList("co.fourth.tuna.domain.subject.mapper.SubjectMapper.SubjectCheck");
 	}

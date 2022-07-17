@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentVO;
@@ -44,6 +45,13 @@ public class StudentController {
 	@RequestMapping("/pwdUpdate")
 	public String pwdUpdate() {
 		return "manage/user/pwdUpdate";
+	}
+	
+	@RequestMapping("/admin/AdminUserUpdate")
+	public String AdminUserUpdate(StudentVO vo,RedirectAttributes ra) {
+		StudentDao.AdminStudUpdate(vo);
+		ra.addAttribute("no", vo.getNo());
+		return "redirect:/admin/adminUserInfo";
 	}
 	
 	

@@ -24,8 +24,6 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 
 <body>
 
-/stud/courseDelete
-
 <th:block th:if = "${message != null && message != ''}">
 	<script th:inline="javascript">
 		let message = /*[[${message}]]*/ 'default';
@@ -45,10 +43,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                 <div class="mb-5">
                   <select class="form-select" id="deptCode" name="deptCode">
                     <option selected value = "">학부(과)</option>
-                    <option value="1">참치과</option>
-                    <option value="1">사조과</option>
-                    <option value="1">컴퓨터공학과</option>
-                    <option value="1">정보통신학과</option>
+                    
                   </select>
                 </div>
               </div>
@@ -387,7 +382,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		}
 		
 		
-		  fetch('/tuna/stud/courseCheck',{
+		  fetch('/tuna/courseCheck',{
 		  		method: "POST",
 		  		headers: {
 		            'header': header,

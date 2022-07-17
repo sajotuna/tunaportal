@@ -22,6 +22,13 @@
 	WHERE no = #{no}
 </select>
 
+<update id = "AdminStudUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
+	
+	update student
+	set deptcode = #{deptCode}, name = #{name}, stateCode = #{stateCode}
+	WHERE no = #{no}
+
+</update>
 
 
 </mapper>

@@ -40,6 +40,11 @@ public class ScholarServiceImpl implements ScholarService {
 	public void ScholarDelete(ScholarApplyVO vo) {
 		mapper.ScholarDelete(vo);
 	}
+
+	@Override
+	public void scholarUpdate(ScholarApplyVO vo) {
+		mapper.scholarUpdate(vo);
+	}
 	
 	
 }

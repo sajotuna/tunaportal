@@ -6,7 +6,7 @@ public interface StudentMapper {
 	public StudentVO findById(StudentVO vo);
 
 	public void studUpdate(StudentVO vo);
-
+	public void AdminStudUpdate(StudentVO vo);
 	public StudentVO findOneById(int no);
 
 }

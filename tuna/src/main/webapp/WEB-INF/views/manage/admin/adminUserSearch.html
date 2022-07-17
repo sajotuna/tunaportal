@@ -8,7 +8,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
   <title>사용자 조회 및 관리</title>
-
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
   <style>
     h5 {
       margin-top: 50px;
@@ -31,42 +32,48 @@
       <div id="page-container">
         <h3 class="h3 fw-bold mb-2">사용자 조회</h3>
         <div class="bg-body-extra-light" style="padding: 10px;">
-          <form th:action="@{/}" method="post" class="row">
+          <form th:action="@{/admin/adminUserSearch}" method="post" class="row">
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
-                <select class="form-select" id="example-select" name="example-select">
-                  <option selected>입학/입사년도</option>
-                  <option value="1">1학기</option>
-                  <option value="2">2학기</option>
-                </select>
+                <select class="form-select" id="year" name="year">
+                <option selected value="">입학/입사년도</option>
+                <option value="2015" id = "103">2021년 2학기</option>
+	            <option value="2016" id = "102">2020년 1학기</option>
+	            <option value="2017" id = "101">2020년 2학기</option>
+                <option value="2018" id = "108">2023년 2학기</option>
+	            <option value="2019" id = "107">2023년 1학기</option>
+	            <option value="2020" id = "106">2022년 2학기</option>
+	            <option value="2022" id = "105">2022년 1학기</option>
+	            <option value="2023" id = "104">2021년 1학기</option>
+              </select>
               </div>
             </div>
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
-                <input type="number" placeholder="학번/교번" class="form-control" id="example-flatpickr-time-standalone-24"
-                  name="example-flatpickr-time-standalone-24">
+                <input type="text" placeholder="학번/교번" class="form-control" id="no"
+                  name="no">
               </div>
             </div>
 
 
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
-                <select class="form-select" id="example-select" name="example-select">
-                  <option selected>학과</option>
-                  <option value="1">성적우수</option>
-                  <option value="2">가족</option>
-                  <option value="3">교직원가족</option>
+                <select class="form-select" id="deptCode" name="deptCode">
+                  <option value = "" selected>학과</option>
                 </select>
               </div>
             </div>
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
-                <select class="form-select" id="example-select" name="example-select">
-                  <option selected>재적상태</option>
-                  <option value="1">졸업</option>
-                  <option value="2">재학</option>
-                  <option value="3">퇴학</option>
-                  <option value="3">재적</option>
+                <select class="form-select" id="statecode" name="statecode">
+                  <option selected value = "">재적/재직상태</option>
+                  <option value="201">재직</option>
+                  <option value="202">휴직</option>
+                  <option value="203">퇴직</option>
+                  <option value="301">재학</option>
+                  <option value="302">휴학</option>
+                  <option value="303">퇴학</option>
+                  <option value="304">졸업</option>
                 </select>
               </div>
             </div>
@@ -83,74 +90,131 @@
                 <tr>
                   <th class="d-none d-sm-table-cell" style="width: 100px;">학번</th>
                   <th class="d-none d-sm-table-cell" style="width: 100px;">성명</th>
-                  <th class="d-none d-sm-table-cell" style="width: 70px;">학년</th>
-                  <th class="d-none d-sm-table-cell" style="width: 80px;">재학</th>
-                  <th class="d-none d-sm-table-cell" style="width: 100px;">졸업예정</th>
-                  <th class="d-none d-sm-table-cell" style="width: 100px;">취득학점</th>
-                  <th class="d-none d-sm-table-cell" style="width: 60px;">평점</th>
-                  <th class="d-none d-sm-table-cell" style="width: 50px;">석차</th>
-                  <th class="d-none d-sm-table-cell" style="width: 100px;">신청구분</th>
-                  <th class="d-none d-sm-table-cell" style="width: 100px;">접수번호</th>
-                  <th class="d-none d-sm-table-cell" style="width: 100px;">심사현황</th>
-                  <th class="d-none d-sm-table-cell" style="width: 100px;">첨부파일</th>
-                  <th class="d-none d-sm-table-cell" style="width: 100px;">비고</th>
+                  <th class="d-none d-sm-table-cell" style="width: 120px;">재적상태</th>
+                  <th class="d-none d-sm-table-cell" style="width: 80px;">학년</th>
+                  <th class="d-none d-sm-table-cell" style="width: 80px;">평점</th>
+                  <th class="d-none d-sm-table-cell" style="width: 100px;">학과</th>
+                  <th class="d-none d-sm-table-cell" style="width: 150px;">입사/입학년도</th>
                 </tr>
               </thead>
               <tbody>
-                <tr scope="row">
-                  <td class="fw-semibold fs-sm">014-124357</td>
-                  <td class="fw-semibold fs-sm">최규완</td>
-                  <td class="fw-semibold fs-sm">3학년</td>
-                  <td class="fw-semibold fs-sm">재학</td>
-                  <td class="fw-semibold fs-sm">X</td>
-                  <th class="fw-semibold fs-sm">17</th>
-                  <td class="fw-semibold fs-sm">4.5</td>
-                  <td class="fw-semibold fs-sm">1/45</td>
-                  <td class="fw-semibold fs-sm">성적우수</td>
-                  <td class="fw-semibold fs-sm">141-123141</td>
-                  <td class="fw-semibold fs-sm">심사대기</td>
-                  <td class="fw-semibold fs-sm"></td>
-                  <td class="fw-semibold fs-sm"></td>
+                <tr th:scope="row" th:each="user, status : ${list}">
+                      <th class="fw-semibold fs-sm" id = "no" th:text="${user.NO}"></th>
+                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" id = "userName" th:text = "${user.NAME}"></a></td>
+                      <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(user.STATECODE)}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${user.SY}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${user.AVGSCORE}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(user.DEPTCODE)}"></td>
+                      <td class="fw-semibold fs-sm" th:text = "${#dates.format(user.ENTERDATE, 'yyyy-MM-dd')}"></td>
                 </tr>
               </tbody>
 
             </table>
             <ul class="pagination justify-content-center">
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)" tabindex="-1" aria-label="Previous">
-                  <span aria-hidden="true">
-                    <i class="fa fa-angle-double-left"></i>
-                  </span>
-                  <span class="visually-hidden">Previous</span>
-                </a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0)">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)" aria-label="Next">
-                  <span aria-hidden="true">
-                    <i class="fa fa-angle-double-right"></i>
-                  </span>
-                  <span class="visually-hidden">Next</span>
-                </a>
-              </li>
-            </ul>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" tabindex="-1" aria-label="Previous" id = "prev">
+                      <span aria-hidden="true">
+                        <i class="fa fa-angle-double-left"></i>
+                      </span>
+                      <span class="visually-hidden">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">2</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">3</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">4</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
+                      <span aria-hidden="true">
+                        <i class="fa fa-angle-double-right"></i>
+                      </span>
+                      <span class="visually-hidden">Next</span>
+                    </a>
+                  </li>
+                </ul>
           </div>
         </div>
       </div>
     </div>
     </div>
-    </main>
+    
+    <script>
+    
+    var header = $("meta[name='_csrf_header']").attr('content');
+    var token = $("meta[name='_csrf']").attr('content');
+    fetch('/tuna/courseCheck',{
+  		method: "POST",
+  		headers: {
+            'header': header,
+          	'X-Requested-With': 'XMLHttpRequest',
+            "Content-Type": "application/json",
+            'X-CSRF-Token': token	// header에 X-CSRF-Token부분에 토큰값이 들어가 정상적으로 POST값이 넘어가는 것을 볼 수 있다!
+        },
+  	}).then(result => result.json())
+  	  .then(result =>{
+  		  let deptcodes = document.querySelector('#deptCode')
+  		  console.log(result)
+  		  result.forEach(val =>{
+  			let opt = document.createElement('option');
+  			opt.setAttribute('value', val.DEPTCODE)
+  			opt.innerText = val.CODENAME;
+  			deptcodes.appendChild(opt)
+  		  })
+  	  }) 
+    
+    
+    
+document.addEventListener('DOMContentLoaded', function(){
+	let userName = document.querySelectorAll('#userName');
+    let no = document.querySelectorAll('#no');
+    userName.forEach( function (btn,idx){
+    	btn.addEventListener('click', function(){
+    		window.open("/tuna/admin/adminUserInfo?no="+no[idx].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
+    	})
+    })
+		
+		let nextBtn = document.querySelector("#next")
+		let prevBtn = document.querySelector("#prev")
+		let pageingBtn = document.querySelectorAll("#pageingBtn");
+		nextBtn.addEventListener('click', function(){
+			pageingBtn.forEach(btn =>{
+				let a = btn.innerHTML
+				btn.innerHTML = parseInt(a)+4;
+			})
+		})
+		
+		prevBtn.addEventListener('click', function(){
+			pageingBtn.forEach(btn =>{
+				let a = btn.innerHTML
+				if (parseInt(a) > 4){
+					btn.innerHTML = parseInt(a)-4;
+				}
+				
+			})
+		})
+		
+		pageingBtn.forEach(btn =>{
+			btn.addEventListener('click',function(){
+				let a = btn.innerHTML
+				location.href = '/tuna/admin/adminUserSearch?pageNum='+parseInt(a)
+			})
+		})
+		
+		
+	})
+    
+    </script>
+    
+    
+</main>
 </body>
 
 </html>
