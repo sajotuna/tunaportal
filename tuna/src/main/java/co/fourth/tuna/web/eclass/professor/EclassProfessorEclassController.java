@@ -135,16 +135,13 @@ public class EclassProfessorEclassController {
 			Model model, 
 			HttpServletRequest req,
 			@RequestParam(value="no", required = false, defaultValue = "0")int no ) {
-		System.out.println("no??");
-		System.out.println(no);
-		System.out.println(req.getContextPath());
-		System.out.println(req.getServletPath());
-		System.out.println(req.getRequestURI());
-		System.out.println(req.getRequestURL());
-		System.out.println(req.getPathInfo());
 		if(no < 1) {
 			return "redirect:/"+profPath;
 		}
+		SubjectVO subject = subjectService.findOneWithApplysAndRatioAndFilesById(no);
+		System.out.println(subject.getLectureFileList());
+		System.out.println(subject.getGradeRatioVO().getNo());
+		
 		return req.getServletPath();
 	}
 	

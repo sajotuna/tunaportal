@@ -145,11 +145,12 @@ xmlns:th="http://www.thymeleaf.org"
               <div class="block block-rounded">
                 <ul class="nav nav-tabs nav-tabs-block" role="tablistr">
                   <li class="nav-item">
-                    <button class="nav-link" id="btabs-static-progress-tab" data-bs-toggle="tab" 
+                    <button class="nav-link active" id="btabs-static-progress-tab" data-bs-toggle="tab" 
                     data-bs-target="#btabs-static-progress">강의 진도</button>
                   </li>
                   <li class="nav-item">
-                    <button class="nav-link active" id="btabs-static-student-tab" data-bs-toggle="tab" data-bs-target="#btabs-static-student">수강생/출결</button>
+                    <button class="nav-link" id="btabs-static-student-tab" data-bs-toggle="tab" 
+                    data-bs-target="#btabs-static-student">수강생/출결</button>
                   </li>
                   <li class="nav-item">
                     <button class="nav-link" id="btabs-static-task-tab" data-bs-toggle="tab"
@@ -184,7 +185,7 @@ xmlns:th="http://www.thymeleaf.org"
       ██      ██   ██  ██████   ██████  ██   ██ ███████ ███████ ███████ 
 -->
                 <div class="block-content tab-content">
-                  <div class="tab-pane" id="btabs-static-progress" role="tabpanel" aria-labelledby="btabs-static-progress-tab">
+                  <div class="tab-pane active" id="btabs-static-progress" role="tabpanel" aria-labelledby="btabs-static-progress-tab">
                     <div class="row">
                       <div class="col-xxl-7">
                         <div class="block block-rounded block-themed block-bordered">
@@ -294,7 +295,7 @@ xmlns:th="http://www.thymeleaf.org"
 ▀ ██ ▀     ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██    
       ███████    ██     ██████  ██████  ███████ ██   ████    ██  
 -->
-                  <div class="tab-pane active pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
+                  <div class="tab-pane pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
                     <div style="overflow-y:scroll; height: 310px;">
                       <table class="table table-hover table-vcenter">
                         <tbody>

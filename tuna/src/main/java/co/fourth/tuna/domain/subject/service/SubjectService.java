@@ -1,14 +1,14 @@
 package co.fourth.tuna.domain.subject.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 public interface SubjectService {
 	SubjectVO findOne(SubjectVO vo);
+	SubjectVO findOneWithApplysAndRatioAndFilesById(int no);
 	
 	public List<SubjectVO> findListForProfessorMain(ProfessorVO prof, int seasonCode, int pageNum, int size);
 	public List<SubjectVO> SubjectCheck();

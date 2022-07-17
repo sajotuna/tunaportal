@@ -67,9 +67,19 @@
 			select="co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.selectAttendancesForSubject"
 			>
 		</collection> -->
+	</resultMap>
+	
+	<resultMap id="subjectWithFIlesMap"
+		type="co.fourth.tuna.domain.subject.vo.SubjectVO">
+		<association
+			property="gradeRatioVO"	column="no"
+			select="co.fourth.tuna.domain.subject.mapper.GradeRatioMapper.findOneById"
+			/>
+		<collection property="lectureFileList" column="no"
+			select="co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.findListBySbjno"
+		/>
 		
 	</resultMap>
-
 
 	<select id="findOne"
 		resultType="co.fourth.tuna.domain.subject.vo.SubjectVO"
@@ -83,6 +93,14 @@
 		resultType="co.fourth.tuna.domain.subject.vo.SubjectVO"
 		>
 		SELECT * 
+		FROM subject
+		WHERE no = #{no}
+		ORDER BY no
+	</select>
+	<select id="findOneWithApplysAndRatioAndFilesById"
+		resultMap="subjectWithFIlesMap"
+	>
+		SELECT *
 		FROM subject
 		WHERE no = #{no}
 		ORDER BY no

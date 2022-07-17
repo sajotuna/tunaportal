@@ -12,6 +12,8 @@ import co.fourth.tuna.domain.user.vo.StudentVO;
 public interface SubjectMapper {
 	public SubjectVO findOne(SubjectVO vo);
 	public SubjectVO findOneById(int no);
+	public SubjectVO findOneWithApplysAndRatioAndFilesById(int no);
+	
 	public ArrayList<SubjectVO> findListForProfessorMain(
 			@Param("prof") ProfessorVO vo, 
 			@Param("seasonCode")int code,
