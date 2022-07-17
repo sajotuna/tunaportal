@@ -3,6 +3,19 @@
 <mapper
 	namespace="co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper">
 	
+	<select id="noticeList" resultType="map" parameterType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO">
+	SELECT N.NO, N.TITLE, N.ENROLLDATE
+	FROM LECTUREAPPLY L JOIN LECTURENOTICE N
+	ON(L.SBJNO = N.SBJNO)
+	JOIN SUBJECT J
+	ON(J.NO = N.SBJNO)
+	WHERE L.STNO = #{stNo}
+	AND L.SEASONCODE = #{seasonCode}
+	AND N.SBJNO = #{sbjNo}
+	ORDER BY N.NO DESC
+	</select>
+	
+	
 	<resultMap id="lectureNoticeMapWithSubject" 
 		type="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO" >
 		<result property="content" column="content" jdbcType="CLOB" javaType="java.lang.String"/>

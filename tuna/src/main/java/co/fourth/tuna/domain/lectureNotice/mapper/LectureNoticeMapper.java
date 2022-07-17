@@ -13,7 +13,7 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 public interface LectureNoticeMapper {
 
 	//강의공지조회
-	List<LectureNoticeVO> noticeList(@Param("state")int state, @Param("key") String key);
+	List<LectureNoticeVO> noticeList(LectureNoticeVO vo);
 	//강의공지단건조회
 	LectureNoticeVO noticeSelect(LectureNoticeVO vo);
 

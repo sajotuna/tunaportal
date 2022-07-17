@@ -16,8 +16,8 @@ public class LectureNoticeServiceImpl implements LectureNoticeService {
 	@Autowired LectureNoticeMapper map;
 	
 	@Override
-	public List<LectureNoticeVO> noticeList(int state, String key) {
-		return map.noticeList(state, key);
+	public List<LectureNoticeVO> noticeList(LectureNoticeVO vo) {
+		return map.noticeList(vo);
 	}
 
 	@Override
@@ -34,5 +34,7 @@ public class LectureNoticeServiceImpl implements LectureNoticeService {
 	public LectureNoticeVO findById(int no) {
 		return map.findOneWithSubjectById(no);
 	}
+
+
 
 }

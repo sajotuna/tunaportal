@@ -24,8 +24,8 @@ public class LectureBasketServiceImpl implements LectureBasketService {
 		
 	}
 	@Override
-	public void courDelete(LectureBasketVO vo) {
-		mapper.courDelete(vo);
+	public String basketApplyMsg(LectureBasketVO vo) {
+		return mapper.basketApplyMsg(vo);
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class LectureBasketServiceImpl implements LectureBasketService {
 		return mapper.FindCourseGrade(vo);
 	}
 	@Override
-	public boolean FindSubject(LectureBasketVO vo) {
-		return mapper.FindSubject(vo);
+	public int subjectTarget(LectureBasketVO vo) {
+		return mapper.subjectTarget(vo);
 	}
 
 }

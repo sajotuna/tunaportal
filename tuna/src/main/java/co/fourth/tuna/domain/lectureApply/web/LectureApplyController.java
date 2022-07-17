@@ -1,6 +1,5 @@
 package co.fourth.tuna.domain.lectureApply.web;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
+import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
 import co.fourth.tuna.util.captcha.CaptchaUtil;
 import nl.captcha.Captcha;
 
@@ -44,9 +45,6 @@ public class LectureApplyController {
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		
-		
-		
-		
 		vo.setStNo(authentication.getName());
 		vo.setStateCode("402");
 		int grade = Integer.parseInt(LectureApplyDao.FindApplyGrade(vo));
@@ -61,20 +59,44 @@ public class LectureApplyController {
 	}
 	
 	@RequestMapping("/stud/courseApplyInsert")
-	public String courseApplyInsert(Authentication authentication, LectureApplyVO vo, String sbjno){
+	public String courseApplyInsert(RedirectAttributes ra,Authentication authentication, LectureApplyVO vo, String sbjno){
 		
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode("106");
 		vo.setSbjNo(sbjno);
-		LectureApplyDao.CourseInsert(vo);
 		
+		int grade = Integer.parseInt(LectureApplyDao.FindApplyGrade(vo));
+		int target = LectureApplyDao.subjectTarget(vo);
+		
+		if(grade - target < 0) {
+			ra.addFlashAttribute("message", "수강신청 가능한 학점이 없습니다.");
+			return "redirect:/stud/courseBasket";
+		}
+		
+		
+		String message = LectureApplyDao.ApplyErrorMsg(vo);
+		LectureApplyDao.CourseInsert(vo);
+		ra.addFlashAttribute("message", message);
+		return "redirect:/stud/courseApplication";
+	}
+	
+	@RequestMapping("/stud/courseDelete")
+	public String courseDelete(Authentication authentication,RedirectAttributes ra, LectureApplyVO vo) {
+		vo.setStNo(authentication.getName());
+		LectureApplyDao.CourseDelete(vo);
+		ra.addFlashAttribute("message", "삭제가 완료되었습니다.");
 		return "redirect:/stud/courseApplication";
 	}
 	
 	
-	
 	@RequestMapping("/stud/courseApplicationLectureList")
-	public String courseApplicationLectureList() {
+	public String courseApplicationLectureList(Model model, Authentication authentication, LectureApplyVO vo) {
+		
+		vo.setStNo(authentication.getName());
+		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo.getStNo());
+		
+		model.addAttribute("courList", courLists);
+		
 		return "course/apply/courseApplicationLectureList";
 	}
 	
@@ -121,5 +143,12 @@ public class LectureApplyController {
 			}
 		}
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/stud/CourseSchedule")
+	public List<LectureBasketVO> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
+		vo.setStNo(authentication.getName());
+		return SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseSchedule", vo);
 	}
 }

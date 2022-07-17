@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.fourth.tuna.domain.subject.mapper.SubjectMapper;
+import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.domain.user.vo.StudentVO;
 import co.fourth.tuna.web.eclass.EclassController;
 import co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO;
 
@@ -41,23 +44,23 @@ public class EclassStudentEclassController {
 	}
 	
 	//수강목록 홈
-	
+	@Autowired private SubjectMapper map;
 	@Autowired private SqlSession sql;
 	@RequestMapping("/home")
 	public String home(Model model, EclassStudentHomeVO vo) {
 		vo.setNo(13168019);
 		vo.setSeasonCode(106);
 		List<Map<String, Object>> list = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.subList", vo);
-		
 		model.addAttribute("list", list);
+		
 		return "eclass/stud/home";
 	}
 	
-	//강의공지
-	@RequestMapping("/lectureNotice")
-	public String lectureNotie() {
-		return "eclass/stud/lectureNotice";
-	}
+//	//강의공지
+//	@RequestMapping("/lectureNotice")
+//	public String lectureNotie() {
+//		return "eclass/stud/lectureNotice";
+//	}
 	
 	//단건강의홈
 	@RequestMapping("/lectureHome")
