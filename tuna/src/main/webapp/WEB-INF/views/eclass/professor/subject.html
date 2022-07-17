@@ -469,41 +469,10 @@ xmlns:th="http://www.thymeleaf.org"
                   <div class="tab-pane" id="btabs-static-notice" role="tabpanel" aria-labelledby="btabs-static-notice-tab">
                     <table id="subject-notice-table" class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
                       <tbody>
-                        <!-- <tr>
+                        <tr>
                           <th style="width: 100px">번호</th>
-                          <th>제목</th>
-                          <th style="width: 15%">작성</th>
-                          <th style="width: 15%">등록일시</th>
-                        </tr> -->
-                        <tr class="fw-bold">
-                          <td style="width: 100px">1</td>
-                          <td class="text-start">내용</td>
-                          <td style="width: 15%">참치분해1</td>
-                          <td style="width: 15%">2022-07-03</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td class="text-start">내용</td>
-                          <td>참치분해2</td>
-                          <td>2022-07-03</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td class="text-start">내용</td>
-                          <td>참치분해3</td>
-                          <td>2022-07-03</td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td class="text-start">내용</td>
-                          <td>참치분해4</td>
-                          <td>2022-07-03</td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td class="text-start">내용</td>
-                          <td>참치분해5</td>
-                          <td>2022-07-03</td>
+                          <th class="text-start">제목</th>
+                          <th style="width: 15%">등록일</th>
                         </tr>
                       </tbody>
                     </table>
@@ -866,114 +835,130 @@ xmlns:th="http://www.thymeleaf.org"
           </div>
          -->
           <script>
+            // 상수데이터
             const TAB_ID = "tab-pane-";
 
+            // 토큰
             let header = document.querySelector('meta[name="_csrf_header"]').content;
             let token = document.querySelector('meta[name="_csrf"]').content;
-            let tabFlag = new Map();
 
+            // url 파라미터
+            let url = new URL(window.location.href);
+            let params = new URLSearchParams(url.searchParams);
+            let sbjno = params.get('no'); // 파라미터
+
+            // 탭 제어
+            let tabFlag = new Map();
+            let tabPanel; // 탭 패널
+            let tabContents; // 탭 컨탠츠
+
+            // 로드 이벤트
             window.addEventListener("DOMContentLoaded", function() {
               // let subjectContents = document.querySelector("#subject-content");
-              let tabPanel = document.querySelector("#subject-tab-panel");
-              let tabContents = document.querySelectorAll("#subject-tab-content>div");
+              tabPanel = document.querySelector("#subject-tab-panel");
+              tabContents = document.querySelectorAll("#subject-tab-content>div");
 
               initSubject();
 
-              function initSubject() {
-                tabPanel.addEventListener('click', function(ele) {
-                  let id = ele.target.parentNode.id;
-                  id = id.slice(id.indexOf(TAB_ID)+TAB_ID.length);
-                  setTabContent(  parseInt(id) );
-                })
-
-                for(let i = 0; i < tabPanel.children.length; i++) {
-                  tabPanel.children[i].setAttribute('id', TAB_ID+i);
-                  tabFlag.set(i, false);
-                }
-                
-              }
-
-              function setTabContent(tabIdx) {
-                switch(tabIdx) {
-                  case 0:
-                    break;
-                  case 1:
-                    break;
-                  case 2:
-                    break;
-                  case 3:
-                    break;
-                  case 4:
-                    if(tabFlag.get(tabIdx)){ break; };
-                    tabFlag.set(tabIdx, true);
-                    setNoticeContent(tabIdx);
-                    break;
-                  case 5:
-                    break;
-                  case 6:
-                    break;
-                  case 7:
-                    break;
-                  default:
-                    break;
-                }
-
-              }
-
-              function setNoticeContent() {
-                //
-                // fetch('/tuna/eclassNotices', {
-                //   method: "POST",
-                //   headers: {
-                //     'X-CSRF-Token': token,
-                //     'Content-Type': 'application/json'
-                //   }
-                // })
-                // .then(result => result.json())
-                // .then(result => {
-                //   console.log(result);
-                // })
-                
-                let tempJson = [
-                  {
-                    id:'1',
-                    title:'제목',
-                    date:'2022-07-03'
-                  },
-                  {
-                    id:'2',
-                    title:'제목2',
-                    date:'2022-07-04'
-                  }
-                ]
-
-                let table = document.querySelector('#subject-notice-table');
-                let tbody = table.firstElementChild;
-                console.log(tbody);
-                tempJson.forEach(data => {
-                  console.log(data);
-
-                  let tr = document.createElement('tr');
-                  tbody.appendChild(tr);
-
-                  let td_no = document.createElement('td');
-                  let td_title = document.createElement('td');
-                  td_title.classList.add('text-start')
-                  let td_date = document.createElement('td');
-                  
-                  tr.appendChild(td_no)
-                  tr.appendChild(td_title);
-                  tr.appendChild(td_date);
-
-                  td_no.innerText = data.id;
-                  td_title.innerText = data.title;
-                  td_date.innerText = data.date;
-                })
-                
-              }
-
-
             });
+
+            // 초기화 세팅
+            function initSubject() {
+              // 이벤트 등록
+              tabPanel.addEventListener('click', function(ele) {
+                let id = ele.target.parentNode.id;
+                id = id.slice(id.indexOf(TAB_ID)+TAB_ID.length);
+                setTabContent(  parseInt(id) );
+              })
+              // 탭 제어 초기화
+              for(let i = 0; i < tabPanel.children.length; i++) {
+                tabPanel.children[i].setAttribute('id', TAB_ID+i);
+                tabFlag.set(i, false);
+              }
+                
+            }
+
+            //
+            function setTabContent(tabIdx) {
+              if(tabFlag.get(tabIdx)){ return; };
+              tabFlag.set(tabIdx, true);
+              
+              switch(tabIdx) {
+                case 0:
+                  break;
+                case 1:
+                  break;
+                case 2:
+                  break;
+                case 3:
+                  break;
+                case 4:
+                  reqNoticeContent(tabIdx);
+                  break;
+                case 5:
+                  break;
+                case 6:
+                  break;
+                case 7:
+                  break;
+                default:
+                  break;
+              }
+
+            }
+
+            function reqNoticeContent(tabIdx) {
+              let resData = {};
+              fetch('/tuna/lecNotices', {
+                method: "POST",
+                headers: {
+                  'header': header,
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify({
+                  sbjno: sbjno
+                })
+              })
+              .then(result => result.json())
+              .then(result => {
+                setNoticeContet(result);
+              })
+              .catch((err) => {
+                console.error('fetch 오류', err);
+                tabFlag.set(tabIdx, false);
+              })
+              
+            }
+
+            function setNoticeContet(jsonData) {
+              let table = document.querySelector('#subject-notice-table');
+              let tbody = table.firstElementChild;
+              jsonData.forEach(data => {
+                console.log(data);
+                let mDate = new Date(data.enrollDate);
+                mDate = mDate.toISOString();
+                mDate = mDate.slice(0, mDate.indexOf('T'));
+
+                let tr = document.createElement('tr');
+                tbody.appendChild(tr);
+
+                let td_no = document.createElement('td');
+                let td_title = document.createElement('td');
+                td_title.classList.add('text-start')
+                let td_date = document.createElement('td');
+                
+                tr.appendChild(td_no)
+                tr.appendChild(td_title);
+                tr.appendChild(td_date);
+
+                td_no.innerText = data.no;
+                td_title.innerText = data.title;
+                td_date.innerText = mDate;
+              })
+            }
+
           </script>
       </main>
 

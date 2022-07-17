@@ -69,4 +69,11 @@
 			ON l.sbjno = s.no
 		WHERE l.no = #{no}
 	</select>
+	
+	<select id="findListBySubjectId"
+		resultType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO">
+		SELECT *
+		FROM lecturenotice
+		WHERE sbjno = #{sbjno}
+	</select>
 </mapper>
