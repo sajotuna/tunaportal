@@ -17,4 +17,9 @@
 
 </update>
 
+<update id = "AdminProfUpdate" parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO">
+	update professor set name = #{name}, deptcode = #{deptcode}, statecode = #{stateCode}
+	where no = #{no}
+</update>
+
 </mapper>

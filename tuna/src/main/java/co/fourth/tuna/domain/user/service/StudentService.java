@@ -6,5 +6,6 @@ public interface StudentService {
 
 	public StudentVO findById(StudentVO vo);
 	public void studUpdate(StudentVO vo);
+	public void AdminStudUpdate(StudentVO vo);
 	
 }

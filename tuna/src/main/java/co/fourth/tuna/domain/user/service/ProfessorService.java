@@ -6,5 +6,6 @@ public interface ProfessorService {
 
 	public ProfessorVO findById(ProfessorVO vo);
 	public void profUpdate(ProfessorVO vo);
+	public void AdminProfUpdate(ProfessorVO vo);
 	
 }

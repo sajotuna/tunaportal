@@ -32,7 +32,7 @@
       <div id="page-container">
         <h3 class="h3 fw-bold mb-2">사용자 조회</h3>
         <div class="bg-body-extra-light" style="padding: 10px;">
-          <form th:action="@{/}" method="post" class="row">
+          <form th:action="@{/admin/adminUserSearch}" method="post" class="row">
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
                 <select class="form-select" id="year" name="year">
@@ -99,8 +99,8 @@
               </thead>
               <tbody>
                 <tr th:scope="row" th:each="user, status : ${list}">
-                      <th class="fw-semibold fs-sm" th:text="${user.NO}"></th>
-                      <td class="fw-semibold fs-sm" th:text = "${user.NAME}"></td>
+                      <th class="fw-semibold fs-sm" id = "no" th:text="${user.NO}"></th>
+                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" id = "userName" th:text = "${user.NAME}"></a></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(user.STATECODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${user.SY}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${user.AVGSCORE}"></td>
@@ -147,6 +147,7 @@
     </div>
     
     <script>
+    
     var header = $("meta[name='_csrf_header']").attr('content');
     var token = $("meta[name='_csrf']").attr('content');
     fetch('/tuna/courseCheck',{
@@ -172,7 +173,13 @@
     
     
 document.addEventListener('DOMContentLoaded', function(){
-		
+	let userName = document.querySelectorAll('#userName');
+    let no = document.querySelectorAll('#no');
+    userName.forEach( function (btn,idx){
+    	btn.addEventListener('click', function(){
+    		window.open("/tuna/admin/adminUserInfo?no="+no[idx].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
+    	})
+    })
 		
 		let nextBtn = document.querySelector("#next")
 		let prevBtn = document.querySelector("#prev")

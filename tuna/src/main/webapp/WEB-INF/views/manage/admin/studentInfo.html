@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <title>마이페이지</title>
+    <title>사용자 상세정보</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
@@ -17,7 +17,7 @@
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
           <div class="flex-grow-1">
             <h1 class="h1 fw-bold mb-2">
-              내 정보수정
+              사용자 상세정보
             </h1>
           </div>
         </div>
@@ -33,20 +33,19 @@
                   <div class="row">
                     <div class="col-md-6 col-xl-4 ">
                       <div class="mb-4">
-                        <h4>기본 정보
-                        <button class="btn btn btn-outline-secondary"  onclick="showPopup();">비밀번호변경</button></h4>
+                        <h4>기본 정보</h4>
                       </div>
                     </div>
-                    <form th:action="@{/stud/userInfoUpdate}" method="post">
+                    <form th:action="@{/admin/AdminUserUpdate}" method="post">
                     <div class="row">
                       <div class="col-lg-12 col-xl-12">
                       
                         <div class="mb-3">
                           <div class="input-group">
                             <span class="input-group-text">소속</span>
-                            <input type="text" class="form-control" th:value = "${@codeList.getName(vo.deptCode)}" readonly>
+                            <input type="text" class="form-control" name = "deptCode" th:value = "${@codeList.getName(vo.deptCode)}" >
                             <span class="input-group-text">이름</span>
-                            <input type="text" class="form-control" th:value = "${vo.name}" readonly>
+                            <input type="text" class="form-control" name = "name" th:value = "${vo.name}" >
                             <span class="input-group-text">생년월일</span>
                             <input type="text" class="form-control" th:value = "${vo.birth}" readonly>
                           </div>
@@ -54,7 +53,7 @@
                     <div class="mb-3">
                       <div class="input-group">
                         <span class="input-group-text">학번</span>
-                        <input type="text" class="form-control" th:value = "${vo.no}" readonly>
+                        <input type="text" class="form-control" th:value = "${vo.no}">
                         <span class="input-group-text">학년</span>
                         <input type="text" class="form-control" th:value = "${vo.sy}" readonly>
                         <span class="input-group-text">입학날짜</span>
@@ -64,15 +63,15 @@
                     <div class="mb-3">
                       <div class="input-group">
                         <span class="input-group-text">재적상태</span>
-                        <input type="text" class="form-control" th:value = "${@codeList.getName(vo.stateCode)}" readonly>
+                        <input type="text" class="form-control" name = "stateCode" th:value = "${@codeList.getName(vo.stateCode)}">
                         <span class="input-group-text">전화번호</span>
-                        <input type="text" class="form-control" name = "tel" th:value = "${vo.tel}">
+                        <input type="text" class="form-control"  th:value = "${vo.tel}" readonly>
                         <span class="input-group-text">이메일</span>
                         <th:block th:if = "${not #strings.isEmpty(vo.email)}">
-                      	<input type="text" class="form-control" name = "email" th:value = "${vo.email}">
+                      	<input type="text" class="form-control"  th:value = "${vo.email}" readonly> 
 	                    </th:block>
 	                    <th:block th:unless = "${not #strings.isEmpty(vo.email)}">
-	                      	<input type="text" class="form-control" name = "email"  placeholder = "이메일 주소를 입력하세요...">
+	                      	<input type="text" class="form-control" readonly>
 	                    </th:block>
                       </div>
                     </div>
@@ -96,10 +95,10 @@
                   <div class="col-4">
                     <div class = "row">
                       <div class = "col-10">
-                      <input type="text" class="form-control" id="postcode" name = "zip" th:value = "${vo.zip}">
+                      <input type="text" class="form-control" id="postcode"  th:value = "${vo.zip}" readonly>
                     </div>
                     <div class = "col-2">
-                      <button type="button" class="btn btn-secondary" onclick="execDaumPostcode()">
+                      <button type="button" class="btn btn-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                         </svg>
@@ -108,12 +107,12 @@
                     </div>  
                   </div>
                   <div class="col-8">
-                    <input type="text" id="address" name = "addr" class="form-control" th:value = "${vo.addr}"><br>
+                    <input type="text" id="address" class="form-control" th:value = "${vo.addr}" readonly><br>
                   </div>
                 </div>
                 <div class="d-flex justify-content-end">
                   <div class="m-2">
-                  <a th:href ="@{/student}" class = "btn btn-secondary">돌아가기</a>
+                  <a href="#" class="btn btn-secondary" onclick="javascript:window.close()">닫기</a>
               </div>
               <div class="m-2">
                 <button type="submit" class="btn btn-secondary">수정하기</button>
@@ -129,29 +128,6 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
-      function showPopup(){
-          window.open("/tuna/pwdUpdate","비밀번호변경","width=600, height=400, top=10, left=10");
-      }
-
-      function execDaumPostcode() {
-          new daum.Postcode({
-              oncomplete: function(data) {
-                  
-                  var addr = ''; 
-                  var extraAddr = ''; 
-                  if (data.userSelectedType === 'R') { 
-                      addr = data.roadAddress;
-                  } else { 
-                      addr = data.jibunAddress;
-                  }
-                  
-                  document.getElementById('postcode').value = data.zonecode;
-                  document.getElementById("address").value = addr;
-                  document.getElementById("address").focus();
-              }
-          }).open();
-      }
-  </script>
+    
   </body>
 </html>

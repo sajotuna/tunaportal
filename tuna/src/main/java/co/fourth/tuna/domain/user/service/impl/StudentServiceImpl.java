@@ -23,4 +23,9 @@ public class StudentServiceImpl implements StudentService {
 		mapper.studUpdate(vo);
 	}
 
+	@Override
+	public void AdminStudUpdate(StudentVO vo) {
+		mapper.AdminStudUpdate(vo);
+	}
+
 }
