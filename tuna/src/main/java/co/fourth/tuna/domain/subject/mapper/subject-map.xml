@@ -39,7 +39,7 @@
 			ofType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO"
 			javaType="java.util.ArrayList"
 			column="no"
-			select="co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.findBySubject"
+			select="co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.findBySubjectId"
 		></collection>
 		
 		<collection
@@ -77,6 +77,12 @@
 			/>
 		<collection property="lectureFileList" column="no"
 			select="co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.findListBySbjno"
+		/>
+		<collection property="lectureApplyList" column="no"
+			select="co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.findBySubject"
+		/>
+		<collection property="lectureQnaList" column="no" 
+			select="co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.findBySubjectId"
 		/>
 		
 	</resultMap>

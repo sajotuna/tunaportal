@@ -139,8 +139,7 @@ public class EclassProfessorEclassController {
 			return "redirect:/"+profPath;
 		}
 		SubjectVO subject = subjectService.findOneWithApplysAndRatioAndFilesById(no);
-		System.out.println(subject.getLectureFileList());
-		System.out.println(subject.getGradeRatioVO().getNo());
+		model.addAttribute("subject", subject);
 		
 		return req.getServletPath();
 	}

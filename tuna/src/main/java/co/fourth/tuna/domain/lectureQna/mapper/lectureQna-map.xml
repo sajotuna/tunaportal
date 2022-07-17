@@ -48,7 +48,7 @@ VALUES(?, ?, ?, ?, ?, ?, ?, ?)
 </insert> -->
 
 <!-- 목록 subject으로 찾기 -->
-	<select id="findBySubject"
+	<select id="findBySubjectId"
 		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 		SELECT *
 		FROM lectureqna

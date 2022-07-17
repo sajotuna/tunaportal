@@ -22,7 +22,7 @@ public interface LectureQnaMapper {
 	
 
 	// ckw 서브젝트로 목록 조회
-	public ArrayList<LectureQnaVO> findBySubject(SubjectVO vo);
+	public ArrayList<LectureQnaVO> findBySubjectId(@Param(value = "no") int no);
 	
 	public List<LectureQnaVO> findListWithSubjectAndStudentByProfessor(
 			@Param("prof")ProfessorVO vo, 
