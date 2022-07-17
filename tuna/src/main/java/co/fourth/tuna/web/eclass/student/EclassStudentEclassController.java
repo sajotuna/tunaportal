@@ -68,11 +68,11 @@ public class EclassStudentEclassController {
 		return "eclass/stud/lectureHome";
 	}
 	
-	//공지사항조회
-	@RequestMapping("/lectureNoticeSelect")
-	public String lectureNoticeSelect() {
-		return "eclass/stud/lectureNoticeSelect";
-	}
+//	//공지사항조회
+//	@RequestMapping("/lectureNoticeSelect")
+//	public String lectureNoticeSelect() {
+//		return "eclass/stud/lectureNoticeSelect";
+//	}
 	
 	//강의계획서
 //	@RequestMapping("/lecturePlan")
@@ -92,11 +92,11 @@ public class EclassStudentEclassController {
 		return "eclass/stud/qnaInsert";
 	}
 	
-	//질의응답목록
-	@RequestMapping("/qnaList")
-	public String qnaList() {
-		return "eclass/stud/qnaList";
-	}
+//	//질의응답목록
+//	@RequestMapping("/qnaList")
+//	public String qnaList() {
+//		return "eclass/stud/qnaList";
+//	}
 	
 //	//과제
 //	@RequestMapping("/taskList")

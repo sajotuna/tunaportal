@@ -48,40 +48,12 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td class="text-center">5</td>
-												<td class="text-center" colspan="7">조 바꿔주세요</td>
-												<td class="text-center" colspan="2">김철수</td>
-												<td class="text-center" colspan="2">2000/00/00</td>
+											<tr th:each="q : ${qna}">
+												<td class="text-center" th:text="${q.NO}">5</td>
+												<td class="text-center" colspan="7" th:text="${q.TITLE}"></td>
+												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
+												<td class="text-center" colspan="2" th:text="${q.ENROLLDATE}"></td>
 												<td class="text-center" colspan="2">미답변</td>
-											</tr>
-											<tr>
-												<td class="text-center">4</td>
-												<td class="text-center" colspan="7">중간고사를 못 쳤는데요</td>
-												<td class="text-center" colspan="2">박지연</td>
-												<td class="text-center" colspan="2">2000/00/00</td>
-												<td class="text-center" colspan="2">미답변</td>
-											</tr>
-											<tr>
-												<td class="text-center">3</td>
-												<td class="text-center" colspan="7">과제가 이게 뭐죠</td>
-												<td class="text-center" colspan="2">최명한</td>
-												<td class="text-center" colspan="2">2000/00/00</td>
-												<td class="text-center" colspan="2">답변</td>
-											</tr>
-											<tr>
-												<td class="text-center">2</td>
-												<td class="text-center" colspan="7">온라인강의 지원하나요?</td>
-												<td class="text-center" colspan="2">권안민</td>
-												<td class="text-center" colspan="2">2000/00/00</td>
-												<td class="text-center" colspan="2">답변</td>
-											</tr>
-											<tr>
-												<td class="text-center">1</td>
-												<td class="text-center" colspan="7">어디서 수업 듣죠?</td>
-												<td class="text-center" colspan="2">나가라</td>
-												<td class="text-center" colspan="2">2000/00/00</td>
-												<td class="text-center" colspan="2">답변</td>
 											</tr>
 										</tbody>
 									</table>
