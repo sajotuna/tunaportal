@@ -78,11 +78,9 @@ xmlns:th="http://www.thymeleaf.org"
 
           
 
+        <h3 class="h3 fw-bold">전체 공지</h3>
           <div class="col-xxl-12">
             <div class="block block-rounded">
-              <div class="block-header block-header-default">
-                <h3 class="block-title">전체 공지</h3>
-              </div>
               <div class="block-content">
 
                 <table class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
@@ -92,8 +90,8 @@ xmlns:th="http://www.thymeleaf.org"
                       <th>제목</th>
                       <th style="width: 15%">작성</th>
                       <th style="width: 15%">등록일시</th>
-                    </tr>
-                    <tr th:each="notice:${noticeList}">
+                    </tr >
+                    <tr th:onclick="'window.location.href = \''+ @{/eclass/professor/notice(no=${notice.no})}+ '\''" th:each="notice:${noticeList}">
                       <td th:text="${notice.no}">00</td>
                       <td th:text="${notice.title}" class="text-start">제목데이터 없음</td>
                       <td th:text="${notice.subjectVO.name}">과목 데이터없음</td>

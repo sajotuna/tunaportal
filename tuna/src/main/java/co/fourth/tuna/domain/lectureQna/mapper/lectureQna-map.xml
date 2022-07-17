@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper">
-
+	
+	<resultMap 
+		id="lectureQnaMapWithSubjectAndStudent"
+		type="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+		<association 
+			property="subjectVO"
+			column="sbjno"
+			javaType="co.fourth.tuna.domain.subject.vo.SubjectVO"			
+			select="co.fourth.tuna.domain.subject.mapper.SubjectMapper.findOne"
+		/>
+		<association 
+			property="studentVO" 
+			column="stno"
+			javaType="co.fourth.tuna.domain.user.vo.StudentVO"
+			select="co.fourth.tuna.domain.user.mapper.StudentMapper.findOneById"
+		/>
+	
+	</resultMap>
 <!-- 질문목록 -->
 <!-- <select id="qnaList" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 
@@ -38,8 +55,8 @@ VALUES(?, ?, ?, ?, ?, ?, ?, ?)
 		WHERE sbjno = #{no}
 	</select>
 	
-	<select id="findByProfessor"
-		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+	<select id="findListWithSubjectAndStudentByProfessor"
+		resultMap="lectureQnaMapWithSubjectAndStudent">
 		SELECT *
 		FROM (
 			SELECT
@@ -50,7 +67,7 @@ VALUES(?, ?, ?, ?, ?, ?, ?, ?)
 				ON	l.sbjno = s.no
 			WHERE s.pfno = #{prof.no}
 		) WHERE rn 
-				BETWEEN (#{pageNum}-1)*#{size}
+				BETWEEN (#{pageNum}-1)*#{size}+1
 				AND #{pageNum}*#{size}
 	</select>
 

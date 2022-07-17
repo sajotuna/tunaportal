@@ -2,6 +2,8 @@ package co.fourth.tuna.domain.lectureQna.vo;
 
 import java.sql.Date;
 
+import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.domain.user.vo.StudentVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +22,7 @@ public class LectureQnaVO {
 	private Date answerDate;
 	private int stNo;
 	private int sbjNo;
+	
+	private StudentVO studentVO;
+	private SubjectVO subjectVO;
 }

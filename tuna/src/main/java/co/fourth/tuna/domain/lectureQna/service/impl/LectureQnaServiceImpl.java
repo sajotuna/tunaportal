@@ -25,7 +25,7 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 
 	@Override
 	public List<LectureQnaVO> findByProfessor(ProfessorVO prof, int pageNum, int size) {
-		return mapper.findByProfessor(prof, pageNum, size);
+		return mapper.findListWithSubjectAndStudentByProfessor(prof, pageNum, size);
 		
 	}
 

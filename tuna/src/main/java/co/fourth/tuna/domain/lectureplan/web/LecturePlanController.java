@@ -26,7 +26,7 @@ public class LecturePlanController {
 		
 		String[] plan = lists.get(0).values().toString().split(",");
 		
-		String[] weekplan = plan[11].split("/");
+		String[] weekplan = plan[11].split("~");
 		
 		for(int i =0; i<plan.length;i++) {
 			System.out.println(plan[i]);
@@ -50,7 +50,7 @@ public class LecturePlanController {
 		
 		String[] plan = lists.get(0).values().toString().split(",");
 		
-		String[] weekplan = plan[11].split("/");
+		String[] weekplan = plan[11].split("~");
 		
 		for(int i =0; i<plan.length;i++) {
 			System.out.println(plan[i]);

@@ -6,18 +6,17 @@ import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO;
 import co.fourth.tuna.domain.grade.vo.GradeRatioVO;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
-import co.fourth.tuna.domain.lectureEval.vo.LectureEvalVO;
-import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
-import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
 import co.fourth.tuna.domain.objection.vo.ObjectionVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class SubjectVO {
 	private int no;
 	private String group;
