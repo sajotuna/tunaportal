@@ -20,16 +20,16 @@
 	
 	</resultMap>
 <!-- 질문목록 -->
-<!-- <select id="qnaList" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
-
-SELECT Q.*, S.NAME, L.SBJNO
-FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
-WHERE S.NO = 13168019
-AND Q.SBJNO = L.SBJNO
-AND L.SEASONCODE = 105
-
-</select>
-
+<!-- 	<select id="qnaList" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+	<![CDATA[
+	SELECT Q.*, S.NAME, L.SBJNO, ROWNUM rn
+	FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
+	WHERE Q.SBJNO = 18011
+    AND ROWNUM <= #{[pageNum} * #{amount}
+    ORDER BY Q.NO DESC
+    ]]>
+	</select> -->
+<!-- 
 질문단건조회
 <select id="qnaSelect" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 
@@ -48,7 +48,7 @@ VALUES(?, ?, ?, ?, ?, ?, ?, ?)
 </insert> -->
 
 <!-- 목록 subject으로 찾기 -->
-	<select id="findBySubject"
+	<select id="findBySubjectId"
 		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 		SELECT *
 		FROM lectureqna

@@ -38,6 +38,11 @@ public class SubjectServiceImpl implements SubjectService {
 	public List<SubjectVO> searchSubjectList(String seasonCode, String searchKey, String key) {
 		return map.searchSubjectList(seasonCode, searchKey, key);
 	}
+
+	@Override
+	public SubjectVO findOneWithApplysAndRatioAndFilesById(int no) {
+		return map.findOneWithApplysAndRatioAndFilesById(no);
+	}
 	
 	
 	

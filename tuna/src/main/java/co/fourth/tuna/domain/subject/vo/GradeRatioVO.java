@@ -1,4 +1,4 @@
-package co.fourth.tuna.domain.grade.vo;
+package co.fourth.tuna.domain.subject.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class GradeRatioVO {
-	private int sbjNo;
+	private int no;
 	private int middle;
 	private int finals;
 	private int task;

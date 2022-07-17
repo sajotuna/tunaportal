@@ -88,14 +88,23 @@ xmlns:th="http://www.thymeleaf.org"
               <h2 class="h3 fw-bold ms-3">강의 상세 내용</h2>
               <div class="block block-rounded">
                 <div class="block-content">
-                  <h5 class="h5">일이삼사오륙칠팔구십일이삼사오륙<small class="text-muted"> [2022년1학기]</small></h5>
-                  <p>
-                    <div>수강생  : <strong>30명</strong></div>
-                    <div>학점 : <strong>3</strong></div>
-                    <div>주차 : <strong>13 / 16</strong></div>
-                    <div>기간 : <strong>2022-03-02 ~ 2022-08-31</strong></div>
-                    <div>문의 : <strong class="text-danger">3</strong></div>
-                    <div>평가 항목 : <strong>중간고사(30), 기말고사(30), 출석(10), 과제(30)</strong></div>
+                  <h5 class="h5" >
+                    <span th:text="${subject.name}">이름 데이터 없음</span><small class="text-muted">&nbsp[
+                      <span th:text="${@codeList.getName(subject.seasonCode)}">학기 데이터 없음</span>]
+                    </small></h5>
+                    <div>수강생  : <strong><span th:text="${#lists.size(subject.lectureApplyList)}">데이터 없음</span> 명</strong></div>
+                    <div>학점 : <strong th:text="${subject.point}">데이터 없음</strong></div>
+                    <div>주차 : <strong>?? / 16</strong></div>
+                    <div>기간 : <strong>20??-??-?? ~ 20??-??-??</strong></div>
+                    <div>문의 : <strong class="text-danger" th:text="${#lists.size(subject.lectureQnaList)}">??</strong></div>
+                    <div>평가 항목 : 
+                      <th:block th:if="${subject.gradeRatioVO != null}">
+                        <strong>중간고사(<span th:text="${subject.gradeRatioVO.middle}">0</span>), 기말고사(<span th:text="${subject.gradeRatioVO.finals}">0</span>), 출석(<span th:text="${subject.gradeRatioVO.attd}">0</span>), 과제(<span th:text="${subject.gradeRatioVO.task}">0</span>)</strong>
+                      </th:block>
+                      <th:block th:unless="${subject.gradeRatioVO != null}">
+                        <span class="text-muted">데이터 없음</span>
+                      </th:block>  
+                    </div>
                     <div class="pt-3 row">
                       <div class="col-10 offset-1 pb-2 col-xxl-3 offset-xxl-6 pb-xxl-0">
                         <button class="col-12 btn btn-dark">
@@ -119,14 +128,27 @@ xmlns:th="http://www.thymeleaf.org"
                 <div class="block-content p-1">
                   <div class="" id="subject_files" style="height: 222px; overflow-y: scroll;">
                     <ul class="nav-items push">
-                      <li><a class="d-flex fs-sm text-primary-dark" href="javascript:void(0)">
-                        <div class=" flex-grow-1 p-2 m-0 row">
-                          <div class="col-xxl">1주차 강의 자료</div>
-                          <div class="col-xxl-2"><i class="far fa- fa-file"></i> (2)</div>
-                          <div class="col-xxl-auto">2022-07-06</div>
-                        </div>
-                      </a></li>
-                      
+                      <th:block th:if="${not #lists.isEmpty(subject.lectureFileList)}">
+                        <li th:each="file:${subject.lectureFileList}" class="p-2 list-group-item d-flex fs-sm text-primary-dark">
+                          <div class="flex-grow-1 m-0 row justify-content-between">
+                            <div class="col">
+                              <i class="far fa- fa-file"></i>&nbsp
+                              <a href="javascript:void(0)"><span th:text="${file.fileName}">이름 데이터 없음</span></a>
+                            </div>
+                            <div class="col-3">
+                              <span th:text="${file.enrollDate}">??-??-??</span>
+                            </div>
+                            <div href="javascript:void(0)" class="col-1 ">
+                              <button class="btn-block-option text-danger p-0">
+                                <i class="fa fa-fw fa-times"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </li>
+                      </th:block>
+                      <th:block th:unless="${not #lists.isEmpty(subject.lectureFileList)}">
+                        <li class="text-center text-muted m-4">강의자료가 없습니다!</li>
+                      </th:block>
                     </ul>
                   </div>
                   <div class="col-10 offset-1 col-xxl-4 offset-xxl-8 px-3 pb-3">
@@ -145,11 +167,12 @@ xmlns:th="http://www.thymeleaf.org"
               <div class="block block-rounded">
                 <ul class="nav nav-tabs nav-tabs-block" role="tablistr">
                   <li class="nav-item">
-                    <button class="nav-link" id="btabs-static-progress-tab" data-bs-toggle="tab" 
+                    <button class="nav-link active" id="btabs-static-progress-tab" data-bs-toggle="tab" 
                     data-bs-target="#btabs-static-progress">강의 진도</button>
                   </li>
                   <li class="nav-item">
-                    <button class="nav-link active" id="btabs-static-student-tab" data-bs-toggle="tab" data-bs-target="#btabs-static-student">수강생/출결</button>
+                    <button class="nav-link" id="btabs-static-student-tab" data-bs-toggle="tab" 
+                    data-bs-target="#btabs-static-student">수강생/출결</button>
                   </li>
                   <li class="nav-item">
                     <button class="nav-link" id="btabs-static-task-tab" data-bs-toggle="tab"
@@ -184,7 +207,7 @@ xmlns:th="http://www.thymeleaf.org"
       ██      ██   ██  ██████   ██████  ██   ██ ███████ ███████ ███████ 
 -->
                 <div class="block-content tab-content">
-                  <div class="tab-pane" id="btabs-static-progress" role="tabpanel" aria-labelledby="btabs-static-progress-tab">
+                  <div class="tab-pane active" id="btabs-static-progress" role="tabpanel" aria-labelledby="btabs-static-progress-tab">
                     <div class="row">
                       <div class="col-xxl-7">
                         <div class="block block-rounded block-themed block-bordered">
@@ -294,7 +317,7 @@ xmlns:th="http://www.thymeleaf.org"
 ▀ ██ ▀     ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██    
       ███████    ██     ██████  ██████  ███████ ██   ████    ██  
 -->
-                  <div class="tab-pane active pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
+                  <div class="tab-pane pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
                     <div style="overflow-y:scroll; height: 310px;">
                       <table class="table table-hover table-vcenter">
                         <tbody>

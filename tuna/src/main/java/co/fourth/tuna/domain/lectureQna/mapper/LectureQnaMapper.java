@@ -13,7 +13,7 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 public interface LectureQnaMapper {
 
 	//질문목록
-	
+	public String qnaList(LectureQnaVO vo);
 	//질문단건조회
 	
 	//질문에 대한 댓글 조회?
@@ -22,7 +22,7 @@ public interface LectureQnaMapper {
 	
 
 	// ckw 서브젝트로 목록 조회
-	public ArrayList<LectureQnaVO> findBySubject(SubjectVO vo);
+	public ArrayList<LectureQnaVO> findBySubjectId(@Param(value = "no") int no);
 	
 	public List<LectureQnaVO> findListWithSubjectAndStudentByProfessor(
 			@Param("prof")ProfessorVO vo, 
