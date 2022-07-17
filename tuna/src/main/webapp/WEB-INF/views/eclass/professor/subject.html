@@ -6,6 +6,8 @@ xmlns:th="http://www.thymeleaf.org"
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
 
 <!--
 ████████ ██ ████████ ██      ███████ 
@@ -164,8 +166,8 @@ xmlns:th="http://www.thymeleaf.org"
 
           <div class="row">
             <div class="col-12">
-              <div class="block block-rounded">
-                <ul class="nav nav-tabs nav-tabs-block" role="tablistr">
+              <div id="subject-contents" class="block block-rounded">
+                <ul id="subject-tab-panel" class="nav nav-tabs nav-tabs-block" role="tablistr">
                   <li class="nav-item">
                     <button class="nav-link active" id="btabs-static-progress-tab" data-bs-toggle="tab" 
                     data-bs-target="#btabs-static-progress">강의 진도</button>
@@ -199,6 +201,8 @@ xmlns:th="http://www.thymeleaf.org"
                     data-bs-target="#btabs-static-grade">성적등록</button>
                   </li>
                 </ul>
+
+                <div id="subject-tab-content" class="block-content tab-content">
 <!--
       ██████  ██████   ██████   ██████  ██████  ███████ ███████ ███████ 
 ▄ ██ ▄██   ██ ██   ██ ██    ██ ██       ██   ██ ██      ██      ██      
@@ -206,7 +210,6 @@ xmlns:th="http://www.thymeleaf.org"
 ▀ ██ ▀██      ██   ██ ██    ██ ██    ██ ██   ██ ██           ██      ██ 
       ██      ██   ██  ██████   ██████  ██   ██ ███████ ███████ ███████ 
 -->
-                <div class="block-content tab-content">
                   <div class="tab-pane active" id="btabs-static-progress" role="tabpanel" aria-labelledby="btabs-static-progress-tab">
                     <div class="row">
                       <div class="col-xxl-7">
@@ -586,6 +589,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                     <p></p>
                   </div><!-- grade TAB END-->
+
                 </div> <!-- tab content END-->
 
               </div>
@@ -861,6 +865,77 @@ xmlns:th="http://www.thymeleaf.org"
             <div>결석</div>
           </div>
          -->
+          <script>
+            const TAB_ID = "tab-pane-";
+
+            let header = document.querySelector('meta[name="_csrf_header"]').content;
+            let token = document.querySelector('meta[name="_csrf"]').content;
+
+            window.addEventListener("DOMContentLoaded", function() {
+              let tabFlag = new Map();
+              // let subjectContents = document.querySelector("#subject-content");
+              let tabPanel = document.querySelector("#subject-tab-panel");
+              let tabContents = document.querySelectorAll("#subject-tab-content>div");
+
+              initSubject();
+
+              function initSubject() {
+                tabPanel.addEventListener('click', function(ele) {
+                  let id = ele.target.parentNode.id;
+                  id = id.slice(id.indexOf(TAB_ID)+TAB_ID.length);
+                  console.log(id); 
+                  setTabContent(id);
+                })
+
+                for(let i = 0; i < tabPanel.children.length; i++) {
+                  tabPanel.children[i].setAttribute('id', TAB_ID+i);
+                  tabFlag.set(i, false);
+                }
+                
+              }
+
+              function setTabContent(tabIdx) {
+                switch(tabIdx) {
+                  case 0:
+                    fetch('/tuna/eclassNotices', {
+                      method: "POST",
+                      headers: {
+                        'X-CSRF-Token': token,
+                        'Content-Type': 'application/json'
+                      }
+                    })
+                    .then(result => result.json())
+                    .then(result => {
+                      console.log(result);
+                    })
+                    break;
+                  case 1:
+                    break;
+                  case 2:
+                    break;
+                  case 3:
+                    break;
+                  case 4:
+                    break;
+                  case 5:
+                    break;
+                  case 6:
+                    break;
+                  case 7:
+                    break;
+                  default:
+                    break;
+                }
+
+              }
+
+              function setNoticeContent() {
+                // ...
+              }
+
+
+            });
+          </script>
       </main>
 
 <!--
