@@ -58,14 +58,11 @@
 			<div class="block-header bg-primary-darker">
 				<h4 class="block-title">과목별 성적 내역</h4>
 				<div class="block-options">
-					<form id="lecGradeSelFrm">
-						<select class="form-select btn-sm" id="season" name="season" style="width: 150px;">
-							<option selected>연도/학기</option>
-							<option value="2022-2">2022년도 2학기</option>
-							<option value="2022-1">2022년도 1학기</option>
-							<option value="2021-2">2021년도 2학기</option>
-						</select>
-					</form>
+					<select class="form-select btn-sm" id="subjectGradeSelect" name="seasonCode" style="width: 150px;">
+						<option selected value="all">전체 학기</option>
+						<option value="106">2022년도 2학기</option>
+						<option value="105">2022년도 1학기</option>
+					</select>
 				</div>
 				<div class="block-options">
 					<button type="button" id="pdfBtn" class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#pdf">PDF</button>
@@ -76,27 +73,17 @@
 				<table id="my-table" class="table table-striped table-vcenter scroll-table">
 					<thead>
 						<tr>
-							<th style="width: 100px;">연도</th>
-							<th style="width: 100px;">학기</th>
-							<th style="width: 100px;">이수구분</th>
+							<th style="width: 150px;">연도/학기</th>
+							<th style="width: 150px;">이수구분</th>
 							<th style="width: 150px;">교과목-분반</th>
 							<th>과목명</th>
-							<th style="width: 100px;">학점</th>
-							<th style="width: 100px;">등급</th>
-							<th style="width: 100px;">평점</th>
+							<th style="width: 150px;">학점</th>
+							<th style="width: 150px;">등급</th>
+							<th style="width: 150px;">평점</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td scope="row" class="fw-semibold fs-sm">2014</td>
-							<td class="fw-semibold fs-sm">1</td>
-							<td class="fw-semibold fs-sm">전공필수</td>
-							<td class="fw-semibold fs-sm">40753-01</td>
-							<td class="fw-semibold fs-sm">타이포그래피(1)</td>
-							<td class="fw-semibold fs-sm">2</td>
-							<td class="fw-semibold fs-sm">A+</td>
-							<td class="fw-semibold fs-sm">4.5</td>
-						</tr>
+					<tbody id="subjectGradeTb">
+						
 					</tbody>
 				</table>
 			</div>
@@ -116,19 +103,13 @@
 						<table class="table table-striped table-vcenter text-center">
 							<thead>
 								<tr>
-									<th class="d-none d-sm-table-cell" style="width: 100px;">연도</th>
-									<th class="d-none d-sm-table-cell" style="width: 100px;">학기</th>
-									<th class="d-none d-sm-table-cell" style="width: 100px;">취득학점</th>
-									<th class="d-none d-sm-table-cell" style="width: 150px;">평점평균</th>
+									<th class="d-none d-sm-table-cell">연도/학기</th>
+									<th class="d-none d-sm-table-cell">취득학점</th>
+									<th class="d-none d-sm-table-cell">평점평균</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td scope="row" class="fw-semibold fs-sm">2014</td>
-									<td class="fw-semibold fs-sm">1</td>
-									<td class="fw-semibold fs-sm">18</td>
-									<td class="fw-semibold fs-sm">3.38</td>
-								</tr>
+							<tbody id="avgGradeTb">
+								
 							</tbody>
 						</table>
 					</div>
@@ -144,21 +125,21 @@
 					</div>
 					<!-- Table -->
 					<div class="mb-4">
-						<table class="table table-striped table-vcenter text-center ">
-							<tr>
-								<th scope="row" class="d-none d-sm-table-cell" style="width: 50%;">전공기초</th>
-								<td class="fw-semibold fs-sm">0</td>
-							</tr>
+						<table id="typeGrade" class="table table-striped table-vcenter text-center ">
 							<tr>
 								<th scope="row" class="d-none d-sm-table-cell" style="width: 50%;">전공필수</th>
 								<td class="fw-semibold fs-sm">0</td>
 							</tr>
 							<tr>
-								<th scope="row" class="d-none d-sm-table-cell" style="width: 50%;">일반교양</th>
+								<th scope="row" class="d-none d-sm-table-cell" style="width: 50%;">전공기초</th>
 								<td class="fw-semibold fs-sm">0</td>
 							</tr>
 							<tr>
 								<th scope="row" class="d-none d-sm-table-cell" style="width: 50%;">필수교양</th>
+								<td class="fw-semibold fs-sm">0</td>
+							</tr>
+							<tr>
+								<th scope="row" class="d-none d-sm-table-cell" style="width: 50%;">일반교양</th>
 								<td class="fw-semibold fs-sm">0</td>
 							</tr>
 						</table>
@@ -211,6 +192,111 @@
 		pdfBtn.addEventListener('click', function() {
 			pdfFrame.setAttribute('src', tableToPdf(table));
 		});
+		
+		$(function() {
+			subjectGrade();
+			avgGrade();
+			seasonSubjectGrade();
+		})
+		
+		function subjectGrade() {
+
+			$.ajax({
+				
+				url: getContextPath() + 'stud/subjectGrade',
+				type: 'GET',
+				data: {stNo:20142268},
+				dataType: 'json',
+
+			}).done(function(grades) {
+				
+				let type1 = 0, type2 = 0, type3 = 0, type4 = 0;
+				
+				$('#subjectGradeTb').html('');
+				for (grade of grades) {
+					
+					switch(grade.TYPE) {
+						case '701' : type1 += parseInt(`${grade.POINT}`); break;
+						case '702' : type2 += parseInt(`${grade.POINT}`); break;
+						case '703' : type3 += parseInt(`${grade.POINT}`); break;
+						case '704' : type4 += parseInt(`${grade.POINT}`); break;
+					}
+					
+					$('#subjectGradeTb').append($('<tr>').append($('<td>').addClass('fw-semibold fs-sm').text(grade.SEASONCODE))
+													     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.TYPE))
+													     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.NO))
+													     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.NAME))
+													     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.POINT))
+													     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.ALPHABET))
+													     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.TOTAL))
+												);	
+					
+					
+				}
+				
+				let types = [type1, type2, type3, type4];
+				
+				for (i=0; i<types.length; i++) {
+					$('#typeGrade td').eq(i).text(types[i])
+				}
+			})
+			
+		}
+		
+		function seasonSubjectGrade() {
+			$('select[id=subjectGradeSelect]').on('change', function() {
+				
+				if($(this).val() === 'all') {
+					
+					subjectGrade();
+					
+				} else {
+					
+					$.ajax({
+						
+						url: getContextPath() + 'stud/seasonSubjectGrade',
+						type: 'GET',
+						data: {stNo:20142268, seasonCode:$(this).val()},
+						dataType: 'json',
+
+					}).done(function(grades) {
+						$('#subjectGradeTb').html('');
+						for (grade of grades) {
+							$('#subjectGradeTb').append($('<tr>').append($('<td>').addClass('fw-semibold fs-sm').text(grade.SEASONCODE))
+															     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.TYPE))
+															     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.NO))
+															     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.NAME))
+															     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.POINT))
+															     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.ALPHABET))
+															     .append($('<td>').addClass('fw-semibold fs-sm').text(grade.TOTAL))
+														);		
+						}
+					})
+				}
+			})
+		}
+		
+		function avgGrade() {
+			
+			$.ajax({
+				
+				url: getContextPath() + 'stud/avgGrade',
+				type: 'GET',
+				data: {stNo:20142268},
+				dataType: 'json',
+
+			}).done(function(grades) {
+				
+				for (grade of grades) {
+					$('#avgGradeTb').append($('<tr>').append($('<td>').addClass('fw-semibold fs-sm').text(grade.SEASONCODE))
+													 .append($('<td>').addClass('fw-semibold fs-sm').text(grade.SUM))
+													 .append($('<td>').addClass('fw-semibold fs-sm').text(grade.AVG))
+										   );		
+				}
+			})
+			
+		}
+		
 	</script>
 </th:block>
 </body>

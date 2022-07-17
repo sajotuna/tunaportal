@@ -147,33 +147,6 @@ SELECT
 	}
 </insert>
 
-<!-- 내 수강내역 -->
-<select id="mySubjectList"
-		parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO" 
-		resultType="map">
-
-	SELECT DISTINCT
-       L.SEASONCODE, 
-       L.SBJNO, 
-       S.NAME, 
-       S.TYPE, 
-       S.POINT, 
-       S.DEPTCODE,
-       F.NAME AS PFNAME,
-       LISTAGG(LS.TIMECODE, ' ') WITHIN GROUP (ORDER BY LS.DAYCODE DESC)  OVER (PARTITION BY S.NO) AS TIMECODE,
-       LISTAGG(LS.DAYCODE, '/') WITHIN GROUP (ORDER BY LS.DAYCODE DESC)  OVER (PARTITION BY S.NO) AS DAYCODE
-	FROM LECTUREAPPLY L, 
-	     SUBJECT S,
-	     PROFESSOR F,
-	     LECTURESCHEDULE LS
-	WHERE L.SBJNO = S.NO 
-	AND S.PFNO = F.NO
-	AND S.NO = LS.SBJNO
-	AND L.STNO = #{stNo}
-	AND L.SEASONCODE = #{seasonCode}
-
-</select>
-	
 <select id = "ApplyErrorMsg" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO" resultType="String">
 	select COURSEROOMCHECK(#{sbjNo}, #{stNo}) FROM dual
 </select>
@@ -192,6 +165,32 @@ SELECT
 	where no = #{sbjNo}
 </select>		
 
-	
+<!-- 내 수강 내역 -->
+<select id="mySubjectList"
+		parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO" 
+		resultType="map">
+
+	SELECT DISTINCT
+       L.SEASONCODE, 
+       L.SBJNO, 
+       S.NAME, 
+       S.TYPE, 
+       S.POINT, 
+       S.DEPTCODE,
+       F.NAME AS PFNAME,
+       LS.ROOMCODE,
+       LISTAGG(LS.TIMECODE, ' ') WITHIN GROUP (ORDER BY LS.DAYCODE DESC)  OVER (PARTITION BY S.NO) AS TIMECODE,
+       LISTAGG(LS.DAYCODE, '/') WITHIN GROUP (ORDER BY LS.DAYCODE DESC)  OVER (PARTITION BY S.NO) AS DAYCODE
+	FROM LECTUREAPPLY L, 
+	     SUBJECT S,
+	     PROFESSOR F,
+	     LECTURESCHEDULE LS
+	WHERE L.SBJNO = S.NO 
+	AND S.PFNO = F.NO
+	AND S.NO = LS.SBJNO
+	AND L.STNO = #{stNo}
+	AND L.SEASONCODE = #{seasonCode}
+
+</select>
 
 </mapper>

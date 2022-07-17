@@ -1,10 +1,47 @@
 package co.fourth.tuna.domain.grade.web;
 
-import org.springframework.stereotype.Controller;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import co.fourth.tuna.domain.grade.service.GradeService;
+
+@RestController
 public class GradeController {
+	
+	@Autowired 
+	private GradeService gradeDao;
 
-
+	// 당해학기 성적 조회
+	@RequestMapping("/stud/currentSemesterGradeList")
+	public List<Map<String, Object>> currentSemesterGrade(int stNo, String seasonCode, Model model) {
+		List<Map<String, Object>> lists = gradeDao.currentSemesterGradeSelect(stNo, seasonCode);
+		return lists;
+	}
+	
+	// 보관 성적 조회 - 과목별 성적 내역
+	@RequestMapping("/stud/subjectGrade")
+	public List<Map<String, Object>> subjectGrade(int stNo){
+		List<Map<String, Object>> subjectGrades = gradeDao.subjectGradeSelect(stNo);
+		return subjectGrades;
+	}
+	
+	// 보관 성적 조회 - 과목별 성적 내역(연도/학기별)
+	@RequestMapping("/stud/seasonSubjectGrade")
+	public List<Map<String, Object>> seasonSubjectGrade(int stNo, String seasonCode){
+		List<Map<String, Object>> subjectGrades = gradeDao.seasonSubjectGradeSelect(stNo, seasonCode);
+		return subjectGrades;
+	}
+	
+	// 보관 성적 조회 - 평균 평점
+	@RequestMapping("/stud/avgGrade")
+	public List<Map<String, Object>> avgGrade(int stNo){
+		List<Map<String, Object>> avgGrade = gradeDao.avgGradeSelect(stNo);
+		return avgGrade;
+	}
+	
 }

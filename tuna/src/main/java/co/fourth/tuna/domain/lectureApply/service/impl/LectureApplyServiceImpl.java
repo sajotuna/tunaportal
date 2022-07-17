@@ -1,6 +1,7 @@
 package co.fourth.tuna.domain.lectureApply.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,11 +45,6 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 		mapper.CourseInsert(vo);
 		
 	}
-
-	@Override
-	public List<LectureApplyVO> mySubjectList(LectureApplyVO vo) {
-		return mapper.mySubjectList(vo);
-	}
   
   @Override
 	public String ApplyErrorMsg(LectureApplyVO vo) {
@@ -66,5 +62,11 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 		// TODO Auto-generated method stub
 		return mapper.subjectTarget(vo);
 	}
+
+	@Override
+	public List<Map<String, Object>> mySubjectList(LectureApplyVO vo) {
+		return mapper.mySubjectList(vo);
+	}
+	
 	
 }
