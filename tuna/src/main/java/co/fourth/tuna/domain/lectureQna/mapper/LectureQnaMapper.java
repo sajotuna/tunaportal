@@ -13,7 +13,7 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 public interface LectureQnaMapper {
 
 	//질문목록
-	
+	public String qnaList(LectureQnaVO vo);
 	//질문단건조회
 	
 	//질문에 대한 댓글 조회?

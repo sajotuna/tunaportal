@@ -28,4 +28,18 @@ public class LectureNoticeController {
 		return "eclass/stud/lectureNotice";
 	}
 	
+	@RequestMapping("/eclass/student/lectureNoticeSelect")
+	public String lectureNoticeSelect(Model model, LectureNoticeVO vo) {
+		
+		vo.setStNo(13168019);
+		vo.setSeasonCode(105);
+		vo.setSbjNo(90079);
+		vo.setNo(1);
+		List<Map<String, Object>> ns = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeSelect", vo);
+		
+		model.addAttribute("ns", ns);
+		
+		return "eclass/stud/lectureNoticeSelect";
+	}
+	
 }
