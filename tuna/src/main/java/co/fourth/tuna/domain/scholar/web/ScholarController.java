@@ -41,6 +41,7 @@ public class ScholarController {
 	@RequestMapping("/stud/scholarshipApplicationStatus")
 	public String scholarshipApplicationStatus(Model model,ScholarApplyVO vo,Authentication authentication) {
 		vo.setStNo(authentication.getName());
+		vo.setSeasonCode("105");
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.ScholarCheck", vo);
 		
 		model.addAttribute("list", lists);
@@ -83,9 +84,14 @@ public class ScholarController {
 	}
 	
 	@RequestMapping("/stud/scholarshipApplicationSearch")
-	public String scholarshipApplicationSearch(@RequestParam(value = "year", required = false, defaultValue = "") String year, @RequestParam(value = "semester", required = false, defaultValue = "") String semester) {
+	public String scholarshipApplicationSearch(Authentication authentication,Model model,ScholarApplyVO vo, @RequestParam(value = "year", required = false, defaultValue = "") String year) {
 		
-		System.out.println(year + " :::::::" + semester);
+		vo.setSeasonCode(year);
+		vo.setStNo(authentication.getName());
+		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.ScholarCheck", vo);
+		
+		model.addAttribute("list", lists);
+		model.addAttribute("year", year);
 		
 		return "scholarship/user/scholarshipApplicationSearch";
 	}

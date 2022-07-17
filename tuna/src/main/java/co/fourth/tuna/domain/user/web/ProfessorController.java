@@ -25,4 +25,22 @@ public class ProfessorController {
 		
 	}
 	
+	@RequestMapping("/staff/userUpdate")
+	public String userUpdate(Model model, ProfessorVO vo, Authentication authentication) {
+		vo.setNo(Integer.parseInt(authentication.getName()));
+		vo = professorDao.findById(vo);
+		model.addAttribute("vo", vo);
+		
+		return "manage/user/professorUpdate";
+		
+	}
+	
+	@RequestMapping("/staff/proInfoUpdate")
+	public String proInfoUpdate(ProfessorVO vo, Authentication authentication) {
+		vo.setNo(Integer.parseInt(authentication.getName()));
+		professorDao.profUpdate(vo);
+		return "redirect:/staff/userUpdate";
+	}
+	
+	
 }

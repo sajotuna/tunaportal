@@ -45,8 +45,9 @@ insert into scholarapply values(#{no}, 501, null, 105, #{stNo}, #{schNo}, null, 
 	where sa.stno = #{stNo} 
 	  and sa.stno = st.no
 	  and sa.schno = s.no
-	  and sa.seasoncode = 105
-
+	  <if test="seasonCode != null and !seasonCode.equals('')">
+	  		and sa.seasoncode = #{seasonCode}
+	  </if>
 </select>
 
 <update id = "FileUpLoad" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">

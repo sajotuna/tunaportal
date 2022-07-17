@@ -10,4 +10,11 @@
 
 </select>
 
+<update id = "profUpdate" parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO">
+	
+	update professor set tel = #{tel}, email = #{email}, zip = #{zip}, addr = #{addr}
+	where no = #{no}
+
+</update>
+
 </mapper>

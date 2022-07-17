@@ -6,5 +6,12 @@
 	select* from student where no = #{no}
 </select>
 
+<update id = "studUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
+	update student 
+	set tel = #{tel}, email = #{email}, zip = #{zip}, addr = #{addr}
+	where no = #{no}
+
+</update>
+
 
 </mapper>

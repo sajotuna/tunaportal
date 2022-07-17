@@ -15,8 +15,12 @@ public class StudentServiceImpl implements StudentService {
 	
 	@Override
 	public StudentVO findById(StudentVO vo) {
-		// TODO Auto-generated method stub
 		return mapper.findById(vo);
+	}
+
+	@Override
+	public void studUpdate(StudentVO vo) {
+		mapper.studUpdate(vo);
 	}
 
 }
