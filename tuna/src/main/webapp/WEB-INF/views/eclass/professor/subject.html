@@ -467,7 +467,7 @@ xmlns:th="http://www.thymeleaf.org"
       ██   ████  ██████     ██    ██  ██████ ███████
 -->
                   <div class="tab-pane" id="btabs-static-notice" role="tabpanel" aria-labelledby="btabs-static-notice-tab">
-                    <table class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
+                    <table id="subject-notice-table" class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
                       <tbody>
                         <!-- <tr>
                           <th style="width: 100px">번호</th>
@@ -870,9 +870,9 @@ xmlns:th="http://www.thymeleaf.org"
 
             let header = document.querySelector('meta[name="_csrf_header"]').content;
             let token = document.querySelector('meta[name="_csrf"]').content;
+            let tabFlag = new Map();
 
             window.addEventListener("DOMContentLoaded", function() {
-              let tabFlag = new Map();
               // let subjectContents = document.querySelector("#subject-content");
               let tabPanel = document.querySelector("#subject-tab-panel");
               let tabContents = document.querySelectorAll("#subject-tab-content>div");
@@ -883,8 +883,7 @@ xmlns:th="http://www.thymeleaf.org"
                 tabPanel.addEventListener('click', function(ele) {
                   let id = ele.target.parentNode.id;
                   id = id.slice(id.indexOf(TAB_ID)+TAB_ID.length);
-                  console.log(id); 
-                  setTabContent(id);
+                  setTabContent(  parseInt(id) );
                 })
 
                 for(let i = 0; i < tabPanel.children.length; i++) {
@@ -897,17 +896,6 @@ xmlns:th="http://www.thymeleaf.org"
               function setTabContent(tabIdx) {
                 switch(tabIdx) {
                   case 0:
-                    fetch('/tuna/eclassNotices', {
-                      method: "POST",
-                      headers: {
-                        'X-CSRF-Token': token,
-                        'Content-Type': 'application/json'
-                      }
-                    })
-                    .then(result => result.json())
-                    .then(result => {
-                      console.log(result);
-                    })
                     break;
                   case 1:
                     break;
@@ -916,6 +904,9 @@ xmlns:th="http://www.thymeleaf.org"
                   case 3:
                     break;
                   case 4:
+                    if(tabFlag.get(tabIdx)){ break; };
+                    tabFlag.set(tabIdx, true);
+                    setNoticeContent(tabIdx);
                     break;
                   case 5:
                     break;
@@ -930,7 +921,55 @@ xmlns:th="http://www.thymeleaf.org"
               }
 
               function setNoticeContent() {
-                // ...
+                //
+                // fetch('/tuna/eclassNotices', {
+                //   method: "POST",
+                //   headers: {
+                //     'X-CSRF-Token': token,
+                //     'Content-Type': 'application/json'
+                //   }
+                // })
+                // .then(result => result.json())
+                // .then(result => {
+                //   console.log(result);
+                // })
+                
+                let tempJson = [
+                  {
+                    id:'1',
+                    title:'제목',
+                    date:'2022-07-03'
+                  },
+                  {
+                    id:'2',
+                    title:'제목2',
+                    date:'2022-07-04'
+                  }
+                ]
+
+                let table = document.querySelector('#subject-notice-table');
+                let tbody = table.firstElementChild;
+                console.log(tbody);
+                tempJson.forEach(data => {
+                  console.log(data);
+
+                  let tr = document.createElement('tr');
+                  tbody.appendChild(tr);
+
+                  let td_no = document.createElement('td');
+                  let td_title = document.createElement('td');
+                  td_title.classList.add('text-start')
+                  let td_date = document.createElement('td');
+                  
+                  tr.appendChild(td_no)
+                  tr.appendChild(td_title);
+                  tr.appendChild(td_date);
+
+                  td_no.innerText = data.id;
+                  td_title.innerText = data.title;
+                  td_date.innerText = data.date;
+                })
+                
               }
 
 
