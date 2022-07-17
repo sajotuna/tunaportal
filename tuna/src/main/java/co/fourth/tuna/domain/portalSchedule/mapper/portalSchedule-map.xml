@@ -11,6 +11,11 @@ FROM PORTALSCHEDULE
 WHERE SEASONCODE =#{seasonCode}
 </select>
 
+<!-- admin schedule list -->
+<select id="adminScheduleList" resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
+SELECT * 
+FROM PORTALSCHEDULE;
+</select>
 
 <!-- admin schedule insert -->
 <insert id="scheduleInsert"
