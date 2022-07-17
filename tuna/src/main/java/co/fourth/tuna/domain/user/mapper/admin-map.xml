@@ -6,4 +6,44 @@
 	select* from admin where no = #{no}
 </select>
 
+<select id ="adminUserCheck" parameterType="map" resultType="map">
+SELECT u.*
+FROM
+    (SELECT ROWNUM RN, LOGIN.* FROM
+        (SELECT S2.NO, S2.NAME, S2.STATECODE, S2.SY, (SELECT  NVL(ROUND(SUM((CASE  WHEN G.TOTAL BETWEEN 95 AND 100 THEN 4.5
+                                WHEN G.TOTAL >= 90                       THEN 4.0
+                                WHEN G.TOTAL >= 85                       THEN 3.5
+                                WHEN G.TOTAL >= 80                       THEN 3.0
+                                WHEN G.TOTAL >= 75                       THEN 2.5
+                                WHEN G.TOTAL >= 70                       THEN 2.0
+                                WHEN G.TOTAL >= 65                       THEN 1.5
+                                WHEN G.TOTAL BETWEEN 60 AND 64  THEN 1.0
+                                ELSE 0 END ) * S.POINT) / SUM(S.POINT),2),0) AS TOTAL
+            FROM GRADE G, SUBJECT S 
+            WHERE S.SEASONCODE = 105 AND S.NO = G.SBJNO AND STNO = S2.NO) AS AVGSCORE, S2.DEPTCODE, S2.ENTERDATE
+        FROM STUDENT S2
+        WHERE NO IN (SELECT NO FROM STUDENT)
+        UNION
+        SELECT NO, NAME, STATECODE, NULL, NULL, DEPTCODE, HIREDATE
+    FROM PROFESSOR
+    ) LOGIN) u
+WHERE rn 
+BETWEEN (#{pageNum}-1)*#{size}
+    AND #{pageNum}*#{size}
+    <if test="year != null and !year.equals('')">
+    </if>
+    <if test="deptCode != null and !deptCode.equals('')">
+    AND u.DEPTCODE = #{deptCode}
+    </if>
+    <if test="statecode != null and !statecode.equals('')">
+    AND u.STATECODE = #{statecode}
+    </if>
+    <if test="no != null and !no.equals('')">
+    AND u.no = #{no}
+    </if>
+     
+
+</select>
+
+
 </mapper>

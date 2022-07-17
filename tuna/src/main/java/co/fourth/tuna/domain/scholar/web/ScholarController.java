@@ -97,8 +97,50 @@ public class ScholarController {
 	}
 	
 	@RequestMapping("/admin/adminScholarshipApplicationSearch")
-	public String adminScholarshipApplicationSearch() {
+	public String adminScholarshipApplicationSearch(Model model, @RequestParam Map<String, Object> params, @RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum) {
+		
+		params.put("pageNum", pageNum);
+		params.put("size", 10);
+		
+		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.adminScholarCheck",params);
+		
+		model.addAttribute("list", lists);
+		
+		
 		return "scholarship/admin/adminScholarshipApplicationSearch";
 	}
+	
+	
+	@RequestMapping("/admin/scholarCheck")
+	public String scholarCheck(ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox) {
+		
+		vo.setStateCode("504");
+		for(String Check : scholarCheckbox) {
+			vo.setNo(Check);
+			ScholarDao.scholarUpdate(vo);
+		}
+		
+		return "redirect:/admin/adminScholarshipApplicationSearch";
+	}
+	@RequestMapping("/admin/scholarReject")
+	public String scholarReject(ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox) {
+		
+		vo.setStateCode("503");
+		for(String Check : scholarCheckbox) {
+			vo.setNo(Check);
+			ScholarDao.scholarUpdate(vo);
+		}
+		return "redirect:/admin/adminScholarshipApplicationSearch";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
