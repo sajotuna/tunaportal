@@ -72,7 +72,7 @@ xmlns:th="http://www.thymeleaf.org"
                   <ul class="nav-items push" th:if="${not #lists.isEmpty(subList)}">
                     <!-- TODO remove id -->
                     <li id="test-li"  th:each="sub:${subList}">
-                      <a class="row m-2 pb-2" th:href="@{/eclass/professor/subject}">
+                      <a class="row m-2 pb-2" th:href="@{/eclass/professor/subject(no=${sub.no})}">
                         
                         <div class="col-6">
                           <!--19자 제한 (19자 넘으면 19자 부터 ...)-->
@@ -131,12 +131,12 @@ xmlns:th="http://www.thymeleaf.org"
                         <td class="d-flex justify-content-between">
                           <div>
                             <div><strong th:text="${qna.title}">제목 데이터없음</strong></div>
-                            <div th:text="${qna.sbjNo}">참치의역사</div>
+                            <div th:text="${qna.subjectVO.name}">참치의역사</div>
                           </div>
                           <div class="text-end">
                             <div th:text="${qna.enrollDate}">시각데이터 없음</div>
                             <div data-bs-toggle="modal" data-bs-target="#modal-block-normal">
-                              <a th:text="${qna.stNo}" class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-original-title="<i class='fa fa-user'></i> 학생정보" 
+                              <a th:text="${qna.studentVO.name}" class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-original-title="<i class='fa fa-user'></i> 학생정보" 
                               href="javascript:void(0)">
                               학생 데이터없음</a>
                             </div>
@@ -178,7 +178,7 @@ xmlns:th="http://www.thymeleaf.org"
                       <th style="width: 15%">작성</th>
                       <th style="width: 15%">등록일시</th>
                     </tr> -->
-                    <tr class="" th:each="notice:${noticeList}">
+                    <tr th:onclick="'window.location.href = \''+ @{/eclass/professor/notice(no=${notice.no})} + '\''" th:each="notice:${noticeList}">
                       <td style="width: 100px" th:text="${notice.no}">00</td>
                       <td class="text-start" th:text="${notice.title}">제목 데이터 없음</td>
                       <td style="width: 15%" th:text="${notice.subjectVO.name}">과목 없음</td>

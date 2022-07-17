@@ -19,4 +19,5 @@ public interface LectureNoticeService {
 			@Param("pageNum")int pageNum,
 			@Param("size")int size
 		);
+	LectureNoticeVO findById(int no);
 }

@@ -86,38 +86,31 @@ xmlns:th="http://www.thymeleaf.org"
                     <p>제목</p>
                   </div>
                   <div class="h4 col-11 mb-1">
-                    <p>2022년도 문화재위원회(건축사적분과 제3회)개최결과</p>
+                    <p th:text="${notice.title}">제목 데이터가 없습니다</p>
                   </div>
                 </div>
                 <div class="d-none d-lg-block">
                   <div class="row">
                     <div class="col-6 d-flex">
-                      <div class="text-start" style="width: 80px">작성자 :</div>
-                      <div class="wrap fw-bold me-5">교육지원</div>
+                      <div class="text-start" style="width: 80px">작성과목 :</div>
+                      <div class="wrap fw-bold me-5" th:text="${notice.subjectVO.name}">과목 데이터가 없습니다</div>
                     </div>
                     <div class="col-6 d-flex">
                       <div class="wrap text-start" style="width: 80px">작성일 :</div>
-                      <div class="wrap fw-bold">2022-07-05</div>
+                      <div class="wrap fw-bold" th:text="${notice.enrollDate}">작성일 데이터가 없습니다!</div>
                     </div>
                   </div>
                 </div>
                 <hr>
                 <div class="row">
-                  <p class="col-12 px-5">
-                    내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
+                  <p class="col-12 px-5" th:text=${notice.content}>
+                    내용 데이터가 없습니다!
                   </p>
                 </div>
                 <hr>
-                <div class="row">
-                  <div class="col-2 text-start">
-                    <p>첨부파일</p>
-                  </div>
-                  <div class="col-10">
-                    파일 파일 파일
-                  </div>
-                  <div>
-                    <button class="btn btn-primary">삭제</button>
-                  </div>
+                <div class="ps-3 pb-3 row">
+					<button class="col-1 me-2 btn btn-primary">삭제</button>
+					<button class="col-1 me-2 btn btn-dark">수정</button>
                 </div>
               </div>
             </div> <!-- block end-->
