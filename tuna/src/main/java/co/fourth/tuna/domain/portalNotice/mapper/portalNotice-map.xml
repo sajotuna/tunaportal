@@ -6,27 +6,27 @@
 	
 <!-- 공지 -->
 <!-- 전체조회 -->
-<select id="noticeList" parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"
+<select id="noticeList"
 	resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"> 
-SELECT *
-FROM  (SELECT 
-		NO,
-		TITLE,
-		CONTENT,
-		ENROLLDATE,
-		VISIBLE,
-		ADNO,
-		ROWNUM as rnum
+SELECT a.*
+FROM  (SELECT ROWNUM as rnum,
+			  			NO,
+						TITLE,
+						CONTENT,
+						ENROLLDATE,
+						VISIBLE,
+						ADNO
 	   FROM PORTALNOTICE
-	   ORDER BY no ASC)
+			WHERE 
+			<if test="state == 1">1 = 1 </if>
+			<if test="state == 2">title like '%'||#{key}||'%' </if>
+			<if test="state == 3">content like '%'||#{key}||'%'</if>
+			   ORDER BY enrolldate DESC) a
 WHERE rnum
 	  between  (#{pageNum}-1)*#{size}
 	  AND 		#{pageNum}*#{size}
-AND
-<if test="state == 1">1 = 1 </if>
-<if test="state == 2">title like '%'||#{key}||'%' </if>
-<if test="state == 3">content like '%'||#{key}||'%'</if>
-ORDER BY NO DESC
+
+
 </select>
 
 <!-- 단건조회 -->
@@ -50,7 +50,7 @@ VALUES (#{no}, #{content}, #{title}, #{visible}, 100482, sysDate)
 </insert>
 
 <!-- 삭제 -->
-<delete id="noticeDelete" parameterType="int">
+<delete id="noticeDelete" parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
 DELETE FROM PORTALNOTICE WHERE NO = #{no}
 </delete>
 
@@ -70,7 +70,6 @@ WHERE NO = #{no}
 <!-- 파일 -->
 <!-- 전체조회 -->
 <select id ="fileList" 
-parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO"
 resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO">
 SELECT *
 FROM PORTALFILE
@@ -100,6 +99,12 @@ VALUES (#{no}, #{name}, #{uri}, #{pnno})
 <delete id="fileDelete">
 DELETE FROM PORTALFILE
  WHERE NO = #{no}
+</delete>
+
+<!-- 게시물과 함께 삭제 -->
+<delete id="fileAllDelete" parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO">
+DELETE FROM PORTALFILE
+WHERE PNNO = #{no}
 </delete>
 
 </mapper>

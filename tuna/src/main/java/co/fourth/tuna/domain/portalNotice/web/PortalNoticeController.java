@@ -3,7 +3,6 @@ package co.fourth.tuna.domain.portalNotice.web;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
@@ -39,19 +38,19 @@ public class PortalNoticeController {
 
 	// user
 	// 전체조회
-	@RequestMapping("/portalNoticeList")
-	public String portalnoticeList(Model model, PortalNoticeFileVO fileVo) {
-		
-		model.addAttribute("notices", noticeDao.noticeList(1, "전체", 2, 10));
-
-		List<PortalNoticeFileVO> list = noticeDao.fileList(fileVo);
-		Set<String> fileYn = new HashSet<>();
-		for (PortalNoticeFileVO vo : list) {
-			fileYn.add(vo.getPnno());
-		}
-		return "notice/user/portalNoticeList";
-
-	}
+//	@RequestMapping("/portalNoticeList")
+//	public String portalnoticeList(Model model, PortalNoticeFileVO fileVo) {
+//		
+//		model.addAttribute("notices", noticeDao.noticeList(1, "전체", 2, 10));
+//
+//		List<PortalNoticeFileVO> list = noticeDao.fileList(fileVo);
+//		Set<String> fileYn = new HashSet<>();
+//		for (PortalNoticeFileVO vo : list) {
+//			fileYn.add(vo.getPnno());
+//		}
+//		return "notice/user/portalNoticeList";
+//
+//	}
 
 	// 단건조회
 	@RequestMapping("/portalNoticeSelect")
@@ -66,18 +65,14 @@ public class PortalNoticeController {
 	// admin
 	// 전체조회
 	@RequestMapping("/admin/adminNoticeList")
-	public String adminNoticeList(Model model, PortalNoticeFileVO fileVo, PortalNoticeVO vo) {
+	public String adminNoticeList(Model model, PortalNoticeVO vo, @RequestParam(value="pageNum", required=false, defaultValue="1")int pageNum) {
 		
+		int size = 10;
 		
-		int size = 2;
-		int pageNum = 10;
+
+		model.addAttribute("notices", noticeDao.noticeList(1, "전체", pageNum, size));
 		
-		vo.setPageNum(pageNum);
-		vo.setSize(size);
-		
-		model.addAttribute("notices", noticeDao.noticeList(1, "전체", size, pageNum));
-		
-		List<PortalNoticeFileVO> list = noticeDao.fileList(fileVo);
+		List<PortalNoticeFileVO> list = noticeDao.fileList();
 		Set<String> fileYn = new HashSet<>();
 		for (PortalNoticeFileVO fvo : list) {
 			fileYn.add(fvo.getPnno());
@@ -174,12 +169,20 @@ public class PortalNoticeController {
 	// 공지삭제
 	@DeleteMapping("/admin/adminNoticeDelete")
 	@ResponseBody
-	public String adminNoticeDelete(@RequestBody PortalNoticeVO vo, PortalNoticeFileVO fileVo) {
-		fileService.delete(fileVo.getUri(), "PortalNotice");
-		noticeDao.noticeDelete(vo);
-		noticeDao.fileDelete(fileVo);
-
-		return "redirect:/admin/adminNoticeList";
+	public int adminNoticeDelete(@RequestBody PortalNoticeVO vo) {
+		
+		List<PortalNoticeFileVO> list = noticeDao.fileSelect(Integer.parseInt(vo.getNo()));
+		
+		logger.info("list ::" + list.toString());	
+		
+		for(int i=0; i<list.size(); i++) {
+			logger.info("uri ::" + list.get(i).getUri());	
+			fileService.delete(list.get(i).getUri(), "portalNotice");
+		}
+		
+		
+			
+		return noticeDao.noticeDelete(vo);
 
 	}
 
@@ -187,7 +190,9 @@ public class PortalNoticeController {
 	@GetMapping("/admin/adminSearch")
 	@ResponseBody
 	public List<PortalNoticeVO> adminSearch(@RequestParam("state") int state, @RequestParam("key") String key,
-			@Param("pageNum") int pageNum, @Param("size") int size) {
+			@RequestParam(value="pageNum", required=false, defaultValue="1")int pageNum) {
+		
+		int size = 10;		
 		return noticeDao.noticeList(state, key, pageNum, size);
 	}
 
