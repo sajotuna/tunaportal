@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import co.fourth.tuna.domain.user.mapper.StudentMapper;
 import co.fourth.tuna.domain.user.service.StudentService;
+import co.fourth.tuna.domain.user.vo.StudentExVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 
 @Service
@@ -31,7 +32,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<StudentVO> findListBySubjectId(int sbjno) {
+	public List<StudentExVO> findListBySubjectId(int sbjno) {
 		return mapper.findListBySubjectId(sbjno);
 	}
 

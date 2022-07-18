@@ -29,6 +29,12 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 		
 	}
 
+	@Override
+	public String qnaList(LectureQnaVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	//mapper 주입, 오버라이딩
 }
