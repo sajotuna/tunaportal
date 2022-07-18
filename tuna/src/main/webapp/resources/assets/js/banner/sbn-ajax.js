@@ -1,3 +1,7 @@
+var header = $("meta[name='_csrf_header']").attr('content');
+var token = $("meta[name='_csrf']").attr('content');
+var userNo = $("meta[name='userNo']").attr('content');
+
 // 사진 업로드
 function uploadAjax() {
 
@@ -5,7 +9,7 @@ function uploadAjax() {
 		
 		let formData = new FormData();
 		formData.append('file', $('input[name=file]').prop('files')[0]);
-		formData.append('adNo', $('#adNo').val());
+		formData.append('adNo', userNo);
 		
 		$.ajax({
 		
@@ -17,6 +21,7 @@ function uploadAjax() {
 			beforeSend: function (xhr) {
 		       xhr.setRequestHeader(header, token);
 			}
+			
 		}).done(function(success) {
 			pageDialogs.dialog('upload');
 		})

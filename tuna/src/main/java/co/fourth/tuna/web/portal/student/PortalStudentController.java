@@ -20,7 +20,8 @@ public class PortalStudentController {
 	private static Logger logger = LoggerFactory.getLogger(BannerController.class); 
 	
 	@Autowired GradeService gradeDao;
-	// 강의/성적 조회 페이지로 이동
+	
+	// 강의/성적 조회
 	@RequestMapping("/stud/subjectAndReport")
 	public String subjectAndRoport(Authentication authentication, Model model) {
 		
@@ -44,7 +45,7 @@ public class PortalStudentController {
 		return "portal/stud/subjectAndReport";
 	}
 	
-	// 당해학기 성적 조회 페이지로 이동
+	// 당해학기 성적 조회
 	@RequestMapping("/stud/currentSemesterGrade")
 	public String currentSemesterGrade() {
 		return "portal/stud/currentSemesterGrade";

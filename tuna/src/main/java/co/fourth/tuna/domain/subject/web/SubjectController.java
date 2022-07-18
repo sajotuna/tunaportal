@@ -28,7 +28,6 @@ public class SubjectController {
 	@ResponseBody
 	@GetMapping("/stud/searchSubjectList")
 	public List<SubjectVO> searchSubjectList(String seasonCode, String searchKey, String key) {
-		System.out.println("seasonCode :: " + seasonCode);
 		return subjectDao.searchSubjectList(seasonCode, searchKey, key);
 	}
 	
