@@ -11,8 +11,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Autowired AttendanceMapper map;
 	
 	@Override
-	public String attendance(AttendanceVO vo) {
-		return map.attendance(vo);
+	public String studentAttendance(AttendanceVO vo) {
+		return map.studentAttendance(vo);
 	}
 
 }

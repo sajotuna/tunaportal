@@ -31,11 +31,11 @@ public class EclassStudentEclassController {
 	}
 	
 	
-	//출석
-	@RequestMapping("/attendance")
-	public String attendance() {
-		return "eclass/stud/attendance";
-	}
+//	//출석
+//	@RequestMapping("/attendance")
+//	public String attendance() {
+//		return "eclass/stud/attendance";
+//	}
 	
 	//자료실
 	@RequestMapping("/download") 

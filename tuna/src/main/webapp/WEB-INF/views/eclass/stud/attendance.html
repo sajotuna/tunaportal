@@ -29,129 +29,38 @@
 						<div class="block-content block-content-full">
 							<div class="row">
 								<div class="col-sm-12">
-									<div class="row mb-2 d-flex flex-row justify-content-end">
+									<div class="row mb-2">
+											<div class="col-3 col-xs-2 col-lg-2 col-md-2 col-sm-2">
+												<p class="p-3 block block-rounded m-0 bg-success-light text-success text-center">출석</p>
+											</div>
+											<div class="col-3 col-xs-2 col-lg-2 col-md-2 col-sm-2">
+												<p class="p-3 block block-rounded m-0 bg-warning-light text-warning text-center">지각</p>
+											</div>
+											<div class="col-3 col-xs-2 col-lg-2 col-md-2 col-sm-2">
+												<p class="p-3 block block-rounded m-0 bg-danger-light text-danger text-center">결석</p>
+											</div>
 										<div class="col"></div>
-										<div class="col-1 col-md-2 col-sm-2">
-										<p class="p-3 m-0 bg-success-light text-success text-center">출석</p>
-										</div>
-										<div class="col-1 col-md-2 col-sm-2">
-										<p class="p-3 m-0 bg-warning-light text-warning text-center">지각</p>
-										</div>
-										<div class="col-1 col-md-2 col-sm-2">
-										<p class="p-3 m-0 bg-danger-light text-danger text-center">결석</p>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<div class="row">
+												<div class="col-5" th:each="at : ${attd}">
+													<div class="block block-rounded">
+														<div class="block-header block-header-default">
+															<p class="fw-bold text-center" th:text="${at.CLASSDATE}"></p>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
-									<table
-										class="text-center table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
-										id="DataTables_Table_0"
-										aria-describedby="DataTables_Table_0_info">
-										<thead>
-											<tr>
-												<th>1주차</th>
-												<th class="p-3 fw-bold bg-success-light text-success">3월
-													2일</th>
-												<th class="p-3 fw-bold bg-danger-light text-danger">3월
-													4일</th>
-												
-											</tr>
-											<tr>
-												<th>2주차</th>
-												<th class="p-3 fw-bold bg-warning-light text-warning">3월 9일</th>
-												<th>3월 11일</th>
-												
-											</tr>
-											<tr>
-												<th>3주차</th>
-												<th>3월 16일</th>
-												<th>3월 18일</th>
-												
-											</tr>
-											<tr>
-												<th>4주차</th>
-												<th>3월 23일</th>
-												<th>3월 25일</th>
-												
-											</tr>
-											<tr>
-												<th>5주차</th>
-												<th>3월 30일</th>
-												<th>4월 1일</th>
-												
-											</tr>
-											<tr>
-												<th>6주차</th>
-												<th>4월 6일</th>
-												<th>4월 8일</th>
-												
-											</tr>
-											<tr>
-												<th>7주차</th>
-												<th>4월 13일</th>
-												<th>4월 15일</th>
-												
-											</tr>
-											<tr>
-												<th>8주차</th>
-												<th>4월 20일</th>
-												<th>4월 22일</th>
-												
-											</tr>
-											<tr>
-												<th>9주차</th>
-												<th>4월 27일</th>
-												<th>4월 29일</th>
-												
-											</tr>
-											<tr>
-												<th>10주차</th>
-												<th>5월 4일</th>
-												<th>5월 6일</th>
-												
-											</tr>
-											<tr>
-												<th>11주차</th>
-												<th>5월 11일</th>
-												<th>5월 13일</th>
-												
-											</tr>
-											<tr>
-												<th>12주차</th>
-												<th>5월 18일</th>
-												<th>5월 20일</th>
-												
-											</tr>
-											<tr>
-												<th>13주차
-												<th>5월 25일</th>
-												<th>5월 27일</th>
-												
-											</tr>
-											<tr>
-												<th>14주차</th>
-												<th>6월 1일</th>
-												<th>6월 3일</th>
-												
-											</tr>
-											<tr>
-												<th>15주차</th>
-												<th>6월 8일</th>
-												<th>6월 10일</th>
-												
-											</tr>
-											<tr>
-												<th>16주차</th>
-												<th>6월 15일</th>
-												<th>6월 17일</th>
-												
-											</tr>
-									</table>
 								</div>
 							</div>
 						</div>
 					</div>
+					<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 				</div>
 			</div>
-			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 		</main>
 	</div>
 </body>

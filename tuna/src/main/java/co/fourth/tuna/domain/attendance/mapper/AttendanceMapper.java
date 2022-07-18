@@ -10,5 +10,5 @@ public interface AttendanceMapper {
 	public List<AttendanceVO> selectAttendancesForSubject(SubjectVO subject);
 	
 	//단일과목 출석 조회
-	public String attendance(AttendanceVO vo);
+	public String studentAttendance(AttendanceVO vo);
 }

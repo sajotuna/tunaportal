@@ -5,6 +5,6 @@ import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 public interface AttendanceService {
 
 	//단일과목 출석 조회
-	public String attendance(AttendanceVO vo);
+	public String studentAttendance(AttendanceVO vo);
 	
 }
