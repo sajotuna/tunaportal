@@ -28,4 +28,5 @@ public class StudentServiceImpl implements StudentService {
 		mapper.AdminStudUpdate(vo);
 	}
 
+
 }

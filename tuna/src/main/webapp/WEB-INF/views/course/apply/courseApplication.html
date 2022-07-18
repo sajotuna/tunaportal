@@ -24,14 +24,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 
 <body>
 
-<th:block th:if = "${message != null && message != ''}">
-	<script th:inline="javascript">
-		let message = /*[[${message}]]*/ 'default';
-		alert(message);
-	</script>
-</th:block>
+
 
 <main layout:fragment="main">
+
   <div id="section">
     <div id="page-container">
       <div class="content content-boxed">
@@ -42,8 +38,17 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
               <div class="col-md-3 col-xl-2 col-10 fomrtag">
                 <div class="mb-5">
                   <select class="form-select" id="deptCode" name="deptCode">
-                    <option selected value = "">학부(과)</option>
-                    
+                    <option selected value="">학부(과)</option>
+	                  <option value="801" id="801">기계공학과</option>
+	                  <option value="805" id="805">항공우주공학과</option>
+	                  <option value="810" id="810">생명공학과</option>
+	                  <option value="806" id="806">바이오및뇌공학과</option>
+	                  <option value="809" id="809">정보보안학과</option>
+	                  <option value="803" id="803">컴퓨터공학과</option>
+	                  <option value="808" id="808">무기재료공학과</option>
+	                  <option value="802" id="802">전기전자공학과</option>
+	                  <option value="804" id="804">화학공학과</option>
+	                  <option value="807" id="807">정보통신학과</option>
                   </select>
                 </div>
               </div>
@@ -51,10 +56,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                 <div class="mb-2">
                   <select class="form-select"  id="type" name="type">
                     <option selected value = "">이수구분</option>
-                    <option value="">전공필수</option>
-                    <option value="">전공선택</option>
-                    <option value="">교양필수</option>
-                    <option value="">교양선택</option>
+                    <option value="701" id = "701">전공필수</option>
+                    <option value="702" id = "702">전공선택</option>
+                    <option value="703" id = "703">교양필수</option>
+                    <option value="704" id = "704">교양선택</option>
                   </select>
                 </div>
               </div>
@@ -62,10 +67,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                 <div class="mb-2">
                   <select class="form-select"  id="target" name="target">
                     <option selected value = "">학년</option>
-                    <option value="1">1학년</option>
-                    <option value="2">2학년</option>
-                    <option value="3">3학년</option>
-                    <option value="4">4학년</option>
+                    <option value="1" id = "1">1학년</option>
+                    <option value="2" id = "2">2학년</option>
+                    <option value="3" id = "3">3학년</option>
+                    <option value="4" id = "4">4학년</option>
                   </select>
                 </div>
               </div>
@@ -296,8 +301,18 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
       </div>
     </div>
   </div>
-  
+  <th:block th:if = "${message != null && message != ''}">
+	<script th:inline="javascript">
+		let message = /*[[${message}]]*/ 'default';
+		alert(message);
+	</script>
+</th:block>
+
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+ 
+  
+  
+  
   <script>
   
  
@@ -382,25 +397,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		}
 		
 		
-		  fetch('/tuna/courseCheck',{
-		  		method: "POST",
-		  		headers: {
-		            'header': header,
-		          	'X-Requested-With': 'XMLHttpRequest',
-		            "Content-Type": "application/json",
-		            'X-CSRF-Token': token	// header에 X-CSRF-Token부분에 토큰값이 들어가 정상적으로 POST값이 넘어가는 것을 볼 수 있다!
-		        },
-		  	}).then(result => result.json())
-		  	  .then(result =>{
-		  		  let deptcodes = document.querySelector('#deptCode')
-		  		  console.log(result)
-		  		  result.forEach(val =>{
-		  			let opt = document.createElement('option');
-		  			opt.setAttribute('value', val.DEPTCODE)
-		  			opt.innerText = val.CODENAME;
-		  			deptcodes.appendChild(opt)
-		  		  })
-		  	  }) 
+		 
 	document.addEventListener('DOMContentLoaded', function(){
 		
 		
@@ -435,5 +432,59 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 	})
 
   </script>
+  
+  <th:block th:if = "${params != null && params != ''}">
+<script th:inline="javascript">
+	document.addEventListener('DOMContentLoaded', function(){
+		let params = /*[[${params}]]*/ 'default';
+		
+		if(params.type == '701'){
+			$('#701').attr('selected', 'selected')
+		}else if(params.type == '702'){
+			$('#702').attr('selected', 'selected')
+		}else if(params.type == '703'){
+			$('#703').attr('selected', 'selected')
+		}else if(params.type == '704'){
+			$('#704').attr('selected', 'selected')
+		}
+		
+		if(params.target == '1'){
+			$('#1').attr('selected', 'selected')
+		}else if(params.target == '2'){
+			$('#2').attr('selected', 'selected')
+		}else if(params.target == '3'){
+			$('#3').attr('selected', 'selected')
+		}else if(params.target == '4'){
+			$('#4').attr('selected', 'selected')
+		}
+		
+		if(params.deptCode == '801'){
+			$('#801').attr('selected', 'selected')
+		}else if(params.deptCode == '802'){
+			$('#802').attr('selected', 'selected')
+		}else if(params.deptCode == '803'){
+			$('#803').attr('selected', 'selected')
+		}else if(params.deptCode == '804'){
+			$('#804').attr('selected', 'selected')
+		}else if(params.deptCode == '805'){
+			$('#805').attr('selected', 'selected')
+		}else if(params.deptCode == '806'){
+			$('#806').attr('selected', 'selected')
+		}else if(params.deptCode == '807'){
+			$('#807').attr('selected', 'selected')
+		}else if(params.deptCode == '808'){
+			$('#808').attr('selected', 'selected')
+		}else if(params.deptCode == '809'){
+			$('#809').attr('selected', 'selected')
+		}else if(params.deptCode == '810'){
+			$('#810').attr('selected', 'selected')
+		}
+		
+		if(params.name != null){
+			$('#name').val(params.name)
+		}
+	})
+</script>
+</th:block>
   </main>
 </body>

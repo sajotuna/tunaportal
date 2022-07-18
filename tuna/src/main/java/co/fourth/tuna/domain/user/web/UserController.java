@@ -31,14 +31,6 @@ public class UserController {
 	@Autowired 
 	private ProfessorService professorDao;
 	
-	@RequestMapping("/admin")
-	public String Admin(Model model, AdminVO vo, Authentication authentication) {
-		vo.setNo(Integer.parseInt(authentication.getName()));
-		vo = AdminDao.findById(vo);
-		model.addAttribute("vo", vo);
-		return "home";
-	}
-
 	@RequestMapping("/admin/adminUserSearch")
 	public String adminUserSearch(Model model, @RequestParam Map<String, Object> params, @RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum) {
 		

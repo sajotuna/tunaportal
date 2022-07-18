@@ -56,6 +56,7 @@ public class LectureApplyController {
 		model.addAttribute("courList", courLists);
 		model.addAttribute("grade", grade);
 		model.addAttribute("baskList", baskLists);
+		model.addAttribute("params", params);
 		return "course/apply/courseApplication";
 	}
 	
@@ -73,10 +74,13 @@ public class LectureApplyController {
 			ra.addFlashAttribute("message", "수강신청 가능한 학점이 없습니다.");
 			return "redirect:/stud/courseBasket";
 		}
-		
-		
 		String message = LectureApplyDao.ApplyErrorMsg(vo);
-		LectureApplyDao.CourseInsert(vo);
+		
+		System.out.println(message);
+		if(message.equals("수강신청이 완료되었습니다.")) {
+			LectureApplyDao.CourseInsert(vo);
+		}
+		
 		ra.addFlashAttribute("message", message);
 		return "redirect:/stud/courseApplication";
 	}

@@ -17,14 +17,6 @@ public class ProfessorController {
 	@Autowired 
 	private ProfessorService professorDao;
 	
-	@RequestMapping("/professor")
-	public String ProfessorInfo(Model model, ProfessorVO vo, Authentication authentication) {
-		vo.setNo(Integer.parseInt(authentication.getName()));
-		vo = professorDao.findById(vo);
-		model.addAttribute("vo", vo);
-		return "home";
-		
-	}
 	
 	@RequestMapping("/staff/userUpdate")
 	public String userUpdate(Model model, ProfessorVO vo, Authentication authentication) {

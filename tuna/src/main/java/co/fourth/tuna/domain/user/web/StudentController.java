@@ -15,16 +15,6 @@ public class StudentController {
 	
 	@Autowired 
 	private StudentService StudentDao;
-	
-	
-	@RequestMapping("/student")
-	public String Student(Model model, StudentVO vo, Authentication authentication) {
-		vo.setNo(Integer.parseInt(authentication.getName()));
-		vo = StudentDao.findById(vo);
-		
-		model.addAttribute("vo", vo);
-		return "home";
-	}
 
 
 	@RequestMapping("/stud/userUpdate")

@@ -28,7 +28,7 @@ FROM
     FROM PROFESSOR
     ) LOGIN) u
 WHERE rn 
-BETWEEN (#{pageNum}-1)*#{size}
+BETWEEN (#{pageNum}-1)*#{size}+1
     AND #{pageNum}*#{size}
     <if test="year != null and !year.equals('')">
     </if>

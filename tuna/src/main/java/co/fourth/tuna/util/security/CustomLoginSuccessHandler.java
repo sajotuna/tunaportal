@@ -27,13 +27,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		authentication.getAuthorities().forEach(authority -> {
 			roleNames.add(authority.getAuthority());
 		});
-		if(authentication.getName().length() == 8) {
-			response.sendRedirect("student");
-		}else if(authentication.getName().length() == 6) {
-			response.sendRedirect("admin");
-		}else if(authentication.getName().length() == 5) {
-			response.sendRedirect("professor");
-		}
+		response.sendRedirect("home");
 		
 		
 	}
