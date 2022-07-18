@@ -52,6 +52,7 @@ public class UserController {
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.user.mapper.AdminMapper.adminUserCheck", params);
 		
 		model.addAttribute("list", lists);
+		model.addAttribute("params", params);
 		
 		return "manage/admin/adminUserSearch";
 	}
