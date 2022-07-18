@@ -1,5 +1,7 @@
 package co.fourth.tuna.domain.user.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,11 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void AdminStudUpdate(StudentVO vo) {
 		mapper.AdminStudUpdate(vo);
+	}
+
+	@Override
+	public List<StudentVO> findListBySubjectId(int sbjno) {
+		return mapper.findListBySubjectId(sbjno);
 	}
 
 }

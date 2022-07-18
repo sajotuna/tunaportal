@@ -29,6 +29,14 @@
 	WHERE no = #{no}
 
 </update>
-
+ 
+<select id = "findListBySubjectId"
+	resultType="co.fourth.tuna.domain.user.vo.StudentVO">
+	SELECT s.*
+	FROM student s
+	JOIN lectureapply l
+	    ON s.no = l.stno
+	WHERE sbjno = #{sbjno};
+</select>
 
 </mapper>
