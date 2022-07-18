@@ -18,4 +18,5 @@ public interface LectureNoticeService {
 			@Param("size") int size);
 
 	LectureNoticeVO findById(int no);
+	List<LectureNoticeVO> findListBySubjectId(int sbjno);
 }

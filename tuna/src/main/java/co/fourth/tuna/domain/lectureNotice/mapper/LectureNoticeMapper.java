@@ -25,5 +25,6 @@ public interface LectureNoticeMapper {
 	
 	LectureNoticeVO findOneWithSubjectById(LectureNoticeVO vo);
 	LectureNoticeVO findOneWithSubjectById(int id);
+	List<LectureNoticeVO> findListBySubjectId(int sbjno);
 
 }

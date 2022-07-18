@@ -35,6 +35,11 @@ public class LectureNoticeServiceImpl implements LectureNoticeService {
 		return map.findOneWithSubjectById(no);
 	}
 
+	@Override
+	public List<LectureNoticeVO> findListBySubjectId(int sbjno) {
+		return map.findListBySubjectId(sbjno);
+	}
+
 
 
 }

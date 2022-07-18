@@ -6,6 +6,8 @@ xmlns:th="http://www.thymeleaf.org"
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
 
 <!--
 ████████ ██ ████████ ██      ███████ 
@@ -164,8 +166,8 @@ xmlns:th="http://www.thymeleaf.org"
 
           <div class="row">
             <div class="col-12">
-              <div class="block block-rounded">
-                <ul class="nav nav-tabs nav-tabs-block" role="tablistr">
+              <div id="subject-contents" class="block block-rounded">
+                <ul id="subject-tab-panel" class="nav nav-tabs nav-tabs-block" role="tablistr">
                   <li class="nav-item">
                     <button class="nav-link active" id="btabs-static-progress-tab" data-bs-toggle="tab" 
                     data-bs-target="#btabs-static-progress">강의 진도</button>
@@ -199,6 +201,8 @@ xmlns:th="http://www.thymeleaf.org"
                     data-bs-target="#btabs-static-grade">성적등록</button>
                   </li>
                 </ul>
+
+                <div id="subject-tab-content" class="block-content tab-content">
 <!--
       ██████  ██████   ██████   ██████  ██████  ███████ ███████ ███████ 
 ▄ ██ ▄██   ██ ██   ██ ██    ██ ██       ██   ██ ██      ██      ██      
@@ -206,7 +210,6 @@ xmlns:th="http://www.thymeleaf.org"
 ▀ ██ ▀██      ██   ██ ██    ██ ██    ██ ██   ██ ██           ██      ██ 
       ██      ██   ██  ██████   ██████  ██   ██ ███████ ███████ ███████ 
 -->
-                <div class="block-content tab-content">
                   <div class="tab-pane active" id="btabs-static-progress" role="tabpanel" aria-labelledby="btabs-static-progress-tab">
                     <div class="row">
                       <div class="col-xxl-7">
@@ -464,43 +467,12 @@ xmlns:th="http://www.thymeleaf.org"
       ██   ████  ██████     ██    ██  ██████ ███████
 -->
                   <div class="tab-pane" id="btabs-static-notice" role="tabpanel" aria-labelledby="btabs-static-notice-tab">
-                    <table class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
+                    <table id="subject-notice-table" class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
                       <tbody>
-                        <!-- <tr>
+                        <tr>
                           <th style="width: 100px">번호</th>
-                          <th>제목</th>
-                          <th style="width: 15%">작성</th>
-                          <th style="width: 15%">등록일시</th>
-                        </tr> -->
-                        <tr class="fw-bold">
-                          <td style="width: 100px">1</td>
-                          <td class="text-start">내용</td>
-                          <td style="width: 15%">참치분해1</td>
-                          <td style="width: 15%">2022-07-03</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td class="text-start">내용</td>
-                          <td>참치분해2</td>
-                          <td>2022-07-03</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td class="text-start">내용</td>
-                          <td>참치분해3</td>
-                          <td>2022-07-03</td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td class="text-start">내용</td>
-                          <td>참치분해4</td>
-                          <td>2022-07-03</td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td class="text-start">내용</td>
-                          <td>참치분해5</td>
-                          <td>2022-07-03</td>
+                          <th class="text-start">제목</th>
+                          <th style="width: 15%">등록일</th>
                         </tr>
                       </tbody>
                     </table>
@@ -586,6 +558,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                     <p></p>
                   </div><!-- grade TAB END-->
+
                 </div> <!-- tab content END-->
 
               </div>
@@ -861,6 +834,132 @@ xmlns:th="http://www.thymeleaf.org"
             <div>결석</div>
           </div>
          -->
+          <script>
+            // 상수데이터
+            const TAB_ID = "tab-pane-";
+
+            // 토큰
+            let header = document.querySelector('meta[name="_csrf_header"]').content;
+            let token = document.querySelector('meta[name="_csrf"]').content;
+
+            // url 파라미터
+            let url = new URL(window.location.href);
+            let params = new URLSearchParams(url.searchParams);
+            let sbjno = params.get('no'); // 파라미터
+
+            // 탭 제어
+            let tabFlag = new Map();
+            let tabPanel; // 탭 패널
+            let tabContents; // 탭 컨탠츠
+
+            // 로드 이벤트
+            window.addEventListener("DOMContentLoaded", function() {
+              // let subjectContents = document.querySelector("#subject-content");
+              tabPanel = document.querySelector("#subject-tab-panel");
+              tabContents = document.querySelectorAll("#subject-tab-content>div");
+
+              initSubject();
+
+            });
+
+            // 초기화 세팅
+            function initSubject() {
+              // 이벤트 등록
+              tabPanel.addEventListener('click', function(ele) {
+                let id = ele.target.parentNode.id;
+                id = id.slice(id.indexOf(TAB_ID)+TAB_ID.length);
+                setTabContent(  parseInt(id) );
+              })
+              // 탭 제어 초기화
+              for(let i = 0; i < tabPanel.children.length; i++) {
+                tabPanel.children[i].setAttribute('id', TAB_ID+i);
+                tabFlag.set(i, false);
+              }
+                
+            }
+
+            //
+            function setTabContent(tabIdx) {
+              if(tabFlag.get(tabIdx)){ return; };
+              tabFlag.set(tabIdx, true);
+              
+              switch(tabIdx) {
+                case 0:
+                  break;
+                case 1:
+                  break;
+                case 2:
+                  break;
+                case 3:
+                  break;
+                case 4:
+                  reqNoticeContent(tabIdx);
+                  break;
+                case 5:
+                  break;
+                case 6:
+                  break;
+                case 7:
+                  break;
+                default:
+                  break;
+              }
+
+            }
+
+            function reqNoticeContent(tabIdx) {
+              let resData = {};
+              fetch('/tuna/lecNotices', {
+                method: "POST",
+                headers: {
+                  'header': header,
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify({
+                  sbjno: sbjno
+                })
+              })
+              .then(result => result.json())
+              .then(result => {
+                setNoticeContet(result);
+              })
+              .catch((err) => {
+                console.error('fetch 오류', err);
+                tabFlag.set(tabIdx, false);
+              })
+              
+            }
+
+            function setNoticeContet(jsonData) {
+              let table = document.querySelector('#subject-notice-table');
+              let tbody = table.firstElementChild;
+              jsonData.forEach(data => {
+                console.log(data);
+                let mDate = new Date(data.enrollDate);
+                mDate = mDate.toISOString();
+                mDate = mDate.slice(0, mDate.indexOf('T'));
+
+                let tr = document.createElement('tr');
+                tbody.appendChild(tr);
+
+                let td_no = document.createElement('td');
+                let td_title = document.createElement('td');
+                td_title.classList.add('text-start')
+                let td_date = document.createElement('td');
+                
+                tr.appendChild(td_no)
+                tr.appendChild(td_title);
+                tr.appendChild(td_date);
+
+                td_no.innerText = data.no;
+                td_title.innerText = data.title;
+                td_date.innerText = mDate;
+              })
+            }
+
+          </script>
       </main>
 
 <!--
