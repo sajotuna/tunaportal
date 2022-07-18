@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.lectureApply.web;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -145,19 +146,19 @@ public class LectureApplyController {
 		return result;
 	}
 	
-	// 내 수강내역
-	@GetMapping("/stud/mySubjectList")
-	@ResponseBody
-	public List<Map<String,Object>> mySubjectList(LectureApplyVO vo) {
-		List<Map<String,Object>> mySubjects = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.mySubjectList",vo);
-		return mySubjects;
-	}
-	
 	@ResponseBody
 	@RequestMapping("/stud/CourseSchedule")
 	public List<LectureBasketVO> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
 		vo.setStNo(authentication.getName());
 		return SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseSchedule", vo);
+	}
+	
+	// 내 수강내역
+	@GetMapping("/stud/mySubjectList")
+	@ResponseBody
+	public List<Map<String,Object>> mySubjectList(LectureApplyVO vo) {
+		List<Map<String,Object>> mySubjects = LectureApplyDao.mySubjectList(vo);
+		return mySubjects;
 	}
 
 }

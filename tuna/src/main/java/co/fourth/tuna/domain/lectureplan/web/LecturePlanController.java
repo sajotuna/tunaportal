@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.lectureplan.web;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 
@@ -15,6 +17,31 @@ import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 public class LecturePlanController {
 
 	@Autowired private SqlSession sql;
+	
+	@RequestMapping("/portal/student/lecturePlan")
+	@ResponseBody
+	public List<Map<String,Object>> lecturePlanModal(Model model, LecturePlanVO vo) {
+		
+		List<Map<String,Object>> lists = sql.selectList("co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper.selectPlan", vo.getSbjNo());
+		List<Map<String,Object>> lectureSchedule = sql.selectList("co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper.selectSc", vo.getSbjNo());
+		
+		for (Map<String,Object> ls : lectureSchedule) {
+			lists.add(ls);
+		}
+		
+		String[] plan = lists.get(0).values().toString().split(",");
+		String[] weekplan = plan[11].split("~");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		for(int i=1; i<=weekplan.length; i++) {
+			map.put(Integer.toString(i), weekplan[(i-1)]);
+		}
+		
+		lists.add(map);
+
+		return lists;
+	}
 	
 	@RequestMapping("/stud/CoursePlan")
 	public String CoursePlan(Model model, LecturePlanVO vo) {

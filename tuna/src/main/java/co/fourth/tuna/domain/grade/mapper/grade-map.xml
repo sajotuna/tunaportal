@@ -1,3 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.fourth.tuna.domain.grade.mapper.GradeMapper"></mapper>
+<mapper namespace="co.fourth.tuna.domain.grade.mapper.GradeMapper">
+
+	<!-- 당해학기 성적 조회 -->
+	<select id="currentSemesterGradeSelect" resultType="map">
+	
+		SELECT LA.SEASONCODE, 
+		       S.TYPE,
+		       S.NO,
+		       S.NAME,
+		       S.POINT,
+		       GRADETOALPHABET(G.TOTAL) AS ALPHABET, 
+		       GRADETOPOINT(G.TOTAL) AS TOTAL,
+		       E.EVALSTATE
+		FROM LECTUREAPPLY LA, SUBJECT S, GRADE G, LECTUREEVAL E
+		WHERE LA.SBJNO = S.NO
+		AND LA.SBJNO = G.SBJNO
+		AND LA.SBJNO = E.SBJNO
+		AND LA.STNO = ${stNo}
+		AND LA.SEASONCODE = ${seasonCode}
+	
+	</select>
+	
+	<!-- 보관 성적 조회 -->
+	<select id="subjectGradeSelect" resultType="map">
+	
+		SELECT S.SEASONCODE,
+      		   S.TYPE,
+		       S.NO,
+		       S.NAME,
+		       S.POINT,
+		       GRADETOALPHABET(G.TOTAL) AS ALPHABET, 
+		       GRADETOPOINT(G.TOTAL) AS TOTAL
+		FROM GRADE G, SUBJECT S
+		WHERE G.SBJNO = S.NO
+		AND STNO = ${stNo}
+		ORDER BY SBJNO
+		
+	</select>
+	
+	<select id="seasonSubjectGradeSelect" resultType="map">
+	
+		SELECT S.SEASONCODE,
+		       S.TYPE,
+		       S.NO,
+		       S.NAME,
+		       S.POINT,
+		       GRADETOALPHABET(G.TOTAL) AS ALPHABET, 
+		       GRADETOPOINT(G.TOTAL) AS TOTAL
+		FROM GRADE G, SUBJECT S
+		WHERE G.SBJNO = S.NO
+		AND STNO = ${stNo}
+		AND S.SEASONCODE = ${seasonCode}
+		ORDER BY SBJNO
+		
+	</select>
+	
+	<select id="avgGradeSelect" resultType="map">
+	
+		SELECT S.SEASONCODE, SUM(S.POINT) AS SUM, AVG(GRADETOPOINT(G.TOTAL)) AS AVG
+		FROM GRADE G, SUBJECT S
+		WHERE G.SBJNO = S.NO
+		AND STNO = ${stNo}
+		group bY S.SEASONCODE
+		ORDER BY S.SEASONCODE ASC
+	
+	</select>
+	<!-- END 보관 성적 조회 -->
+
+</mapper>

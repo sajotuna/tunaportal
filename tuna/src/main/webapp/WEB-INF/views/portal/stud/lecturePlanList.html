@@ -12,7 +12,7 @@
 		<div class="row">
 			<div class="col-xl-4">
 				<div class="mb-3 mb-xl-2 ">
-					<select id="lecturePlan" class="form-select" name="seasonCode">
+					<select id="lecturePlanSelect" class="form-select" name="seasonCode">
 						<option selected value="noSelect">연도/학기</option>
 						<option value="106">2022년도 2학기</option>
 						<option value="105">2022년도 1학기</option>
@@ -79,16 +79,70 @@
 			<div class="modal-content">
 				<div class="block block-rounded block-transparent mb-0">
 					<div class="block-header block-header-default">
-							<h3 class="block-title">강의 계획서</h3>
-							<div class="block-options">
-								<button type="button" class="btn-block-option"
-									data-bs-dismiss="modal" aria-label="Close">
-									<i class="fa fa-fw fa-times"></i>
-								</button>
-							</div>
+						<h3 class="block-title">강의 계획서</h3>
+						<div class="block-options">
+							<button type="button" class="btn-block-option"
+								data-bs-dismiss="modal" aria-label="Close">
+								<i class="fa fa-fw fa-times"></i>
+							</button>
+						</div>
 					</div>
 					<div class="block-content block-content-full">
-						
+						<div class="d-flex justify-content-center" style="width:100%;">
+							<table id="lp_table" class="table table-vcenter table-bordered">
+								<tr>
+									<th class="fw-semibold fs-sm">교과목명</th>
+									<th id="lp_name" class="fw-semibold fs-sm" colspan="8"></th>
+								</tr>
+								<tr>
+									<th class="fw-semibold fs-sm">교수명</th>
+									<th id="lp_pronm" class="fw-semibold fs-sm" colspan="4"></th>
+									<th class="fw-semibold fs-sm">소속학과</th>
+									<th id="lp_deptcode" class="fw-semibold fs-sm" colspan="4"></th>
+								</tr>
+								<tr>
+									<th class="fw-semibold fs-sm">이메일</th>
+									<th id="lp_email" class="fw-semibold fs-sm" colspan="4"></th>
+									<th class="fw-semibold fs-sm">연락처</th>
+									<th id="lp_tel" class="fw-semibold fs-sm" colspan="4"></th>
+								</tr>
+								<tr>
+									<th class="fw-semibold fs-sm">과목코드</th>
+									<th id="lp_no" class="fw-semibold fs-sm" colspan="4"></th>
+									<th class="fw-semibold fs-sm">개설년도/학기</th>
+									<th id="lp_seasoncode" class="fw-semibold fs-sm" colspan="4"></th>
+								</tr>
+								<tr>
+									<th class="fw-semibold fs-sm">수강대상</th>
+									<th id="lp_target" class="fw-semibold fs-sm" colspan="4"></th>
+									<th class="fw-semibold fs-sm">강의실</th>
+									<th id="lp_roomcode" class="fw-semibold fs-sm" colspan="4"></th>
+								</tr>
+								<tr>
+									<th class="fw-semibold fs-sm">요일/교시</th>
+									<th id="lp_daytime" class="fw-semibold fs-sm" colspan="4"></th>
+									<th class="fw-semibold fs-sm">학점</th>
+									<th id="lp_point" class="fw-semibold fs-sm" colspan="4"></th>
+								</tr>
+								<tr>
+									<th class="fw-semibold fs-sm" colspan="2" rowspan="2">평가기준(%)</th>
+									<th:block class="col-8">
+									<th class="fw-semibold fs-sm" colspan="2" >출 석</th>
+									<th class="fw-semibold fs-sm" colspan="2" >중간고사</th>
+									<th class="fw-semibold fs-sm" colspan="2" >기말고사</th>
+									<th class="fw-semibold fs-sm" colspan="2" >과제</th>
+								</tr>
+								<tr>
+									<th id="lp_attd" class="fw-semibold fs-sm" colspan="2"></th>
+									<th id="lp_middle" class="fw-semibold fs-sm" colspan="2"></th>
+									<th id="lp_finals" class="fw-semibold fs-sm" colspan="2"></th>
+									<th id="lp_task" class="fw-semibold fs-sm" colspan="2"></th>
+								</tr>
+								<tr>
+									<th class="fw-semibold fs-sm" colspan="9">주차별 강의계획</th>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -102,13 +156,13 @@
 			<div class="modal-content">
 				<div class="block block-rounded block-transparent mb-0">
 					<div class="block-header block-header-default">
-							<h3 class="block-title">강의평가</h3>
-							<div class="block-options">
-								<button type="button" class="btn-block-option"
-									data-bs-dismiss="modal" aria-label="Close">
-									<i class="fa fa-fw fa-times"></i>
-								</button>
-							</div>
+						<h3 class="block-title">강의평가</h3>
+						<div class="block-options">
+							<button type="button" class="btn-block-option"
+								data-bs-dismiss="modal" aria-label="Close">
+								<i class="fa fa-fw fa-times"></i>
+							</button>
+						</div>
 					</div>
 					<div class="block-content block-content-full">
 						
@@ -125,20 +179,70 @@
 	
 	$(function() {
 		search();
+		lectuerPlanViewAjax();
 	})
-
+	
+	function lectuerPlanViewAjax() {
+		
+			$(document).on('click', '.lecture-plan', function() {
+				$.ajax({
+					
+					url: getContextPath() + 'portal/student/lecturePlan',
+					type: 'GET',
+					data: {sbjNo:$(this).text()},
+					dataType: 'json',
+	
+				}).done(function(lectureInfo) {
+					
+					let count = lectureInfo.length;
+					let daytimeTxt = '';
+					let planOrder = 0;
+					
+					if(count == 4) {
+						daytimeTxt = `${lectureInfo[1].DAYCODE} ${lectureInfo[1].TIMECODE}<br>${lectureInfo[2].DAYCODE} ${lectureInfo[2].TIMECODE}`;
+						planOrder = 3;
+					} else {
+						daytimeTxt = `${lectureInfo[1].DAYCODE} ${lectureInfo[1].TIMECODE}`;
+						planOrder = 2;
+					}
+					
+					// 강의 정보
+					let infoDatas = lectureInfo[0];
+					for (data in infoDatas) {
+						$(`#lp_${data.toLowerCase()}`).text(infoDatas[data])
+					}
+					
+					// 강의실, 강의시간
+					$('#lp_roomcode').text(lectureInfo[1].ROOMCODE);
+					$('#lp_daytime').html(daytimeTxt);
+					
+					// 강의 계획
+					$('#lp_table').find('.lp_plan').remove();
+					let plans = lectureInfo[planOrder];
+					for (plan in plans) {
+						$('#lp_table').append($('<tr>').addClass('lp_plan')
+													   .append($('<th>').addClass('fw-semibold fs-sm text-start')
+														         		.text(`${plan}주차`))
+										 			   .append($('<th>').addClass('fw-semibold fs-sm text-start')
+														         		.attr('colspan', '8')
+														         		.text(`${plans[plan]}`))
+											 );
+					}
+				})
+		})
+	}
 	
 	function search() {
 		$('#search').on('click', function () {
 			
 			// value check
-			let elemAry = [{'element':$('#select'), 'message':'옵션을 선택해 주세요.'},
+			let elemAry = [{'element':$('#lecturePlanSelect'), 'message':'옵션을 선택해 주세요.'},
 						   {'element':$('#inputTxt'), 'message':'빈 칸을 입력해 주세요.'}];
 			
 			for (let obj of elemAry) {
 				
 				let condition = obj.element.length && !obj.element.val();
-				if(obj.element.attr('id') === 'select') {
+				if(obj.element.attr('id') === 'lecturePlanSelect') {
 					condition = (obj.element.length && obj.element.val() === 'noSelect');
 				}
 				
@@ -176,7 +280,7 @@
 	
 	function searchSubjectsAjax() {
 			
-		let seasonCode = $('select[id=lecturePlan]').val();
+		let seasonCode = $('select[id=lecturePlanSelect]').val();
 		let key = $('input[name=key]').val();
 		let searchKey = $('input:radio:checked').val();
 		
@@ -186,9 +290,6 @@
 			type: 'GET',
 			data: {seasonCode:seasonCode,key:key,searchKey:searchKey},
 			dataType: 'json',
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader(header, token);
-			}
 
 		}).done(function(subjects) {
 			
@@ -196,24 +297,26 @@
 			
 			for (subject of subjects) {
 
-				$('#lecturePlanTb').append($('<tr>')
-											.append($('<td>').addClass('fw-semibold fs-sm').append($('<a>').attr('href', '#')
-																	   		 				.attr('data-bs-toggle', 'modal')
-																	   		 				.attr('data-bs-target', '#lecturePlan')
-																	   		 				.text(`${subject.no}`)))
-											.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.group}`))
-											.append($('<td>').addClass('fw-semibold fs-sm').text(/*[[${@codeList.getName(*/`${subject.deptCode}`/*)}]]*/))
-											.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.type}`))
-											.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.name}`))
-											.append($('<td>').addClass('fw-semibold fs-sm')
-															 .append($('<a>').attr('href', '#')
-																	   		 .attr('data-bs-toggle', 'modal')
-																	   		 .attr('data-bs-target', '#lectureEval')
-																	   		 .text(`${subject.pfName}`)))
-											.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.target}`))
-											.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.point}`))
-											);
-				
+				$('#lecturePlanTb')
+					.append($('<tr>')
+							.append($('<td>').addClass('fw-semibold fs-sm')
+											 .append($('<a>').addClass('lecture-plan')
+													 		 .attr('href', '#')
+													   		 .attr('data-bs-toggle', 'modal')
+													   		 .attr('data-bs-target', '#lecturePlan')
+													   		 .text(`${subject.no}`)))
+							.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.group}`))
+							.append($('<td>').addClass('fw-semibold fs-sm').text(/*[[${@codeList.getName(*/subject.deptCode/*)}]]*/))
+							.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.type}`))
+							.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.name}`))
+							.append($('<td>').addClass('fw-semibold fs-sm')
+											 .append($('<a>').attr('href', '#')
+													   		 .attr('data-bs-toggle', 'modal')
+													   		 .attr('data-bs-target', '#lectureEval')
+													   		 .text(`${subject.pfName}`)))
+							.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.target}`))
+							.append($('<td>').addClass('fw-semibold fs-sm').text(`${subject.point}`))
+							);
 			}
 		})
 	}
