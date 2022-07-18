@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.lectureEval.service.LectureEvalService;
 import co.fourth.tuna.domain.lectureEval.vo.LectureEvalVO;
@@ -58,6 +59,16 @@ public class LectureEvalController {
 		evalDao.EvalSucess(vo);
 		
 		return "close";
+	}
+	
+	// 강의 계획서 조회 - 강의 평가 모달
+	@RequestMapping("/portal/student/lectureEvaluation")
+	@ResponseBody
+	public List<Map<String,Object>> portalLectureEvaluation(LectureEvalVO vo, Model model, Authentication authentication) {
+		
+		vo.setStNo(authentication.getName());
+		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.EvalAvgScore", vo);
+		return lists;
 	}
 
 }

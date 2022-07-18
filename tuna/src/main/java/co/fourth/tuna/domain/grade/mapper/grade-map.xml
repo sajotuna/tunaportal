@@ -25,15 +25,18 @@
 	<!-- 보관 성적 조회 -->
 	<select id="subjectGradeSelect" resultType="map">
 	
-		SELECT S.SEASONCODE,
+		SELECT PS.CODENAME AS SEASONCODE,
+      		   PT.CODENAME AS TYPENAME,
       		   S.TYPE,
 		       S.NO,
 		       S.NAME,
 		       S.POINT,
 		       GRADETOALPHABET(G.TOTAL) AS ALPHABET, 
 		       GRADETOPOINT(G.TOTAL) AS TOTAL
-		FROM GRADE G, SUBJECT S
+		FROM GRADE G, SUBJECT S, PUBLICCODE PS, PUBLICCODE PT
 		WHERE G.SBJNO = S.NO
+		AND S.SEASONCODE = PS.NO
+		AND S.TYPE = PT.NO
 		AND STNO = ${stNo}
 		ORDER BY SBJNO
 		
@@ -41,15 +44,18 @@
 	
 	<select id="seasonSubjectGradeSelect" resultType="map">
 	
-		SELECT S.SEASONCODE,
-		       S.TYPE,
+		SELECT PS.CODENAME AS SEASONCODE,
+      		   PT.CODENAME AS TYPENAME,
+      		   S.TYPE,
 		       S.NO,
 		       S.NAME,
 		       S.POINT,
 		       GRADETOALPHABET(G.TOTAL) AS ALPHABET, 
 		       GRADETOPOINT(G.TOTAL) AS TOTAL
-		FROM GRADE G, SUBJECT S
+		FROM GRADE G, SUBJECT S, PUBLICCODE PS, PUBLICCODE PT
 		WHERE G.SBJNO = S.NO
+		AND S.SEASONCODE = PS.NO
+		AND S.TYPE = PT.NO
 		AND STNO = ${stNo}
 		AND S.SEASONCODE = ${seasonCode}
 		ORDER BY SBJNO
@@ -58,11 +64,13 @@
 	
 	<select id="avgGradeSelect" resultType="map">
 	
-		SELECT S.SEASONCODE, SUM(S.POINT) AS SUM, AVG(GRADETOPOINT(G.TOTAL)) AS AVG
+		SELECT S.SEASONCODE, 
+		       SUM(S.POINT) AS SUM, 
+		       AVG(GRADETOPOINT(G.TOTAL)) AS AVG
 		FROM GRADE G, SUBJECT S
 		WHERE G.SBJNO = S.NO
 		AND STNO = ${stNo}
-		group bY S.SEASONCODE
+		GROUP BY S.SEASONCODE
 		ORDER BY S.SEASONCODE ASC
 	
 	</select>
