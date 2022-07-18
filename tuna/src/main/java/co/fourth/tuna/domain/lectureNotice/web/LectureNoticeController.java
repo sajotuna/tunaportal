@@ -44,6 +44,8 @@ public class LectureNoticeController {
 		vo.setNo(1);
 		List<Map<String, Object>> ns = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeSelect", vo);
 		
+		System.out.println(ns);
+		
 		model.addAttribute("ns", ns);
 		
 		return "eclass/stud/lectureNoticeSelect";

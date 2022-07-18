@@ -18,4 +18,9 @@ public class EclassStudentHomeServiceImpl implements EclassStudentHomeService {
 		return map.subList(vo);
 	}
 
+	@Override
+	public String twoTask(EclassStudentHomeVO vo) {
+		return map.twoTask(vo);
+	}
+
 }
