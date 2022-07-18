@@ -342,7 +342,7 @@ xmlns:th="http://www.thymeleaf.org"
                         <button class="col-12 btn btn-dark">상세보기</button>
                       </div>
                       <div class="offset-xxl-6 col-xl-2">
-                        <button class="col-12 btn btn-dark">전체 출석</button>
+                        <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
                       </div>
                       <div class="col-xl-2">
                         <button class="col-12 btn btn-primary">적용</button>
@@ -831,8 +831,12 @@ xmlns:th="http://www.thymeleaf.org"
             let tabFlag = new Map();
             let tabPanel; // 탭 패널
             let tabContents; // 탭 컨탠츠
-
+            
+            // 로딩 출력
             let loaderCurtain;
+
+
+            let attendRadioGroups = [];
 
             // 로드 이벤트
             window.addEventListener("DOMContentLoaded", function() {
@@ -989,26 +993,33 @@ xmlns:th="http://www.thymeleaf.org"
                 <td class="table-cell">
                   <div class="atten-radio-group space-x-4">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="atten-radio-attend-${student.no}" name="radio-group-${student.no}" value="1401">
+                      <input class="radio-attend form-check-input" type="radio" id="atten-radio-attend-${student.no}" name="radio-group-${student.no}" value="1401">
                       <label class="form-check-label" for="atten-radio-attend-${student.no}">출석</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="atten-radio-absence-${student.no}" name="radio-group-${student.no}" value="1402">
+                      <input class="radio-absence form-check-input" type="radio" id="atten-radio-absence-${student.no}" name="radio-group-${student.no}" value="1402">
                       <label class="form-check-label" for="atten-radio-absence-${student.no}">결석</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="atten-radio-lateness-${student.no}" name="radio-group-${student.no}" value="1403">
+                      <input class="radio-lateness form-check-input" type="radio" id="atten-radio-lateness-${student.no}" name="radio-group-${student.no}" value="1403">
                       <label class="form-check-label" for="atten-radio-lateness-${student.no}">지각</label>
                     </div>
                   </div>
                 </td>`;
                 
                 tr.innerHTML = innerHTML;
+                attendRadioGroups.push(tr);
                 tbody.appendChild(tr);
               });
+
             }
 
-
+            function allStudentAttend() {
+              let attendRadios = document.querySelectorAll('.radio-attend');
+              for( let atRadio of attendRadios ) {
+                atRadio.checked = true;
+              }
+            }
 
             function onLoaderCurtain() {
               loaderCurtain.classList.remove('d-none');
