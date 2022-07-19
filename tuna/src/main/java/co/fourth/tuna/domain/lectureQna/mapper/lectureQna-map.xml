@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper">
-	
+
+<resultMap type="HashMap" id="ClobToString">
+
+	<result property="content" column="CONTENT" jdbcType="CLOB" javaType="java.lang.String" />
+
+</resultMap>
+
 	<resultMap 
 		id="lectureQnaMapWithSubjectAndStudent"
 		type="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
@@ -20,27 +26,28 @@
 	
 	</resultMap>
 <!-- 질문목록 -->
-<!-- 	<select id="qnaList" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+	<select id="qnaList" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 	<![CDATA[
 	SELECT Q.*, S.NAME, L.SBJNO, ROWNUM rn
 	FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
 	WHERE Q.SBJNO = 18011
-    AND ROWNUM <= #{[pageNum} * #{amount}
+    AND ROWNUM <= 5 * 5
     ORDER BY Q.NO DESC
     ]]>
-	</select> -->
+	</select>
+	
+	<!-- 질문단건조회 -->
+	<select id="qnaSelect" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO" resultMap="ClobToString">
+	
+	SELECT Q.*, S.NAME, L.SBJNO
+	FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
+	WHERE S.NO = #{stNo}
+    AND S.NO = L.STNO
+    AND L.SBJNO = Q.SBJNO
+	AND Q.SBJNO = #{sbjNo}
+	AND Q.NO = #{no}
+	</select>
 <!-- 
-질문단건조회
-<select id="qnaSelect" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
-
-SELECT Q.*, S.NAME, L.SBJNO
-FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
-WHERE S.NO = 13168019
-AND Q.SBJNO = L.SBJNO
-AND L.SEASONCODE = 105
-AND Q.NO = 1
-</select>
-
 질문작성
 <insert id="qnsInsert" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 INSERT INTO LECTUREQNA

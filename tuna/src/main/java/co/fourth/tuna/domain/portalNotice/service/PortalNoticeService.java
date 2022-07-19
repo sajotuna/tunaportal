@@ -17,13 +17,15 @@ public interface PortalNoticeService {
 
 	int noticeUpdate(PortalNoticeVO vo);
 
-	List<PortalNoticeFileVO> fileList(PortalNoticeFileVO filevo);
+	List<PortalNoticeFileVO> fileList();
 
 	List<PortalNoticeFileVO> fileSelect(int pnNo);
 
 	int fileInsert(PortalNoticeFileVO fileVo);
 
 	int fileDelete(PortalNoticeFileVO fileVo);
+	
+	int fileAllDelete(PortalNoticeFileVO fileVo);
 
 	
 

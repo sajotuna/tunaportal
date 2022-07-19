@@ -202,7 +202,17 @@ xmlns:th="http://www.thymeleaf.org"
                   </li>
                 </ul>
 
-                <div id="subject-tab-content" class="block-content tab-content">
+                <div id="subject-tab-content" class="block-content tab-content position-relative">
+
+                  <div id="loaderCurtain" class="d-none">
+                    <div class="overflow-hidden bg-white-95 position-absolute top-0 start-0 w-100 h-100 opacity-75"></div>
+                    <span class="position-absolute top-50 start-50 translate-middle">
+                      <div class="spinner-border text-secondary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </span>
+                  </div>
+                  
 <!--
       ██████  ██████   ██████   ██████  ██████  ███████ ███████ ███████ 
 ▄ ██ ▄██   ██ ██   ██ ██    ██ ██       ██   ██ ██      ██      ██      
@@ -322,38 +332,8 @@ xmlns:th="http://www.thymeleaf.org"
 -->
                   <div class="tab-pane pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
                     <div style="overflow-y:scroll; height: 310px;">
-                      <table class="table table-hover table-vcenter">
+                      <table id="subject-attendance-table" class="table table-hover table-vcenter">
                         <tbody>
-                          <tr class="m-0">
-                            <td class="table-cell" style="width: 54px;">
-                              <i class="fa fa-2x fa-circle-user"></i>
-                            </td>
-                            <td class="table-cell">
-                              <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);">김철수</a>
-                            </td>
-                            <td class="table-cell">
-                                참치공학
-                            </td>
-                            <td class="table-cell">
-                              1053099
-                            </td>
-                            <td class="table-cell">
-                              <div class="space-x-4">
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" id="example-radios-inline1" name="example-radios-inline" value="1">
-                                  <label class="form-check-label" for="example-radios-inline1">출석</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" id="example-radios-inline2" name="example-radios-inline" value="2">
-                                  <label class="form-check-label" for="example-radios-inline2">결석</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" id="example-radios-inline3" name="example-radios-inline" value="3">
-                                  <label class="form-check-label" for="example-radios-inline3">지각</label>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -362,7 +342,7 @@ xmlns:th="http://www.thymeleaf.org"
                         <button class="col-12 btn btn-dark">상세보기</button>
                       </div>
                       <div class="offset-xxl-6 col-xl-2">
-                        <button class="col-12 btn btn-dark">전체 출석</button>
+                        <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
                       </div>
                       <div class="col-xl-2">
                         <button class="col-12 btn btn-primary">적용</button>
@@ -851,6 +831,12 @@ xmlns:th="http://www.thymeleaf.org"
             let tabFlag = new Map();
             let tabPanel; // 탭 패널
             let tabContents; // 탭 컨탠츠
+            
+            // 로딩 출력
+            let loaderCurtain;
+
+
+            let attendRadioGroups = [];
 
             // 로드 이벤트
             window.addEventListener("DOMContentLoaded", function() {
@@ -875,41 +861,60 @@ xmlns:th="http://www.thymeleaf.org"
                 tabPanel.children[i].setAttribute('id', TAB_ID+i);
                 tabFlag.set(i, false);
               }
-                
+               //
+               loaderCurtain = document.querySelector('#loaderCurtain');
             }
 
             //
             function setTabContent(tabIdx) {
-              if(tabFlag.get(tabIdx)){ return; };
-              tabFlag.set(tabIdx, true);
+              let url = "";
+              let sbj = sbjno;
+              let resFunc = {};
+
+              if(tabFlag.get(tabIdx)){ 
+                offloaderCurtain();
+                return; 
+              };
+              onLoaderCurtain();
               
               switch(tabIdx) {
-                case 0:
+                case 0: // 진도
+                  return;
                   break;
-                case 1:
+                case 1: // 출결
+                  url = "/tuna/students";
+                  resFunc = setAttendanceContent;
                   break;
-                case 2:
+                case 2: // 과제
+                  return;
                   break;
-                case 3:
+                case 3: // 문의
+                  return;
                   break;
-                case 4:
-                  reqNoticeContent(tabIdx);
+                case 4: // 공지
+                  //reqNoticeContent(tabIdx);
+                  url = "/tuna/lecNotices";
+                  resFunc = setNoticeContent;
                   break;
-                case 5:
+                case 5: // 이의
+                return;
                   break;
-                case 6:
-                  break;
-                case 7:
+                case 6: // 성적
+                  return;
                   break;
                 default:
+                  return;
                   break;
               }
+              reqSbjContent(tabIdx, sbj, url, resFunc)
 
             }
-
-            function reqNoticeContent(tabIdx) {
-              let resData = {};
-              fetch('/tuna/lecNotices', {
+            function reqSbjContent(tabIdx, sbjno, url, resFunc) {
+              // console.log(tabIdx);
+              // console.log(sbjno);
+              // console.log(url);
+              // console.log(resFunc);
+              fetch(url, {
                 method: "POST",
                 headers: {
                   'header': header,
@@ -923,25 +928,31 @@ xmlns:th="http://www.thymeleaf.org"
               })
               .then(result => result.json())
               .then(result => {
-                setNoticeContet(result);
+                resFunc(result);
+
+                offloaderCurtain();
+                tabFlag.set(tabIdx, true);
               })
               .catch((err) => {
                 console.error('fetch 오류', err);
+
+                offloaderCurtain();
                 tabFlag.set(tabIdx, false);
               })
-              
             }
 
-            function setNoticeContet(jsonData) {
+            // 공지사항 패널 세팅
+            function setNoticeContent(jsonData) {
               let table = document.querySelector('#subject-notice-table');
               let tbody = table.firstElementChild;
               jsonData.forEach(data => {
-                console.log(data);
+                // console.log(data);
                 let mDate = new Date(data.enrollDate);
                 mDate = mDate.toISOString();
                 mDate = mDate.slice(0, mDate.indexOf('T'));
 
                 let tr = document.createElement('tr');
+                let atag = document.createElement('a');
                 tbody.appendChild(tr);
 
                 let td_no = document.createElement('td');
@@ -957,6 +968,64 @@ xmlns:th="http://www.thymeleaf.org"
                 td_title.innerText = data.title;
                 td_date.innerText = mDate;
               })
+            }
+
+            // 출결 패널 세팅
+            function setAttendanceContent(jsonData) {
+              let table = document.querySelector('#subject-attendance-table');
+              let tbody = table.firstElementChild;
+              jsonData.forEach(student => {
+                let tr = document.createElement('tr');
+                let innerHTML = `
+                <td class="table-cell" style="width: 54px;">
+                  <i class="fa fa-2x fa-circle-user"></i>
+                </td>
+                <td class="table-cell">
+                  <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);">
+                    ${student.name}</a>
+                </td>
+                <td class="table-cell">
+                  ${student.deptName}
+                </td>
+                <td class="table-cell">
+                  ${student.no}
+                </td>
+                <td class="table-cell">
+                  <div class="atten-radio-group space-x-4">
+                    <div class="form-check form-check-inline">
+                      <input class="radio-attend form-check-input" type="radio" id="atten-radio-attend-${student.no}" name="radio-group-${student.no}" value="1401">
+                      <label class="form-check-label" for="atten-radio-attend-${student.no}">출석</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="radio-absence form-check-input" type="radio" id="atten-radio-absence-${student.no}" name="radio-group-${student.no}" value="1402">
+                      <label class="form-check-label" for="atten-radio-absence-${student.no}">결석</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="radio-lateness form-check-input" type="radio" id="atten-radio-lateness-${student.no}" name="radio-group-${student.no}" value="1403">
+                      <label class="form-check-label" for="atten-radio-lateness-${student.no}">지각</label>
+                    </div>
+                  </div>
+                </td>`;
+                
+                tr.innerHTML = innerHTML;
+                attendRadioGroups.push(tr);
+                tbody.appendChild(tr);
+              });
+
+            }
+
+            function allStudentAttend() {
+              let attendRadios = document.querySelectorAll('.radio-attend');
+              for( let atRadio of attendRadios ) {
+                atRadio.checked = true;
+              }
+            }
+
+            function onLoaderCurtain() {
+              loaderCurtain.classList.remove('d-none');
+            }
+            function offloaderCurtain() {
+              loaderCurtain.classList.add('d-none');
             }
 
           </script>

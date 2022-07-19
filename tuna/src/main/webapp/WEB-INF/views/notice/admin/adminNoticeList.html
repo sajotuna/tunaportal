@@ -35,7 +35,7 @@
 								<div class="input-group">
 									<input type="text" class="form-control form-control-alt"
 										id="key" name="key" placeholder="Search">
-									<button type="button" onclick="searchList()"
+									<button id = "searchBtn" type="button" onclick="searchList()"
 										class="btn btn-alt-secondary">
 										<i class="fa fa-search"></i>
 									</button>
@@ -139,12 +139,12 @@
 		var header = $("meta[name='_csrf_header']").attr('content');
 		var token = $("meta[name='_csrf']").attr('content');
 		
+		
 
-
+		//검색기능
 		function searchList() {
 			let state= $("#state").val();
-			let key = $("#key").val();
-			
+			let key = $("#key").val();			
 			$.ajax({
 				url : getPathRootJump() + "admin/adminSearch",
 				type: "get",
@@ -159,6 +159,7 @@
 			})	
 		}
 
+		
 		function htmlConvert(rs){
 			$("tbody").remove();
 			let tbody = $("<tbody/>");
@@ -166,8 +167,7 @@
 				var row = $("<tr/>").append(
 						  $("<td/>").addClass("text-center").html(`
 		                          <input class="form-check-input text-center" type="checkbox" value="" >
-		                          <label class="form-check-label text-center" ></label>          
-		                         `),
+		                          <label class="form-check-label text-center" ></label>`),
 						  $("<td/>").addClass("text-center").css("width","10px").html(n.no),
 						  $("<td/>").html(`<a href="adminNoticeSelect?no=${n.no}"> ${n.title} </a>`),
 						  $("<td/>").addClass("text-center").css("width","10px"),
@@ -180,16 +180,58 @@
 		
 
 
-
+		
+			//삭제버튼 클릭했을 때 이벤트 
 			 $('#delBtn').on('click',function(){		 
 				 let job =$(this).data('job');
-				 let tr = $('input:checkbox[class="table-active"]').parent().data('no');
-				 
-				 console.log(tr)
 
+ 				 pageDialogs.dialog(job)
+				 		 
 				 
-				 class pageDialogs{
-						static dialog(job, txt){
+			 })//onclick end
+		
+
+			
+			
+			//페이지이동
+			 document.addEventListener('DOMContentLoaded', function(){
+					
+					
+					let nextBtn = document.querySelector("#next")
+					let prevBtn = document.querySelector("#prev")
+					let pageBtn = document.querySelectorAll("#pageBtn");
+					
+ 					nextBtn.addEventListener('click', function(){
+ 						pageBtn.forEach(btn =>{
+ 							let a = btn.innerHTML
+ 							btn.innerHTML = parseInt(a)+3;
+ 						})
+ 					})
+					
+ 					prevBtn.addEventListener('click', function(){
+ 						pageBtn.forEach(btn =>{
+ 							let a = btn.innerHTML
+ 							if (parseInt(a) > 3){
+ 								btn.innerHTML = parseInt(a)-3;
+ 							}
+							
+ 						})
+ 					})
+					
+					pageBtn.forEach(btn =>{
+						btn.addEventListener('click',function(){
+							let a = btn.innerHTML
+							location.href = '/tuna/admin/adminNoticeList?pageNum='+parseInt(a)
+						})
+					})
+					
+					
+				})
+		
+				
+				//삭제 다이어로그
+				class pageDialogs{
+						static dialog(job){
 							let toast = Swal.mixin({
 							      buttonsStyling: false,
 							      target: '#page-container',
@@ -216,6 +258,7 @@
 									 },
 									 confirmButtonText:'삭제하기',
 									 cancelButtonText:'취소',
+									 
 									 preConfirm: e => {
 										 return new Promise(resolve => {
 											 setTimeout(() => {
@@ -226,22 +269,27 @@
 									 	 
 									 }).then(result => {
 										 if(result.value){
-										 let tr = $('#check').hasClass("table-active"===true).parent('tr')
-										 $.ajax({
 											 
-											 url:getContextPath()+'admin/adminNoticeDelete',
-											 method:'DELETE',
-											 data:JSON.stringfy({no:no, pnno:pnno}),
-											 contentType : 'application/json; charset=utf-8',
-											 beforeSend : function(xhr) {
-													xhr.setRequestHeader(header, token);
-												}
 											 
-										 }).done(function(success){
-											 if(success){
-												pageDialogs.dialog('success');
-											 }
-										 }) //done end
+											 let tr = $('input:checkbox').closest('tr[class="table-active"]')
+
+											 tr.each(function(){
+												 $.ajax({								 
+													 url:getPathRootJump()+'admin/adminNoticeDelete',
+													 method:'DELETE',
+													 data: JSON.stringify({no:$(this).data('no')}),
+													 traditional: true,
+	 												 contentType : 'application/json; charset=utf-8',
+	 												 dataType :'json',
+													 beforeSend : function(xhr) {
+															xhr.setRequestHeader(header, token);
+														}
+													 
+												 }).done(function(){
+														 location.reload();
+													 
+												 }) //done end
+											 })
 											 
 										 }
 										 
@@ -253,46 +301,6 @@
 						}//static dialog end 
 					 
 					 }//class end
-				 
-			 })//onclick end
-		
-
-			
-			
-			
-			 document.addEventListener('DOMContentLoaded', function(){
-					
-					
-					let nextBtn = document.querySelector("#next")
-					let prevBtn = document.querySelector("#prev")
-					let pageBtn = document.querySelectorAll("#pageBtn");
-					nextBtn.addEventListener('click', function(){
-						pageBtn.forEach(btn =>{
-							let a = btn.innerHTML
-							btn.innerHTML = parseInt(a)+3;
-						})
-					})
-					
-					prevBtn.addEventListener('click', function(){
-						pageBtn.forEach(btn =>{
-							let a = btn.innerHTML
-							if (parseInt(a) > 3){
-								btn.innerHTML = parseInt(a)-3;
-							}
-							
-						})
-					})
-					
-					pageBtn.forEach(btn =>{
-						btn.addEventListener('click',function(){
-							let a = btn.innerHTML
-							console.log(parseInt(a))
-							location.href = '/tuna/admin/adminNoticeList?pageNum='+parseInt(a)
-						})
-					})
-					
-					
-				})
 
 		function getPathRootJump() {
 		    var pathName = window.location.pathname.substring(1);

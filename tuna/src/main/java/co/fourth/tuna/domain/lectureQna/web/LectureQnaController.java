@@ -29,4 +29,18 @@ public class LectureQnaController {
 		return "eclass/stud/qnaList";
 	}
 	
+	@RequestMapping("eclass/student/qnaSelect")
+	public String qnaSelect(Model model, LectureQnaVO vo) {
+		
+		vo.setNo(1);
+		vo.setSbjNo(18011);
+		vo.setStNo(13168019);
+		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
+		
+		System.out.println(qs);
+		model.addAttribute("qs", qs);
+		
+		return "eclass/stud/qnaSelect";
+	}
+	
 }

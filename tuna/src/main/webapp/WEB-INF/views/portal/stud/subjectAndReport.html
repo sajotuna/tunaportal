@@ -6,6 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="_csrf" th:content="${_csrf.token}">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="userNo" th:content="${#authentication.name}">
 	<title>subjectAndReport</title>
 	<style>
 	.space-x-2 {
@@ -22,7 +23,7 @@
 	}
 	
 	.scroll-table {
-		width:1165px;
+		width:1162px;
 	}
 	</style>
 </head>

@@ -5,51 +5,56 @@
 <title>Insert title here</title>
 </head>
 <body>
-<th:block th:fragment="mySubject">
-	<div class="tab-pane" id="btabs-static-mysubject" role="tabpanel" aria-labelledby="btabs-static-mysubject-tab">
-		<!-- Input -->
-		<div class="row">
-			<input type="hidden" name="stNo" value="20142268">
-			<div class="mb-3 mb-xl-2 col-xl-4">
-				<select id="mySubject" class="form-select" name="seasonCode">
-					<option selected value="noSelect">연도/학기</option>
-					<option value="106">2022년도 2학기</option>
-					<option value="105">2022년도 1학기</option>
-				</select>
-			</div>
-			<div class="col-md-6 col-xl-4">
-				<div class="block block-rounded bg-primary-darker mb-2">
-					<div class="space-x-2 text-center text-gray-light">신청 과목수 <span id="mySubjectCount">0</span></div>
+	<th:block th:fragment="mySubject">
+		<div class="tab-pane" id="btabs-static-mysubject" role="tabpanel"
+			aria-labelledby="btabs-static-mysubject-tab">
+			<!-- Input -->
+			<div class="row">
+				<div class="mb-3 mb-xl-2 col-xl-4">
+					<select id="mySubject" class="form-select" name="seasonCode">
+						<option selected value="noSelect">연도/학기</option>
+						<option value="106">2022년도 2학기</option>
+						<option value="105">2022년도 1학기</option>
+					</select>
+				</div>
+				<div class="col-md-6 col-xl-4">
+					<div class="block block-rounded bg-primary-darker mb-2">
+						<div class="space-x-2 text-center text-gray-light">
+							신청 과목수 <span id="mySubjectCount">0</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-xl-4">
+					<div class="block block-rounded bg-primary-darker mb-3">
+						<div class="space-x-2 text-center text-gray-light">
+							신청 학점 <span id="mySubjectTotal">0</span>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-xl-4">
-				<div class="block block-rounded bg-primary-darker mb-3">
-					<div class="space-x-2 text-center text-gray-light">신청 학점 <span id="mySubjectTotal" >0</span></div>
-				</div>
-			</div>
-		</div>
-		<!-- END Input -->
-		<!-- Table -->
-		<div class="mb-4 scroll-table-div">
-			<table class="table table-striped table-vcenter scroll-table">
-				<thead>
-					<tr>
-						<th style="width: 120px;">과목번호</th>
-						<th style="width: 230px;">과목명</th>
-						<th style="width: 200px;">개설학과</th>
-						<th style="width: 100px;">이수구분</th>
-						<th style="width: 100px;">담당교수</th>
-						<th>강의실/강의시간</th>
-					</tr>
-				</thead>
-				<tbody id="mySubjectTb">
+			<!-- END Input -->
+			<!-- Table -->
+			<div class="mb-4 scroll-table-div">
+				<table class="table table-striped table-vcenter scroll-table">
+					<thead>
+						<tr>
+							<th style="width: 120px;">과목번호</th>
+							<th style="width: 230px;">과목명</th>
+							<th style="width: 200px;">개설학과</th>
+							<th style="width: 100px;">이수구분</th>
+							<th style="width: 100px;">담당교수</th>
+							<th>강의실/강의시간</th>
+						</tr>
+					</thead>
+					<tbody id="mySubjectTb">
 
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</div>
+			<!-- END Table -->
 		</div>
-		<!-- END Table -->
-	</div>
-	<script th:inline="javascript">
+		<script th:inline="javascript">
+		var userNo = $("meta[name='userNo']").attr('content');
 	
 		$(function() {
 			findMySubjectAjax();
@@ -61,17 +66,15 @@
 			$('#mySubject').on('change', function () {
 				
 				let seasonCode = $('select[id=mySubject]').val();
-				let stNo = $('input[name=stNo]').val();
 				
 				$.ajax({
 					
 					url: getContextPath() + 'stud/mySubjectList',
 					type: 'GET',
-					data: {seasonCode:seasonCode,stNo:stNo},
+					data: {seasonCode:seasonCode,stNo:userNo},
 					dataType: 'json',
 
 				}).done(function(mySubjects) {
-					
 					
 					let count = 0;
 					let totalPoint = 0;
@@ -115,6 +118,6 @@
 		}
 	
 	</script>
-</th:block>
+	</th:block>
 </body>
 </html>

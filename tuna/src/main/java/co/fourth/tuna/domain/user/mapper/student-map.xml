@@ -22,14 +22,31 @@
 	WHERE no = #{no}
 </select>
 
-<update id = "AdminStudUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
-	
+<update id = "AdminStudUpdate" 
+	parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
 	update student
 	set deptcode = #{deptCode}, name = #{name}, stateCode = #{stateCode}
 	WHERE no = #{no}
 
 </update>
-
+ 
+<select id = "findListBySubjectId"
+	resultType="co.fourth.tuna.domain.user.vo.StudentExVO">
+	SELECT s.*,
+		(<include refid="co.fourth.tuna.domain.common.mapper.CodeMapper.findCodeNameSql">
+			<property name="no" value="statecode" />
+		</include>) AS statename,
+		(<include refid="co.fourth.tuna.domain.common.mapper.CodeMapper.findCodeNameSql">
+			<property name="no" value="bacc" />
+		</include>) AS bankname,
+		(<include refid="co.fourth.tuna.domain.common.mapper.CodeMapper.findCodeNameSql">
+			<property name="no" value="deptcode" />
+		</include>) AS deptname
+	FROM student s
+	JOIN lectureapply l
+	    ON s.no = l.stno
+	WHERE sbjno = #{sbjno}
+</select>
 
 
 

@@ -1,5 +1,6 @@
 var header = $("meta[name='_csrf_header']").attr('content');
 var token = $("meta[name='_csrf']").attr('content');
+var userNo = $("meta[name='userNo']").attr('content');
 
 // 배너 미리보기
 function banner(job) {
@@ -51,7 +52,7 @@ function basicBannerInsert() {
 	let formData = new FormData();
 	
 	formData.append("file", $('input[name=file]').get(0).files[0]);
-	formData.append("adNo", $('input[name=adNo]').val());
+	formData.append("adNo", userNo);
 	formData.append("url", $('input[name=url]').val());			
 	
 	$.ajax({
@@ -77,7 +78,7 @@ function optionBannerInsert() {
 	let formData = new FormData();
 	
 	formData.append("file", $('input[name=file]').get(0).files[0]);
-	formData.append("adNo", $('input[name=adNo]').val());
+	formData.append("adNo", userNo);
 	formData.append("url", $('select[name=url]').val());
 	formData.append("startDate", moment($('input[name=startDate]').val()).format('YYYY-MM-DD'));
 	formData.append("endDate", moment($('input[name=endDate]').val()).format('YYYY-MM-DD'));

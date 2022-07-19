@@ -40,8 +40,8 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 	
 	
 	//파일
-	public List<PortalNoticeFileVO> fileList(PortalNoticeFileVO fileVo) {
-		 return map.fileList(fileVo);
+	public List<PortalNoticeFileVO> fileList() {
+		 return map.fileList();
 	}
 	
 	public List<PortalNoticeFileVO> fileSelect(int pnNo) {
@@ -55,6 +55,10 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 	
 	public int fileDelete(PortalNoticeFileVO vo) {
 		return map.fileDelete(vo);
+	}
+	
+	public int fileAllDelete(PortalNoticeFileVO vo) {
+		return map.fileAllDelete(vo);
 	}
 
 
