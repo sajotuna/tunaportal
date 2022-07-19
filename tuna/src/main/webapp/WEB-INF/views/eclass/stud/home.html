@@ -34,9 +34,22 @@
 					<div class="col-8">
 						<div class="row">
 							<div class="col-6" th:each="l : ${list}">
-								<div class="block">
-									<div class="block-header block-header-default text-center">
-										<h3 class="block-title"th:text="${l.NAME}"></h3>
+								<div class="block block-rounded">
+									<div class="block-header block-header-default text-center bg-dark">
+										<h3 class="block-title text-white"
+											th:text="${l.NAME}+'('+${l.SBJNO}+')'"></h3>
+									</div>
+									<div
+										class="text-center bg-dark d-flex justify-content-center">
+										<div class="row d-flex justify-content-start">
+											<p class="text-light mb-0 d-flex justify-content-start"
+												style="font-size: 9pt"
+												th:text="'강의실: '+${@codeList.getName(l.ROOMCODE)}"></p>
+											<p class="text-light mb-0 d-flex justify-content-start"
+												style="font-size: 9pt" th:text="'강의요일: '+${l.DAYCODE}"></p>
+											<p class="text-light mb-0 d-flex justify-content-start"
+												style="font-size: 9pt" th:text="'강의시간: '+${l.TIMECODE}"></p>
+										</div>
 									</div>
 									<div class="block-content text-center bg-white">
 										<div class="row d-flex justify-content-center">
@@ -44,22 +57,21 @@
 												style="width: 50px">
 												<a class="" th:href="@{/eclass/student/lectureNotice}"
 													style="color: black"><i class="far fa-2x fa-bell m-2"></i>
-													<p style="font-size: 8pt">공지</p>
-												</a>
+													<p style="font-size: 8pt">공지</p> </a>
 											</div>
 											<div class="d-flex justify-content-center"
 												style="width: 50px">
 												<a class="" th:href="@{/eclass/student/qnaList}"
-													style="color: black"><i class="far fa-2x fa-circle-question m-2"></i>
-													<p style="font-size: 8pt">QnA</p>
-												</a>
+													style="color: black"><i
+													class="far fa-2x fa-circle-question m-2"></i>
+													<p style="font-size: 8pt">QnA</p> </a>
 											</div>
 											<div class="d-flex justify-content-center"
 												style="width: 50px">
 												<a class="" th:href="@{/eclass/student/taskList}"
-													style="color: black"><i class="fa fa-2x fa-book-open m-2"></i>
-													<p style="font-size: 8pt">과제</p>
-												</a>
+													style="color: black"><i
+													class="fa fa-2x fa-book-open m-2"></i>
+													<p style="font-size: 8pt">과제</p> </a>
 											</div>
 										</div>
 									</div>
@@ -69,22 +81,15 @@
 					</div>
 					<div class="col-1"></div>
 					<div class="col-3">
-						<div class="block">
-							<div class="block-header block-header-default text-center">
-								<h3 class="block-title">A과목</h3>
+						<div class="block block-rounded" th:each="t : ${tt}">
+							<div
+								class="block-header block-header-default text-center bg-dark">
+								<h3 class="block-title" style="color: white" th:text="${t.NAME}"></h3>
 							</div>
 							<div class="block-content text-lg-center bg-white">
-								<a href="과제상세.html" style="color: black">JAVA 실습</a>
-								<p class="text-danger fw-bold">~00/00</p>
-							</div>
-						</div>
-						<div class="block">
-							<div class="block-header block-header-default text-center">
-								<h3 class="block-title">A과목</h3>
-							</div>
-							<div class="block-content text-lg-center bg-white">
-								<a href="과제상세.html" style="color: black">BOOTSTRAP 실습</a>
-								<p class="text-danger fw-bold">~00/00</p>
+								<a href="@{/eclass/student/taskSelect}" style="color: black"
+									th:text="${t.TITLE}"></a>
+								<p class="text-danger fw-bold" th:text="'~'+${t.LIMITDATE}"></p>
 							</div>
 						</div>
 					</div>

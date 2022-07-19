@@ -29,7 +29,7 @@
 						<div class="block-content block-content-full">
 							<div id="DataTables_Table_0_wrapper"
 								class="dataTables_wrapper dt-bootstrap5 no-footer">
-								<div class="row">
+								<div class="row" th:each="qs : ${qs}">
 									<div class="col-sm-12">
 										<table
 											class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
@@ -38,20 +38,19 @@
 											<thead>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="3">제목</th>
-													<th colspan="7">성적 산출 문의</th>
+													<th colspan="7" th:text="${qs.TITLE}"></th>
 												</tr>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="3">작성자</th>
-													<th colspan="7">김철수</th>
+													<th colspan="7" th:text="${qs.NAME}"></th>
 												</tr>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="3">작성일</th>
-													<th colspan="7">2000-00-00</th>
+													<th colspan="7" th:text="${qs.ENROLLDATE}"></th>
 												</tr>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="3">내용</th>
-													<th colspan="7">성적이 C+이던데 왜 이렇게 나왔는지 궁금해서 문의드립니다. 성적이
-														산출된 상세내역을 알려주세요. 이거 때문에 성적장학금 못 받게 생겼습니다.</th>
+													<th colspan="7" th:text="${qs.content}"></th>
 												</tr>
 											</thead>
 										</table>
@@ -60,14 +59,18 @@
 											id="DataTables_Table_0"
 											aria-describedby="DataTables_Table_0_info">
 											<tbody>
-												<tr>
+												<tr th:if="${#strings.isEmpty(qs.ANSWER)}">
+													<th class="text-center" th:text="'등록된 답변이 없습니다'"></th>
+												</tr>
+												<tr th:if="${not #strings.isEmpty(qs.ANSWER)}">
 													<th class="text-center" tabindex="0" colspan="3">답변</th>
-													<th colspan="7">학생 시험을 너무 못 쳤네요 ㅋㅋ~</th>
+													<th colspan="7" th:text="${qs.ANSWER}"></th>
 												</tr>
 											</tbody>
 										</table>
 										<div class="d-flex justify-content-center">
-											<button type="button" th:onclick="|location.href='@{/eclass/student/qnaList}'|"
+											<button type="button"
+												th:onclick="|location.href='@{/eclass/student/qnaList}'|"
 												class="btn btn-dark m-2">목록으로</button>
 										</div>
 									</div>

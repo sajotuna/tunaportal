@@ -2,10 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper">
+
+<resultMap type="HashMap" id="ClobToString">
+
+	<result property="content" column="CONTENT" jdbcType="CLOB" javaType="java.lang.String" />
+
+</resultMap>
 	
 	<!-- 단일과목 공지전체 -->
 	<select id="noticeList" resultType="map" parameterType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO">
-	SELECT N.NO, N.TITLE, N.ENROLLDATE
+	SELECT N.NO, N.TITLE, TO_CHAR(N.ENROLLDATE, 'YYYY-MM-DD HH24:MI') ENROLLDATE
 	FROM LECTUREAPPLY L JOIN LECTURENOTICE N
 	ON(L.SBJNO = N.SBJNO)
 	JOIN SUBJECT J
@@ -17,8 +23,9 @@
 	</select>
 	
 	<!-- 단일과목 1개 공지 -->
-	<select id="noticeSelect" resultType="map" parameterType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO">
-	SELECT N.NO, N.TITLE, N.CONTENT, N.ENROLLDATE
+	<select id="noticeSelect" resultType="map" parameterType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO" resultMap="ClobToString">
+
+	SELECT N.NO, N.TITLE, N.CONTENT AS "CONTENT", TO_CHAR(N.ENROLLDATE, 'YYYY-MM-DD HH24:MI') ENROLLDATE
 	FROM LECTUREAPPLY L JOIN LECTURENOTICE N
 	ON(L.SBJNO = N.SBJNO)
 	JOIN SUBJECT J

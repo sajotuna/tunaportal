@@ -27,14 +27,14 @@
 					</div>
 				</div>
 				<div class="block" th:each="s : ${sbjli}">
-					<div class="row" th:each="t : ${s.taskList}">
+					<div class="row" th:each="i, t : ${s.taskList}">
 						<div class="col-12">
 							<div class="row block-content">
-								<h4 class="h4 fw-bold mb-2 col-2 text-center" th:text="${t.no}"></h4>
+								<h4 class="h4 fw-bold mb-2 col-2 text-center" th:text="${t.index+1}"></h4>
 								<h4 class="h4 mb-2 col-7 text-center">
-									<a th:href="@{/eclass/student/taskSelect}" style="color: black" th:text="${t.title}"></a>
+									<a th:href="@{/eclass/student/taskSelect}" style="color: black" th:text="${i.title}"></a>
 								</h4>
-								<h4 class="h4 text-center col-3" th:text="${t.limitDate}"></h4>
+								<h4 class="h4 text-center col-3" th:text="${i.limitDate}"></h4>
 							</div>
 						</div>
 					</div>

@@ -31,11 +31,11 @@ public class EclassStudentEclassController {
 	}
 	
 	
-	//출석
-	@RequestMapping("/attendance")
-	public String attendance() {
-		return "eclass/stud/attendance";
-	}
+//	//출석
+//	@RequestMapping("/attendance")
+//	public String attendance() {
+//		return "eclass/stud/attendance";
+//	}
 	
 	//자료실
 	@RequestMapping("/download") 
@@ -52,6 +52,12 @@ public class EclassStudentEclassController {
 		vo.setSeasonCode(106);
 		List<Map<String, Object>> list = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.subList", vo);
 		model.addAttribute("list", list);
+		
+		
+		
+		List<Map<String, Object>> tt = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.twoTask", vo);
+		System.out.println(tt);
+		model.addAttribute("tt", tt);
 		
 		return "eclass/stud/home";
 	}
@@ -80,11 +86,11 @@ public class EclassStudentEclassController {
 //		return "eclass/stud/lecturePlan";
 //	}
 	
-	//질의응답보기
-	@RequestMapping("/qnaForm")
-	public String qnaForm() {
-		return "eclass/stud/qnaForm";
-	}
+//	//질의응답보기
+//	@RequestMapping("/qnaForm")
+//	public String qnaForm() {
+//		return "eclass/stud/qnaForm";
+//	}
 	
 	//질의응답작성
 	@RequestMapping("/qnaInsert")

@@ -8,4 +8,12 @@
 		FROM attendance
 		WHERE sbjno = #{no}
 	</select>
+	
+	<select id="studentAttendance" resultType="map"
+	parameterType="co.fourth.tuna.domain.attendance.vo.AttendanceVO">
+	SELECT TO_CHAR(CLASSDATE, 'MM"월"DD"일"') CLASSDATE
+	FROM ATTENDANCE
+	WHERE STNO = #{stNo}
+	AND SBJNO = #{sbjNo}
+	</select>
 </mapper>
