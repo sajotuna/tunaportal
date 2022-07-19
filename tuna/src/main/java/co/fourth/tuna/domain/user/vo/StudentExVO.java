@@ -14,4 +14,5 @@ public class StudentExVO extends StudentVO {
 	private String stateName;
 	private String bankName;
 	private String deptName;
+	
 }

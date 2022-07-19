@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -102,8 +104,19 @@ public class ScholarController {
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		
+
+		if(params.get("applydate") != null && !params.get("applydate").equals("")) {
+			String Date = (String)params.get("applydate");
+			System.out.println(Date.substring(0, Date.indexOf(" ")) +"~"+ (Date.substring(Date.lastIndexOf(" "),Date.length())).trim());
+			
+			params.put("startDate", Date.substring(0, Date.indexOf(" ")));
+			params.put("endDate", (Date.substring(Date.lastIndexOf(" "),Date.length())).trim());
+		}
+		
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.adminScholarCheck",params);
-		System.out.println(params.get("applydate"));
+		
+		
+		
 		model.addAttribute("list", lists);
 		model.addAttribute("params", params);
 		
@@ -135,6 +148,13 @@ public class ScholarController {
 	
 	
 	
+	
+	@ResponseBody
+	@GetMapping("/stud/scholarApplyCheck")
+	public List<ScholarApplyVO> scholarApplyCheck(ScholarApplyVO vo,Authentication authentication) {
+		vo.setStNo(authentication.getName());
+		return ScholarDao.scholarApplyCheck(vo);
+	}
 	
 	
 	

@@ -45,6 +45,11 @@ public class ScholarServiceImpl implements ScholarService {
 	public void scholarUpdate(ScholarApplyVO vo) {
 		mapper.scholarUpdate(vo);
 	}
+
+	@Override
+	public List<ScholarApplyVO> scholarApplyCheck(ScholarApplyVO vo) {
+		return mapper.scholarApplyCheck(vo);
+	}
 	
 	
 }

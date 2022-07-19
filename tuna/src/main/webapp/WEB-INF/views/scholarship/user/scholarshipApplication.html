@@ -7,6 +7,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
 
   <title>장학금 신청</title>
   <style>
@@ -32,7 +34,7 @@
         <div class="row">
           <div class="col-lg-12 col-xl-12 bg-body-extra-light "style="padding: 10px;">
             <div class="m-4">
-              <form th:action="@{/stud/scolarShipApply}" method="post">
+              <form th:action="@{/stud/scolarShipApply}" method="post" id = "frm">
                 <div class="mb-4">
                   <div class="input-group">
                     <span class="input-group-text">소속</span>
@@ -141,7 +143,7 @@
                   <tbody>
                   </tbody>
                 </table>
-                <input type="submit" class="btn btn-info" style="margin: 0 auto; display: block;" value="제출">
+                <input type="button" id = "applyBtn" onclick="javascript:ScholarApply();" class="btn btn-info" style="margin: 0 auto; display: block;" value="제출">
               </form>
             </div>
           </div>
@@ -149,6 +151,49 @@
       </div>
     </div>
   </div>
+  <script>
+  let check = 0;
+  function ScholarApply(){
+	  let header = document.querySelector('meta[name="_csrf_header"]').content;
+	  let token = document.querySelector('meta[name="_csrf"]').content;
+	  let radios = document.querySelectorAll("[type='radio']")		
+	  
+	  
+	  
+	  fetch("/tuna/stud/scholarApplyCheck",{
+	  			headers: {
+	                'header': header,
+	              	'X-Requested-With': 'XMLHttpRequest',
+	                "Content-Type": "application/json",
+	                'X-CSRF-Token': token	// header에 X-CSRF-Token부분에 토큰값이 들어가 정상적으로 POST값이 넘어가는 것을 볼 수 있다!
+	            }
+	  		}).then(result => result.json())
+	  		  .then(result => {
+	  			let radios = document.querySelectorAll("[type='radio']")
+	  			
+			  	check=0;
+			  	result.forEach((val,idx)=>{
+			  		radios.forEach(radio=>{
+			  			if(radio.checked == true){
+			  				if(radio.value == val.schNo){
+			  					alert('동일한장학금은 신청이 불가능합니다.');
+			  					check++;
+			  					return;
+			  				}
+			  			}
+			  	  	})
+			    })
+	  if(check == 0){
+		  frm.submit();
+	  }
+	  })
+  }  
+  
+  
+  
+  </script>
+  
+  
   </main>
 </body>
 

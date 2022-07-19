@@ -41,6 +41,14 @@ public class UserController {
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		
+		if(params.get("year") != null && !params.get("year").equals("")) {
+			String Date = (String)params.get("year");
+			System.out.println(Date.substring(0, Date.indexOf(" ")) +"~"+ (Date.substring(Date.lastIndexOf(" "),Date.length())).trim());
+			
+			params.put("startDate", Date.substring(0, Date.indexOf(" ")));
+			params.put("endDate", (Date.substring(Date.lastIndexOf(" "),Date.length())).trim());
+		}
+		
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.user.mapper.AdminMapper.adminUserCheck", params);
 		
 		model.addAttribute("list", lists);
