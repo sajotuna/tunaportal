@@ -109,21 +109,6 @@ public class LecturePlanController {
 		List<LecturePlanVO> resultData = service.findListBySubjectId(reqData.get("sbjno"));
 		PortalScheduleVO schedule = scheduleService.findSeasonSchedule(season, "1101");
 		
-		System.out.println("HERE!!!");
-		
-		Calendar cal = Calendar.getInstance();
-		Date start = schedule.getStartDate();
-		int dayNum = cal.get(Calendar.DAY_OF_WEEK);
-		System.out.println(dayNum);
-		
-		System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(start));
-		
-		cal.setTime(start);
-		System.out.println(cal);
-		cal.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-		String nextDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-		System.out.println(nextDate);
-		
 		//PortalScheduleVO schedule2 = scheduleService.findSeasonSchedule(season, "1102");
 		
 		return resultData;  
