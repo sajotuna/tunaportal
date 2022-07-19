@@ -13,4 +13,5 @@ public interface CodeMapper {
 	public CodeVO findCode(String no);
 	public ArrayList<CodeVO> findCodeByDivision(String division);
 	public CodeMasterVO findCodeMaster(String no);
+	
 }

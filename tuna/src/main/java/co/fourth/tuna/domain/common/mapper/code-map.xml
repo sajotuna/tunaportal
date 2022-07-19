@@ -52,4 +52,9 @@
 			AND p.no = #{no}
 	</select>
 	
+	<sql id="findCodeNameSql">
+		SELECT codename
+		FROM publiccode
+		WHERE no = ${no}
+	</sql>
 </mapper>
