@@ -10,11 +10,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
+import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
+import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
+import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
+import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 import co.fourth.tuna.domain.subject.mapper.SubjectMapper;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.domain.task.vo.TaskVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 import co.fourth.tuna.web.eclass.EclassController;
 import co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO;
@@ -24,6 +31,8 @@ import co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO;
 public class EclassStudentEclassController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(EclassController.class);
+	@Autowired SqlSession sql;
+	@Autowired LectureNoticeService service;
 	
 	@RequestMapping("/")
 	public void Eclass() {
@@ -31,12 +40,109 @@ public class EclassStudentEclassController {
 	}
 	
 	
-//	//출석
-//	@RequestMapping("/attendance")
-//	public String attendance() {
-//		return "eclass/stud/attendance";
-//	}
+	@RequestMapping("/lectureNotice")
+	public String lectureNotice(Model model, LectureNoticeVO vo) {
+		vo.setSbjNo(90079);
+		vo.setSeasonCode(105);
+		vo.setStNo(13168019);
+		List<Map<String, Object>> notice = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeList", vo);
+		
+		model.addAttribute("notice", notice);
+		
+		return "eclass/stud/lectureNotice";
+	}
 	
+	@RequestMapping("/lectureNoticeSelect")
+	public String lectureNoticeSelect(Model model, LectureNoticeVO vo) {
+		
+		vo.setStNo(13168019);
+		vo.setSeasonCode(105);
+		vo.setSbjNo(90079);
+		vo.setNo(1);
+		List<Map<String, Object>> ns = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeSelect", vo);
+		
+		
+		model.addAttribute("ns", ns);
+		
+		return "eclass/stud/lectureNoticeSelect";
+	}
+	
+	@RequestMapping("/lecturePlan")
+	public String lecturePlan(Model model, LecturePlanVO vo) {
+		vo.setSbjNo(18101);
+		List<Map<String,Object>> lists = sql.selectList("co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper.selectPlan", vo.getSbjNo());
+		//강의스케쥴
+		List<Map<String,Object>> lectureSchedule = sql.selectList("co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper.selectSc", vo.getSbjNo());
+		
+		String[] plan = lists.get(0).values().toString().split(",");
+		
+		String[] weekplan = plan[11].split("~");
+		
+		model.addAttribute("sc", lectureSchedule.get(0));
+		model.addAttribute("plan", lists.get(0));
+		model.addAttribute("weekplan", weekplan);
+		return "eclass/stud/lecturePlan";
+	}
+	
+	@RequestMapping("/qnaList")
+	public String qnaList(Model model, @RequestParam HashMap<String, Object> map, @RequestParam(value="pageNum", required=false, defaultValue= "1" ) int pageNum) {
+		
+		map.put("sbjNo", 18011);
+		map.put("pageNum", pageNum);
+		map.put("size", 5);
+		List<Map<String, Object>> qna = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
+		
+		map.put("sbjNo", 18011);
+		map.put("pageNum", pageNum);
+		map.put("size", 100);
+		List<Map<String, Object>> qna2 = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
+		
+		int pageCount = (int)Math.ceil((double)qna2.size()/(5));
+		
+		model.addAttribute("qna", qna);
+		model.addAttribute("pgcnt", pageCount);
+		
+		
+		return "eclass/stud/qnaList";
+	}
+	
+	@RequestMapping("/qnaSelect")
+	public String qnaSelect(Model model, LectureQnaVO vo) {
+		
+		vo.setNo(1);
+		vo.setSbjNo(18011);
+		vo.setStNo(13168019);
+		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
+		
+		model.addAttribute("qs", qs);
+		
+		return "eclass/stud/qnaSelect";
+	}
+	
+	@RequestMapping("/taskList")
+	public String taskList(Model model) {
+		
+		//단일과목과제 조회
+		StudentVO sv = new StudentVO();
+		SubjectVO sb = new SubjectVO();
+		sv.setNo(13168019);
+		sb.setNo(90079);
+		List<SubjectVO> sbjli = map.selectOneSubTask(sv, sb);
+		model.addAttribute("sbjli", sbjli);
+		return "eclass/stud/taskList";
+	}
+	
+	@RequestMapping("/taskSelect")
+	public String taskSelect(Model model, TaskVO vo) {
+		vo.setNo(1);
+		vo.setSbjNo(90079);
+		List<Map<String, Object>> tsk = sql.selectList("co.fourth.tuna.domain.task.mapper.TaskMapper.taskSelect", vo);
+		
+		model.addAttribute("tsk", tsk);
+		
+		return "eclass/stud/taskSelect";
+	}
+
 	//자료실
 	@RequestMapping("/download") 
 	public String download() {
@@ -45,7 +151,6 @@ public class EclassStudentEclassController {
 	
 	//수강목록 홈
 	@Autowired private SubjectMapper map;
-	@Autowired private SqlSession sql;
 	@RequestMapping("/home")
 	public String home(Model model, EclassStudentHomeVO vo) {
 		vo.setNo(13168019);
@@ -56,64 +161,62 @@ public class EclassStudentEclassController {
 		
 		
 		List<Map<String, Object>> tt = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.twoTask", vo);
-		System.out.println(tt);
 		model.addAttribute("tt", tt);
 		
 		return "eclass/stud/home";
 	}
 	
-//	//강의공지
-//	@RequestMapping("/lectureNotice")
-//	public String lectureNotie() {
-//		return "eclass/stud/lectureNotice";
-//	}
-	
 	//단건강의홈
 	@RequestMapping("/lectureHome")
-	public String lectureHome() {
+	public String lectureHome(Model model, EclassStudentHomeVO vo) {
+		vo.setSeasonCode(106);
+		vo.setSbjNo(18011);
+		
+		List<Map<String, Object>> stn = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.singleTwoNotice", vo);
+		List<Map<String, Object>> stt = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.singleTwoTask", vo);
+		List<Map<String, Object>> stq = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.singleTwoQna", vo);
+		List<Map<String, Object>> stf = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.singleTwoFile", vo);
+		
+		model.addAttribute("stn", stn);
+		model.addAttribute("stt", stt);
+		model.addAttribute("stq", stq);
+		model.addAttribute("stf", stf);
+		
 		return "eclass/stud/lectureHome";
 	}
-	
-//	//공지사항조회
-//	@RequestMapping("/lectureNoticeSelect")
-//	public String lectureNoticeSelect() {
-//		return "eclass/stud/lectureNoticeSelect";
-//	}
-	
-	//강의계획서
-//	@RequestMapping("/lecturePlan")
-//	public String lecturePlan() {
-//		return "eclass/stud/lecturePlan";
-//	}
-	
-//	//질의응답보기
-//	@RequestMapping("/qnaForm")
-//	public String qnaForm() {
-//		return "eclass/stud/qnaForm";
-//	}
 	
 	//질의응답작성
 	@RequestMapping("/qnaInsert")
 	public String qnaInsert() {
 		return "eclass/stud/qnaInsert";
 	}
-	
-//	//질의응답목록
-//	@RequestMapping("/qnaList")
-//	public String qnaList() {
-//		return "eclass/stud/qnaList";
-//	}
-	
-//	//과제
-//	@RequestMapping("/taskList")
-//	public String taskList() {
-//		return "eclass/stud/taskList";
-//	}
-	
-//	//과제보기
-//	@RequestMapping("/taskSelect")
-//	public String taskSelect() {
-//		return "eclass/stud/taskSelect";
-//	}
-	
+
+	//사이드바 작업 열심히 해보자
+	@ModelAttribute("side")
+	public Map<String, Object> side() {
+		
+		EclassStudentHomeVO vo = new EclassStudentHomeVO();
+		
+		vo.setNo(13168019);
+		vo.setSeasonCode(106);
+		
+		Map<String, Object> sidemap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.subList", vo);
+		sidemap.put("side", list);
+		
+		return sidemap;
+	}
+	//출석
+	@RequestMapping("/attendance")
+	public String studentAttendance(Model model, AttendanceVO vo) {
+		vo.setStNo(13168019);
+		vo.setSbjNo(18011);
+		
+		List<Map<String, Object>> attd = sql.selectList("co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.studentAttendance", vo);
+		
+		model.addAttribute("attd", attd);
+		
+		
+		return "eclass/stud/attendance";
+	}
 }

@@ -1,11 +1,19 @@
 package co.fourth.tuna.web.eclass.student;
 
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.fourth.tuna.web.eclass.EclassController;
+import co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO;
 
 @Component
 public class EclassStudentEclassSideController {
@@ -22,7 +30,7 @@ public class EclassStudentEclassSideController {
 //		
 //		System.out.println(2345);
 //		model.addAttribute("side", side);
-//		return "layouts/aside/eclassSidebar";
+//		return "layouts/aside/eclassSidebar2";
 //	}
-	
+//	
 }

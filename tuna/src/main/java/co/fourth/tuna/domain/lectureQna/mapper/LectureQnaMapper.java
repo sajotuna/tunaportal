@@ -13,7 +13,11 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 public interface LectureQnaMapper {
 
 	//질문목록
-	public String qnaList(LectureQnaVO vo);
+	public String qnaList(
+			@Param("vo")LectureQnaVO vo, 
+			@Param("pageNum")int pageNum, 
+			@Param("size")int size);
+
 	//질문단건조회
 	public String qnaSelect(LectureQnaVO vo);
 	//질문에 대한 댓글 조회?
