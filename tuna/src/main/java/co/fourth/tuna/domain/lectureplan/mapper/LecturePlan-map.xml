@@ -17,4 +17,20 @@
 	SELECT *
 	FROM LECTURESCHEDULE WHERE SBJNO = #{sbjNo}
 	</select>
+	
+	<resultMap id="lecturePlanMap"
+		type="co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO">
+		<result property="summary" column="summary" 
+			jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
+	<select
+		id = "findListBySubjectId"
+		resultMap="lecturePlanMap"
+		resultType="co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO">
+		SELECT l.*
+		FROM lectureplan l
+		WHERE sbjno = #{sbjno}
+		ORDER BY wkcode
+	</select>
+	
 </mapper>

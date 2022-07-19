@@ -1,8 +1,8 @@
 package co.fourth.tuna.domain.subject.vo;
 
+import java.util.Date;
 import java.util.List;
 
-import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
 import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
@@ -32,6 +32,9 @@ public class SubjectVO {
 
 	private ProfessorVO professorVO;
 	private GradeRatioVO gradeRatioVO;
+
+	private Date start;
+	private Date end;
 
 	// private List<AttendanceVO> attendanceList;
 	private List<LectureApplyVO> lectureApplyList; // 수강생

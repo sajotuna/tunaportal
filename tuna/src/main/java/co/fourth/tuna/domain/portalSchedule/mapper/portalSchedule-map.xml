@@ -34,5 +34,15 @@ INSERT INTO
 					ADNO)
 VALUES (#{no}, #{STARTDATE}, #{ENDDATE}, #{CONTENT}, #{SEASONCODE}, 100482)
 </insert>
+
+	<select id="findOneBySeasonCode"
+		resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
+			SELECT * 
+			FROM portalschedule 
+			WHERE seasoncode = ${seasonCode}
+			    AND schedulecode = ${scheduleCode}
+			ORDER BY startdate
+	</select>
+
 </mapper>
 

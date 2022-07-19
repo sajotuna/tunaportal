@@ -19,6 +19,7 @@ public class PortalScheduleVO {
 	
 	private String content;
 	private String seasonCode;
+	private String scheduleCode;
 	private String adNo;
 	
 	@JsonFormat(pattern = "yyyy/MM/dd",timezone="Asia/Seoul")

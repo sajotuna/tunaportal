@@ -11,4 +11,8 @@ public interface PortalScheduleMapper {
 	List<PortalScheduleVO> scheduleList(PortalScheduleVO vo);
 	//admin
 	int scheduleInsert(PortalScheduleVO vo);
+	
+	PortalScheduleVO findOneBySeasonCode(
+			@Param(value = "seasonCode")String seasonCode, 
+			@Param(value = "scheduleCode")String scheduleCode);
 }

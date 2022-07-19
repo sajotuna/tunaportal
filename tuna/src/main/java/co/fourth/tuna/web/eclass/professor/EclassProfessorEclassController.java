@@ -58,9 +58,9 @@ public class EclassProfessorEclassController {
 		
 		//TODO 교수 데이터 추가해야함
 		ProfessorVO prof = new ProfessorVO();
-		prof.setNo(61275);
+		prof.setNo(63123);
 		//TODO 기준 시즌 필요
-		int season = 105;
+		int season = 106;
 		
 		List<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season, 1, 5);
 		List<LectureQnaVO> qnaList = lectureService.findByProfessor(prof, 1, 5); 

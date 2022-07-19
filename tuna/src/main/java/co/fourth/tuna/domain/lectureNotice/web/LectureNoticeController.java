@@ -52,7 +52,7 @@ public class LectureNoticeController {
 	}
 	
 	
-	@PostMapping("/lecNotices")
+	@PostMapping("/prof/lecNotices")
 	@ResponseBody
 	public List<LectureNoticeVO> lectureNotices(@RequestBody Map<String,Integer> data) {
 		// TODO 내 강의인지 확인

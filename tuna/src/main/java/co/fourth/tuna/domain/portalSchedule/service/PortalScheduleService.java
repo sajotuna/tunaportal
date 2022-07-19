@@ -11,4 +11,5 @@ public interface PortalScheduleService {
 	//admin
 	int scheduleInsert(PortalScheduleVO vo);
 	
+	PortalScheduleVO findSeasonSchedule(String season, String schedule);
 }
