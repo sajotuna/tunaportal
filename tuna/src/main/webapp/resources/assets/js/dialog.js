@@ -38,7 +38,7 @@ class Dialogs {
 	    			
 		  	          title: title,
 		  	          text: text,
-		  	          icon: 'success',
+		  	          icon: 'question',
 		  	          showCancelButton: true,
 		  	          customClass: {
 		  	            confirmButton: 'btn btn-dark m-1',
