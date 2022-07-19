@@ -991,7 +991,7 @@ xmlns:th="http://www.thymeleaf.org"
                 let li = document.createElement('li');
                 ulTag.appendChild(li);
                 let innerHtml = `
-                    <a class="d-flex text-default-dark" id="progress-week1" href="javascript:void(0)">
+                    <a class="d-flex text-default-dark" id="progress-week-${plan.no}" href="javascript:void(0);" onclick="planClickEvent(this)">
                       <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
                       <div class="d-flex p-3 align-items-center" style="width: 71px;">${plan.wkCode-1200} 주
                       </div>
@@ -1002,10 +1002,16 @@ xmlns:th="http://www.thymeleaf.org"
                       </div>
                     </a>`
                   li.innerHTML = innerHtml;
+                  li.date_no = plan.no;
                   li.data_wkcode = plan.wkCode-1200;
                   li.date_summary = plan.summary;
               }
               
+            }
+
+            function planClickEvent(ele) {
+              console.log(ele);
+              let li = ele.parentNode;
             }
 
             function allStudentAttend() {

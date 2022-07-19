@@ -1,5 +1,8 @@
 package co.fourth.tuna.domain.lectureplan.web;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.common.service.YearService;
-import co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO;
 import co.fourth.tuna.domain.lectureplan.service.LecturePlanService;
 import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 import co.fourth.tuna.domain.portalSchedule.service.PortalScheduleService;
@@ -104,10 +106,26 @@ public class LecturePlanController {
 			@RequestBody Map<String, Integer> reqData){
 		String season = yService.yearFind();
 		
-		
 		List<LecturePlanVO> resultData = service.findListBySubjectId(reqData.get("sbjno"));
 		PortalScheduleVO schedule = scheduleService.findSeasonSchedule(season, "1101");
-		System.out.println(schedule);
+		
+		System.out.println("HERE!!!");
+		
+		Calendar cal = Calendar.getInstance();
+		Date start = schedule.getStartDate();
+		int dayNum = cal.get(Calendar.DAY_OF_WEEK);
+		System.out.println(dayNum);
+		
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(start));
+		
+		cal.setTime(start);
+		System.out.println(cal);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+		String nextDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+		System.out.println(nextDate);
+		
+		//PortalScheduleVO schedule2 = scheduleService.findSeasonSchedule(season, "1102");
+		
 		return resultData;  
 	}
 }
