@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	data-layout-decorate="~{layouts/lecApplyLayout}">
+	data-layout-decorate="~{layouts/adminLayout}">
 <head>
 <meta charset="UTF-8">
 <meta name="_csrf" th:content="${_csrf.token}">
@@ -21,7 +21,7 @@
 					th:action="@{/admin/adminNoticeUpdate(${_csrf.parameterName}=${_csrf.token})}"
 					class="block-content block-content-full" method="post"
 					enctype="multipart/form-data">
-					<div th:eaallFileallFileallFilech="notice, i:${content}">
+					<div th:each="notice, i:${content}">
 						<input type="hidden" name="no" id="no" th:value="${notice.no}">
 						<input type="text" name="title" class="mb-4 form-control"
 							id="title" th:value="${notice.title}">

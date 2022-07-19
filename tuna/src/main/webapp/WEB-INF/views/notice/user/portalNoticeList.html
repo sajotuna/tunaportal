@@ -31,7 +31,7 @@
 								<div class="input-group">
 									<input type="text" class="form-control form-control-alt"
 										id="key" name="key" placeholder="Search">
-									<button type="button" onclick="searchList()"
+									<button id = "searchBtn" type="button" onclick="searchList()"
 										class="btn btn-alt-secondary">
 										<i class="fa fa-search"></i>
 									</button>
@@ -65,15 +65,15 @@
 								<tr th:each="notices, i:${notices}" th:data-no=${notices.no}>
 									<td class="text-center" id="nocheck">[[${notices.no}]]</td>
 									<td><a
-										th:href="@{portalNoticeSelect(no=${notices.no})}">[[${notices.title}]]</a></td>
+										th:href="@{/portalNoticeSelect(no=${notices.no})}">[[${notices.title}]]</a></td>
 									<td class="">
-										<div th:each="files, i:${files}">
-											<th:block th:if="${files == notices.no}">
+										
+											<th:block th:if="${notices.fileyn == 'Y'}">
 												<p style="text-align: center; margin: 0 0 0 0">
 													<i class="far fa fa-file"></i>
 												</p>
 											</th:block>
-										</div>
+										
 									</td>
 									<td class="fs-sm text-muted text-center">[[${notices.enrollDate}]]</td>
 								</tr>
@@ -83,25 +83,26 @@
 
 					</table>
 
-
 					<div class="block-content d-flex justify-content-center ">
 						<nav aria-label="Page navigation">
 							<ul class="pagination pagination-sm">
-								<li class="page-item"><a class="page-link"
-									href="javascript:void(0)" aria-label="Previous"> <span
-										aria-hidden="true"> <i class="fa fa-angle-left"></i>
-									</span> <span class="visually-hidden">Previous</span>
-								</a></li>
-								<li class="page-item"><a class="page-link"
-									href="javascript:void(0)">1</a></li>
-								<li class="page-item"><a class="page-link"
-									href="javascript:void(0)">2</a></li>
-								<li class="page-item"><a class="page-link"
-									href="javascript:void(0)">3</a></li>
-								<li class="page-item"><a class="page-link"
-									href="javascript:void(0)" aria-label="Next"> <span
-										aria-hidden="true"> <i class="fa fa-angle-right"></i>
-									</span> <span class="visually-hidden">Next</span>
+							 <li class="page-item">
+							  <a class="page-link" href="javascript:void(0)" tabindex="-1" id="prev" aria-label="Previous">
+								 <span aria-hidden="true"> 
+									<i class="fa fa-angle-left"></i>
+								</span>
+								<span class="visually-hidden">Previous</span>
+							  </a>
+							 </li>
+							 <li class="page-item">
+							 <a class="page-link" id="pageBtn" href="javascript:void(0)">1</a></li>
+								<li class="page-item"><a class="page-link" id="pageBtn" href="javascript:void(0)">2</a></li>
+								<li class="page-item"><a class="page-link" id="pageBtn" href="javascript:void(0)">3</a></li>
+								<li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Next" id="next">
+								 <span aria-hidden="true">
+								  <i class="fa fa-angle-right"></i>
+								 </span>
+								 <span class="visually-hidden">Next</span>
 								</a></li>
 							</ul>
 						</nav>
@@ -113,13 +114,15 @@
 
 		</div>
 		<script>
-
+		var header = $("meta[name='_csrf_header']").attr('content');
+		var token = $("meta[name='_csrf']").attr('content');
+		
+		
 
 		//검색기능
 		function searchList() {
 			let state= $("#state").val();
-			let key = $("#key").val();
-			
+			let key = $("#key").val();			
 			$.ajax({
 				url : getPathRootJump() + "admin/adminSearch",
 				type: "get",
@@ -134,16 +137,12 @@
 			})	
 		}
 
-		//검색목록조회
+		
 		function htmlConvert(rs){
 			$("tbody").remove();
 			let tbody = $("<tbody/>");
 			$.each(rs,function(index, n){ 
 				var row = $("<tr/>").append(
-						  $("<td/>").addClass("text-center").html(`
-		                          <input class="form-check-input text-center" type="checkbox" value="" >
-		                          <label class="form-check-label text-center" ></label>          
-		                         `),
 						  $("<td/>").addClass("text-center").css("width","10px").html(n.no),
 						  $("<td/>").html(`<a href="adminNoticeSelect?no=${n.no}"> ${n.title} </a>`),
 						  $("<td/>").addClass("text-center").css("width","10px"),
@@ -153,6 +152,42 @@
 			})
 			$("#tb").append(tbody);
 		}
+		
+
+			
+			//페이지이동
+			 document.addEventListener('DOMContentLoaded', function(){
+					
+					
+					let nextBtn = document.querySelector("#next")
+					let prevBtn = document.querySelector("#prev")
+					let pageBtn = document.querySelectorAll("#pageBtn");
+					
+ 					nextBtn.addEventListener('click', function(){
+ 						pageBtn.forEach(btn =>{
+ 							let a = btn.innerHTML
+ 							btn.innerHTML = parseInt(a)+3;
+ 						})
+ 					})
+					
+ 					prevBtn.addEventListener('click', function(){
+ 						pageBtn.forEach(btn =>{
+ 							let a = btn.innerHTML
+ 							if (parseInt(a) > 3){
+ 								btn.innerHTML = parseInt(a)-3;
+ 							}
+							
+ 						})
+ 					})
+					
+					pageBtn.forEach(btn =>{
+						btn.addEventListener('click',function(){
+							let a = btn.innerHTML
+							location.href = '/tuna/portalNoticeList?pageNum='+parseInt(a)
+						})
+					})
+										
+				})
 		
 
 
@@ -165,6 +200,9 @@
 
 
 </script>
+		<script>One.helpersOnLoad(['one-table-tools-checkable', 'one-table-tools-sections']);</script>
+		<script
+			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	</main>
 </body>
 </html>
