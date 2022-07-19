@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.fourth.tuna.domain.banner.web.BannerController;
+import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.grade.service.GradeService;
 
 @Controller
@@ -20,6 +21,7 @@ public class PortalStudentController {
 	private static Logger logger = LoggerFactory.getLogger(BannerController.class); 
 	
 	@Autowired GradeService gradeDao;
+	@Autowired YearService yearDao;
 	
 	// 강의/성적 조회
 	@RequestMapping("/stud/subjectAndReport")
@@ -47,7 +49,12 @@ public class PortalStudentController {
 	
 	// 당해학기 성적 조회
 	@RequestMapping("/stud/currentSemesterGrade")
-	public String currentSemesterGrade() {
+	public String currentSemesterGrade(Authentication authentication, Model model) {
+		List<Map<String, Object>> grades = gradeDao.currentSemesterGradeSelect(Integer.parseInt(authentication.getName()), yearDao.yearFind());
+		Map<String, Object> total = gradeDao.currentSemesterGradeTotal(Integer.parseInt(authentication.getName()), yearDao.yearFind());
+		
+		model.addAttribute("grades", grades);
+		model.addAttribute("total", total);
 		return "portal/stud/currentSemesterGrade";
 	}
 	

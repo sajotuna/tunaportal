@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+	<link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
+</head>
+<body>
+<main id="page-container">
+	<div class="block">
+	<button type="button" id="success" class="btn btn-sm btn-primary">success</button>
+	<button type="button" id="confirmGreen" class="btn btn-sm btn-success">confirmGreen</button>
+	<button type="button" id="confirmRed" class="btn btn-sm btn-danger">confirmRed</button>
+	</div>
+</main>
+	
+	<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
+	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+	<script th:src="@{/resources/assets/js/dialog.js}"></script>
+	<script>
+	
+		$('#success').on('click', function() {
+			Dialogs.dialog('success', 
+		                   '완료', 
+		                   '완료입니다', 
+		                   function() {
+							   console.log('완료');
+						   });
+		})
+		
+		$('#confirmGreen').on('click', function() {
+			let result = Dialogs.dialog('confirmGreen', 
+					                    '수정하시겠습니까?', 
+					                    '언제든 변경 가능', 
+					                    function() {
+											console.log('수정 완료');
+										});
+		})
+		
+		$('#confirmRed').on('click', function() {
+			let result = Dialogs.dialog('confirmRed', 
+					                    '삭제하시겠습니까?', 
+					                    '돌이킬 수 없어요', 
+					                    function() {
+											console.log('삭제 완료');
+										});
+		})
+		
+	</script>
+</body>
+</html>
