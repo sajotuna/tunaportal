@@ -35,7 +35,7 @@
 										<img th:src="@{/display(fileName=${bn.uri}, folder=banner)}" height=100>
 										<button class="btn" th:onclick="|location.href='@{/display(fileName=${bn.uri}, folder=banner)}'|">크게보기</button>
 										</td>
-									<td class="fw-semibold fs-sm">[[${bn.bannerCode}]]</td>
+									<td class="fw-semibold fs-sm">[[${@codeList.getName(bn.bannerCode)}]]</td>
 									<td class="fw-semibold fs-sm">[[${bn.enrollDate}]]</td>
 									<td class="fw-semibold fs-sm">[[${bn.adNo}]]</td>
 									<td class="fw-semibold fs-sm">

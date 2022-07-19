@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    data-layout-decorate="~{layouts/adminLayout}">
+    data-layout-decorate="~{layouts/adminLayout}"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8">
 	<meta name="_csrf" th:content="${_csrf.token}">
   	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+  	<meta name="userNo" th:content="${#authentication.name}">
 	<title>basicBannerManagm</title>
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 	<link rel="stylesheet" th:href="@{/resources/assets/css/bn-preview.css}">
@@ -37,7 +39,6 @@
 								<!-- END Banner Preview -->
 							
 								<!-- Basic Banner Input -->
-								<input type="hidden" name="adNo" value="139341">
 								<h2 class="content-heading border-bottom mb-2 pb-2">배너 정보</h2>
 				                <div class="row">
 				                    <p class="fs-sm text-muted">

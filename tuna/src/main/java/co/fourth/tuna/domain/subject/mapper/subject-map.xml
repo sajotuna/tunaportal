@@ -143,20 +143,37 @@
 		resultType="co.fourth.tuna.domain.subject.vo.SubjectVO">
 		
 		<if test="searchKey.equals('lecture')">
-			SELECT S.*, P.NAME AS PFNAME
-			FROM SUBJECT S JOIN PROFESSOR P
-			ON S.PFNO = P.NO
-			WHERE S.SEASONCODE = #{seasonCode}
-			AND S.NAME LIKE '%'||#{key}||'%' ORDER BY S.NO
+			SELECT S.NO,
+		           PD.CODENAME AS DEPTCODE, 
+		           PT.CODENAME AS TYPE, 
+		           S.NAME,
+		           P.NAME AS PFNAME, 
+		           S.TARGET,
+		           S.POINT
+			FROM SUBJECT S, PROFESSOR P, PUBLICCODE PT, PUBLICCODE PD
+			WHERE S.PFNO = P.NO
+			AND PT.NO = S.TYPE
+			AND PD.NO = S.DEPTCODE
+			AND S.SEASONCODE = #{seasonCode}
+			AND S.NAME LIKE '%'||#{key}||'%' 
+			ORDER BY S.NO
 		</if>
 		
 		<if test="searchKey.equals('professor')">
-			SELECT S.*, P.NAME AS PFNAME
-			FROM SUBJECT S JOIN PROFESSOR P
-			ON S.PFNO = P.NO
-			WHERE S.PFNO IN ( SELECT NO
-			                  FROM PROFESSOR
-			                  WHERE NAME LIKE '%'||#{key}||'%' )
+			SELECT S.NO,
+			       PD.CODENAME AS DEPTCODE, 
+			       PT.CODENAME AS TYPE, 
+			       S.NAME,
+			       P.NAME AS PFNAME, 
+			       S.TARGET,
+			       S.POINT
+			FROM SUBJECT S, PROFESSOR P, PUBLICCODE PT, PUBLICCODE PD
+			WHERE S.PFNO = P.NO
+			AND PT.NO = S.TYPE
+			AND PD.NO = S.DEPTCODE
+			AND S.PFNO IN ( SELECT NO
+			                FROM PROFESSOR
+			                WHERE NAME LIKE '%'||#{key}||'%' )
 			AND S.SEASONCODE = #{seasonCode}
 			ORDER BY S.NO ASC
 		</if>
