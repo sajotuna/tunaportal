@@ -15,28 +15,30 @@ public class ObjectionServiceImpl implements ObjectionService {
 	@Autowired ObjectionMapper mapper;
 
 	@Override
-	public List<ObjectionVO> objectionListSelect(ObjectionVO vo) {
-		return mapper.objectionListSelect(vo);
+	public List<ObjectionVO> objectionListOfStud(ObjectionVO vo) {
+		return mapper.objectionListOfStud(vo);
+	}
+
+	@Override
+	public List<ObjectionVO> objectionListOfProf(ObjectionVO vo) {
+		return mapper.objectionListOfProf(vo);
 	}
 
 	@Override
 	public ObjectionVO objectionSelect(ObjectionVO vo) {
 		return mapper.objectionSelect(vo);
 	}
-
+	
 	@Override
-	public int objectionContentInsert(ObjectionVO vo) {
-		return mapper.objectionContentInsert(vo);
+	public int objectionInsert(ObjectionVO vo) {
+		return mapper.objectionInsert(vo);
 	}
 
 	@Override
-	public int objectionAnswerInsert(ObjectionVO vo) {
-		return mapper.objectionAnswerInsert(vo);
+	public int objectionUpdate(ObjectionVO vo) {
+		return mapper.objectionUpdate(vo);
 	}
 
-	@Override
-	public int objectionAnswerUpdate(ObjectionVO vo) {
-		return mapper.objectionAnswerUpdate(vo);
-	}
+
 
 }

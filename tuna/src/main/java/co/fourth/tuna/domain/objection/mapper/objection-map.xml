@@ -8,7 +8,7 @@
 		WHERE sbjno = #{no}
 	</select>
 	
-	<select id="objectionListSelect" 
+	<select id="objectionListOfStud" 
 			resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
 	
 		SELECT O.*, 
@@ -20,7 +20,21 @@
 	
 	</select>
 	
-	<insert id="objectionContentInsert">
+	<select id="objectionListOfProf" 
+			resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
+	
+	
+	
+	</select>
+
+	<select id="objectionSelect"
+			resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
+	
+		
+	
+	</select>
+	
+	<insert id="objectionInsert">
 	
 		<selectKey resultType="int" keyProperty="no" order="BEFORE">
 			SELECT CASE WHEN MAX(NO) != 0
@@ -34,4 +48,12 @@
 		VALUES(#{no}, SYSDATE, #{content}, #{stNo}, #{sbjNo})
 			
 	</insert>
+	
+	<update id="objectionUpdate">
+		UPDATE OBJECTION
+		SET ANSWERDATE = SYSDATE,
+		    ANSWER = #{answer}
+		WHERE no = #{no}
+	</update>
+	
 </mapper>

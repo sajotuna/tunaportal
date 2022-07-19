@@ -7,10 +7,10 @@ import co.fourth.tuna.domain.objection.vo.ObjectionVO;
 
 public interface ObjectionService {
 
-	public List<ObjectionVO> objectionListSelect(ObjectionVO vo);
+	public List<ObjectionVO> objectionListOfStud(ObjectionVO vo);
+	public List<ObjectionVO> objectionListOfProf(ObjectionVO vo);
 	public ObjectionVO objectionSelect(ObjectionVO vo);
-	public int objectionContentInsert(ObjectionVO vo);
-	public int objectionAnswerInsert(ObjectionVO vo);
-	public int objectionAnswerUpdate(ObjectionVO vo);
+	public int objectionInsert(ObjectionVO vo);
+	public int objectionUpdate(ObjectionVO vo);
 	
 }

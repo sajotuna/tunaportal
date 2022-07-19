@@ -177,80 +177,21 @@
 	
 	$(function() {
 		search();
-		lectuerPlanViewAjax();
-		lectureEvalViewAjax();
 	})
 	
-	// 강의 평가 모달
-	function lectureEvalViewAjax() {
+/* 	function lectureEvalPop(pfNo) {
 		
-		$(document).on('click', '.lectureEval', function() {
-			
-			$.ajax({
-				
-				url: getContextPath() + 'portal/student/lectureEvaluation',
-				type: 'GET',
-				data: {sbjNo:$('input[name=username]').val()},
-				dataType: 'json',
-
-			}).done(function(list) {
-				console.log(list)
-			})
-			
-		})
-		
-	}
-	
-	// 강의 계획서 모달
-	function lectuerPlanViewAjax() {
-		
-		$(document).on('click', '.lecturePlan', function() {
-			$.ajax({
-				
-				url: getContextPath() + 'portal/student/lecturePlan',
-				type: 'GET',
-				data: {sbjNo:$(this).text()},
-				dataType: 'json',
-
-			}).done(function(lectureInfo) {
-				
-				let count = lectureInfo.length;
-				let daytimeTxt = '';
-				let planOrder = 0;
-				
-				if(count == 4) {
-					daytimeTxt = `${lectureInfo[1].DAYCODE} ${lectureInfo[1].TIMECODE}<br>${lectureInfo[2].DAYCODE} ${lectureInfo[2].TIMECODE}`;
-					planOrder = 3;
-				} else {
-					daytimeTxt = `${lectureInfo[1].DAYCODE} ${lectureInfo[1].TIMECODE}`;
-					planOrder = 2;
-				}
-				
-				// 강의 정보
-				let infoDatas = lectureInfo[0];
-				for (data in infoDatas) {
-					$(`#lp_${data.toLowerCase()}`).text(infoDatas[data])
-				}
-				
-				// 강의실, 강의시간
-				$('#lp_roomcode').text(lectureInfo[1].ROOMCODE);
-				$('#lp_daytime').html(daytimeTxt);
-				
-				// 강의 계획
-				$('#lp_table').find('.lp_plan').remove();
-				let plans = lectureInfo[planOrder];
-				for (plan in plans) {
-					$('#lp_table').append($('<tr>').addClass('lp_plan')
-												   .append($('<th>').addClass('fw-semibold fs-sm text-start')
-													         		.text(`${plan}주차`))
-									 			   .append($('<th>').addClass('fw-semibold fs-sm text-start')
-													         		.attr('colspan', '8')
-													         		.text(`${plans[plan]}`))
-										 );
-				}
-			})
-		})
-	}
+	   	let popup = window.open( "/tuna/stud/lectureEvaluationSearch?proName=" + pfNo, 
+	   			                 "강의평가 조회", "width=650, height=600, top=10, left=10");
+	    
+	} */
+    
+    function lecturePlanPop(sbjNo){
+    	  
+	     let popup = window.open( "/tuna/stud/CoursePlan?sbjNo=" + sbjNo, 
+	        		              "강의계획서 조회", "width=850, height=1000, top=10, left=10" );
+ 
+    }
 	
 	function search() {
 		$('#search').on('click', function () {
@@ -320,20 +261,15 @@
 				$('#lecturePlanTb')
 					.append($('<tr>')
 							.append($('<td>').addClass('fw-semibold fs-sm')
-											 .append($('<a>').addClass('lecturePlan')
-													 		 .attr('href', '#')
-													   		 .attr('data-bs-toggle', 'modal')
-													   		 .attr('data-bs-target', '#lecturePlan')
+											 .append($('<a>').attr('href', `javascript:lecturePlanPop(${subject.no})`)
+													 		 .addClass('lecturePlanLink')
 													   		 .text(subject.no)))
 							.append($('<td>').addClass('fw-semibold fs-sm').text(subject.deptCode))
 							.append($('<td>').addClass('fw-semibold fs-sm').text(subject.type))
 							.append($('<td>').addClass('fw-semibold fs-sm').text(subject.name))
 							.append($('<td>').addClass('fw-semibold fs-sm')
-											 .append($('<a>').addClass('lectureEval')
-														 	 .attr('href', '#')
-													   		 .attr('data-bs-toggle', 'modal')
-													   		 .attr('data-bs-target', '#lectureEval')
-													   		 .text(subject.pfName)))
+											 .append($('<a>').attr('href', `javascript:lectureEvalPop(${subject.professorVO.no})`)
+													   		 .text(subject.professorVO.name)))
 							.append($('<td>').addClass('fw-semibold fs-sm').text(subject.target))
 							.append($('<td>').addClass('fw-semibold fs-sm').text(subject.point))
 							);

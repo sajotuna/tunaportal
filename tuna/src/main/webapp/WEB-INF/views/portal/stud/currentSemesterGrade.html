@@ -66,20 +66,20 @@
 							<tbody id="currentGradeTb">
 								<th:block th:each="grade, i:${grades}">
 									<tr>
-										<th th:text="${@codeList.getName(grade.SEASONCODE)}">#</th>
-										<th th:text="${@codeList.getName(grade.TYPE)}">#</th>
-										<th th:text="${grade.NO}">#</th>
-										<th th:text="${grade.NAME}">#</th>
-										<th th:text="${grade.POINT}">#</th>
-										<th>
+										<td scope="row" class="text-center fw-semibold fs-sm" th:text="${@codeList.getName(grade.SEASONCODE)}">#</td>
+										<td class="fw-semibold fs-sm" th:text="${@codeList.getName(grade.TYPE)}">#</td>
+										<td class="fw-semibold fs-sm" th:text="${grade.NO}">#</td>
+										<td class="fw-semibold fs-sm" th:text="${grade.NAME}">#</td>
+										<td class="fw-semibold fs-sm" th:text="${grade.POINT}">#</td>
+										<td class="fw-semibold fs-sm">
 											<th:block th:if="${grade.EVALSTATE == 'Y'}" th:text="${grade.ALPHABET}" />
 											<th:block th:if="${grade.EVALSTATE == 'N'}" th:text="비공개" />
-										</th>
-										<th>
+										</td>
+										<td class="text-center fw-semibold fs-sm">
 											<th:block th:if="${grade.EVALSTATE == 'Y'}" th:text="${grade.TOTAL}" />
 											<th:block th:if="${grade.EVALSTATE == 'N'}" th:text="비공개" />
-										</th>
-										<th th:text="${grade.EVALSTATE}">#</th>
+										</td>
+										<td class="text-center fw-semibold fs-sm" th:text="${grade.EVALSTATE}">#</td>
 									</tr>
 								</th:block>
 							</tbody>
@@ -160,15 +160,15 @@
 													th:data-sbjno="${grade.NO}" 
 													th:data-sbjname="${grade.NAME}" 
 													th:data-objstate="미신청">
-													<th th:text="${@codeList.getName(grade.SEASONCODE)}">#</th>
-													<th th:text="${@codeList.getName(grade.TYPE)}">#</th>
-													<th th:text="${grade.NO}">#</th>
-													<th th:text="${grade.NAME}">#</th>
-													<th th:text="${grade.POINT}">#</th>
-													<th th:text="${grade.ALPHABET}">#</th>
-													<th th:text="${grade.TOTAL}">#</th>
-													<th th:text="${grade.EVALSTATE}">#</th>
-													<th th:id="${grade.NO}">미신청</th>
+													<td class="fw-semibold fs-sm" th:text="${@codeList.getName(grade.SEASONCODE)}">#</td>
+													<td class="fw-semibold fs-sm" th:text="${@codeList.getName(grade.TYPE)}">#</td>
+													<td class="fw-semibold fs-sm" th:text="${grade.NO}">#</td>
+													<td class="fw-semibold fs-sm" th:text="${grade.NAME}">#</td>
+													<td class="fw-semibold fs-sm" th:text="${grade.POINT}">#</td>
+													<td class="fw-semibold fs-sm" th:text="${grade.ALPHABET}">#</td>
+													<td class="fw-semibold fs-sm" th:text="${grade.TOTAL}">#</td>
+													<td class="fw-semibold fs-sm" th:text="${grade.EVALSTATE}">#</td>
+													<td class="fw-semibold fs-sm table-danger" th:id="${grade.NO}">미신청</td>
 												</tr>
 											</th:block>
 										</th:block>
@@ -185,21 +185,21 @@
 							<form class="mb-4" action="">
 								<table class="table table-vcenter">
 									<tr>
-										<th scope="row" class="d-none d-xl-table-cell table-active" width=150>과목명</th>
+										<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>과목명</th>
 										<td id="sbjname" class="fw-semibold fs-sm" width=250></td>
-										<th class="d-none d-xl-table-cell table-active" width=150>담당교수</th>
+										<th class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>담당교수</th>
 										<td id="pfname" class="fw-semibold fs-sm"></td>
-										<th class="d-none d-xl-table-cell table-active" width=150>신청상태</th>
+										<th class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>신청상태</th>
 										<td id="objstate" class="fw-semibold fs-sm"></td>
 									</tr>
 									<tr>
-										<th scope="row" class="d-none d-xl-table-cell table-active" width=150>이의신청 내용</th>
+										<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>이의신청 내용</th>
 										<td class="fw-semibold fs-sm" colspan="5">
 											<textarea id="content" rows="4" placeholder="내용을 입력하세요." style="width:100%; resize:none;" disabled></textarea>
 										</td>
 									</tr>
 									<tr>
-										<th scope="row" class="d-none d-xl-table-cell table-active"width=150>답변</th>
+										<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active"width=150>답변</th>
 										<td id="answer" class="fw-semibold fs-sm" colspan="5"></td>
 									</tr>
 								</table>
@@ -232,6 +232,7 @@
 			objectionInsert();
 		})
 		
+	    // 이의신청
 		function objectionInsert() {
 			
 			$('#objInsertBtn').on('click', function() {
@@ -253,8 +254,8 @@
 					if(result) {
 						
 						Dialogs.dialog('success', 
-				                       '신청 완료', 
-				                       '신청이 완료되었습니다');
+				                       '이의신청 완료', 
+				                       '성적 이의신청이 완료되었습니다.');
 						
 						objectionListSelectAjax();
 						
@@ -263,12 +264,13 @@
 							$(`#${data}`).text('');
 						}
 						$('#content').val('');
+						$('#objectionTb tr').removeClass('table-primary');
 					}
 				})
 			})
 		}
 		
-		// 성적 이의신청 리스트
+		// 이의신청 리스트
 		function objectionListSelectAjax() {
 			$.ajax({
 				
@@ -280,7 +282,17 @@
 			}).done(function(objList){
 				
 				for (obj of objList) {
-					$(`#${obj.sbjNo}`).text(obj.objState);
+					
+					$(`#${obj.sbjNo}`).text(obj.objState)
+
+					if (obj.objState === '신청 완료') {
+						$(`#${obj.sbjNo}`).removeClass('table-danger');
+						$(`#${obj.sbjNo}`).addClass('table-warning');
+					} else {
+						$(`#${obj.sbjNo}`).removeClass('table-danger');
+						$(`#${obj.sbjNo}`).addClass('table-success');
+					}
+					
 					$(`#${obj.sbjNo}`).closest('tr').data('objstate', obj.objState)
 												    .data('content', obj.content)
 												    .data('answer', obj.answer);
@@ -290,11 +302,10 @@
 		
 		// 이의신청 1건 보기
 		function objectionView() {
-			
 			$(document).on('click', '#objectionTb tr', objTableMake);
 		}
 		
-		// 이의신청 table
+		// 이의신청 insert form
 		function objTableMake() {
 				
 				$('#objectionTb tr').removeClass('table-primary');
@@ -309,6 +320,8 @@
 					$(`#${data}`).text($(this).data(data));
 					$(`#${data}`).val($(this).data(data));
 				}
+				console.log($(this).data('objstate'))
+				
 				if ($(this).data('content')) {
 					$('#content').attr('disabled', true);
 				}

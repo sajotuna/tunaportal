@@ -53,6 +53,16 @@ public class PortalStudentController {
 		List<Map<String, Object>> grades = gradeDao.currentSemesterGradeSelect(Integer.parseInt(authentication.getName()), yearDao.yearFind());
 		Map<String, Object> total = gradeDao.currentSemesterGradeTotal(Integer.parseInt(authentication.getName()), yearDao.yearFind());
 		
+		boolean findN = false;
+		for (int i=0; i<grades.size(); i++) {
+			if (grades.get(i).get("EVALSTATE").toString().equals("N")) {
+				findN = true;
+			}
+		}
+		if (findN) {
+			total.put("AVG", "비공개");
+		}
+		
 		model.addAttribute("grades", grades);
 		model.addAttribute("total", total);
 		return "portal/stud/currentSemesterGrade";
