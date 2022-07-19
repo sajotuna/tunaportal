@@ -108,7 +108,7 @@
               <tbody>
                 <tr th:scope="row" th:each="user, status : ${list}">
                       <th class="fw-semibold fs-sm" id = "no" th:text="${user.NO}"></th>
-                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" id = "userName" th:text = "${user.NAME}"></a></td>
+                      <td class="fw-semibold fs-sm"><a href="#" id = "userName" th:text = "${user.NAME}"></a></td>
                       <th:block th:if = "${not #strings.isEmpty(user.STATECODE)}">
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(user.STATECODE)}"></td>
                       </th:block>
@@ -165,14 +165,16 @@
    
     <script>
     
-document.addEventListener('DOMContentLoaded', function(){
-	let userName = document.querySelectorAll('#userName');
+    let userName = document.querySelectorAll('#userName');
     let no = document.querySelectorAll('#no');
     userName.forEach( function (btn,idx){
     	btn.addEventListener('click', function(){
-    		window.open("/tuna/admin/adminUserInfo?no="+no[idx].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
+    		window.open("/tuna/admin/adminUserInfo?no="+no[idx+1].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
     	})
     })
+    
+	document.addEventListener('DOMContentLoaded', function(){
+		
 		
 		let nextBtn = document.querySelector("#next")
 		let prevBtn = document.querySelector("#prev")
