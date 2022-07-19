@@ -176,7 +176,7 @@
 				tbody.append(row); 
 
 				
-			})
+			})//forEach end
 			$("#tb").append(tbody);
 		}
 		
@@ -221,7 +221,7 @@
 
 			//삭제버튼 클릭했을 때 이벤트 
 			 $('#delBtn').on('click',function(){		 
-				 let job =$(this).data('job');
+			let job =$(this).data('job');
 
  				 pageDialogs.dialog(job)
 				 		 
@@ -229,7 +229,7 @@
 			 })//onclick end
 		
 
-				//삭제 다이어로그 클래스
+				//삭제 다이얼로그 클래스
 				class pageDialogs{
 						static dialog(job){
 							let toast = Swal.mixin({

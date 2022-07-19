@@ -11,6 +11,7 @@ FROM PORTALSCHEDULE
 WHERE SEASONCODE =#{seasonCode}
 </select>
 
+
 <!-- admin schedule list -->
 <select id="adminScheduleList" resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
 SELECT * 
@@ -34,5 +35,14 @@ INSERT INTO
 					ADNO)
 VALUES (#{no}, #{startDate}, #{endDate}, #{content}, #{seasonCode}, 100482)
 </insert>
+
+
+<!-- admin schedule delete -->
+<delete id="scheduleDelete"
+parameterType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
+DELETE FROM PORTALSCHEDULE WHERE NO = #{no}
+</delete>
+
+
 </mapper>
 

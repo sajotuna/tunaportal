@@ -25,10 +25,17 @@ public class PortalScheduleServiceImpl implements PortalScheduleService {
 		return map.scheduleInsert(vo);
 	}
 
+	public int scheduleDelete(PortalScheduleVO vo) {
+		return map.scheduleDelete(vo);
+	}
+	
 	@Override
 	public List<PortalScheduleVO> adminScheduleList(PortalScheduleVO vo) {
 		return map.adminScheduleList(vo);
 	}
+
+
+	
 	
 
 	
