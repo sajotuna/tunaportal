@@ -26,9 +26,13 @@ class Dialogs {
 		    			icon: 'success',
 		    			confirmButtonText: '확인'
 		    			
-	    		});
+	    		}).then(result => {
+		
+	  	          	if (result.value && confirmCallBack) confirmCallBack();
+	  	          
+	  	        });
 	    		
-	    	} else if (job === 'confirmGreen') {
+	    	} else if (job === 'checkConfirm') {
 	    		
 	    		toast.fire({
 	    			
@@ -49,7 +53,7 @@ class Dialogs {
 	  	          
 	  	        });
 	    		
-	    	} else if (job === 'confirmRed') {
+	    	} else if (job === 'warnConfirm') {
 	    		
 	    		toast.fire({
 	    			
@@ -69,7 +73,52 @@ class Dialogs {
 		  	        if (result.value) confirmCallBack();
 		  	        
 		  	   });
-	    	}
+	    	} else if (job === 'error') {
+	    		
+	    		toast.fire({
+		
+		    			title: title, 
+		    			text: text, 
+		    			icon: 'error',
+		    			confirmButtonText: '확인'
+		    			
+	    		}).then(result => {
+		
+	  	          	if (result.value && confirmCallBack) confirmCallBack();
+	  	          
+	  	        });
+	    		
+	    	} else if (job === 'info') {
+	    		
+	    		toast.fire({
+		
+		    			title: title, 
+		    			text: text, 
+		    			icon: 'info',
+		    			confirmButtonText: '확인'
+		    			
+	    		}).then(result => {
+		
+	  	          	if (result.value && confirmCallBack) confirmCallBack();
+	  	          
+	  	        });
+	    		
+	    	} else if (job === 'question') {
+	    		
+	    		toast.fire({
+		
+		    			title: title, 
+		    			text: text, 
+		    			icon: 'question',
+		    			confirmButtonText: '확인'
+		    			
+	    		}).then(result => {
+		
+	  	          	if (result.value && confirmCallBack) confirmCallBack();
+	  	          
+	  	        });
+	    		
+	    	} 
 	  	}
 	}
 }
