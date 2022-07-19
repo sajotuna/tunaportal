@@ -1,10 +1,12 @@
 package co.fourth.tuna;
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Locale;
 
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -12,18 +14,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-
 import org.springframework.security.core.Authentication;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import co.fourth.tuna.util.captcha.CaptchaUtil;
-import nl.captcha.Captcha;
+import co.fourth.tuna.domain.user.service.AdminService;
+import co.fourth.tuna.domain.user.service.ProfessorService;
+import co.fourth.tuna.domain.user.service.StudentService;
+import co.fourth.tuna.domain.user.vo.AdminVO;
+import co.fourth.tuna.domain.user.vo.ProfessorVO;
+import co.fourth.tuna.domain.user.vo.StudentVO;
 
 /**
  * Handles requests for the application home page.
@@ -35,9 +36,34 @@ public class HomeController {
 
 	@Autowired
 	private JavaMailSender mailSender;
-
+	@Autowired 
+	private ProfessorService professorDao;
+	@Autowired 
+	private StudentService StudentDao;
+	@Autowired 
+	private AdminService AdminDao;
+	
 	@RequestMapping(value = "/home")
-	public String home(Locale locale, Model model) {
+	public String home(HttpServletResponse response ,Locale locale, Model model,Authentication authentication) {
+		
+		if(authentication.getName().length() == 8) {
+			StudentVO vo = new StudentVO();
+			vo.setNo(Integer.parseInt(authentication.getName()));
+			vo = StudentDao.findById(vo);
+			model.addAttribute("vo", vo);
+		}else if(authentication.getName().length() == 6) {
+			AdminVO vo = new AdminVO();
+			vo.setNo(Integer.parseInt(authentication.getName()));
+			vo = AdminDao.findById(vo);
+			model.addAttribute("vo", vo);
+		}else if(authentication.getName().length() == 5) {
+			ProfessorVO vo = new ProfessorVO();
+			vo.setNo(Integer.parseInt(authentication.getName()));
+			vo = professorDao.findById(vo);
+			model.addAttribute("vo", vo);
+		}
+		
+		
 		return "home";
 	}
 

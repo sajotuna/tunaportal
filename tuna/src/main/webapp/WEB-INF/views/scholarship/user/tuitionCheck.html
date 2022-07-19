@@ -70,20 +70,16 @@
               
 	            <div class="col-md-3 col-xl-2">
 	              <div class="m-2">
-	                  <select class="form-select" id="example-select" name="example-select" onchange="this.form.submit()">
-	                    <option selected>연도</option>
-	                    <option value="1">2022</option>
-	                    <option value="2">2021</option>
-	                    <option value="3">2020</option>
-	                  </select>
-	              </div>
-	            </div>
-	            <div class="col-md-3 col-xl-2">
-	              <div class="m-2">
-	                  <select class="form-select" id="example-select" name="example-select" onchange="this.form.submit()">
-	                    <option selected>학기</option>
-	                    <option value="1">1</option>
-	                    <option value="2">2</option>
+	                  <select class="form-select" id="year" name="year" onchange="this.form.submit()">
+	                    <option selected>연도/학기</option>
+	                    <option value="108" id = "108">2023년 2학기</option>
+	                    <option value="107" id = "107">2023년 1학기</option>
+	                    <option value="106" id = "106">2022년 2학기</option>
+	                    <option value="105" id = "105">2022년 1학기</option>
+	                    <option value="104" id = "104">2021년 1학기</option>
+	                    <option value="103" id = "103">2021년 2학기</option>
+	                    <option value="102" id = "102">2020년 1학기</option>
+	                    <option value="101" id = "101">2020년 2학기</option>
 	                  </select>
 	              </div>
 	            </div>
@@ -94,7 +90,7 @@
               <thead>
                 <tr>
                   <th class="fw-semibold fs-sm">대학</th>
-                  <td class="fw-semibold fs-sm" colspan="2"></td>
+                  <td class="fw-semibold fs-sm" colspan="2">튜나대학교</td>
                   <th class="fw-semibold fs-sm">학과</th>
                   <td class="fw-semibold fs-sm" colspan="2"></td>
                 </tr>
@@ -170,7 +166,41 @@
       window.print();
     })
   </script>
-
+ <script th:inline="javascript">
+  	 document.addEventListener("DOMContentLoaded", function(){
+  		 let selectedYear = /*[[${year}]]*/ 'default';
+  		 
+  		 
+  		 switch(selectedYear){
+  		 	case '108':
+  		 		$('#108').attr('selected', 'selected')
+  		 		break;
+  		 	case '107':
+  		 		$('#107').attr('selected', 'selected')
+  		 		break;
+  		 	case '106':
+  		 		$('#106').attr('selected', 'selected')
+  		 		break;
+  		 	case '105':
+  		 		$('#105').attr('selected', 'selected')
+  		 		break;
+  		 	case '104':
+  		 		$('#104').attr('selected', 'selected')
+  		 		break;
+  		 	case '103':
+  		 		$('#103').attr('selected', 'selected')
+  		 		break;
+  		 	case '102':
+  		 		$('#102').attr('selected', 'selected')
+  		 		break;
+  		 	case '101':
+  		 		$('#101').attr('selected', 'selected')
+  		 		break;
+  		 }
+  	 })
+  
+	     	
+	</script>
 
 </body>
 

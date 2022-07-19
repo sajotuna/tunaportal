@@ -59,21 +59,31 @@
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
                 <select class="form-select" id="deptCode" name="deptCode">
-                  <option value = "" selected>학과</option>
-                </select>
+                    <option selected value="">학부(과)</option>
+	                  <option value="801" id="801">기계공학과</option>
+	                  <option value="805" id="805">항공우주공학과</option>
+	                  <option value="810" id="810">생명공학과</option>
+	                  <option value="806" id="806">바이오및뇌공학과</option>
+	                  <option value="809" id="809">정보보안학과</option>
+	                  <option value="803" id="803">컴퓨터공학과</option>
+	                  <option value="808" id="808">무기재료공학과</option>
+	                  <option value="802" id="802">전기전자공학과</option>
+	                  <option value="804" id="804">화학공학과</option>
+	                  <option value="807" id="807">정보통신학과</option>
+                  </select>
               </div>
             </div>
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
                 <select class="form-select" id="statecode" name="statecode">
                   <option selected value = "">재적/재직상태</option>
-                  <option value="201">재직</option>
-                  <option value="202">휴직</option>
-                  <option value="203">퇴직</option>
-                  <option value="301">재학</option>
-                  <option value="302">휴학</option>
-                  <option value="303">퇴학</option>
-                  <option value="304">졸업</option>
+                  <option value="201" id = "201">재직</option>
+                  <option value="202" id = "202">휴직</option>
+                  <option value="203" id = "203">퇴직</option>
+                  <option value="301" id = "301">재학</option>
+                  <option value="302" id = "302">휴학</option>
+                  <option value="303" id = "303">퇴학</option>
+                  <option value="304" id = "304">졸업</option>
                 </select>
               </div>
             </div>
@@ -101,7 +111,12 @@
                 <tr th:scope="row" th:each="user, status : ${list}">
                       <th class="fw-semibold fs-sm" id = "no" th:text="${user.NO}"></th>
                       <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" id = "userName" th:text = "${user.NAME}"></a></td>
+                      <th:block th:if = "${not #strings.isEmpty(user.STATECODE)}">
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(user.STATECODE)}"></td>
+                      </th:block>
+                      <th:block th:unless = "${not #strings.isEmpty(user.STATECODE)}">
+                      <td class="fw-semibold fs-sm"></td>
+                      </th:block>
                       <td class="fw-semibold fs-sm" th:text = "${user.SY}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${user.AVGSCORE}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(user.DEPTCODE)}"></td>
@@ -148,30 +163,6 @@
     
     <script>
     
-    var header = $("meta[name='_csrf_header']").attr('content');
-    var token = $("meta[name='_csrf']").attr('content');
-    fetch('/tuna/courseCheck',{
-  		method: "POST",
-  		headers: {
-            'header': header,
-          	'X-Requested-With': 'XMLHttpRequest',
-            "Content-Type": "application/json",
-            'X-CSRF-Token': token	// header에 X-CSRF-Token부분에 토큰값이 들어가 정상적으로 POST값이 넘어가는 것을 볼 수 있다!
-        },
-  	}).then(result => result.json())
-  	  .then(result =>{
-  		  let deptcodes = document.querySelector('#deptCode')
-  		  console.log(result)
-  		  result.forEach(val =>{
-  			let opt = document.createElement('option');
-  			opt.setAttribute('value', val.DEPTCODE)
-  			opt.innerText = val.CODENAME;
-  			deptcodes.appendChild(opt)
-  		  })
-  	  }) 
-    
-    
-    
 document.addEventListener('DOMContentLoaded', function(){
 	let userName = document.querySelectorAll('#userName');
     let no = document.querySelectorAll('#no');
@@ -212,7 +203,65 @@ document.addEventListener('DOMContentLoaded', function(){
 	})
     
     </script>
-    
+       <th:block th:if = "${params != null && params != ''}">
+<script th:inline="javascript">
+	document.addEventListener('DOMContentLoaded', function(){
+		let params = /*[[${params}]]*/ 'default';
+		
+		 switch(params.statecode){
+		 	case '201':
+		 		$('#201').attr('selected', 'selected')
+		 		break;
+		 	case '202':
+		 		$('#202').attr('selected', 'selected')
+		 		break;
+		 	case '203':
+		 		$('#203').attr('selected', 'selected')
+		 		break;
+		 	case '301':
+		 		$('#301').attr('selected', 'selected')
+		 		break;
+		 	case '302':
+		 		$('#302').attr('selected', 'selected')
+		 		break;
+		 	case '303':
+		 		$('#303').attr('selected', 'selected')
+		 		break;
+		 	case '304':
+		 		$('#304').attr('selected', 'selected')
+		 		break;
+		 }
+		 
+		
+		if(params.no != null){
+			$('#no').val(params.no)
+		}
+		
+		if(params.deptCode == '801'){
+			$('#801').attr('selected', 'selected')
+		}else if(params.deptCode == '802'){
+			$('#802').attr('selected', 'selected')
+		}else if(params.deptCode == '803'){
+			$('#803').attr('selected', 'selected')
+		}else if(params.deptCode == '804'){
+			$('#804').attr('selected', 'selected')
+		}else if(params.deptCode == '805'){
+			$('#805').attr('selected', 'selected')
+		}else if(params.deptCode == '806'){
+			$('#806').attr('selected', 'selected')
+		}else if(params.deptCode == '807'){
+			$('#807').attr('selected', 'selected')
+		}else if(params.deptCode == '808'){
+			$('#808').attr('selected', 'selected')
+		}else if(params.deptCode == '809'){
+			$('#809').attr('selected', 'selected')
+		}else if(params.deptCode == '810'){
+			$('#810').attr('selected', 'selected')
+		}
+		
+	})
+</script>
+</th:block>
     
 </main>
 </body>

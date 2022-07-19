@@ -48,4 +48,6 @@
 	WHERE sbjno = #{sbjno}
 </select>
 
+
+
 </mapper>

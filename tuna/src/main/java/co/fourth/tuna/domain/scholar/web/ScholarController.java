@@ -103,9 +103,9 @@ public class ScholarController {
 		params.put("size", 10);
 		
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.adminScholarCheck",params);
-		
+		System.out.println(params.get("applydate"));
 		model.addAttribute("list", lists);
-		
+		model.addAttribute("params", params);
 		
 		return "scholarship/admin/adminScholarshipApplicationSearch";
 	}

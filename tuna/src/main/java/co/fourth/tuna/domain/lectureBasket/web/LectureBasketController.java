@@ -43,7 +43,7 @@ public class LectureBasketController {
 		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
 		
 		System.out.println(grade);
-		
+		model.addAttribute("params", params);
 		model.addAttribute("list", lists);
 		model.addAttribute("grade", grade);
 		model.addAttribute("baskList", baskLists);
@@ -67,7 +67,7 @@ public class LectureBasketController {
 				ra.addFlashAttribute("message", "수강신청 가능한 학점이 없습니다.");
 				return "redirect:/stud/courseBasket";
 			}
-			if(message == null || !message.equals("")) {
+			if(message == null || message.equals("")) {
 				LectureBasketDao.baskInsert(vo);
 			}else {
 				ra.addFlashAttribute("message", message);

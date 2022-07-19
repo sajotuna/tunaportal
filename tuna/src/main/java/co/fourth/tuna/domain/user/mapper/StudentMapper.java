@@ -11,6 +11,5 @@ public interface StudentMapper {
 	public void studUpdate(StudentVO vo);
 	public void AdminStudUpdate(StudentVO vo);
 	public StudentVO findOneById(int no);
-	
 	public List<StudentExVO> findListBySubjectId(int sbjno);
 }
