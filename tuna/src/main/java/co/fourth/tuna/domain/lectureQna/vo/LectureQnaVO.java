@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LectureQnaVO {
 	private int no;
+	
+	
 	private String title;
 	private String content;
 	private Date enrollDate;
@@ -22,6 +24,8 @@ public class LectureQnaVO {
 	private Date answerDate;
 	private int stNo;
 	private int sbjNo;
+
+	
 	
 	private StudentVO studentVO;
 	private SubjectVO subjectVO;

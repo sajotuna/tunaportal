@@ -22,35 +22,35 @@ public class LectureNoticeController {
 
 	@Autowired SqlSession sql;
 	@Autowired LectureNoticeService service;
-	
-	@RequestMapping("/eclass/student/lectureNotice")
-	public String lectureNotice(Model model, LectureNoticeVO vo) {
-		vo.setSbjNo(90079);
-		vo.setSeasonCode(105);
-		vo.setStNo(13168019);
-		List<Map<String, Object>> notice = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeList", vo);
-		
-		model.addAttribute("notice", notice);
-		
-		return "eclass/stud/lectureNotice";
-	}
-	
-	@RequestMapping("/eclass/student/lectureNoticeSelect")
-	public String lectureNoticeSelect(Model model, LectureNoticeVO vo) {
-		
-		vo.setStNo(13168019);
-		vo.setSeasonCode(105);
-		vo.setSbjNo(90079);
-		vo.setNo(1);
-		List<Map<String, Object>> ns = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeSelect", vo);
-		
-		System.out.println(ns);
-		
-		model.addAttribute("ns", ns);
-		
-		return "eclass/stud/lectureNoticeSelect";
-	}
-	
+//	
+//	@RequestMapping("/eclass/student/lectureNotice")
+//	public String lectureNotice(Model model, LectureNoticeVO vo) {
+//		vo.setSbjNo(90079);
+//		vo.setSeasonCode(105);
+//		vo.setStNo(13168019);
+//		List<Map<String, Object>> notice = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeList", vo);
+//		
+//		model.addAttribute("notice", notice);
+//		
+//		return "eclass/stud/lectureNotice";
+//	}
+//	
+//	@RequestMapping("/eclass/student/lectureNoticeSelect")
+//	public String lectureNoticeSelect(Model model, LectureNoticeVO vo) {
+//		
+//		vo.setStNo(13168019);
+//		vo.setSeasonCode(105);
+//		vo.setSbjNo(90079);
+//		vo.setNo(1);
+//		List<Map<String, Object>> ns = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeSelect", vo);
+//		
+//		System.out.println(ns);
+//		
+//		model.addAttribute("ns", ns);
+//		
+//		return "eclass/stud/lectureNoticeSelect";
+//	}
+//	
 	
 	@PostMapping("/lecNotices")
 	@ResponseBody

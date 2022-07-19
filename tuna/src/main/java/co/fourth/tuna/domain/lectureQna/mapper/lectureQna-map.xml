@@ -26,13 +26,17 @@
 	
 	</resultMap>
 <!-- 질문목록 -->
-	<select id="qnaList" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+	<select id="qnaList" resultType="map" parameterType="HashMap">
 	<![CDATA[
-	SELECT Q.*, S.NAME, L.SBJNO, ROWNUM rn
+	SELECT *
+	FROM
+    (SELECT Q.*, S.NAME,  ROWNUM RN
 	FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
-	WHERE Q.SBJNO = 18011
-    AND ROWNUM <= 5 * 5
-    ORDER BY Q.NO DESC
+	WHERE Q.SBJNO = #{sbjNo}
+    ORDER BY RN DESC)
+    WHERE RN 
+    	BETWEEN (#{pageNum}-1) * #{size} +1
+    	AND #{pageNum}*#{size}
     ]]>
 	</select>
 	

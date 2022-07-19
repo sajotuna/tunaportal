@@ -28,21 +28,11 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 		return mapper.findListWithSubjectAndStudentByProfessor(prof, pageNum, size);
 		
 	}
-	//학생 질문 전체리스트
-	@Override
-	public String qnaList(LectureQnaVO vo) {
-		return mapper.qnaList(vo);
-	}
+
 	//학생 질문 단건 조회
 	@Override
 	public String qnaSelect(LectureQnaVO vo) {
 		return mapper.qnaSelect(vo);
-	}
-
-	@Override
-	public String qnaList(LectureQnaVO vo) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	

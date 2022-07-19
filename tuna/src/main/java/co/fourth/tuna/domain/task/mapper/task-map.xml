@@ -16,4 +16,14 @@ AND T.SBJNO = #{sbjNo}
 <select id="taskList" resultType="co.fourth.tuna.domain.task.vo.TaskVO">
 SELECT * FROM TASK WHERE SBJNO = #{sbjNo}
 </select>
+
+<select id="taskSelect" resultType="map" parameterType="co.fourth.tuna.domain.task.vo.TaskVO">
+SELECT NO, 
+TITLE, 
+CONTENT,
+TO_CHAR(LIMITDATE, 'YYYY"년"MM"월"DD"일 23:59:59"') LIMITDATE,
+TO_CHAR(STARTDATE, 'YYYY"년"MM"월"DD"일 00:00:00"') STARTDATE
+FROM TASK WHERE SBJNO = #{sbjNo}
+ AND NO = #{no}
+</select>
 </mapper>

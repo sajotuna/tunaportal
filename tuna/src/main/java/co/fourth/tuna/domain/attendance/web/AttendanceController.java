@@ -17,17 +17,21 @@ public class AttendanceController {
 	@Autowired
 	SqlSession sql;
 
-	@RequestMapping("/eclass/student/attendance")
-	public String studentAttendance(Model model, AttendanceVO vo) {
-		vo.setStNo(13168019);
-		vo.setSbjNo(18011);
-		
-		List<Map<String, Object>> attd = sql.selectList("co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.studentAttendance", vo);
-		
-		model.addAttribute("attd", attd);
-		
-		System.out.println(attd);
-		
-		return "eclass/stud/attendance";
-	}
+//	@RequestMapping("/eclass/student/attendance")
+//	public String studentAttendance(Model model, AttendanceVO vo) {
+//		vo.setStNo(13168019);
+//		vo.setSbjNo(18011);
+//		
+//		List<Map<String, Object>> attd = sql.selectList("co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.studentAttendance", vo);
+//
+//		int[] i = new int[16];
+//		
+//		model.addAttribute("i", i);
+//		model.addAttribute("attd", attd);
+//		
+//		System.out.println(i);
+//		
+//		
+//		return "eclass/stud/attendance";
+//	}
 }

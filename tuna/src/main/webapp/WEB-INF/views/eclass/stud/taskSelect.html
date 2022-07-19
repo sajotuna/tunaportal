@@ -35,25 +35,23 @@
 									<table
 										class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
 										id="DataTables_Table_0"
-										aria-describedby="DataTables_Table_0_info">
+										aria-describedby="DataTables_Table_0_info" th:each="tsk : ${tsk}">
 										<thead>
 											<tr>
 												<th class="text-center" tabindex="0" colspan="2">제목</th>
-												<th colspan="7">JAVA 실습 파일 제출</th>
+												<th colspan="7" th:text="${tsk.TITLE}"></th>
 											</tr>
 											<tr>
 												<th class="text-center" tabindex="0" colspan="2">작성일자</th>
-												<th colspan="7">2000-00-00</th>
+												<th colspan="7" th:text="${tsk.STARTDATE}"></th>
 											</tr>
 											<tr>
 												<th class="text-center" tabindex="0" colspan="2">마감일자</th>
-												<th colspan="7">2000-00-00</th>
+												<th colspan="7" th:text="${tsk.LIMITDATE}"></th>
 											</tr>
 											<tr>
 												<th class="text-center" tabindex="0" colspan="2">내용</th>
-												<th colspan="7">제출내용 : JAVA 실행 화면 제출<br> 조건 : 화면
-													캡쳐 5장(확장자 무관)
-												</th>
+												<th colspan="7" th:text="${tsk.CONTENT}"></th>
 											</tr>
 											<tr>
 												<th class="text-center" tabindex="0" colspan="2">파일</th>

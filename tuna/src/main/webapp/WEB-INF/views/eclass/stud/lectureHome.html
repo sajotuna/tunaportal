@@ -25,9 +25,8 @@
 					<div class="col-12">
 						<h3 class="h3 fw-bold mb-2">공지사항</h3>
 						<div class="block block-rounded">
-							<div class="block-content">
-								<p class="fw-bold">조 추첨 결과 안내</p>
-								<p class="fw-bold">기말고사 안내</p>
+							<div class="block-content" th:each="stn : ${stn}">
+								<p class="fw-bold" th:text="${stn.TITLE}"></p>
 							</div>
 						</div>
 					</div>
@@ -49,10 +48,9 @@
 						<div class="col-12">
 							<h3 class="h3 fw-bold mb-2">과제</h3>
 							<div class="block block-rounded">
-								<div class="block-content">
-									<p class="fw-bold">JAVA실습 2000/00/00</p>
-									<br>
-									<p class="fw-bold">부트스트랩 실습 2000/00/00</p>
+								<div class="block-content" th:each="stt : ${stt}">
+									<p class="fw-bold"
+										th:text="${stt.TITLE}+'  /  '+${stt.LIMITDATE}"></p>
 								</div>
 							</div>
 						</div>
@@ -67,15 +65,12 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="col-1"></div>
 					<div class="col-5">
 						<h3 class="h3 fw-bold mb-2">QnA</h3>
 						<div class="block block-rounded">
-							<div class="block-content">
-								<p class="fw-bold">성적 산출 질문</p>
-								<br>
-								<p class="fw-bold">비공개 질문입니다.</p>
+							<div class="block-content" th:each="stq : ${stq}">
+								<p class="fw-bold" th:text="${stq.TITLE}"></p>
 							</div>
 						</div>
 					</div>
