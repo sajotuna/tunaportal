@@ -63,7 +63,6 @@ public class EclassProfessorEclassController {
 		List<LectureQnaVO> qnaList = lectureService.findByProfessor(prof, 1, 5); 
 		List<LectureNoticeVO> noticeList = noticeService.findByProfessor(prof, 1, 5);
 		
-		
 		model.addAttribute("subList", subList);
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("noticeList",noticeList);

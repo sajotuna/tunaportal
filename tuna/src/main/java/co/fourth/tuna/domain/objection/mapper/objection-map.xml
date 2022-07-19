@@ -7,4 +7,10 @@
 		FROM objection
 		WHERE sbjno = #{no}
 	</select>
+	<select id="findListBySubjectId"
+		resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
+		SELECT *
+		FROM objection
+		WHERE sbjno = #{sbjno}
+	</select>
 </mapper>
