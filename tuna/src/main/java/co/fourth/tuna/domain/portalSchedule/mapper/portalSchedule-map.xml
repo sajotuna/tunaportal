@@ -36,6 +36,14 @@ INSERT INTO
 VALUES (#{no}, #{startDate}, #{endDate}, #{content}, #{seasonCode}, 100482)
 </insert>
 
+	<select id="findOneBySeasonCode"
+		resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
+			SELECT * 
+			FROM portalschedule 
+			WHERE seasoncode = ${seasonCode}
+			    AND schedulecode = ${scheduleCode}
+			ORDER BY startdate
+	</select>
 
 <!-- admin schedule delete -->
 <delete id="scheduleDelete"

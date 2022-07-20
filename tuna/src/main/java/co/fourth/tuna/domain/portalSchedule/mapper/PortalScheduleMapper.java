@@ -13,7 +13,12 @@ public interface PortalScheduleMapper {
 	//admin
 	int scheduleInsert(PortalScheduleVO vo);
 	
-	int scheduleDelete(PortalScheduleVO vo);
+  int scheduleDelete(PortalScheduleVO vo);
 	
 	List<PortalScheduleVO> adminScheduleList(PortalScheduleVO vo);
+  
+	PortalScheduleVO findOneBySeasonCode(
+			@Param(value = "seasonCode")String seasonCode, 
+			@Param(value = "scheduleCode")String scheduleCode);
+      
 }

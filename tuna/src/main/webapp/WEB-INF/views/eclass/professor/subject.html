@@ -244,6 +244,7 @@ xmlns:th="http://www.thymeleaf.org"
                           </div>
                           <div class="block-content p-0" id="subject-progress" style="height: 300px; overflow-y: scroll;">
                             <ul class="nav-items push">
+                              <!-- 
                               <li>
                                 <a class="d-flex text-gray" id="progress-week1" href="javascript:void(0)">
                                   <div class="d-flex py-3 bg-gray" style="width: 15px;"></div>
@@ -279,43 +280,7 @@ xmlns:th="http://www.thymeleaf.org"
                                     <div>참치역사관 402호</div>
                                   </div>
                                 </a>
-                              </li>
-                              <li>
-                                <a class="d-flex text-primary-dark" href="javascript:void(0)">
-                                  <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
-                                  <div class="d-flex p-3 align-items-center">4 주차
-                                  </div>
-                                  <div class="py-1 small">
-                                    <div>참치 민족의 부흥</div>
-                                    <div>2022-06-17</div>
-                                    <div>참치역사관 402호</div>
-                                  </div>
-                                </a>
-                              </li>
-                              <li>
-                                <a class="d-flex text-primary-dark" href="javascript:void(0)">
-                                  <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
-                                  <div class="d-flex p-3 align-items-center">5 주차
-                                  </div>
-                                  <div class="py-1 small">
-                                    <div>참치 민족의 부흥</div>
-                                    <div>2022-06-17</div>
-                                    <div>참치역사관 402호</div>
-                                  </div>
-                                </a>
-                              </li>
-                              <li>
-                                <a class="d-flex text-primary-dark" href="javascript:void(0)">
-                                  <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
-                                  <div class="d-flex p-3 align-items-center">5 주차
-                                  </div>
-                                  <div class="py-1 small">
-                                    <div>참치 민족의 부흥</div>
-                                    <div>2022-06-17</div>
-                                    <div>참치역사관 402호</div>
-                                  </div>
-                                </a>
-                              </li>
+                              </li> -->
                             </ul>
                             <!-- 강의 진도 list NED-->
                           </div>
@@ -854,7 +819,7 @@ xmlns:th="http://www.thymeleaf.org"
               tabPanel.addEventListener('click', function(ele) {
                 let id = ele.target.parentNode.id;
                 id = id.slice(id.indexOf(TAB_ID)+TAB_ID.length);
-                setTabContent(  parseInt(id) );
+                tabClickEvent(  parseInt(id) );
               })
               // 탭 제어 초기화
               for(let i = 0; i < tabPanel.children.length; i++) {
@@ -863,10 +828,11 @@ xmlns:th="http://www.thymeleaf.org"
               }
                //
                loaderCurtain = document.querySelector('#loaderCurtain');
+               tabClickEvent(0);
             }
 
             //
-            function setTabContent(tabIdx) {
+            function tabClickEvent(tabIdx) {
               let url = "";
               let sbj = sbjno;
               let resFunc = {};
@@ -879,10 +845,11 @@ xmlns:th="http://www.thymeleaf.org"
               
               switch(tabIdx) {
                 case 0: // 진도
-                  return;
+                  url = "/tuna/prof/lecPlans";
+                  resFunc = setPlanContent;
                   break;
                 case 1: // 출결
-                  url = "/tuna/students";
+                  url = "/tuna/prof/students";
                   resFunc = setAttendanceContent;
                   break;
                 case 2: // 과제
@@ -893,7 +860,7 @@ xmlns:th="http://www.thymeleaf.org"
                   break;
                 case 4: // 공지
                   //reqNoticeContent(tabIdx);
-                  url = "/tuna/lecNotices";
+                  url = "/tuna/prof/lecNotices";
                   resFunc = setNoticeContent;
                   break;
                 case 5: // 이의
@@ -1012,6 +979,39 @@ xmlns:th="http://www.thymeleaf.org"
                 tbody.appendChild(tr);
               });
 
+            }
+
+            // 강의정보 패널
+            function setPlanContent(jsonData) {
+              
+              let plan_progress_content = document.getElementById("subject-progress");
+              let ulTag = plan_progress_content.getElementsByTagName("ul")[0];
+              
+              for(let plan of jsonData) {
+                let li = document.createElement('li');
+                ulTag.appendChild(li);
+                let innerHtml = `
+                    <a class="d-flex text-default-dark" id="progress-week-${plan.no}" href="javascript:void(0);" onclick="planClickEvent(this)">
+                      <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
+                      <div class="d-flex p-3 align-items-center" style="width: 71px;">${plan.wkCode-1200} 주
+                      </div>
+                      <div class="py-1 fs-sm">
+                        <div>${plan.summary}</div>
+                        <div>날짜?</div>
+                        <div>장소?</div>
+                      </div>
+                    </a>`
+                  li.innerHTML = innerHtml;
+                  li.date_no = plan.no;
+                  li.data_wkcode = plan.wkCode-1200;
+                  li.date_summary = plan.summary;
+              }
+              
+            }
+
+            function planClickEvent(ele) {
+              console.log(ele);
+              let li = ele.parentNode;
             }
 
             function allStudentAttend() {

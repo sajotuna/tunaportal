@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class ObjectionVO {
 	private int no;
 	@JsonFormat(pattern="yyyy-MM-dd", timezone="Asia/Seoul")
