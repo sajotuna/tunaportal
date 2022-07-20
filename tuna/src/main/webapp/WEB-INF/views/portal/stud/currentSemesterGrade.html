@@ -211,7 +211,7 @@
 					<div class="block-content block-content-full text-end bg-body">
 						<button type="button" class="btn btn-sm btn-alt-secondary me-1"
 							data-bs-dismiss="modal">닫기</button>
-						<button type="button" id="objInsertBtn" class="btn btn-sm btn-primary">등록</button>
+						<button type="button" id="objInsertBtn" class="btn btn-sm btn-primary" disabled>등록</button>
 					</div>
 				</div>
 				
@@ -232,45 +232,57 @@
 			objectionInsert();
 		})
 		
-	    // 이의신청
+	    // 성적 이의신청 등록
 		function objectionInsert() {
 			
 			$('#objInsertBtn').on('click', function() {
 				
-				$.ajax({
+				let sbjNo = $(this).data('sbjno');
+				let content = $('#content').val();
+				
+				Dialogs.dialog('checkConfirm',
+							   '정말로 등록하시겠습니까?',
+							   '한 번 등록한 이의신청은 변경할 수 없습니다.',
+							   function() {
+									
+									$.ajax({
+										
+										url: getContextPath() + 'portal/student/objection',
+										type: 'PUT',
+										data: JSON.stringify({ stNo:userNo,
+											    			   sbjNo:sbjNo,
+											   				   content:content }),
+									    contentType : 'application/json',
+										dataType: 'json',
+										beforeSend: function (xhr) {
+										       xhr.setRequestHeader(header, token);
+											}
+										
+									}).done(function(result) {
+										if(result) {
+											
+											Dialogs.dialog('success', 
+									                       '이의신청 완료', 
+									                       '성적 이의신청이 완료되었습니다.');
+											
+											objectionListSelectAjax();
+											
+											let datas = ['pfname', 'sbjname', 'objstate', 'content', 'answer'];
+											for (data of datas) {
+												$(`#${data}`).text('');
+											}
+											$('#content').val('').attr('disabled', true);
+											$('#objectionTb tr').removeClass('table-primary');
+											$('#objInsertBtn').attr('disabled', true);
+										}
+									})
 					
-					url: getContextPath() + 'portal/student/objection',
-					type: 'PUT',
-					data: JSON.stringify({ stNo:userNo,
-						    			   sbjNo:$(this).data('sbjno'),
-						   				   content:$('#content').val() }),
-				    contentType : 'application/json',
-					dataType: 'json',
-					beforeSend: function (xhr) {
-					       xhr.setRequestHeader(header, token);
-						}
-					
-				}).done(function(result) {
-					if(result) {
-						
-						Dialogs.dialog('success', 
-				                       '이의신청 완료', 
-				                       '성적 이의신청이 완료되었습니다.');
-						
-						objectionListSelectAjax();
-						
-						let datas = ['pfname', 'sbjname', 'objstate', 'content', 'answer'];
-						for (data of datas) {
-							$(`#${data}`).text('');
-						}
-						$('#content').val('');
-						$('#objectionTb tr').removeClass('table-primary');
-					}
-				})
-			})
+				               });
+				
+			});
 		}
 		
-		// 이의신청 리스트
+		// 성적 이의신청 리스트
 		function objectionListSelectAjax() {
 			$.ajax({
 				
@@ -283,9 +295,9 @@
 				
 				for (obj of objList) {
 					
-					$(`#${obj.sbjNo}`).text(obj.objState)
+					$(`#${obj.sbjNo}`).text(obj.objState);
 
-					if (obj.objState === '신청 완료') {
+					if (obj.objState === '답변 대기') {
 						$(`#${obj.sbjNo}`).removeClass('table-danger');
 						$(`#${obj.sbjNo}`).addClass('table-warning');
 					} else {
@@ -305,13 +317,14 @@
 			$(document).on('click', '#objectionTb tr', objTableMake);
 		}
 		
-		// 이의신청 insert form
+		// 이의신청 insert table
 		function objTableMake() {
 				
 				$('#objectionTb tr').removeClass('table-primary');
 				$(this).addClass('table-primary');
 				
 				$('#content').attr('disabled', false);
+				$('#objInsertBtn').attr('disabled', false);
 				
 				let datas = ['pfname', 'sbjname', 'objstate', 'content', 'answer'];
 				
@@ -320,10 +333,10 @@
 					$(`#${data}`).text($(this).data(data));
 					$(`#${data}`).val($(this).data(data));
 				}
-				console.log($(this).data('objstate'))
 				
 				if ($(this).data('content')) {
 					$('#content').attr('disabled', true);
+					$('#objInsertBtn').attr('disabled', true);
 				}
 				
 				$('#objInsertBtn').data('sbjno', $(this).data('sbjno'));
