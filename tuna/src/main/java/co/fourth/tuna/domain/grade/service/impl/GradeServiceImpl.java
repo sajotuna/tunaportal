@@ -18,6 +18,11 @@ public class GradeServiceImpl implements GradeService {
 	public List<Map<String, Object>> currentSemesterGradeSelect(int stNo, String seasonCode) {
 		return mapper.currentSemesterGradeSelect(stNo, seasonCode);
 	}
+	
+	@Override
+	public Map<String, Object> currentSemesterGradeTotal(int stNo, String seasonCode) {
+		return mapper.currentSemesterGradeTotal(stNo, seasonCode);
+	}
 
 	@Override
 	public List<Map<String, Object>> subjectGradeSelect(int stNo) {
@@ -33,5 +38,6 @@ public class GradeServiceImpl implements GradeService {
 	public List<Map<String, Object>> avgGradeSelect(int stNo) {
 		return mapper.avgGradeSelect(stNo);
 	}
+
 
 }

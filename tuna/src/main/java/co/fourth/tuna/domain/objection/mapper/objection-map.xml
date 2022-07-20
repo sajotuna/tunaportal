@@ -7,4 +7,53 @@
 		FROM objection
 		WHERE sbjno = #{no}
 	</select>
+	
+	<select id="objectionListOfStud" 
+			resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
+	
+		SELECT O.*, 
+               OBJECTIONSTATE(O.SBJNO, O.STNO) AS OBJSTATE
+		FROM OBJECTION O, SUBJECT S
+		WHERE O.SBJNO = S.NO
+        AND STNO = #{stNo}
+        AND S.SEASONCODE = #{seasonCode}
+	
+	</select>
+	
+	<select id="objectionListOfProf" 
+			resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
+	
+	
+	
+	</select>
+
+	<select id="objectionSelect"
+			resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
+	
+		
+	
+	</select>
+	
+	<insert id="objectionInsert">
+	
+		<selectKey resultType="int" keyProperty="no" order="BEFORE">
+			SELECT CASE WHEN MAX(NO) != 0
+						THEN MAX(NO) + 1 
+						ELSE 1 END
+						AS ID
+			FROM OBJECTION 
+		</selectKey>
+	
+		INSERT INTO OBJECTION (NO, ENROLLDATE, CONTENT,  STNO, SBJNO)
+		VALUES(#{no}, SYSDATE, #{content}, #{stNo}, #{sbjNo})
+			
+	</insert>
+	
+	<update id="objectionUpdate">
+		UPDATE OBJECTION
+		SET ANSWERDATE = SYSDATE,
+		    ANSWER = #{answer}
+		WHERE no = #{no}
+	</update>
+	
 </mapper>

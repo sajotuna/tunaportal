@@ -28,7 +28,6 @@ public class SubjectVO {
 	private String deptCode;
 	private String seasonCode;
 	private int pfNo;
-	private String pfName;
 
 	private ProfessorVO professorVO;
 	private GradeRatioVO gradeRatioVO;

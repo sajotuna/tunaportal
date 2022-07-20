@@ -15,13 +15,6 @@ public class GradeController {
 	
 	@Autowired 
 	private GradeService gradeDao;
-
-	// 당해학기 성적 조회
-	@RequestMapping("/stud/currentSemesterGradeList")
-	public List<Map<String, Object>> currentSemesterGrade(int stNo, String seasonCode, Model model) {
-		List<Map<String, Object>> lists = gradeDao.currentSemesterGradeSelect(stNo, seasonCode);
-		return lists;
-	}
 	
 	// 보관 성적 조회 - 과목별 성적 내역
 	@RequestMapping("/stud/subjectGrade")
@@ -43,5 +36,4 @@ public class GradeController {
 		List<Map<String, Object>> avgGrade = gradeDao.avgGradeSelect(stNo);
 		return avgGrade;
 	}
-	
 }

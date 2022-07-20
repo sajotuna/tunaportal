@@ -6,7 +6,7 @@
 	parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
 	resultType="co.fourth.tuna.domain.user.vo.ProfessorVO">
 
-	select* from professor where no = #{no}
+	select* from professor where no = #{pfNo}
 
 </select>
 
