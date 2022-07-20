@@ -48,13 +48,11 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="q : ${qna}"
-												th:onclick="|location.href='@{/eclass/student/qnaSelect}'|">
-												<td class="text-center" th:text="${q.NO}">5</td>
-												<td class="text-center" colspan="7" th:text="${q.TITLE}"></td>
+											<tr th:each="q, i : ${qna}">
+												<td class="text-center" th:text="${i.index+1}">5</td>
+												<td class="text-center" colspan="7" th:onclick="|location.href='@{/eclass/student/qnaSelect}'|" th:text="${q.TITLE}"></td>
 												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
-												<td class="text-center" colspan="2"
-													th:text="${q.ENROLLDATE}"></td>
+												<td class="text-center" colspan="2" th:text="${q.ENROLLDATE}"></td>
 												<td class="text-center" colspan="2">미답변</td>
 											</tr>
 										</tbody>

@@ -26,4 +26,20 @@ TO_CHAR(STARTDATE, 'YYYY"년"MM"월"DD"일 00:00:00"') STARTDATE
 FROM TASK WHERE SBJNO = #{sbjNo}
  AND NO = #{no}
 </select>
+
+<insert id="taskSubmission" parameterType="co.fourth.tuna.domain.task.vo.SubmitTaskVO">
+
+<selectKey resultType="int" keyProperty="no" order="BEFORE">
+SELECT CASE WHEN MAX(NO) != 0 THEN MAX(NO) + 1 ELSE 1 END FROM SUBMITTASK
+</selectKey>
+INSERT INTO SUBMITTASK
+VALUES(#{no}, #{fileName}, SYSDATE, 0, #{stNo}, #{taskNo}, #{uri})
+</insert>
+
+<select id="findSubmission" resultType="co.fourth.tuna.domain.task.vo.SubmitTaskVO" parameterType="co.fourth.tuna.domain.task.vo.SubmitTaskVO">
+SELECT * FROM SUBMITTASK 
+WHERE STNO = #{stNo}
+AND TASKNO = #{taskNo}
+</select>
+
 </mapper>

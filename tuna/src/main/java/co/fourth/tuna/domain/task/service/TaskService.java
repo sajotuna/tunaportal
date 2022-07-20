@@ -1,5 +1,7 @@
 package co.fourth.tuna.domain.task.service;
 
+import java.util.List;
+
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 
@@ -9,7 +11,11 @@ public interface TaskService {
 	public TaskVO taskList(TaskVO vo);
 	
 	//과제 상세보기
-	public SubmitTaskVO taskSelect(SubmitTaskVO vo);
+	public TaskVO taskSelect(TaskVO vo);
 
 	//과제 파일 제출
+	public void taskSubmission(SubmitTaskVO vo);
+	
+	//제출한 파일 조회
+	 public List<SubmitTaskVO> findSubmission(SubmitTaskVO vo);
 }

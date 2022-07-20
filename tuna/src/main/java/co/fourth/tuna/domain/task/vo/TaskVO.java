@@ -2,11 +2,15 @@ package co.fourth.tuna.domain.task.vo;
 
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TaskVO {
 	
 	//인덱스
