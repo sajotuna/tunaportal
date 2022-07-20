@@ -12,7 +12,7 @@
 	<main layout:fragment="main">
 		<!--title start-->
 		<div class="bg-body-light">
-			<div class="content content-full content-boxed">
+			<div class="content content-full">
 				<div
 					class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
 					<div class="flex-grow-1">
@@ -53,7 +53,7 @@
 							<hr>
 							<div class="p-1 d-flex justify-content-end">
 								<button type="button" class="btn btn-outline-secondary m-1"
-									th:onclick="|location.href='@{/portalNoticeList}'|">목록</button>
+									th:onclick="|location.href='@{/admin/adminNoticeList}'|">목록</button>
 								
 								<form th:action="@{/admin/adminNoticeupdateForm}" method="post">
 								<input type="hidden" id="no" name="no" th:value="${content.no}">

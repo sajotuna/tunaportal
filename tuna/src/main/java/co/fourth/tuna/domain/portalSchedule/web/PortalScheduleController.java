@@ -6,12 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.common.service.YearService;
@@ -29,12 +29,22 @@ public class PortalScheduleController {
 
 	@Autowired
 	private YearService yearService;
+	
+	@RequestMapping("/portalSchedule")
+	public String portalSchedule() {
+		return "schedule/user/portalSchedule";
+	}
 
 	// user
-	@RequestMapping("/portalSchedule")
-	public String portalSchedule(PortalScheduleVO vo, Model model) {
-		model.addAttribute("schedules", scheduleDao.scheduleList(vo));
-		return "schedule/user/portalSchedule";
+	@GetMapping("/portalScheduleList")
+	@ResponseBody
+	public List<PortalScheduleVO> portalScheduleList(PortalScheduleVO vo) {
+
+		if(vo.getSeasonCode()==null) {
+			vo.setSeasonCode(yearService.yearFind());
+		}
+		
+		return scheduleDao.scheduleList(vo);
 	}
 
 	// admin
@@ -65,7 +75,7 @@ public class PortalScheduleController {
 	@DeleteMapping("/admin/adminSchduleDelete")
 	@ResponseBody
 	public int schduleDelete(@RequestBody PortalScheduleVO vo) {
-		
+		logger.info("delete::" + vo);
 		return scheduleDao.scheduleDelete(vo);
 	}
  

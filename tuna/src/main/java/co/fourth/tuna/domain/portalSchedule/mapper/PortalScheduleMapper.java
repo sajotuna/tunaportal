@@ -7,18 +7,17 @@ import org.apache.ibatis.annotations.Param;
 import co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO;
 
 public interface PortalScheduleMapper {
-	//user
+	// user
 	List<PortalScheduleVO> scheduleList(PortalScheduleVO vo);
-	
-	//admin
+
+	// admin
 	int scheduleInsert(PortalScheduleVO vo);
-	
-  int scheduleDelete(PortalScheduleVO vo);
-	
+
+	int scheduleDelete(PortalScheduleVO vo);
+
 	List<PortalScheduleVO> adminScheduleList(PortalScheduleVO vo);
-  
-	PortalScheduleVO findOneBySeasonCode(
-			@Param(value = "seasonCode")String seasonCode, 
-			@Param(value = "scheduleCode")String scheduleCode);
-      
+
+	PortalScheduleVO findOneBySeasonCode(@Param(value = "seasonCode") String seasonCode,
+			@Param(value = "scheduleCode") String scheduleCode);
+
 }

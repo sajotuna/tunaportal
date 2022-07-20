@@ -6,9 +6,10 @@
 <!-- user schedule list -->
 <select id="scheduleList" resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
 SELECT EXTRACT(MONTH FROM STARTDATE)as month,
-STARTDATE, ENDDATE, CONTENT
+STARTDATE, ENDDATE, CONTENT, seasonCode
 FROM PORTALSCHEDULE
 WHERE SEASONCODE =#{seasonCode}
+order by startDate ASC
 </select>
 
 
@@ -36,14 +37,14 @@ INSERT INTO
 VALUES (#{no}, #{startDate}, #{endDate}, #{content}, #{seasonCode}, 100482)
 </insert>
 
-	<select id="findOneBySeasonCode"
+<select id="findOneBySeasonCode"
 		resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
 			SELECT * 
 			FROM portalschedule 
 			WHERE seasoncode = ${seasonCode}
 			    AND schedulecode = ${scheduleCode}
 			ORDER BY startdate
-	</select>
+</select>
 
 <!-- admin schedule delete -->
 <delete id="scheduleDelete"
