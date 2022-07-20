@@ -37,4 +37,9 @@ public class TaskServiceImpl implements TaskService {
 		return map.findSubmission(vo);
 	}
 
+	@Override
+	public void deleteSubmitTask(SubmitTaskVO vo) {
+		map.deleteSubmitTask(vo);
+	}
+
 }

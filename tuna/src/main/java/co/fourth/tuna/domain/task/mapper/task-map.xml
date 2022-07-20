@@ -40,6 +40,11 @@ VALUES(#{no}, #{fileName}, SYSDATE, 0, #{stNo}, #{taskNo}, #{uri})
 SELECT * FROM SUBMITTASK 
 WHERE STNO = #{stNo}
 AND TASKNO = #{taskNo}
+ORDER BY NO
 </select>
 
+<delete id="deleteSubmitTask">
+DELETE FROM SUBMITTASK
+WHERE NO = #{no}
+</delete>
 </mapper>

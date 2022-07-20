@@ -63,11 +63,9 @@
 													<th colspan="7"><input
 														class="form-control fw-semibold fs-sm"
 														id="example-file-input file" name="file" type="file"
-														multiple="multiple"> <th:block
-															th:each="fts : ${fts}">
-															<a
-																th:href="@{/download(fileName=${fts.uri}, originName=${fts.fileName}, folder=task)}"
-																class="mb-0 fw-bold"> [[${fts.fileName}]] </a>
+														multiple="multiple">
+														<th:block th:each="fts : ${fts}">
+															<a th:href="@{/download(fileName=${fts.uri}, originName=${fts.fileName}, folder=task)}" class="mb-0 fw-bold"> [[${fts.fileName}]] </a>
 															<button th:data-uri=${fts.uri} th:data-no=${fts.no}
 																type="button" class="btn btn-sm delBtn">
 																<i class="fa fa-fw fa-sm fa-times"></i>
@@ -91,38 +89,22 @@
 				</form>
 			</div>
 			<script>
-				$('.delBtn')
-						.on(
-								'click',
-								function() {
-									var header = $("meta[name='_csrf_header']")
-											.attr('content');
-									var token = $("meta[name='_csrf']").attr(
-											'content');
-
+				$('.delBtn').on('click', function() {
+									var header = $("meta[name='_csrf_header']").attr('content');
+									var token = $("meta[name='_csrf']").attr('content');
 									let uri = $(this).data('uri');
 									let no = $(this).data('no');
-									let fileRow = $(this).parent();
-
-									$
-											.ajax(
-													{
-														url : getContextPath()
-																+ 'fileDel',
-														method : 'DELETE',
-														data : JSON.stringify({
-															no : no,
-															uri : uri
-														}),
-														contentType : 'application/json; charset=utf-8',
-														dataType : 'json',
-														beforeSend : function(
-																xhr) {
-															xhr
-																	.setRequestHeader(
-																			header,
-																			token);
-														},
+									let fileRow = $(this).prev();
+									$.ajax({url : getContextPath() + 'deleteSubmitTask',
+											method : 'DELETE',
+											data : JSON.stringify({
+											no : no,
+											uri : uri
+											}),
+											contentType : 'application/json; charset=utf-8',
+											dataType : 'json',
+											beforeSend : function(xhr) {
+												xhr.setRequestHeader(header, token);},
 													}).done(function(success) {
 												if (success) {
 													fileRow.remove();

@@ -18,4 +18,6 @@ public interface TaskMapper {
 		
 	//제출한 파일 조회
 	public List<SubmitTaskVO>  findSubmission(SubmitTaskVO vo);
+	//제출한 파일 삭제
+	public void deleteSubmitTask(SubmitTaskVO vo);
 }

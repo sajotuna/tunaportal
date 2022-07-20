@@ -1,6 +1,7 @@
 package co.fourth.tuna.web.eclass.student;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
@@ -154,8 +157,10 @@ public class EclassStudentEclassController {
 		
 		List<Map<String, Object>> tsk = sql.selectList("co.fourth.tuna.domain.task.mapper.TaskMapper.taskSelect", vo);
 		System.out.println("12354574679");
-		List<SubmitTaskVO> fts = taskDao.findSubmission(vo1);
-		System.out.println(fts.get(0).getFileName() +"===================================================");
+		List<SubmitTaskVO> fts = new ArrayList<>();
+		if(taskDao.findSubmission(vo1).size() != 0) {
+			fts = taskDao.findSubmission(vo1);
+		}
 		
 		model.addAttribute("tsk", tsk);
 		model.addAttribute("fts",fts);
@@ -189,6 +194,14 @@ public class EclassStudentEclassController {
 		}
 		
 		return "redirect:/eclass/student/taskSelect";
+	}
+	
+	@DeleteMapping("/deleteSubmitTask")
+	@ResponseBody
+	public void deleteSubmitTask(@RequestBody SubmitTaskVO vo) {
+		fileService.delete(vo.getUri(), "task");
+		taskDao.deleteSubmitTask(vo);
+		
 	}
 	
 
