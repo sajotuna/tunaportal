@@ -89,7 +89,7 @@ public class LecturePlanController {
 				LocalDate ldate = startDate.with(TemporalAdjusters.next(
 						DayOfWeek.of(CustomDateUtills.koreanWeeksToLocalDateNum(lecSche.getDayCode()))
 					));
-				pdvo.setLocalDate(ldate.plusWeeks((i-1)));
+				pdvo.setLocalDate(ldate.plusWeeks((Integer.parseInt(resultData.get(i).getWkCode())-1200 -1)));
 				pdvos.add(pdvo);
 			}
 			resultData.get(i).setPlaceAndDate(pdvos);

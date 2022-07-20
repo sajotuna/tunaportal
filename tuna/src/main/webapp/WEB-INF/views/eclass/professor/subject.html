@@ -229,13 +229,13 @@ xmlns:th="http://www.thymeleaf.org"
                           <div class="block-header bg-primary-darker">
                             <h3 class="block-title">강의정보</h3>
                           </div>
-                          <div class="block-content">
-                            <div>13주차 <span class="text-muted">[2022-06-17]</span><h5> 참치 민족의 부흥</h5></div>
+                          <div id="subject-plan" class="block-content">
+                            <!-- <div>13주차 <span class="text-muted">[2022-06-17]</span><h5> 참치 민족의 부흥</h5></div>
                             <p>
                               <div>학습목표: 참치 문명의 발생과 생활 양식을 알 수 있다.</div>
                               <div>과제: <span>멸치민족 조사하기</span></div>
                               <div>2022-06-23 까지</div>
-                            </p>
+                            </p> -->
                           </div>
                         </div>
                       </div>
@@ -985,8 +985,7 @@ xmlns:th="http://www.thymeleaf.org"
 
             // 강의정보 패널
             function setPlanContent(jsonData) {
-              console.log("here!!!");
-              console.log(jsonData);
+              
               let plan_progress_content = document.getElementById("subject-progress");
               let ulTag = plan_progress_content.getElementsByTagName("ul")[0];
               
@@ -994,27 +993,50 @@ xmlns:th="http://www.thymeleaf.org"
                 let li = document.createElement('li');
                 ulTag.appendChild(li);
                 let innerHtml = `
-                    <a class="d-flex text-default-dark" id="progress-week-${plan.no}" href="javascript:void(0);" onclick="planClickEvent(this)">
-                      <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
-                      <div class="d-flex p-3 align-items-center" style="width: 71px;">${plan.wkCode-1200} 주
-                      </div>
-                      <div class="py-1 fs-sm">
-                        <div>${plan.summary}</div>
-                        <div>날짜?</div>
-                        <div>장소?</div>
-                      </div>
-                    </a>`
-                  li.innerHTML = innerHtml;
-                  li.date_no = plan.no;
-                  li.data_wkcode = plan.wkCode-1200;
-                  li.date_summary = plan.summary;
+                  <a class="d-flex text-default-dark" id="progress-week-${plan.no}" href="javascript:void(0);" onclick="planClickEvent(this)">
+                    <div class="d-flex py-3 bg-default-dark" style="width: 15px;"></div>
+                    <div class="d-flex p-3 align-items-center" style="width: 71px;">${plan.wkCode-1200} 주
+                    </div>
+                    <div class="py-1 fs-sm">
+                      <div><strong>${plan.summary}</strong></div>
+                      <div>`;
+                for(let pAd of plan.placeAndDate) {
+                  innerHtml += `
+                  <span>
+                    [${pAd.localDate}
+                  </span>
+                  :
+                  <span>
+                    ${pAd.roomName}]
+                  </span>
+                  `;
+                }
+                innerHtml += `</div>
+                    </div>
+                  </a>`;
+                li.innerHTML = innerHtml;
+                li.data_no = plan.no;
+                li.data_wkcode = plan.wkCode-1200;
+                li.data_summary = plan.summary;
+                li.data_pad = plan.placeAndDate;
               }
-              
+              ulTag.children[0].children[0].click();
             }
 
             function planClickEvent(ele) {
               console.log(ele);
+              let subject_plan_tag = document.getElementById("subject-plan");
               let li = ele.parentNode;
+              let content = `
+              <div>${li.data_wkcode} 주차 <br> <span class="text-muted">
+              `
+              for(let PAD of li.data_pad) {
+                content += `&nbsp<span>[${PAD.localDate}:${PAD.roomName}]</span>`
+              }
+              content +=`</span><h5>${li.data_summary}</h5></div>
+              <p></p>
+              `
+              subject_plan_tag.innerHTML = content;
             }
 
             function allStudentAttend() {
