@@ -25,8 +25,12 @@
 
 	<select id="bannerListSelect"
 		resultType="co.fourth.tuna.domain.banner.vo.BannerVO">
-		SELECT *
-		FROM BANNER
+		select *
+		from (select rownum as rnum,
+		             b.*
+		      from banner b
+		      order by no desc)
+		<![CDATA[where #{startList} < rnum and rnum <= #{endList}]]>
 	
 	</select>
 

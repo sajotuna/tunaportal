@@ -92,7 +92,7 @@ public class BannerController {
 	
 	// 기본 배너 등록
 	@PostMapping("/admin/basicBanner")
-	public int basicBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile file, HttpServletRequest request) {
+	public int basicBannerInsert(BannerVO vo, @RequestParam(value = "file")MultipartFile file) {
 		
 		String[] fileInfo = fileService.upload(file, "banner");
 		
