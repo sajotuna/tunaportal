@@ -30,47 +30,47 @@
 		})
 		
 		$('#checkConfirm').on('click', function() {
-			let result = Dialogs.dialog('checkConfirm', 
-					                    '수정하시겠습니까?', 
-					                    '언제든 변경 가능', 
-					                    function() {
-											Dialogs.dialog('success', 
-									                   '완료', 
-									                   '완료입니다');
-										});
+			Dialogs.dialog('checkConfirm', 
+		                    '수정하시겠습니까?', 
+		                    '언제든 변경 가능', 
+		                    function() {
+								Dialogs.dialog('success', 
+						                   '완료', 
+						                   '완료입니다');
+							});
 		})
 		
 		$('#warnConfirm').on('click', function() {
-			let result = Dialogs.dialog('warnConfirm', 
-					                    '삭제하시겠습니까?', 
-					                    '돌이킬 수 없어요', 
-					                    function() {
-											console.log('삭제 완료');
-										});
+			Dialogs.dialog('warnConfirm', 
+		                    '삭제하시겠습니까?', 
+		                    '돌이킬 수 없어요', 
+		                    function() {
+								console.log('삭제 완료');
+							});
 		})
 		
 		$('#error').on('click', function() {
-			let result = Dialogs.dialog('error', 
-					                    '작업 취소', 
-					                    '에러났어요 고쳐오세요!', 
-					                    function() {
-											console.log('에러 확인');
-										});
+			Dialogs.dialog('error', 
+		                    '작업 취소', 
+		                    '에러났어요 고쳐오세요!', 
+		                    function() {
+								console.log('에러 확인');
+							});
 		})
 		
 		$('#info').on('click', function() {
-			let result = Dialogs.dialog('info', 
-					                    '정보', 
-					                    '읽었으면 확인을 누르세요');
+			Dialogs.dialog('info', 
+		                    '정보', 
+		                    '읽었으면 확인을 누르세요');
 		})
 		
 		$('#question').on('click', function() {
-			let result = Dialogs.dialog('question', 
-					                    '아래 사항을 확인해 주세요	', 
-					                    '이렇게 할거야 알겠지? 분명히 말했어용', 
-					                    function() {
-											console.log('질문 확인');
-										});
+			Dialogs.dialog('question', 
+		                    '아래 사항을 확인해 주세요	', 
+		                    '이렇게 할거야 알겠지? 분명히 말했어용', 
+		                    function() {
+								console.log('질문 확인');
+							});
 		})
 		
 	</script>
