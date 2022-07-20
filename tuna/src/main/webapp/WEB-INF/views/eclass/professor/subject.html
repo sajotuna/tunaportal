@@ -97,7 +97,9 @@ xmlns:th="http://www.thymeleaf.org"
                     <div>수강생  : <strong><span th:text="${#lists.size(subject.lectureApplyList)}">데이터 없음</span> 명</strong></div>
                     <div>학점 : <strong th:text="${subject.point}">데이터 없음</strong></div>
                     <div>주차 : <strong>?? / 16</strong></div>
-                    <div>기간 : <strong>20??-??-?? ~ 20??-??-??</strong></div>
+                    <div>기간 : <strong>
+                      <span th:text="${firstDay}">20??-??-??</span> ~ 
+                      <span th:text="${lastDay}">20??-??-??</span></strong></div>
                     <div>문의 : <strong class="text-danger" th:text="${#lists.size(subject.lectureQnaList)}">??</strong></div>
                     <div>평가 항목 : 
                       <th:block th:if="${subject.gradeRatioVO != null}">
@@ -983,7 +985,8 @@ xmlns:th="http://www.thymeleaf.org"
 
             // 강의정보 패널
             function setPlanContent(jsonData) {
-              
+              console.log("here!!!");
+              console.log(jsonData);
               let plan_progress_content = document.getElementById("subject-progress");
               let ulTag = plan_progress_content.getElementsByTagName("ul")[0];
               

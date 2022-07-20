@@ -4,9 +4,24 @@
 	namespace="co.fourth.tuna.domain.common.mapper.LectureScheduleMapper">
 	
 	<select id="findLectureScheduleForSubject"
+		parameterType="LectureScheduleVO"
 		resultType="co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO">
+		<include refid="selectAllWhereNo">
+			<property name="no" value="${vo.no}"/>
+		</include>
+	</select>
+	
+	<select id="findLectureScheduleForSubjectId"
+		parameterType="int"
+		resultType="co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO">
+		<include refid="selectAllWhereNo">
+			<property name="no" value="${sbjno}"/>
+		</include>
+	</select>
+	
+	<sql id="selectAllWhereNo">
 		SELECT *
 		FROM lectureschedule
 		WHERE sbjno = #{no}
-	</select>
+	</sql>
 </mapper>
