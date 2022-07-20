@@ -22,10 +22,9 @@
 	<selectKey  keyColumn="deptcode,stateCode" resultType="co.fourth.tuna.domain.user.vo.ProfessorVO" keyProperty="deptcode,stateCode" order="BEFORE">
 		select no stateCode, (select no deptcode
                       from publiccode
-                      where codename = #{deptCode}) deptcode
+                      where codename = #{deptcode}) deptcode
 		from publiccode
 		where codename = #{stateCode}
-	
 	</selectKey>
 	
 	

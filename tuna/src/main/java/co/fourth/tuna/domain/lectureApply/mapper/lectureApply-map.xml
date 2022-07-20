@@ -87,6 +87,7 @@ SELECT DISTINCT
    AND S.NO IN ( SELECT NO FROM SUBJECT)
    AND S.SEASONCODE = 106
    AND STNO = #{stNo}
+   <if test="stateCode != null and !stateCode.equals('')">AND L2.STATECODE = #{stateCode}</if>
 
 </select>
 
