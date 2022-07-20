@@ -11,19 +11,20 @@ FROM PORTALSCHEDULE
 WHERE SEASONCODE =#{seasonCode}
 </select>
 
+
 <!-- admin schedule list -->
 <select id="adminScheduleList" resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
 SELECT * 
-FROM PORTALSCHEDULE;
+FROM PORTALSCHEDULE
 </select>
 
 <!-- admin schedule insert -->
-<insert id="scheduleInsert"
-		parameterType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
+<insert id="scheduleInsert" 
+parameterType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
 
 <selectKey resultType="String" keyProperty="no" order="BEFORE">
 			SELECT CASE WHEN MAX(NO)!= 0 THEN MAX(NO) + 1 
-						ELSE 1 END AS ID FROM PORTALNOTICE
+						ELSE 1 END AS id FROM PORTALSCHEDULE
 </selectKey>
 INSERT INTO
 	 PORTALSCHEDULE(NO,
@@ -32,7 +33,16 @@ INSERT INTO
 					CONTENT,
 					SEASONCODE,
 					ADNO)
-VALUES (#{no}, #{STARTDATE}, #{ENDDATE}, #{CONTENT}, #{SEASONCODE}, 100482)
+VALUES (#{no}, #{startDate}, #{endDate}, #{content}, #{seasonCode}, 100482)
 </insert>
+
+
+<!-- admin schedule delete -->
+<delete id="scheduleDelete"
+parameterType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
+DELETE FROM PORTALSCHEDULE WHERE NO = #{no}
+</delete>
+
+
 </mapper>
 

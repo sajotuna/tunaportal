@@ -38,19 +38,17 @@ public class PortalNoticeController {
 
 	// user
 	// 전체조회
-//	@RequestMapping("/portalNoticeList")
-//	public String portalnoticeList(Model model, PortalNoticeFileVO fileVo) {
-//		
-//		model.addAttribute("notices", noticeDao.noticeList(1, "전체", 2, 10));
-//
-//		List<PortalNoticeFileVO> list = noticeDao.fileList(fileVo);
-//		Set<String> fileYn = new HashSet<>();
-//		for (PortalNoticeFileVO vo : list) {
-//			fileYn.add(vo.getPnno());
-//		}
-//		return "notice/user/portalNoticeList";
-//
-//	}
+	@RequestMapping("/portalNoticeList")
+	public String portalnoticeList(Model model, PortalNoticeVO vo, @RequestParam(value="pageNum", required=false, defaultValue="1")int pageNum) {
+		int size = 10;
+
+		model.addAttribute("notices", noticeDao.noticeList(1, "전체", pageNum, size));
+		
+		List<PortalNoticeFileVO> list = noticeDao.fileList();
+
+		return "notice/user/portalNoticeList";
+
+	}
 
 	// 단건조회
 	@RequestMapping("/portalNoticeSelect")
@@ -73,12 +71,7 @@ public class PortalNoticeController {
 		model.addAttribute("notices", noticeDao.noticeList(1, "전체", pageNum, size));
 		
 		List<PortalNoticeFileVO> list = noticeDao.fileList();
-		Set<String> fileYn = new HashSet<>();
-		for (PortalNoticeFileVO fvo : list) {
-			fileYn.add(fvo.getPnno());
-		}
-		
-		model.addAttribute("files", fileYn);
+
 		return "notice/admin/adminNoticeList";
 	}
 
@@ -180,8 +173,7 @@ public class PortalNoticeController {
 			fileService.delete(list.get(i).getUri(), "portalNotice");
 		}
 		
-		
-			
+
 		return noticeDao.noticeDelete(vo);
 
 	}

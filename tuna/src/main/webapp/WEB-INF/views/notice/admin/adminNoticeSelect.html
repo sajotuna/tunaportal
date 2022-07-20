@@ -53,7 +53,7 @@
 							<hr>
 							<div class="p-1 d-flex justify-content-end">
 								<button type="button" class="btn btn-outline-secondary m-1"
-									th:onclick="|location.href='@{/admin/adminNoticeList}'|">목록</button>
+									th:onclick="|location.href='@{/portalNoticeList}'|">목록</button>
 								
 								<form th:action="@{/admin/adminNoticeupdateForm}" method="post">
 								<input type="hidden" id="no" name="no" th:value="${content.no}">
@@ -68,32 +68,7 @@
 
 
 		</div>
-		<script>
-// 		function modiBtn(){
-// 			var no = $('#no').val()
-// 			var header = $("meta[name='_csrf_header']").attr('content');
-// 			var token = $("meta[name='_csrf']").attr('content');
-// 			$.ajax({
-// 				url: getPathRootJump() + 'admin/adminNoticeupdateForm',
-// 				type:'POST',
-// 				data:{no:no},
-// 				dataType:'json',
-// 				beforeSend: function(xhr){
-// 					xhr.setRequestHeader(header, token);
-// 				},
-// 				success: function(no){
-// 					location.href()
-// 				},
-// 				error: function(){
-// 					console.log(no)
-// 				}
-// 			}) 
-// 		}
-		
 
-		
-		 
-		</script>
 		<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 	</main>
 </body>

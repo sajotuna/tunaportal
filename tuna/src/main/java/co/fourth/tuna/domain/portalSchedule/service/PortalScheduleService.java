@@ -11,4 +11,7 @@ public interface PortalScheduleService {
 	//admin
 	int scheduleInsert(PortalScheduleVO vo);
 	
+	int scheduleDelete(PortalScheduleVO vo);
+	
+	List<PortalScheduleVO> adminScheduleList(PortalScheduleVO vo);
 }
