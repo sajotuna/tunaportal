@@ -46,6 +46,12 @@ public class PortalScheduleController {
 		
 		return scheduleDao.scheduleList(vo);
 	}
+	
+	@GetMapping("/scheduleSearch")
+	@ResponseBody
+	public List<PortalScheduleVO> scheduleSearch(@RequestParam("key") String key){
+		return scheduleDao.scheduleSearch(key);
+	}
 
 	// admin
 	@RequestMapping("/admin/adminSchedule")

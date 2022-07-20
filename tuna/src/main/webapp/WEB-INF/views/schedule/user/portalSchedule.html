@@ -49,7 +49,7 @@
 						<div class="input-group">
 							<input type="text" id="searchText"
 								class="form-control form-control-alt" placeholder="Search">
-							<button id="searchBtn" type="submit"
+							<button id="searchBtn" onclick="searchList()"
 								class="btn btn-alt-secondary">
 								<i class="fa fa-search"></i>
 							</button>
@@ -92,43 +92,21 @@ $(function(){
 
 // var leng = $('tr').eq(4).text()
 
-			$('#searchBtn').on('click', function(){
+/* 			$('#searchBtn').on('click', function(){
 				var text= $('#searchText').val()
-				var tr = $('tr')
-				//var td = tr.children();
-				var td = $('tr>td');
-				var trArr = new Array();
-				var val = $('#Title').eq(tr.length-1).text()
 				
-				/* td.each(function(i){
-					trArr.push(td.eq(i).text())
+				var tr = $('tr' )
+				var td = $('#Title').text()
 					
-					console.log(trArr)
-					let a = trArr
-					if(a.indexOf(text) == -1){
-						console.log(a.indexOf(text))
-						return;
-					}					
-				}) */
+			
+				console.log(tr + '입니다')
+				console.log(td +'인데요')
 				
-				console.log(val)
-				
-				
-// 				console.log(td.eq(2).text());
-				
-// 				var isFound = trArr.includes(text)
-// 				console.log(isFound)
-				
-// 				if(isFound == true){
-// 					td.each(function(i){
-// 						td.eq(i).addClass('keyWord')
-						
-// 					})
-// 				}
+		
 
 				
 			})
-
+ */
 
 //selectBox 선택할 때 event
 function seasonSelect(){
@@ -159,7 +137,7 @@ function makeSchedule(){
 			$('#scheduleList').append($('<tr>')
 					  .append($('<td>').addClass('text-center fs-sm sorting_1 col-1 rowCheck').text(schedule.month))
 					  .append($('<td>').addClass('fw-semibold fs-sm text-center cod-3').text(day))
-					  .append($('<td>').addClass('d-none d-sm-table-cell fs-sm').text(schedule.content).attr('id','Title'))		
+					  .append($('<td>').addClass('d-none d-sm-table-cell fs-sm').text(schedule.content).attr('id','searchAnswer'))		
 						)
 			
 
@@ -182,6 +160,26 @@ function makeSchedule(){
 	
 
 	
+}
+
+function searchList(){
+	let key = $('#searchText').val()
+	$.ajax({
+		url : getPathRootJump() + "scheduleSearch",
+		type:"get",
+		data:{key:key},
+		dataType : "json",
+		success:function(lists){
+		
+			for(list of lists){	
+			console.log(list.content)
+			}
+			
+		},
+		error:function(){
+			
+		}
+	})
 }
 
 

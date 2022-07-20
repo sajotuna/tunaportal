@@ -9,6 +9,8 @@ import co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO;
 public interface PortalScheduleMapper {
 	// user
 	List<PortalScheduleVO> scheduleList(PortalScheduleVO vo);
+	
+	List<PortalScheduleVO> scheduleSearch(@Param("key")String key);
 
 	// admin
 	int scheduleInsert(PortalScheduleVO vo);
