@@ -14,6 +14,7 @@
 	rel='stylesheet' />
 <link rel="stylesheet"
 	th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
 <title>adminSchedule</title>
@@ -45,14 +46,13 @@ html, body {
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript"
-			src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
 
 		<script th:inline="javascript">
 		var header = $("meta[name='_csrf_header']").attr('content');
 		var token = $("meta[name='_csrf']").attr('content');
     (function () {
-        $(function calendar() {
+        $(function calendar(){
         	
         	var calendarList = []
         	
@@ -104,46 +104,51 @@ html, body {
 	                    		contentType : 'application/json; charset=utf-8',
 	                    		data:JSON.stringify({content:title,
 	                    			                 startDate:moment(arg.start).format('YYYY-MM-DD'), 
-	                    			                 endDate:moment(arg.end).format('YYYY-MM-DD')}),
+	                    			                 endDate:moment(arg.end).format('YYYY-MM-DD')
+	                    							}),
 	                    		beforeSend : function(xhr) {
 	    							xhr.setRequestHeader(header, token);
 	    						}	                    	
 	                    	}).done(function(){
-	                    		
-  	  	                     calendar.addEvent({
+	                    		location.reload();
+  	  	                     	calendar.addEvent({
   	  	                     	 title:title, 
     			                 start:arg.start, 
     			                 end:arg.end,
-    			                 allDay: arg.allDay
-    			                 
+    			                 allDay: arg.allDay   			                 
   	  	                      })
-	                  
-  	  	                      
+  	  	                      calendar.unselect()
+      
 	                    	})         	
 
 	                    } //end if(title)
 	                  },//end select
 	                  
 	                  //삭제 이벤트
-	                  eventClick:function(arg){
-	                              	  
-	                	 if(confirm('해당 일정을 삭제하시겠습니까?')){
-	                		 console.log(arg.extenedProps.no)
-	                		 $.ajax({
-	                			url:getPathRootJump()+'admin/adminSchduleDelete',
-	                			method:'post',
-	                    		dataType:'json',
-	                    		contentType : 'application/json; charset=utf-8',
-	                    		data:JSON.stringify({no:arg.event._def}),
-	                    		beforeSend : function(xhr) {
-	    							xhr.setRequestHeader(header, token);
-	    						}
-	                		 }).done(function(){
-	                			 arg.event.remove()
-	                		 }).fail(function(){
-	                			 console.log({no:arg.event._def})
-	                		 })
-	                	 }
+	                  eventClick:function(arg){	                	    	  
+	                	    	  var result = arg.event._def.title.substr(0, 29);
+	                	  Dialogs.dialog('warnConfirm', 
+	                			  '삭제하시겠습니까?', 
+	                			  '*'+ result + '*', 
+				                    function() {
+	                		  
+		                		 $.ajax({
+			                			url:getPathRootJump()+'admin/adminSchduleDelete',
+			                			method:'DELETE',
+			                    		dataType:'json',
+			                    		contentType : 'application/json; charset=utf-8',
+			                    		data:JSON.stringify({no:arg.event._def.extendedProps.no}),
+			                    		beforeSend : function(xhr) {
+			    							xhr.setRequestHeader(header, token);
+			    						}
+			                		 }).done(function(){
+			                			 arg.event.remove()
+			                		 })
+	                		  
+										
+									});
+	                		 
+	                	 
 	                  }
 	                  // 이벤트 
 	                   ,events:calendarList
@@ -169,6 +174,11 @@ html, body {
 		    return path_root;
 		 }
 </script>
+		<script type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+		<script
+			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+		<script th:src="@{/resources/assets/js/dialog.js}"></script>
 		<script
 			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 		<script

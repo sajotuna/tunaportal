@@ -1,102 +1,201 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    data-layout-decorate="~{layouts/navLayout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layouts/navLayout}">
 <head>
 <meta charset="UTF-8">
 <title>portalSchedule</title>
+<style>
+.keyWord {
+	font-weight : bold ;
+}
+</style>
 </head>
 <body>
-<main layout:fragment="main">
-    <!--title start-->
-    <div class="bg-body-light">
-      <div class="content content-full content-boxed">
-        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-          <div class="flex-grow-1">
-            <h1 class="h1 fw-bold mb-2">
-              학사일정
-            </h1>
-            <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-              Schedule
-            </h2>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--title end-->
-    <div class="content content-boxed">
 
-      <div class="block block-rounded">
-        <div class="block-header block-header-default">
-          <div class="block-title">
-            <div class="row">
-            <button type="button" class="btn btn-outline-secondary"
-              style="border:none; height:38px; width: 40px;"><i class="fa fa-arrow-left"></i></button>
-              <div class="col-3">
-                <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
-	                <select id="seasonSelect" name="seasonCode" class="form-select">
-	                    <option value="102">2023 1학기</option>
-	                    <option value="103">2022 2학기</option>
-	                    <option value="104">2022 1학기</option>
-	                </select>
-            </div>
-            <button type="button" class="btn btn-outline-secondary" style="border:none; height:38px;  width: 40px;"><i
-                class="fa fa-arrow-right"></i></button>
-              </div>
-          </div>
-          <div class="block-obtions">
-            <!--search start-->
-            <form action="be_pages_blog_classic.html" method="POST">
-              <div class="input-group">
-                <input type="text" class="form-control form-control-alt" placeholder="Search">
-                <button class="btn btn-alt-secondary">
-                  <i class="fa fa-search"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-          
-         <!-- search End -->
-        </div>
-        
-        <!-- content start -->
-        <div class="block-content">
-          <table class="table table-bordered table-striped table-vcenter js-dataTable-full dataTable no-footer"
-            id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
-            <thead>
-              <tr>
-                <th class="text-center" style="width: 80px;" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                  colspan="1">월</th>
-                <th class="text-center" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1">일</th>
-                <th class="text-center" style="width: 30%;" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                  colspan="1">학사내용</th>
-              </tr>
-            </thead>
-            <tbody>
-            	<th:block class="text center" scope="row" th:if="$">
-              <tr th:each="sche, i:${schedules}"class="odd">
-                <td class="text-center fs-sm sorting_1 col-1" rowspan="3">[[${sche.month}]]</td>
-                <td class="fw-semibold fs-sm text-center">[[${sche.startDate}]] ~ [[${sche.endDate}]]</td>
-                <td class="d-none d-sm-table-cell fs-sm">
-                 [[${sche.content}]]
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- content end -->
-      </div>
-    </div>
-<script>
-$('#sesonCode').on('change', function(){
-	let seasonCode = $(this).selected.val()
-	
-	console.log(seasonCode)
-	alert("seasonCode")
+	<main layout:fragment="main">
+		<!--title start-->
+		<div class="bg-body-light">
+			<div class="content content-full content-boxed">
+				<div
+					class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+					<div class="flex-grow-1">
+						<h1 class="h1 fw-bold mb-2">학사일정</h1>
+						<h2 class="fs-base lh-base fw-medium text-muted mb-0">
+							Schedule</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--title end-->
+		<div class="content content-boxed">
+
+			<div class="block block-rounded">
+				<div class="block-header block-header-default">
+					<div class="block-title">
+						<div class="row">
+							<div class="col-3">
+								<select id="seasonSelect" name="seasonCode" class="form-select">
+									<option value="107">2023 1학기</option>
+									<option value="106">2022 2학기</option>
+									<option value="105" selected>2022 1학기</option>
+								</select>
+							</div>
+
+						</div>
+					</div>
+					<div class="block-obtions">
+						<!--search start-->
+						<div class="input-group">
+							<input type="text" id="searchText"
+								class="form-control form-control-alt" placeholder="Search">
+							<button id="searchBtn" onclick="searchList()"
+								class="btn btn-alt-secondary">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</div>
+
+					<!-- search End -->
+				</div>
+
+				<!-- content start -->
+				<div class="block-content">
+					<table
+						class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
+						id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+						<thead>
+							<tr>
+								<th class="text-center" tabindex="0"
+									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">월</th>
+								<th class="text-center" tabindex="0"
+									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">일</th>
+								<th class="text-center" tabindex="0" style="width: 70%"
+									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">학사내용</th>
+							</tr>
+						</thead>
+						<!-- thead end -->
+
+						<tbody id="scheduleList">
+						</tbody>
+					</table>
+				</div>
+				<!-- content end -->
+			</div>
+		</div>
+		<script>
+$(function(){
+	seasonSelect()
+	makeSchedule()
 })
 
-</script>    
-    
-</main>
+
+// var leng = $('tr').eq(4).text()
+
+/* 			$('#searchBtn').on('click', function(){
+				var text= $('#searchText').val()
+				
+				var tr = $('tr' )
+				var td = $('#Title').text()
+					
+			
+				console.log(tr + '입니다')
+				console.log(td +'인데요')
+				
+		
+
+				
+			})
+ */
+
+//selectBox 선택할 때 event
+function seasonSelect(){
+$('#seasonSelect').on('change', makeSchedule)
+}
+
+//seasonCode의 schedule list를 가져오는 function
+function makeSchedule(){
+	let seasonCode = $('select[id=seasonSelect]').val();
+	$.ajax({
+		url:getPathRootJump()+'portalScheduleList',
+		type:'GET',
+		data:{seasonCode:seasonCode},
+		dataType:'json'
+	}).done(function(schedules) {
+	
+		$('#scheduleList').html('');
+		for(schedule of schedules){			
+
+			//day표시하기 ('2020-11-11' or '2020 ~ 2020')
+			if(schedule.startDate==schedule.endDate){
+				var day= schedule.startDate
+			} else {
+				var day=(schedule.startDate.concat(` ~ ${schedule.endDate}`))
+			}
+			
+			//tbody에 tr붙이기
+			$('#scheduleList').append($('<tr>')
+					  .append($('<td>').addClass('text-center fs-sm sorting_1 col-1 rowCheck').text(schedule.month))
+					  .append($('<td>').addClass('fw-semibold fs-sm text-center cod-3').text(day))
+					  .append($('<td>').addClass('d-none d-sm-table-cell fs-sm').text(schedule.content).attr('id','searchAnswer'))		
+						)
+			
+
+			  
+		}//for end
+		
+		//rowspan function 
+		$('.rowCheck').each(function(){
+ 		var rows = $(".rowCheck:contains('" + $(this).text() + "')");
+			if(rows.length>1){
+				rows.eq(0).attr('rowspan', rows.length);
+				rows.not(':eq(0)').remove();
+			}
+			
+		})//rowspan end
+				
+		
+	
+	})//end done
+	
+
+	
+}
+
+function searchList(){
+	let key = $('#searchText').val()
+	$.ajax({
+		url : getPathRootJump() + "scheduleSearch",
+		type:"get",
+		data:{key:key},
+		dataType : "json",
+		success:function(lists){
+		
+			for(list of lists){	
+			console.log(list.content)
+			}
+			
+		},
+		error:function(){
+			
+		}
+	})
+}
+
+
+
+
+
+
+</script>
+		<script>
+		function getPathRootJump() {
+		    var pathName = window.location.pathname.substring(1);
+		    var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+		    var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+		    return path_root;
+		 }
+</script>
+	</main>
 </body>
 </html>
