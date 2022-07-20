@@ -33,4 +33,7 @@ public interface LectureQnaMapper {
 			@Param("pageNum")int pageNum, 
 			@Param("size")int size
 		);
+	
+	public List<LectureQnaVO> findListBySubjectId(int sbjno);
+	
 }

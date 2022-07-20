@@ -375,7 +375,7 @@ xmlns:th="http://www.thymeleaf.org"
           ▀▀                    
 -->
                   <div class="tab-pane pb-3" id="btabs-static-qna" role="tabpanel" aria-labelledby="btabs-static-qna-tab">
-                    <div class="" style="height: 310px; overflow-y: scroll;">
+                    <div id="qna-content" class="" style="height: 310px; overflow-y: scroll;">
                       <ul class="nav-items push">
                         <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
                           <div class="col-1 d-none d-lg-block text-center text-danger">대기</div>
@@ -858,7 +858,8 @@ xmlns:th="http://www.thymeleaf.org"
                   return;
                   break;
                 case 3: // 문의
-                  return;
+                  url = "/tuna/prof/lecQna";
+                  resFunc = setQnaContent;
                   break;
                 case 4: // 공지
                   //reqNoticeContent(tabIdx);
@@ -911,10 +912,10 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
             // 공지사항 패널 세팅
-            function setNoticeContent(jsonData) {
+            function setNoticeContent(notices) {
               let table = document.querySelector('#subject-notice-table');
               let tbody = table.firstElementChild;
-              jsonData.forEach(data => {
+              notices.forEach(data => {
                 // console.log(data);
                 let mDate = new Date(data.enrollDate);
                 mDate = mDate.toISOString();
@@ -940,10 +941,10 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
             // 출결 패널 세팅
-            function setAttendanceContent(jsonData) {
+            function setAttendanceContent(students) {
               let table = document.querySelector('#subject-attendance-table');
               let tbody = table.firstElementChild;
-              jsonData.forEach(student => {
+              students.forEach(student => {
                 let tr = document.createElement('tr');
                 let innerHTML = `
                 <td class="table-cell" style="width: 54px;">
@@ -984,12 +985,12 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
             // 강의정보 패널
-            function setPlanContent(jsonData) {
+            function setPlanContent(planList) {
               
               let plan_progress_content = document.getElementById("subject-progress");
               let ulTag = plan_progress_content.getElementsByTagName("ul")[0];
               
-              for(let plan of jsonData) {
+              for(let plan of planList) {
                 let li = document.createElement('li');
                 ulTag.appendChild(li);
                 let innerHtml = `
@@ -1023,8 +1024,37 @@ xmlns:th="http://www.thymeleaf.org"
               ulTag.children[0].children[0].click();
             }
 
+            function setQnaContent(qnaList) {
+              console.log(qnaList);
+              let qna_content = document.getElementById("qna-content");
+              let ulTag = qna_content.getElementsByTagName("ul")[0];
+              let qnaContent = "";
+
+              for(let qna of qnaList) {
+                qnaContent += `
+                      <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">`
+                if( qna.answer == null ) {
+                  qnaContent+=`<div class="col-1 d-none d-lg-block text-center text-danger">대기</div>`;
+                } else {
+                  qnaContent += `<div class="col-1 d-none d-lg-block text-center text-success">완료</div>`;
+                }
+                
+                if( qna.visible == 1 ) {
+                  qnaContent += `<div class="col-1 d-none d-lg-block text-center text-gray">비공개</div>`;
+                } else {
+                  qnaContent += `<div class="col-1 d-none d-lg-block text-center">공개</div>`
+                }
+
+                qnaContent += `<div class="col-6">${qna.title}</div>
+                    <div class="col-2 fw-bold text-end">${qna.studentVO.name}</div>
+                    <div class="col text-center">${dateNumberToISO(qna.enrollDate)}</div>
+                  </a></li>`;
+              }
+              ulTag.innerHTML = qnaContent;
+            }
+
             function planClickEvent(ele) {
-              console.log(ele);
+              
               let subject_plan_tag = document.getElementById("subject-plan");
               let li = ele.parentNode;
               let content = `
@@ -1051,6 +1081,13 @@ xmlns:th="http://www.thymeleaf.org"
             }
             function offloaderCurtain() {
               loaderCurtain.classList.add('d-none');
+            }
+
+            function dateNumberToISO(dateNumber) {
+              let mDate = new Date(dateNumber);
+                mDate = mDate.toISOString();
+                mDate = mDate.slice(0, mDate.indexOf('T'));
+              return mDate;
             }
 
           </script>

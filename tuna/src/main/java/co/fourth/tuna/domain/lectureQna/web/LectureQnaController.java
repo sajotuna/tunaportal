@@ -1,22 +1,23 @@
 package co.fourth.tuna.domain.lectureQna.web;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
 
 @Controller
 public class LectureQnaController {
 
 	@Autowired SqlSession sql;
+	@Autowired LectureQnaService lecQnaService;
 	
 //	@RequestMapping("/eclass/student/qnaList")
 //	public String qnaList(Model model, @RequestParam HashMap<String, Object> map, @RequestParam(value="pageNum", required=false, defaultValue= "1" ) int pageNum) {
@@ -54,5 +55,10 @@ public class LectureQnaController {
 //		
 //		return "eclass/stud/qnaSelect";
 //	}
-	
+	@PostMapping("/prof/lecQna")
+	@ResponseBody
+	public List<LectureQnaVO> getLectureQna(
+			@RequestBody Map<String, Integer>reqData) {
+		return lecQnaService.findListBySubjectId(reqData.get("sbjno"));
+	}
 }
