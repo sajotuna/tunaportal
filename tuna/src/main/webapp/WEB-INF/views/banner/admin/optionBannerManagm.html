@@ -27,12 +27,14 @@
 								<h2 class="content-heading mb-2 pb-2">배너 미리보기</h2>
 								<div class="mb-4 d-flex justify-content-center preview">
 									<div class="img-section">
-										<button id="shortcutBtn" class="btn btn-alt-secondary shortcut-btn" style="display:none;">바로가기</button>
+										<button id="shortcutBtn" class="btn btn-alt-secondary shortcut-btn" style="display:none;" disabled>바로가기</button>
 										<img id="shortcutImg" class="img" th:src="@{/display?fileName=no_image.png&folder=banner}" alt="">
 									</div>
 								</div>
-								<div>
-									<a id="imgDownload">다운로드</a>
+								<div class="d-flex justify-content-end">
+									<a id="imgDownload" class="btn btn-sm btn-dark me-1 mb-3">
+							        	<i class="fa fa-fw fa-download me-1"></i>다운로드
+							        </a>
 								</div>
 								<!-- END Banner Preview -->
 								<!-- Option Banner Input -->
@@ -71,8 +73,10 @@
 									      <input type="text" class="form-control date" id="endDate" name="endDate" placeholder="To" data-week-start="1" data-autoclose="true" data-today-highlight="true">
 									    </div>
 					              	</div>
-				                  	<div class="d-flex justify-content-center mt-5">
-										<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="option">배너 등록</button>
+				                  	<div class="d-flex justify-content-end mt-4">
+										<button type="button" class="btn btn-sm btn-dark m-1 submit-btn" data-job="option">
+											<i class="fa fa-fw fa-image me-1"></i>배너 등록
+										</button>
 				      			  	</div>
 					            </div>
 					            <!-- END Option Banner Input -->

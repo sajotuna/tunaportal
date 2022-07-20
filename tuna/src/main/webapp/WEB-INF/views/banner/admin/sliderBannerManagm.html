@@ -40,15 +40,17 @@
 					<div class="block-header bg-primary-darker">
 						<h4 class="block-title">배너 사진 목록</h4>
 						<div class="block-options">
-						<button type="button" class="btn btn-sm btn-light submit-btn" data-job="delete" style="margin-right: 10px;">삭제</button>
+						<button type="button" class="btn btn-sm btn-danger submit-btn" data-job="delete" style="margin-right: 10px;">삭제</button>
 						<label class="upload-label" for="file">
-							<button id="upload" class="btn btn-sm btn-light upload-btn">사진 올리기</button>
+							<button id="upload" class="btn btn-sm btn-light upload-btn">
+								<i class="fa fa-fw fa-upload me-1"></i>사진 올리기
+							</button>
 						</label>
 						<input class="form-control hidden-file" type="file" id="file" name="file"
 							   accept="image/jpg, image/jpeg, image/png">
 						</div>
 					</div>
-					<table class="table table-hover table-vcenter">
+					<table class="table table-striped table-hover table-vcenter">
 						<thead>
 							<tr>
 								<th width=30></th>
@@ -80,8 +82,12 @@
 					</table>
 					<div class="d-flex justify-content-center mt-5">
 						<button type="button"id="sliderPreview" class="btn btn-sm btn-light me-2"
-							data-bs-toggle="modal" data-bs-target="#modal-block-vcenter">배너 미리보기</button>
-						<button type="button" class="btn btn-sm btn-dark submit-btn" data-job="submit" data-bs-dismiss="modal">순서 등록</button>
+							    data-bs-toggle="modal" data-bs-target="#modal-block-vcenter">
+							<i class="fa fa-fw fa-images me-1"></i>배너 미리보기
+						</button>
+						<button type="button" class="btn btn-sm btn-dark submit-btn" data-job="submit" data-bs-dismiss="modal">
+							<i class="fa fa-fw fa-layer-group me-1"></i>순서 등록
+						</button>
             		</div>
 				</div>
 				<!-- END Image List -->
