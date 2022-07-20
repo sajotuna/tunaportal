@@ -95,6 +95,6 @@ public class LecturePlanController {
 			resultData.get(i).setPlaceAndDate(pdvos);
 		}
 		
-		return resultData;  
+		return resultData;
 	}
 }

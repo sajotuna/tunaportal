@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,21 +65,13 @@ public class EclassProfessorEclassController {
 	private static final Logger logger = LoggerFactory.getLogger(EclassProfessorEclassController.class);
 
 	@GetMapping(value = { "", "/", "/home" })
-	public String homeView(Model model, HttpServletRequest req) {
+	public String homeView(Model model, HttpServletRequest req, Authentication auth) {
 //		logger.info(req.getRequestURI()); //tuna/eclass/professor/notice
 //		logger.info(req.getRequestURL().toString()); //http://localhost/tuna/eclass/professor/notice
 //		logger.info(req.getServletPath()); //eclass/professor/notice
-
-//		PagingVO paging = new PagingVO();
-//		System.out.println("!! here");
-//		paging.setTableName("subject");
-//		paging.setSizePerPage(10);
-//		paging = pagingService.getPaging(paging);
-//		System.out.println(paging.getLength());
-
-		// TODO 교수 데이터 추가해야함
+		
 		ProfessorVO prof = new ProfessorVO();
-		prof.setNo(63123);
+		prof.setNo(Integer.parseInt(auth.getName()) );
 		
 		int season = Integer.parseInt(yearService.yearFind());
 
@@ -107,11 +100,12 @@ public class EclassProfessorEclassController {
 	}
 
 	@GetMapping("/noticeList")
-	public String noticeListView(Model model, HttpServletRequest req,
+	public String noticeListView(Model model, 
+			HttpServletRequest req,
+			Authentication auth,
 			@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum) {
-		// TODO 교수 데이터 추가해야함
 		ProfessorVO prof = new ProfessorVO();
-		prof.setNo(61275);
+		prof.setNo(Integer.parseInt(auth.getName()));
 
 		List<LectureNoticeVO> noticeList = noticeService.findByProfessor(prof, pageNum, 20);
 		List<LectureNoticeVO> noticeList2 = noticeService.findByProfessor(prof, pageNum, 999);
@@ -191,12 +185,13 @@ public class EclassProfessorEclassController {
 	}
 
 	@GetMapping("/subjectList")
-	public String subjectListView(Model model, HttpServletRequest req,
+	public String subjectListView(Model model, 
+			HttpServletRequest req,
+			Authentication auth,
 			@RequestParam(value = "season", required = false, defaultValue = "0") int season) {
 
-		// TODO 교수 데이터 추가해야함
 		ProfessorVO prof = new ProfessorVO();
-		prof.setNo(61275);
+		prof.setNo(Integer.parseInt(auth.getName()) );
 
 		if (season == 0) {
 			season = 105;

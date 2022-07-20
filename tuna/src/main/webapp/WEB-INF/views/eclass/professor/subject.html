@@ -377,7 +377,7 @@ xmlns:th="http://www.thymeleaf.org"
                   <div class="tab-pane pb-3" id="btabs-static-qna" role="tabpanel" aria-labelledby="btabs-static-qna-tab">
                     <div id="qna-content" class="" style="height: 310px; overflow-y: scroll;">
                       <ul class="nav-items push">
-                        <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                        <!-- <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
                           <div class="col-1 d-none d-lg-block text-center text-danger">대기</div>
                           <div class="col-1 d-none d-lg-block text-center text-gray">비공개</div>
                           <div class="col-6">안녕하세요 교수님? 궁금한게 있는데요</div>
@@ -397,7 +397,7 @@ xmlns:th="http://www.thymeleaf.org"
                           <div class="col-6">안녕하세요 교수님? 궁금한게 있는데요</div>
                           <div class="col-2 fw-bold text-end">김철수</div>
                           <div class="col text-center">07-06</div>
-                        </a></li>
+                        </a></li> -->
                       </ul>
                     </div>
                     <div class="pt-2 row">
@@ -870,6 +870,8 @@ xmlns:th="http://www.thymeleaf.org"
                 return;
                   break;
                 case 6: // 성적
+                  url = "/tuna/prof/students"
+                  resFunc = null;
                   return;
                   break;
                 default:
