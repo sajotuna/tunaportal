@@ -45,4 +45,8 @@ public class TestContoller {
 		logger.info("single :: originname " + fileInfo[0] + " :: filename " +fileInfo[1]);
 	}
 	
+	@RequestMapping("/dialogTest")
+	public String dialogTest() {
+		return "test/dialogTest";
+	}
 }

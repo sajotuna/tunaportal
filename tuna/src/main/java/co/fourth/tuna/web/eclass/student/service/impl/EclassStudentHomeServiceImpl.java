@@ -23,4 +23,24 @@ public class EclassStudentHomeServiceImpl implements EclassStudentHomeService {
 		return map.twoTask(vo);
 	}
 
+	@Override
+	public String singleTwoTask(EclassStudentHomeVO vo) {
+		return map.singleTwoTask(vo);
+	}
+
+	@Override
+	public String singleTwoNotice(EclassStudentHomeVO vo) {
+		return map.singleTwoNotice(vo);
+	}
+
+	@Override
+	public String singleTwoQna(EclassStudentHomeVO vo) {
+		return map.singleTwoQna(vo);
+	}
+
+	@Override
+	public String singleTwoFile(EclassStudentHomeVO vo) {
+		return map.singleTwoFile(vo);
+	}
+
 }

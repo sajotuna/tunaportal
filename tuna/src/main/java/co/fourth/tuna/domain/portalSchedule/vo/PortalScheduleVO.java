@@ -5,13 +5,11 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
 public class PortalScheduleVO {
 	private String no;
@@ -22,9 +20,9 @@ public class PortalScheduleVO {
 	private String scheduleCode;
 	private String adNo;
 	
-	@JsonFormat(pattern = "yyyy/MM/dd",timezone="Asia/Seoul")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	private Date startDate;
 	
-	@JsonFormat(pattern = "yyyy/MM/dd",timezone="Asia/Seoul")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	private Date endDate;
 }

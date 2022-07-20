@@ -7,8 +7,6 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 public interface LectureQnaService {
 
-	//해당 강의 qna 조회
-	public String qnaList(LectureQnaVO vo);
 	//질문단건조회
 	public String qnaSelect(LectureQnaVO vo);
 	

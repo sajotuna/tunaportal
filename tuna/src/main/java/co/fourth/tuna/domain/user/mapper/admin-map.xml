@@ -30,8 +30,9 @@ FROM
 WHERE rn 
 BETWEEN (#{pageNum}-1)*#{size}+1
     AND #{pageNum}*#{size}
-    <if test="year != null and !year.equals('')">
-    </if>
+    <if test="startDate != null and !startDate.equals('') and endDate != null and !endDate.equals('')">
+      AND u.ENTERDATE BETWEEN #{startDate} AND #{endDate}
+      </if>
     <if test="deptCode != null and !deptCode.equals('')">
     AND u.DEPTCODE = #{deptCode}
     </if>

@@ -203,5 +203,9 @@ public class EclassProfessorEclassController {
 		return req.getServletPath();
 	}
 	
+	@GetMapping("/objectionList")
+	public String objectionListView(HttpServletRequest req) {
+		return req.getServletPath();
+	}
 	
 }

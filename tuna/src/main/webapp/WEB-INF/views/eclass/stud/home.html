@@ -35,24 +35,25 @@
 						<div class="row">
 							<div class="col-6" th:each="l : ${list}">
 								<div class="block block-rounded">
-									<div class="block-header block-header-default text-center bg-dark">
-										<h3 class="block-title text-white"
-											th:text="${l.NAME}+'('+${l.SBJNO}+')'"></h3>
-									</div>
 									<div
-										class="text-center bg-dark d-flex justify-content-center">
-										<div class="row d-flex justify-content-start">
-											<p class="text-light mb-0 d-flex justify-content-start"
-												style="font-size: 9pt"
-												th:text="'강의실: '+${@codeList.getName(l.ROOMCODE)}"></p>
-											<p class="text-light mb-0 d-flex justify-content-start"
-												style="font-size: 9pt" th:text="'강의요일: '+${l.DAYCODE}"></p>
-											<p class="text-light mb-0 d-flex justify-content-start"
-												style="font-size: 9pt" th:text="'강의시간: '+${l.TIMECODE}"></p>
-										</div>
+										class="block-header block-header-default text-center bg-dark">
+										<h3 class="block-title text-white">
+										<a class="text-white" th:href="@{/eclass/student/lectureHome}" th:text="${l.NAME}+'('+${l.SBJNO}+')'"></a>
+										</h3>
+											
 									</div>
+									<div class="col-12">
 									<div class="block-content text-center bg-white">
-										<div class="row d-flex justify-content-center">
+									<div class="col-7">
+											<p class="mb-0 text-start"
+												style="font-size: 10pt"
+												th:text="'강의실: '+${@codeList.getName(l.ROOMCODE)}"></p>
+											<p class="mb-0 text-start"
+												style="font-size: 10pt" th:text="'강의요일: '+${l.DAYCODE}"></p>
+											<p class="mb-0 text-start"
+												style="font-size: 10pt" th:text="'강의시간: '+${l.TIMECODE}"></p>
+									</div>
+										<div class="d-flex justify-content-end col-5">
 											<div class="d-flex justify-content-center"
 												style="width: 50px">
 												<a class="" th:href="@{/eclass/student/lectureNotice}"
@@ -75,6 +76,7 @@
 											</div>
 										</div>
 									</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -87,7 +89,7 @@
 								<h3 class="block-title" style="color: white" th:text="${t.NAME}"></h3>
 							</div>
 							<div class="block-content text-lg-center bg-white">
-								<a href="@{/eclass/student/taskSelect}" style="color: black"
+								<a th:href="@{/eclass/student/taskSelect}" style="color: black"
 									th:text="${t.TITLE}"></a>
 								<p class="text-danger fw-bold" th:text="'~'+${t.LIMITDATE}"></p>
 							</div>

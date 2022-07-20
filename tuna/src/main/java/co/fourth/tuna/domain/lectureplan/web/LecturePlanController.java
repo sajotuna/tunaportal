@@ -77,7 +77,6 @@ public class LecturePlanController {
 	}
 	
 	
-	
 	@RequestMapping("/eclass/student/lecturePlan")
 	public String lecturePlan(Model model, LecturePlanVO vo) {
 		vo.setSbjNo(18101);

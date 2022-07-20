@@ -15,5 +15,6 @@
 	FROM ATTENDANCE
 	WHERE STNO = #{stNo}
 	AND SBJNO = #{sbjNo}
+	ORDER BY CLASSDATE
 	</select>
 </mapper>

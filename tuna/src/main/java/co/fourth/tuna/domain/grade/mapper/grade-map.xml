@@ -5,24 +5,38 @@
 	<!-- 당해학기 성적 조회 -->
 	<select id="currentSemesterGradeSelect" resultType="map">
 	
-		SELECT PS.CODENAME AS SEASONCODE, 
-		       PT.CODENAME AS TYPE,
+		SELECT S.SEASONCODE,
+		       S.TYPE,
 		       S.NO,
 		       S.NAME,
+               P.NAME AS PFNAME,
 		       S.POINT,
+		       S.PFNO,
 		       GRADETOALPHABET(G.TOTAL) AS ALPHABET, 
 		       GRADETOPOINT(G.TOTAL) AS TOTAL,
-		       E.EVALSTATE
-		FROM LECTUREAPPLY LA, SUBJECT S, GRADE G, LECTUREEVAL E, PUBLICCODE PS, PUBLICCODE PT
+		       LE.EVALSTATE
+		FROM LECTUREAPPLY LA, SUBJECT S, GRADE G, LECTUREEVAL LE, PROFESSOR P
 		WHERE LA.SBJNO = S.NO
 		AND LA.SBJNO = G.SBJNO
-		AND LA.SBJNO = E.SBJNO
-		AND PS.NO = S.SEASONCODE
-		AND PT.NO = S.TYPE
+		AND LA.SBJNO = LE.SBJNO
+        AND S.PFNO = P.NO
 		AND LA.STNO = ${stNo}
 		AND LA.SEASONCODE = ${seasonCode}
 	
 	</select>
+	
+	<select id="currentSemesterGradeTotal" resultType="map">
+		
+		SELECT COUNT(*) AS COUNT,
+		       SUM(S.POINT) AS SUM, 
+		       AVG(GRADETOPOINT(G.TOTAL)) AS AVG
+		FROM GRADE G, SUBJECT S
+		WHERE G.SBJNO = S.NO
+		AND STNO = ${stNo}
+		AND S.SEASONCODE = ${seasonCode}
+	
+	</select>
+	<!-- END 당해학기 성적 조회 -->
 	
 	<!-- 보관 성적 조회 -->
 	<select id="subjectGradeSelect" resultType="map">

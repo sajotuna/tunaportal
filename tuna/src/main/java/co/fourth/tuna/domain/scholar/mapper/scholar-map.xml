@@ -100,8 +100,8 @@ FROM
       <if test="schno != null and !schno.equals('')">
       AND SC2.SCHNO = #{schno}
       </if>
-      <if test="applydate != null and !applydate.equals('')">
-      AND SC2.APPLYDATE = #{applydate}
+      <if test="startDate != null and !startDate.equals('') and endDate != null and !endDate.equals('')">
+      AND SC2.APPLYDATE BETWEEN #{startDate} AND #{endDate}
       </if>
       <if test="no != null and !no.equals('')">
       AND S2.NO = #{no}
@@ -124,6 +124,11 @@ BETWEEN (#{pageNum}-1)*#{size}+1
 	update scholarApply set statecode = #{stateCode} where no = #{no}
 	
 </update>
+
+<select id = "scholarApplyCheck" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO" resultType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
+
+	select schno from scholarApply where stno = #{stNo}
+</select>
 
 
 

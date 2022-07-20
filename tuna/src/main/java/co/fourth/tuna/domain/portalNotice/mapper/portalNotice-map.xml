@@ -8,7 +8,7 @@
 <!-- 전체조회 -->
 <select id="noticeList"
 	resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"> 
-SELECT a.*
+SELECT a.* , fileSelect(no) fileyn
 FROM  (SELECT ROWNUM as rnum,
 			  			NO,
 						TITLE,
