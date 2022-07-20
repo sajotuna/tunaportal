@@ -10,6 +10,8 @@
   <title>사용자 조회 및 관리</title>
   <meta name="_csrf" th:content="${_csrf.token}">
   <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.css}">
+  
   <style>
     h5 {
       margin-top: 50px;
@@ -35,17 +37,13 @@
           <form th:action="@{/admin/adminUserSearch}" method="post" class="row">
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
-                <select class="form-select" id="year" name="year">
-                <option selected value="">입학/입사년도</option>
-                <option value="2015" id = "103">2021년 2학기</option>
-	            <option value="2016" id = "102">2020년 1학기</option>
-	            <option value="2017" id = "101">2020년 2학기</option>
-                <option value="2018" id = "108">2023년 2학기</option>
-	            <option value="2019" id = "107">2023년 1학기</option>
-	            <option value="2020" id = "106">2022년 2학기</option>
-	            <option value="2022" id = "105">2022년 1학기</option>
-	            <option value="2023" id = "104">2021년 1학기</option>
-              </select>
+                <input type="text" class="js-flatpickr form-control"
+                id="year" name="year" placeholder="입학/입사년도"
+                data-mode="range" readonly="readonly">
+                <input type="file" multiple="multiple" class="dz-hidden-input" 
+                tabindex="-1" 
+                style="visibility: hidden; position: absolute; top: 0px; left: 0px; 
+                height: 0px; width: 0px;">
               </div>
             </div>
             <div class="col-md-4 col-xl-4 fomrtag">
@@ -110,7 +108,7 @@
               <tbody>
                 <tr th:scope="row" th:each="user, status : ${list}">
                       <th class="fw-semibold fs-sm" id = "no" th:text="${user.NO}"></th>
-                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" id = "userName" th:text = "${user.NAME}"></a></td>
+                      <td class="fw-semibold fs-sm"><a href="#" id = "userName" th:text = "${user.NAME}"></a></td>
                       <th:block th:if = "${not #strings.isEmpty(user.STATECODE)}">
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(user.STATECODE)}"></td>
                       </th:block>
@@ -160,17 +158,23 @@
       </div>
     </div>
     </div>
-    
+     <script th:src="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.js}"></script>
+
+  <!-- Page JS Helpers (Flatpickr + BS Datepicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider + BS Colorpicker plugins) -->
+  <script>One.helpersOnLoad(['js-flatpickr']);</script>
+   
     <script>
     
-document.addEventListener('DOMContentLoaded', function(){
-	let userName = document.querySelectorAll('#userName');
+    let userName = document.querySelectorAll('#userName');
     let no = document.querySelectorAll('#no');
     userName.forEach( function (btn,idx){
     	btn.addEventListener('click', function(){
-    		window.open("/tuna/admin/adminUserInfo?no="+no[idx].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
+    		window.open("/tuna/admin/adminUserInfo?no="+no[idx+1].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
     	})
     })
+    
+	document.addEventListener('DOMContentLoaded', function(){
+		
 		
 		let nextBtn = document.querySelector("#next")
 		let prevBtn = document.querySelector("#prev")
@@ -257,6 +261,10 @@ document.addEventListener('DOMContentLoaded', function(){
 			$('#809').attr('selected', 'selected')
 		}else if(params.deptCode == '810'){
 			$('#810').attr('selected', 'selected')
+		}
+		
+		if(params.year != null){
+			$('#year').val(params.year)
 		}
 		
 	})

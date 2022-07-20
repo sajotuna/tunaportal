@@ -82,11 +82,11 @@
 	                      	
 	                      	<th:block th:if = "${not #strings.isEmpty(sch.FILENAME)}">
 	                      		<label for="file" id = "filetag"  >[[${sch.FILENAME}]]</label>
-	                      		<input type="file" name = file id="file">
+	                      		<input type="file" id="file" name = "file" style="display:none">
 	                      	</th:block>
 	                      	<th:block th:unless = "${not #strings.isEmpty(sch.FILENAME)}">
-	                      		<label for="file" id = "filetag" >파일찾기</label>
-	                      		<input type="file" name = file id="file">
+	                      		<label th:for="file+${status.count}" id = "filetag" >파일찾기</label>
+	                      		<input type="file" th:id="file+${status.count}" name = "file" style="display:none">
 	                      	</th:block>
 	                      	
 	                      </form>

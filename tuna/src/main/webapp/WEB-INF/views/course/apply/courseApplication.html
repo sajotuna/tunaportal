@@ -113,8 +113,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     <tr th:scope="row" th:each="sub, status : ${list}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" id = "sbjNo" th:text = "${sub.NO}"></td>
-                      <td class="fw-semibold fs-sm"><a href = "javascript:planPopup();" id = "subName" th:text = "${sub.NAME}"></a></td>
-                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" id = "proName" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm"><a href = "#" id = "subName" th:text = "${sub.NAME}"></a></td>
+                      <td class="fw-semibold fs-sm"><a href="#" id = "proName" th:text = "${sub.PRONAME}"></a></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
@@ -305,6 +305,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 	<script th:inline="javascript">
 		let message = /*[[${message}]]*/ 'default';
 		alert(message);
+		
 	</script>
 </th:block>
 
@@ -318,23 +319,20 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
  
   
   
-    function showPopup() {
       let proName = document.querySelectorAll('#proName');
-      
       proName.forEach(btn =>{
-    	window.open("/tuna/stud/lectureEvaluationSearch?proName="+btn.innerHTML, "강의평가조회", "width=650, height=600, top=10, left=10");
-
+    	  btn.addEventListener('click', function(){
+    		  window.open("/tuna/stud/lectureEvaluationSearch?proName="+btn.innerHTML, "강의평가조회", "width=650, height=600, top=10, left=10");
+    	  })
       })
-    }
     
-    function planPopup(){
     	let subName = document.querySelectorAll('#subName');
         let sbjNo = document.querySelectorAll('#sbjNo');
         subName.forEach( function (btn,idx){
-      		window.open("/tuna/stud/CoursePlan?sbjNo="+sbjNo[idx].innerHTML, "강의계획서조회", "width=850, height=1000, top=10, left=10");
-      		
+        	btn.addEventListener('click', function(){
+      			window.open("/tuna/stud/CoursePlan?sbjNo="+sbjNo[idx].innerHTML, "강의계획서조회", "width=850, height=1000, top=10, left=10");
+        	})
         })
-    }
     
     var header = $("meta[name='_csrf_header']").attr('content');
     var token = $("meta[name='_csrf']").attr('content');
@@ -407,18 +405,25 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		nextBtn.addEventListener('click', function(){
 			pageingBtn.forEach(btn =>{
 				let a = btn.innerHTML
+				btn.parentElement.classList.remove('active')
 				btn.innerHTML = parseInt(a)+4;
 			})
+			
+			setTimeout(() => location.href = '/tuna/stud/courseApplication?pageNum='+pageingBtn[0].innerHTML, 10);
+			
 		})
 		
 		prevBtn.addEventListener('click', function(){
 			pageingBtn.forEach(btn =>{
 				let a = btn.innerHTML
 				if (parseInt(a) > 4){
+					btn.parentElement.classList.remove('active')
 					btn.innerHTML = parseInt(a)-4;
 				}
-				
 			})
+			
+			setTimeout(() => location.href = '/tuna/stud/courseApplication?pageNum='+pageingBtn[0].innerHTML, 10);
+			
 		})
 		
 		pageingBtn.forEach(btn =>{
@@ -437,6 +442,36 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 <script th:inline="javascript">
 	document.addEventListener('DOMContentLoaded', function(){
 		let params = /*[[${params}]]*/ 'default';
+		
+		let pageingBtn = document.querySelectorAll("#pageingBtn"); 
+		
+		
+		
+		 if(params.pageNum % 4 == 1){
+			pageingBtn[0].innerHTML = parseInt(params.pageNum)
+			pageingBtn[0].parentElement.setAttribute("class", "page-item active")
+			pageingBtn[1].innerHTML = parseInt(params.pageNum) + 1
+			pageingBtn[2].innerHTML = parseInt(params.pageNum) + 2
+			pageingBtn[3].innerHTML = parseInt(params.pageNum) + 3
+		}else if(params.pageNum % 4 == 2){
+			pageingBtn[0].innerHTML = parseInt(params.pageNum) - 1
+			pageingBtn[1].innerHTML = parseInt(params.pageNum)
+			pageingBtn[1].parentElement.setAttribute("class", "page-item active")
+			pageingBtn[2].innerHTML = parseInt(params.pageNum) + 1
+			pageingBtn[3].innerHTML = parseInt(params.pageNum) + 2
+		}else if(params.pageNum % 4 == 3){
+			pageingBtn[0].innerHTML = parseInt(params.pageNum) - 2
+			pageingBtn[1].innerHTML = parseInt(params.pageNum) - 1
+			pageingBtn[2].innerHTML = parseInt(params.pageNum) 
+			pageingBtn[2].parentElement.setAttribute("class", "page-item active")
+			pageingBtn[3].innerHTML = parseInt(params.pageNum) + 1
+		}else if(params.pageNum % 4 == 0){
+			pageingBtn[0].innerHTML = parseInt(params.pageNum) - 3
+			pageingBtn[1].innerHTML = parseInt(params.pageNum) - 2
+			pageingBtn[2].innerHTML = parseInt(params.pageNum) - 1
+			pageingBtn[3].innerHTML = parseInt(params.pageNum)
+			pageingBtn[3].parentElement.setAttribute("class", "page-item active")
+		} 
 		
 		if(params.type == '701'){
 			$('#701').attr('selected', 'selected')

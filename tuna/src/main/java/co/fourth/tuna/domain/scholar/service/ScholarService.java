@@ -12,4 +12,5 @@ public interface ScholarService {
 	public void FileUpLoad(ScholarApplyVO vo);
 	public void ScholarDelete(ScholarApplyVO vo);
 	public void scholarUpdate(ScholarApplyVO vo);
+	public List<ScholarApplyVO> scholarApplyCheck(ScholarApplyVO vo);
 }

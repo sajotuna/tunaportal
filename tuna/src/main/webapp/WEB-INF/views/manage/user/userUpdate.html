@@ -78,10 +78,18 @@
                     </div>
                     <div class="mb-3">
                       <div class="input-group">
+                        <th:block th:if = "${not #strings.isEmpty(vo.bank)}">
                         <span class="input-group-text">은행</span>
-                        <input type="text" class="form-control" th:value = "${@codeList.getName(vo.bacc)}" readonly>
+                        <input type="text" class="form-control" th:value = "${@codeList.getName(vo.bacc)}" >
                         <span class="input-group-text">계좌번호</span>
-                        <input type="text" class="form-control" th:value = "${vo.bank}" readonly>
+                        <input type="text" class="form-control" th:value = "${vo.bank}" >
+                      </th:block>
+                      <th:block th:unless = "${not #strings.isEmpty(vo.bank)}">
+                        <span class="input-group-text">은행</span>
+                        <input type="text" class="form-control" >
+                        <span class="input-group-text">계좌번호</span>
+                        <input type="text" class="form-control" >
+                      </th:block>
                       </div>
                     </div>
                   </div>
