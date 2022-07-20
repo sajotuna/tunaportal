@@ -6,7 +6,7 @@
 	parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
 	resultType="co.fourth.tuna.domain.user.vo.ProfessorVO">
 
-	select* from professor where no = #{pfNo}
+	select* from professor where no = #{no}
 
 </select>
 
@@ -18,6 +18,17 @@
 </update>
 
 <update id = "AdminProfUpdate" parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO">
+	
+	<selectKey  keyColumn="deptcode,stateCode" resultType="co.fourth.tuna.domain.user.vo.ProfessorVO" keyProperty="deptcode,stateCode" order="BEFORE">
+		select no stateCode, (select no deptcode
+                      from publiccode
+                      where codename = #{deptCode}) deptcode
+		from publiccode
+		where codename = #{stateCode}
+	
+	</selectKey>
+	
+	
 	update professor set name = #{name}, deptcode = #{deptcode}, statecode = #{stateCode}
 	where no = #{no}
 </update>
