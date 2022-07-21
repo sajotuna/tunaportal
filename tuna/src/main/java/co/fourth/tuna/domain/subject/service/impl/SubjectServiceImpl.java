@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.fourth.tuna.domain.common.mapper.LectureScheduleMapper;
+import co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper;
+import co.fourth.tuna.domain.subject.mapper.GradeRatioMapper;
 import co.fourth.tuna.domain.subject.mapper.SubjectMapper;
 import co.fourth.tuna.domain.subject.service.SubjectService;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
@@ -15,6 +18,12 @@ public class SubjectServiceImpl implements SubjectService {
 	
 	@Autowired
 	SubjectMapper map;
+	@Autowired
+	LectureScheduleMapper lectureScheduleMap;
+	@Autowired
+	GradeRatioMapper gradeRatioMap;
+	@Autowired
+	LecturePlanMapper planMap;
 	
 	@Override
 	public SubjectVO findOne(SubjectVO vo) {
@@ -38,6 +47,15 @@ public class SubjectServiceImpl implements SubjectService {
 	@Override
 	public SubjectVO findOneWithApplysAndRatioAndFilesById(int no) {
 		return map.findOneWithApplysAndRatioAndFilesById(no);
+	}
+
+	@Override
+	public SubjectVO findOneWithRatioAndScheduleAndPlanById(int no) {
+		SubjectVO subject = map.findOneById(no);
+		subject.setLectureScheduleList(lectureScheduleMap.findLectureScheduleForSubjectId(no));
+		subject.setGradeRatioVO(gradeRatioMap.findOneById(no));
+		subject.setLecturePlanList(planMap.findListBySubjectId(no));
+		return subject;
 	}
 	
 	

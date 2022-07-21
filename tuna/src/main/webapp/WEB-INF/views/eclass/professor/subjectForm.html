@@ -6,6 +6,8 @@ xmlns:th="http://www.thymeleaf.org"
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
 
     <title>E-Class 강의 정보 입력</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
@@ -84,10 +86,13 @@ xmlns:th="http://www.thymeleaf.org"
               <div class="col-xxl-3">
                 <div class="block block-rounded">
                   <div class="block-content">
-                    <div>2022년 1학기</div>
-                    <div>(수)</div>
-                    <div>4교시 (14:00)</div>
-                    <div>3시간</div>
+                    <div>
+                      [<span th:text="${@codeList.getName(subject.seasonCode)}">학기 데이터 없음</span>]</div>
+                      <hr>
+                    <th:block th:each="schedule:${subject.lectureScheduleList}">
+                    <div>(<span th:text="${schedule.dayCode}"></span>)<span th:text="${schedule.timeCode}"></span></div>
+                    </th:block>
+                    <p></p>
                   </div>
                 </div>
               </div>
@@ -96,33 +101,47 @@ xmlns:th="http://www.thymeleaf.org"
                   <div class="block-content">
                     <div class="row">
                       <p class="col-xxl-2">강의 명</p>
-                      <div class="col fw-bold">참치 민족의 역사와 문화</div>
+                      <div class="col fw-bold" th:text="${subject.name}" >데이터 없음</div>
                     </div>
+                    <!-- 
                     <div class="row">
                       <p class="col-xxl-2">강의 주제 및 방향</p>
                       <div class="col">
                         <textarea class="js-maxlength form-control js-maxlength-enabled" id="example-maxlength10" name="example-maxlength10" rows="5" maxlength="100" placeholder="" data-always-show="true"></textarea>
                       </div>
-                    </div>
+                    </div> -->
+                    <hr>
                     <div class="row">
                       <p class="col-xxl-2">평가기준</p>
-                      <div class="col-xxl-10">
+                      <div class="col-xxl-12">
                         <div class="row">
-                          <label class="col" for="atten">출결</label>
-                          <div class="col-2">
-                            <input class="form-control" name="atten" type="number">
+                          
+                          <div class="col-lg-3">
+                          	<label for="atten">출결</label>
+                            <input class="form-control" name="atten" type="number"
+                            th:value="${subject.gradeRatioVO.attd}">
                           </div>
-                          <label class="col" for="middle">중간</label>
-                          <div class="col-2">
-                            <input class="form-control" name="middle" type="number">
+                          <div class="col-lg-3">
+                          	<label class="col" for="middle">중간</label>
+                            <input class="form-control" name="middle" type="number"
+                            th:value="${subject.gradeRatioVO.middle}">
                           </div>
-                          <label class="col" for="final">기말</label>
-                          <div class="col-2">
-                            <input class="form-control" name="final" type="number">
+                          <div class="col-lg-3">
+                          	<label class="col" for="final">기말</label>
+                            <input class="form-control" name="final" type="number"
+                            th:value="${subject.gradeRatioVO.finals}"
+                            >
                           </div>
-                          <label class="col" for="task">과제</label>
-                          <div class="col-2">
-                            <input class="form-control" name="task" type="number">
+                          <div class="col-lg-3">
+                          	<label class="col" for="task">과제</label>
+                            <input class="form-control" name="task" type="number"
+                            th:value="${subject.gradeRatioVO.task}">
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-10 offset-1 pb-2 col-xxl-2 offset-xxl-10">
+                            <button class="col-12 btn btn-primary">적용</button>
                           </div>
                         </div>
                       </div>
@@ -144,49 +163,23 @@ xmlns:th="http://www.thymeleaf.org"
                       <thead class="">
                         <tr>
                           <th style="width: 10%;">차시</th>
-                          <th style="width: 15%;">일자</th>
                           <th>강의주제 및 강의내용</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody th:each="plan:${subject.lecturePlanList}">
                         <tr>
-                          <td>1</td>
-                          <td>2022-07-08</td>
+                          <td th:text="${plan.wkCode}-1200">??</td>
                           <td>
-                            <input class="form-control" type="text">
+                            <input class="form-control" type="text" th:value="${plan.summary}">
                           </td>
                         </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>2022-07-08</td>
-                          <td>
-                            <input class="form-control" type="text">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>2022-07-08</td>
-                          <td>
-                            <input class="form-control" type="text">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>2022-07-08</td>
-                          <td>
-                            <input class="form-control" type="text">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td>2022-07-08</td>
-                          <td>
-                            <input class="form-control" type="text">
-                          </td>
-                        </tr>
-                        
                       </tbody>
                     </table>
+                    <div class="row">
+                      <div class="col-10 offset-1 pb-2 col-xxl-2 offset-xxl-10">
+                        <button class="col-12 btn btn-primary">적용</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -204,7 +197,38 @@ xmlns:th="http://www.thymeleaf.org"
           </div>
         </div> -->
         <!-- 모달 리스트 END -->
-        
+        <script>
+
+          let header = document.querySelector('meta[name="_csrf_header"]').content;
+          let token = document.querySelector('meta[name="_csrf"]').content;
+
+          function updateSubject() {
+            fetch(null, {
+                method: "POST",
+                headers: {
+                  'header': header,
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify({
+                  sbjno: sbjno
+                })
+              })
+              .then(result => result.json())
+              .then(result => {
+                resFunc(result);
+
+                offloaderCurtain();
+                tabFlag.set(tabIdx, true);
+              })
+              .catch((err) => {
+                console.error('fetch 오류', err);
+
+              })
+          }
+          
+        </script>
       </main>
 
 <!--
