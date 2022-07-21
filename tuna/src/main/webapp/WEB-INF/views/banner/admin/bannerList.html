@@ -7,6 +7,20 @@
 <meta name="_csrf" th:content="${_csrf.token}">
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
 <title>bannerList</title>
+<style>
+	.img-section {
+		width: 80px;
+		height: 50px;
+		overflow: hidden;
+	}
+	
+	.img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	
+</style>
 </head>
 <body>
 <main layout:fragment="main">
@@ -14,43 +28,65 @@
 	<div class="content">
 		<p class="h3 fw-bold">전체 배너 관리</p>
 		<div class="block block-rounded mb-2">
-				<div class="mb-4 scroll-table-div">
-					<table class="table table-vcenter scroll-table">
-						<thead>
+			<div class="mb-4 scroll-table-div">
+				<table class="table table-vcenter scroll-table">
+					<thead>
+						<tr>
+							<th width=150>분류</th>
+							<th width=180>등록일자</th>
+							<th width=150>등록자</th>
+							<th width=150>이미지</th>
+							<th>파일명</th>
+							<th width=80></th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="bn, i:${bnList}">
 							<tr>
-								<th><input class="form-check-input" type="checkbox"></th>
-								<th>이미지</th>
-								<th>분류</th>
-								<th>등록일자</th>
-								<th>등록자</th>
-								<th>파일명</th>
-								<th></th>
+								<td class="fw-semibold fs-sm">[[${@codeList.getName(bn.bannerCode)}]]</td>
+								<td class="fw-semibold fs-sm">[[${bn.enrollDate}]]</td>
+								<td class="fw-semibold fs-sm">[[${bn.adNo}]]</td>
+								<td class="fw-semibold fs-sm">
+									<div class="row">
+										<div class="img-section col-6">
+											<img class="img" th:src="@{/display(fileName=${bn.uri}, folder=banner)}">
+										</div>
+										<a class="btn btn-sm col-2 mt-2" th:href="@{/display(fileName=${bn.uri}, folder=banner)}" target="_blank"><i class="fa fa-magnifying-glass"></i></a>
+									</div>
+								</td>
+								<td class="fw-semibold fs-sm">
+									<a th:href="@{/download(fileName=${bn.uri}, originName=${bn.fileName}, folder=banner)}">
+										<i class="fa fa-fw fa-download me-2"></i>[[${bn.fileName}]] 
+									</a>
+									
+								</td>
+								<td><button class="btn btn-dark btn-sm bnDelete"
+											th:data-uri=${bn.uri} th:data-no=${bn.no}>삭제</button></td>
 							</tr>
-						</thead>
-						<tbody>
-							<th:block th:each="bn, i:${bnList}">
-								<tr>
-									<td scope="row" class="fw-semibold fs-sm"><input class="form-check-input" type="checkbox"></td>
-									<td class="fw-semibold fs-sm">
-										<img th:src="@{/display(fileName=${bn.uri}, folder=banner)}" height=100>
-										<button class="btn" th:onclick="|location.href='@{/display(fileName=${bn.uri}, folder=banner)}'|">크게보기</button>
-										</td>
-									<td class="fw-semibold fs-sm">[[${@codeList.getName(bn.bannerCode)}]]</td>
-									<td class="fw-semibold fs-sm">[[${bn.enrollDate}]]</td>
-									<td class="fw-semibold fs-sm">[[${bn.adNo}]]</td>
-									<td class="fw-semibold fs-sm">
-										<a th:href="@{/download(fileName=${bn.uri}, originName=${bn.fileName}, folder=banner)}">
-											[[${bn.fileName}]] 
-										</a>
-									</td>
-									<td><button class="btn bnDelete"
-												th:data-uri=${bn.uri} th:data-no=${bn.no}>삭제</button></td>
-								</tr>
-							</th:block>
-						</tbody>
-					</table>
-				</div>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
 		</div>
+		<nav class="d-flex justify-content-center" aria-label="Page navigation">
+			<ul class="pagination pagination-sm">
+				<li th:styleappend="${!paging.prev} ? 'display:none' : 'display:inline-block'" class="page-item">
+					<a class="page-link" href="javascript:pagingPrev()" tabindex="-1" aria-label="Previous">
+						<span><i class="fa fa-angle-double-left"></i></span>
+					</a>
+				</li>
+				<li th:each="page: ${#numbers.sequence(paging.startPage, paging.endPage)}" 
+				    th:classappend="${page == paging.page} ? 'active'"
+				    class="page-item">
+					<a th:text="${page}" class="page-link" th:onclick="|javascript:pagingNo(${page},${paging.range})|">#</a>
+				</li>
+				<li th:styleappend="${!paging.next} ? 'display:none' : 'display:inline-block'"  class="page-item">
+					<a class="page-link" href="javascript:pagingNext()" aria-label="Next">
+					<span><i class="fa fa-angle-double-right"></i></span>
+				</a>
+				</li>
+			</ul>
+		</nav>
 	</div>
 </div>
 <script th:src="@{/resources/assets/js/banner/bn-ajax.js}"></script>
@@ -59,6 +95,33 @@
 	$(function() {
 		basicBannerDelete();
 	})
+	
+	// 페이징 이전
+	function pagingPrev(range, rangeSize) {
+		let page = ((range-2)*rangeSize) + 1;
+		range = range - 1;
+		pagingUrl(page, range, rangeSize);
+	}
+	// 페이징 번호
+	function pagingNo(page, range) {
+		pagingUrl(page, range);
+	}
+	
+	// 페이징 다음
+	function pagingNext(range, rangeSize) {
+		let page = parseInt((range*rangeSize)) + 1;
+		range = parseInt(range) + 1;
+		pagingUrl(page, range, rangeSize);
+	}
+	
+	// 페이징 url
+	function pagingUrl(page, range) {
+		let url = getContextPath() + 'admin/bannerList';
+		url = url + '?page=' + page;
+		url = url + '&range=' + range;
+		
+		location.href=url;
+	}
 	
 </script>
 </main>

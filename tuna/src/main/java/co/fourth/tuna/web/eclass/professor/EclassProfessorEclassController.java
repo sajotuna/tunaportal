@@ -1,18 +1,19 @@
 package co.fourth.tuna.web.eclass.professor;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
 import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
 import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
+import co.fourth.tuna.domain.objection.service.ObjectionService;
 import co.fourth.tuna.domain.portalSchedule.service.PortalScheduleService;
 import co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO;
 import co.fourth.tuna.domain.subject.service.SubjectService;
@@ -43,6 +45,7 @@ public class EclassProfessorEclassController {
 	@Autowired LectureQnaService lectureService;
 	@Autowired LectureNoticeService noticeService;
 	@Autowired PortalScheduleService portalScheduleService;
+	@Autowired ObjectionService objectionService;
 	
 	@Autowired YearService yearService;
 	
@@ -204,7 +207,13 @@ public class EclassProfessorEclassController {
 	}
 	
 	@GetMapping("/objectionList")
-	public String objectionListView(HttpServletRequest req) {
+	public String objectionListView(HttpServletRequest req, 
+									Authentication authentication,
+			                        Model model) {
+		
+		List<Map<String, Object>> list = objectionService.objectionListOfProf(Integer.parseInt(authentication.getName()), "all");
+
+		model.addAttribute("objList", list);
 		return req.getServletPath();
 	}
 	

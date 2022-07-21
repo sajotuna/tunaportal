@@ -1,6 +1,7 @@
 package co.fourth.tuna.domain.objection.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +21,13 @@ public class ObjectionServiceImpl implements ObjectionService {
 	}
 
 	@Override
-	public List<ObjectionVO> objectionListOfProf(ObjectionVO vo) {
-		return mapper.objectionListOfProf(vo);
+	public List<Map<String, Object>> objectionListOfProf(int pfNo, String seasonCode) {
+		return mapper.objectionListOfProf(pfNo, seasonCode);
 	}
 
 	@Override
-	public ObjectionVO objectionSelect(ObjectionVO vo) {
-		return mapper.objectionSelect(vo);
+	public Map<String, Object> objectionSelect(int objNo) {
+		return mapper.objectionSelect(objNo);
 	}
 	
 	@Override

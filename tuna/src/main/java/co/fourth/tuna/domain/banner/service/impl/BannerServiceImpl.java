@@ -25,8 +25,8 @@ public class BannerServiceImpl implements BannerService {
 	}
 
 	@Override
-	public List<BannerVO> bannerListSelect() {
-		return map.bannerListSelect();
+	public List<BannerVO> bannerListSelect(int startList, int endList) {
+		return map.bannerListSelect(startList, endList);
 	}
 	
 	@Override

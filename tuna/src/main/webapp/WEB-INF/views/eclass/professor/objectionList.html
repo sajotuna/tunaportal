@@ -4,7 +4,11 @@
     data-layout-decorate="~{layouts/eclassProfLayout}">
 <head>
 	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="userNo" th:content="${#authentication.name}">
 	<title>objectionList</title>
+	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 	<style>
 	.scroll-table-div {
 		width: 100%;
@@ -22,69 +26,283 @@
 	<div class="mt-3">
 		<div class="content">
 		<p class="h3 fw-bold">학기별 이의신청 조회</p>
-			<!-- Block -->
-			<div class="block block-rounded mb-4">
-				<div class="block-content block-content-full">
-					<!-- Input -->
+		<!-- Input -->
 					<div class="row">
-						<div class="col-lg-6">
+						<div class="col-xl-3">
 							<div class="mb-2 mb-lg-4">
-								<select class="form-select" id="" name="">
-									<option selected>연도</option>
-									<option value="2022">2022</option>
-									<option value="2021">2021</option>
-									<option value="2020">2020</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="mb-4">
-								<select class="form-select" id="" name="">
-									<option selected>학기</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
+								<select class="form-select" id="seasonCode">
+									<option selected value="all">전체 학기</option>
+									<option value="106">2022년도 2학기</option>
+									<option value="105">2021년도 1학기</option>
 								</select>
 							</div>
 						</div>
 					</div>
 					<!-- END Input -->
+			<!-- Block -->
+			<div class="block block-rounded mb-4">
 					<!-- Table -->
 					<div class="mb-4 scroll-table-div">
-						<table class="table table-hover table-striped table-vcenter scroll-table">
+						<table class="table table-hover table-vcenter scroll-table">
 							<thead>
 								<tr>
+									<th style="width: 200px;">연도/학기</th>
 									<th style="width: 120px;">과목번호</th>
 									<th>과목명</th>
 									<th style="width: 200px;">개설학과</th>
 									<th style="width: 100px;">이수구분</th>
-									<th style="width: 100px;">담당교수</th>
 									<th style="width: 100px;">학생명</th>
 									<th>이의신청일</th>
-									<th style="width: 100px;">답변</th>
+									<th style="width: 100px;">신청상태</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td scope="row" class="fw-semibold fs-sm">49171-01</td>
-									<td class="fw-semibold fs-sm">비주얼인포메이션디자인(2)</td>
-									<td class="fw-semibold fs-sm">예술대학 디자인학부</td>
-									<td class="fw-semibold fs-sm">전공</td>
-									<td class="fw-semibold fs-sm">이설민</td>
-									<td class="fw-semibold fs-sm">지수빈</td>
-									<td class="fw-semibold fs-sm">2022-07-01</td>
-									<td class="fw-semibold fs-sm">미등록</td>
-								</tr>
+							<tbody id="objectionTb">
+								<th:block th:each="obj, i:${objList}">
+									<tr data-bs-toggle="modal" data-bs-target="#objection" th:data-objno="${obj.NO}">
+										<td scope="row" class="fw-semibold fs-sm" th:text="${obj.SEASONCODE}">#</td>
+										<td class="fw-semibold fs-sm" th:text="${obj.SBJNO}">#</td>
+										<td class="fw-semibold fs-sm" th:text="${obj.NAME}">#</td>
+										<td class="fw-semibold fs-sm" th:text="${obj.DEPTCODE}">#</td>
+										<td class="fw-semibold fs-sm" th:text="${obj.TYPE}">#</td>
+										<td class="fw-semibold fs-sm" th:text="${obj.STNAME}"></td>
+										<td class="fw-semibold fs-sm" th:text="${#dates.format(obj.ENROLLDATE, 'yyyy-MM-dd')}">#</td>
+										<td class="fw-semibold fs-sm objState" th:text="${obj.OBJSTATE}"></td>
+									</tr>
+								</th:block>
 							</tbody>
 						</table>
 					</div>
 					<!-- END Table -->
-				</div>
 			</div>
 			<!-- END Block -->
 		</div>
 	</div>
 	<!-- END Page Content -->
+	
+	<!-- Objection Modal -->
+	<div class="modal" id="objection" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-xl"role="document">
+			<div class="modal-content">
+				<div class="block block-rounded block-transparent mb-0">
+					<div class="block-header block-header-default">
+						<h3 class="block-title">성적 이의신청 및 답변 조회</h3>
+						<div class="block-options">
+							<button type="button" class="btn-block-option"
+								data-bs-dismiss="modal" aria-label="Close">
+								<i class="fa fa-fw fa-times"></i>
+							</button>
+						</div>
+					</div>
+					
+						<!-- Objection Insert Form -->
+						<div class="block-content block-content-full">
+							<table class="table table-vcenter mb-0">
+								<tr>
+									<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>과목명</th>
+									<td id="sbjname" class="fw-semibold fs-sm" width=250></td>
+									<th class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>학생명</th>
+									<td id="stname" class="fw-semibold fs-sm"></td>
+									<th class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>신청상태</th>
+									<td id="objstate" class="fw-semibold fs-sm"></td>
+								</tr>
+								<tr>
+									<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>이의신청 내용</th>
+									<td id="content" class="fw-semibold fs-sm" colspan="5"></td>
+								</tr>
+								<tr>
+									<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active"width=150>답변</th>
+									<td class="fw-semibold fs-sm" colspan="5">
+										<textarea id="answer" class="mb-0" rows="4" placeholder="내용을 입력하세요." style="width:100%; resize:none;" disabled></textarea>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- END Objection Insert Form -->
+					
+					<div class="block-content block-content-full text-end bg-body">
+						<button type="button" class="btn btn-sm btn-alt-secondary me-1"
+							data-bs-dismiss="modal">닫기</button>
+						<button type="button" id="objUpdateBtn" class="btn btn-sm btn-primary">등록</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- END Objection Modal -->
+	
 	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+	<script th:src="@{/resources/assets/js/dialog.js}"></script>
+	<script type="text/javascript">
+	var header = $("meta[name='_csrf_header']").attr('content');
+	var token = $("meta[name='_csrf']").attr('content');
+	var userNo = $("meta[name='userNo']").attr('content');
+	
+	$(function() {
+		trColor();
+		seasonObjListSelect();
+		objectionSelectAjax();
+		objectionUpdateAjax();
+	})
+	
+	function objectionUpdateAjax() {
+		
+		$('#objUpdateBtn').on('click', function() {
+			
+			let objNo = $(this).data('objno');
+			let answer = $('#answer').val();
+			
+			Dialogs.dialog('checkConfirm',
+					       '정말로 등록하시겠습니까?',
+					       '한 번 등록된 답변은 수정할 수 없습니다.',
+					       function() {
+					
+								$.ajax({
+									
+									url: getContextPath() + 'eclass/professor/objection',
+									type: 'PUT',
+									data: JSON.stringify(
+											{no:objNo, 
+										     answer:answer}
+										  ),
+									contentType: 'application/json',
+									dataType: 'json',
+									beforeSend: function (xhr) {
+									       xhr.setRequestHeader(header, token);
+										}
+									
+								}).done(function() {
+									
+									Dialogs.dialog('success',
+										           '등록 완료',
+										           '성적 이의신청 답변 등록이 완료되었습니다.');
+								
+									$('#objstate').text('답변 완료');
+									$('#answer').attr('disabled', true);
+									$('#objUpdateBtn').attr('disabled', true);
+									seasonObjListSelectAjax($('#seasonCode').val());
+									
+								}).fail(function() {
+									
+									Dialogs.dialog('error',
+										      	   '등록 실패',
+										    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
+									
+								})
+								
+								
+						   });
+
+		})
+		
+	}
+	
+	// 이의신청 1건 조회
+	function objectionSelectAjax() {
+		$(document).on('click', '#objectionTb tr', function() {
+			
+			$.ajax({
+				
+				url: getContextPath() + 'eclass/professor/objection',
+				type: 'GET',
+				data: {objNo:$(this).data('objno')},
+				dataType: 'json'
+				
+			}).done(function(obj) {
+				
+				$('#sbjname').text(obj.NAME);
+				$('#stname').text(obj.STNAME);
+				$('#objstate').text(obj.OBJSTATE);
+				$('#content').text(obj.CONTENT);
+				
+				if (obj.ANSWER == null) {
+					$('#answer').attr('disabled', false);
+					$('#objUpdateBtn').attr('disabled', false);
+				} else {
+					$('#answer').text(obj.ANSWER);
+					$('#objUpdateBtn').attr('disabled', true);
+				}
+				
+				$('#objUpdateBtn').data('objno', obj.NO)
+			})
+			
+		})
+	}
+	
+	// 연도학기별 이의신청 조회
+	function seasonObjListSelect() {
+
+		$('#seasonCode').on('change', function(){
+			
+			seasonObjListSelectAjax($(this).val());
+			
+		})
+		
+	}
+	
+	function seasonObjListSelectAjax(seasonCode){
+
+		$.ajax({
+			
+			url: getContextPath() + 'eclass/professor/seasonObjectionList',
+			type: 'GET',
+			data: {pfNo:userNo, seasonCode:seasonCode},
+			dataType: 'json'
+			
+		}).done(function(objList) {
+			
+			$('#objectionTb').html('');
+			
+			for (obj of objList) {
+				
+				$('#objectionTb').append($('<tr>').attr('data-bs-toggle', 'modal')
+										   		  .attr('data-bs-target', '#objection')
+										   		  .attr('data-objno', `${obj.NO}`)
+												  .append($('<td>').addClass('fw-semibold fs-sm')
+														           .text(obj.SEASONCODE))
+												  .append($('<td>').addClass('fw-semibold fs-sm')
+														           .text(obj.SBJNO))
+												  .append($('<td>').addClass('fw-semibold fs-sm')
+														           .text(obj.NAME))
+												  .append($('<td>').addClass('fw-semibold fs-sm')
+														           .text(obj.DEPTCODE))
+												  .append($('<td>').addClass('fw-semibold fs-sm')
+														           .text(obj.TYPE))
+												  .append($('<td>').addClass('fw-semibold fs-sm')
+														           .text(obj.STNAME))
+												  .append($('<td>').addClass('fw-semibold fs-sm')
+														           .text(moment(obj.ENROLLDATE).format('YYYY-MM-DD')))
+												  .append($('<td>').addClass('fw-semibold fs-sm objState')
+														           .text(obj.OBJSTATE))
+			                             );
+				
+			}
+			trColor();
+		})
+		
+	}
+	
+	// 답변 대기 시 tr색 변경
+	function trColor() {
+		
+		$('.objState').each(function() {
+			if($(this).text() === "답변 대기") {
+				$(this).closest('tr').addClass('table-danger');
+			}
+		})
+	
+	}
+	
+	function getContextPath() {
+		var pathName = window.location.pathname.substring(1);
+		var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+		var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+		return path_root;
+	}
+	
+	</script>
 </main>
 </body>
 </html>
