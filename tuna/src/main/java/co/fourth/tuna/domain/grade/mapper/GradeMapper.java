@@ -15,6 +15,6 @@ public interface GradeMapper {
 	public List<Map<String, Object>> seasonSubjectGradeSelect(@Param("stNo")int stNo, @Param("seasonCode")String seasonCode);
 	public List<Map<String, Object>> avgGradeSelect(int stNo);
 	
-	public GradeVO findByStudentNo(int sbjno);
+	public GradeVO findBySbjectNo(GradeVO vo);
 	
 }

@@ -16,16 +16,16 @@
 	</select>
 	
 	<resultMap id="objectionWithGrade" type="co.fourth.tuna.domain.objection.vo.ObjectionVO">
-		<!-- <association property="grade" 
-		             column="sbjno" 
+		<association property="grade" 
+		             column="sbjNo" 
 		             javaType="co.fourth.tuna.domain.grade.vo.GradeVO"
-		             select="co.fourth.tuna.domain.grade.mapper.GradeMapper.findByStudentNo"
+		             select="co.fourth.tuna.domain.grade.mapper.GradeMapper.findBySbjectNo"
 		></association>
-		<association property="student" 
-		             column="{no=stno}" 
+		 <association property="student" 
+		             column="{no=stNo}" 
 		             javaType="co.fourth.tuna.domain.user.vo.StudentVO"
 		             select="co.fourth.tuna.domain.user.mapper.StudentMapper.findById"
-		></association> -->
+		></association>
 	</resultMap>
 	
 	<select id="objectionListOfStud" 
