@@ -21,5 +21,5 @@ public interface PortalScheduleMapper {
 
 	PortalScheduleVO findOneBySeasonCode(@Param(value = "seasonCode") String seasonCode,
 			@Param(value = "scheduleCode") String scheduleCode);
-
+	public PortalScheduleVO findTuitionSchedule(PortalScheduleVO vo);
 }

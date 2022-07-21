@@ -2,15 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.tuition.mapper.TuitionMapper">
 
-<select id = "tuitionCheck" resultType="co.fourth.tuna.domain.tuition.vo.tuitionGiveVO" parameterType="co.fourth.tuna.domain.tuition.vo.tuitionGiveVO">
+<select id = "tuitionCheck" resultType="map" parameterType="map">
 
-SELECT DISTINCT S.NO, S.SY, S.DEPTCODE, S.NAME, TA.AMOUNT, T.SCPCT, SCH.NAME SCHNAME
-FROM TUITIONGIVE T, STUDENT S, TUITION TA, SCHOLARSTUDENT SS, SCHOLAR SCH
-WHERE T.SEASONCODE = #{seasonCode}
-        AND S.NO = T.STNO
-        AND S.NO = #{stNo}
-        AND TA.DEPTCODE = S.DEPTCODE
-        AND SS.TUIGIVNO = SCH.NO
+SELECT T.AMOUNT, SCH.NAME SCHNAME, SS.GIVEMONEY
+FROM TUITION T , SCHOLARSTUDENT SS, SCHOLAR SCH
+WHERE T.SEASONCODE= SS.SEASONCODE
+AND T.DEPTCODE = #{deptCode}
+AND SS.TUIGIVNO = SCH.NO
+AND SS.STNO = #{stNo}
+AND T.SEASONCODE = #{seasonCode}
 
 </select>
+
 </mapper>
