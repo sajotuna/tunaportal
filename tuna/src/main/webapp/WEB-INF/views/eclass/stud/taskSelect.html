@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 
 <title>과제상세</title>
 <link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
@@ -95,7 +97,7 @@
 									let uri = $(this).data('uri');
 									let no = $(this).data('no');
 									let fileRow = $(this).prev();
-									$.ajax({url : getContextPath() + 'deleteSubmitTask',
+									$.ajax({url : getContextPath() + 'eclass/student/deleteSubmitTask',
 											method : 'DELETE',
 											data : JSON.stringify({
 											no : no,
