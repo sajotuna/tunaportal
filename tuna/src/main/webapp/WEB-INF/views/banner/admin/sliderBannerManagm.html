@@ -40,14 +40,14 @@
 					<div class="block-header bg-primary-darker">
 						<h4 class="block-title">배너 사진 목록</h4>
 						<div class="block-options">
-						<button type="button" class="btn btn-sm btn-danger submit-btn" data-job="delete" style="margin-right: 10px;">삭제</button>
-						<label class="upload-label" for="file">
-							<button id="upload" class="btn btn-sm btn-light upload-btn">
-								<i class="fa fa-fw fa-upload me-1"></i>사진 올리기
-							</button>
-						</label>
-						<input class="form-control hidden-file" type="file" id="file" name="file"
-							   accept="image/jpg, image/jpeg, image/png">
+							<label class="upload-label" for="file">
+								<button id="upload" class="btn btn-sm btn-light upload-btn me-2">
+									<i class="fa fa-fw fa-upload me-1"></i>사진 올리기
+								</button>
+							</label>
+							<input class="form-control hidden-file" type="file" id="file" name="file"
+								   accept="image/jpg, image/jpeg, image/png">
+							<button type="button" class="btn btn-sm btn-primary submit-btn" data-job="delete">삭제</button>
 						</div>
 					</div>
 					<table class="table table-striped table-hover table-vcenter">
@@ -56,12 +56,12 @@
 								<th width=30></th>
 								<th>파일명</th>
 								<th width=30>
-									<button id="up" class="btn btn-sm" type="button">
+									<button id="up" class="btn btn-sm">
 										<i class="fa fa-arrow-up"></i>
 									</button>
 								</th>
 								<th width=30>
-									<button id="down" class="btn btn-sm" type="button">
+									<button id="down" class="btn btn-sm">
 										<i class="fa fa-arrow-down"></i>
 									</button>
 								</th>
@@ -69,7 +69,6 @@
 						</thead>
 						<tbody id="tb">
 							<th:block th:each="bn, i:${bnList}">
-								<input type="hidden" id="adNo" value="139341" >
 								<tr th:data-no="${bn.no}" 
 									th:data-uri="${bn.uri}" th:data-filename="${bn.fileName}" style="cursor:pointer;">
 									<td scope="row" class="fw-semibold fs-sm">
@@ -131,7 +130,7 @@
 	<script>One.helpersOnLoad([ 'jq-slick' ]);</script>
 	<script th:src="@{/resources/assets/js/banner/sliderBanner.js}"></script>
 	<script th:src="@{/resources/assets/js/banner/sbn-ajax.js}"></script>
-	
+
 </main>
 </body>
 </html>
