@@ -90,5 +90,12 @@ VALUES(?, ?, ?, ?, ?, ?, ?, ?)
 				BETWEEN (#{pageNum}-1)*#{size}+1
 				AND #{pageNum}*#{size}
 	</select>
-
+	
+	<select id="findListBySubjectId"
+		resultMap="lectureQnaMapWithSubjectAndStudent">
+		SELECT *
+		FROM lectureQna
+		WHERE sbjno = ${sbjno}
+	</select>
+	
 </mapper>

@@ -14,4 +14,6 @@ public interface LectureQnaService {
 //	List<LectureQnaVO> qnaList(String key);
 	
 	List<LectureQnaVO> findByProfessor(ProfessorVO vo, int pageNum, int size);
+	
+	List<LectureQnaVO> findListBySubjectId(int sbjno);
 }

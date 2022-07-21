@@ -24,8 +24,7 @@ public class LectureQnaVO {
 	private Date answerDate;
 	private int stNo;
 	private int sbjNo;
-
-	
+	private int visible;
 	
 	private StudentVO studentVO;
 	private SubjectVO subjectVO;

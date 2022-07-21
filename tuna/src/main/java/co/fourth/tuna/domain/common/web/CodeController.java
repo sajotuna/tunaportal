@@ -25,7 +25,6 @@ public class CodeController {
 	@Autowired
 	private CodeService codeService;
 
-	@PostConstruct
 	public HashMap<String, CodeVO> setCodeList() {
 		
 		CODE_ARR_MAP = new HashMap<>();
@@ -65,7 +64,7 @@ public class CodeController {
 //			}
 //		}
 		if(CODE_MAP != null) {
-			codeResult = CODE_MAP.get(code).getCodeName(); 
+			codeResult = codeService.getName(code); 
 		}
 		
 		return codeResult;
