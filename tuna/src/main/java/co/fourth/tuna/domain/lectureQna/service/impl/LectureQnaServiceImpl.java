@@ -41,8 +41,8 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 	}
 
 	@Override
-	public String insertOneQna(LectureQnaVO vo) {
-		 return mapper.insertOneQna(vo);
+	public void insertOneQna(LectureQnaVO vo) {
+		 mapper.insertOneQna(vo);
 	}
 
 	

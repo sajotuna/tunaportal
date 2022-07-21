@@ -35,7 +35,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<form th:action="@{insertOneQna(${_csrf.parameterName}=${_csrf.token})}" method="POST">
-										<input type="hidden" name="sbjNo" id="sbjNo" th:each="sbjno : ${sbjno}" th:value="${sbjno.SBJNO}" >
+										<input type="hidden" name="sbjNo" id="sbjNo" th:each="sbjno : ${sbjno}" th:value="${sbjno[0].SBJNO}" >
 									<table
 										class="table table-vcenter js-dataTable-full dataTable no-footer"
 										id="DataTables_Table_0"

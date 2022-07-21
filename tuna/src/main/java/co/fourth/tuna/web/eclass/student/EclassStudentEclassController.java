@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,10 +128,13 @@ public class EclassStudentEclassController {
 	}
 	
 	@RequestMapping("/qnaSelect")
-	public String qnaSelect(Model model, LectureQnaVO vo, Authentication authentication) {
-		
-		vo.setNo(1);
-		vo.setSbjNo(18011);
+	public String qnaSelect(Model model, LectureQnaVO vo, HttpServletRequest req, Authentication authentication) {
+		;
+		//인덱스 부여하여 vo에 setting
+		vo.setNo(Integer.parseInt(req.getParameter("no")));
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
+		//vo.set값 -> 쿼리 -> 
+		                                //학번
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
 		model.addAttribute("qs", qs);
@@ -140,14 +144,14 @@ public class EclassStudentEclassController {
 	
 	//질의응답작성폼
 	@RequestMapping("/qnaInsert")
-	public String qnaInsert(Model model, LectureQnaVO vo, Authentication authentication) {
+	public String qnaInsert(Model model, LectureQnaVO vo, HttpServletRequest req, Authentication authentication) {
 		
-		vo.setNo(1);
-		vo.setSbjNo(18011);
+		System.out.println("req : " + req);
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> sbjno = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
 		
-		System.out.println(sbjno);
+//		System.out.println(sbjno);
 		model.addAttribute("sbjno", sbjno);
 		
 		return "eclass/stud/qnaInsert";
@@ -155,14 +159,16 @@ public class EclassStudentEclassController {
 	
 	//질의응답등록
 	@PostMapping("/insertOneQna")
-	public String insertOneQna(Model model, LectureQnaVO vo, HttpServletRequest req, Authentication authentication) {
+	public String insertOneQna(Model model, LectureQnaVO vo, 
+			HttpServletRequest req, Authentication authentication) {
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
-		
+		 
 		 qnaDao.insertOneQna(vo);
 		 
-		return "redirect:qnaSelect";
+		return "redirect:/eclass/student/qnaSelect";
 	}
 
 	
@@ -291,6 +297,7 @@ public class EclassStudentEclassController {
 		vo.setSbjNo(18011);
 		
 		List<Map<String, Object>> attd = sql.selectList("co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.studentAttendance", vo);
+		System.out.println(attd);
 		
 		model.addAttribute("attd", attd);
 		

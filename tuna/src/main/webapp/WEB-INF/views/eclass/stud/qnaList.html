@@ -50,7 +50,7 @@
 										<tbody>
 											<tr th:each="q, i : ${qna}">
 												<td class="text-center" th:text="${i.index+1}"></td>
-												<td class="text-center" colspan="7" th:onclick="|location.href='@{/eclass/student/qnaSelect}'|" th:text="${q.TITLE}"></td>
+												<td class="text-center" colspan="7" th:onclick="|location.href='@{/eclass/student/qnaSelect}?no=${q.NO}&sbjNo=${q.SBJNO}'|" th:text="${q.TITLE}"></td>
 												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
 												<td class="text-center" colspan="2" th:text="${q.ENROLLDATE}"></td>
 												<td class="text-center" colspan="2">미답변</td>
@@ -61,7 +61,7 @@
 							</div>
 							<div class="d-flex justify-content-center">
 								<button type="button"
-									th:onclick="|location.href='@{/eclass/student/qnaInsert}'|"
+									th:onclick="|location.href='@{/eclass/student/qnaInsert}?sbjNo=${qna[0].SBJNO}'|"
 									class="btn btn-primary m-2">등록</button>
 							</div>
 							<div class="row">

@@ -22,7 +22,7 @@ public interface LectureQnaMapper {
 	public String qnaSelect(LectureQnaVO vo);
 	
 	//질문작성
-	public String insertOneQna(LectureQnaVO vo);
+	public void insertOneQna(LectureQnaVO vo);
 	
 
 	// ckw 서브젝트로 목록 조회
