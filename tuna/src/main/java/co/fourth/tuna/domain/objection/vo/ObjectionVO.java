@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class ObjectionVO {
 	private int no;
 	@JsonFormat(pattern="yyyy-MM-dd", timezone="Asia/Seoul")

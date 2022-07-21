@@ -2,11 +2,14 @@ package co.fourth.tuna.domain.banner.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import co.fourth.tuna.domain.banner.vo.BannerVO;
 
 public interface BannerMapper {
 	
-	List<BannerVO> bannerListSelect();
+	List<BannerVO> bannerListSelect(@Param("startList")int startList, 
+			                        @Param("endList")int endList);
 	BannerVO bannerSelect(String bannerCode);
 	int bannerInsert(BannerVO vo);
 	int bannerDelete(BannerVO vo);

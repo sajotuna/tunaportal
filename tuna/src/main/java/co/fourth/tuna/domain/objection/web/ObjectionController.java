@@ -1,6 +1,7 @@
 package co.fourth.tuna.domain.objection.web;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +31,27 @@ public class ObjectionController {
 		vo.setStNo(stNo);
 		vo.setSeasonCode(yearDao.yearFind());
 		
-		return objectionDao.objectionListSelect(vo);
+		return objectionDao.objectionListOfStud(vo);
 	}
 	
 	@PutMapping("/portal/student/objection")
 	public int objectionContentInsert(@RequestBody ObjectionVO vo) {
-		
-		return objectionDao.objectionContentInsert(vo);
-		
+		return objectionDao.objectionInsert(vo);
+	}
+	
+	@GetMapping("/eclass/professor/seasonObjectionList")
+	public List<Map<String, Object>> seasonObjectionList(int pfNo, String seasonCode) {
+		return objectionDao.objectionListOfProf(pfNo, seasonCode);
+	}
+	
+	@GetMapping("/eclass/professor/objection")
+	public Map<String, Object> objectionSelect(int objNo) {
+		return objectionDao.objectionSelect(objNo);
+	}
+	
+	@PutMapping("/eclass/professor/objection")
+	public int objectionUpdate(@RequestBody ObjectionVO vo) {
+		return objectionDao.objectionUpdate(vo);
 	}
 	
 }	

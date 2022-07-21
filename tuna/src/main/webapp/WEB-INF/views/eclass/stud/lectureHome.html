@@ -23,22 +23,18 @@
 			<div class="content">
 				<div class="row">
 					<div class="col-12">
-						<h3 class="h3 fw-bold mb-2">공지사항</h3>
 						<div class="block block-rounded">
-							<div class="block-content" th:each="stn : ${stn}">
-								<p class="fw-bold" th:text="${stn.TITLE}"></p>
+							<div class="block-header block-header-default bg-dark">
+								<a class="h3 text-white fw-bold text-white mb-0"
+									th:href="@{/eclass/student/lectureNotice}"> 공지사항 </a>
 							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<h3 class="h3 fw-bold mb-2">금주의 강의계획</h3>
-						<div class="block block-rounded">
-							<div class="block-content">
-								<p class="fw-bold">00주차 강의 계획 : 웹프로그래밍 언어의 이해</p>
-								<br>
-								<p class="fw-bold">강의 방법 : 실습, 유인물</p>
+							<div class="col-12">
+								<div class="block-content bg-white">
+									<div class="col-7" th:each="stn : ${stn}">
+										<p class="fw-bold"
+											th:text="${stn.TITLE}+'  /  '+${stn.ENROLLDATE}"></p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -46,31 +42,36 @@
 				<div class="row">
 					<div class="col-6">
 						<div class="col-12">
-							<h3 class="h3 fw-bold mb-2">과제</h3>
 							<div class="block block-rounded">
-								<div class="block-content" th:each="stt : ${stt}">
-									<p class="fw-bold"
-										th:text="${stt.TITLE}+'  /  '+${stt.LIMITDATE}"></p>
+								<div class="block-header block-header-default bg-dark">
+									<a class="h3 text-white fw-bold text-white mb-0"
+										th:href="@{/eclass/student/taskList}"> 과제 </a>
 								</div>
-							</div>
-						</div>
-						<div class="col-12">
-							<h3 class="h3 fw-bold mb-2">강의자료</h3>
-							<div class="block block-rounded">
-								<div class="block-content">
-									<p class="fw-bold">00주차 강의자료</p>
-									<br>
-									<p class="fw-bold">시험관련 자료</p>
+								<div class="col-12">
+									<div class="block-content bg-white">
+										<div class="" th:each="stt : ${stt}">
+											<p class="fw-bold"
+												th:text="${stt.TITLE}+'  /  '+${stt.LIMITDATE}"></p>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-1"></div>
-					<div class="col-5">
-						<h3 class="h3 fw-bold mb-2">QnA</h3>
-						<div class="block block-rounded">
-							<div class="block-content" th:each="stq : ${stq}">
-								<p class="fw-bold" th:text="${stq.TITLE}"></p>
+					<div class="col-6">
+						<div class="col-12">
+							<div class="block block-rounded">
+								<div class="block-header block-header-default bg-dark">
+									<a class="h3 text-white fw-bold text-white mb-0"
+										th:href="@{/eclass/student/qnaList}"> QnA </a>
+								</div>
+								<div class="col-12">
+									<div class="block-content bg-white">
+										<div class="" th:each="stq : ${stq}">
+											<p class="fw-bold" th:text="${stq.TITLE}"></p>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

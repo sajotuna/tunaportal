@@ -7,6 +7,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +31,7 @@ import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
 import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
 import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
+import co.fourth.tuna.domain.objection.service.ObjectionService;
 import co.fourth.tuna.domain.portalSchedule.service.PortalScheduleService;
 import co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO;
 import co.fourth.tuna.domain.subject.service.SubjectService;
@@ -40,26 +42,20 @@ import co.fourth.tuna.util.CustomDateUtills;
 @Controller
 @RequestMapping("/eclass/professor")
 public class EclassProfessorEclassController {
-
-	@Autowired
-	PagingService pagingService;
-	@Autowired
-	SubjectService subjectService;
-	@Autowired
-	LectureQnaService lectureService;
-	@Autowired
-	LectureNoticeService noticeService;
-	@Autowired
-	PortalScheduleService portalScheduleService;
-	@Autowired
+	
+	@Autowired PagingService pagingService;
+	@Autowired SubjectService subjectService;
+	@Autowired LectureQnaService lectureService;
+	@Autowired LectureNoticeService noticeService;
+	@Autowired PortalScheduleService portalScheduleService;
+	@Autowired ObjectionService objectionService;
+  @Autowired
 	LectureScheduleService lecScheduleService;
-
-	@Autowired
-	YearService yearService;
-
-	@Autowired
-	CodeService codeService;
-
+	
+	@Autowired YearService yearService;
+	
+	@Autowired CodeService codeService;
+  
 	private String profPath = "eclass/professor";
 
 	private static final Logger logger = LoggerFactory.getLogger(EclassProfessorEclassController.class);
@@ -208,7 +204,13 @@ public class EclassProfessorEclassController {
 	}
 
 	@GetMapping("/objectionList")
-	public String objectionListView(HttpServletRequest req) {
+	public String objectionListView(HttpServletRequest req, 
+									Authentication authentication,
+			                        Model model) {
+		
+		List<Map<String, Object>> list = objectionService.objectionListOfProf(Integer.parseInt(authentication.getName()), "all");
+
+		model.addAttribute("objList", list);
 		return req.getServletPath();
 	}
 

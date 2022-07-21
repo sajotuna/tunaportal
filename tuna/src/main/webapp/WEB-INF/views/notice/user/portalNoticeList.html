@@ -142,17 +142,22 @@
 			$("tbody").remove();
 			let tbody = $("<tbody/>");
 			$.each(rs,function(index, n){ 
+				var td = $("<td/>").addClass("text-center filecheck")
+				if(n.fileyn == "Y"){
+					td.html(`<p style="text-align: center; margin: 0 0 0 0"> <i class="far fa fa-file"></i></p>`)
+				}
 				var row = $("<tr/>").append(
 						  $("<td/>").addClass("text-center").css("width","10px").html(n.no),
-						  $("<td/>").html(`<a href="adminNoticeSelect?no=${n.no}"> ${n.title} </a>`),
-						  $("<td/>").addClass("text-center").css("width","10px"),
+						  $("<td/>").html(`<a href="portalNoticeSelect?no=${n.no}"> ${n.title} </a>`),
+						  td,
 						  $("<td/>").addClass("fs-sm text-muted text-center").html(n.enrollDate)
 					);
 				tbody.append(row); 
-			})
+
+				
+			})//forEach end
 			$("#tb").append(tbody);
 		}
-		
 
 			
 			//페이지이동
@@ -200,9 +205,6 @@
 
 
 </script>
-		<script>One.helpersOnLoad(['one-table-tools-checkable', 'one-table-tools-sections']);</script>
-		<script
-			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	</main>
 </body>
 </html>

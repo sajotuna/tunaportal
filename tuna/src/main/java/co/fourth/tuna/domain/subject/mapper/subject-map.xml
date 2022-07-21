@@ -5,7 +5,7 @@
 <mapper namespace="co.fourth.tuna.domain.subject.mapper.SubjectMapper">
 	
 	<resultMap id="subjectMap" type="co.fourth.tuna.domain.subject.vo.SubjectVO">
-		<association property="professorVO" column="pfno" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
+		<association property="professorVO" column="{no=pfno}" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
 			select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
 	</resultMap>
 

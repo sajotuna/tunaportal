@@ -27,17 +27,38 @@
 	
 	</select>
 	
-	<select id="objectionListOfProf" 
-			resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
+	<select id="objectionListOfProf" resultType="map">
 	
-	
+		SELECT PS.CODENAME AS SEASONCODE,
+		        S.NAME,
+		        PD.CODENAME AS DEPTCODE,
+		        PT.CODENAME AS TYPE,
+		        ST.NAME AS STNAME,
+		        O.*,  
+		        OBJECTIONSTATE(O.SBJNO, O.STNO) AS OBJSTATE
+		FROM SUBJECT S, OBJECTION O, STUDENT ST, PUBLICCODE PS, PUBLICCODE PD, PUBLICCODE PT
+		WHERE S.NO = O.SBJNO
+		AND O.STNO = ST.NO
+		AND PS.NO = S.SEASONCODE
+		AND PD.NO = S.DEPTCODE
+		AND PT.NO = S.TYPE
+		AND S.PFNO = ${pfNo}
+		<if test="seasonCode != 'all'">AND S.SEASONCODE = #{seasonCode}</if>
 	
 	</select>
 
-	<select id="objectionSelect"
-			resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
-	
+	<select id="objectionSelect" resultType="map">
 		
+		SELECT O.NO,
+		       S.NAME, 
+		       ST.NAME AS STNAME, 
+		       OBJECTIONSTATE(O.SBJNO, O.STNO) AS OBJSTATE, 
+		       O.CONTENT, 
+		       O.ANSWER
+		FROM SUBJECT S, OBJECTION O, STUDENT ST
+		WHERE S.NO = O.SBJNO
+		AND O.STNO = ST.NO
+		AND O.NO = ${objNo}
 	
 	</select>
 	
@@ -57,10 +78,12 @@
 	</insert>
 	
 	<update id="objectionUpdate">
+	
 		UPDATE OBJECTION
 		SET ANSWERDATE = SYSDATE,
 		    ANSWER = #{answer}
 		WHERE no = #{no}
+		
 	</update>
 	
 </mapper>
