@@ -13,7 +13,7 @@ select DISTINCT
         e.avgscore,
         l2.roomcode
 from subject s, professor p,lectureeval e, lectureschedule l2
-where s.pfno = p.no and p.name = #{proName} and s.seasoncode = 106 and l2.sbjno = s.no
+where s.pfno = p.no and p.no = #{proNo} and s.seasoncode = 106 and l2.sbjno = s.no
 
 </select>
 
