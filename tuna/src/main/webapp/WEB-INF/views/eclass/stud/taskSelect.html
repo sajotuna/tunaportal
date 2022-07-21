@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 
 <title>과제상세</title>
 <link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
@@ -26,57 +28,103 @@
 						<h3 class="h3 fw-bold mb-2">과제</h3>
 					</div>
 				</div>
-				<div class="block block-rounded">
-					<div class="block-content block-content-full">
-						<div id="DataTables_Table_0_wrapper"
-							class="dataTables_wrapper dt-bootstrap5 no-footer">
-							<div class="row">
-								<div class="col-sm-12">
-									<table
-										class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
-										id="DataTables_Table_0"
-										aria-describedby="DataTables_Table_0_info" th:each="tsk : ${tsk}">
-										<thead>
-											<tr>
-												<th class="text-center" tabindex="0" colspan="2">제목</th>
-												<th colspan="7" th:text="${tsk.TITLE}"></th>
-											</tr>
-											<tr>
-												<th class="text-center" tabindex="0" colspan="2">작성일자</th>
-												<th colspan="7" th:text="${tsk.STARTDATE}"></th>
-											</tr>
-											<tr>
-												<th class="text-center" tabindex="0" colspan="2">마감일자</th>
-												<th colspan="7" th:text="${tsk.LIMITDATE}"></th>
-											</tr>
-											<tr>
-												<th class="text-center" tabindex="0" colspan="2">내용</th>
-												<th colspan="7" th:text="${tsk.CONTENT}"></th>
-											</tr>
-											<tr>
-												<th class="text-center" tabindex="0" colspan="2">파일</th>
-												<th colspan="7"><input
-													class="form-control fw-semibold fs-sm"
-													id="example-file-input" type="file"></th>
-											</tr>
-										</thead>
-									</table>
-									<div class="d-flex justify-content-center">
-										<button type="button"
-											th:onclick="|location.href='@{/eclass/student/taskSelect}'|"
-											class="btn btn-primary m-2">등록</button>
-										<button type="button"
-											th:onclick="|location.href='@{/eclass/student/taskList}'|"
-											class="btn btn-dark m-2">취소</button>
+				<form
+					th:action="@{/eclass/student/taskInsert(${_csrf.parameterName}=${_csrf.token})}"
+					method="post" enctype="multipart/form-data">
+					<div class="block block-rounded">
+						<div class="block-content block-content-full">
+							<div id="DataTables_Table_0_wrapper"
+								class="dataTables_wrapper dt-bootstrap5 no-footer">
+								<div class="row">
+									<div class="col-sm-12">
+										<table
+											class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
+											id="DataTables_Table_0"
+											aria-describedby="DataTables_Table_0_info"
+											th:each="tsk : ${tsk}">
+											<thead>
+												<tr>
+													<th class="text-center" tabindex="0" colspan="2">제목</th>
+													<th colspan="7" th:text="${tsk.TITLE}"><input
+														type="hidden" name="no" th:value="${tsk.NO}"></th>
+												</tr>
+												<tr>
+													<th class="text-center" tabindex="0" colspan="2">작성일자</th>
+													<th colspan="7" th:text="${tsk.STARTDATE}"></th>
+												</tr>
+												<tr>
+													<th class="text-center" tabindex="0" colspan="2">마감일자</th>
+													<th colspan="7" th:text="${tsk.LIMITDATE}"></th>
+												</tr>
+												<tr>
+													<th class="text-center" tabindex="0" colspan="2">내용</th>
+													<th colspan="7" th:text="${tsk.CONTENT}"></th>
+												</tr>
+												<tr>
+													<th class="text-center" tabindex="0" colspan="2">파일</th>
+													<th colspan="7"><input
+														class="form-control fw-semibold fs-sm"
+														id="example-file-input file" name="file" type="file"
+														multiple="multiple">
+														<th:block th:each="fts : ${fts}">
+															<a th:href="@{/download(fileName=${fts.uri}, originName=${fts.fileName}, folder=task)}" class="mb-0 fw-bold"> [[${fts.fileName}]] </a>
+															<button th:data-uri=${fts.uri} th:data-no=${fts.no}
+																type="button" class="btn btn-sm delBtn">
+																<i class="fa fa-fw fa-sm fa-times"></i>
+															</button>
+															<br>
+														</th:block>
+												</tr>
+											</thead>
+										</table>
+										<div class="d-flex justify-content-center">
+											<button type="submit" class="btn btn-primary m-2">등록</button>
+											<button type="button"
+												th:onclick="|location.href='@{/eclass/student/taskList}'|"
+												class="btn btn-dark m-2">취소</button>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
-			<div class="col-xxl-12"></div>
-			<!-- col-12 end -->
+			<script>
+				$('.delBtn').on('click', function() {
+									var header = $("meta[name='_csrf_header']").attr('content');
+									var token = $("meta[name='_csrf']").attr('content');
+									let uri = $(this).data('uri');
+									let no = $(this).data('no');
+									let fileRow = $(this).prev();
+									$.ajax({url : getContextPath() + 'eclass/student/deleteSubmitTask',
+											method : 'DELETE',
+											data : JSON.stringify({
+											no : no,
+											uri : uri
+											}),
+											contentType : 'application/json; charset=utf-8',
+											dataType : 'json',
+											beforeSend : function(xhr) {
+												xhr.setRequestHeader(header, token);},
+													}).done(function(success) {
+												if (success) {
+													fileRow.remove();
+												} else {
+													console.log(no)
+												}
+											})
+								})
+
+				function getContextPath() {
+					var pathName = window.location.pathname.substring(1);
+					var webName = pathName == '' ? '' : pathName.substring(0,
+							pathName.indexOf('/'));
+					var path_root = window.location.protocol + '//'
+							+ window.location.host + '/' + webName + '/';
+					return path_root;
+				}
+			</script>
 			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 		</main>
 	</div>

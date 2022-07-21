@@ -30,7 +30,7 @@
 	<select id="singleTwoNotice" resultType="map" parameterType="co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO">
 	<![CDATA[
 		SELECT* FROM
-		(SELECT DISTINCT T.NO, T.TITLE, S.NAME
+		(SELECT DISTINCT T.NO, T.TITLE, S.NAME, TO_CHAR(T.ENROLLDATE, 'MM"월"DD"일"') ENROLLDATE
 		FROM LECTURENOTICE T, LECTUREAPPLY L, SUBJECT S, STUDENT U
 		WHERE T.SBJNO = L.SBJNO
         AND L.SBJNO = S.NO
