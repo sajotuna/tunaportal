@@ -17,4 +17,7 @@ public class GradeVO {
 	private int total;
 	private int stNo;
 	private int sbjNo;
+	
+	private String alphabet;
+	private double score;
 }

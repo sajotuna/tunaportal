@@ -5,8 +5,10 @@
 	<select id="findBySbjectNo"
 		    resultType="co.fourth.tuna.domain.grade.vo.GradeVO">
 	
-		SELECT *
-		FROM GRADE
+		SELECT G.*, 
+		       GRADETOALPHABET(G.TOTAL) AS ALPHABET, 
+		       GRADETOPOINT(G.TOTAL) AS SCORE
+		FROM GRADE G
 		WHERE SBJNO = #{sbjNo}
 		
 	</select>

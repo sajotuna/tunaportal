@@ -442,7 +442,8 @@ xmlns:th="http://www.thymeleaf.org"
 	                      <thead>
 	                        <tr>
 	                          <th>학생명</th>
-	                          <th>총점</th>
+	                          <th>등급</th>
+	                          <th>평점</th>
 	                          <th>이의신청일</th>
 	                          <th>답변일</th>
 	                          <th>신청상태</th>
@@ -538,8 +539,8 @@ xmlns:th="http://www.thymeleaf.org"
 			<div class="modal-dialog modal-dialog-centered modal-lg"role="document">
 				<div class="modal-content">
 					<div class="block block-rounded block-transparent mb-0">
-						<div class="block-header block-header-default">
-							<h3 class="block-title">성적 이의신청 상세 조회 및 답변 등록</h3>
+						<div class="block-header block-header-default bg-dark">
+							<h3 class="block-title text-gray-lighter">성적 이의신청 상세 조회 및 답변 등록</h3>
 							<div class="block-options">
 								<button type="button" class="btn-block-option"
 									data-bs-dismiss="modal" aria-label="Close">
@@ -571,10 +572,8 @@ xmlns:th="http://www.thymeleaf.org"
 								</table>
 							<!-- END Objection Insert Form -->
 						
-						<div class="block-content block-content-full text-end bg-body">
-							<button type="button" class="btn btn-sm btn-alt-secondary me-1"
-								data-bs-dismiss="modal">닫기</button>
-							<button id="objUpdateBtn" class="btn btn-sm btn-primary">등록</button>
+						<div class="block-content block-content-full text-center">
+							<button id="objUpdateBtn" class="btn btn-sm btn-primary px-3">등록</button>
 						</div>
 					</div>
 					
@@ -1133,7 +1132,8 @@ xmlns:th="http://www.thymeleaf.org"
                 tr.setAttribute('data-objno', obj.no);
                 tr.classList.add('objTr');
                 tr.innerHTML = ` <th style="fw-semibold fs-sm">${obj.student.name}</th>
-                                 <th style="fw-semibold fs-sm">${obj.grade.total}</th>
+                                 <th style="fw-semibold fs-sm">${obj.grade.alphabet}</th>
+                                 <th style="fw-semibold fs-sm">${obj.grade.score}</th>
                                  <th style="fw-semibold fs-sm">${obj.enrollDate}</th>
                                  <th style="fw-semibold fs-sm">${obj.answerDate != null ? obj.answerDate : ''}</th>
                                  <th class="objState" style="fw-semibold fs-sm">${obj.objState}</th>`;
@@ -1165,6 +1165,7 @@ xmlns:th="http://www.thymeleaf.org"
 		           	            		  objUpdateBtn.removeAttribute('disabled');
 		           	            	  } else {
 		           	            		  objAnswer.innerHTML = result.ANSWER;
+		           	            		  objUpdateBtn.setAttribute('disabled', true);
 		           	            	  }
 		           	            	  
 		           	            	  objUpdateBtn.setAttribute('data-objno', result.NO);
