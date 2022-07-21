@@ -16,6 +16,7 @@
 	th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="fullcalendar.css">
 <meta charset="UTF-8">
 <title>adminSchedule</title>
 <style>
@@ -31,6 +32,29 @@ html, body {
 	padding-left: 1em;
 	padding-right: 1em;
 }
+
+.fc-day-sun a {
+  color: rgb(184, 108, 111);
+  text-decoration: none;
+}
+
+/* 토요일 날짜 파란색 */
+.fc-day-sat a {
+  color: rgb(69, 123, 169);
+  text-decoration: none;
+}
+
+.fc-h-event{
+border-radius:40px;
+} 
+
+.fc-event-title-container{
+border-radius:4px;
+background-color:rgb(80, 94, 107);
+}
+
+
+
 </style>
 </head>
 
