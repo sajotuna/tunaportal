@@ -190,7 +190,7 @@ public class EclassProfessorEclassController {
 		prof.setNo(Integer.parseInt(auth.getName()) );
 
 		if (season == 0) {
-			season = 105;
+			season = 106;
 		}
 
 		CodeMasterVO seasonMasterCode = codeService.findById("100");

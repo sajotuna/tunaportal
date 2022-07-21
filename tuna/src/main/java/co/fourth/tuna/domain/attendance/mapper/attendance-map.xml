@@ -17,4 +17,14 @@
 	AND SBJNO = #{sbjNo}
 	ORDER BY CLASSDATE
 	</select>
+	
+	<select id="findListByStudentIdAndSubjectId"
+		resultType="co.fourth.tuna.domain.attendance.vo.AttendanceVO">
+		SELECT * 
+		FROM attendance
+		WHERE stno = #{stno}
+		AND sbjno = #{sbjno}
+		ORDER BY stno
+	</select>
+		
 </mapper>

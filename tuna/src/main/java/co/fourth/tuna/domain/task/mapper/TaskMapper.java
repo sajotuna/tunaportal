@@ -20,4 +20,9 @@ public interface TaskMapper {
 	public List<SubmitTaskVO>  findSubmission(SubmitTaskVO vo);
 	//제출한 파일 삭제
 	public void deleteSubmitTask(SubmitTaskVO vo);
+	
+	// 과목으로 과제 조회
+	public List<TaskVO> findListBySubjectId(int sbjno);
+	
+	public SubmitTaskVO findSubmitTasksByTaskIdAndStudentId(int taskno, int stno);
 }
