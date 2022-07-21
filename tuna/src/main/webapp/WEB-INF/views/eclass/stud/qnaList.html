@@ -49,7 +49,7 @@
 										</thead>
 										<tbody>
 											<tr th:each="q, i : ${qna}">
-												<td class="text-center" th:text="${i.index+1}">5</td>
+												<td class="text-center" th:text="${i.index+1}"></td>
 												<td class="text-center" colspan="7" th:onclick="|location.href='@{/eclass/student/qnaSelect}'|" th:text="${q.TITLE}"></td>
 												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
 												<td class="text-center" colspan="2" th:text="${q.ENROLLDATE}"></td>
@@ -79,7 +79,7 @@
 													th:each="num : ${#numbers.sequence(1, pgcnt)}">
 													<a
 													class="page-link" th:href="@{/eclass/student/qnaList(pageNum=${num})}"
-													th:text="${num}">00</a></li>
+													th:text="${num}"></a></li>
 												<li class="page-item"><a class="page-link"
 													href="javascript:void(0)" aria-label="Next"> <span
 														aria-hidden="true"> <i class="fa fa-angle-right"></i>

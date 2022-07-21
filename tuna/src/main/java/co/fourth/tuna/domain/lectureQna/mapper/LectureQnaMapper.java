@@ -20,9 +20,9 @@ public interface LectureQnaMapper {
 
 	//질문단건조회
 	public String qnaSelect(LectureQnaVO vo);
-	//질문에 대한 댓글 조회?
 	
 	//질문작성
+	public String insertOneQna(LectureQnaVO vo);
 	
 
 	// ckw 서브젝트로 목록 조회

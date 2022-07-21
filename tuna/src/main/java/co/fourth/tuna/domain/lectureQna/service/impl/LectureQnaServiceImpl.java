@@ -40,6 +40,11 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 		return mapper.findListBySubjectId(sbjno);
 	}
 
+	@Override
+	public String insertOneQna(LectureQnaVO vo) {
+		 return mapper.insertOneQna(vo);
+	}
+
 	
 	//mapper 주입, 오버라이딩
 }
