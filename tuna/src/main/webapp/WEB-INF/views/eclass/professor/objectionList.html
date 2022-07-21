@@ -88,8 +88,8 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg"role="document">
 			<div class="modal-content">
 				<div class="block block-rounded block-transparent mb-0">
-					<div class="block-header block-header-default">
-						<h3 class="block-title">성적 이의신청 상세 조회 및 답변 등록</h3>
+					<div class="block-header block-header-default bg-dark">
+						<h3 class="block-title text-gray-lighter">성적 이의신청 상세 조회 및 답변 등록</h3>
 						<div class="block-options">
 							<button type="button" class="btn-block-option"
 								data-bs-dismiss="modal" aria-label="Close">
@@ -121,11 +121,9 @@
 							</table>
 						<!-- END Objection Insert Form -->
 					
-					<div class="block-content block-content-full text-end bg-body">
-						<button type="button" class="btn btn-sm btn-alt-secondary me-1"
-							data-bs-dismiss="modal">닫기</button>
-						<button type="button" id="objUpdateBtn" class="btn btn-sm btn-primary">등록</button>
-					</div>
+					<div class="block-content block-content-full text-center">
+							<button id="objUpdateBtn" class="btn btn-sm btn-primary px-3">등록</button>
+						</div>
 				</div>
 				
 			</div>
@@ -133,7 +131,6 @@
 	</div>
 	<!-- END Objection Modal -->
 	
-	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	<script th:src="@{/resources/assets/js/dialog.js}"></script>
