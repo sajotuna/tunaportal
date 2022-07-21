@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.grade.mapper.GradeMapper">
 
+	<select id="findByStudentNo"
+		    resultType="co.fourth.tuna.domain.user.vo.StudentVO">
+	
+		SELECT *
+		FROM GRADE
+		WHERE SBJNO = #{sbjno}
+		
+	</select>
+
 	<!-- 당해학기 성적 조회 -->
 	<select id="currentSemesterGradeSelect" resultType="map">
 	
