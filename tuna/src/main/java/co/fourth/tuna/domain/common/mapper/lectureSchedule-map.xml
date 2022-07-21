@@ -4,7 +4,7 @@
 	namespace="co.fourth.tuna.domain.common.mapper.LectureScheduleMapper">
 	
 	<select id="findLectureScheduleForSubject"
-		parameterType="LectureScheduleVO"
+		parameterType="co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO"
 		resultType="co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO">
 		<include refid="selectAllWhereNo">
 			<property name="no" value="${vo.no}"/>
