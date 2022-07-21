@@ -43,9 +43,9 @@ public class LectureEvalController {
 	
 	
 	@RequestMapping("/stud/lectureEvaluationSearch")
-	public String lectureEvaluationSearch(String proName, Model model) {
+	public String lectureEvaluationSearch(String proNo, Model model) {
 		
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.EvalAvgScore",proName);
+		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.EvalAvgScore",proNo);
 		model.addAttribute("list", lists);
 		return "course/evaluation/lectureEvaluationSearch";
 	}

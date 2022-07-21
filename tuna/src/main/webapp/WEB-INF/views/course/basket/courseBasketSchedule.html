@@ -504,7 +504,46 @@ Main Components
     .cd-schedule .single-event[data-event="event-5"]:hover {
       background: #f64213;
     }
+	.cd-schedule .single-event[data-event="event-6"],
+    .cd-schedule [data-event="event-6"] .header-bg {
+      background: #808000;
+    }
 
+    .cd-schedule .single-event[data-event="event-6"]:hover {
+      background: #808000;
+    }
+    .cd-schedule .single-event[data-event="event-7"],
+    .cd-schedule [data-event="event-7"] .header-bg {
+      background: #008000;
+    }
+
+    .cd-schedule .single-event[data-event="event-7"]:hover {
+      background: #008000;
+    }
+    .cd-schedule .single-event[data-event="event-8"],
+    .cd-schedule [data-event="event-8"] .header-bg {
+      background: #800000;
+    }
+
+    .cd-schedule .single-event[data-event="event-8"]:hover {
+      background: #800000;
+    }
+    .cd-schedule .single-event[data-event="event-9"],
+    .cd-schedule [data-event="event-9"] .header-bg {
+      background: #800080;
+    }
+
+    .cd-schedule .single-event[data-event="event-9"]:hover {
+      background: #800080;
+    }
+    .cd-schedule .single-event[data-event="event-10"],
+    .cd-schedule [data-event="event-10"] .header-bg {
+      background: #008080;
+    }
+
+    .cd-schedule .single-event[data-event="event-10"]:hover {
+      background: #008080;
+    }
     .cd-schedule .event-modal {
       position: fixed;
       z-index: 3;
@@ -1102,9 +1141,9 @@ xcarbonads
       	  let wentag = document.querySelector("#wen");
       	  let thrtag = document.querySelector("#thrs");
       	  let fritag = document.querySelector("#fri");
-      	  result.forEach(val =>{
+      	let add=1
+      	  result.forEach((val,idx) =>{
       		  
-      		  console.log(result)
       		  
       		  let li = document.createElement('li');
       		  
@@ -1112,8 +1151,19 @@ xcarbonads
       		  li.setAttribute("class", "single-event")
       		  li.setAttribute("data-start", time[0])
       		  li.setAttribute("data-end", time[1])
-      		  li.setAttribute("data-event", "event-3");
-      		  li.setAttribute("data-content", "event-rowing-workout");
+      		  
+      		if(idx == 0){
+      			nameCheck = val.NAME
+      			li.setAttribute("data-event", `event-${add}`);
+      		  }else{
+      			  if(result[idx-1].NAME == val.NAME){
+      				li.setAttribute("data-event", `event-${add}`);
+      			  }else{
+      				add+=1
+      				li.setAttribute("data-event", `event-${add}`);
+      			  }
+      		  }
+      		  
       		  let em = document.createElement('em');
       		  em.className = "event-name"
       		  em.innerHTML = val.NAME

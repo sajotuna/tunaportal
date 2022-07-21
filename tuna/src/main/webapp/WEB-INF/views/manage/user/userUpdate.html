@@ -80,15 +80,15 @@
                       <div class="input-group">
                         <th:block th:if = "${not #strings.isEmpty(vo.bank)}">
                         <span class="input-group-text">은행</span>
-                        <input type="text" class="form-control" th:value = "${@codeList.getName(vo.bacc)}" >
+                        <input type="text" class="form-control" name = "bacc" th:value = "${@codeList.getName(vo.bacc)}" >
                         <span class="input-group-text">계좌번호</span>
-                        <input type="text" class="form-control" th:value = "${vo.bank}" >
+                        <input type="text" class="form-control" name = "bank" th:value = "${vo.bank}" >
                       </th:block>
                       <th:block th:unless = "${not #strings.isEmpty(vo.bank)}">
                         <span class="input-group-text">은행</span>
-                        <input type="text" class="form-control" >
+                        <input type="text" name = "bacc" class="form-control" >
                         <span class="input-group-text">계좌번호</span>
-                        <input type="text" class="form-control" >
+                        <input type="text" name = "bank" class="form-control" >
                       </th:block>
                       </div>
                     </div>

@@ -35,10 +35,11 @@ public class LectureBasketController {
 		params.put("size", 10);
 
 		vo.setStNo(authentication.getName());
+		vo.setSeasonCode("401");
 		List<Map<String, Object>> lists = SqlSession
 				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind", params);
 		List<Map<String, Object>> baskLists = SqlSession
-				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket", vo.getStNo());
+				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket", vo);
 		
 		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
 		

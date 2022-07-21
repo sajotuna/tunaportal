@@ -114,7 +114,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" id = "sbjNo" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm"><a href = "#" id = "subName" th:text = "${sub.NAME}"></a></td>
-                      <td class="fw-semibold fs-sm"><a href="#" id = "proName" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm"><a href="#" id = "proName" th:text = "${sub.PRONAME}"></a><input type = "hidden" name = "PRONO" id="PRONO" th:value = "${sub.PRONO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
@@ -320,9 +320,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   
   
       let proName = document.querySelectorAll('#proName');
-      proName.forEach(btn =>{
+      let proNo = document.querySelectorAll('[name="PRONO"]');
+      proName.forEach((btn,idx) =>{
     	  btn.addEventListener('click', function(){
-    		  window.open("/tuna/stud/lectureEvaluationSearch?proName="+btn.innerHTML, "강의평가조회", "width=650, height=600, top=10, left=10");
+    		  window.open("/tuna/stud/lectureEvaluationSearch?proNo="+proNo[idx].value, "강의평가조회", "width=650, height=600, top=10, left=10");
     	  })
       })
     

@@ -7,10 +7,15 @@
 	select* from student where no = #{no}
 </select>
 
-
 <update id = "studUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
+	<selectKey resultType="String" keyProperty="bacc" order="BEFORE">
+		select no bacc
+		from publiccode
+		where codename = #{bacc}
+	</selectKey>
+
 	update student 
-	set tel = #{tel}, email = #{email}, zip = #{zip}, addr = #{addr}
+	set tel = #{tel}, email = #{email}, zip = #{zip}, addr = #{addr}, bacc = #{bacc}, bank = #{bank}
 	where no = #{no}
 
 </update>
