@@ -117,31 +117,32 @@ xmlns:th="http://www.thymeleaf.org"
                         <div class="row">
                           
                           <div class="col-lg-3">
-                          	<label for="atten">출결</label>
-                            <input class="form-control" name="atten" type="number"
+                          	<label for="atten-ratio">출결</label>
+                            <input id="atten-ratio" class="form-control" name="atten" type="number"
                             th:value="${subject.gradeRatioVO.attd}">
                           </div>
                           <div class="col-lg-3">
-                          	<label class="col" for="middle">중간</label>
-                            <input class="form-control" name="middle" type="number"
+                          	<label class="col" for="middle-ratio">중간</label>
+                            <input id="middle-ratio"class="form-control" name="middle" type="number"
                             th:value="${subject.gradeRatioVO.middle}">
                           </div>
                           <div class="col-lg-3">
-                          	<label class="col" for="final">기말</label>
-                            <input class="form-control" name="final" type="number"
+                          	<label class="col" for="final-ratio">기말</label>
+                            <input id="final-ratio" class="form-control" name="final" type="number"
                             th:value="${subject.gradeRatioVO.finals}"
                             >
                           </div>
                           <div class="col-lg-3">
-                          	<label class="col" for="task">과제</label>
-                            <input class="form-control" name="task" type="number"
+                          	<label class="col" for="task-ratio">과제</label>
+                            <input id="task-ratio" class="form-control" name="task" type="number"
                             th:value="${subject.gradeRatioVO.task}">
                           </div>
                         </div>
                         <hr>
                         <div class="row">
                           <div class="col-10 offset-1 pb-2 col-xxl-2 offset-xxl-10">
-                            <button class="col-12 btn btn-primary">적용</button>
+                            <button class="col-12 btn btn-primary"
+                              onclick="updateSubject()">적용</button>
                           </div>
                         </div>
                       </div>
@@ -170,14 +171,15 @@ xmlns:th="http://www.thymeleaf.org"
                         <tr>
                           <td th:text="${plan.wkCode}-1200">??</td>
                           <td>
-                            <input class="form-control" type="text" th:value="${plan.summary}">
+                            <input th:id="'plan-text-'+${plan.no}" class="form-control plan-text" type="text" th:value="${plan.summary}">
                           </td>
                         </tr>
                       </tbody>
                     </table>
                     <div class="row">
                       <div class="col-10 offset-1 pb-2 col-xxl-2 offset-xxl-10">
-                        <button class="col-12 btn btn-primary">적용</button>
+                        <button class="col-12 btn btn-primary"
+                          onclick="updateSubject()">적용</button>
                       </div>
                     </div>
                   </div>
@@ -198,12 +200,49 @@ xmlns:th="http://www.thymeleaf.org"
         </div> -->
         <!-- 모달 리스트 END -->
         <script>
+          let url = new URL(window.location.href);
+          let params = new URLSearchParams(url.searchParams);
+          let sbjno = params.get('no'); // 파라미터
 
           let header = document.querySelector('meta[name="_csrf_header"]').content;
           let token = document.querySelector('meta[name="_csrf"]').content;
 
+          // 로드 이벤트
+          window.addEventListener("DOMContentLoaded", function() {
+            
+          })
+
           function updateSubject() {
-            fetch(null, {
+            console.log("적용!");
+            let attend = document.getElementById("atten-ratio");
+            let middle = document.getElementById("middle-ratio");
+            let final = document.getElementById("final-ratio");
+            let task = document.getElementById("task-ratio");
+            let plans = document.getElementsByClassName("plan-text");
+            let plansValue = {};
+
+            // console.log(attend.value);
+            // console.log(middle.value);
+            // console.log(final.value);
+            // console.log(task.value);
+            // console.log(plans);
+
+            for (let plan of plans) {
+              //plansValue.set(plan.id.slice("plan-text-".length), plan.value);
+              plansValue[plan.id.slice("plan-text-".length)] = plan.value;
+            }
+
+            let obj = {
+              attd: attend.value,
+              middle: middle.value,
+              finals: final.value,
+              task: task.value,
+              plans: plansValue
+            }
+            console.log(obj);
+            console.log(JSON.stringify(obj));
+
+            fetch("/tuna/prof/updateSubject", {
                 method: "POST",
                 headers: {
                   'header': header,
@@ -211,16 +250,12 @@ xmlns:th="http://www.thymeleaf.org"
                   'Content-Type': 'application/json',
                   'X-CSRF-Token': token
                 },
-                body: JSON.stringify({
-                  sbjno: sbjno
-                })
+                body: JSON.stringify(obj)
               })
               .then(result => result.json())
               .then(result => {
-                resFunc(result);
 
-                offloaderCurtain();
-                tabFlag.set(tabIdx, true);
+                console.log(result);
               })
               .catch((err) => {
                 console.error('fetch 오류', err);
