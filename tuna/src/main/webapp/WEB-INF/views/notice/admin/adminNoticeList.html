@@ -105,20 +105,19 @@
 					<div class="block-content d-flex justify-content-center ">
 						<nav aria-label="Page navigation">
 							<ul class="pagination pagination-sm">
-								<li class="page-item"><a class="page-link"
-									href="javascript:void(0)" tabindex="-1" id="prev"
-									aria-label="Previous"> <span aria-hidden="true"> <i
-											class="fa fa-angle-left"></i>
+								<li class="page-item">
+								<a class="page-link" th:onclick="|javascript:pagingPrev(${paging.range},${paging.rangeSize})|" tabindex="-1" aria-label="Previous">
+								 <span aria-hidden="true"> <i class="fa fa-angle-left"></i>
 									</span> <span class="visually-hidden">Previous</span>
 								</a></li>
-								<li class="page-item"><a class="page-link" id="pageBtn"
-									href="javascript:void(0)">1</a></li>
-								<li class="page-item"><a class="page-link" id="pageBtn"
-									href="javascript:void(0)">2</a></li>
-								<li class="page-item"><a class="page-link" id="pageBtn"
-									href="javascript:void(0)">3</a></li>
+								<li th:each="page: ${#numbers.sequence(paging.startPage, paging.endPage)}"
+									th:classappend="${page == paging.page} ? 'active'"
+									class = "page-itme">
+									<a th:text="${page}" class="page-link" th:onclick="|javascript:pagingNo(${page},${paging.range})|"></a>
+								</li>
+							
 								<li class="page-item"><a class="page-link"
-									href="javascript:void(0)" aria-label="Next" id="next"> <span
+									th:onclick="|javascript:pagingNext(${paging.range},${paging.rangeSize})|" aria-label="Next"> <span
 										aria-hidden="true"> <i class="fa fa-angle-right"></i>
 									</span> <span class="visually-hidden">Next</span>
 								</a></li>
@@ -134,8 +133,7 @@
 		<script>
 		var header = $("meta[name='_csrf_header']").attr('content');
 		var token = $("meta[name='_csrf']").attr('content');
-		
-		
+
 
 		//검색기능
 		function searchList() {
@@ -181,49 +179,33 @@
 		}
 		
 
-		
-		//페이지이동
-		 document.addEventListener('DOMContentLoaded', function(){
-				
-				
-				let nextBtn = document.querySelector("#next")
-				let prevBtn = document.querySelector("#prev")
-				let pageBtn = document.querySelectorAll("#pageBtn");
-				
-					nextBtn.addEventListener('click', function(){
-						pageBtn.forEach(btn =>{
-							let a = btn.innerHTML
-							btn.innerHTML = parseInt(a)+3;
-						})
-					})
-				
-					prevBtn.addEventListener('click', function(){
-						pageBtn.forEach(btn =>{
-							let a = btn.innerHTML
-							if (parseInt(a) > 3){
-								btn.innerHTML = parseInt(a)-3;
-							}
-						
-						})
-					})
-				
-				pageBtn.forEach(btn =>{
-					btn.addEventListener('click',function(){
-						let a = btn.innerHTML
-						location.href = '/tuna/admin/adminNoticeList?pageNum='+parseInt(a)
-					})
-				})
-				
-				
-			})		
-			
+		// 페이징 번호
+		   function pagingNo(page, range) {
+		      let url = getPathRootJump() + 'admin/adminNoticeList';
+		      url = url + '?page=' + page;
+		      url = url + '&range=' + range;
+		      
+		      location.href=url;
+		   }
+		   
+		   // 페이징 이전
+		   function pagingPrev(range, rangeSize) {
+		      let moveRange = (range-1)
+		      pagingNo(((moveRange-1) * rangeSize + 1), moveRange);
+		   }
+		   
+		   // 페이징 다음
+		   function pagingNext(range, rangeSize) {
+		      let moveRange = (range+1)
+		      pagingNo(((moveRange-1) * rangeSize + 1), moveRange);
+		   }
 		
 
 			//삭제버튼 클릭했을 때 이벤트 
-			 $('#delBtn').on('click',function(){		 
-			let job =$(this).data('job');
+		$('#delBtn').on('click',function(){		 
+		let job =$(this).data('job');
 
- 				 pageDialogs.dialog(job)
+ 			pageDialogs.dialog(job)
 				 		 
 				 
 			 })//onclick end

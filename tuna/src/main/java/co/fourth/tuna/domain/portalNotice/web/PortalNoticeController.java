@@ -1,11 +1,8 @@
 package co.fourth.tuna.domain.portalNotice.web;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.fourth.tuna.domain.common.service.FileService;
+import co.fourth.tuna.domain.common.service.PagingService;
+import co.fourth.tuna.domain.common.vo.PagingVO;
 import co.fourth.tuna.domain.portalNotice.service.PortalNoticeService;
+import co.fourth.tuna.domain.portalNotice.vo.NoticePagingVO;
 import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO;
 import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO;
 
@@ -32,20 +32,28 @@ public class PortalNoticeController {
 
 	@Autowired
 	private PortalNoticeService noticeDao;
-
 	@Autowired
 	private FileService fileService;
+	@Autowired
+	PagingService pagingDao;
 
 	// user
 	// 전체조회
 	@RequestMapping("/portalNoticeList")
-	public String portalnoticeList(Model model, PortalNoticeVO vo, @RequestParam(value="pageNum", required=false, defaultValue="1")int pageNum) {
-		int size = 10;
-
-		model.addAttribute("notices", noticeDao.noticeList(1, "전체", pageNum, size));
+	public String portalnoticeList(Model model, PortalNoticeVO vo, @RequestParam(required = false, defaultValue = "1")int page,
+			@RequestParam(required = false, defaultValue = "1" ) int range ){
+	
+		NoticePagingVO nvo =new NoticePagingVO(10);
 		
-		List<PortalNoticeFileVO> list = noticeDao.fileList();
+		PagingVO pvo = pagingDao.getPaging(new PagingVO("portalnotice", nvo.getListSize()));
 
+		nvo.pageInfo(page, range, pvo.getPageCount(), 5);
+		
+		List<PortalNoticeVO> notices = noticeDao.portalNoticeList(1, "전체", nvo.getStartList(), nvo.getEndList());
+		
+		model.addAttribute("notices", notices);
+		model.addAttribute("paging", nvo);
+		
 		return "notice/user/portalNoticeList";
 
 	}
@@ -63,15 +71,20 @@ public class PortalNoticeController {
 	// admin
 	// 전체조회
 	@RequestMapping("/admin/adminNoticeList")
-	public String adminNoticeList(Model model, PortalNoticeVO vo, @RequestParam(value="pageNum", required=false, defaultValue="1")int pageNum) {
+	public String adminNoticeList(Model model, PortalNoticeVO vo, @RequestParam(required = false, defaultValue = "1")int page,
+			@RequestParam(required = false, defaultValue = "1" ) int range) {
 		
-		int size = 10;
+		NoticePagingVO nvo =new NoticePagingVO(10);
 		
+		PagingVO pvo = pagingDao.getPaging(new PagingVO("portalnotice", nvo.getListSize()));
 
-		model.addAttribute("notices", noticeDao.noticeList(1, "전체", pageNum, size));
+		nvo.pageInfo(page, range, pvo.getPageCount(), 5);
 		
-		List<PortalNoticeFileVO> list = noticeDao.fileList();
-
+		List<PortalNoticeVO> notices = noticeDao.adminNoticeList(1, "전체", nvo.getStartList(), nvo.getEndList());
+		
+		model.addAttribute("notices", notices);
+		model.addAttribute("paging", nvo);
+		
 		return "notice/admin/adminNoticeList";
 	}
 
@@ -185,7 +198,7 @@ public class PortalNoticeController {
 			@RequestParam(value="pageNum", required=false, defaultValue="1")int pageNum) {
 		
 		int size = 10;		
-		return noticeDao.noticeList(state, key, pageNum, size);
+		return noticeDao.adminNoticeList(state, key, pageNum, size);
 	}
 
 }

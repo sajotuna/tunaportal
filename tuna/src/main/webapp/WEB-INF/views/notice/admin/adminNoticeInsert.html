@@ -18,9 +18,9 @@
                             <form th:action="@{/admin/adminNoticeInsert(${_csrf.parameterName}=${_csrf.token})}" class="block-content block-content-full" method="post" enctype="multipart/form-data">
                             <div>
                                 <input type="text" name="title"class="mb-4 form-control" id="title"
-                                    placeholder="학사공지 등록">
+                                    required placeholder="학사공지 등록">
                                 <hr>
-                                <textarea class="js-simplemde" id="content" name="content" placeholder="내용을 입력하세요."></textarea>
+                                <textarea required class="js-simplemde" id="content" name="content" placeholder="내용을 입력하세요."></textarea>
                             </div>
                             <hr>
                             <div class="row mb-3">
@@ -29,8 +29,8 @@
                                 </div>
                                 <div class="col-6">
                                     <select id="visible" name="visible"class="form-select">
-                                        <option value="y">공개</option>
-                                        <option value="n">비공개</option>
+                                        <option value="Y">공개</option>
+                                        <option value="N">비공개</option>
                                     </select>
                                 </div>
                             </div>
@@ -45,6 +45,7 @@
             </div>
    
     <script th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
+    
     <script>
         One.helpersOnLoad(['js-simplemde']);
     </script>

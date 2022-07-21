@@ -8,9 +8,13 @@ import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO;
 import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO;
 
 public interface PortalNoticeMapper {
-	List<PortalNoticeVO> noticeList(
+	List<PortalNoticeVO> adminNoticeList(
 			@Param("state") int state, @Param("key") String key,
-			@Param("pageNum") int pageNum, @Param("size")int size);
+			@Param("startList") int startList, @Param("endList")int endList);
+	
+	List<PortalNoticeVO> portalNoticeList(
+			@Param("state") int state, @Param("key") String key,
+			@Param("startList") int startList, @Param("endList")int endList);
 
 	PortalNoticeVO noticeSelect(PortalNoticeVO vo);
 

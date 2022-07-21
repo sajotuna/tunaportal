@@ -109,17 +109,18 @@ html, body {
 	                    		beforeSend : function(xhr) {
 	    							xhr.setRequestHeader(header, token);
 	    						}	                    	
-	                    	}).done(function(){
-	                    		location.reload();
-  	  	                     	calendar.addEvent({
-  	  	                     	 title:title, 
-    			                 start:arg.start, 
-    			                 end:arg.end,
-    			                 allDay: arg.allDay   			                 
-  	  	                      })
-  	  	                      calendar.unselect()
+	                    		}).done(function(){
+	                    		
+	                    			Dialogs.dialog('success', 
+	                    		                   '등록완료', 
+	                    		                   '',
+	                    		         			function(){
+	    	                    		location.reload();
+	                    			}
+	                    		                   );
+	                    		
       
-	                    	})         	
+	                    	})  	
 
 	                    } //end if(title)
 	                  },//end select
@@ -129,7 +130,7 @@ html, body {
 	                	    	  var result = arg.event._def.title.substr(0, 29);
 	                	  Dialogs.dialog('warnConfirm', 
 	                			  '삭제하시겠습니까?', 
-	                			  '*'+ result + '*', 
+	                			  '* '+ result + ' *', 
 				                    function() {
 	                		  
 		                		 $.ajax({
@@ -152,6 +153,7 @@ html, body {
 	                  }
 	                  // 이벤트 
 	                   ,events:calendarList
+	                   
 	                });
 	                // 캘린더 랜더링
 	                calendar.render();

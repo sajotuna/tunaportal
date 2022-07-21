@@ -6,8 +6,10 @@
 <meta charset="UTF-8">
 <title>portalSchedule</title>
 <style>
-.keyWord {
-	font-weight : bold ;
+.searchClass {
+	color :rgb(0, 65, 121);
+	background-color : rgb(207, 230, 250);
+	font-weight :bold;
 }
 </style>
 </head>
@@ -49,7 +51,7 @@
 						<div class="input-group">
 							<input type="text" id="searchText"
 								class="form-control form-control-alt" placeholder="Search">
-							<button id="searchBtn" onclick="searchList()"
+							<button id="searchBtn" 
 								class="btn btn-alt-secondary">
 								<i class="fa fa-search"></i>
 							</button>
@@ -75,8 +77,8 @@
 							</tr>
 						</thead>
 						<!-- thead end -->
-
 						<tbody id="scheduleList">
+						
 						</tbody>
 					</table>
 				</div>
@@ -87,26 +89,24 @@
 $(function(){
 	seasonSelect()
 	makeSchedule()
+	search()
 })
 
 
-// var leng = $('tr').eq(4).text()
-
-/* 			$('#searchBtn').on('click', function(){
-				var text= $('#searchText').val()
-				
-				var tr = $('tr' )
-				var td = $('#Title').text()
-					
-			
-				console.log(tr + '입니다')
-				console.log(td +'인데요')
-				
+function search(){
+	$('#searchBtn').on('click',function(){
+		var searchAnswer = $('#searchAnswer').text()		
 		
+		var search= $('#searchText').val()
+		$(".searchList:contains('"+search+"')").each(function(){
+			var reqex = new RegExp(search, 'gi');
+			$(this).html($(this).text().replace(reqex, "<span class='searchClass'>" +search +"</span>"))
+			
+		})
+	})
+}
 
-				
-			})
- */
+ 
 
 //selectBox 선택할 때 event
 function seasonSelect(){
@@ -135,25 +135,23 @@ function makeSchedule(){
 			
 			//tbody에 tr붙이기
 			$('#scheduleList').append($('<tr>')
-					  .append($('<td>').addClass('text-center fs-sm sorting_1 col-1 rowCheck').text(schedule.month))
-					  .append($('<td>').addClass('fw-semibold fs-sm text-center cod-3').text(day))
-					  .append($('<td>').addClass('d-none d-sm-table-cell fs-sm').text(schedule.content).attr('id','searchAnswer'))		
-						)
-			
-
+					  .append($('<td>').addClass('text-center fs-sm sorting_1 col-1 rowCheck').html(('0'+schedule.month).substr(-2)))
+					  .append($('<td>').addClass('fw-semibold fs-sm text-center').html(day))
+					  .append($('<td>').addClass('d-none d-sm-table-cell fs-sm searchList').html(schedule.content))		
+						)			
 			  
 		}//for end
-		
-		//rowspan function 
-		$('.rowCheck').each(function(){
- 		var rows = $(".rowCheck:contains('" + $(this).text() + "')");
-			if(rows.length>1){
-				rows.eq(0).attr('rowspan', rows.length);
-				rows.not(':eq(0)').remove();
-			}
-			
-		})//rowspan end
-				
+
+ 		//rowspan function 
+ 		$('.rowCheck').each(function(){
+ 
+  			var rows = $(".rowCheck:contains('" + $(this).html() + "')");
+ 			if(rows.length>1){
+ 				rows.eq(0).attr('rowspan', rows.length);
+ 				rows.not(':eq(0)').remove();
+ 			}
+
+ 		})//rowspan end	
 		
 	
 	})//end done
@@ -162,25 +160,6 @@ function makeSchedule(){
 	
 }
 
-function searchList(){
-	let key = $('#searchText').val()
-	$.ajax({
-		url : getPathRootJump() + "scheduleSearch",
-		type:"get",
-		data:{key:key},
-		dataType : "json",
-		success:function(lists){
-		
-			for(list of lists){	
-			console.log(list.content)
-			}
-			
-		},
-		error:function(){
-			
-		}
-	})
-}
 
 
 
