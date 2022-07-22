@@ -47,8 +47,11 @@
 												<th class="text-center" rowspan="1" colspan="2">답변여부</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr th:each="q, i : ${qna}" th:if="${q.VISIBLE} == 0">
+										<tbody th:each="q, i : ${qna}" >
+										<tr th:if="${#strings.isEmpty(qna)}">
+										<td colspan="14">질문이 등록되지 않았습니다.</td>
+										</tr>
+											<tr th:if="${q.VISIBLE} == 0">
 												<td class="text-center" th:text="${i.index+1}"></td>
 												<td class="text-center" colspan="7" th:onclick="|location.href='@{/eclass/student/qnaSelect}?no=${q.NO}&sbjNo=${q.SBJNO}'|" th:text="${q.TITLE}"></td>
 												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
@@ -65,7 +68,7 @@
 							</div>
 							<div class="d-flex justify-content-center">
 								<button type="button"
-									th:onclick="|location.href='@{/eclass/student/qnaInsert}?sbjNo=${qna[0].SBJNO}'|"
+									th:onclick="|location.href='@{/eclass/student/qnaInsert}?sbjNo=${sbjNo}'|"
 									class="btn btn-primary m-2">등록</button>
 							</div>
 							<div class="row">
