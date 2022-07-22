@@ -23,7 +23,7 @@ public class LectureQnaVO {
 	private String answer;
 	private Date answerDate;
 	private int stNo;
-	private int sbjNo;
+	private String sbjNo;
 	private int visible;
 	
 	private StudentVO studentVO;

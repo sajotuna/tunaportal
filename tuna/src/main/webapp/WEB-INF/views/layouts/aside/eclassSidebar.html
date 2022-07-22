@@ -26,11 +26,11 @@
 	     <div class="content-side">
 	     <div class="row">
 	     <div class="d-flex justify-content-center">
-	     <select class="form-select" style="width:180px;" id="example-select-floating" name="example-select-folating" aria-label="Floating label select example">
+	     <select class="form-select" style="width:180px;" id="example-select-floating seasonCode" name="example-select-folating seasonCode" aria-label="Floating label select example">
 	     <option selected>연도학기</option>
-	     <option value="104">2021년 2학기</option>
-	     <option value="105">2022년 1학기</option>
-	     <option value="106">2022년 2학기</option>
+	     <option th:value="104">2021년 2학기</option>
+	     <option th:value="105">2022년 1학기</option>
+	     <option th:value="106">2022년 2학기</option>
 	     </select>
 	     </div>
 	     </div>
@@ -49,37 +49,37 @@
 	           </a>
 	           <ul class="nav-main-submenu">
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/eclass/student/lectureHome}">
+	               <a class="nav-main-link" th:href="@{/eclass/student/lectureHome(sbjNo=${s.SBJNO})}">
 	                 <span class="nav-main-link-name">홈</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/eclass/student/lectureNotice}">
+	               <a class="nav-main-link" th:href="@{/eclass/student/lectureNotice(sbjNo=${s.SBJNO})}">
 	                 <span class="nav-main-link-name">공지사항</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/eclass/student/lecturePlan}">
+	               <a class="nav-main-link" th:href="@{/eclass/student/lecturePlan(sbjNo=${s.SBJNO})}">
 	                 <span class="nav-main-link-name">강의계획서</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/eclass/student/download}">
+	               <a class="nav-main-link" th:href="@{/eclass/student/download(sbjNo=${s.SBJNO})}">
 	                 <span class="nav-main-link-name">자료실</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/eclass/student/taskList}">
+	               <a class="nav-main-link" th:href="@{/eclass/student/taskList(sbjNo=${s.SBJNO})}">
 	                 <span class="nav-main-link-name">과제</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/eclass/student/qnaList}">
+	               <a class="nav-main-link" th:href="@{/eclass/student/qnaList(sbjNo=${s.SBJNO})}">
 	                 <span class="nav-main-link-name">Q&A</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/eclass/student/attendance}">
+	               <a class="nav-main-link" th:href="@{/eclass/student/attendance(sbjNo=${s.SBJNO})}">
 	                 <span class="nav-main-link-name">출석</span>
 	               </a>
 	             </li>
