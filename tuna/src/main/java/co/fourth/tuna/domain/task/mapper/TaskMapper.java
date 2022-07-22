@@ -2,6 +2,8 @@ package co.fourth.tuna.domain.task.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 
@@ -24,5 +26,7 @@ public interface TaskMapper {
 	// 과목으로 과제 조회
 	public List<TaskVO> findListBySubjectId(int sbjno);
 	
-	public SubmitTaskVO findSubmitTasksByTaskIdAndStudentId(int taskno, int stno);
+	public SubmitTaskVO findSubmitTasksByTaskIdAndStudentId(
+			@Param("taskno")int taskno, 
+			@Param("stno")int stno);
 }

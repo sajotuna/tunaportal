@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.user.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,12 @@ public class StudentServiceImpl implements StudentService {
 			student.setGradeVO(grade);
 			for(TaskVO task : tasks) {
 				SubmitTaskVO subTask = taskMap.findSubmitTasksByTaskIdAndStudentId(task.getNo(), student.getNo());
-				student.getSubmitTaskList().add(subTask);
+				if(student.getSubmitTaskList() != null) {
+					student.getSubmitTaskList().add(subTask);
+				} else {
+					student.setSubmitTaskList(new ArrayList<SubmitTaskVO>());
+					student.getSubmitTaskList().add(subTask);
+				}
 			}
 		}
 		

@@ -219,7 +219,7 @@ xmlns:th="http://www.thymeleaf.org"
             let final = document.getElementById("final-ratio");
             let task = document.getElementById("task-ratio");
             let plans = document.getElementsByClassName("plan-text");
-            let plansValue = {};
+            let plansList = [];
 
             // console.log(attend.value);
             // console.log(middle.value);
@@ -227,22 +227,30 @@ xmlns:th="http://www.thymeleaf.org"
             // console.log(task.value);
             // console.log(plans);
 
-            for (let plan of plans) {
+            for (let planEle of plans) {
               //plansValue.set(plan.id.slice("plan-text-".length), plan.value);
-              plansValue[plan.id.slice("plan-text-".length)] = plan.value;
+              //plansValue[plan.id.slice("plan-text-".length)] = plan.value;
+              let plan = {
+                no: planEle.id.slice("plan-text-".length),
+                summary: planEle.value
+              }
+              plansList.push(plan);
             }
 
             let obj = {
-              attd: attend.value,
-              middle: middle.value,
-              finals: final.value,
-              task: task.value,
-              plans: plansValue
+              gradeRatio: {
+                no: sbjno,
+                attd: attend.value,
+                middle: middle.value,
+                finals: final.value,
+                task: task.value
+              },
+              plans: plansList
             }
-            console.log(obj);
-            console.log(JSON.stringify(obj));
+            // console.log(obj);
+            // console.log(JSON.stringify(obj));
 
-            fetch("/tuna/prof/updateSubject", {
+            fetch("/tuna/professor/updateSubject", {
                 method: "POST",
                 headers: {
                   'header': header,
@@ -254,7 +262,6 @@ xmlns:th="http://www.thymeleaf.org"
               })
               .then(result => result.json())
               .then(result => {
-
                 console.log(result);
               })
               .catch((err) => {

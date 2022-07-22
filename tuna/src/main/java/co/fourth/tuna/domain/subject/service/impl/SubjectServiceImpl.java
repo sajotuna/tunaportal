@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.fourth.tuna.domain.common.mapper.LectureScheduleMapper;
+import co.fourth.tuna.domain.grade.vo.GradeVO;
 import co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper;
 import co.fourth.tuna.domain.subject.mapper.GradeRatioMapper;
 import co.fourth.tuna.domain.subject.mapper.SubjectMapper;
 import co.fourth.tuna.domain.subject.service.SubjectService;
+import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
@@ -56,6 +58,20 @@ public class SubjectServiceImpl implements SubjectService {
 		subject.setGradeRatioVO(gradeRatioMap.findOneById(no));
 		subject.setLecturePlanList(planMap.findListBySubjectId(no));
 		return subject;
+	}
+
+	@Override
+	public String updateGradeRatio(GradeRatioVO gradeRatio) {
+		int sum = gradeRatio.getAttd() + gradeRatio.getFinals() + gradeRatio.getMiddle() + gradeRatio.getTask();
+		
+		if(sum < 100) {
+			return "합계가 100이 되어야 합니다.";
+		}
+		
+		if(gradeRatioMap.updateGradeRatioByNo(gradeRatio) < 1) {
+			return "업데이트 실패";
+		}
+		return "성공";
 	}
 	
 	

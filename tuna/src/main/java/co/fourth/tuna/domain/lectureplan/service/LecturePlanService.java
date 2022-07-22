@@ -13,4 +13,6 @@ public interface LecturePlanService {
 	public LecturePlanVO selectSc(LecturePlanVO vo);
 	
 	public List<LecturePlanVO> findListBySubjectId(int sbjno);
+	
+	public String updatePlanList(List<LecturePlanVO> planList);
 }

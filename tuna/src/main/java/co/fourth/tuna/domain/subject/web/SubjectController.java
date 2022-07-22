@@ -1,10 +1,12 @@
 package co.fourth.tuna.domain.subject.web;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import co.fourth.tuna.domain.lectureplan.service.LecturePlanService;
 import co.fourth.tuna.domain.subject.service.SubjectService;
+import co.fourth.tuna.domain.subject.vo.SubjectUpdateForm;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 
 
@@ -25,6 +25,7 @@ public class SubjectController {
 	
 	@Autowired SqlSession SqlSession;
 	@Autowired SubjectService subjectDao;
+	@Autowired LecturePlanService lecPlanService;
 	
 	@ResponseBody
 	@RequestMapping("/courseCheck")
@@ -39,21 +40,19 @@ public class SubjectController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/prof/updateSubject")
-	public String updateSubject(
-			@RequestBody String reqData) {
-		HashMap<String, Object> jsonMap = null;
-		try {
-			jsonMap = new ObjectMapper().readValue(reqData, HashMap.class);
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(jsonMap.get("plans").getClass());
-		return null;
+	@PostMapping("/professor/updateSubject")
+	public ResponseEntity updateSubject(
+			@RequestBody SubjectUpdateForm form) {
+		
+		String subjectResult = subjectDao.updateGradeRatio(form.getGradeRatio());
+		String planResult = lecPlanService.updatePlanList(form.getPlans());
+		
+		List<String> resultMsg = new ArrayList<String>();
+		
+		resultMsg.add(subjectResult);
+		resultMsg.add(planResult);
+		
+		return new ResponseEntity<>( resultMsg ,HttpStatus.OK);
 	}
 	
 }

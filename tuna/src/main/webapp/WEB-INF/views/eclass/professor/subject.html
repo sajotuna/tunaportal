@@ -117,7 +117,7 @@ xmlns:th="http://www.thymeleaf.org"
                         </button>
                       </div>
                       <div class="col-10 offset-1 col-xxl-3 offset-xxl-0">
-                        <button class="col-12 btn btn-primary">
+                        <button th:onclick="|location.href='@{/eclass/professor/subjectForm(no=${param.no})}'|" class="col-12 btn btn-primary">
                           수정 
                         </button>
                       </div>

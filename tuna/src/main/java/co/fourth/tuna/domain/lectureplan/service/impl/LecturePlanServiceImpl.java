@@ -31,6 +31,16 @@ public class LecturePlanServiceImpl implements LecturePlanService{
 		return mapper.findListBySubjectId(sbjno);
 	}
 
+	@Override
+	public String updatePlanList(List<LecturePlanVO> planList) {
+		List<LecturePlanVO> list = planList;
+		for(LecturePlanVO plan : list) {
+			mapper.updateOneByNo(plan);
+		}
+		
+		return "성공";
+	}
+
 
 	
 	

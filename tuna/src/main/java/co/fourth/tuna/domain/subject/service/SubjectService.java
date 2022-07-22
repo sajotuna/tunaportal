@@ -22,5 +22,5 @@ public interface SubjectService {
 //	List<Map<String, Object>> getMapsForLectureSchedule(int pageNum, int size);
 //	List<Map<String, Object>> getMapsForLectureScheduleByProf(ProfessorVO prof, int pageNum, int size);
 	
-	
+	public String updateGradeRatio(GradeRatioVO grade);
 }

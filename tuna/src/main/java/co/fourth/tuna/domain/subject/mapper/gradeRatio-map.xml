@@ -9,4 +9,15 @@
 		FROM graderatio
 		WHERE no = #{no}
 	</select>
+	
+	<update id="updateGradeRatioByNo"
+		parameterType="GradeVO">
+		UPDATE graderatio 
+		SET
+			middle = #{middle},
+			finals = #{finals},
+			task = #{task},
+			attd = #{attd}
+		WHERE no = #{no}
+	</update>
 </mapper>
