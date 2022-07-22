@@ -40,7 +40,7 @@
 								<select id="seasonSelect" name="seasonCode" class="form-select">
 									<option value="107">2023 1학기</option>
 									<option value="106">2022 2학기</option>
-									<option value="105" selected>2022 1학기</option>
+									<option value="105">2022 1학기</option>
 								</select>
 							</div>
 
@@ -94,14 +94,22 @@ $(function(){
 
 
 function search(){
+	let searchList = [];
+	
 	$('#searchBtn').on('click',function(){
-		var searchAnswer = $('#searchAnswer').text()		
+		searchList.push($('#searchText').val());
+		let prevSearch = searchList[searchList.length-2];
 		
-		var search= $('#searchText').val()
+		if(searchList.length > 0){
+			$(".searchList:contains('"+prevSearch+"')").each(function(){
+				var prevReqex = new RegExp(prevSearch, 'gi');
+				$(this).html($(this).text().replace(prevReqex, prevSearch));
+			})
+		}
+		var search= $('#searchText').val();
 		$(".searchList:contains('"+search+"')").each(function(){
 			var reqex = new RegExp(search, 'gi');
-			$(this).html($(this).text().replace(reqex, "<span class='searchClass'>" +search +"</span>"))
-			
+			$(this).html($(this).text().replace(reqex, "<span class='searchClass'>" +search +"</span>"));
 		})
 	})
 }

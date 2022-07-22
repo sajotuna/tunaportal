@@ -32,8 +32,9 @@ INSERT INTO
 					ENDDATE,
 					CONTENT,
 					SEASONCODE,
+					SCHEDULECODE,
 					ADNO)
-VALUES (#{no}, #{startDate}, #{endDate}, #{content}, #{seasonCode}, 100482)
+VALUES (#{no}, #{startDate}, #{endDate}, #{content}, #{seasonCode}, #{scheduleCode}, #{adNo})
 </insert>
 
 <select id="findOneBySeasonCode"

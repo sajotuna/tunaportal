@@ -5,13 +5,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.common.service.YearService;
@@ -53,6 +53,7 @@ public class PortalScheduleController {
 	public String adminSchedule() {
 		return "schedule/admin/adminSchedule";
 	}
+	
 
 	@GetMapping("/admin/adminScheduleList")
 	@ResponseBody
@@ -65,8 +66,8 @@ public class PortalScheduleController {
 
 	@PostMapping("/admin/adminScheduleInsert")
 	@ResponseBody
-	public int scheduleInsert(@RequestBody PortalScheduleVO vo) {			
-		vo.setSeasonCode(yearService.yearFind());
+	public int scheduleInsert(@RequestBody PortalScheduleVO vo, Authentication authentication) {		
+		vo.setAdNo((authentication.getName()));
 		logger.info("insert::" + vo);
 		
 		return scheduleDao.scheduleInsert(vo);
