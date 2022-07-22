@@ -149,22 +149,24 @@ public class EclassStudentEclassController {
 		System.out.println("req : " + req);
 		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		vo.setStNo(Integer.parseInt(authentication.getName()));
-		List<Map<String, Object>> sbjno = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
 		
-//		System.out.println(sbjno);
+		LectureQnaVO sbjno = vo;
+		
+		System.out.println(sbjno);
 		model.addAttribute("sbjno", sbjno);
 		
 		return "eclass/stud/qnaInsert";
 	}
 	
 	//질의응답등록
-	@PostMapping("/insertOneQna")
+	@RequestMapping("/insertOneQna")
 	public String insertOneQna(Model model, LectureQnaVO vo, 
 			HttpServletRequest req, Authentication authentication) {
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
+		System.out.println(vo);
 		 
 		 qnaDao.insertOneQna(vo);
 		 
