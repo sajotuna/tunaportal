@@ -54,7 +54,7 @@
                     <div class="mb-3">
                       <div class="input-group">
                         <span class="input-group-text">학번</span>
-                        <input type="text" class="form-control" th:value = "${vo.no}" readonly>
+                        <input type="text" class="form-control" id = "no" th:value = "${vo.no}" readonly>
                         <span class="input-group-text">학년</span>
                         <input type="text" class="form-control" th:value = "${vo.sy}" readonly>
                         <span class="input-group-text">입학날짜</span>
@@ -138,8 +138,11 @@
     <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+    
+    
       function showPopup(){
-          window.open("/tuna/pwdUpdate","비밀번호변경","width=600, height=400, top=10, left=10");
+    	  let no = document.querySelector('#no')
+          window.open("/tuna/pwdUpdate?no="+no.value,"비밀번호변경","width=600, height=400, top=10, left=10");
       }
 
       function execDaumPostcode() {

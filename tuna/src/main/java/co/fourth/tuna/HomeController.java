@@ -1,12 +1,9 @@
 package co.fourth.tuna;
 
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Locale;
 
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -19,12 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import co.fourth.tuna.domain.user.service.AdminService;
-import co.fourth.tuna.domain.user.service.ProfessorService;
-import co.fourth.tuna.domain.user.service.StudentService;
-import co.fourth.tuna.domain.user.vo.AdminVO;
-import co.fourth.tuna.domain.user.vo.ProfessorVO;
-import co.fourth.tuna.domain.user.vo.StudentVO;
 
 /**
  * Handles requests for the application home page.
@@ -36,34 +27,9 @@ public class HomeController {
 
 	@Autowired
 	private JavaMailSender mailSender;
-	@Autowired 
-	private ProfessorService professorDao;
-	@Autowired 
-	private StudentService StudentDao;
-	@Autowired 
-	private AdminService AdminDao;
 	
 	@RequestMapping(value = "/home")
 	public String home(HttpServletResponse response ,Locale locale, Model model,Authentication authentication) {
-		
-		if(authentication.getName().length() == 8) {
-			StudentVO vo = new StudentVO();
-			vo.setNo(Integer.parseInt(authentication.getName()));
-			vo = StudentDao.findById(vo);
-			model.addAttribute("vo", vo);
-		}else if(authentication.getName().length() == 6) {
-			AdminVO vo = new AdminVO();
-			vo.setNo(Integer.parseInt(authentication.getName()));
-			vo = AdminDao.findById(vo);
-			model.addAttribute("vo", vo);
-		}else if(authentication.getName().length() == 5) {
-			ProfessorVO vo = new ProfessorVO();
-			vo.setNo(Integer.parseInt(authentication.getName()));
-			vo = professorDao.findById(vo);
-			model.addAttribute("vo", vo);
-		}else {
-		}
-		
 		
 		return "home";
 	}

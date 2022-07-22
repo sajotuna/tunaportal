@@ -10,6 +10,7 @@ public interface StudentService {
 	public StudentVO findById(StudentVO vo);
 	public void studUpdate(StudentVO vo);
 	public void AdminStudUpdate(StudentVO vo);
-	
+	public void studPwdUpdate(StudentVO vo);
 	public List<StudentExVO> findListBySubjectId(int sbjno);
+	public StudentVO findByUserId(StudentVO vo);
 }

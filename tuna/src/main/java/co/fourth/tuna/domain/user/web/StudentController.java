@@ -2,6 +2,7 @@ package co.fourth.tuna.domain.user.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,8 @@ public class StudentController {
 	@Autowired 
 	private StudentService StudentDao;
 
+	@Autowired
+	private BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
 	@RequestMapping("/stud/userUpdate")
 	public String userUpdate(Model model, StudentVO vo, Authentication authentication) {
@@ -42,6 +45,16 @@ public class StudentController {
 		StudentDao.AdminStudUpdate(vo);
 		ra.addAttribute("no", vo.getNo());
 		return "redirect:/admin/adminUserInfo";
+	}
+	
+	@RequestMapping("/userpwdUpdate")
+	public String userpwdUpdate(Model model, String beforepassword, StudentVO vo){
+		
+		
+		vo.setPwd(enc.encode(vo.getPwd()));
+		StudentDao.studPwdUpdate(vo);
+		return "redirect:/pwdUpdate";
+		
 	}
 	
 	
