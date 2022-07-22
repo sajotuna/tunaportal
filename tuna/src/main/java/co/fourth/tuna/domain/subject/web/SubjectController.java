@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,8 @@ import co.fourth.tuna.domain.lectureplan.service.LecturePlanService;
 import co.fourth.tuna.domain.subject.service.SubjectService;
 import co.fourth.tuna.domain.subject.vo.SubjectUpdateForm;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.util.ResState;
+import co.fourth.tuna.util.ServiceResponseVO;
 
 
 @Controller
@@ -40,19 +43,22 @@ public class SubjectController {
 	}
 	
 	@ResponseBody
+	@Transactional
 	@PostMapping("/professor/updateSubject")
 	public ResponseEntity updateSubject(
 			@RequestBody SubjectUpdateForm form) {
 		
-		String subjectResult = subjectDao.updateGradeRatio(form.getGradeRatio());
-		String planResult = lecPlanService.updatePlanList(form.getPlans());
+		ServiceResponseVO planResult = lecPlanService.updatePlanList(form.getPlans());
+		if(planResult.getState() == ResState.ERROR) {
+			return new ResponseEntity<>( planResult.getMessage(), HttpStatus.BAD_REQUEST );
+		}
 		
-		List<String> resultMsg = new ArrayList<String>();
+		ServiceResponseVO subjectResult = subjectDao.updateGradeRatio(form.getGradeRatio());
+		if(subjectResult.getState() == ResState.ERROR) {
+			return new ResponseEntity<>( subjectResult.getMessage(), HttpStatus.BAD_REQUEST );
+		}
 		
-		resultMsg.add(subjectResult);
-		resultMsg.add(planResult);
-		
-		return new ResponseEntity<>( resultMsg ,HttpStatus.OK);
+		return new ResponseEntity<>( "성공" ,HttpStatus.OK);
 	}
 	
 }

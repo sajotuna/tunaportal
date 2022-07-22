@@ -14,6 +14,8 @@ import co.fourth.tuna.domain.subject.service.SubjectService;
 import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
+import co.fourth.tuna.util.ResState;
+import co.fourth.tuna.util.ServiceResponseVO;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -61,17 +63,17 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
-	public String updateGradeRatio(GradeRatioVO gradeRatio) {
+	public ServiceResponseVO updateGradeRatio(GradeRatioVO gradeRatio) {
 		int sum = gradeRatio.getAttd() + gradeRatio.getFinals() + gradeRatio.getMiddle() + gradeRatio.getTask();
 		
-		if(sum < 100) {
-			return "합계가 100이 되어야 합니다.";
+		if(sum < 100 || sum > 100) {
+			return new ServiceResponseVO(ResState.ERROR, "합계값이 100이 되어야 합니다.");
 		}
 		
 		if(gradeRatioMap.updateGradeRatioByNo(gradeRatio) < 1) {
-			return "업데이트 실패";
+			return new ServiceResponseVO(ResState.ERROR, "오류가 발생 했습니다.");
 		}
-		return "성공";
+		return new ServiceResponseVO(ResState.SUCESS, "성공");
 	}
 	
 	

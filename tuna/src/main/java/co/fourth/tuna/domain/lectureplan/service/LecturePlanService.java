@@ -3,6 +3,7 @@ package co.fourth.tuna.domain.lectureplan.service;
 import java.util.List;
 
 import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
+import co.fourth.tuna.util.ServiceResponseVO;
 
 public interface LecturePlanService {
 
@@ -14,5 +15,5 @@ public interface LecturePlanService {
 	
 	public List<LecturePlanVO> findListBySubjectId(int sbjno);
 	
-	public String updatePlanList(List<LecturePlanVO> planList);
+	public ServiceResponseVO updatePlanList(List<LecturePlanVO> planList);
 }

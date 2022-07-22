@@ -13,9 +13,11 @@ xmlns:th="http://www.thymeleaf.org"
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
     <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
     <link rel="stylesheet" href="../assets/js/plugins/simplemde/simplemde.min.css">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+    <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+    <script th:src="@{/resources/assets/js/dialog.js}"></script>
   </head>
   <body>
-
     <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
       <div id="page-overlay"></div>
 
@@ -141,8 +143,8 @@ xmlns:th="http://www.thymeleaf.org"
                         <hr>
                         <div class="row">
                           <div class="col-10 offset-1 pb-2 col-xxl-2 offset-xxl-10">
-                            <button class="col-12 btn btn-primary"
-                              onclick="updateSubject()">적용</button>
+                            <button id="subject-submit-btn1" class="col-12 btn btn-primary"
+                              >적용</button>
                           </div>
                         </div>
                       </div>
@@ -178,8 +180,8 @@ xmlns:th="http://www.thymeleaf.org"
                     </table>
                     <div class="row">
                       <div class="col-10 offset-1 pb-2 col-xxl-2 offset-xxl-10">
-                        <button class="col-12 btn btn-primary"
-                          onclick="updateSubject()">적용</button>
+                        <button id="subject-submit-btn2" class="col-12 btn btn-primary"
+                          >적용</button>
                       </div>
                     </div>
                   </div>
@@ -209,11 +211,21 @@ xmlns:th="http://www.thymeleaf.org"
 
           // 로드 이벤트
           window.addEventListener("DOMContentLoaded", function() {
-            
+            let btn1 = document.getElementById("subject-submit-btn1");
+            let btn2 = document.getElementById("subject-submit-btn2");
+
+            btn1.addEventListener("click", function() {
+              Dialogs.dialog('checkConfirm',
+                '수정하시겠습니까?',
+                '',
+                updateSubject
+              )
+            });
           })
 
+
           function updateSubject() {
-            console.log("적용!");
+            
             let attend = document.getElementById("atten-ratio");
             let middle = document.getElementById("middle-ratio");
             let final = document.getElementById("final-ratio");
@@ -260,16 +272,43 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify(obj)
               })
-              .then(result => result.json())
-              .then(result => {
-                console.log(result);
+              .then(res => {
+                let text = res.text();
+                if(res.ok) {
+                  Dialogs.dialog(
+                    'success',
+                    '수정완료',
+                    text,
+                    function() {
+                      window.location.reload();
+                    }
+                  )
+                } else {
+                  Dialogs.dialog(
+                    'error',
+                    '실패',
+                    text,
+                    function() {
+                      window.location.reload();
+                    }
+                  )
+                }
               })
               .catch((err) => {
-                console.error('fetch 오류', err);
-
+                //console.error('fetch 오류', err);
+                Dialogs.dialog("error",
+                  "오류 발생",
+                  err,
+                  function() {
+                    console.error(err);
+                  })
               })
           }
           
+        </script>
+
+        <script>
+
         </script>
       </main>
 
