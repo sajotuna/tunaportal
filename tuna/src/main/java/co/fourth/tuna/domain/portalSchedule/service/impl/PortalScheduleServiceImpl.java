@@ -50,7 +50,6 @@ public class PortalScheduleServiceImpl implements PortalScheduleService {
 		return map.findTuitionSchedule(vo);
 	}
 	
-	
-	
+
 }
 
