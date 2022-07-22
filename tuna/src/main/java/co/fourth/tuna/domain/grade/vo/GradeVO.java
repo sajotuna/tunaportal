@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 public class GradeVO {
@@ -17,4 +18,7 @@ public class GradeVO {
 	private int total;
 	private int stNo;
 	private int sbjNo;
+	
+	private String alphabet;
+	private double score;
 }

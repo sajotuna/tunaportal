@@ -6,6 +6,8 @@ import java.util.Map;
 import co.fourth.tuna.domain.objection.vo.ObjectionVO;
 
 public interface ObjectionService {
+	
+	public List<ObjectionVO> findListBySubjectId(int sbjno);
 
 	public List<ObjectionVO> objectionListOfStud(ObjectionVO vo);
 	public List<Map<String, Object>> objectionListOfProf(int pfNo, String seasonCode);

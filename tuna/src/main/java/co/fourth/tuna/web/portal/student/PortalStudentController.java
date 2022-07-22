@@ -10,18 +10,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import co.fourth.tuna.domain.banner.web.BannerController;
+import co.fourth.tuna.domain.common.service.DateCheckService;
 import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.grade.service.GradeService;
 
 @Controller
 public class PortalStudentController {
 	
-	private static Logger logger = LoggerFactory.getLogger(BannerController.class); 
+	private static Logger logger = LoggerFactory.getLogger(PortalStudentController.class); 
 	
 	@Autowired GradeService gradeDao;
 	@Autowired YearService yearDao;
+	@Autowired DateCheckService dateCheckDao;
 	
 	// 강의/성적 조회
 	@RequestMapping("/stud/subjectAndReport")
@@ -49,23 +51,33 @@ public class PortalStudentController {
 	
 	// 당해학기 성적 조회
 	@RequestMapping("/stud/currentSemesterGrade")
-	public String currentSemesterGrade(Authentication authentication, Model model) {
+	public String currentSemesterGrade(Authentication authentication, Model model, RedirectAttributes redirectAttributes) {
 		List<Map<String, Object>> grades = gradeDao.currentSemesterGradeSelect(Integer.parseInt(authentication.getName()), yearDao.yearFind());
 		Map<String, Object> total = gradeDao.currentSemesterGradeTotal(Integer.parseInt(authentication.getName()), yearDao.yearFind());
 		
-		boolean findN = false;
-		for (int i=0; i<grades.size(); i++) {
-			if (grades.get(i).get("EVALSTATE").toString().equals("N")) {
-				findN = true;
+		int result = dateCheckDao.accessDateCheck(yearDao.yearFind(), "1106");
+		
+		if (result > 0) {
+			
+			boolean findN = false;
+			for (int i=0; i<grades.size(); i++) {
+				if (grades.get(i).get("EVALSTATE").toString().equals("N")) {
+					findN = true;
+				}
 			}
-		}
-		if (findN) {
-			total.put("AVG", "비공개");
+			if (findN) {
+				total.put("AVG", "비공개");
+			}
+			
+			model.addAttribute("grades", grades);
+			model.addAttribute("total", total);
+			return "portal/stud/currentSemesterGrade";
+		} else {
+			redirectAttributes.addAttribute("message", "성적 조회 기간이 아닙니다.");
+			return "redirect:home";
 		}
 		
-		model.addAttribute("grades", grades);
-		model.addAttribute("total", total);
-		return "portal/stud/currentSemesterGrade";
+		
 	}
 	
 }
