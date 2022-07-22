@@ -85,5 +85,4 @@ public class UserController {
 			@RequestBody Map<String, Integer> reqData) {
 		return StudentDao.findListBySubjectId(reqData.get("sbjno"));
 	}
-	
 }

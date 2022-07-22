@@ -91,5 +91,11 @@
 			
 	</select>
 	<!-- END 보관 성적 조회 -->
-
+	<select id="findOneByStudentIdAndSubjectId"
+		resultType="co.fourth.tuna.domain.grade.vo.GradeVO">
+		SELECT *
+		FROM grade
+		WHERE stno = #{stno}
+			AND sbjno = #{sbjno}
+	</select>
 </mapper>
