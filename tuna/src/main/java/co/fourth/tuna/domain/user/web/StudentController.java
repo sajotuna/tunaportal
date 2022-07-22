@@ -48,11 +48,23 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/userpwdUpdate")
-	public String userpwdUpdate(Model model, String beforepassword, StudentVO vo){
+	public String userpwdUpdate(RedirectAttributes ra,Model model, String beforepassword, StudentVO vo){
+		
+		String oldpwd = StudentDao.findStudPwd(vo);
+		String message = "";
+		if(enc.matches(beforepassword,oldpwd)) {
+			vo.setPwd(enc.encode(vo.getPwd()));
+			StudentDao.studPwdUpdate(vo);
+			System.out.println("비밀번호 변경");
+			message = "비밀번호가 변경 되었습니다.";
+		}else {
+			System.out.println("비밀번호 변경실패");
+			message = "비밀번호가 틀립니다.";
+		}
+		
+		ra.addAttribute("message", message);
 		
 		
-		vo.setPwd(enc.encode(vo.getPwd()));
-		StudentDao.studPwdUpdate(vo);
 		return "redirect:/pwdUpdate";
 		
 	}

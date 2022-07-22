@@ -113,6 +113,12 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 		return vo;
 	}
 
+	@Override
+	public String findStudPwd(StudentVO vo) {
+		
+		return mapper.findStudPwd(vo);
+	}
+
 	
 	
 
