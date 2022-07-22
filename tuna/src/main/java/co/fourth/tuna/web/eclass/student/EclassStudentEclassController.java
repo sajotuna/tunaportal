@@ -146,14 +146,18 @@ public class EclassStudentEclassController {
 	@RequestMapping("/qnaInsert")
 	public String qnaInsert(Model model, LectureQnaVO vo, HttpServletRequest req, Authentication authentication) {
 		
-		System.out.println("req : " + req);
-		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
-		vo.setStNo(Integer.parseInt(authentication.getName()));
 		
-		LectureQnaVO sbjno = vo;
+		System.out.println(1235234548);
+//		System.out.println("req : " + req);
+//		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
+//		vo.setStNo(Integer.parseInt(authentication.getName()));
+//		
+//		LectureQnaVO sbjno = vo;
+//		
+//		System.out.println(sbjno);
+//		model.addAttribute("sbjno", sbjno);
 		
-		System.out.println(sbjno);
-		model.addAttribute("sbjno", sbjno);
+		System.out.println("나오나" + vo);
 		
 		return "eclass/stud/qnaInsert";
 	}
@@ -164,7 +168,6 @@ public class EclassStudentEclassController {
 			HttpServletRequest req, Authentication authentication) {
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
-		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
 		System.out.println(vo);
 		 
