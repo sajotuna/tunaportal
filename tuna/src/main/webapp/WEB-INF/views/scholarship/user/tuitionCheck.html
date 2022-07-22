@@ -84,6 +84,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	              </div>
 	           </div>
             </div>
+            <embed height="1000px" width = "1150px" target="_self">
             <table class="table table-striped table-vcenter table-bordered">
               <thead>
                 <tr>
@@ -114,20 +115,19 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                 </tr>
                 <tr>
                   <th class="fw-semibold fs-sm">수업료</th>
+                  <td class="fw-semibold fs-sm" id = "tuition"></td>
                   <td class="fw-semibold fs-sm"></td>
                   <td class="fw-semibold fs-sm"></td>
                   <td class="fw-semibold fs-sm"></td>
-                  <td class="fw-semibold fs-sm"></td>
-                  <td class="fw-semibold fs-sm"></td>
+                  <td class="fw-semibold fs-sm" id = "tuitionSum" rowspan="2"></td>
 
                 </tr>
                 <tr>
                   <th class="fw-semibold fs-sm">총계</th>
                   <td class="fw-semibold fs-sm"></td>
-                  <td class="fw-semibold fs-sm"></td>
-                  <td class="fw-semibold fs-sm"></td>
-                  <td class="fw-semibold fs-sm"></td>
-                  <td class="fw-semibold fs-sm"></td>
+                  <td class="fw-semibold fs-sm"id = "goodGrade"></td>
+                  <td class="fw-semibold fs-sm"id = "family"></td>
+                  <td class="fw-semibold fs-sm"id = "staffFamily"></td>
                 </tr>
               </thead>
               <tbody>
@@ -136,15 +136,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             </table>
 
             <p>위 금액을 납부하시길 바랍니다.</p>
-            <p>납부기간 : </p>
-            <p>납부장소 : </p>
-            <p>가상계좌 : </p>
+            <p>납부기간 : <span id = "tuitionDate"></span></p>
+            <p>납부장소 : 대구은행</p>
+            <p>가상계좌 : 220-13-304766</p>
 
             <p>문의처 : 입학관리 담당자 최규완 (010-XXXX-XXXX)</p>
 
             <div id="tuna" class="text">TUNA대학교 수입징수관
               <img src="TUNA도장2.png" style="position: absolute; margin-top: 860px; margin-left : -100px; width: 150px;">
             </div>
+            
             <br>
             <br>
 
@@ -153,6 +154,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             </div>
           </div>
         </div>
+        
       </div>
     </div>
   </div>
@@ -200,6 +202,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   
 	     	
 	</script>
+	
 	<script>
 	
 	function submitFnc(){
@@ -210,13 +213,28 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		seasonCode = seasonCode.options[seasonCode.selectedIndex].value
 		let stNo = document.querySelector('#no').innerHTML
 		let deptCode = document.querySelector('[name = "deptCode"]').value
+		
+		let goodGrade = document.querySelector('#goodGrade');
+		  let family = document.querySelector('#family');
+		  let staffFamily = document.querySelector('#staffFamily');
+		  
+		  let tuition = document.querySelector('#tuition');
+		  let tuitionSum = document.querySelector('#tuitionSum');
+		  let tuitionDate = document.querySelector('#tuitionDate')
+		  goodGrade.innerHTML = ''
+	      tuition.innerHTML =''
+		  family.innerHTML =''
+		  staffFamily.innerHTML =''
+		  tuitionSum.innerHTML =''
+		  tuitionDate.innerHTML = ''
+		
 			fetch('/tuna/stud/tuition',{
 				method : 'POST',
 				headers: {
 	                'header': header,
 	              	'X-Requested-With': 'XMLHttpRequest',
 	                "Content-Type": "application/json",
-	                'X-CSRF-Token': token	// header에 X-CSRF-Token부분에 토큰값이 들어가 정상적으로 POST값이 넘어가는 것을 볼 수 있다!
+	                'X-CSRF-Token': token
 	            },
 	            body :JSON.stringify({
 	            	"seasonCode" : seasonCode,
@@ -225,7 +243,49 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	            })
 			}).then(result => result.json())
 			  .then(result =>{
-				  console.log(result)
+				  result.forEach((val,idx) =>{
+					  
+					  if(idx == 0){
+						  tuition.innerHTML = result[0].AMOUNT+'원';
+					  }
+					  
+					  if(val.SCHNAME == '성적우수'){
+						  goodGrade.innerHTML = val.GIVEMONEY+'원'
+					  }else if(val.SCHNAME == '가족'){
+						  family.innerHTML = val.GIVEMONEY+'원'
+					  }else if(val.SCHNAME == '교직원가족'){
+						  staffFamily.innerHTML = val.GIVEMONEY+'원'
+					  }
+					  
+					  
+					  result[0].AMOUNT -= val.GIVEMONEY;
+					  if(result[0].AMOUNT < 0 ){
+						  tuitionSum.innerHTML = '0원'
+					  }					  
+					  else{
+						  tuitionSum.innerHTML = result[0].AMOUNT;
+					  }
+				  })
+				  
+				  
+			  })
+			  
+			fetch('/tuna/stud/TuitionScheduleFind',{
+				method : 'POST',
+				headers: {
+	                'header': header,
+	              	'X-Requested-With': 'XMLHttpRequest',
+	                "Content-Type": "application/json",
+	                'X-CSRF-Token': token
+	            },
+	            body :JSON.stringify({
+	            	"seasonCode" : seasonCode
+	            })
+			}).then(result => result.json())
+			  .then(result =>{
+				  
+			      tuitionDate.innerHTML = result.startDate + '~' + result.endDate
+				  
 			  })
 	}
 	
