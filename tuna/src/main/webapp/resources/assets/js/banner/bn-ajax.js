@@ -18,31 +18,45 @@ function banner(job) {
 }
 
 // 배너 삭제
-function basicBannerDelete() {
+function bannerDelete() {
 	$('.bnDelete').on('click', function() {
 		let uri = $(this).data('uri');
 		let no = $(this).data('no');
 		
-		let result = confirm('정말로 삭제하시겠습니까?');
-		if(result) {
+		Dialogs.dialog('warnConfirm', 
+	                    '정말로 삭제하시겠습니까?', 
+	                    '삭제된 사진은 복구할 수 없습니다.', 
+	                    function() {
 		
-		$.ajax({
-			
-				url: getContextPath() + 'admin/banner',
-				method:'DELETE',
-				data: JSON.stringify({uri,no}),
-				contentType : 'application/json; charset=utf-8',
-				beforeSend: function (xhr) {
-			       xhr.setRequestHeader(header, token);
-				}
+							$.ajax({
+				
+								url: getContextPath() + 'admin/banner',
+								method:'DELETE',
+								data: JSON.stringify({uri,no}),
+								contentType : 'application/json; charset=utf-8',
+								beforeSend: function (xhr) {
+							       xhr.setRequestHeader(header, token);
+								}
+						
+								}).done(function(success) {
+									
+									if (success) {
+										Dialogs.dialog('success', 
+									                   '삭제 완료', 
+									                   '배너 사진 삭제가 완료되었습니다.');
+									} else {
+										Dialogs.dialog('error', 
+									                   '삭제 실패', 
+									                   '배너 사진 삭제가 정상적으로 처리되지 않았습니다.');
+									}
+								})
+								
+						});
 		
-				}).done(function(success) {
-					if(success) {
-						alert('삭제 완료');
-						location.reload();
-					}
-				})
-		}
+
+		
+
+		
 	
 	})
 }

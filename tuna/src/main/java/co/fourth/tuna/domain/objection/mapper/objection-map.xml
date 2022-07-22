@@ -9,11 +9,24 @@
 	</select>
   
 	<select id="findListBySubjectId"
-		resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
-		SELECT *
-		FROM objection
+		resultMap="objectionWithGrade">
+		SELECT O.*, OBJECTIONSTATE(O.SBJNO, O.STNO) AS OBJSTATE
+		FROM OBJECTION O
 		WHERE sbjno = #{sbjno}
 	</select>
+	
+	<resultMap id="objectionWithGrade" type="co.fourth.tuna.domain.objection.vo.ObjectionVO">
+		<association property="grade" 
+		             column="sbjNo" 
+		             javaType="co.fourth.tuna.domain.grade.vo.GradeVO"
+		             select="co.fourth.tuna.domain.grade.mapper.GradeMapper.findBySbjectNo"
+		></association>
+		 <association property="student" 
+		             column="{no=stNo}" 
+		             javaType="co.fourth.tuna.domain.user.vo.StudentVO"
+		             select="co.fourth.tuna.domain.user.mapper.StudentMapper.findById"
+		></association>
+	</resultMap>
 	
 	<select id="objectionListOfStud" 
 			resultType="co.fourth.tuna.domain.objection.vo.ObjectionVO">
@@ -35,10 +48,13 @@
 		        PT.CODENAME AS TYPE,
 		        ST.NAME AS STNAME,
 		        O.*,  
+                GRADETOALPHABET(G.TOTAL) AS ALPHABET, 
+		        GRADETOPOINT(G.TOTAL) AS TOTAL,
 		        OBJECTIONSTATE(O.SBJNO, O.STNO) AS OBJSTATE
-		FROM SUBJECT S, OBJECTION O, STUDENT ST, PUBLICCODE PS, PUBLICCODE PD, PUBLICCODE PT
+		FROM SUBJECT S, OBJECTION O, STUDENT ST, GRADE G, PUBLICCODE PS, PUBLICCODE PD, PUBLICCODE PT
 		WHERE S.NO = O.SBJNO
 		AND O.STNO = ST.NO
+        AND O.SBJNO = G.SBJNO
 		AND PS.NO = S.SEASONCODE
 		AND PD.NO = S.DEPTCODE
 		AND PT.NO = S.TYPE

@@ -1,6 +1,7 @@
 package co.fourth.tuna.domain.task.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +24,7 @@ public class TaskVO {
 	private int sbjNo;
 	//시작시간
 	private Date startDate;
+	
+	
+	private List<SubmitTaskVO> submitTaskList;
 }

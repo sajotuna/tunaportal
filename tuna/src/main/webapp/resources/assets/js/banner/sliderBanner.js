@@ -3,6 +3,8 @@ $(function() {
 	sliderPreview();
 	uploadAjax();
 	submit();
+	trUp();
+	trDown();
 })
 
 // 배너 미리보기
@@ -146,18 +148,22 @@ class pageDialogs {
 }
 
 // 위로 이동
-$('#up').on('click', function() {
-	let tr = $('#tb input:radio:checked').closest('tr');
-	let prevTr = tr.prev();
-	tr.insertBefore(prevTr);
-})
+function trUp() {
+	$('#up').on('click', function() {
+		let tr = $('#tb input:radio:checked').closest('tr');
+		let prevTr = tr.prev();
+		tr.insertBefore(prevTr);
+	})
+}
 
 // 아래로 이동
-$('#down').on('click', function() {
-	let tr = $('#tb input:radio:checked').closest('tr');
-	let nextTr = tr.next();
-	tr.insertAfter(nextTr);
-})
+function trDown() {
+	$('#down').on('click', function() {
+		let tr = $('#tb input:radio:checked').closest('tr');
+		let nextTr = tr.next();
+		tr.insertAfter(nextTr);
+	})
+}
 
 function getContextPath() {
 	var pathName = window.location.pathname.substring(1);

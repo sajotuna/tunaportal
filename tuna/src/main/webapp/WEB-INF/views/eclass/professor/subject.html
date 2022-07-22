@@ -19,6 +19,7 @@ xmlns:th="http://www.thymeleaf.org"
     <title>E-class 강의 상세</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
     <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
   </head>
   <body>
 
@@ -436,7 +437,20 @@ xmlns:th="http://www.thymeleaf.org"
        ██████  ██████   █████  ███████  ██████    ██    ██  ██████  ██   ████
 -->
                   <div class="tab-pane" id="btabs-static-objection" role="tabpanel" aria-labelledby="btabs-static-objection-tab">
-                    이의신청 내용
+					<div class="mb-4" style="height:345px; overflow-y:scroll;">
+	                    <table id="subject-objection-table" class="table table-hover table-vcenter">
+	                      <thead>
+	                        <tr>
+	                          <th>학생명</th>
+	                          <th>등급</th>
+	                          <th>평점</th>
+	                          <th>이의신청일</th>
+	                          <th>답변일</th>
+	                          <th>신청상태</th>
+	                        </tr>
+	                      </thead>
+	                     </table>
+                     </div>
                   </div>  <!-- objection TAB END -->
 <!-- *GRADE
        ██████  ██████   █████  ██████  ███████ 
@@ -520,6 +534,53 @@ xmlns:th="http://www.thymeleaf.org"
 ██      ██  ██████  ██████  ██   ██ ███████
 -->
         <!-- 모달 리스트 -->
+        <!-- Objection Modal -->
+		<div class="modal" id="objection" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg"role="document">
+				<div class="modal-content">
+					<div class="block block-rounded block-transparent mb-0">
+						<div class="block-header block-header-default bg-dark">
+							<h3 class="block-title text-gray-lighter">성적 이의신청 상세 조회 및 답변 등록</h3>
+							<div class="block-options">
+								<button type="button" class="btn-block-option"
+									data-bs-dismiss="modal" aria-label="Close">
+									<i class="fa fa-fw fa-times"></i>
+								</button>
+							</div>
+						</div>
+						
+							<!-- Objection Insert Form -->
+								<table class="table table-vcenter mb-0">
+									<tr>
+										<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=130>과목명</th>
+										<td id="objSbjName" class="fw-semibold fs-sm" width=200></td>
+										<th class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=100>학생명</th>
+										<td id="objStname" class="fw-semibold fs-sm"></td>
+										<th class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=100>신청상태</th>
+										<td id="objState" class="fw-semibold fs-sm"></td>
+									</tr>
+									<tr>
+										<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=130>이의신청 내용</th>
+										<td id="objContent" class="fw-semibold fs-sm" colspan="5"></td>
+									</tr>
+									<tr>
+										<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active"width=130>답변</th>
+										<td class="fw-semibold fs-sm" colspan="5">
+											<textarea id="objAnswer" class="mb-0" rows="4" placeholder="내용을 입력하세요." style="width:100%; resize:none;" disabled></textarea>
+										</td>
+									</tr>
+								</table>
+							<!-- END Objection Insert Form -->
+						
+						<div class="block-content block-content-full text-center">
+							<button id="objUpdateBtn" class="btn btn-sm btn-primary px-3">등록</button>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<!-- END Objection Modal -->
         <div class="modal" id="modal-block-tabs" tabindex="-1" role="dialog" aria-labelledby="modal-block-tabs" aria-hidden="true">
           <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -812,6 +873,8 @@ xmlns:th="http://www.thymeleaf.org"
               tabContents = document.querySelectorAll("#subject-tab-content>div");
 
               initSubject();
+              objTrClickEvent();
+              objUpdateClickEvent();
 
             });
 
@@ -867,7 +930,8 @@ xmlns:th="http://www.thymeleaf.org"
                   resFunc = setNoticeContent;
                   break;
                 case 5: // 이의
-                return;
+                  url = "/tuna/prof/objections";
+                  resFunc = setObjectionContent;
                   break;
                 case 6: // 성적
                   url = "/tuna/prof/students"
@@ -1055,6 +1119,128 @@ xmlns:th="http://www.thymeleaf.org"
               ulTag.innerHTML = qnaContent;
             }
 
+            // 이의신청 패널
+            function setObjectionContent(objList) {
+              let table = document.querySelector('#subject-objection-table');
+              let tbody = document.createElement('tbody');
+              tbody.setAttribute('id', 'objectionTb');
+
+              for (let obj of objList) {
+                let tr = document.createElement('tr');
+                tr.setAttribute('data-bs-toggle', 'modal');
+                tr.setAttribute('data-bs-target', '#objection');
+                tr.setAttribute('data-objno', obj.no);
+                tr.classList.add('objTr');
+                tr.innerHTML = ` <th style="fw-semibold fs-sm">${obj.student.name}</th>
+                                 <th style="fw-semibold fs-sm">${obj.grade.alphabet}</th>
+                                 <th style="fw-semibold fs-sm">${obj.grade.score}</th>
+                                 <th style="fw-semibold fs-sm">${obj.enrollDate}</th>
+                                 <th style="fw-semibold fs-sm">${obj.answerDate != null ? obj.answerDate : ''}</th>
+                                 <th class="objState" style="fw-semibold fs-sm">${obj.objState}</th>`;
+                tbody.appendChild(tr);
+              }
+              table.appendChild(tbody);
+              objTrColorChange();
+            }
+            
+            // 이의신청 1건 조회
+            function objTrClickEvent() {            	
+           		document.addEventListener('click',function(e){
+           		    if(e.target.parentNode.className.search('objTr') != -1){
+           		    	
+           		    	let objNo = e.target.parentNode.getAttribute('data-objno');
+           		    	
+           		    	fetch('/tuna/eclass/professor/objection?objNo='+objNo)
+	           	              .then(result => result.json())
+	           	              .then(result => {
+	           	            	  if(result) {
+	           	            		  
+		           	            	  objSbjName.innerHTML = result.NAME;
+		           	            	  objStname.innerHTML = result.STNAME;
+		           	            	  objState.innerHTML = result.OBJSTATE;
+		           	            	  objContent.innerHTML = result.CONTENT;
+		           	            	  
+		           	            	  if(result.ANSWER == null) {
+		           	            		  objAnswer.removeAttribute('disabled');
+		           	            		  objUpdateBtn.removeAttribute('disabled');
+		           	            	  } else {
+		           	            		  objAnswer.innerHTML = result.ANSWER;
+		           	            		  objUpdateBtn.setAttribute('disabled', true);
+		           	            	  }
+		           	            	  
+		           	            	  objUpdateBtn.setAttribute('data-objno', result.NO);
+		           	            	  objUpdateBtn.setAttribute('onclick', 'objUpdateClickEvent();')
+		           	            	  
+	           	            	  }
+	           	              })
+           		    }
+           		});
+            }
+            
+            // 이의신청 답변 등록
+            function objUpdateClickEvent() {
+            	objUpdateBtn.addEventListener('click', function() {
+            		let objNo = this.getAttribute('data-objno');
+            		let answer = objAnswer.value;
+            		
+            		Dialogs.dialog('checkConfirm',
+		 					       '정말로 등록하시겠습니까?',
+		 					       '한 번 등록된 답변은 수정할 수 없습니다.',
+		 					       function() {
+            							fetch('/tuna/eclass/professor/objection', {
+	            				                method: "PUT",
+	            				                headers: {
+	            				                  'header': header,
+	            				                  'X-Requested-With': 'XMLHttpRequest',
+	            				                  'Content-Type': 'application/json',
+	            				                  'X-CSRF-Token': token
+	            				                },
+	            				                body: JSON.stringify({
+	            				                	no:objNo,
+	            				                	answer:answer
+	            				                })
+	            				             })
+	            				             .then(result => result.json())
+	            				             .then(result => {
+	            				            	 
+	            				            	 if(result) {
+	            				            		 
+		            				            	 Dialogs.dialog('success',
+				  										           '등록 완료',
+				  										           '성적 이의신청 답변 등록이 완료되었습니다.');
+		            				            	 
+		            				            	 objState.innerHTML = '답변 완료';
+		            				            	 objAnswer.setAttribute('disabled', true);
+		            				            	 objUpdateBtn.setAttribute('disabled', true);
+		            				            	 
+		            				            	 objectionTb.remove();
+		            				                 reqSbjContent(5, sbjno, '/tuna/prof/objections', setObjectionContent);
+	            				            	 
+	            				            	 } else {
+	            				            		 
+	            				            	 }
+	            				            	 
+	            				             }).catch(error => {
+	            				            	 
+	            				            	 Dialogs.dialog('error',
+			  										      	   '등록 실패',
+			  										    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
+	            				            	 
+	            				             })
+            					   })
+            	}) 
+            }
+            
+            // 이의신청 답변 대기 배경색 변경
+            function objTrColorChange() {
+            	let objStates = document.querySelectorAll('.objState');
+            	for (let i=0; i<objStates.length; i++) {
+            		if(objStates[i].innerHTML === '답변 대기') {
+            			objStates[i].parentNode.classList.add('table-danger');
+            		}
+            	}
+            }
+            
             function planClickEvent(ele) {
               
               let subject_plan_tag = document.getElementById("subject-plan");
@@ -1093,6 +1279,8 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
           </script>
+          <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+	      <script th:src="@{/resources/assets/js/dialog.js}"></script>
       </main>
 
 <!--
@@ -1111,6 +1299,7 @@ xmlns:th="http://www.thymeleaf.org"
     <script src="../assets/js/oneui.app.min.js"></script>
     <script src="../assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script src="../assets/js/pages/be_forms_validation.min.js"></script>
+
     <script>
       let objDiv = document.getElementById("subject-progress");
       objDiv.scrollTop = 72; // 스크롤 이동

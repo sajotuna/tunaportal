@@ -41,11 +41,7 @@ public class PortalAdminController {
 		bvo.pageInfo(page, range, pvo.getPageCount(), 5);
 		
 		List<BannerVO> list = bannerDao.bannerListSelect(bvo.getStartList(), bvo.getEndList());
-		
-		logger.info("start::"+bvo.getStartList()+"end::"+bvo.getEndList()
-		+"startpage::"+bvo.getStartPage()+"endpage::"
-				+bvo.getEndPage()+"pagecount::"+bvo.getPageCnt());
-		
+			
 		model.addAttribute("bnList", list);
 		model.addAttribute("paging", bvo);
 		

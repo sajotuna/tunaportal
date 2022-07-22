@@ -24,9 +24,9 @@
 					<div th:each="notice, i:${content}">
 						<input type="hidden" name="no" id="no" th:value="${notice.no}">
 						<input type="text" name="title" class="mb-4 form-control"
-							id="title" th:value="${notice.title}">
+							id="title" th:value="${notice.title}"  required>
 						<hr>
-						<textarea class="js-simplemde" id="content" name="content">[[${notice.content}]]</textarea>
+						<textarea class="js-simplemde" id="content" name="content"  required>[[${notice.content}]]</textarea>
 						<hr>
 						<div class="row mb-3">
 							<div class="col-6">

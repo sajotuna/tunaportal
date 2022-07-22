@@ -176,7 +176,16 @@ public class EclassProfessorEclassController {
 	}
 
 	@GetMapping("/subjectForm")
-	public String subjectFormView(Model model, HttpServletRequest req) {
+	public String subjectFormView(
+			Model model, 
+			HttpServletRequest req,
+			Authentication auth,
+			@RequestParam(value="no", required = false, defaultValue = "0")int no) {
+		// TODO 내 강의 인지 검사
+		SubjectVO subject = subjectService.findOneWithRatioAndScheduleAndPlanById(no);
+		
+		model.addAttribute("subject", subject);
+		
 		return req.getServletPath();
 	}
 
@@ -190,7 +199,7 @@ public class EclassProfessorEclassController {
 		prof.setNo(Integer.parseInt(auth.getName()) );
 
 		if (season == 0) {
-			season = 105;
+			season = 106;
 		}
 
 		CodeMasterVO seasonMasterCode = codeService.findById("100");

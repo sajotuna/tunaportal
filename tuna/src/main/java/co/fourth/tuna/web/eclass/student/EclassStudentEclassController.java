@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +27,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.common.service.FileService;
+import co.fourth.tuna.domain.common.service.YearService;
+import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
 import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
 import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
+import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
 import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 import co.fourth.tuna.domain.subject.mapper.SubjectMapper;
@@ -44,7 +51,9 @@ public class EclassStudentEclassController {
 	@Autowired SqlSession sql;
 	@Autowired LectureNoticeService service;
 	@Autowired TaskService taskDao;
+	@Autowired LectureQnaService qnaDao;
 	@Autowired private FileService fileService;
+	@Autowired YearService year;
 	
 	@RequestMapping("/")
 	public void Eclass() {
@@ -53,10 +62,10 @@ public class EclassStudentEclassController {
 	
 	
 	@RequestMapping("/lectureNotice")
-	public String lectureNotice(Model model, LectureNoticeVO vo) {
+	public String lectureNotice(Model model, LectureNoticeVO vo, Authentication authentication) {
 		vo.setSbjNo(90079);
 		vo.setSeasonCode(105);
-		vo.setStNo(13168019);
+		vo.setStNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> notice = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeList", vo);
 		
 		model.addAttribute("notice", notice);
@@ -65,9 +74,9 @@ public class EclassStudentEclassController {
 	}
 	
 	@RequestMapping("/lectureNoticeSelect")
-	public String lectureNoticeSelect(Model model, LectureNoticeVO vo) {
+	public String lectureNoticeSelect(Model model, LectureNoticeVO vo, Authentication authentication) {
 		
-		vo.setStNo(13168019);
+		vo.setStNo(Integer.parseInt(authentication.getName()));
 		vo.setSeasonCode(105);
 		vo.setSbjNo(90079);
 		vo.setNo(1);
@@ -119,26 +128,63 @@ public class EclassStudentEclassController {
 	}
 	
 	@RequestMapping("/qnaSelect")
-	public String qnaSelect(Model model, LectureQnaVO vo) {
-		
-		vo.setNo(1);
-		vo.setSbjNo(18011);
-		vo.setStNo(13168019);
+	public String qnaSelect(Model model, LectureQnaVO vo, HttpServletRequest req, Authentication authentication) {
+		;
+		//인덱스 부여하여 vo에 setting
+		vo.setNo(Integer.parseInt(req.getParameter("no")));
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
+		//vo.set값 -> 쿼리 -> 
+		                                //학번
+		vo.setStNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
-		
 		model.addAttribute("qs", qs);
 		
 		return "eclass/stud/qnaSelect";
 	}
 	
+	//질의응답작성폼
+	@RequestMapping("/qnaInsert")
+	public String qnaInsert(Model model, LectureQnaVO vo, HttpServletRequest req, Authentication authentication) {
+		
+		
+		System.out.println(1235234548);
+//		System.out.println("req : " + req);
+//		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
+//		vo.setStNo(Integer.parseInt(authentication.getName()));
+//		
+//		LectureQnaVO sbjno = vo;
+//		
+//		System.out.println(sbjno);
+//		model.addAttribute("sbjno", sbjno);
+		
+		System.out.println("나오나" + vo);
+		
+		return "eclass/stud/qnaInsert";
+	}
+	
+	//질의응답등록
+	@RequestMapping("/insertOneQna")
+	public String insertOneQna(Model model, LectureQnaVO vo, 
+			HttpServletRequest req, Authentication authentication) {
+		
+		vo.setStNo(Integer.parseInt(authentication.getName()));
+		
+		System.out.println(vo);
+		 
+		 qnaDao.insertOneQna(vo);
+		 
+		return "redirect:/eclass/student/qnaSelect";
+	}
+
+	
 	@RequestMapping("/taskList")
-	public String taskList(Model model) {
+	public String taskList(Model model, Authentication authentication) {
 		
 		//단일과목과제 조회
 		StudentVO sv = new StudentVO();
 		SubjectVO sb = new SubjectVO();
-		sv.setNo(13168019);
-		sb.setNo(90079);
+		sv.setNo(Integer.parseInt(authentication.getName()));
+		sb.setNo(18011);
 		List<SubjectVO> sbjli = map.selectOneSubTask(sv, sb);
 		model.addAttribute("sbjli", sbjli);
 		return "eclass/stud/taskList";
@@ -146,8 +192,8 @@ public class EclassStudentEclassController {
 	
 	@RequestMapping("/taskSelect")
 	public String taskSelect(Model model, TaskVO vo, Authentication authentication){
-		vo.setNo(1);
-		vo.setSbjNo(90079);
+		vo.setNo(7);
+		vo.setSbjNo(18011);
 		
 		SubmitTaskVO vo1 = new SubmitTaskVO();
 		//로그인한 유저 아이디
@@ -156,7 +202,6 @@ public class EclassStudentEclassController {
 		vo1.setTaskNo(vo.getNo());
 		
 		List<Map<String, Object>> tsk = sql.selectList("co.fourth.tuna.domain.task.mapper.TaskMapper.taskSelect", vo);
-		System.out.println("12354574679");
 		List<SubmitTaskVO> fts = new ArrayList<>();
 		if(taskDao.findSubmission(vo1).size() != 0) {
 			fts = taskDao.findSubmission(vo1);
@@ -173,8 +218,8 @@ public class EclassStudentEclassController {
 	public String taskSubmission(TaskVO vo, Authentication authentication,
 			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
 		
-		vo.setNo(1);
-		vo.setSbjNo(90079);
+		vo.setNo(7);
+		vo.setSbjNo(18011);
 		
 		SubmitTaskVO vo1 = new SubmitTaskVO();
 		
@@ -208,14 +253,15 @@ public class EclassStudentEclassController {
 	//자료실
 	@RequestMapping("/download") 
 	public String download() {
+		
 		return "eclass/stud/download";
 	}
 	
 	//수강목록 홈
 	@Autowired private SubjectMapper map;
 	@RequestMapping("/home")
-	public String home(Model model, EclassStudentHomeVO vo) {
-		vo.setNo(13168019);
+	public String home(Model model, EclassStudentHomeVO vo, Authentication authentication) {
+		vo.setNo(Integer.parseInt(authentication.getName()));
 		vo.setSeasonCode(106);
 		List<Map<String, Object>> list = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.subList", vo);
 		model.addAttribute("list", list);
@@ -248,19 +294,15 @@ public class EclassStudentEclassController {
 		return "eclass/stud/lectureHome";
 	}
 	
-	//질의응답작성
-	@RequestMapping("/qnaInsert")
-	public String qnaInsert() {
-		return "eclass/stud/qnaInsert";
-	}
-
+	
 	//출석
 	@RequestMapping("/attendance")
-	public String studentAttendance(Model model, AttendanceVO vo) {
-		vo.setStNo(13168019);
+	public String studentAttendance(Model model, AttendanceVO vo, Authentication authentication) {
+		vo.setStNo(Integer.parseInt(authentication.getName()));
 		vo.setSbjNo(18011);
 		
 		List<Map<String, Object>> attd = sql.selectList("co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.studentAttendance", vo);
+		System.out.println(attd);
 		
 		model.addAttribute("attd", attd);
 		
@@ -269,11 +311,11 @@ public class EclassStudentEclassController {
 	}
 	//사이드바 작업 열심히 해보자
 	@ModelAttribute("side")
-	public Map<String, Object> side() {
+	public Map<String, Object> side(Authentication authentication) {
 		
 		EclassStudentHomeVO vo = new EclassStudentHomeVO();
 		
-		vo.setNo(13168019);
+		vo.setNo(Integer.parseInt(authentication.getName()));
 		vo.setSeasonCode(106);
 		
 		Map<String, Object> sidemap = new HashMap<String, Object>();

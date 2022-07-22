@@ -40,6 +40,11 @@ public class ObjectionServiceImpl implements ObjectionService {
 		return mapper.objectionUpdate(vo);
 	}
 
+	@Override
+	public List<ObjectionVO> findListBySubjectId(int sbjno) {
+		return mapper.findListBySubjectId(sbjno);
+	}
+
 
 
 }

@@ -3,9 +3,12 @@ package co.fourth.tuna.domain.grade.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class GradeVO {
 	private int no;
 	private int middle;
@@ -15,4 +18,7 @@ public class GradeVO {
 	private int total;
 	private int stNo;
 	private int sbjNo;
+	
+	private String alphabet;
+	private double score;
 }
