@@ -69,6 +69,7 @@ FROM
            S2.NAME, 
            S2.STATECODE, 
            S2.SY, 
+           SC2.SEASONCODE,
            (SELECT  NVL(ROUND(SUM((CASE  WHEN G.TOTAL BETWEEN 95 AND 100 THEN 4.5
                                    WHEN G.TOTAL >= 90                       THEN 4.0
                                    WHEN G.TOTAL >= 85                       THEN 3.5

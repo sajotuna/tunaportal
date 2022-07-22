@@ -136,12 +136,11 @@
                 <th class="d-none d-sm-table-cell" style="width: 110px;">심사현황</th>
                 <th class="d-none d-sm-table-cell" style="width: 100px;">신청날짜</th>
                 <th class="d-none d-sm-table-cell" style="width: 100px;">첨부파일</th>
-                <th class="d-none d-sm-table-cell" style="width: 100px;">비고</th>
               </tr>
             </thead>
             <tbody>
               <tr th:scope="row" th:each="sch, status : ${list}">
-                      <th class="fw-semibold fs-sm"><input type="checkbox" name = "scholarCheckbox" th:value = "${sch.SCHNO}"></th>
+                      <th class="fw-semibold fs-sm"><input type="checkbox" name = "scholarCheckbox" th:value = "${sch.SCHNO}"><input type = "hidden" th:value = "${sch.SEASONCODE}" name = "seasonCode"></th>
                       <th class="fw-semibold fs-sm" th:text="${sch.NO}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sch.NAME}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sch.STATECODE)}"></td>
@@ -162,10 +161,6 @@
 	                      		<label for="file" id = "filetag" >파일 없음</label>
 	                      	</th:block>
                       </td>
-                    <td class="fw-semibold fs-sm"><a class = "btn" th:href = "@{/stud/scholarDelete(no=${sch.NO})}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-						  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-						  </svg></a>
-					  </td>
                     </tr>
             </tbody>
           
@@ -214,6 +209,13 @@
     </div>
   </div>
   </div>
+  <th:block th:if = "${message != null && message != ''}">
+	<script th:inline="javascript">
+		let message = /*[[${message}]]*/ 'default';
+		alert(message);
+		
+	</script>
+</th:block>
   <!-- Page JS Plugins -->
   <script th:src="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.js}"></script>
 

@@ -3,6 +3,9 @@ package co.fourth.tuna.domain.user.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import co.fourth.tuna.domain.attendance.mapper.AttendanceMapper;
@@ -18,7 +21,7 @@ import co.fourth.tuna.domain.user.vo.StudentExVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 
 @Service
-public class StudentServiceImpl implements StudentService {
+public class StudentServiceImpl implements StudentService, UserDetailsService {
 
 	@Autowired
 	private StudentMapper mapper;
@@ -87,5 +90,30 @@ public class StudentServiceImpl implements StudentService {
 
 		return score;
 	}
+
+	@Override
+	public void studPwdUpdate(StudentVO vo) {
+		mapper.studPwdUpdate(vo);
+		
+	}
+	
+	@Override
+	public StudentVO findByUserId(StudentVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.findByUserId(vo);
+	}
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		StudentVO vo = new StudentVO();
+		vo.setNo(Integer.parseInt(username));
+		vo = mapper.findByUserId(vo);
+		if(vo == null)
+			throw new UsernameNotFoundException("no user");
+		return vo;
+	}
+
+	
+	
 
 }
