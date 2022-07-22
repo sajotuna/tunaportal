@@ -59,11 +59,11 @@ parameterType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
 DELETE FROM PORTALSCHEDULE WHERE NO = #{no}
 </delete>
 
-<select id = "findTuitionSchedule" resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO" parameterType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO"></select>
+<select id = "findTuitionSchedule" resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO" parameterType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
 
 select startdate, enddate from portalschedule
 where schedulecode = 1107
 and seasoncode = ${seasonCode}
-
+</select>
 </mapper>
 
