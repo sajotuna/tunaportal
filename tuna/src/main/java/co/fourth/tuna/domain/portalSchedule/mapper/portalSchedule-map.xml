@@ -12,14 +12,6 @@ WHERE SEASONCODE =#{seasonCode}
 order by startDate ASC
 </select>
 
-<!-- user schedule search -->
-<select id = "scheduleSearch"  resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"> 
-SELECT CONTENT
-FROM PORTALSCHEDULE
-WHERE CONTENT LIKE '%'||#{key}||'%' 
-</select>
-
-
 <!-- admin schedule list -->
 <select id="adminScheduleList" resultType="co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO">
 SELECT * 

@@ -7,7 +7,9 @@ import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO;
 
 public interface PortalNoticeService {
 
-	List<PortalNoticeVO> noticeList(int state, String key, int pageNum, int size);
+	List<PortalNoticeVO> adminNoticeList(int state, String key, int startList, int endList);
+	
+	List<PortalNoticeVO> portalNoticeList(int state, String key, int startList, int endList);
 
 	PortalNoticeVO noticeSelect(PortalNoticeVO vo);
 

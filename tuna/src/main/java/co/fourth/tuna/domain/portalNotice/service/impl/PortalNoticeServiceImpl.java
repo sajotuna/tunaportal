@@ -17,9 +17,15 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 
 	//공지사항
 	@Override
-	public List<PortalNoticeVO> noticeList(int state, String key, int pageNum, int size) {
-		return map.noticeList(state, key, pageNum, size);
+	public List<PortalNoticeVO> adminNoticeList(int state, String key, int startList, int endList) {
+		return map.adminNoticeList(state, key, startList, endList);
 	}
+	
+	@Override
+	public List<PortalNoticeVO> portalNoticeList(int state, String key, int startList, int endList) {
+		return map.portalNoticeList(state, key, startList, endList);
+	}
+
 	
 	public PortalNoticeVO noticeSelect(PortalNoticeVO vo) {
 		return map.noticeSelect(vo);
@@ -60,6 +66,7 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 	public int fileAllDelete(PortalNoticeFileVO vo) {
 		return map.fileAllDelete(vo);
 	}
+
 
 
 }
