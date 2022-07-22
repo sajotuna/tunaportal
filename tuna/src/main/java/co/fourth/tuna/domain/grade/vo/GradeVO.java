@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 public class GradeVO {
 	private int no;
 	private int middle;
