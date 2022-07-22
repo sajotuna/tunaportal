@@ -61,6 +61,7 @@ public class HomeController {
 			vo.setNo(Integer.parseInt(authentication.getName()));
 			vo = professorDao.findById(vo);
 			model.addAttribute("vo", vo);
+		}else {
 		}
 		
 		
