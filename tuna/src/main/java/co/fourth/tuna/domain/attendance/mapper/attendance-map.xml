@@ -11,10 +11,20 @@
 	
 	<select id="studentAttendance" resultType="map"
 	parameterType="co.fourth.tuna.domain.attendance.vo.AttendanceVO">
-	SELECT TO_CHAR(CLASSDATE, 'MM"월"DD"일"') CLASSDATE
+	SELECT STATECODE, TO_CHAR(CLASSDATE, 'MM"월"DD"일"') CLASSDATE
 	FROM ATTENDANCE
 	WHERE STNO = #{stNo}
 	AND SBJNO = #{sbjNo}
 	ORDER BY CLASSDATE
 	</select>
+	
+	<select id="findListByStudentIdAndSubjectId"
+		resultType="co.fourth.tuna.domain.attendance.vo.AttendanceVO">
+		SELECT * 
+		FROM attendance
+		WHERE stno = #{stno}
+		AND sbjno = #{sbjno}
+		ORDER BY stno
+	</select>
+		
 </mapper>

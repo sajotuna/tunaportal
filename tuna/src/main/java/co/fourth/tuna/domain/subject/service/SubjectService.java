@@ -9,6 +9,7 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 public interface SubjectService {
 	SubjectVO findOne(SubjectVO vo);
 	SubjectVO findOneWithApplysAndRatioAndFilesById(int no);
+	SubjectVO findOneWithRatioAndScheduleAndPlanById(int no);
 	
 	public List<SubjectVO> findListForProfessorMain(ProfessorVO prof, int seasonCode, int pageNum, int size);
 	public List<SubjectVO> SubjectCheck();

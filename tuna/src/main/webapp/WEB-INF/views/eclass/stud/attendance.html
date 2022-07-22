@@ -54,9 +54,18 @@
 										</div>
 										<div class="col-5">
 											<div class="row">
-												<div class="col-5 col-xs-5 col-lg-5 col-md-5 col-sm-5" th:each="at: ${attd}">
+												<div class="col-5 col-xs-5 col-lg-5 col-md-5 col-sm-5" th:each="at : ${attd}">
 													<div class="block block-rounded">
 														<p class="p-3 block block-rounded bg-light border m-0 text-center fw-bold" th:text="${at.CLASSDATE}"></p>
+													</div>
+													<div class="block block-rounded" th:if="${at.STATECODE} == '1401'">
+													<p class="p-3 block block-rounded bg-success-light text-success border m-0 text-center fw-bold" th:text="${at.CLASSDATE}"></p>
+													</div>
+													<div class="block block-rounded" th:if="${at.STATECODE} == '1402'">
+													<p class="p-3 block block-rounded bg-danger-light text-danger text-success border m-0 text-center fw-bold" th:text="${at.CLASSDATE}"></p>
+													</div>
+													<div class="block block-rounded" th:if="${at.STATECODE} == '1403'">
+													<p class="p-3 block block-rounded bg-warning-light text-warning text-success border m-0 text-center fw-bold" th:text="${at.CLASSDATE}"></p>
 													</div>
 												</div>
 											</div>

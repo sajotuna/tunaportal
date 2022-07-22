@@ -48,12 +48,16 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="q, i : ${qna}">
-												<td class="text-center" th:text="${i.index+1}">5</td>
-												<td class="text-center" colspan="7" th:onclick="|location.href='@{/eclass/student/qnaSelect}'|" th:text="${q.TITLE}"></td>
+											<tr th:each="q, i : ${qna}" th:if="${q.VISIBLE} == 0">
+												<td class="text-center" th:text="${i.index+1}"></td>
+												<td class="text-center" colspan="7" th:onclick="|location.href='@{/eclass/student/qnaSelect}?no=${q.NO}&sbjNo=${q.SBJNO}'|" th:text="${q.TITLE}"></td>
 												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
 												<td class="text-center" colspan="2" th:text="${q.ENROLLDATE}"></td>
-												<td class="text-center" colspan="2">미답변</td>
+												<td class="text-center text-danger fw-bold" colspan="2" th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
+												<td class="text-center" colspan="2" th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
+											</tr>
+											<tr th:each="q, i : ${qna}" th:if="${q.VISIBLE} == 1">
+											<td class="text-center fw-bold" colspan="14">비공개 질문입니다.</td>
 											</tr>
 										</tbody>
 									</table>
@@ -61,7 +65,7 @@
 							</div>
 							<div class="d-flex justify-content-center">
 								<button type="button"
-									th:onclick="|location.href='@{/eclass/student/qnaInsert}'|"
+									th:onclick="|location.href='@{/eclass/student/qnaInsert}?sbjNo=${qna[0].SBJNO}'|"
 									class="btn btn-primary m-2">등록</button>
 							</div>
 							<div class="row">
@@ -79,7 +83,7 @@
 													th:each="num : ${#numbers.sequence(1, pgcnt)}">
 													<a
 													class="page-link" th:href="@{/eclass/student/qnaList(pageNum=${num})}"
-													th:text="${num}">00</a></li>
+													th:text="${num}"></a></li>
 												<li class="page-item"><a class="page-link"
 													href="javascript:void(0)" aria-label="Next"> <span
 														aria-hidden="true"> <i class="fa fa-angle-right"></i>

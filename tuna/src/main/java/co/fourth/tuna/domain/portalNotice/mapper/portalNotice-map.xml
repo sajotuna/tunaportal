@@ -5,30 +5,56 @@
 	
 	
 <!-- 공지 -->
-<!-- 전체조회 -->
-<select id="noticeList"
+<!-- 관리자 전체조회 -->
+<select id="adminNoticeList"
 	resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"> 
-SELECT a.* , fileSelect(no) fileyn
-FROM  (SELECT ROWNUM as rnum,
-			  			NO,
-						TITLE,
-						CONTENT,
-						ENROLLDATE,
-						VISIBLE,
-						ADNO
-	   FROM PORTALNOTICE
-			WHERE 
-			<if test="state == 1">1 = 1 </if>
-			<if test="state == 2">title like '%'||#{key}||'%' </if>
-			<if test="state == 3">content like '%'||#{key}||'%'</if>
-			   ORDER BY enrolldate DESC) a
-WHERE rnum
-	  between  (#{pageNum}-1)*#{size}
-	  AND 		#{pageNum}*#{size}
-
-
+SELECT b.* , fileSelect(no) FILEYN
+FROM  (SELECT ROWNUM as RNUM,
+			  a.*
+		FROM (SELECT
+				  	NO,
+				  	TITLE,
+				  	CONTENT,
+				  	ENROLLDATE,
+				  	VISIBLE,
+				  	ADNO
+	   			FROM PORTALNOTICE
+				WHERE 
+				<if test="state == 1">1 = 1 </if>
+				<if test="state == 2">title like '%'||#{key}||'%' </if>
+				<if test="state == 3">content like '%'||#{key}||'%'</if>
+			   ORDER BY ENROLLDATE DESC)a
+			  )b
+WHERE RNUM
+	  BETWEEN  #{startList}
+	  AND 		#{endList}
 </select>
 
+<!-- 유저 전체조회 -->
+<select id="portalNoticeList"
+	resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"> 
+SELECT b.* , fileSelect(no) FILEYN
+FROM  (SELECT ROWNUM as RNUM,
+			  a.*
+		FROM (SELECT
+				  	NO,
+				  	TITLE,
+				  	CONTENT,
+				  	ENROLLDATE,
+				  	VISIBLE,
+				  	ADNO
+	   			FROM PORTALNOTICE
+				WHERE 
+				<if test="state == 1">1 = 1 </if>
+				<if test="state == 2">title like '%'||#{key}||'%' </if>
+				<if test="state == 3">content like '%'||#{key}||'%'</if>
+				AND VISIBLE ='Y'
+			   ORDER BY ENROLLDATE DESC)a
+			  )b
+WHERE RNUM
+	  BETWEEN  #{startList}
+	  AND 		#{endList}
+</select>
 <!-- 단건조회 -->
 <select id="noticeSelect" 
 	parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"

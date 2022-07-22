@@ -47,11 +47,6 @@ public class PortalScheduleController {
 		return scheduleDao.scheduleList(vo);
 	}
 	
-	@GetMapping("/scheduleSearch")
-	@ResponseBody
-	public List<PortalScheduleVO> scheduleSearch(@RequestParam("key") String key){
-		return scheduleDao.scheduleSearch(key);
-	}
 
 	// admin
 	@RequestMapping("/admin/adminSchedule")
@@ -70,12 +65,11 @@ public class PortalScheduleController {
 
 	@PostMapping("/admin/adminScheduleInsert")
 	@ResponseBody
-	public String scheduleInsert(@RequestBody PortalScheduleVO vo) {			
+	public int scheduleInsert(@RequestBody PortalScheduleVO vo) {			
 		vo.setSeasonCode(yearService.yearFind());
 		logger.info("insert::" + vo);
-		scheduleDao.scheduleInsert(vo);
 		
-		return "redirect:/admin/adminScheduleList";
+		return scheduleDao.scheduleInsert(vo);
 	}
 	
 	@DeleteMapping("/admin/adminSchduleDelete")

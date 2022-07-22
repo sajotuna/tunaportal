@@ -10,7 +10,6 @@ public interface PortalScheduleService {
 	///user
 	List<PortalScheduleVO> scheduleList(PortalScheduleVO vo);
 	
-	List<PortalScheduleVO> scheduleSearch(@Param("key")String key);
 	
 	//admin
 	int scheduleInsert(PortalScheduleVO vo);
@@ -20,5 +19,5 @@ public interface PortalScheduleService {
 	int scheduleDelete(PortalScheduleVO vo);
 	
 	List<PortalScheduleVO> adminScheduleList(PortalScheduleVO vo);
-
+	public PortalScheduleVO findTuitionSchedule(PortalScheduleVO vo);
 }

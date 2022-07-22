@@ -44,8 +44,12 @@ public class PortalScheduleServiceImpl implements PortalScheduleService {
 	public List<PortalScheduleVO> scheduleSearch(String key) {
 		return map.scheduleSearch(key);
 	}
+
+	@Override
+	public PortalScheduleVO findTuitionSchedule(PortalScheduleVO vo) {
+		return map.findTuitionSchedule(vo);
+	}
 	
-	
-	
+
 }
 

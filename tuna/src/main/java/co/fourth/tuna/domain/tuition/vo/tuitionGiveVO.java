@@ -16,7 +16,7 @@ public class tuitionGiveVO {
 	private int no;
 	private String yn;
 	private Date giveDate;
-	private String seasonCode;
+	private int seasonCode;
 	private int scPct;
 	private int stNo;
 	private int scstNo;

@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <title>질의응답상세</title>
-<link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
 </head>
 <body>
 	<div id="page-container"
@@ -64,7 +63,7 @@
 												</tr>
 												<tr th:if="${not #strings.isEmpty(qs.ANSWER)}">
 													<th class="text-center" tabindex="0" colspan="3">답변</th>
-													<th colspan="7" th:text="${qs.ANSWER}"></th>
+													<th colspan="7" th:text="${qs.ANSWER}+${qs.ANSWERDATE}"></th>
 												</tr>
 											</tbody>
 										</table>
@@ -81,6 +80,7 @@
 				</div>
 			</div>
 			<div class="col-xxl-12"></div>
+			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 		</main>
 	</div>
 	<!-- content END -->

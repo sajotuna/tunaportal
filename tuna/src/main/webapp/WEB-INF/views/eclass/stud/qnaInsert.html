@@ -34,6 +34,8 @@
 							class="dataTables_wrapper dt-bootstrap5 no-footer">
 							<div class="row">
 								<div class="col-sm-12">
+									<form th:action="@{insertOneQna(${_csrf.parameterName}=${_csrf.token})}" method="POST">
+										<input type="hidden" name="sbjNo" id="sbjNo" th:each="sbjno : ${sbjno}" th:value="${sbjno.SBJNO}" >
 									<table
 										class="table table-vcenter js-dataTable-full dataTable no-footer"
 										id="DataTables_Table_0"
@@ -41,23 +43,20 @@
 										<thead>
 											<tr>
 												<th class="text-center">제목</th>
-												<th class="text-center"><input class="form-control"></th>
+												<th class="text-center"><input class="form-control" id="title" name="title"></th>
 												<th class="text-center"><input class="private"
-													type="checkbox" value="private"><label
-													for="private">비공개</label></th>
+													type="checkbox" id="visible" name="visible" value="1"><label for="private">비공개</label></th>
 											</tr>
 										</thead>
 									</table>
-									<form action="be_forms_editors.html" method="POST"
-										onsubmit="return false;">
-										<textarea class="js-simplemde" id="simplemde" name="simplemde"></textarea>
-									</form>
+										<textarea class="js-simplemde" id="content" name="content"></textarea>
 									<div class="d-flex justify-content-center">
-										<button th:onclick="|location.href='@{/eclass/student/qnaForm}'|" type="button"
-											class="btn btn-primary m-2">등록</button>
-										<button th:onclick="|location.href='@{/eclass/student/qnaList}'|" type="button"
-											class="btn btn-dark  m-2">취소</button>
+										<button type="submit" th:onclick="|location.href='@{/eclass/student/qnaSelect}'|" class="btn btn-primary m-2">등록</button>
+										<button
+											th:onclick="|location.href='@{/eclass/student/qnaList}'|"
+											type="button" class="btn btn-dark  m-2">취소</button>
 									</div>
+									</form>
 								</div>
 							</div>
 							<div class="col-xxl-12"></div>
@@ -65,13 +64,15 @@
 						</div>
 
 					</div>
-					<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-					<script
-						th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
-					<!-- Page JS Helpers (CKEditor + SimpleMDE plugins) -->
-					<script>
-						One.helpersOnLoad([ 'js-simplemde' ]);
-				</script>
+				</div>
+			</div>
+			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+			<script
+				th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
+			<!-- Page JS Helpers (CKEditor + SimpleMDE plugins) -->
+			<script>
+				One.helpersOnLoad([ 'js-simplemde' ]);
+			</script>
 		</main>
 	</div>
 </body>

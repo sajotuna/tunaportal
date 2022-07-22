@@ -10,8 +10,6 @@ public interface PortalScheduleMapper {
 	// user
 	List<PortalScheduleVO> scheduleList(PortalScheduleVO vo);
 	
-	List<PortalScheduleVO> scheduleSearch(@Param("key")String key);
-
 	// admin
 	int scheduleInsert(PortalScheduleVO vo);
 
@@ -21,5 +19,5 @@ public interface PortalScheduleMapper {
 
 	PortalScheduleVO findOneBySeasonCode(@Param(value = "seasonCode") String seasonCode,
 			@Param(value = "scheduleCode") String scheduleCode);
-
+	public PortalScheduleVO findTuitionSchedule(PortalScheduleVO vo);
 }

@@ -7,6 +7,7 @@ import co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
 import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
+import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 import co.fourth.tuna.domain.objection.vo.ObjectionVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
@@ -43,5 +44,6 @@ public class SubjectVO {
 	private List<TaskVO> taskList; // 과제
 	private List<LectureFileVO> lectureFileList; // 파일
 //	private List<LectureNoticeVO> lectureNoticeList; // 공지
-	private List<LectureScheduleVO> lectureScheduleList;
+	private List<LectureScheduleVO> lectureScheduleList; // 강의 스케줄
+	private List<LecturePlanVO> lecturePlanList;
 }

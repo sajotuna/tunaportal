@@ -66,10 +66,10 @@
 														class="form-control fw-semibold fs-sm"
 														id="example-file-input file" name="file" type="file"
 														multiple="multiple">
-														<th:block th:each="fts : ${fts}">
+														<th:block th:each="fts : ${fts}" id="fileList">
 															<a th:href="@{/download(fileName=${fts.uri}, originName=${fts.fileName}, folder=task)}" class="mb-0 fw-bold"> [[${fts.fileName}]] </a>
 															<button th:data-uri=${fts.uri} th:data-no=${fts.no}
-																type="button" class="btn btn-sm delBtn">
+																type="submit" class="btn btn-sm delBtn">
 																<i class="fa fa-fw fa-sm fa-times"></i>
 															</button>
 															<br>
@@ -110,6 +110,7 @@
 													}).done(function(success) {
 												if (success) {
 													fileRow.remove();
+													$('#fileList').load("${ContextPath}/eclass/student/taskSelect #fileList" );
 												} else {
 													console.log(no)
 												}
