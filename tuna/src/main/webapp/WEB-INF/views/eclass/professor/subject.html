@@ -17,9 +17,9 @@ xmlns:th="http://www.thymeleaf.org"
    ██    ██    ██    ███████ ███████ 
 -->
     <title>E-class 강의 상세</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
-    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
   </head>
   <body>
 
@@ -354,15 +354,19 @@ xmlns:th="http://www.thymeleaf.org"
                         </tbody>
                       </table>
                     </div>
-                    <div class="pt-2 row">
-                      <div class="col-4">
+                    <div class="pt-2 row justify-content-center">
+                      <div class="col-xxl-8 col-10 mb-xsl-0 mb-2">
                         <select class="form-select" id="example-select" name="example-select">
                           <option value="1">과제 #1</option>
                           <option value="2">과제 #2</option>
                           <option value="3">과제 #3</option>
                         </select>
                       </div>
-                      <div class="offset-xl-6 col-xl-2">
+                      <div class="col-xxl-2 col-10 mb-xsl-0 mb-2">
+                        <button type="button" class="col-12 btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#taskInsertFrm">과제 등록</button>
+					  </div>
+                      <div class="col-xxl-2 col-10">
                         <button class="col-12 btn btn-dark">전체 다운로드</button>
                       </div>
                     </div>
@@ -534,6 +538,46 @@ xmlns:th="http://www.thymeleaf.org"
 ██      ██  ██████  ██████  ██   ██ ███████
 -->
         <!-- 모달 리스트 -->
+        <!-- 과제 등록 Modal -->
+		<div class="modal" id="taskInsertFrm" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg"role="document">
+				<div class="modal-content">
+					<div class="block block-rounded block-transparent mb-0">
+						<div class="block-header block-header-default bg-dark">
+							<h3 class="block-title text-gray-lighter">과제 등록</h3>
+							<div class="block-options">
+								<button type="button" class="btn-block-option"
+									data-bs-dismiss="modal" aria-label="Close">
+									<i class="fa fa-fw fa-times"></i>
+								</button>
+							</div>
+						</div>
+						<div class="block-content block-content-full text-center">
+							<div class="fw-semibold fs-sm m-3">
+								<input class="form-control" type="text" placeholder="제목을 입력하세요." style="width:100%;">
+							</div>
+							<div class="fw-semibold fs-sm m-3">
+				                <div class="input-daterange input-group" data-date-format="yyyy-mm-dd" data-week-start="1" data-autoclose="true" data-today-highlight="true">
+							      <input type="text" class="form-control date" id="" name="" placeholder="제출 시작일" 
+							             data-week-start="1" data-autoclose="true" data-today-highlight="true">
+							      <span class="input-group-text fw-semibold">
+							        <i class="fa fa-fw fa-arrow-right"></i>
+							      </span>
+							      <input type="text" class="form-control date" id="" name="" placeholder="제출 종료일" 
+							             data-week-start="1" data-autoclose="true" data-today-highlight="true">
+							    </div>
+			                </div>
+							<div class="fw-semibold fs-sm m-3">
+								<textarea class="form-control mb-0" placeholder="내용을 입력하세요." style="width:100%; height:300px; resize:none;"></textarea>
+							</div>
+								<button class="btn btn-sm btn-dark px-3 mb-3">등록</button>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<!-- END 과제 등록 -->
         <!-- Objection Modal -->
 		<div class="modal" id="objection" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-lg"role="document">
@@ -566,7 +610,7 @@ xmlns:th="http://www.thymeleaf.org"
 									<tr>
 										<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active"width=130>답변</th>
 										<td class="fw-semibold fs-sm" colspan="5">
-											<textarea id="objAnswer" class="mb-0" rows="4" placeholder="내용을 입력하세요." style="width:100%; resize:none;" disabled></textarea>
+											<textarea id="objAnswer" class="mb-0 form-control" rows="4" placeholder="내용을 입력하세요." style="width:100%; resize:none;" disabled></textarea>
 										</td>
 									</tr>
 								</table>
@@ -918,7 +962,6 @@ xmlns:th="http://www.thymeleaf.org"
                   resFunc = setAttendanceContent;
                   break;
                 case 2: // 과제
-                  return;
                   break;
                 case 3: // 문의
                   url = "/tuna/prof/lecQna";
@@ -1147,7 +1190,6 @@ xmlns:th="http://www.thymeleaf.org"
             function objTrClickEvent() {            	
            		document.addEventListener('click',function(e){
            		    if(e.target.parentNode.className.search('objTr') != -1){
-           		    	
            		    	let objNo = e.target.parentNode.getAttribute('data-objno');
            		    	
            		    	fetch('/tuna/eclass/professor/objection?objNo='+objNo)
@@ -1202,7 +1244,6 @@ xmlns:th="http://www.thymeleaf.org"
 	            				             })
 	            				             .then(result => result.json())
 	            				             .then(result => {
-	            				            	 
 	            				            	 if(result) {
 	            				            		 
 		            				            	 Dialogs.dialog('success',
@@ -1217,15 +1258,14 @@ xmlns:th="http://www.thymeleaf.org"
 		            				                 reqSbjContent(5, sbjno, '/tuna/prof/objections', setObjectionContent);
 	            				            	 
 	            				            	 } else {
-	            				            		 
+	            				            		 Dialogs.dialog('error',
+			  										      	   '등록 실패',
+			  										    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
 	            				            	 }
-	            				            	 
 	            				             }).catch(error => {
-	            				            	 
 	            				            	 Dialogs.dialog('error',
 			  										      	   '등록 실패',
 			  										    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
-	            				            	 
 	            				             })
             					   })
             	}) 
@@ -1277,8 +1317,10 @@ xmlns:th="http://www.thymeleaf.org"
                 mDate = mDate.slice(0, mDate.indexOf('T'));
               return mDate;
             }
-
-          </script>
+		  </script>
+	      <script th:src="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.js}"></script>
+	      <script th:src="@{/resources/assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+		  <script>One.helpersOnLoad(['js-flatpickr', 'jq-datepicker']);</script>
           <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	      <script th:src="@{/resources/assets/js/dialog.js}"></script>
       </main>
