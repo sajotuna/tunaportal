@@ -20,3 +20,4 @@ public interface GradeMapper {
 	public GradeVO findOneByStudentIdAndSubjectId(
 				@Param("stno")int stno, 
 				@Param("sbjno")int sbjno);
+}
