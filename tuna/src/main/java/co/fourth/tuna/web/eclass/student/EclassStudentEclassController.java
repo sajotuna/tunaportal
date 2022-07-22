@@ -154,9 +154,11 @@ public class EclassStudentEclassController {
 	@RequestMapping("/insertOneQna")
 	public String insertOneQna(Model model, LectureQnaVO vo, 
 			HttpServletRequest req, Authentication authentication) {
+
+		System.out.println(111234);
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
-		vo.setVisible(Integer.parseInt(req.getParameter("visible")));
+		vo.setVisible(Integer.parseInt(req.getParameter("visibleCheck")));
 		System.out.println("등록버튼 : " + vo);
 		 
 		qnaDao.insertOneQna(vo);
