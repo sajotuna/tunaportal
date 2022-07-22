@@ -29,58 +29,50 @@
 	</select>
 	<select id="singleTwoNotice" resultType="map" parameterType="co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO">
 	<![CDATA[
-		SELECT* FROM
-		(SELECT DISTINCT T.NO, T.TITLE, S.NAME, TO_CHAR(T.ENROLLDATE, 'MM"월"DD"일"') ENROLLDATE
+		SELECT DISTINCT T.NO, T.TITLE, S.NAME, TO_CHAR(T.ENROLLDATE, 'MM"월"DD"일"') ENROLLDATE
 		FROM LECTURENOTICE T, LECTUREAPPLY L, SUBJECT S, STUDENT U
 		WHERE T.SBJNO = L.SBJNO
         AND L.SBJNO = S.NO
 		AND L.SBJNO = #{sbjNo}
 		AND L.STNO = U.NO
 		AND L.SEASONCODE = #{seasonCode}
-		ORDER BY T.NO DESC)
-		WHERE ROWNUM <=2
+		ORDER BY T.NO DESC
 	]]>
 	</select>
 	<select id="singleTwoTask" resultType="map" parameterType="co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO">
 	<![CDATA[
-		SELECT* FROM
-		(SELECT DISTINCT T.NO, T.TITLE, S.NAME, TO_CHAR(T.LIMITDATE, 'MM"월"DD"일"') LIMITDATE
+		SELECT DISTINCT T.NO, T.TITLE, S.NAME, TO_CHAR(T.LIMITDATE, 'MM"월"DD"일"') LIMITDATE
 		FROM TASK T, LECTUREAPPLY L, SUBJECT S, STUDENT U
 		WHERE T.SBJNO = L.SBJNO
         AND L.SBJNO = S.NO
 		AND L.SBJNO = #{sbjNo}
 		AND L.STNO = U.NO
 		AND L.SEASONCODE = #{seasonCode}
-		ORDER BY T.NO DESC)
-		WHERE ROWNUM <=2
+		ORDER BY T.NO DESC
 	]]>
 	</select>
 	<select id="singleTwoQna" resultType="map" parameterType="co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO">
 	<![CDATA[
-		SELECT* FROM
-		(SELECT DISTINCT T.NO, T.TITLE, S.NAME
+		SELECT DISTINCT T.NO, T.TITLE, S.NAME
 		FROM LECTUREQNA T, LECTUREAPPLY L, SUBJECT S, STUDENT U
 		WHERE T.SBJNO = L.SBJNO
         AND L.SBJNO = S.NO
 		AND L.SBJNO = #{sbjNo}
 		AND L.STNO = U.NO
 		AND L.SEASONCODE = #{seasonCode}
-		ORDER BY T.NO DESC)
-		WHERE ROWNUM <=2
+		ORDER BY T.NO DESC
 	]]>
 	</select>
 	<select id="singleTwoFile" resultType="map" parameterType="co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO">
 	<![CDATA[
-		SELECT* FROM
-		(SELECT DISTINCT T.NO, T.TITLE, S.NAME
+		SELECT DISTINCT T.NO, T.TITLE, S.NAME
 		FROM LECTUREFILE T, LECTUREAPPLY L, SUBJECT S, STUDENT U
 		WHERE T.SBJNO = L.SBJNO
         AND L.SBJNO = S.NO
 		AND L.SBJNO = #{sbjNo}
 		AND L.STNO = U.NO
 		AND L.SEASONCODE = #{seasonCode}
-		ORDER BY T.NO DESC)
-		WHERE ROWNUM <=2
+		ORDER BY T.NO DESC
 	]]>
 	</select>	
 </mapper>

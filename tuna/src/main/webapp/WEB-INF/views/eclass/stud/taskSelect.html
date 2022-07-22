@@ -69,7 +69,7 @@
 														<th:block th:each="fts : ${fts}" id="fileList">
 															<a th:href="@{/download(fileName=${fts.uri}, originName=${fts.fileName}, folder=task)}" class="mb-0 fw-bold"> [[${fts.fileName}]] </a>
 															<button th:data-uri=${fts.uri} th:data-no=${fts.no}
-																type="submit" class="btn btn-sm delBtn">
+																type="button" class="btn btn-sm delBtn">
 																<i class="fa fa-fw fa-sm fa-times"></i>
 															</button>
 															<br>
@@ -106,15 +106,12 @@
 											contentType : 'application/json; charset=utf-8',
 											dataType : 'json',
 											beforeSend : function(xhr) {
-												xhr.setRequestHeader(header, token);},
-													}).done(function(success) {
-												if (success) {
-													fileRow.remove();
-													$('#fileList').load("${ContextPath}/eclass/student/taskSelect #fileList" );
-												} else {
-													console.log(no)
-												}
-											})
+												xhr.setRequestHeader(header, token);
+												},	
+											error : function(data){
+													location.reload();
+												}		
+									})
 								})
 
 				function getContextPath() {

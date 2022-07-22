@@ -20,70 +20,69 @@
  ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
 -->
 		<main layout:fragment="main">
-			<div class="content">
-				<div class="row">
-					<div class="col-12">
-						<h3 class="h3 fw-bold mb-2">공지사항</h3>
-					</div>
-					<div class="block block-rounded">
-						<div class="block-content block-content-full">
-							<div id="DataTables_Table_0_wrapper"
-								class="dataTables_wrapper dt-bootstrap5 no-footer">
-								<div class="row">
-									<div class="col-sm-12">
-										<table
-											class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
-											id="DataTables_Table_0"
-											aria-describedby="DataTables_Table_0_info">
-											<thead>
-												<tr>
-													<th class="text-center" style="width: 80px;" tabindex="0"
-														rowspan="1">번호</th>
-													<th class="text-center" tabindex="0" colspan="7">제목</th>
-													<th class="text-center" rowspan="1" colspan="3">작성일자</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr th:each="n : ${notice}" th:onclick="|location.href='@{/eclass/student/lectureNoticeSelect}'|">
-													<th class="text-center" th:text="${n.NO}"></th>
-													<th class="text-center" colspan="7" th:text="${n.TITLE}"></th>
-													<th class="text-center" colspan="3" th:text="${n.ENROLLDATE}"></th>
-												</tr>
-												
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-sm-12 com-md-7">
-										<div class="dataTables_paginate paging_simple_numbers"
-											id="DataTables_Table_0_paginate">
-											<ul class="pagination">
-												<li class="paginate_button page-item previous disabled"
-													id="DataTables_Table_0_previous"><a href="#"
-													aria-controls="DataTables_Table_0" data-dt-idx="0"
-													tabindex="0" class="page-link"> <i
-														class="fa fa-angle-left"></i>
-												</a></li>
-												<li class="paginate_button page-item active"><a
-													href="#" aria-controls="DataTables_Table_0" data-dt-idx="1"
-													tabindex="0" class="page-link"> 1 </a></li>
-												<li class="paginate_button page-item next"
-													id="DataTables_Table_0_next"><a href="#"
-													aria-controls="DataTables_Table_0" data-dt-idx="5"
-													tabindex="0" class="page-link"> <i
-														class="fa fa-angle-right"></i>
-												</a></li>
-											</ul>
-										</div>
-									</div>
+		<div class="content">
+			<div class="row">
+			<div class="col-12">
+				<h3 class="h3 fw-bold mb-2">공지사항</h3>
+				</div>
+				<div class="block block-rounded">
+				<div class="block-content block-content-full">
+					<div id="DataTables_Table_0_wrapper"
+						class="dataTables_wrapper dt-bootstrap5 no-footer">
+						<div class="row">
+							<div class="col-sm-12">
+								<table
+									class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
+									id="DataTables_Table_0"
+									aria-describedby="DataTables_Table_0_info">
+									<thead>
+										<tr>
+											<th class="text-center" style="width: 80px;" tabindex="0"
+												rowspan="1">번호</th>
+											<th class="text-center" tabindex="0" colspan="7">제목</th>
+											<th class="text-center" rowspan="1" colspan="3">작성일자</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="n : ${notice}">
+											<th class="text-center" th:text="${n.NO}"></th>
+											<th class="text-center" colspan="7"><a th:href="@{/eclass/student/lectureNoticeSelect(no = ${n.NO}, sbjNo = ${n.SBJNO})}" th:text="${n.TITLE}" style="color:black"></a></th>
+											<th class="text-center" colspan="3" th:text="${n.ENROLLDATE}"></th>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 com-md-7">
+								<div class="dataTables_paginate paging_simple_numbers"
+									id="DataTables_Table_0_paginate">
+									<ul class="pagination">
+										<li class="paginate_button page-item previous disabled"
+											id="DataTables_Table_0_previous"><a href="#"
+											aria-controls="DataTables_Table_0" data-dt-idx="0"
+											tabindex="0" class="page-link"> <i
+												class="fa fa-angle-left"></i>
+										</a></li>
+										<li class="paginate_button page-item active"><a
+											href="#" aria-controls="DataTables_Table_0" data-dt-idx="1"
+											tabindex="0" class="page-link"> 1 </a></li>
+										<li class="paginate_button page-item next"
+											id="DataTables_Table_0_next"><a href="#"
+											aria-controls="DataTables_Table_0" data-dt-idx="5"
+											tabindex="0" class="page-link"> <i
+												class="fa fa-angle-right"></i>
+										</a></li>
+									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
+					</div>
 				</div>
 			</div>
 			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+		</div>
 		</main>
 	</div>
 

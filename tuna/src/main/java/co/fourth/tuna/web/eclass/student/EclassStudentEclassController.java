@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,17 +17,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.common.service.YearService;
-import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
 import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
 import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
 import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
@@ -74,7 +72,7 @@ public class EclassStudentEclassController {
 	}
 	
 	@RequestMapping("/lectureNoticeSelect")
-	public String lectureNoticeSelect(Model model, LectureNoticeVO vo, Authentication authentication) {
+	public String lectureNoticeSelect(Model model, LectureNoticeVO vo, HttpServletRequest req, Authentication authentication) {
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		vo.setSeasonCode(105);
@@ -89,8 +87,8 @@ public class EclassStudentEclassController {
 	}
 	
 	@RequestMapping("/lecturePlan")
-	public String lecturePlan(Model model, LecturePlanVO vo) {
-		vo.setSbjNo(18101);
+	public String lecturePlan(Model model, HttpServletRequest req, LecturePlanVO vo) {
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		List<Map<String,Object>> lists = sql.selectList("co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper.selectPlan", vo.getSbjNo());
 		//강의스케쥴
 		List<Map<String,Object>> lectureSchedule = sql.selectList("co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper.selectSc", vo.getSbjNo());
@@ -106,14 +104,14 @@ public class EclassStudentEclassController {
 	}
 	
 	@RequestMapping("/qnaList")
-	public String qnaList(Model model, @RequestParam HashMap<String, Object> map, @RequestParam(value="pageNum", required=false, defaultValue= "1" ) int pageNum) {
+	public String qnaList(Model model, LectureQnaVO vo, HttpServletRequest req, @RequestParam HashMap<String, Object> map, @RequestParam(value="pageNum", required=false, defaultValue= "1" ) int pageNum) {
 		
-		map.put("sbjNo", 18011);
+		map.put("sbjNo", vo.getSbjNo());
 		map.put("pageNum", pageNum);
 		map.put("size", 5);
 		List<Map<String, Object>> qna = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
 		
-		map.put("sbjNo", 18011);
+		map.put("sbjNo", vo.getSbjNo());
 		map.put("pageNum", pageNum);
 		map.put("size", 100);
 		List<Map<String, Object>> qna2 = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
@@ -122,7 +120,7 @@ public class EclassStudentEclassController {
 		
 		model.addAttribute("qna", qna);
 		model.addAttribute("pgcnt", pageCount);
-		
+		model.addAttribute("sbjNo",req.getParameter("sbjNo"));
 		
 		return "eclass/stud/qnaList";
 	}
@@ -132,12 +130,14 @@ public class EclassStudentEclassController {
 		;
 		//인덱스 부여하여 vo에 setting
 		vo.setNo(Integer.parseInt(req.getParameter("no")));
-		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
-		//vo.set값 -> 쿼리 -> 
-		                                //학번
+		vo.setSbjNo(req.getParameter("sbjNo"));
+		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
 		model.addAttribute("qs", qs);
+		model.addAttribute("sbjNo", vo.getSbjNo());
+		
+		System.out.println("단건조회 : " + qs);
 		
 		return "eclass/stud/qnaSelect";
 	}
@@ -145,19 +145,7 @@ public class EclassStudentEclassController {
 	//질의응답작성폼
 	@RequestMapping("/qnaInsert")
 	public String qnaInsert(Model model, LectureQnaVO vo, HttpServletRequest req, Authentication authentication) {
-		
-		
-		System.out.println(1235234548);
-//		System.out.println("req : " + req);
-//		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
-//		vo.setStNo(Integer.parseInt(authentication.getName()));
-//		
-//		LectureQnaVO sbjno = vo;
-//		
-//		System.out.println(sbjno);
-//		model.addAttribute("sbjno", sbjno);
-		
-		System.out.println("나오나" + vo);
+		model.addAttribute("sbjNo",req.getParameter("sbjNo"));
 		
 		return "eclass/stud/qnaInsert";
 	}
@@ -166,19 +154,23 @@ public class EclassStudentEclassController {
 	@RequestMapping("/insertOneQna")
 	public String insertOneQna(Model model, LectureQnaVO vo, 
 			HttpServletRequest req, Authentication authentication) {
+
+		System.out.println(111234);
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
+		vo.setVisible(Integer.parseInt(req.getParameter("visibleCheck")));
+		System.out.println("등록버튼 : " + vo);
+		 
+		qnaDao.insertOneQna(vo);
 		
-		System.out.println(vo);
-		 
-		 qnaDao.insertOneQna(vo);
-		 
-		return "redirect:/eclass/student/qnaSelect";
+		model.addAttribute("sbjNo", vo.getSbjNo());
+		
+		return "eclass/stud/qnaList";
 	}
 
 	
 	@RequestMapping("/taskList")
-	public String taskList(Model model, Authentication authentication) {
+	public String taskList(Model model, HttpServletRequest req, Authentication authentication) {
 		
 		//단일과목과제 조회
 		StudentVO sv = new StudentVO();
@@ -311,7 +303,7 @@ public class EclassStudentEclassController {
 	}
 	//사이드바 작업 열심히 해보자
 	@ModelAttribute("side")
-	public Map<String, Object> side(Authentication authentication) {
+	public Map<String, Object> side(Authentication authentication, HttpServletRequest req ) {
 		
 		EclassStudentHomeVO vo = new EclassStudentHomeVO();
 		

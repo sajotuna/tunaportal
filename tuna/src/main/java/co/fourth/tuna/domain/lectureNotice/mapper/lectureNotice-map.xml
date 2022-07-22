@@ -11,7 +11,7 @@
 	
 	<!-- 단일과목 공지전체 -->
 	<select id="noticeList" resultType="map" parameterType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO">
-	SELECT N.NO, N.TITLE, TO_CHAR(N.ENROLLDATE, 'YYYY-MM-DD HH24:MI') ENROLLDATE
+	SELECT N.NO, N.TITLE, N.SBJNO, TO_CHAR(N.ENROLLDATE, 'YYYY-MM-DD HH24:MI') ENROLLDATE
 	FROM LECTUREAPPLY L JOIN LECTURENOTICE N
 	ON(L.SBJNO = N.SBJNO)
 	JOIN SUBJECT J
