@@ -10,6 +10,9 @@ public interface LectureQnaService {
 	//질문단건조회
 	public String qnaSelect(LectureQnaVO vo);
 	
+	//질문등록
+	public void insertOneQna(LectureQnaVO vo);
+	
 	//lectureQnaMapper과 동일한 메소드
 //	List<LectureQnaVO> qnaList(String key);
 	

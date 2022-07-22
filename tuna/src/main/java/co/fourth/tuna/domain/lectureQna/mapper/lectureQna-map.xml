@@ -5,6 +5,7 @@
 <resultMap type="HashMap" id="ClobToString">
 
 	<result property="content" column="CONTENT" jdbcType="CLOB" javaType="java.lang.String" />
+	<result property="ANSWER" column="ANSWER" jdbcType="CLOB" javaType="java.lang.String" />
 
 </resultMap>
 
@@ -42,6 +43,8 @@
   		ROWNUM RN
 	FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
 	WHERE Q.SBJNO = #{sbjNo}
+    and s.no = l.stno
+    and q.sbjno = l.sbjno
     ORDER BY RN DESC)
     WHERE RN 
     	BETWEEN (#{pageNum}-1) * #{size} +1
@@ -60,12 +63,15 @@
 	AND Q.SBJNO = #{sbjNo}
 	AND Q.NO = #{no}
 	</select>
-<!-- 
-질문작성
-<insert id="qnsInsert" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+ 
+<!-- 질문작성 -->
+<insert id="insertOneQna" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+<selectKey resultType="int" keyProperty="no" order="BEFORE">
+SELECT CASE WHEN MAX(NO) != 0 THEN MAX(NO) + 1 ELSE 1 END FROM LECTUREQNA
+</selectKey>
 INSERT INTO LECTUREQNA
-VALUES(?, ?, ?, ?, ?, ?, ?, ?)
-</insert> -->
+VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, default)
+</insert>
 
 <!-- 목록 subject으로 찾기 -->
 	<select id="findBySubjectId"
