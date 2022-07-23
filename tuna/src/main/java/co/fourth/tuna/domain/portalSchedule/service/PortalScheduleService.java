@@ -19,5 +19,6 @@ public interface PortalScheduleService {
 	int scheduleDelete(PortalScheduleVO vo);
 	
 	List<PortalScheduleVO> adminScheduleList(PortalScheduleVO vo);
+	
 	public PortalScheduleVO findTuitionSchedule(PortalScheduleVO vo);
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -107,9 +108,10 @@ public class PortalNoticeController {
 
 	// 공지등록
 	@PostMapping("/admin/adminNoticeInsert")
-	public String adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo,
+	public String adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo,Authentication authentication,
 			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
 
+		vo.setAdNo((authentication.getName()));
 		noticeDao.noticeInsert(vo);
 
 		for (MultipartFile file : files) {
@@ -140,9 +142,10 @@ public class PortalNoticeController {
 
 	// 공지 수정
 	@PostMapping("/admin/adminNoticeUpdate")
-	public String adminNoticeUpdate(PortalNoticeVO vo, @RequestParam(value = "file") MultipartFile[] files)
+	public String adminNoticeUpdate(PortalNoticeVO vo, Authentication authentication, @RequestParam(value = "file") MultipartFile[] files)
 			throws IOException {
-
+		
+		vo.setAdNo((authentication.getName()));
 		noticeDao.noticeUpdate(vo);
 
 		for (MultipartFile file : files) {
