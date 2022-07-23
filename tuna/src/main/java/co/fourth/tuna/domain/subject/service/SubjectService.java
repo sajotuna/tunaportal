@@ -5,6 +5,7 @@ import java.util.List;
 import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
+import co.fourth.tuna.util.ServiceResponseVO;
 
 public interface SubjectService {
 	SubjectVO findOne(SubjectVO vo);
@@ -22,5 +23,5 @@ public interface SubjectService {
 //	List<Map<String, Object>> getMapsForLectureSchedule(int pageNum, int size);
 //	List<Map<String, Object>> getMapsForLectureScheduleByProf(ProfessorVO prof, int pageNum, int size);
 	
-	
+	public ServiceResponseVO updateGradeRatio(GradeRatioVO grade);
 }

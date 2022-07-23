@@ -111,13 +111,8 @@ xmlns:th="http://www.thymeleaf.org"
                       </th:block>  
                     </div>
                     <div class="pt-3 row">
-                      <div class="col-10 offset-1 pb-2 col-xxl-3 offset-xxl-6 pb-xxl-0">
-                        <button class="col-12 btn btn-dark">
-                          상세보기
-                        </button>
-                      </div>
-                      <div class="col-10 offset-1 col-xxl-3 offset-xxl-0">
-                        <button class="col-12 btn btn-primary">
+                      <div class="col-10 offset-1 col-xxl-3 offset-xxl-9">
+                        <button th:onclick="|location.href='@{/eclass/professor/subjectForm(no=${param.no})}'|" class="col-12 btn btn-primary">
                           수정 
                         </button>
                       </div>

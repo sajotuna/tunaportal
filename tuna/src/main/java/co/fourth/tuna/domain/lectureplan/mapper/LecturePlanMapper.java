@@ -12,4 +12,6 @@ public interface LecturePlanMapper {
 	public LecturePlanVO selectSc(LecturePlanVO vo);
 	
 	public List<LecturePlanVO> findListBySubjectId(int sbjno);
+	
+	public int updateOneByNo(LecturePlanVO vo);
 }

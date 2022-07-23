@@ -3,13 +3,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Home</title>
+    <title>TUNA Portal</title>
     <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/css/home.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
+    <style>
+    
+    .staff-box {
+   		height: 665px;
+   	}
+    
+    @media (max-width: 990px) {
+	  .staff-box {
+	    height: 100px;
+	  }
+	}
+    
+    </style>
 </head>
 <body>
+
+<!-- <th:block sec:authorize="hasRole('ROLE_STUDENT')"> -->
+<!-- <th:block sec:authorize="hasRole('ROLE_STAFF')"> -->
+<!-- <th:block sec:authorize="hasRole('ROLE_ADMIN')"> -->
 
 <div id="page-container">
 	<!-- Main Container -->
@@ -31,12 +48,12 @@
 	            </div>
 	            
 	            <div class="mt-3 mt-md-0 ms-md-3 space-x-1">
-	            <div sec:authorize="isAnonymous()">
+	            <!-- <div sec:authorize="isAnonymous()">
 		            <a class="btn btn-sm btn-dark space-x-1" th:href="@{/custom/login}">
 		                <i class="far fa-user opacity-50"></i>
 		                <span>로그인</span>
 		            </a>
-	            </div>
+	            </div> -->
 	            <div sec:authorize="isAuthenticated()">
 	            <div class="dropdown d-inline-block">
 	                <button type="button" class="btn btn-sm btn-dark space-x-1" id="dropdown-analytics-overview" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -65,8 +82,8 @@
 	                    </th:block>
 	                    <div sec:authorize="hasAuthority('ROLE_ADMIN')">
 	                    <div class="p-2">
-	                      <a class="dropdown-item d-flex align-items-center justify-content-between" th:href="@{/admin/adminUserSearch}">
-	                        <span class="fs-sm fw-medium">관리자 페이지</span>
+	                      <a class="dropdown-item d-flex align-items-center justify-content-between" >
+	                        <span class="fs-sm fw-medium">내 정보 수정</span>
 	                      </a>
 	                    </div>
 	                    </div>
@@ -86,174 +103,229 @@
 	    </div>
 	    <!-- END Hero -->
 	    <!-- Main Navigation -->
+	    <th:block sec:authorize="hasRole('ROLE_STUDENT')">
 	    <div class="bg-primary-darker">
-		<div id="main-navigation" class="d-md-none mt-2 mt-lg-0">
-			<ul class="nav-main nav-main-dark nav-main-horizontal nav-main-hover">
-				<li class="nav-main-item"><a
-					class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
-					aria-haspopup="true" aria-expanded="false" href="#"><span
-						class="nav-main-link-name">학사정보</span>
-				</a>
-					<ul class="nav-main-submenu">
-						<li class="nav-main-item"><a class="nav-main-link"
-							href="portalNoticeList"> <span class="nav-main-link-name">공지사항</span>
-						</a></li>
-						<li class="nav-main-item"><a class="nav-main-link"
-							href="portalSchedule"> <span class="nav-main-link-name">학사일정</span>
-						</a></li>
-					</ul></li>
-					
-				<li class="nav-main-item"><a
-					class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
-					aria-haspopup="true" aria-expanded="false" href="#"><span
-						class="nav-main-link-name">조회</span>
-				</a>
-					<ul class="nav-main-submenu">
-						<li class="nav-main-item"><a class="nav-main-link"
-							th:href="@{/stud/subjectAndReport}"> <span class="nav-main-link-name">강의/성적 조회</span>
-						</a></li>
-						<li class="nav-main-item"><a class="nav-main-link"
-							th:href="@{/stud/scholarshipApplication}"> <span class="nav-main-link-name">장학 신청 및 조회</span>
-						</a></li>
-						<li class="nav-main-item"><a class="nav-main-link"
-							th:href="@{/stud/tuitionCheck}"> <span class="nav-main-link-name">등록금납입확인서</span>
-						</a></li>
-						<li class="nav-main-item"><a class="nav-main-link"
-							th:href="@{/stud/semesterReportSelect}"> <span class="nav-main-link-name">당해학기 성적 조회</span>
-						</a></li>
-					</ul></li>
-					
-				<li class="nav-main-item"><a
-					class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
-					aria-haspopup="true" aria-expanded="false" href="#"><span
-						class="nav-main-link-name">강의</span>
-				</a>
-					<ul class="nav-main-submenu" sec:authorize="hasRole('ROLE_STUDENT')">
-						<li class="nav-main-item"><a class="nav-main-link"
-							th:href="@{/eclass/student/home}"> <span class="nav-main-link-name">e-class</span>
-						</a></li>
-						<li sec:authorize="hasRole('ROLE_STAFF')" class="nav-main-item"><a class="nav-main-link"
-							href="#"> <span class="nav-main-link-name">e-class 교수</span>
-						</a></li>
-						<li class="nav-main-item"><a class="nav-main-link"
-							th:href="@{/stud/courseWarning}"> <span class="nav-main-link-name">수강신청</span>
-						</a></li>
-						<li class="nav-main-item"><a class="nav-main-link"
-							th:href="@{/stud/lectureEvaluationDetails}"> <span class="nav-main-link-name">강의평가</span>
-						</a></li>
-					</ul></li>
-	
-			</ul>
+			<div id="main-navigation" class="d-md-none mt-2 mt-lg-0">
+				<ul class="nav-main nav-main-dark nav-main-horizontal nav-main-hover">
+					<li class="nav-main-item"><a
+						class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+						aria-haspopup="true" aria-expanded="false" href="#"><span
+							class="nav-main-link-name">학사정보</span>
+					</a>
+						<ul class="nav-main-submenu">
+							<li class="nav-main-item"><a class="nav-main-link"
+								href="portalNoticeList"> <span class="nav-main-link-name">공지사항</span>
+							</a></li>
+							<li class="nav-main-item"><a class="nav-main-link"
+								href="portalSchedule"> <span class="nav-main-link-name">학사일정</span>
+							</a></li>
+						</ul></li>
+						
+					<li class="nav-main-item"><a
+						class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+						aria-haspopup="true" aria-expanded="false" href="#"><span
+							class="nav-main-link-name">조회</span>
+					</a>
+						<ul class="nav-main-submenu">
+							<li class="nav-main-item"><a class="nav-main-link"
+								th:href="@{/stud/subjectAndReport}"> <span class="nav-main-link-name">강의/성적 조회</span>
+							</a></li>
+							<li class="nav-main-item"><a class="nav-main-link"
+								th:href="@{/stud/scholarshipApplication}"> <span class="nav-main-link-name">장학 신청 및 조회</span>
+							</a></li>
+							<li class="nav-main-item"><a class="nav-main-link"
+								th:href="@{/stud/tuitionCheck}"> <span class="nav-main-link-name">등록금납입확인서</span>
+							</a></li>
+							<li class="nav-main-item"><a class="nav-main-link"
+								th:href="@{/stud/semesterReportSelect}"> <span class="nav-main-link-name">당해학기 성적 조회</span>
+							</a></li>
+						</ul></li>
+						
+					<li class="nav-main-item"><a
+						class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+						aria-haspopup="true" aria-expanded="false" href="#"><span
+							class="nav-main-link-name">강의</span>
+					</a>
+						<ul class="nav-main-submenu">
+							<li class="nav-main-item"><a class="nav-main-link"
+								th:href="@{/eclass/student/home}"> <span class="nav-main-link-name">e-class</span>
+							</a></li>
+							<li class="nav-main-item"><a class="nav-main-link"
+								th:href="@{/stud/courseWarning}"> <span class="nav-main-link-name">수강신청</span>
+							</a></li>
+							<li class="nav-main-item"><a class="nav-main-link"
+								th:href="@{/stud/lectureEvaluationDetails}"> <span class="nav-main-link-name">강의평가</span>
+							</a></li>
+						</ul></li>
+		
+				</ul>
+			</div>
 		</div>
-		</div>
+		</th:block>
 		<!-- END Main Navigation -->
-	
-	    <div class="mt-3">
-	    <!-- Page Content -->
+		
+		<!-- Page Content -->
 	    <div class="content content-boxed">
-	        <!-- First Row -->
-	        <div class="row">
-	        	<!-- Slide Banner -->
-	            <div class="col-xl-5">
-	                <div class="block block-rounded">
-	                    <div id="slider" class="block-content box banner">
-	                    	<!-- <th:block th:include=@{homeSliderBanner}></th:block>  -->
-	                    </div>
-	                </div>
-	            </div>
-	            <!-- END Slide Banner -->
-	            <div class="col-xl-3 col-md-6 d-none d-md-block">
-	                <div class="block block-rounded">
-	                    <div class="block-content box">
-	                        <button class="box-btn btn btn-dark fw-bold" th:onclick="|location.href='@{/stud/courseWarning}'|">수강신청</button>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-xl-4 col-md-6 d-none d-md-block">
-	                <div class="row">
-	                    <div class="col-md-6">
-	                        <div class="block block-rounded">
-	                            <div class="block-content short-box">
-	                                <button class="box-btn btn btn-info fw-bold" th:onclick="|location.href='@{/stud/tuitionCheck}'|">등록금납입확인서</button>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-md-6">
-	                        <div class="block block-rounded">
-	                            <div class="block-content short-box">
-	                                <button class="box-btn btn btn-outline-light 
-	                                    text-primary-darker fw-bold" th:onclick="|location.href='@{/stud/scholarshipApplication}'|">장학 신청 및 조회</button>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="block block-rounded">
-	                    <div class="block-content short-box">
-	                        <button class="box-btn btn bg-modern-light text-gray-lighter fw-bold" 
-	                        		th:onclick="|location.href='@{/stud/subjectAndReport}'|">강의 / 성적 조회</button>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	        <!-- END First Row -->
-	        <!-- Second Row -->
-	        <div class="row">
-	            <div class="col-xl-4 col-md-6 d-none d-md-block">
-	                <div class="row">
-	                    <div class="col-md-6">
-	                        <div class="block block-rounded">
-	                            <div class="block-content short-box">
-	                                <button class="box-btn btn btn-alt-info fw-bold text-dark" th:onclick="|location.href='@{/portalNoticeList}'|">학사공지</button>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-md-6">
-	                        <div class="block block-rounded">
-	                            <div class="block-content short-box">
-	                                <button class="box-btn btn btn-primary fw-bold" th:onclick="|location.href='@{/portalSchedule}'|">학사일정</button>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="block block-rounded">
-	                    <div class="block-content short-box banner bg-muted slogan-banner">
-	                        <h4 class="text-gray-lighter">TUNA, <br>세계의 중심에서 세상을 바꾸라.</h4>
-	                        
-	                    </div>
-	                </div>
-	                
-	            </div>
-	            <div class="col-xl-3 col-md-6 d-none d-md-block"> 
-	                <div class="block block-rounded">
-	                    <div class="block-content box">
-	                        <button class="box-btn btn btn-outline-light 
-	                                    text-primary-darker fw-bold" th:onclick="|location.href='@{/eclass/student/home}'|">e-Class</button>
-	                    </div>
-	                </div>
-	            </div>
-<!-- 	        <div class="col-xl-3 col-md-6 d-none d-md-block">
-	                <div class="block block-rounded">
-	                    <div class="block-content box">
-	                        <button class="box-btn btn btn-outline-light 
-	                                    text-primary-darker fw-bold" onclick="javascript:void(0)">e-Class 교수</button>
-	                    </div>
-	                </div>
-	            </div> -->
-	            <!-- Shortcut Banner -->
-	            <div class="col-xl-5">
-	                <div class="block block-rounded">
-	                    <div class="block-content box banner shortcut-banner">
-	                        <button id="shortcutBtn" class="btn btn-alt-secondary shortcut-btn" onclick="javascript:void(0)">바로가기</button>
-							<img id="shortcutImg" class="banner-img" alt="">
+	    	<th:block sec:authorize="hasRole('ROLE_STUDENT')">
+				<!-- ███████ ████████ ██    ██ ██████  
+					 ██         ██    ██    ██ ██   ██ 
+					 ███████    ██    ██    ██ ██   ██ 
+					      ██    ██    ██    ██ ██   ██ 
+					 ███████    ██     ██████  ██████   -->
+		        <!-- First Row -->
+		        <div class="row">
+		        	<!-- Slide Banner -->
+		            <div class="col-xl-5">
+		                <div class="block block-rounded">
+		                    <div id="slider" class="block-content box banner">
+		                    	<!-- <th:block th:include=@{homeSliderBanner}></th:block>  -->
+		                    </div>
+		                </div>
+		            </div>
+		            <!-- END Slide Banner -->
+		            <div class="col-xl-3 col-md-6 d-none d-md-block">
+		                <div class="block block-rounded">
+		                    <div class="block-content box">
+		                        <button class="box-btn btn btn-dark fw-bold" th:onclick="|window.open('@{/stud/courseWarning}')|">수강신청</button>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="col-xl-4 col-md-6 d-none d-md-block">
+		                <div class="row">
+		                    <div class="col-md-6">
+		                        <div class="block block-rounded">
+		                            <div class="block-content short-box">
+		                                <button class="box-btn btn btn-info fw-bold" th:onclick="|location.href='@{/stud/tuitionCheck}'|">등록금납입확인서</button>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="col-md-6">
+		                        <div class="block block-rounded">
+		                            <div class="block-content short-box">
+		                                <button class="box-btn btn btn-outline-light 
+		                                    text-primary-darker fw-bold" th:onclick="|window.open('@{/stud/scholarshipApplication}')|">장학 신청 및 조회</button>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="block block-rounded">
+		                    <div class="block-content short-box">
+		                        <button class="box-btn btn bg-modern-light text-gray-lighter fw-bold" 
+		                        		th:onclick="|location.href='@{/stud/subjectAndReport}'|">강의 / 성적 조회</button>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		        <!-- END First Row -->
+		        <!-- Second Row -->
+		        <div class="row">
+		            <div class="col-xl-4 col-md-6 d-none d-md-block">
+		                <div class="row">
+		                    <div class="col-md-6">
+		                        <div class="block block-rounded">
+		                            <div class="block-content short-box">
+		                                <button class="box-btn btn btn-alt-info fw-bold text-dark" th:onclick="|location.href='@{/portalNoticeList}'|">학사공지</button>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="col-md-6">
+		                        <div class="block block-rounded">
+		                            <div class="block-content short-box">
+		                                <button class="box-btn btn btn-primary fw-bold" th:onclick="|location.href='@{/portalSchedule}'|">학사일정</button>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="block block-rounded">
+		                    <div class="block-content short-box banner bg-muted slogan-banner">
+		                        <h4 class="text-gray-lighter">TUNA, <br>세계의 중심에서 세상을 바꾸라.</h4>
+		                        
+		                    </div>
+		                </div>
+		                
+		            </div>
+		            <div class="col-xl-3 col-md-6 d-none d-md-block"> 
+		                <div class="block block-rounded">
+		                    <div class="block-content box">
+		                        <button class="box-btn btn btn-outline-light 
+		                                    text-primary-darker fw-bold" th:onclick="|window.open('@{/eclass/student/home}')|">e-Class</button>
+		                    </div>
+		                </div>
+		            </div>
+
+		            <!-- Shortcut Banner -->
+		            <div class="col-xl-5">
+		                <div class="block block-rounded">
+		                    <div class="block-content box banner shortcut-banner">
+		                        <button id="shortcutBtn" class="btn btn-alt-secondary shortcut-btn" onclick="javascript:void(0)">바로가기</button>
+								<img id="shortcutImg" class="banner-img" alt="">
+							</div>
+		                </div>
+		            </div>
+		            <!-- END Shortcut Banner -->
+		        </div>
+		        <!-- END Second Row -->
+	        </th:block>
+			<th:block sec:authorize="hasRole('ROLE_STAFF')">
+		 	    <!-- ██████  ██████   ██████  ███████ 
+					 ██   ██ ██   ██ ██    ██ ██      
+					 ██████  ██████  ██    ██ █████   
+					 ██      ██   ██ ██    ██ ██      
+					 ██      ██   ██  ██████  ██     -->
+				<div class="row justify-content-center align-middle">
+					<div class="col-lg-3">
+						<div class="block block-rounded staff-box">
+						       <button class="box-btn btn btn-outline-light text-primary-darker fw-bold" 
+						       		   th:onclick="|location.href='@{/portalNoticeList}'|">학사공지</button>
 						</div>
+					</div>
+				    <div class="col-lg-3">
+						<div class="block block-rounded staff-box">
+						    <button class="box-btn btn fw-bold banner" th:onclick="|window.open('@{/eclass/professor/home}')|"
+						    		   style="position:relative; border:none;">
+								<div class="text-gray-lighter" style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);">e-Class<br>교수</div>
+								<img class="banner-img" th:src="@{/display(fileName=home01.png, folder=home)}">
+						    </button>
+						</div>
+				    </div>
+					    <div class="col-lg-3">
+						    <div class="block block-rounded staff-box">
+						        <button class="box-btn btn btn-primary fw-bold" th:onclick="|location.href='@{/portalSchedule}'|">학사일정</button>
+						    </div>
+						</div>
+				</div>
+			</th:block>
+			<th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
+				<!-- █████  ██████  ███    ███ ██ ███    ██ 
+					██   ██ ██   ██ ████  ████ ██ ████   ██ 
+					███████ ██   ██ ██ ████ ██ ██ ██ ██  ██ 
+					██   ██ ██   ██ ██  ██  ██ ██ ██  ██ ██ 
+					██   ██ ██████  ██      ██ ██ ██   ████  -->
+				<div class="row justify-content-center align-middle">
+					<div class="col-lg-3">
+		                <div class="block block-rounded staff-box">
+	                        <button class="box-btn btn btn-outline-light 
+	                                    text-primary-darker fw-bold" th:onclick="|location.href='@{/portalNoticeList}'|">학사공지</button>
+		                </div>
+		            </div>
+		            <div class="col-lg-3">
+	                    <div class="block block-rounded staff-box">
+	                        <button class="box-btn btn btn-alt-info fw-bold text-dark banner" th:onclick="|window.open('@{/admin/adminUserSearch}')|"
+	                        		   style="position:relative; border:none;">
+	                       	   <div class="text-gray-lighter" style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);">관리자 페이지</div>
+	                       	   <img class="banner-img" th:src="@{/display(fileName=home01.png, folder=home)}">
+	                        </button>
+	                    </div>
 	                </div>
-	            </div>
-	            <!-- END Shortcut Banner -->
-	        </div>
-	        <!-- END Second Row -->
+					<div class="col-lg-3">
+					    <div class="block block-rounded staff-box">
+					        <button class="box-btn btn btn-primary fw-bold" th:onclick="|location.href='@{/portalSchedule}'|">학사일정</button>
+					    </div>
+					</div>
+                </div>
+			</th:block>
 	    </div>
-	    <!-- END Grid -->
-	    </div>
+	    <!-- END Page Content -->
 	</main>
     <!-- Footer -->
 	 <footer id="page-footer" class="bg-sidebar-dark">

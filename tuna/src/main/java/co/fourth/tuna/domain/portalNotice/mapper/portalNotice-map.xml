@@ -72,7 +72,7 @@ WHERE no = #{no}
 						ELSE 1 END AS ID FROM PORTALNOTICE
 </selectKey>
 INSERT INTO PORTALNOTICE
-VALUES (#{no}, #{content}, #{title}, #{visible}, 100482, sysDate)
+VALUES (#{no}, #{content}, #{title}, #{visible}, #{adNo}, sysDate)
 </insert>
 
 <!-- 삭제 -->
@@ -87,7 +87,8 @@ UPDATE PORTALNOTICE
 SET TITLE = #{title},
     CONTENT = #{content},
     ENROLLDATE = sysDate,
-    VISIBLE = #{visible}
+    VISIBLE = #{visible},
+    aDNO = #{adNo}
 WHERE NO = #{no}
 </update>
 

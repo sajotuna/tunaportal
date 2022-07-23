@@ -9,6 +9,8 @@
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
 <link rel="stylesheet"
 	th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
+	<link rel="stylesheet"
+	th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 <title>NoticeUpdate</title>
 </head>
 <body>
@@ -24,15 +26,15 @@
 					<div th:each="notice, i:${content}">
 						<input type="hidden" name="no" id="no" th:value="${notice.no}">
 						<input type="text" name="title" class="mb-4 form-control"
-							id="title" th:value="${notice.title}"  required>
+							id="title" th:value="${notice.title}" required>
 						<hr>
-						<textarea class="js-simplemde" id="content" name="content"  required>[[${notice.content}]]</textarea>
+						<textarea class="js-simplemde" id="content" name="content"
+							required>[[${notice.content}]]</textarea>
 						<hr>
 						<div class="row mb-3">
 							<div class="col-6">
 								<div id="fileRow" th:each="file, i:${files}" class="col5 mb-3">
-									첨부파일 : 
-										[[${file.name}]]
+									첨부파일 : [[${file.name}]]
 									<button th:data-uri=${file.uri} th:data-no=${file.no}
 										type="button"
 										class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled delBtn">
@@ -47,14 +49,14 @@
 
 							<div class="col-6">
 								<select id="visible" name="visible" class="form-select">
-									<option value="y">공개</option>
-									<option value="n">비공개</option>
+									<option value="Y">공개</option>
+									<option value="N">비공개</option>
 								</select>
 							</div>
 						</div>
 					</div>
 					<div class="d-flex justify-content-end">
-						<button type="submit" class="btn btn-outline-secondary me-2">수정</button>
+						<button type="submit" id="sbmBtn" class="sbmBtn btn btn-outline-secondary me-2">수정</button>
 						<button type="button" class="btn btn-outline-secondary"
 							th:onclick="|location.href='@{/admin/adminNoticeList}'|">홈으로</button>
 					</div>
@@ -65,31 +67,45 @@
 
 		</div>
 		<script>
-				    $('.delBtn').on('click', function() {
-					var header = $("meta[name='_csrf_header']").attr('content');
-					var token = $("meta[name='_csrf']").attr('content');
-					
-					let uri = $(this).data('uri');
-					let no = $(this).data('no');
-					let fileRow = $(this).parent();
+		
+/* 		   $('.sbmBtn').on('click', function(){
+			   if($("#content").val() =='' ||$("#content").val() =='null' ){
+					Dialogs.dialog('error', 
+			               '', 
+			               '내용을 입력해주세요');
+					return false;
+				}	
+		   }) */
+		
+		
+			$('.delBtn').on('click', function() {
+				var header = $("meta[name='_csrf_header']").attr('content');
+				var token = $("meta[name='_csrf']").attr('content');
 
-					$.ajax({
-						url : getContextPath() + 'fileDel',
-						method : 'DELETE',
-						data : JSON.stringify({no:no, uri:uri}),
-						contentType : 'application/json; charset=utf-8',
-						dataType : 'json',
-						beforeSend : function(xhr) {
-							xhr.setRequestHeader(header, token);
-						},
-					}).done(function(success){
-						if(success) {
-							fileRow.remove();
-						} else{
-							console.log(no)
-						}
-					})
+				let uri = $(this).data('uri');
+				let no = $(this).data('no');
+				let fileRow = $(this).parent();
+
+				$.ajax({
+					url : getContextPath() + 'fileDel',
+					method : 'DELETE',
+					data : JSON.stringify({
+						no : no,
+						uri : uri
+					}),
+					contentType : 'application/json; charset=utf-8',
+					dataType : 'json',
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+				}).done(function(success) {
+					if (success) {
+						fileRow.remove();
+					} else {
+						console.log(no)
+					}
 				})
+			})
 
 			function getContextPath() {
 				var pathName = window.location.pathname.substring(1);
@@ -99,12 +115,17 @@
 						+ window.location.host + '/' + webName + '/';
 				return path_root;
 			}
-				    
-	    
-				    
+			
+			   
+
+
+			
 		</script>
 		<script
 			th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
+		<script
+			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+		<script th:src="@{/resources/assets/js/dialog.js}"></script>
 		<script>
 			One.helpersOnLoad([ 'js-simplemde' ]);
 		</script>

@@ -31,16 +31,16 @@
           <!-- User Dropdown -->
           <div class="dropdown d-inline-block ms-2">
             <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="d-none d-sm-inline-block ms-2">{vo.name}</span>
+              <span class="d-none d-sm-inline-block ms-2" th:text = "${#authentication.principal.name}"></span>
               <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block opacity-50 ms-1 mt-1"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
               <div class="p-3 text-center bg-body-light border-bottom rounded-top">
-                <p class="mt-2 mb-0 fw-medium">{vo.name}</p>
-                <p class="mb-0 text-muted fs-sm fw-medium">시각디자인학과</p>
+                <p class="mt-2 mb-0 fw-medium" th:text = "${#authentication.principal.name}"></p>
+                <p class="mb-0 text-muted fs-sm fw-medium" th:text = "${@codeList.getName(#authentication.principal.deptCode)}"></p>
               </div>
               <div class="p-2">
-                <a class="dropdown-item d-flex align-items-center justify-content-between" th:href="@{/userUpdate}">
+                <a class="dropdown-item d-flex align-items-center justify-content-between" th:href="@{userUpdate}">
                   <span class="fs-sm fw-medium">내 정보 수정</span>
                 </a>
               </div>

@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.user.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,12 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 			student.setGradeVO(grade);
 			for(TaskVO task : tasks) {
 				SubmitTaskVO subTask = taskMap.findSubmitTasksByTaskIdAndStudentId(task.getNo(), student.getNo());
-				student.getSubmitTaskList().add(subTask);
+				if(student.getSubmitTaskList() != null) {
+					student.getSubmitTaskList().add(subTask);
+				} else {
+					student.setSubmitTaskList(new ArrayList<SubmitTaskVO>());
+					student.getSubmitTaskList().add(subTask);
+				}
 			}
 		}
 		
@@ -111,6 +117,18 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 		if(vo == null)
 			throw new UsernameNotFoundException("no user");
 		return vo;
+	}
+
+	@Override
+	public String findStudPwd(StudentVO vo) {
+		
+		return mapper.findStudPwd(vo);
+	}
+
+	@Override
+	public boolean findEmail(StudentVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.findEmail(vo);
 	}
 
 	

@@ -13,4 +13,6 @@ public interface StudentService {
 	public void studPwdUpdate(StudentVO vo);
 	public List<StudentExVO> findListBySubjectId(int sbjno);
 	public StudentVO findByUserId(StudentVO vo);
+	public String findStudPwd(StudentVO vo);
+	public boolean findEmail(StudentVO vo);
 }
