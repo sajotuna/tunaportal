@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import co.fourth.tuna.domain.grade.vo.GradeFormVO;
 import co.fourth.tuna.domain.grade.vo.GradeVO;
 
 public interface GradeMapper {
@@ -20,4 +21,6 @@ public interface GradeMapper {
 	public GradeVO findOneByStudentIdAndSubjectId(
 				@Param("stno")int stno, 
 				@Param("sbjno")int sbjno);
+	
+	public int updateGradeByForm(GradeFormVO vo);
 }

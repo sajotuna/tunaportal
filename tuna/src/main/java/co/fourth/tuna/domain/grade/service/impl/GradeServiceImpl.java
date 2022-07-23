@@ -5,9 +5,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.fourth.tuna.domain.grade.mapper.GradeMapper;
 import co.fourth.tuna.domain.grade.service.GradeService;
+import co.fourth.tuna.domain.grade.vo.GradeFormVO;
+import co.fourth.tuna.domain.grade.vo.GradeVO;
 
 @Service
 public class GradeServiceImpl implements GradeService {
@@ -37,6 +40,18 @@ public class GradeServiceImpl implements GradeService {
 	@Override
 	public List<Map<String, Object>> avgGradeSelect(int stNo) {
 		return mapper.avgGradeSelect(stNo);
+	}
+
+	@Override
+	@Transactional
+	public String updateGradeList(List<GradeFormVO> list) {
+		for(GradeFormVO form : list) {
+			if ( mapper.updateGradeByForm(form) < 1) {
+				throw new Error("수정에 실패 했습니다");
+			}
+			
+		}
+		return "성공적으로 등록 되었습니다.";
 	}
 
 
