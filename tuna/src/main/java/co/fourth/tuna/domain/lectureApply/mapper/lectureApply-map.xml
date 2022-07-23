@@ -139,25 +139,13 @@ SELECT
 
 </select>
 
-
-<insert id = "CourseInsert" statementType="CALLABLE" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
-	{
-		call courseApply(
-			#{sbjNo},
-			#{seasonCode}, 
-			#{stNo})
-	}
-</insert>
-
 <select id = "ApplyErrorMsg" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO" resultType="String">
-	select COURSEROOMCHECK(#{sbjNo}, #{stNo}) FROM dual
+	select COURSEROOMCHECK(#{sbjNo}, #{stNo}, #{seasonCode}) FROM dual
 </select>
 	
-<delete id ="CourseDelete" statementType="CALLABLE" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
+<delete id ="CourseDelete" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
 
-	{ 
-		call LectureDelete(#{sbjNo},#{stNo})
-	}
+	delete from lectureApply where sbjno = #{sbjNo} and stno = #{stNo}
 
 </delete>	
 

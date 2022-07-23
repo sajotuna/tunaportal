@@ -81,7 +81,6 @@ public class LectureApplyController {
 		
 		System.out.println(message);
 		if(message.equals("수강신청이 완료되었습니다.")) {
-			LectureApplyDao.CourseInsert(vo);
 			ra.addFlashAttribute("success", message);
 			return "redirect:/stud/courseApplication";
 		}

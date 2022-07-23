@@ -52,6 +52,7 @@ public class LectureBasketController {
 		return "course/basket/courseBasket";
 	}
 
+	@SuppressWarnings("null")
 	@RequestMapping("/stud/basketInsert")
 	public String basketInsert(RedirectAttributes ra, @RequestParam List<String> courcheck, LectureBasketVO vo,
 			Authentication authentication) {
@@ -68,9 +69,7 @@ public class LectureBasketController {
 				ra.addFlashAttribute("error", "수강신청 가능한 학점이 없습니다.");
 				return "redirect:/stud/courseBasket";
 			}
-			if(message == null || message.equals("")) {
-				LectureBasketDao.baskInsert(vo);
-			}else {
+			if(message != null) {
 				ra.addFlashAttribute("error", message);
 				return "redirect:/stud/courseBasket";
 			}
