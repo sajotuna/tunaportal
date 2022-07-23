@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.common.service.FileService;
+import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.scholar.service.ScholarService;
 import co.fourth.tuna.domain.scholar.vo.ScholarApplyVO;
 import co.fourth.tuna.domain.user.service.StudentService;
@@ -37,8 +38,7 @@ public class ScholarController {
 	private FileService fileService;
 
 	@Autowired
-	private String fileDir;
-	
+	private YearService yearDao; 
 	
 	@RequestMapping("/stud/scholarshipApplicationStatus")
 	public String scholarshipApplicationStatus(Model model,ScholarApplyVO vo,Authentication authentication) {
@@ -125,23 +125,37 @@ public class ScholarController {
 	
 	
 	@RequestMapping("/admin/scholarCheck")
-	public String scholarCheck(ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox) {
+	public String scholarCheck(RedirectAttributes ra,ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox, @RequestParam List<String> seasonCode) {
 		
 		vo.setStateCode("504");
-		for(String Check : scholarCheckbox) {
-			vo.setNo(Check);
-			ScholarDao.scholarUpdate(vo);
+		String year = yearDao.yearFind();
+		for(int i =0; i<scholarCheckbox.size(); i++) {
+			vo.setNo(scholarCheckbox.get(i));
+			if(year.equals(seasonCode.get(i))) {
+				ScholarDao.scholarUpdate(vo);
+			}
+			else {
+				ra.addFlashAttribute("message", "지난학기에 신청한 장학금내역은 변경이 불가능합니다.");
+				return "redirect:/admin/adminScholarshipApplicationSearch";
+			}
 		}
 		
 		return "redirect:/admin/adminScholarshipApplicationSearch";
 	}
 	@RequestMapping("/admin/scholarReject")
-	public String scholarReject(ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox) {
+	public String scholarReject(RedirectAttributes ra,ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox, @RequestParam List<String> seasonCode) {
 		
 		vo.setStateCode("503");
-		for(String Check : scholarCheckbox) {
-			vo.setNo(Check);
-			ScholarDao.scholarUpdate(vo);
+		String year = yearDao.yearFind();
+		for(int i =0; i<scholarCheckbox.size(); i++) {
+			vo.setNo(scholarCheckbox.get(i));
+			if(year.equals(seasonCode.get(i))) {
+				ScholarDao.scholarUpdate(vo);
+			}
+			else {
+				ra.addFlashAttribute("message", "지난학기에 신청한 장학금내역은 변경이 불가능합니다.");
+				return "redirect:/admin/adminScholarshipApplicationSearch";
+			}
 		}
 		return "redirect:/admin/adminScholarshipApplicationSearch";
 	}
