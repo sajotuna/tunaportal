@@ -40,7 +40,10 @@ public class PortalStudentController {
 			totalAvg += Double.valueOf(String.valueOf(avgGrades.get(i).get("AVG")));
 		}
 		
-		double totalGrade = totalAvg / avgGrades.size();
+		double totalGrade = 0;
+		if(avgGrades.size() != 0) {
+			totalGrade = totalAvg / avgGrades.size();
+		}
 		double totalPct = ( totalGrade / 4.5 ) * 100;
 		
 		model.addAttribute("totalPoint", totalPoint);
@@ -52,13 +55,18 @@ public class PortalStudentController {
 	
 	// 당해학기 성적 조회
 	@RequestMapping("/stud/portal/currentSemesterGrade")
-	public String currentSemesterGrade(Authentication authentication, Model model, RedirectAttributes redirectAttributes) {
-		List<Map<String, Object>> grades = gradeDao.currentSemesterGradeSelect(Integer.parseInt(authentication.getName()), yearDao.yearFind());
-		Map<String, Object> total = gradeDao.currentSemesterGradeTotal(Integer.parseInt(authentication.getName()), yearDao.yearFind());
+	public String currentSemesterGrade(Authentication authentication, 
+										Model model, 
+										RedirectAttributes redirectAttributes) {
+		
+		List<Map<String, Object>> grades = gradeDao.currentSemesterGradeSelect(Integer.parseInt(authentication.getName()), 
+																				yearDao.yearFind());
+		Map<String, Object> total = gradeDao.currentSemesterGradeTotal(Integer.parseInt(authentication.getName()), 
+																		yearDao.yearFind());
 		
 		int result = dateCheckDao.accessDateCheck(yearDao.yearFind(), "1106");
 		
-		if (result > 0) {
+		//if (result > 0) {
 			
 			boolean findN = false;
 			for (int i=0; i<grades.size(); i++) {
@@ -74,10 +82,10 @@ public class PortalStudentController {
 			model.addAttribute("total", total);
 			return "portal/stud/currentSemesterGrade";
 			
-		} else {
-			redirectAttributes.addFlashAttribute("message", "지금은 성적 조회 기간이 아닙니다.");
-			return "redirect:/home";
-		}
+//		} else {
+//			redirectAttributes.addFlashAttribute("message", "지금은 성적 조회 기간이 아닙니다.");
+//			return "redirect:/home";
+//		}
 		
 	}
 	

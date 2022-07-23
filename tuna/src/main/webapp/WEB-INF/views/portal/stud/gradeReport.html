@@ -19,33 +19,39 @@
 				<div class="row align-items-center justify-content-center">
 					<div class="mb-5 col-md-4 col-lg-3">
 						<div class="text-center mb-4"><strong>총 취득 학점</strong></div>
-						<div class="js-pie-chart pie-chart" th:data-percent="(${totalPoint}/137)*100"
-							data-line-width="11" data-size="190" data-bar-color="#6BB9ED"
-							data-track-color="#eeeeee">
-							<span>
-								<span class="h2" th:text="${totalPoint}">0</span><br><small class="text-muted">/137</small>
-							</span>
-						</div>
+						<th:block th:if="${totalPoint != null && totalPoint != ''}">
+							<div class="js-pie-chart pie-chart" th:data-percent="(${totalPoint}/137)*100"
+								data-line-width="11" data-size="190" data-bar-color="#6BB9ED"
+								data-track-color="#eeeeee">
+								<span>
+									<span class="h2" th:text="${totalPoint}">0</span><br><small class="text-muted">/137</small>
+								</span>
+							</div>
+						</th:block>
 					</div>
 					<div class="mb-5 col-md-4 col-lg-3">
 						<div class="text-center mb-4"><strong>총 평점 평균</strong></div>
-						<div class="js-pie-chart pie-chart" th:data-percent="(${totalGrade}/4.5)*100"
-							data-line-width="11" data-size="180" data-bar-color="#4E7AC7"
-							data-track-color="#eeeeee">
-							<span>
-								<span class="h2" th:text="${#numbers.formatDecimal(totalGrade,1,1)}">0</span><br><small class="text-muted">/4.5</small>
-							</span>
-						</div>
+						<th:block th:if="${totalGrade != null && totalGrade != ''}">
+							<div class="js-pie-chart pie-chart" th:data-percent="(${totalGrade}/4.5)*100"
+								data-line-width="11" data-size="180" data-bar-color="#4E7AC7"
+								data-track-color="#eeeeee">
+								<span>
+									<span class="h2" th:text="${#numbers.formatDecimal(totalGrade,1,1)}">0</span><br><small class="text-muted">/4.5</small>
+								</span>
+							</div>
+						</th:block>
 					</div>
 					<div class="mb-5 col-md-4 col-lg-3">
 						<div class="text-center mb-4"><strong>백분율 성적</strong></div>
-						<div class="js-pie-chart pie-chart" th:data-percent="${totalPct}"
-							data-line-width="11" data-size="180" data-bar-color="#48B1E8"
-							data-track-color="#eeeeee">
-							<span>
-								<span class="h2" th:text="${#numbers.formatDecimal(totalPct,1,1)}">0</span><br><small class="text-muted">/100</small>
-							</span>
-						</div>
+						<th:block th:if="${totalPct != null && totalPct != ''}">
+							<div class="js-pie-chart pie-chart" th:data-percent="${totalPct}"
+								data-line-width="11" data-size="180" data-bar-color="#48B1E8"
+								data-track-color="#eeeeee">
+								<span>
+									<span class="h2" th:text="${#numbers.formatDecimal(totalPct,1,1)}">0</span><br><small class="text-muted">/100</small>
+								</span>
+							</div>
+						</th:block>
 					</div>
 				</div>
 			</div>
