@@ -272,30 +272,26 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify(obj)
               })
-              .then(res => {
-                let text = res.text();
+              .then(async (res) => {
+                // console.log(res);
+                let resBody = await res.text();
                 if(res.ok) {
-                  Dialogs.dialog(
-                    'success',
-                    '수정완료',
-                    text,
+                  Dialogs.dialog("success",
+                    "성공",
+                    resBody,
                     function() {
                       window.location.reload();
-                    }
-                  )
+                    })
                 } else {
-                  Dialogs.dialog(
-                    'error',
-                    '실패',
-                    text,
-                    function() {
-                      window.location.reload();
-                    }
-                  )
+                  Dialogs.dialog("error",
+                  "실패",
+                  resBody,
+                  function() {
+                    console.error("error");
+                  })
                 }
               })
               .catch((err) => {
-                //console.error('fetch 오류', err);
                 Dialogs.dialog("error",
                   "오류 발생",
                   err,

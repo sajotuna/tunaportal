@@ -2,8 +2,9 @@ package co.fourth.tuna.domain.lectureplan.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
-import co.fourth.tuna.util.ServiceResponseVO;
 
 public interface LecturePlanService {
 
@@ -15,5 +16,6 @@ public interface LecturePlanService {
 	
 	public List<LecturePlanVO> findListBySubjectId(int sbjno);
 	
-	public ServiceResponseVO updatePlanList(List<LecturePlanVO> planList);
+	@Transactional
+	public String updatePlanList(List<LecturePlanVO> planList);
 }
