@@ -51,15 +51,15 @@
 										<tr th:if="${#strings.isEmpty(qna)}">
 										<td colspan="14">질문이 등록되지 않았습니다.</td>
 										</tr>
-											<tr th:if="${q.VISIBLE} == 0">
+											<tr th:if="${q.VISIBLE} == 0 and ${not #strings.isEmpty(qna)}">
 												<td class="text-center" th:text="${i.index+1}"></td>
-												<td class="text-center" colspan="7" th:onclick="|location.href='@{/eclass/student/qnaSelect}?no=${q.NO}&sbjNo=${q.SBJNO}'|" th:text="${q.TITLE}"></td>
+												<td class="text-center" colspan="7" th:onclick="|location.href='@{/stud/eclass/qnaSelect}?no=${q.NO}&sbjNo=${q.SBJNO}'|" th:text="${q.TITLE}"></td>
 												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
 												<td class="text-center" colspan="2" th:text="${q.ENROLLDATE}"></td>
 												<td class="text-center text-danger fw-bold" colspan="2" th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
 												<td class="text-center" colspan="2" th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
 											</tr>
-											<tr th:each="q, i : ${qna}" th:if="${q.VISIBLE} == 1">
+											<tr th:if="${q.VISIBLE} == 1 and ${not #strings.isEmpty(qna)}">
 											<td class="text-center fw-bold" colspan="14">비공개 질문입니다.</td>
 											</tr>
 										</tbody>
@@ -68,7 +68,7 @@
 							</div>
 							<div class="d-flex justify-content-center">
 								<button type="button"
-									th:onclick="|location.href='@{/eclass/student/qnaInsert}?sbjNo=${sbjNo}'|"
+									th:onclick="|location.href='@{/stud/eclass/qnaInsert}?sbjNo=${sbjNo}'|"
 									class="btn btn-primary m-2">등록</button>
 							</div>
 							<div class="row">

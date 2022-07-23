@@ -29,7 +29,7 @@
 					</div>
 				</div>
 				<form
-					th:action="@{/eclass/student/taskInsert(${_csrf.parameterName}=${_csrf.token})}"
+					th:action="@{taskInsert(${_csrf.parameterName}=${_csrf.token})}"
 					method="post" enctype="multipart/form-data">
 					<div class="block block-rounded">
 						<div class="block-content block-content-full">
@@ -80,7 +80,7 @@
 										<div class="d-flex justify-content-center">
 											<button type="submit" class="btn btn-primary m-2">등록</button>
 											<button type="button"
-												th:onclick="|location.href='@{/eclass/student/taskList}'|"
+												th:onclick="|location.href='@{/stud/eclass/taskList}'|"
 												class="btn btn-dark m-2">취소</button>
 										</div>
 									</div>
@@ -97,7 +97,7 @@
 									let uri = $(this).data('uri');
 									let no = $(this).data('no');
 									let fileRow = $(this).prev();
-									$.ajax({url : getContextPath() + 'eclass/student/deleteSubmitTask',
+									$.ajax({url : getContextPath() + 'stud/eclass/deleteSubmitTask',
 											method : 'DELETE',
 											data : JSON.stringify({
 											no : no,

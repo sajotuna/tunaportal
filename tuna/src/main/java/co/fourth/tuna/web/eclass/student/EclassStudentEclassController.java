@@ -42,7 +42,7 @@ import co.fourth.tuna.web.eclass.EclassController;
 import co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO;
 
 @Controller
-@RequestMapping("/eclass/student")
+@RequestMapping("/stud/eclass")
 public class EclassStudentEclassController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(EclassController.class);
@@ -60,9 +60,8 @@ public class EclassStudentEclassController {
 	
 	
 	@RequestMapping("/lectureNotice")
-	public String lectureNotice(Model model, LectureNoticeVO vo, Authentication authentication) {
-		vo.setSbjNo(90079);
-		vo.setSeasonCode(105);
+	public String lectureNotice(Model model, LectureNoticeVO vo, HttpServletRequest req,  Authentication authentication) {
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> notice = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeList", vo);
 		
@@ -75,9 +74,8 @@ public class EclassStudentEclassController {
 	public String lectureNoticeSelect(Model model, LectureNoticeVO vo, HttpServletRequest req, Authentication authentication) {
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
-		vo.setSeasonCode(105);
-		vo.setSbjNo(90079);
-		vo.setNo(1);
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
+		vo.setNo(Integer.parseInt(req.getParameter("no")));
 		List<Map<String, Object>> ns = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeSelect", vo);
 		
 		
@@ -131,6 +129,7 @@ public class EclassStudentEclassController {
 		//인덱스 부여하여 vo에 setting
 		vo.setNo(Integer.parseInt(req.getParameter("no")));
 		vo.setSbjNo(req.getParameter("sbjNo"));
+		vo.getVisible();
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
@@ -144,7 +143,9 @@ public class EclassStudentEclassController {
 	
 	//질의응답작성폼
 	@RequestMapping("/qnaInsert")
-	public String qnaInsert(Model model, LectureQnaVO vo, HttpServletRequest req, Authentication authentication) {
+	public String qnaInsert(Model model, LectureQnaVO vo, 
+							HttpServletRequest req, 
+							Authentication authentication) {
 		model.addAttribute("sbjNo",req.getParameter("sbjNo"));
 		
 		return "eclass/stud/qnaInsert";
@@ -154,12 +155,9 @@ public class EclassStudentEclassController {
 	@RequestMapping("/insertOneQna")
 	public String insertOneQna(Model model, LectureQnaVO vo, 
 			HttpServletRequest req, Authentication authentication) {
-
-		System.out.println(111234);
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		vo.setVisible(Integer.parseInt(req.getParameter("visibleCheck")));
-		System.out.println("등록버튼 : " + vo);
 		 
 		qnaDao.insertOneQna(vo);
 		
@@ -176,16 +174,17 @@ public class EclassStudentEclassController {
 		StudentVO sv = new StudentVO();
 		SubjectVO sb = new SubjectVO();
 		sv.setNo(Integer.parseInt(authentication.getName()));
-		sb.setNo(18011);
+		sb.setNo(Integer.parseInt(req.getParameter("sbjNo")));
 		List<SubjectVO> sbjli = map.selectOneSubTask(sv, sb);
 		model.addAttribute("sbjli", sbjli);
 		return "eclass/stud/taskList";
 	}
 	
 	@RequestMapping("/taskSelect")
-	public String taskSelect(Model model, TaskVO vo, Authentication authentication){
-		vo.setNo(7);
-		vo.setSbjNo(18011);
+	public String taskSelect(Model model, TaskVO vo, HttpServletRequest req, Authentication authentication){
+		
+		vo.setNo(Integer.parseInt(req.getParameter("no")));
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
 		SubmitTaskVO vo1 = new SubmitTaskVO();
 		//로그인한 유저 아이디
@@ -207,11 +206,11 @@ public class EclassStudentEclassController {
 	
 	//과제 등록
 	@RequestMapping("/taskInsert")
-	public String taskSubmission(TaskVO vo, Authentication authentication,
+	public String taskSubmission(TaskVO vo, Authentication authentication, HttpServletRequest req, 
 			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
 		
-		vo.setNo(7);
-		vo.setSbjNo(18011);
+		vo.setNo(Integer.parseInt(req.getParameter("no")));
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
 		SubmitTaskVO vo1 = new SubmitTaskVO();
 		
@@ -230,7 +229,7 @@ public class EclassStudentEclassController {
 			}
 		}
 		
-		return "redirect:/eclass/student/taskSelect";
+		return "redirect:/stud/eclass/taskSelect";
 	}
 	
 	@DeleteMapping("/deleteSubmitTask")

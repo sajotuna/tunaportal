@@ -16,9 +16,7 @@
 	ON(L.SBJNO = N.SBJNO)
 	JOIN SUBJECT J
 	ON(J.NO = N.SBJNO)
-	WHERE L.STNO = #{stNo}
-	AND L.SEASONCODE = #{seasonCode}
-	AND N.SBJNO = #{sbjNo}
+	WHERE N.SBJNO = #{sbjNo}
 	ORDER BY N.NO DESC
 	</select>
 	
@@ -30,9 +28,7 @@
 	ON(L.SBJNO = N.SBJNO)
 	JOIN SUBJECT J
 	ON(J.NO = N.SBJNO)
-	WHERE L.STNO = #{stNo}
-	AND L.SEASONCODE = #{seasonCode}
-	AND N.SBJNO = #{sbjNo}
+	WHERE N.SBJNO = #{sbjNo}
 	AND N.NO = #{no}
 	</select>
 	

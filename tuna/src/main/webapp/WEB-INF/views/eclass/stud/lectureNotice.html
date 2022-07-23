@@ -46,7 +46,7 @@
 									<tbody>
 										<tr th:each="n : ${notice}">
 											<th class="text-center" th:text="${n.NO}"></th>
-											<th class="text-center" colspan="7"><a th:href="@{/eclass/student/lectureNoticeSelect(no = ${n.NO}, sbjNo = ${n.SBJNO})}" th:text="${n.TITLE}" style="color:black"></a></th>
+											<th class="text-center" colspan="7"><a th:href="@{/stud/eclass/lectureNoticeSelect(no = ${n.NO}, sbjNo = ${n.SBJNO})}" th:text="${n.TITLE}" style="color:black"></a></th>
 											<th class="text-center" colspan="3" th:text="${n.ENROLLDATE}"></th>
 										</tr>
 									</tbody>

@@ -44,16 +44,18 @@
 											<tr>
 												<th class="text-center">제목</th>
 												<th class="text-center"><input class="form-control" id="title" name="title"></th>
-												<th class="text-center"><input class="private"
-													type="checkbox" id="visible" name="visibleCheck" th:value="1"><label for="visible">비공개</label></th>
+												<th class="text-center">
+												<input type="checkbox" id="visibleCheck" name="visibleCheck" th:value="1"><label for="visibleCheck">비공개</label>
+												<input type="hidden" id="visibleValue" name="visibleCheck" th:value="0">
+												</th>
 											</tr>
 										</thead>
 									</table>
 										<textarea class="js-simplemde" id="content" name="content"></textarea>
 									<div class="d-flex justify-content-center">
-										<button type="submit" th:onclick="|location.href='@{/eclass/student/qnaSelect}'|" class="btn btn-primary m-2">등록</button>
+										<button type="submit" th:onclick="|location.href='@{/stud/eclass/qnaSelect}'|" class="btn btn-primary m-2">등록</button>
 										<button
-											th:onclick="|location.href='@{/eclass/student/qnaList}'|"
+											th:onclick="|location.href='@{/stud/eclass/qnaList}'|"
 											type="button" class="btn btn-dark  m-2">취소</button>
 									</div>
 									</form>
@@ -66,6 +68,11 @@
 					</div>
 				</div>
 			</div>
+			<script>
+				if(document.getElementById("visibleCheck").checked){
+					document.getElementById("visibleValue").disabled = true;
+				}
+			</script>
 			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 			<script
 				th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
