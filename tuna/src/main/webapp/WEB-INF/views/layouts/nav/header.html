@@ -26,7 +26,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				<ul
 					class="nav-main nav-main-dark nav-main-horizontal nav-main-hover">
 					<li class="nav-main-item"><a class="nav-main-link"
-						href="home"> <i
+						th:href="@{/home}"> <i
 							class="nav-main-link-icon fa fa-house"></i> <span
 							class="nav-main-link-name">홈</span>
 					</a></li>
@@ -38,10 +38,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="portalNoticeList"> <span class="nav-main-link-name">공지사항</span>
+								th:href="@{/portalNoticeList}"> <span class="nav-main-link-name">공지사항</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="portalSchedule"> <span class="nav-main-link-name">학사일정</span>
+								th:href="@{/portalSchedule}"> <span class="nav-main-link-name">학사일정</span>
 							</a></li>
 						</ul></li>
 						
@@ -55,7 +55,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								th:href="@{/stud/subjectAndReport}"> <span class="nav-main-link-name">강의/성적 조회</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/scholarshipApplication}"> <span class="nav-main-link-name">장학 신청 및 조회</span>
+								th:href="@{/stud/scholarshipApplication}" target="_blank"> <span class="nav-main-link-name">장학 신청 및 조회</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
 								th:href="@{/stud/tuitionCheck}"> <span class="nav-main-link-name">등록금납입확인서</span>
@@ -72,10 +72,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="javascript:void(0)"> <span class="nav-main-link-name">e-class</span>
+								href="javascript:void(0)" target="_blank"> <span class="nav-main-link-name">e-class</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/courseWarning}"> <span class="nav-main-link-name">수강신청</span>
+								th:href="@{/stud/courseWarning}" target="_blank"> <span class="nav-main-link-name">수강신청</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
 								th:href="@{/stud/lectureEvaluationDetails}"> <span class="nav-main-link-name">강의평가</span>
