@@ -7,7 +7,7 @@
 	<meta name="_csrf" th:content="${_csrf.token}">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 	<meta name="userNo" th:content="${#authentication.name}">
-	<title>currentSemesterGrade</title>
+	<title>당해학기 성적 조회</title>
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 	<style>
 	.scroll-table-div {
@@ -48,44 +48,44 @@
 							data-bs-toggle="modal" data-bs-target="#objection">성적 이의신청</button>
 					</div>
 				</div>
-						<!-- Table -->
-						<div class="scroll-table-div">
-						<table class="table table-striped table-vcenter scroll-table">
-							<thead>
-								<tr>
-									<th width=150>연도/학기</th>
-									<th width=100>이수구분</th>
-									<th width=150>과목코드</th>
-									<th>과목명</th>
-									<th width=100>학점</th>
-									<th width=100>등급</th>
-									<th width=100>평점</th>
-									<th width=100>강의평가</th>
-								</tr>
-							</thead>
-							<tbody id="currentGradeTb">
-								<th:block th:each="grade, i:${grades}">
-									<tr>
-										<td scope="row" class="text-center fw-semibold fs-sm" th:text="${@codeList.getName(grade.SEASONCODE)}">#</td>
-										<td class="fw-semibold fs-sm" th:text="${@codeList.getName(grade.TYPE)}">#</td>
-										<td class="fw-semibold fs-sm" th:text="${grade.NO}">#</td>
-										<td class="fw-semibold fs-sm" th:text="${grade.NAME}">#</td>
-										<td class="fw-semibold fs-sm" th:text="${grade.POINT}">#</td>
-										<td class="fw-semibold fs-sm">
-											<th:block th:if="${grade.EVALSTATE == 'Y'}" th:text="${grade.ALPHABET}" />
-											<th:block th:if="${grade.EVALSTATE == 'N'}" th:text="비공개" />
-										</td>
-										<td class="text-center fw-semibold fs-sm">
-											<th:block th:if="${grade.EVALSTATE == 'Y'}" th:text="${grade.TOTAL}" />
-											<th:block th:if="${grade.EVALSTATE == 'N'}" th:text="비공개" />
-										</td>
-										<td class="text-center fw-semibold fs-sm" th:text="${grade.EVALSTATE}">#</td>
-									</tr>
-								</th:block>
-							</tbody>
-						</table>
-						</div>
-						<!-- END Table -->
+				<!-- Table -->
+				<div class="scroll-table-div">
+				<table class="table table-striped table-vcenter scroll-table m-0">
+					<thead>
+						<tr>
+							<th width=150>연도/학기</th>
+							<th width=100>이수구분</th>
+							<th width=150>과목코드</th>
+							<th>과목명</th>
+							<th width=100>학점</th>
+							<th width=100>등급</th>
+							<th width=100>평점</th>
+							<th width=100>강의평가</th>
+						</tr>
+					</thead>
+					<tbody id="currentGradeTb">
+						<th:block th:each="grade, i:${grades}">
+							<tr>
+								<td scope="row" class="text-center fw-semibold fs-sm" th:text="${@codeList.getName(grade.SEASONCODE)}">#</td>
+								<td class="fw-semibold fs-sm" th:text="${@codeList.getName(grade.TYPE)}">#</td>
+								<td class="fw-semibold fs-sm" th:text="${grade.NO}">#</td>
+								<td class="fw-semibold fs-sm" th:text="${grade.NAME}">#</td>
+								<td class="fw-semibold fs-sm" th:text="${grade.POINT}">#</td>
+								<td class="fw-semibold fs-sm">
+									<th:block th:if="${grade.EVALSTATE == 'Y'}" th:text="${grade.ALPHABET}" />
+									<th:block th:if="${grade.EVALSTATE == 'N'}" th:text="비공개" />
+								</td>
+								<td class="text-center fw-semibold fs-sm">
+									<th:block th:if="${grade.EVALSTATE == 'Y'}" th:text="${grade.TOTAL}" />
+									<th:block th:if="${grade.EVALSTATE == 'N'}" th:text="비공개" />
+								</td>
+								<td class="text-center fw-semibold fs-sm" th:text="${grade.EVALSTATE}">#</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+				</div>
+				<!-- END Table -->
 			</div>
 			<!-- END Block -->
 			<!-- Block -->
@@ -94,7 +94,7 @@
 					<h3 class="block-title">성적 누계</h3>
 				</div>
 					<!-- Table -->
-					<table class="table table-vcenter table-striped">
+					<table class="table table-vcenter table-striped m-0">
 						<thead>
 							<tr>
 								<th class="text-center">신청과목수</th>
@@ -121,7 +121,6 @@
 	<div class="modal" id="objection" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-xl"role="document">
 			<div class="modal-content">
-				
 				<div class="block block-rounded block-transparent mb-0">
 					<div class="block-header block-header-default">
 						<h3 class="block-title">성적 이의신청 및 답변 조회</h3>
@@ -139,7 +138,7 @@
 								<h4 class="block-title">강의 목록</h4>
 							</div>
 							<div class="scroll-table-div">
-								<table class="table table-hover table-vcenter" style="width:1083px;">
+								<table class="table table-hover table-vcenter m-0" style="width:1083px;">
 									<thead>
 										<tr>
 											<th width=150>연도/학기</th>
@@ -178,43 +177,39 @@
 						</div>
 						<!-- END Block -->
 						<!-- Objection Insert Form -->
-						<div class="block block-rounded block-themed mb-4">
+						<div class="block block-rounded block-themed m-0">
 							<div class="block-header bg-primary-darker">
 								<h4 class="block-title">이의신청 및 답변 조회</h4>
 							</div>
-							<form class="mb-4" action="">
-								<table class="table table-vcenter">
-									<tr>
-										<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>과목명</th>
-										<td id="sbjname" class="fw-semibold fs-sm" width=250></td>
-										<th class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>담당교수</th>
-										<td id="pfname" class="fw-semibold fs-sm"></td>
-										<th class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>신청상태</th>
-										<td id="objstate" class="fw-semibold fs-sm"></td>
-									</tr>
-									<tr>
-										<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>이의신청 내용</th>
-										<td class="fw-semibold fs-sm" colspan="5">
-											<textarea class="form-control" id="content" rows="4" placeholder="내용을 입력하세요." style="width:100%; resize:none;" disabled></textarea>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active"width=150>답변</th>
-										<td id="answer" class="fw-semibold fs-sm" colspan="5"></td>
-									</tr>
-								</table>
-							</form>
+							<table class="table table-vcenter m-0">
+								<tr>
+									<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>과목명</th>
+									<td id="sbjname" class="fw-semibold fs-sm" width=250></td>
+									<th class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>담당교수</th>
+									<td id="pfname" class="fw-semibold fs-sm"></td>
+									<th class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>신청상태</th>
+									<td id="objstate" class="fw-semibold fs-sm"></td>
+								</tr>
+								<tr>
+									<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active" width=150>이의신청 내용</th>
+									<td class="fw-semibold fs-sm" colspan="5">
+										<textarea class="form-control" id="content" rows="4" placeholder="내용을 입력하세요." style="width:100%; resize:none;" disabled></textarea>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row" class="d-none d-xl-table-cell fw-semibold fs-sm table-active"width=150>답변</th>
+									<td id="answer" class="fw-semibold fs-sm" colspan="5"></td>
+								</tr>
+							</table>
 						</div>
 						<!-- END Objection Insert Form -->
 					</div>
-					
 					<div class="block-content block-content-full text-end bg-body">
 						<button type="button" class="btn btn-sm btn-alt-secondary me-1"
 							data-bs-dismiss="modal">닫기</button>
 						<button type="button" id="objInsertBtn" class="btn btn-sm btn-primary" disabled>등록</button>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>
