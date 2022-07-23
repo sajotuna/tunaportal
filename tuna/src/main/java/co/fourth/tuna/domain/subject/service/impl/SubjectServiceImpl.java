@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.fourth.tuna.domain.common.mapper.LectureScheduleMapper;
+import co.fourth.tuna.domain.grade.vo.GradeVO;
 import co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper;
 import co.fourth.tuna.domain.subject.mapper.GradeRatioMapper;
 import co.fourth.tuna.domain.subject.mapper.SubjectMapper;
 import co.fourth.tuna.domain.subject.service.SubjectService;
+import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
+import co.fourth.tuna.util.ResState;
+import co.fourth.tuna.util.ServiceResponseVO;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -56,6 +60,20 @@ public class SubjectServiceImpl implements SubjectService {
 		subject.setGradeRatioVO(gradeRatioMap.findOneById(no));
 		subject.setLecturePlanList(planMap.findListBySubjectId(no));
 		return subject;
+	}
+
+	@Override
+	public ServiceResponseVO updateGradeRatio(GradeRatioVO gradeRatio) {
+		int sum = gradeRatio.getAttd() + gradeRatio.getFinals() + gradeRatio.getMiddle() + gradeRatio.getTask();
+		
+		if(sum < 100 || sum > 100) {
+			return new ServiceResponseVO(ResState.ERROR, "합계값이 100이 되어야 합니다.");
+		}
+		
+		if(gradeRatioMap.updateGradeRatioByNo(gradeRatio) < 1) {
+			return new ServiceResponseVO(ResState.ERROR, "오류가 발생 했습니다.");
+		}
+		return new ServiceResponseVO(ResState.SUCESS, "성공");
 	}
 	
 	

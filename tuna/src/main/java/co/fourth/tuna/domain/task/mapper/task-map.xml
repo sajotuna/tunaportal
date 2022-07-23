@@ -4,9 +4,13 @@
 	
 	<resultMap id="taskMap"
 		type="co.fourth.tuna.domain.task.vo.TaskVO">
+	</resultMap>
+	
+	<resultMap id="taskSubmitMap"
+		type="co.fourth.tuna.domain.task.vo.TaskVO">
 		<collection property="submitTaskList" 
 			ofType="co.fourth.tuna.domain.task.vo.SubmitTaskVO"
-			column="no"
+			column="{taskno, stno}"
 			select="findSubmitTasksByTaskIdAndStudentId"
 		>
 		</collection>
@@ -60,13 +64,15 @@ WHERE NO = #{no}
 
 <select id="findListBySubjectId"
 	resultMap="taskMap">
-	SELECT * FROM task
+	SELECT * 
+	FROM task
 	WHERE sbjno = #{sbjno}
 </select>
 
 <select id="findSubmitTasksByTaskIdAndStudentId"
 	resultType="co.fourth.tuna.domain.task.vo.SubmitTaskVO">
-	SELECT * FROM
+	SELECT * 
+	FROM submittask
 	WHERE taskno = #{taskno}
 		AND stno = #{stno}
 </select>

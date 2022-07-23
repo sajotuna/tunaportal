@@ -33,4 +33,13 @@
 		ORDER BY wkcode
 	</select>
 	
+	<update id="updateOneByNo"
+		parameterType="co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO">
+		UPDATE lectureplan
+		SET 
+			summary = #{summary}
+		WHERE
+			no = #{no}
+	</update>
+	
 </mapper>
