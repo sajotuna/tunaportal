@@ -11,7 +11,7 @@
 	</select>
 	
 	<update id="updateGradeRatioByNo"
-		parameterType="GradeVO">
+		parameterType="co.fourth.tuna.domain.subject.vo.GradeRatioVO">
 		UPDATE graderatio 
 		SET
 			middle = #{middle},
