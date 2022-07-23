@@ -26,8 +26,6 @@
 			authentication-success-handler-ref="customLoginSuccessHandler"
 			default-target-url="/home"
 			authentication-failure-handler-ref="customLoginFailureHandler"
-			
-			
 		 />
 		 <security:logout logout-url="/logout" invalidate-session="true" logout-success-url="/home"/>
 		 <security:csrf disabled="false" />
@@ -39,13 +37,8 @@
 	
 	
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:jdbc-user-service data-source-ref="dataSource"
-			users-by-username-query="select username, password, status from login where username = ?"
-			authorities-by-username-query="select username,authority from loginAuthority where username = ?"
-			/>
-			<security:password-encoder ref = "customNoOpPasswordEncoder"/>
-			<security:password-encoder ref = "bcryptPasswordEncoder"/>
+		<security:authentication-provider user-service-ref="studentServiceImpl">
+			<security:password-encoder hash="bcrypt"/>
 		</security:authentication-provider>
 		
 	</security:authentication-manager>

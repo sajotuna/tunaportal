@@ -52,7 +52,7 @@
 									<h1 class="fw-bold mb-2">TUNA Portal</h1>
 								</div>
 								<!-- END Header -->
-
+								
 								<!-- Sign In Form -->
 								<div class="row g-0 justify-content-center">
 									<div class="col-sm-8 col-xl-6">
@@ -93,7 +93,7 @@
 																</label>
 															</div>
 														</div>
-
+														
 
 														<div class="col-md-6">
 															<div class="form-check form-block">
@@ -131,6 +131,9 @@
 												</button>
 											</div>
 										</form>
+										<div th:if="${LoginFailMessage}">
+									        <p th:text="${LoginFailMessage}" class="alert alert-danger"></p>
+									    </div>
 									</div>
 
 								</div>

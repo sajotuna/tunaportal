@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>navHeader</title>
@@ -80,17 +81,20 @@
 								th:href="@{/stud/lectureEvaluationDetails}"> <span class="nav-main-link-name">강의평가</span>
 							</a></li>
 						</ul></li>
-						
+					<th:block sec:authorize="isAuthenticated()">
 					<li class="nav-main-item ms-lg-auto"><a
 						class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
 						aria-haspopup="true" aria-expanded="false" href="#"> <i
 							class="nav-main-link-icon far fa-user"></i> <span
-							class="nav-main-link-name">유저</span>
+							class="nav-main-link-name" th:text = "${#authentication.principal.name}"></span>
 					</a>
 						<ul class="nav-main-submenu nav-main-submenu-right">
 							<li class="nav-main-item">
+								<span class="nav-main-link nav-main-link-name" th:text = "${@codeList.getName(#authentication.principal.deptCode)}"></span>
+							</li>
+							<li class="nav-main-item">
 								<a class="nav-main-link" th:href="@{/userUpdate}">
-								<span class="nav-main-link-name">내 정보 수정</span>
+								<span class="nav-main-link-name" >내 정보 수정</span>
 							</a></li>
 							<li class="nav-main-item">
 							<form method = "post" th:action ="@{/logout}">
@@ -99,6 +103,7 @@
                     		</form>
                     		</li>
 						</ul></li>
+					</th:block>
 				</ul>
 			</div>
 			<!-- END Main Navigation -->

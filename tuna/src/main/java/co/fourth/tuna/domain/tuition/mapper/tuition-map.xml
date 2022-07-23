@@ -12,6 +12,7 @@ AND SS.TUIGIVNO = SCH.NO
 AND SS.STNO = #{stNo}
 AND T.SEASONCODE = #{seasonCode}
 
+
 </select>
 
 </mapper>

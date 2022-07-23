@@ -8,6 +8,11 @@
 	select* from student where no = #{no}
 </select>
 
+<select id = "findByUserId" parameterType="co.fourth.tuna.domain.user.vo.StudentVO" resultType="co.fourth.tuna.domain.user.vo.StudentVO">
+	select* from login where no = #{no}
+</select>
+
+
 <update id = "studUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
 	<selectKey resultType="String" keyProperty="bacc" order="BEFORE">
 		select no bacc
@@ -64,6 +69,31 @@
 	WHERE sbjno = #{sbjno}
 </select>
 
+<update id="studPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
+
+update student set pwd = #{pwd} where no = #{no}
+
+</update>
+
+<select id = "findStudPwd" parameterType="co.fourth.tuna.domain.user.vo.StudentVO" resultType="String">
+
+select pwd from student where no = #{no}
+
+</select>
+
+<select id = "findEmail" parameterType="co.fourth.tuna.domain.user.vo.StudentVO" resultType="boolean">
+
+SELECT case when count(*) >= 1 then 1 else 0 end as truefalse
+ from login
+ where email = #{email}
+
+</select>
+
+<!-- <update id = "emailPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO"> -->
+
+<!-- update student set pwd = #{pwd} where email = #{email} -->
+
+<!-- </update> -->
 
 
 </mapper>
