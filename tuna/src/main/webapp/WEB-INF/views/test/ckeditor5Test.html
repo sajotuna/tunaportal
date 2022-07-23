@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+<title>ckTest</title>
+</head>
+<link rel="stylesheet" id="css-main" th:href="@{resources/assets/css/oneui.min.css}">
+<body>
+<div id="page-container" class="page-header-dark main-content-boxed">
+	<main id="main-container">
+		<div class="block block-rounded">
+			<div class="block-header block-header-default">
+				<h3 class="block-title">Full Editor</h3>
+				<div class="block-options">
+					<button type="button" class="btn-block-option">
+						<i class="si si-settings"></i>
+					</button>
+				</div>
+			</div>
+			<div class="block-content">
+				<form action="editorUpload" method="POST" onsubmit="return false;">
+					<div class="mb-4">
+					  <!-- CKEditor 5 Classic Container -->
+						<div id="js-ckeditor5-classic">Hello classic CKEditor 5!</div>
+					</div>
+					<button class="btn" type="button">등록</button>
+				</form>
+			</div>
+		</div>
+	</main>
+</div>	
+	<script th:src="@{resources/assets/js/lib/jquery.min.js}"></script>
+	<script th:src="@{resources/assets/js/oneui.app.min.js}"></script>
+    <script th:src="@{resources/assets/js/plugins/ckeditor5-classic/build/ckeditor.js}"></script>
+    
+    <script>
+    
+    $(function() {
+    	jsCkeditor5();
+    })
+ 
+    function jsCkeditor5() {
+        let ckeditor5Full = document.querySelector('#js-ckeditor5-classic');
+
+        if (ckeditor5Full) {
+          ClassicEditor
+            .create(document.querySelector('#js-ckeditor5-classic'),
+            		{
+            			extraPlugins: [uploadAdapterPlugin],
+            			language:'ko',
+            			image: {
+            			      // Configure the available styles.
+            			      styles: ["alignLeft", "alignCenter", "alignRight"],      
+            			      // You need to configure the image toolbar, too, so it shows the new style
+            			      // buttons as well as the resize buttons.
+            			      toolbar: [
+            			        "imageStyle:alignLeft",
+            			        "imageStyle:alignCenter",
+            			        "imageStyle:alignRight",
+            			        "|",
+            			        "imageTextAlternative",
+            			      ],
+            			      nImageMaxWidthSize : 500
+            			    }
+            		})
+            .then(editor => {
+              window.editor = editor;
+            })
+            .catch(error => {
+              console.error('There was a problem initializing the classic editor.', error);
+            });
+        }
+        
+        // 업로드 어댑터 인스턴스를 생성하는 FileRepository를 선언. (커스텀 업로드 어댑터 활성화)
+        function uploadAdapterPlugin(editor) {
+     	   editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
+     		   return new imagePreview(loader);
+     	   }
+        }
+        
+      }
+    
+    class imagePreview {
+        constructor(loader) {
+            this.loader = loader; //파일 로더
+        }
+		
+     	// 업로드 시작
+        upload() {
+     		// 파일 업로드가 성공했을 때 resolved될 promise를 리턴
+            return this.loader.file
+            	.then( file => new Promise((
+            			(resolve, reject) => {
+			                this._initRequest();
+			                this._initListeners( resolve, reject, file );
+			                this._sendRequest( file );
+						})))
+        }
+        
+     	// 업로드 프로세스 취소
+        abort() {
+        	if (this.xhr) {
+        		this.xhr.abort(); 
+        	}
+        }
+	
+     	// 업로드 요청
+        _initRequest() {
+            const xhr = this.xhr = new XMLHttpRequest();
+            xhr.open('POST', 'editorImage', true)
+			xhr.setRequestHeader('x-csrf-token', document.querySelector('meta[name="_csrf"]').getAttribute('content'));
+            xhr.responseType = 'json';
+        }
+		
+      	//XHR 리스너 초기화
+        _initListeners(resolve, reject, file) {
+            const xhr = this.xhr;
+            const loader = this.loader;
+            const genericErrorText = '파일을 업로드 할 수 없습니다.'
+
+            xhr.addEventListener('error', () => {reject(genericErrorText)})
+            xhr.addEventListener('abort', () => reject())
+            xhr.addEventListener('load', () => {
+            
+                const response = xhr.response
+                if(!response || response.error) {
+                    return reject( response && response.error ? response.error.message : genericErrorText );
+                }
+                
+             	// 만약 업로드가 성공했다면, 업로드 프로미스를 적어도 default URL을 담은 객체와 함께 resolve하라. 
+                setTimeout(() => {
+                resolve({
+                    default: response.result.url  // 이 URL은 서버에 업로드된 이미지를 가리키며, 컨텐츠에 이미지를 표시하기 위해 사용된다.
+                })
+                }, 5000);
+                
+            })
+        }
+		
+        //데이터를 준비하고 서버에 전송
+        _sendRequest(file) {
+            const data = new FormData()
+            data.append('upload',file)
+            this.xhr.send(data)
+        }
+    }
+    </script>
+
+</body>
+</html>
