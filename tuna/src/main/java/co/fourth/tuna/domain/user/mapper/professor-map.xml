@@ -32,4 +32,23 @@
 	where no = #{no}
 </update>
 
+<update id ="staffEamilPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO">
+
+update professor set pwd = #{pwd} where email = #{email}
+
+</update>
+
+<update id = "staffPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO">
+
+update professor set pwd = #{pwd} where no = #{no}
+
+</update>
+
+<select id = "findStaffPwd" parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO" resultType="String">
+
+select pwd from professor where no = #{no} 
+
+</select>
+
+
 </mapper>

@@ -14,8 +14,29 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public AdminVO findById(AdminVO vo) {
-		// TODO Auto-generated method stub
 		return mapper.findById(vo);
+	}
+
+	@Override
+	public void adminEamilPwdUpdate(AdminVO vo) {
+		mapper.adminEamilPwdUpdate(vo);
+	}
+
+	@Override
+	public void adminInfoUpdate(AdminVO vo) {
+		mapper.adminInfoUpdate(vo);
+		
+	}
+
+	@Override
+	public void adminpwdUpdate(AdminVO vo) {
+		mapper.adminpwdUpdate(vo);
+	}
+
+	@Override
+	public String adminPwdFind(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.adminPwdFind(vo);
 	}
 
 }

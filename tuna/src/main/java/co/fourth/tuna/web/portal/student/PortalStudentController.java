@@ -26,7 +26,7 @@ public class PortalStudentController {
 	@Autowired DateCheckService dateCheckDao;
 	
 	// 강의/성적 조회
-	@RequestMapping("/stud/subjectAndReport")
+	@RequestMapping("/stud/portal/subjectAndReport")
 	public String subjectAndRoport(Authentication authentication, Model model) {
 		
 		List<Map<String, Object>> avgGrades = gradeDao.avgGradeSelect(Integer.parseInt(authentication.getName()));
@@ -50,7 +50,7 @@ public class PortalStudentController {
 	}
 	
 	// 당해학기 성적 조회
-	@RequestMapping("/stud/currentSemesterGrade")
+	@RequestMapping("/stud/portal/currentSemesterGrade")
 	public String currentSemesterGrade(Authentication authentication, Model model, RedirectAttributes redirectAttributes) {
 		List<Map<String, Object>> grades = gradeDao.currentSemesterGradeSelect(Integer.parseInt(authentication.getName()), yearDao.yearFind());
 		Map<String, Object> total = gradeDao.currentSemesterGradeTotal(Integer.parseInt(authentication.getName()), yearDao.yearFind());
@@ -74,7 +74,7 @@ public class PortalStudentController {
 			return "portal/stud/currentSemesterGrade";
 		} else {
 			redirectAttributes.addAttribute("message", "성적 조회 기간이 아닙니다.");
-			return "redirect:home";
+			return "redirect:/home";
 		}
 		
 		

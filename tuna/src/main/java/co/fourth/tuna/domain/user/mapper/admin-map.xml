@@ -46,5 +46,30 @@ BETWEEN (#{pageNum}-1)*#{size}+1
 
 </select>
 
+<update id = "adminEamilPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.AdminVO">
+
+update admin set pwd = #{pwd} where email = #{email}
+
+</update>
+
+<update id = "adminInfoUpdate" parameterType="co.fourth.tuna.domain.user.vo.AdminVO">
+
+update admin set tel = #{tel}, email = #{email}, zip = #{zip}, addr = #{addr}
+	where no = #{no}
+
+</update>
+
+<update id = "adminpwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.AdminVO">
+
+update admin set pwd = #{pwd} where no = #{no}
+
+</update>
+
+<select id = "adminPwdFind" parameterType="co.fourth.tuna.domain.user.vo.AdminVO" resultType="String">
+
+select pwd from admin where no = #{no}
+
+</select>
+
 
 </mapper>

@@ -28,7 +28,7 @@ public class PortalAdminController {
 	PagingService pagingDao;
 
 	// 배너 리스트
-	@GetMapping("/admin/bannerList")
+	@GetMapping("/admin/admin/bannerList")
 	public String bannerList(Model model, 
 			 
 			@RequestParam(required = false, defaultValue = "1") int page,
@@ -50,19 +50,19 @@ public class PortalAdminController {
 	}
 	
 	// 기본 배너
-	@RequestMapping("/admin/basicBannerManagm")
+	@RequestMapping("/admin/admin/basicBannerManagm")
 	public String basicBannerManagm() {
 		return "banner/admin/basicBannerManagm";
 	}
 	
 	// 옵션 배너
-	@RequestMapping("/admin/optionBannerManagm")
+	@RequestMapping("/admin/admin/optionBannerManagm")
 	public String optionBannerManagm() {
 		return "banner/admin/optionBannerManagm";
 	}
 	
 	// 슬라이드 배너
-	@RequestMapping("/admin/sliderBannerManagm")
+	@RequestMapping("/admin/admin/sliderBannerManagm")
 	public String sliderBannerManagm(Model model) {
 		model.addAttribute("bnList", bannerDao.sliderBannerSelect());
 		return "banner/admin/sliderBannerManagm";

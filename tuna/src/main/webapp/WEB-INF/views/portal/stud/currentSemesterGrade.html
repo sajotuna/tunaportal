@@ -247,7 +247,7 @@
 									
 									$.ajax({
 										
-										url: getContextPath() + 'portal/student/objection',
+										url: getContextPath() + 'stud/portal/objection',
 										type: 'PUT',
 										data: JSON.stringify({ stNo:userNo,
 											    			   sbjNo:sbjNo,
@@ -286,7 +286,7 @@
 		function objectionListSelectAjax() {
 			$.ajax({
 				
-				url: getContextPath() + 'portal/student/objectionList',
+				url: getContextPath() + 'stud/portal/objection',
 				type: 'GET',
 				data: {stNo:userNo},
 				dataType: 'json'

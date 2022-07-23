@@ -210,7 +210,7 @@
 
 			$.ajax({
 				
-				url: getContextPath() + 'stud/subjectGrade',
+				url: getContextPath() + 'stud/portal/subjectGrade',
 				type: 'GET',
 				data: {stNo:userNo},
 				dataType: 'json',
@@ -259,7 +259,7 @@
 					
 					$.ajax({
 						
-						url: getContextPath() + 'stud/seasonSubjectGrade',
+						url: getContextPath() + 'stud/portal/seasonSubjectGrade',
 						type: 'GET',
 						data: {stNo:userNo, seasonCode:$(this).val()},
 						dataType: 'json',
@@ -286,7 +286,7 @@
 			
 			$.ajax({
 				
-				url: getContextPath() + 'stud/avgGrade',
+				url: getContextPath() + 'stud/portal/avgGrade',
 				type: 'GET',
 				async: false,
 				data: {stNo:userNo},

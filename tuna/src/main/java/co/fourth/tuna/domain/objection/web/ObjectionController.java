@@ -31,7 +31,8 @@ public class ObjectionController {
 		return objectionDao.findListBySubjectId(reqData.get("sbjno"));
 	}
 	
-	@GetMapping("/portal/student/objectionList")
+	// (학생) 이의신청 리스트 
+	@GetMapping("/stud/portal/objection")
 	public List<ObjectionVO> objectionListSelect(int stNo) {
 		
 		ObjectionVO vo = new ObjectionVO();
@@ -41,22 +42,26 @@ public class ObjectionController {
 		return objectionDao.objectionListOfStud(vo);
 	}
 	
-	@PutMapping("/portal/student/objection")
+	// (학생) 이의신청 등록
+	@PutMapping("/stud/portal/objection")
 	public int objectionContentInsert(@RequestBody ObjectionVO vo) {
 		return objectionDao.objectionInsert(vo);
 	}
 	
-	@GetMapping("/eclass/professor/seasonObjectionList")
+	// (교수) 이의신청 리스트
+	@GetMapping("/staff/eclass/seasonObjectionList")
 	public List<Map<String, Object>> seasonObjectionList(int pfNo, String seasonCode) {
 		return objectionDao.objectionListOfProf(pfNo, seasonCode);
 	}
 	
-	@RequestMapping("/eclass/professor/objection")
+	// (공통) 이의신청 1건 조회 
+	@RequestMapping("/staff/eclass/objection")
 	public Map<String, Object> objectionSelect(int objNo) {
 		return objectionDao.objectionSelect(objNo);
 	}
 	
-	@PutMapping("/eclass/professor/objection")
+	// (교수) 이의신청 답변 등록
+	@PutMapping("/staff/eclass/objection")
 	public int objectionUpdate(@RequestBody ObjectionVO vo) {
 		return objectionDao.objectionUpdate(vo);
 	}

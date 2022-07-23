@@ -89,11 +89,11 @@ SELECT case when count(*) >= 1 then 1 else 0 end as truefalse
 
 </select>
 
-<!-- <update id = "emailPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO"> -->
+<update id = "studEamilPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
 
-<!-- update student set pwd = #{pwd} where email = #{email} -->
+update student set pwd = #{pwd} where email = #{email}
 
-<!-- </update> -->
+</update>
 
 
 </mapper>
