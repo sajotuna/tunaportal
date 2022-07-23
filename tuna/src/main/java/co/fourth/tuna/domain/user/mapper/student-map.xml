@@ -81,5 +81,19 @@ select pwd from student where no = #{no}
 
 </select>
 
+<select id = "findEmail" parameterType="co.fourth.tuna.domain.user.vo.StudentVO" resultType="boolean">
+
+SELECT case when count(*) >= 1 then 1 else 0 end as truefalse
+ from login
+ where email = #{email}
+
+</select>
+
+<!-- <update id = "emailPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO"> -->
+
+<!-- update student set pwd = #{pwd} where email = #{email} -->
+
+<!-- </update> -->
+
 
 </mapper>

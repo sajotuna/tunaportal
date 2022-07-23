@@ -2,6 +2,7 @@ package co.fourth.tuna;
 
 
 import java.util.Locale;
+import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
@@ -12,9 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import co.fourth.tuna.domain.user.service.StudentService;
+import co.fourth.tuna.domain.user.vo.StudentVO;
 
 
 /**
@@ -25,9 +30,13 @@ public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
+	@Autowired 
+	private StudentService StudentDao;
 	@Autowired
 	private JavaMailSender mailSender;
-	
+	@Autowired
+	private BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+
 	@RequestMapping(value = "/home")
 	public String home(HttpServletResponse response ,Locale locale, Model model,Authentication authentication) {
 		
@@ -55,27 +64,54 @@ public class HomeController {
 		return "custom/login";
 	}
 
-	@RequestMapping("/mypage")
-	public String home() {
-		return "mypage";
-	}
-
 	@RequestMapping("/custom/pwdfind")
 	public String pwdFind() {
 		return "custom/pwdfind";
 	}
 
 	@RequestMapping("/custom/pwdEmailfind")
-	public String pwdEmailFind(String email) throws Exception {
+	public String pwdEmailFind(StudentVO vo) throws Exception {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
-		messageHelper.setFrom("lnsertgood123@gmail.com");
-		messageHelper.setTo(email);
-		messageHelper.setSubject("메일제목");
-		messageHelper.setText("메일내용"); // 메일 내용
+		String authCode = null;
+		String msg = "";
+		StringBuffer temp = new StringBuffer();
+		Random rnd = new Random();
+		for (int i = 0; i < 10; i++) {
+			int rIndex = rnd.nextInt(3);
+			switch (rIndex) {
+			case 0:
+				temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+				break;
+			case 1:
+				temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+				break;
+			case 2:
+				temp.append((rnd.nextInt(10)));
+				break;
+			}
+		}
 
-		mailSender.send(message);
+		authCode = temp.toString();
+		
+		System.out.println(authCode);
+		System.out.println(enc.encode(authCode));
+		
+		boolean emailCheck = StudentDao.findEmail(vo);
+		
+		if(emailCheck == true) {
+			messageHelper.setFrom("lnsertgood123@gmail.com");
+			messageHelper.setTo(vo.getEmail());
+			messageHelper.setSubject("안녕하세요 TUNA대학입니다. 고객님의 임시비밀번호가 도착했습니다.");
+			messageHelper.setText("임시비밀번호 : " + authCode); // 메일 내용
+			mailSender.send(message);
+		}else {
+			msg = "없는 이메일 계정입니다. 이메일을 다시한번 확인해주세요.";
+		}
+		
+		
+
 
 		return "custom/pwdfind";
 	}

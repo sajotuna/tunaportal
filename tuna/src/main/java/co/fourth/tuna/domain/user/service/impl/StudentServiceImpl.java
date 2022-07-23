@@ -119,6 +119,12 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 		return mapper.findStudPwd(vo);
 	}
 
+	@Override
+	public boolean findEmail(StudentVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.findEmail(vo);
+	}
+
 	
 	
 

@@ -14,6 +14,7 @@ public interface StudentMapper {
 	public void studPwdUpdate(StudentVO vo);
 	public StudentVO findByUserId(StudentVO vo);
 	public String findStudPwd(StudentVO vo);
+	public boolean findEmail(StudentVO vo);
 	//TODO 사용자 가져올 때 비밀번호 제외
 	public List<StudentExVO> findListBySubjectId(int sbjno);
 }
