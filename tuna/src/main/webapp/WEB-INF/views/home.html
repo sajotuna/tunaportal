@@ -4,10 +4,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>TUNA Portal</title>
+    
     <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/css/home.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
     <style>
     
     .staff-box {
@@ -23,7 +25,14 @@
     </style>
 </head>
 <body>
-
+<th:block th:if = "${message != null && message != ''}">
+	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+    <script th:src="@{/resources/assets/js/dialog.js}"></script>
+	<script th:inline="javascript">
+		let message = /*[[${message}]]*/ 'default';
+		Dialogs.dialog('error', '접근 금지', message);
+	</script>
+</th:block>
 <div id="page-container">
 	<!-- Main Container -->
 	<main id="main-container">
@@ -338,45 +347,8 @@
    		
 	   	$(function() {
 	   		shortcutBanner();
-	   		//sliderBanner();
+	   		message();
 		})
-		
-		
-		 // 슬라이드 배너
-		/*function sliderBanner() {
-	   		 $.ajax({
-				
-				url: getContextPath() + 'sliderBanner',
-				type: 'GET',
-				async: false,
-				dataType: 'json'
-				
-			}).done(function(sliderBn) {
-				
-				for (bn of sliderBn) {
-					console.log(bn.fileName);
-					
-					$('#slider').append($('<div>').addClass('js-slider slick-dotted-inner slick-dotted-white box')
-         				          				  .data('dots', 'true')
-         				          				  .data('autoplay', 'true')
-         				          				  .data('autoplay-speed', '1500')
-         				          				  .append($('<div>')
-         				          						  .append($('<img>').addClass('img-fluid')
-                 				        		 		  .attr('src', getContextPath() + `display?fileName=${bn.uri}&folder=banner`))))
-         				        
-         				        
-					
-					
-					 $('<img>').addClass('img-fluid')
-					          .attr('src', getContextPath() + `display?fileName=${bn.uri}&folder=banner`)	
-					          .appendTo($('<div>'))
-					          .appendTo($('<div>')).addClass('js-slider slick-dotted-inner slick-dotted-white box')
-					         				    .data('dots', 'true').data('autoplay', 'true'). data('autoplay-speed', '1500')
-					          .appendTo('#slider'); 
-				}
-				
-			})  
-	   	}*/
 		
 		// 기본 배너
 		function shortcutBanner() {

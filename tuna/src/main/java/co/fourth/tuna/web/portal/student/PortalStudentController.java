@@ -73,8 +73,9 @@ public class PortalStudentController {
 			model.addAttribute("grades", grades);
 			model.addAttribute("total", total);
 			return "portal/stud/currentSemesterGrade";
+			
 		} else {
-			redirectAttributes.addAttribute("message", "성적 조회 기간이 아닙니다.");
+			redirectAttributes.addFlashAttribute("message", "지금은 성적 조회 기간이 아닙니다.");
 			return "redirect:/home";
 		}
 		
