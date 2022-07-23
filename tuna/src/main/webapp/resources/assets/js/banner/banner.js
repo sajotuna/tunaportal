@@ -2,44 +2,6 @@ $(function() {
 	submit();
 })
 
-// 등록 완료 dialog
-class pageDialogs {
-	static dialog() {
-	    let toast = Swal.mixin({
-	      buttonsStyling: false,
-	      target: '#page-container',
-	      customClass: {
-	        confirmButton: 'btn btn-success m-1',
-	        cancelButton: 'btn btn-danger m-1',
-	        input: 'form-control'
-	      }
-	    });
-	    
-	    success();
-	    
-	    function success() {
-	        toast.fire({
-	          title: '등록 완료',
-	          text: '메인 페이지로 돌아가 배너를 확인해 보세요.',
-	          icon: 'success',
-	          showCancelButton: true,
-	          customClass: {
-	            confirmButton: 'btn btn-dark m-1',
-	            cancelButton: 'btn btn-light m-1'
-	          },
-	          confirmButtonText: '메인으로 가기',
-	          cancelButtonText: '취소',
-
-	        }).then(result => {
-	          if (result.value) location.href = '/tuna/admin';
-	          else if (result.dismiss === 'cancel') location.reload();
-	        });
-	      };
-
-	  }
-
-}
-
 // 배너 수정, 배너 등록 버튼 클릭
 function submit() {
 	$('.submit-btn').on('click', function () {
@@ -67,12 +29,7 @@ function submit() {
 		}
 		
 		const job = $(this).data('job');
-		
-		if (job === 'basic') {
-			basicBannerInsert();
-		} else if (job === 'option') {
-			optionBannerInsert();
-		}
+		bannerInsert(job);
 		
 	}) 
 }
@@ -114,3 +71,11 @@ $('#file').on('change', changeEvent => {
 	reader.readAsDataURL(img);
 })
 
+
+function insertSuccess() {
+	Dialogs.dialog('success', '등록 완료', '배너 등록이 완료되었습니다.')
+}
+
+function error() {
+	Dialogs.dialog('error', '작업 실패', '작업이 정상적으로 처리되지 않았습니다.')
+}
