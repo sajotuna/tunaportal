@@ -29,7 +29,8 @@ public class PortalStudentController {
 	@RequestMapping("/stud/portal/subjectAndReport")
 	public String subjectAndRoport(Authentication authentication, Model model) {
 		
-		List<Map<String, Object>> avgGrades = gradeDao.avgGradeSelect(Integer.parseInt(authentication.getName()));
+		List<Map<String, Object>> avgGrades = gradeDao.avgGradeSelect(Integer.parseInt(authentication.getName()),
+																	  yearDao.yearFind());
 		
 		int totalPoint = 0;
 		double totalAvg = 0;
@@ -76,7 +77,6 @@ public class PortalStudentController {
 			redirectAttributes.addAttribute("message", "성적 조회 기간이 아닙니다.");
 			return "redirect:/home";
 		}
-		
 		
 	}
 	
