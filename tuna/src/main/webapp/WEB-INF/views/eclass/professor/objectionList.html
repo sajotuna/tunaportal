@@ -43,7 +43,7 @@
 			<div class="block block-rounded mb-4">
 					<!-- Table -->
 					<div class="mb-4 scroll-table-div">
-						<table class="table table-hover table-vcenter scroll-table">
+						<table class="table table-hover table-vcenter scroll-table m-0">
 							<thead>
 								<tr>
 									<th style="width: 200px;">연도/학기</th>
@@ -160,7 +160,7 @@
 					
 								$.ajax({
 									
-									url: getContextPath() + 'eclass/professor/objection',
+									url: getContextPath() + 'staff/eclass/objection',
 									type: 'PUT',
 									data: JSON.stringify(
 											{no:objNo, 
@@ -204,7 +204,7 @@
 			
 			$.ajax({
 				
-				url: getContextPath() + 'eclass/professor/objection',
+				url: getContextPath() + 'staff/eclass/objection',
 				type: 'GET',
 				data: {objNo:$(this).data('objno')},
 				dataType: 'json'
@@ -234,9 +234,7 @@
 	function seasonObjListSelect() {
 
 		$('#seasonCode').on('change', function(){
-			
 			seasonObjListSelectAjax($(this).val());
-			
 		})
 		
 	}
@@ -245,7 +243,7 @@
 
 		$.ajax({
 			
-			url: getContextPath() + 'eclass/professor/seasonObjectionList',
+			url: getContextPath() + 'staff/eclass/seasonObjectionList',
 			type: 'GET',
 			data: {pfNo:userNo, seasonCode:seasonCode},
 			dataType: 'json'
