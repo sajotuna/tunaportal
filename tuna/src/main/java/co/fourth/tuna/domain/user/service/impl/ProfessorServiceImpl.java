@@ -28,4 +28,22 @@ public class ProfessorServiceImpl implements ProfessorService {
 		mapper.AdminProfUpdate(vo);
 	}
 
+	@Override
+	public void staffEamilPwdUpdate(ProfessorVO vo) {
+		mapper.staffEamilPwdUpdate(vo);
+		
+	}
+
+	@Override
+	public void staffPwdUpdate(ProfessorVO vo) {
+		mapper.staffPwdUpdate(vo);
+		
+	}
+
+	@Override
+	public String findStaffPwd(ProfessorVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.findStaffPwd(vo);
+	}
+
 }

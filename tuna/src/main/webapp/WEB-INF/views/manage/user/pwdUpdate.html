@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <title>비밀번호 수정</title>
      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" id="css-main" th:href="@{resources/assets/css/oneui.min.css}">
-    <link rel="stylesheet" th:href="@{resources/assets/js/plugins/slick-carousel/slick.css}">
-    <link rel="stylesheet" th:href="@{resources/assets/js/plugins/slick-carousel/slick-theme.css}">
+    <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
           <div class="bg-body-extra-light">
               <div class="row">
                 <div class="col-10 m-4">
-                  <form th:action="@{/userpwdUpdate}" method="post" id = "frm">
+                  <form th:action="@{/stud/userpwdUpdate}" method="post" id = "frm">
                     <div class="mb-4">
                       <div class="input-group">
                         <input type="password" class="form-control" id="beforepassword"

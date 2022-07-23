@@ -92,10 +92,24 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 							<li class="nav-main-item">
 								<span class="nav-main-link nav-main-link-name" th:text = "${@codeList.getName(#authentication.principal.deptCode)}"></span>
 							</li>
+							<th:block sec:authorize="hasRole('ROLE_STUDENT')">
 							<li class="nav-main-item">
-								<a class="nav-main-link" th:href="@{/userUpdate}">
+								<a class="nav-main-link" th:href="@{/stud/userUpdate}">
 								<span class="nav-main-link-name" >내 정보 수정</span>
 							</a></li>
+							</th:block>
+							<th:block sec:authorize="hasRole('ROLE_STAFF')">
+							<li class="nav-main-item">
+								<a class="nav-main-link" th:href="@{/staff/userUpdate}">
+								<span class="nav-main-link-name" >내 정보 수정</span>
+							</a></li>
+							</th:block>
+							<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+							<li class="nav-main-item">
+								<a class="nav-main-link" th:href = "@{/admin/adminUpdate}">
+								<span class="nav-main-link-name" >내 정보 수정</span>
+							</a></li>
+							</th:block>
 							<li class="nav-main-item">
 							<form method = "post" th:action ="@{/logout}">
                     			<input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>

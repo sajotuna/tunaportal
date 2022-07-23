@@ -82,7 +82,7 @@
 	                    </th:block>
 	                    <div sec:authorize="hasAuthority('ROLE_ADMIN')">
 	                    <div class="p-2">
-	                      <a class="dropdown-item d-flex align-items-center justify-content-between" >
+	                      <a class="dropdown-item d-flex align-items-center justify-content-between" th:href = "@{/admin/adminUpdate}">
 	                        <span class="fs-sm fw-medium">내 정보 수정</span>
 	                      </a>
 	                    </div>

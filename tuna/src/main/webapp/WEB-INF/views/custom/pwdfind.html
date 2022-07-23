@@ -1,132 +1,182 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <title>비밀번호찾기</title>
-    <!-- Icons -->
-    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-    <link rel="shortcut icon" th:href="@{/resources/assets/media/favicons/favicon.png}">
-    <link rel="icon" type="image/png" sizes="192x192" th:href="@{/resources/assets/media/favicons/favicon-192x192.png}">
-    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/resources/assets/media/favicons/apple-touch-icon-180x180.png}">
-    <!-- END Icons -->
+<title>비밀번호찾기</title>
+<!-- Icons -->
+<!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+<link rel="shortcut icon"
+	th:href="@{/resources/assets/media/favicons/favicon.png}">
+<link rel="icon" type="image/png" sizes="192x192"
+	th:href="@{/resources/assets/media/favicons/favicon-192x192.png}">
+<link rel="apple-touch-icon" sizes="180x180"
+	th:href="@{/resources/assets/media/favicons/apple-touch-icon-180x180.png}">
+<!-- END Icons -->
 
-    <!-- Stylesheets -->
-    <!-- Fonts and OneUI framework -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
+<!-- Stylesheets -->
+<!-- Fonts and OneUI framework -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" id="css-main"
+	th:href="@{/resources/assets/css/oneui.min.css}">
 
-    <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-    <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/amethyst.min.css"> -->
-    <!-- END Stylesheets -->
-  </head>
-  <body>
-    <div id="page-container">
+<!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
+<!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/amethyst.min.css"> -->
+<!-- END Stylesheets -->
+</head>
+<body>
+	<div id="page-container">
 
-      <!-- Main Container -->
-      <main id="main-container">
-        <!-- Page Content -->
-        <div class="bg-primary">
-          <div class="row g-0 bg-primary-dark-op">
-            <!-- Meta Info Section -->
-            <div class="hero-static col-lg-4 d-none d-lg-flex flex-column justify-content-center">
-              <div class="p-4 p-xl-5 flex-grow-1 d-flex align-items-center">
-                <div class="w-100">
-                  <a class="link-fx fw-semibold fs-2 text-white" href="${pageContext.request.contextPath }/custom/login">
-                    TUNA
-                  </a>
-                </div>
-              </div>
-              <div class="p-4 p-xl-5 d-xl-flex justify-content-between align-items-center fs-sm">
-                <p class="fw-medium text-white-50 mb-0">
-                  <strong>OneUI 5.2</strong> &copy; <span data-toggle="year-copy"></span>
-                </p>
-                <ul class="list list-inline mb-0 py-2">
-                  <li class="list-inline-item">
-                    <a class="text-white-75 fw-medium" href="javascript:void(0)">Legal</a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a class="text-white-75 fw-medium" href="javascript:void(0)">Contact</a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a class="text-white-75 fw-medium" href="javascript:void(0)">Terms</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <!-- END Meta Info Section -->
+		<!-- Main Container -->
+		<main id="main-container">
+			<!-- Page Content -->
+			<div class="bg-primary">
+				<div class="row g-0 bg-primary-dark-op">
+					<!-- Meta Info Section -->
+					<div
+						class="hero-static col-lg-4 d-none d-lg-flex flex-column justify-content-center">
+						<div class="p-4 p-xl-5 flex-grow-1 d-flex align-items-center">
+							<div class="w-100">
+								<a class="link-fx fw-semibold fs-2 text-white"
+									href="${pageContext.request.contextPath }/custom/login">
+									TUNA </a>
+							</div>
+						</div>
+						<div
+							class="p-4 p-xl-5 d-xl-flex justify-content-between align-items-center fs-sm">
+							<p class="fw-medium text-white-50 mb-0">
+								<strong>OneUI 5.2</strong> &copy; <span data-toggle="year-copy"></span>
+							</p>
+							<ul class="list list-inline mb-0 py-2">
+								<li class="list-inline-item"><a
+									class="text-white-75 fw-medium" href="javascript:void(0)">Legal</a>
+								</li>
+								<li class="list-inline-item"><a
+									class="text-white-75 fw-medium" href="javascript:void(0)">Contact</a>
+								</li>
+								<li class="list-inline-item"><a
+									class="text-white-75 fw-medium" href="javascript:void(0)">Terms</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- END Meta Info Section -->
 
-            <!-- Main Section -->
-            <div class="hero-static col-lg-8 d-flex flex-column align-items-center bg-body-light">
-              <div class="p-3 w-100 d-lg-none text-center">
-                <a class="link-fx fw-semibold fs-3 text-dark" href="index.html">
-                  One<span class="fw-normal">UI</span>
-                </a>
-              </div>
-              <div class="p-4 w-100 flex-grow-1 d-flex align-items-center">
-                <div class="w-100">
-                  <!-- Header -->
-                  <div class="text-center mb-5">
-                    <p class="mb-3">
-                      <i class="fa fa-2x fa-circle-notch text-primary-light"></i>
-                    </p>
-                    <h1 class="fw-bold mb-2">
-                      Password Reminder
-                    </h1>
-                    <p class="fw-medium text-muted">
-                      Please provide your account’s email and we will send you your password.
-                    </p>
-                  </div>
-                  <!-- END Header -->
+					<!-- Main Section -->
+					<div
+						class="hero-static col-lg-8 d-flex flex-column align-items-center bg-body-light">
+						<div class="p-3 w-100 d-lg-none text-center">
+							<a class="link-fx fw-semibold fs-3 text-dark" href="index.html">
+								One<span class="fw-normal">UI</span>
+							</a>
+						</div>
+						<div class="p-4 w-100 flex-grow-1 d-flex align-items-center">
+							<div class="w-100">
+								<!-- Header -->
+								<div class="text-center mb-5">
+									<p class="mb-3">
+										<i class="fa fa-2x fa-circle-notch text-primary-light"></i>
+									</p>
+									<h1 class="fw-bold mb-2">Password Reminder</h1>
+									<p class="fw-medium text-muted">Please provide your
+										account’s email and we will send you your password.</p>
+								</div>
+								<!-- END Header -->
 
-                  <!-- Reminder Form -->
-                  <!-- jQuery Validation (.js-validation-reminder class is initialized in js/pages/op_auth_reminder.min.js which was auto compiled from _js/pages/op_auth_reminder.js) -->
-                  <!-- For more info and examples you can check out https://github.com/jzaefferer/jquery-validation -->
-                  <div class="row g-0 justify-content-center">
-                    <div class="col-sm-8 col-xl-4">
-                      <form class="js-validation-reminder" th:action="@{/custom/pwdEmailfind}" method="POST">
-                        <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
-                        <div class="mb-4">
-                          <input type="text" class="form-control form-control-lg form-control-alt py-3" id="reminder-credential" name="email" placeholder="Email Insert....">
-                        </div>
-                        <div class="text-center">
-                          <button type="submit" class="btn btn-lg btn-alt-primary">
-                            <i class="fa fa-fw fa-envelope me-1 opacity-50"></i> Send Mail
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  <!-- END Reminder Form -->
-                </div>
-              </div>
-              
-            </div>
-            <!-- END Main Section -->
-          </div>
-        </div>
-        <!-- END Page Content -->
-      </main>
-      <!-- END Main Container -->
-    </div>
-    <!-- END Page Container -->
+								<!-- Reminder Form -->
+								<!-- jQuery Validation (.js-validation-reminder class is initialized in js/pages/op_auth_reminder.min.js which was auto compiled from _js/pages/op_auth_reminder.js) -->
+								<!-- For more info and examples you can check out https://github.com/jzaefferer/jquery-validation -->
+								<form th:action="@{/custom/pwdEmailfind}" method="POST">
+									<div class="row g-0 justify-content-center">
+										<div class="col-sm-8 col-xl-4 ">
 
-    <!--
+											<div class="js-validation-reminder">
+												<input type="hidden" th:name="_csrf"
+													th:value="${_csrf.token}" />
+												<div class="mb-4">
+													<input type="text"
+														class="form-control form-control-lg form-control-alt py-3"
+														id="reminder-credential" name="email"
+														placeholder="Email Insert....">
+												</div>
+												<div class="row">
+
+													<div class="col-mb-6">
+														<div class="row items-push justify-content-center">
+															<div class="col-4">
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="radio"
+																		id="example-radios-inline1" name="user" value="1"
+																		checked> <label class="form-check-label"
+																		for="example-radios-inline1">학생</label>
+																</div>
+															</div>
+															<div class="col-4">
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="radio"
+																		id="example-radios-inline2" name="user" value="2">
+																	<label class="form-check-label"
+																		for="example-radios-inline2">교수</label>
+																</div>
+															</div>
+															<div class="col-4">
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="radio"
+																		id="example-radios-inline3" name="user" value="3">
+																	<label class="form-check-label"
+																		for="example-radios-inline3">교직원</label>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="text-center mt-4">
+													<button type="submit" class="btn btn-lg btn-alt-primary">
+														<i class="fa fa-fw fa-envelope me-1 opacity-50"></i> Send
+														Mail
+													</button>
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+
+								</form>
+							</div>
+							<!-- END Reminder Form -->
+						</div>
+					</div>
+
+				</div>
+				<!-- END Main Section -->
+
+			</div>
+			<!-- END Page Content -->
+
+		</main>
+		<!-- END Main Container -->
+	</div>
+	<!-- END Page Container -->
+
+	<!--
         OneUI JS
 
         Core libraries and functionality
         webpack is putting everything together at assets/_js/main/app.js
     -->
-    <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 
-    <!-- jQuery (required for jQuery Validation plugin) -->
-    <script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
+	<!-- jQuery (required for jQuery Validation plugin) -->
+	<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
 
-    <!-- Page JS Plugins -->
-    <script th:src="@{/resources/assets/js/plugins/jquery-validation/jquery.validate.min.js}"></script>
+	<!-- Page JS Plugins -->
+	<script
+		th:src="@{/resources/assets/js/plugins/jquery-validation/jquery.validate.min.js}"></script>
 
-    <!-- Page JS Code -->
-    <script th:src="@{/resources/assets/js/pages/op_auth_reminder.min.js}"></script>
-  </body>
+	<!-- Page JS Code -->
+	<script th:src="@{/resources/assets/js/pages/op_auth_reminder.min.js}"></script>
+</body>
 </html>
