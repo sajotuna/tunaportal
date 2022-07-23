@@ -163,7 +163,7 @@ public class LectureApplyController {
 	}
 	
 	// 내 수강내역
-	@GetMapping("/stud/mySubjectList")
+	@GetMapping("/stud/portal/mySubjectList")
 	@ResponseBody
 	public List<Map<String,Object>> mySubjectList(LectureApplyVO vo) {
 		List<Map<String,Object>> mySubjects = LectureApplyDao.mySubjectList(vo);
