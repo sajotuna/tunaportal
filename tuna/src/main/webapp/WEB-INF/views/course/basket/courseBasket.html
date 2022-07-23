@@ -8,6 +8,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   <title>수강꾸러미</title>
   <meta name="_csrf" th:content="${_csrf.token}">
   <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
   <style>
     h5 {
       margin-top: 50px;
@@ -32,10 +36,15 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 <body>
 <main layout:fragment="main">
 
-<th:block th:if = "${message != null && message != ''}">
+<th:block th:if = "${(success != null && success != '') || (error != null && error != '')}">
 	<script th:inline="javascript">
-		let message = /*[[${message}]]*/ 'default';
-		alert(message);
+		let success = /*[[${success}]]*/ 'default';
+		let error = /*[[${error}]]*/ 'default';
+		if (success) {
+			Dialogs.dialog('success', '완료', success);
+		} else if (error) {
+			Dialogs.dialog('error', '실패', error);
+		}
 	</script>
 </th:block>
 
