@@ -3,17 +3,19 @@ var token = $("meta[name='_csrf']").attr('content');
 var userNo = $("meta[name='userNo']").attr('content');
 
 // 배너 미리보기
-function banner(job) {
+function banner(bannerCode) {
 	$.ajax({
 		
-		url: getContextPath() + `${job}`,
+		url: getContextPath() + `${bannerCode}`,
 		type: 'GET',
 		dataType: 'json'
 		
 	}).done(function(basicBn) {
+		
 		$('#shortcutImg').attr('src', getContextPath() + `display?fileName=${basicBn.uri}&folder=banner`)
 		$('#shortcutBtn').css('display', 'inline-block');
 		$('#imgDownload').attr('href', getContextPath() + `download?fileName=${basicBn.uri}&originName=${basicBn.fileName}&folder=banner`)
+	
 	})
 }
 
@@ -30,7 +32,7 @@ function bannerDelete() {
 		
 							$.ajax({
 				
-								url: getContextPath() + 'admin/banner',
+								url: getContextPath() + 'admin/admin/banner',
 								method:'DELETE',
 								data: JSON.stringify({uri,no}),
 								contentType : 'application/json; charset=utf-8',
@@ -44,75 +46,64 @@ function bannerDelete() {
 										Dialogs.dialog('success', 
 									                   '삭제 완료', 
 									                   '배너 사진 삭제가 완료되었습니다.');
+									    location.reload();
 									} else {
-										Dialogs.dialog('error', 
-									                   '삭제 실패', 
-									                   '배너 사진 삭제가 정상적으로 처리되지 않았습니다.');
+										error();
 									}
+									
+								}).fail(function() {
+									error();
 								})
-								
 						});
-		
-
-		
-
-		
-	
 	})
 }
 
 // 기본 배너 등록
-function basicBannerInsert() {
+function bannerInsert(bannerCode) {
 	let formData = new FormData();
 	
 	formData.append("file", $('input[name=file]').get(0).files[0]);
 	formData.append("adNo", userNo);
-	formData.append("url", $('input[name=url]').val());			
 	
-	$.ajax({
-		
-		url: getContextPath() + 'admin/basicBanner',
-		method:'POST',
-		data: formData,
-		contentType: false,
-		processData: false,
-		beforeSend: function (xhr) {
-	       xhr.setRequestHeader(header, token);
-		}
-
-		}).done(function(success) {
-			if(success) {
-				pageDialogs.dialog();
-			}
-	})
-}
-
-// 옵션 배너 등록
-function optionBannerInsert() {
-	let formData = new FormData();
+	if(bannerCode == '1302') {
+		formData.append("url", $('input[name=url]').val());		
+	} else if (bannerCode == '1303') {
+		formData.append("url", $('select[name=url]').val());
+		formData.append("startDate", moment($('input[name=startDate]').val()).format('YYYY-MM-DD'));
+		formData.append("endDate", moment($('input[name=endDate]').val()).format('YYYY-MM-DD'));
+	}
 	
-	formData.append("file", $('input[name=file]').get(0).files[0]);
-	formData.append("adNo", userNo);
-	formData.append("url", $('select[name=url]').val());
-	formData.append("startDate", moment($('input[name=startDate]').val()).format('YYYY-MM-DD'));
-	formData.append("endDate", moment($('input[name=endDate]').val()).format('YYYY-MM-DD'));
+	Dialogs.dialog('checkConfirm', 
+                    '정말로 등록하시겠습니까?', 
+                    '등록된 배너는 수정할 수 없으며, 이전 배너 삭제는 전체 배너 관리에서 가능합니다.',
+                    function() {
 	
-	$.ajax({
-		
-			url: getContextPath() + 'admin/optionBanner',
-			method:'POST',
-			data: formData,
-			contentType: false,
-			processData: false,
-			beforeSend: function (xhr) {
-		       xhr.setRequestHeader(header, token);
-			}
+						$.ajax({
 	
-			}).done(function(success) {
-				if(success) {
-					pageDialogs.dialog();
-				}
-			})
+							url: getContextPath() + `admin/admin/banner/${bannerCode}`,
+							method:'POST',
+							data: formData,
+							contentType: false,
+							processData: false,
+							beforeSend: function (xhr) {
+						       xhr.setRequestHeader(header, token);
+							}
+					
+						}).done(function(success) {
+							
+							if(success) {
+								insertSuccess();
+								$('input[name=file]').get(0).val('');
+								$('input[name=url]').val('');
+							} else {
+								error();
+							}
+							
+						}).fail(function() {
+							error();
+						})
+					}
+	            )
 }
 
 function getContextPath() {

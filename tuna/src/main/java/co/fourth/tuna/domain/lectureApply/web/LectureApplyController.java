@@ -74,17 +74,18 @@ public class LectureApplyController {
 		int target = LectureApplyDao.subjectTarget(vo);
 		
 		if(grade - target < 0) {
-			ra.addFlashAttribute("message", "수강신청 가능한 학점이 없습니다.");
+			ra.addFlashAttribute("error", "수강신청 가능한 학점이 없습니다.");
 			return "redirect:/stud/courseBasket";
 		}
 		String message = LectureApplyDao.ApplyErrorMsg(vo);
 		
 		System.out.println(message);
 		if(message.equals("수강신청이 완료되었습니다.")) {
-			LectureApplyDao.CourseInsert(vo);
+			ra.addFlashAttribute("success", message);
+			return "redirect:/stud/courseApplication";
 		}
 		
-		ra.addFlashAttribute("message", message);
+		ra.addFlashAttribute("error", message);
 		return "redirect:/stud/courseApplication";
 	}
 	
@@ -92,7 +93,7 @@ public class LectureApplyController {
 	public String courseDelete(Authentication authentication,RedirectAttributes ra, LectureApplyVO vo) {
 		vo.setStNo(authentication.getName());
 		LectureApplyDao.CourseDelete(vo);
-		ra.addFlashAttribute("message", "삭제가 완료되었습니다.");
+		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
 		return "redirect:/stud/courseApplication";
 	}
 	

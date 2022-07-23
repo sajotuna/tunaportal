@@ -81,7 +81,7 @@ public class ScholarController {
 	public String scholarDelete(RedirectAttributes ra,ScholarApplyVO vo) {
 		
 		ScholarDao.ScholarDelete(vo);
-		ra.addFlashAttribute("message", "삭제가 완료되었습니다.");
+		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
 		return "redirect:/stud/scholarshipApplicationStatus";
 	}
 	
@@ -135,7 +135,7 @@ public class ScholarController {
 				ScholarDao.scholarUpdate(vo);
 			}
 			else {
-				ra.addFlashAttribute("message", "지난학기에 신청한 장학금내역은 변경이 불가능합니다.");
+				ra.addFlashAttribute("error", "지난학기에 신청한 장학금내역은 변경이 불가능합니다.");
 				return "redirect:/admin/adminScholarshipApplicationSearch";
 			}
 		}
@@ -153,7 +153,7 @@ public class ScholarController {
 				ScholarDao.scholarUpdate(vo);
 			}
 			else {
-				ra.addFlashAttribute("message", "지난학기에 신청한 장학금내역은 변경이 불가능합니다.");
+				ra.addFlashAttribute("error", "지난학기에 신청한 장학금내역은 변경이 불가능합니다.");
 				return "redirect:/admin/adminScholarshipApplicationSearch";
 			}
 		}

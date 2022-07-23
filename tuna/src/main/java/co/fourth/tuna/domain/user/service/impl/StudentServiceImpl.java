@@ -131,6 +131,12 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 		return mapper.findEmail(vo);
 	}
 
+	@Override
+	public void studEamilPwdUpdate(StudentVO vo) {
+		mapper.studEamilPwdUpdate(vo);
+		
+	}
+
 	
 	
 

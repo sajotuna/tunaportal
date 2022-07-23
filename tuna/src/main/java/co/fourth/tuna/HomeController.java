@@ -18,7 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import co.fourth.tuna.domain.user.service.AdminService;
+import co.fourth.tuna.domain.user.service.ProfessorService;
 import co.fourth.tuna.domain.user.service.StudentService;
+import co.fourth.tuna.domain.user.vo.AdminVO;
+import co.fourth.tuna.domain.user.vo.ProfessorVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 
 
@@ -32,6 +36,11 @@ public class HomeController {
 
 	@Autowired 
 	private StudentService StudentDao;
+	@Autowired
+	private AdminService AdminDao;
+	@Autowired
+	private ProfessorService ProfessorDao;
+	
 	@Autowired
 	private JavaMailSender mailSender;
 	@Autowired
@@ -70,13 +79,22 @@ public class HomeController {
 	}
 
 	@RequestMapping("/custom/pwdEmailfind")
-	public String pwdEmailFind(StudentVO vo) throws Exception {
+	public String pwdEmailFind(Model model, String email, String user) throws Exception {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
 		String authCode = null;
 		String msg = "";
 		StringBuffer temp = new StringBuffer();
+		
+		StudentVO vo = new StudentVO();
+		
+		
+		ProfessorVO provo = new ProfessorVO();
+		AdminVO adminvo = new AdminVO();
+		vo.setEmail(email);
+		
+		
 		Random rnd = new Random();
 		for (int i = 0; i < 10; i++) {
 			int rIndex = rnd.nextInt(3);
@@ -95,23 +113,32 @@ public class HomeController {
 
 		authCode = temp.toString();
 		
-		System.out.println(authCode);
-		System.out.println(enc.encode(authCode));
-		
 		boolean emailCheck = StudentDao.findEmail(vo);
-		
 		if(emailCheck == true) {
 			messageHelper.setFrom("lnsertgood123@gmail.com");
 			messageHelper.setTo(vo.getEmail());
 			messageHelper.setSubject("안녕하세요 TUNA대학입니다. 고객님의 임시비밀번호가 도착했습니다.");
 			messageHelper.setText("임시비밀번호 : " + authCode); // 메일 내용
 			mailSender.send(message);
+			if(Integer.parseInt(user) == 1) {
+				vo.setPwd(enc.encode(authCode));
+				StudentDao.studEamilPwdUpdate(vo);
+			}else if(Integer.parseInt(user) == 2) {
+				provo.setEmail(email);
+				provo.setPwd(enc.encode(authCode));
+				ProfessorDao.staffEamilPwdUpdate(provo);
+			}else if(Integer.parseInt(user) == 3) {
+				adminvo.setEmail(email);
+				adminvo.setPwd(enc.encode(authCode));
+				AdminDao.adminEamilPwdUpdate(adminvo);
+			}
+			msg = "회원님의 메일으로 임시비밀번호를 보냈습니다. 확인해주세요.";
+			
 		}else {
 			msg = "없는 이메일 계정입니다. 이메일을 다시한번 확인해주세요.";
 		}
 		
-		
-
+		model.addAttribute("message", msg);
 
 		return "custom/pwdfind";
 	}

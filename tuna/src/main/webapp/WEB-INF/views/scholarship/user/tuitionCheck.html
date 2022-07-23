@@ -1,7 +1,9 @@
 
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+data-layout-decorate="~{layouts/navLayout}">
 
 <head>
   <meta charset="utf-8">
@@ -47,7 +49,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 </head>
 
 <body>
-
+<main layout:fragment="main">
   <div class="bg-body-light">
     <div class="content content-full content-boxed">
       <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
@@ -158,7 +160,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
       </div>
     </div>
   </div>
-  
+</main>  
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>

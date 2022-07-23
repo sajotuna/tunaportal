@@ -7,7 +7,7 @@
 	<meta name="_csrf" th:content="${_csrf.token}">
   	<meta name="_csrf_header" th:content="${_csrf.headerName}">
   	<meta name="userNo" th:content="${#authentication.name}">
-	<title>sliderBannerManagm</title>
+	<title>슬라이드 배너 관리</title>
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
@@ -130,6 +130,7 @@
 	<script>One.helpersOnLoad([ 'jq-slick' ]);</script>
 	<script th:src="@{/resources/assets/js/banner/sliderBanner.js}"></script>
 	<script th:src="@{/resources/assets/js/banner/sbn-ajax.js}"></script>
+	<script th:src="@{/resources/assets/js/dialog.js}"></script>
 
 </main>
 </body>
