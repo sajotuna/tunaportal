@@ -8,7 +8,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   <title>수강신청</title>
   <meta name="_csrf" th:content="${_csrf.token}">
   <meta name="_csrf_header" th:content="${_csrf.headerName}">
-
+  
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
   <style>
     h5 {
       margin-top: 50px;
@@ -301,16 +304,20 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
       </div>
     </div>
   </div>
-  <th:block th:if = "${message != null && message != ''}">
+  <th:block th:if = "${(success != null && success != '') || (error != null && error != '')}">
 	<script th:inline="javascript">
-		let message = /*[[${message}]]*/ 'default';
-		alert(message);
-		
+		let success = /*[[${success}]]*/ 'default';
+		let error = /*[[${error}]]*/ 'default';
+		if (success) {
+			Dialogs.dialog('success', '완료', success);
+		} else if (error) {
+			Dialogs.dialog('error', '실패', error);
+		}
 	</script>
 </th:block>
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
- 
+  
   
   
   
@@ -358,7 +365,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 										frm.submit();
 										// 성공 코드
 									} else {
-										alert('자동입력방지 코드가 틀립니다.');
+										Dialogs.dialog('error', '수강신청 실패', '자동입력방지 코드가 틀립니다.')
 										getImage();
 										document.querySelector('#answer').setAttribute(
 												'value', '');
