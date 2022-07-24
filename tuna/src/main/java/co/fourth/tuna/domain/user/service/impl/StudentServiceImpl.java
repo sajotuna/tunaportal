@@ -20,6 +20,7 @@ import co.fourth.tuna.domain.user.mapper.StudentMapper;
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentExVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
+import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
 
 @Service
 public class StudentServiceImpl implements StudentService, UserDetailsService {
@@ -135,6 +136,11 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 	public void studEamilPwdUpdate(StudentVO vo) {
 		mapper.studEamilPwdUpdate(vo);
 		
+	}
+	
+	@Override
+	public List<StudentWithSubmitTaskVO> findListWithSubmitTaskByTaskId(int taskno) {
+		return mapper.findListWithSubmitTaskByTaskId(taskno);
 	}
 
 	

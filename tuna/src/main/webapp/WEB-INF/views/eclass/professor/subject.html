@@ -897,10 +897,12 @@ xmlns:th="http://www.thymeleaf.org"
             let header = document.querySelector('meta[name="_csrf_header"]').content;
             let token = document.querySelector('meta[name="_csrf"]').content;
 
-            // url 파라미터
+            //  파라미터
             let url = new URL(window.location.href);
             let params = new URLSearchParams(url.searchParams);
             let sbjno = params.get('no'); // 파라미터
+
+            let taskno = 8; // TODO 
 
             // 탭 제어
             let tabFlag = new Map();
@@ -1040,7 +1042,8 @@ xmlns:th="http://www.thymeleaf.org"
                   resFunc = setAttendanceContent;
                   break;
                 case 2: // 과제
-                  break;
+                  reqTaskContent(tabIdx, taskno, "/tuna/staff/task/students", setTaskContent);
+                  return;
                 case 3: // 문의
                   url = "/tuna/prof/lecQna";
                   resFunc = setQnaContent;
@@ -1062,7 +1065,7 @@ xmlns:th="http://www.thymeleaf.org"
                   return;
                   break;
               }
-              reqSbjContent(tabIdx, sbj, url, resFunc)
+                reqSbjContent(tabIdx, sbj, url, resFunc);
 
             }
             function reqSbjContent(tabIdx, sbjno, url, resFunc) {
@@ -1080,6 +1083,34 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify({
                   sbjno: sbjno
+                })
+              })
+              .then(result => result.json())
+              .then(result => {
+                resFunc(result);
+
+                offloaderCurtain();
+                tabFlag.set(tabIdx, true);
+              })
+              .catch((err) => {
+                console.error('fetch 오류', err);
+
+                offloaderCurtain();
+                tabFlag.set(tabIdx, false);
+              })
+            }
+
+            function reqTaskContent(tabIdx, taskno, url, resFunc) {
+              fetch(url, {
+                method: "POST",
+                headers: {
+                  'header': header,
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify({
+                  taskno: taskno
                 })
               })
               .then(result => result.json())
@@ -1177,6 +1208,11 @@ xmlns:th="http://www.thymeleaf.org"
                 tbody.appendChild(tr);
               });
 
+            }
+            
+            // 과제 패널
+            function setTaskContent(studentList) {
+              console.log(studentList);
             }
 
             // 강의정보 패널

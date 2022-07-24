@@ -16,6 +16,7 @@
 		</collection>
 	</resultMap>
 	
+	
 <!-- <select id="taskList" resultType="map" parameterType="co.fourth.tuna.domain.task.vo.TaskVO">
 SELECT T.TITLE, L.SBJNO, T.LIMITDATE
 FROM LECTUREAPPLY L JOIN TASK T
@@ -76,6 +77,7 @@ WHERE NO = #{no}
 	WHERE taskno = #{taskno}
 		AND stno = #{stno}
 </select>
+
 <insert id="insertTaskByVO"
 	parameterType="co.fourth.tuna.domain.task.vo.TaskVO">
 	<selectKey resultType="int" keyProperty="no" order="BEFORE">

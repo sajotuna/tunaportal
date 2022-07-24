@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.user.mapper.StudentMapper">
 
+<resultMap id = "studentWithSubmitTaskMap"
+	type="co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO">
+	<association property="submitTask"
+		select="co.fourth.tuna.domain.task.mapper.TaskMapper.findSubmitTasksByTaskIdAndStudentId"
+		column="{taskno=taskno, stno=no}" >
+	</association>
+</resultMap>
 
 <select id = "findById" 
 	parameterType="co.fourth.tuna.domain.user.vo.StudentVO" resultType="co.fourth.tuna.domain.user.vo.StudentVO">
@@ -67,6 +74,27 @@
 	JOIN lectureapply l
 	    ON s.no = l.stno
 	WHERE sbjno = #{sbjno}
+</select>
+
+<select id="findListWithSubmitTaskByTaskId"
+	resultMap="studentWithSubmitTaskMap">
+	
+	SELECT s.*,t.no AS taskno,
+		(<include refid="co.fourth.tuna.domain.common.mapper.CodeMapper.findCodeNameSql">
+			<property name="no" value="statecode" />
+		</include>) AS statename,
+		(<include refid="co.fourth.tuna.domain.common.mapper.CodeMapper.findCodeNameSql">
+			<property name="no" value="bacc" />
+		</include>) AS bankname,
+		(<include refid="co.fourth.tuna.domain.common.mapper.CodeMapper.findCodeNameSql">
+			<property name="no" value="deptcode" />
+		</include>) AS deptname
+	FROM student s
+	JOIN lectureapply l
+		ON s.no = l.stno
+	JOIN task t
+		ON l.sbjno = t.sbjno
+	WHERE t.no = #{taskno}
 </select>
 
 <update id="studPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
