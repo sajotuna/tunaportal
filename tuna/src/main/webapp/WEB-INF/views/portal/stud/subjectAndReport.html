@@ -7,7 +7,7 @@
 	<meta name="_csrf" th:content="${_csrf.token}">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 	<meta name="userNo" th:content="${#authentication.name}">
-	<title>subjectAndReport</title>
+	<title>강의/성적 조회</title>
 	<style>
 	.space-x-2 {
 		padding: 7px 15px;
@@ -28,74 +28,67 @@
 	</style>
 </head>
 <body>
-<main layout:fragment="main">
-	<!-- Hero -->
-	<div class="bg-body-light">
-		<div class="content content-full content-boxed">
-			<div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
-				<div class="flex-grow-1 mb-1 mb-md-0">
-					<p class="h3 fw-bold mb-2">강의 / 성적 조회</p>
-					<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">강의 계획서, 수강 내역 및 성적 조회 페이지입니다.</p>
+	<main layout:fragment="main">
+		<!-- Hero -->
+		<div class="bg-body-light">
+			<div class="content content-full content-boxed">
+				<div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
+					<div class="flex-grow-1 mb-1 mb-md-0">
+						<p class="h3 fw-bold mb-2">강의 / 성적 조회</p>
+						<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">강의 계획서, 수강 내역, 보관 성적 조회</p>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- END Hero -->
-	<!-- Page Content -->
-	<div class="mt-3">
-		<div class="content content-boxed">
-			<div class="block block-rounded">
-
-				<!-- Tab -->
-				<ul class="nav nav-tabs nav-tabs-block" role="tablist">
-					<li class="nav-item">
-						<button class="nav-link active" id="btabs-static-subject-tab"
-							data-bs-toggle="tab" data-bs-target="#btabs-static-subject"
-							role="tab" aria-controls="btabs-static-subject"
-							aria-selected="true">강의 계획서 조회</button>
-					</li>
-					<li class="nav-item">
-						<button class="nav-link" id="btabs-static-mysubject-tab"
-							data-bs-toggle="tab" data-bs-target="#btabs-static-mysubject"
-							role="tab" aria-controls="btabs-static-mysubject"
-							aria-selected="false">수강 내역 조회</button>
-					</li>
-					<li class="nav-item">
-						<button class="nav-link" id="btabs-static-grade-tab"
-							data-bs-toggle="tab" data-bs-target="#btabs-static-grade"
-							role="tab" aria-controls="btabs-static-grade"
-							aria-selected="false">보관 성적 조회</button>
-					</li>
-				</ul>
-				<!-- END Tab -->
-
-				<!-- Block -->
-				<div class="block-content tab-content">
-				
-					<!-- lecturePlanList Tab -->
-					<th:block th:replace="portal/stud/lecturePlanList :: lecturePlan"></th:block>	
-					<!-- END lecturePlanList Tab -->
-
-					<!-- mySubjectList Tab -->
-					<th:block th:replace="portal/stud/mySubjectList :: mySubject"></th:block>	
-					<!-- END mySubjectList Tab -->
-
-					<!-- Grade Report Tab -->
-					<th:block th:replace="portal/stud/gradeReport :: grade"></th:block>	
-					<!-- END Grade Report Tab -->
+		<!-- END Hero -->
+		<!-- Page Content -->
+		<div class="mt-3">
+			<div class="content content-boxed">
+				<div class="block block-rounded">
+	
+					<!-- Tab -->
+					<ul class="nav nav-tabs nav-tabs-block" role="tablist">
+						<li class="nav-item">
+							<button class="nav-link active" id="btabs-static-subject-tab"
+								data-bs-toggle="tab" data-bs-target="#btabs-static-subject"
+								role="tab" aria-controls="btabs-static-subject"
+								aria-selected="true">강의 계획서 조회</button>
+						</li>
+						<li class="nav-item">
+							<button class="nav-link" id="btabs-static-mysubject-tab"
+								data-bs-toggle="tab" data-bs-target="#btabs-static-mysubject"
+								role="tab" aria-controls="btabs-static-mysubject"
+								aria-selected="false">수강 내역 조회</button>
+						</li>
+						<li class="nav-item">
+							<button class="nav-link" id="btabs-static-grade-tab"
+								data-bs-toggle="tab" data-bs-target="#btabs-static-grade"
+								role="tab" aria-controls="btabs-static-grade"
+								aria-selected="false">보관 성적 조회</button>
+						</li>
+					</ul>
+					<!-- END Tab -->
+	
+					<!-- Block -->
+					<div class="block-content tab-content">
+						<!-- lecturePlanList Tab -->
+						<th:block th:replace="portal/stud/lecturePlanList :: lecturePlan"></th:block>	
+						<!-- END lecturePlanList Tab -->
+	
+						<!-- mySubjectList Tab -->
+						<th:block th:replace="portal/stud/mySubjectList :: mySubject"></th:block>	
+						<!-- END mySubjectList Tab -->
+	
+						<!-- Grade Report Tab -->
+						<th:block th:replace="portal/stud/gradeReport :: grade"></th:block>	
+						<!-- END Grade Report Tab -->
+					</div>
+					<!-- END Block -->
 					
 				</div>
-				<!-- END Block -->
 			</div>
 		</div>
-	</div>
-	<!-- END Page Content -->
-	<script type="text/javascript">
-	
-
-	
-	</script>
-</main>
-
+		<!-- END Page Content -->
+	</main>
 </body>
 </html>

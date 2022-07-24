@@ -26,10 +26,11 @@ public class PortalStudentController {
 	@Autowired DateCheckService dateCheckDao;
 	
 	// 강의/성적 조회
-	@RequestMapping("/stud/subjectAndReport")
+	@RequestMapping("/stud/portal/subjectAndReport")
 	public String subjectAndRoport(Authentication authentication, Model model) {
 		
-		List<Map<String, Object>> avgGrades = gradeDao.avgGradeSelect(Integer.parseInt(authentication.getName()));
+		List<Map<String, Object>> avgGrades = gradeDao.avgGradeSelect(Integer.parseInt(authentication.getName()),
+																	  yearDao.yearFind());
 		
 		int totalPoint = 0;
 		double totalAvg = 0;
@@ -39,7 +40,10 @@ public class PortalStudentController {
 			totalAvg += Double.valueOf(String.valueOf(avgGrades.get(i).get("AVG")));
 		}
 		
-		double totalGrade = totalAvg / avgGrades.size();
+		double totalGrade = 0;
+		if(avgGrades.size() != 0) {
+			totalGrade = totalAvg / avgGrades.size();
+		}
 		double totalPct = ( totalGrade / 4.5 ) * 100;
 		
 		model.addAttribute("totalPoint", totalPoint);
@@ -50,10 +54,15 @@ public class PortalStudentController {
 	}
 	
 	// 당해학기 성적 조회
-	@RequestMapping("/stud/currentSemesterGrade")
-	public String currentSemesterGrade(Authentication authentication, Model model, RedirectAttributes redirectAttributes) {
-		List<Map<String, Object>> grades = gradeDao.currentSemesterGradeSelect(Integer.parseInt(authentication.getName()), yearDao.yearFind());
-		Map<String, Object> total = gradeDao.currentSemesterGradeTotal(Integer.parseInt(authentication.getName()), yearDao.yearFind());
+	@RequestMapping("/stud/portal/currentSemesterGrade")
+	public String currentSemesterGrade(Authentication authentication, 
+										Model model, 
+										RedirectAttributes redirectAttributes) {
+		
+		List<Map<String, Object>> grades = gradeDao.currentSemesterGradeSelect(Integer.parseInt(authentication.getName()), 
+																				yearDao.yearFind());
+		Map<String, Object> total = gradeDao.currentSemesterGradeTotal(Integer.parseInt(authentication.getName()), 
+																		yearDao.yearFind());
 		
 		int result = dateCheckDao.accessDateCheck(yearDao.yearFind(), "1106");
 		
@@ -72,11 +81,11 @@ public class PortalStudentController {
 			model.addAttribute("grades", grades);
 			model.addAttribute("total", total);
 			return "portal/stud/currentSemesterGrade";
+			
 		} else {
-			redirectAttributes.addAttribute("message", "성적 조회 기간이 아닙니다.");
-			return "redirect:home";
+			redirectAttributes.addFlashAttribute("error", "지금은 성적 조회 기간이 아닙니다.");
+			return "redirect:/home";
 		}
-		
 		
 	}
 	

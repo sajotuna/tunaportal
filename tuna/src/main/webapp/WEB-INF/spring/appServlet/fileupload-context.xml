@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<bean id="fileDir" class="java.lang.String">
-		<constructor-arg value="C:\Dev\tunaportal\tuna\src\main\webapp\WEB-INF\files\">
+		<constructor-arg value="/Users/binggla/Desktop/temp/">
 		</constructor-arg>
 	</bean>
 	

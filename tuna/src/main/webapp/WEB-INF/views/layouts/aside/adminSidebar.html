@@ -6,7 +6,6 @@
 </head>
 <body>
 <th:block th:fragment="sidebar">
-
 	<!-- Sidebar -->
 	 <nav id="sidebar" aria-label="Main Navigation">
 	   <!-- Side Header -->
@@ -14,9 +13,11 @@
 	     <a class="fw-semibold text-dual">
 	       <span class="smini-hide fs-5 tracking-wider">TUNA<span class="fw-normal"> admin</span></span>
 	     </a>
+	     <a class="d-lg-none btn btn-sm btn-alt-secondary ms-1" data-toggle="layout" data-action="sidebar_close" href="javascript:void(0)">
+           <i class="fa fa-fw fa-times"></i>
+         </a>
 	   </div>
 	   <!-- END Side Header -->
-	
 	   <!-- Sidebar Scrolling -->
 	   <div class="js-sidebar-scroll">
 	     <!-- Side Navigation -->
@@ -60,22 +61,22 @@
 	           </a>
 	           <ul class="nav-main-submenu">
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/admin/basicBannerManagm}">
+	               <a class="nav-main-link" th:href="@{/admin/admin/basicBannerManagm}">
 	                 <span class="nav-main-link-name">기본 바로가기 배너 관리</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/admin/optionBannerManagm}">
+	               <a class="nav-main-link" th:href="@{/admin/admin/optionBannerManagm}">
 	                 <span class="nav-main-link-name">옵션 바로가기 배너 관리</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/admin/sliderBannerManagm}">
+	               <a class="nav-main-link" th:href="@{/admin/admin/sliderBannerManagm}">
 	                 <span class="nav-main-link-name">슬라이드 배너 관리</span>
 	               </a>
 	             </li>
 	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/admin/bannerList}">
+	               <a class="nav-main-link" th:href="@{/admin/admin/bannerList}">
 	                 <span class="nav-main-link-name">전체 배너 관리</span>
 	               </a>
 	             </li>
@@ -106,8 +107,6 @@
 	   <!-- END Sidebar Scrolling -->
 	 </nav>
 	 <!-- END Sidebar -->
-	<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-	<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
 </th:block>
 </body>
 </html>

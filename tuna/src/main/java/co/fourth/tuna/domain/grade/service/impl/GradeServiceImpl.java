@@ -28,8 +28,8 @@ public class GradeServiceImpl implements GradeService {
 	}
 
 	@Override
-	public List<Map<String, Object>> subjectGradeSelect(int stNo) {
-		return mapper.subjectGradeSelect(stNo);
+	public List<Map<String, Object>> subjectGradeSelect(int stNo, String SeasonCode) {
+		return mapper.subjectGradeSelect(stNo, SeasonCode);
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class GradeServiceImpl implements GradeService {
 	}
 
 	@Override
-	public List<Map<String, Object>> avgGradeSelect(int stNo) {
-		return mapper.avgGradeSelect(stNo);
+	public List<Map<String, Object>> avgGradeSelect(int stNo, String SeasonCode) {
+		return mapper.avgGradeSelect(stNo, SeasonCode);
 	}
 
 	@Override

@@ -7,16 +7,16 @@
 </head>
 <body>
 <th:block th:fragment="sidebar">
-			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-			<script th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
-			<script th:src="@{https://code.jquery.com/jquery-3.6.0.js}"></script>
 	<!-- Sidebar -->
 	 <nav id="sidebar" aria-label="Main Navigation">
 	   <!-- Side Header -->
 	   <div class="content-header">
 	     <a class="fw-semibold text-dual">
-  	     <span class="smini-hide fs-5 tracking-wider">TUNA<span class="fw-normal"> e-Class</span></span>
+  	       <span class="smini-hide fs-5 tracking-wider">TUNA<span class="fw-normal"> e-Class</span></span>
 	     </a>
+	     <a class="d-lg-none btn btn-sm btn-alt-secondary ms-1" data-toggle="layout" data-action="sidebar_close" href="javascript:void(0)">
+           <i class="fa fa-fw fa-times"></i>
+         </a>
 	   </div>
 	   <!-- END Side Header -->
 	

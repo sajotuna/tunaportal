@@ -24,8 +24,6 @@ import co.fourth.tuna.domain.common.service.FileService;
 @RestController
 public class BannerController {
 	
-	private static Logger logger = LoggerFactory.getLogger(BannerController.class); 
-	
 	@Autowired BannerService bannerDao;
 	@Autowired FileService fileService;
 	@Autowired String fileDir;

@@ -12,9 +12,9 @@ public interface GradeMapper {
 
 	public List<Map<String, Object>> currentSemesterGradeSelect(@Param("stNo")int stNo, @Param("seasonCode")String seasonCode);
 	public Map<String, Object> currentSemesterGradeTotal(@Param("stNo")int stNo, @Param("seasonCode")String seasonCode);
-	public List<Map<String, Object>> subjectGradeSelect(int stNo);
+	public List<Map<String, Object>> subjectGradeSelect(@Param("stNo")int stNo, @Param("seasonCode")String seasonCode);
 	public List<Map<String, Object>> seasonSubjectGradeSelect(@Param("stNo")int stNo, @Param("seasonCode")String seasonCode);
-	public List<Map<String, Object>> avgGradeSelect(int stNo);
+	public List<Map<String, Object>> avgGradeSelect(@Param("stNo")int stNo, @Param("seasonCode")String seasonCode);
 	
 
 	public GradeVO findBySbjectNo(GradeVO vo);

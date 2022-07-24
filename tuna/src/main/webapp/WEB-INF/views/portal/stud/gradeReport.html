@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>보관 성적 조회</title>
 </head>
 <body>
 <th:block th:fragment="grade">
@@ -19,33 +19,39 @@
 				<div class="row align-items-center justify-content-center">
 					<div class="mb-5 col-md-4 col-lg-3">
 						<div class="text-center mb-4"><strong>총 취득 학점</strong></div>
-						<div class="js-pie-chart pie-chart" th:data-percent="(${totalPoint}/137)*100"
-							data-line-width="11" data-size="190" data-bar-color="#6BB9ED"
-							data-track-color="#eeeeee">
-							<span>
-								<span class="h2" th:text="${totalPoint}">0</span><br><small class="text-muted">/137</small>
-							</span>
-						</div>
+						<th:block th:if="${totalPoint != null && totalPoint != ''}">
+							<div class="js-pie-chart pie-chart" th:data-percent="(${totalPoint}/137)*100"
+								data-line-width="11" data-size="190" data-bar-color="#6BB9ED"
+								data-track-color="#eeeeee">
+								<span>
+									<span class="h2" th:text="${totalPoint}">0</span><br><small class="text-muted">/137</small>
+								</span>
+							</div>
+						</th:block>
 					</div>
 					<div class="mb-5 col-md-4 col-lg-3">
 						<div class="text-center mb-4"><strong>총 평점 평균</strong></div>
-						<div class="js-pie-chart pie-chart" th:data-percent="(${totalGrade}/4.5)*100"
-							data-line-width="11" data-size="180" data-bar-color="#4E7AC7"
-							data-track-color="#eeeeee">
-							<span>
-								<span class="h2" th:text="${#numbers.formatDecimal(totalGrade,1,1)}">0</span><br><small class="text-muted">/4.5</small>
-							</span>
-						</div>
+						<th:block th:if="${totalGrade != null && totalGrade != ''}">
+							<div class="js-pie-chart pie-chart" th:data-percent="(${totalGrade}/4.5)*100"
+								data-line-width="11" data-size="180" data-bar-color="#4E7AC7"
+								data-track-color="#eeeeee">
+								<span>
+									<span class="h2" th:text="${#numbers.formatDecimal(totalGrade,1,1)}">0</span><br><small class="text-muted">/4.5</small>
+								</span>
+							</div>
+						</th:block>
 					</div>
 					<div class="mb-5 col-md-4 col-lg-3">
 						<div class="text-center mb-4"><strong>백분율 성적</strong></div>
-						<div class="js-pie-chart pie-chart" th:data-percent="${totalPct}"
-							data-line-width="11" data-size="180" data-bar-color="#48B1E8"
-							data-track-color="#eeeeee">
-							<span>
-								<span class="h2" th:text="${#numbers.formatDecimal(totalPct,1,1)}">0</span><br><small class="text-muted">/100</small>
-							</span>
-						</div>
+						<th:block th:if="${totalPct != null && totalPct != ''}">
+							<div class="js-pie-chart pie-chart" th:data-percent="${totalPct}"
+								data-line-width="11" data-size="180" data-bar-color="#48B1E8"
+								data-track-color="#eeeeee">
+								<span>
+									<span class="h2" th:text="${#numbers.formatDecimal(totalPct,1,1)}">0</span><br><small class="text-muted">/100</small>
+								</span>
+							</div>
+						</th:block>
 					</div>
 				</div>
 			</div>
@@ -73,7 +79,7 @@
 			</div>
 			<!-- Table -->
 			<div class="mb-4 scroll-table-div">
-				<table id="subjectGradeTable" class="table table-striped table-vcenter scroll-table">
+				<table id="subjectGradeTable" class="table table-striped table-vcenter scroll-table m-0">
 					<thead>
 						<tr>
 							<th width=200>연도/학기</th>
@@ -102,8 +108,8 @@
 						<h4 class="block-title">평균 평점</h4>
 					</div>
 					<!-- Table -->
-					<div class="mb-4" style="min-height:200px; overflow-y:scroll;">
-						<table class="table table-striped table-vcenter text-center">
+					<div class="mb-4" style="height:184px; overflow-y:scroll;">
+						<table class="table table-striped table-vcenter text-center m-0">
 							<thead>
 								<tr>
 									<th style="width:33%;">연도/학기</th>
@@ -210,7 +216,7 @@
 
 			$.ajax({
 				
-				url: getContextPath() + 'stud/subjectGrade',
+				url: getContextPath() + 'stud/portal/subjectGrade',
 				type: 'GET',
 				data: {stNo:userNo},
 				dataType: 'json',
@@ -259,7 +265,7 @@
 					
 					$.ajax({
 						
-						url: getContextPath() + 'stud/seasonSubjectGrade',
+						url: getContextPath() + 'stud/portal/seasonSubjectGrade',
 						type: 'GET',
 						data: {stNo:userNo, seasonCode:$(this).val()},
 						dataType: 'json',
@@ -286,7 +292,7 @@
 			
 			$.ajax({
 				
-				url: getContextPath() + 'stud/avgGrade',
+				url: getContextPath() + 'stud/portal/avgGrade',
 				type: 'GET',
 				async: false,
 				data: {stNo:userNo},

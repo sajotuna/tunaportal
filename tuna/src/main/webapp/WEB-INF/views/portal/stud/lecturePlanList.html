@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<title>subjectSelect</title>
+<title>강의 계획서 조회</title>
 </head>
 <body>
 <th:block th:fragment="lecturePlan">
@@ -54,7 +54,7 @@
 		<!-- END Form -->
 		<!-- Table -->
 		<div class="mb-4 scroll-table-div">
-			<table class="table table-striped table-vcenter scroll-table">
+			<table class="table table-striped table-vcenter scroll-table m-0">
 				<thead>
 					<tr>
 						<th style="width: 70px;">과목코드</th>
@@ -247,7 +247,7 @@
 		
 		$.ajax({
 			
-			url: getContextPath() + 'stud/searchSubjectList',
+			url: getContextPath() + 'stud/portal/searchSubjectList',
 			type: 'GET',
 			data: {seasonCode:seasonCode,key:key,searchKey:searchKey},
 			dataType: 'json',

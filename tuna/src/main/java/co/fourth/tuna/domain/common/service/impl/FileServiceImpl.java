@@ -17,7 +17,7 @@ import co.fourth.tuna.domain.common.service.FileService;
  * @date 2022/07/13
  * @details
  * 1. upload() - 파일 업로드
- *   parameter : MultipartFile[] files(파일 목록 배열), 
+ *   parameter : MultipartFile file(파일 목록 배열), 
  *   			 String folder(WEB-INF/files/* 폴더명)
  *   return : String[] 
  *   		  [originName(실제 파일명), fileName(변환되어 저장된 파일명)]
@@ -33,7 +33,7 @@ public class FileServiceImpl implements FileService {
 	
 	@Autowired(required = false)
 	String fileDir;
-
+	
 	@Override
 	public String[] upload(MultipartFile file, String folder) {
 		

@@ -36,7 +36,7 @@ public class SubjectController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/stud/searchSubjectList")
+	@GetMapping("/stud/portal/searchSubjectList")
 	public List<SubjectVO> searchSubjectList(String seasonCode, String searchKey, String key) {
 		return subjectDao.searchSubjectList(seasonCode, searchKey, key);
 	}

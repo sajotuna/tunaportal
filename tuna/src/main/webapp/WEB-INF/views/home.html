@@ -4,10 +4,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>TUNA Portal</title>
+    
     <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/css/home.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
     <style>
     
     .staff-box {
@@ -23,24 +25,25 @@
     </style>
 </head>
 <body>
-
-<!-- <th:block sec:authorize="hasRole('ROLE_STUDENT')"> -->
-<!-- <th:block sec:authorize="hasRole('ROLE_STAFF')"> -->
-<!-- <th:block sec:authorize="hasRole('ROLE_ADMIN')"> -->
-
+<th:block th:if = "${error != null && error != ''}">
+	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+    <script th:src="@{/resources/assets/js/dialog.js}"></script>
+	<script th:inline="javascript">
+		let error = /*[[${error}]]*/ 'default';
+		Dialogs.dialog('error', '접근 불가', error);
+	</script>
+</th:block>
 <div id="page-container">
 	<!-- Main Container -->
 	<main id="main-container">
 	    <!-- Hero -->
 	    <div class="bg-body-light">
 	        <div class="content content-full content-boxed">
-	        <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
-	            <div class="flex-grow-1 mb-1 mb-md-0">
-	            <h1 class="h1 fw-bold mb-2">
-	                TUNA Portal
-	            </h1>
-	           <div sec:authorize="isAuthenticated()">
-	            
+		        <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
+		            <div class="flex-grow-1 mb-1 mb-md-0">
+			            <h1 class="h1 fw-bold mb-2">TUNA Portal</h1>
+				        <div sec:authorize="isAuthenticated()">
+
 	            <h2 class="h6 fw-medium fw-medium text-muted mb-0">
 	                <a class="fw-semibold" href="#" th:text = "${#authentication.principal.name}" ></a> 님, 환영합니다. 
 	            </h2>
@@ -114,10 +117,10 @@
 					</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="portalNoticeList"> <span class="nav-main-link-name">공지사항</span>
+								th:href="@{/portalNoticeList}"> <span class="nav-main-link-name">공지사항</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								href="portalSchedule"> <span class="nav-main-link-name">학사일정</span>
+								th:href="@{/portalSchedule}"> <span class="nav-main-link-name">학사일정</span>
 							</a></li>
 						</ul></li>
 						
@@ -128,7 +131,7 @@
 					</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/subjectAndReport}"> <span class="nav-main-link-name">강의/성적 조회</span>
+								th:href="@{/stud/portal/subjectAndReport}"> <span class="nav-main-link-name">강의/성적 조회</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
 								th:href="@{/stud/scholarshipApplication}"> <span class="nav-main-link-name">장학 신청 및 조회</span>
@@ -137,7 +140,7 @@
 								th:href="@{/stud/tuitionCheck}"> <span class="nav-main-link-name">등록금납입확인서</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/semesterReportSelect}"> <span class="nav-main-link-name">당해학기 성적 조회</span>
+								th:href="@{/stud/portal/currentSemesterGrade}"> <span class="nav-main-link-name">당해학기 성적 조회</span>
 							</a></li>
 						</ul></li>
 						
@@ -211,7 +214,7 @@
 		                <div class="block block-rounded">
 		                    <div class="block-content short-box">
 		                        <button class="box-btn btn bg-modern-light text-gray-lighter fw-bold" 
-		                        		th:onclick="|location.href='@{/stud/subjectAndReport}'|">강의 / 성적 조회</button>
+		                        		th:onclick="|location.href='@{/stud/portal/subjectAndReport}'|">강의 / 성적 조회</button>
 		                    </div>
 		                </div>
 		            </div>
@@ -351,45 +354,7 @@
    		
 	   	$(function() {
 	   		shortcutBanner();
-	   		//sliderBanner();
 		})
-		
-		
-		 // 슬라이드 배너
-		/*function sliderBanner() {
-	   		 $.ajax({
-				
-				url: getContextPath() + 'sliderBanner',
-				type: 'GET',
-				async: false,
-				dataType: 'json'
-				
-			}).done(function(sliderBn) {
-				
-				for (bn of sliderBn) {
-					console.log(bn.fileName);
-					
-					$('#slider').append($('<div>').addClass('js-slider slick-dotted-inner slick-dotted-white box')
-         				          				  .data('dots', 'true')
-         				          				  .data('autoplay', 'true')
-         				          				  .data('autoplay-speed', '1500')
-         				          				  .append($('<div>')
-         				          						  .append($('<img>').addClass('img-fluid')
-                 				        		 		  .attr('src', getContextPath() + `display?fileName=${bn.uri}&folder=banner`))))
-         				        
-         				        
-					
-					
-					 $('<img>').addClass('img-fluid')
-					          .attr('src', getContextPath() + `display?fileName=${bn.uri}&folder=banner`)	
-					          .appendTo($('<div>'))
-					          .appendTo($('<div>')).addClass('js-slider slick-dotted-inner slick-dotted-white box')
-					         				    .data('dots', 'true').data('autoplay', 'true'). data('autoplay-speed', '1500')
-					          .appendTo('#slider'); 
-				}
-				
-			})  
-	   	}*/
 		
 		// 기본 배너
 		function shortcutBanner() {

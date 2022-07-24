@@ -13,9 +13,11 @@
 	     <a class="fw-semibold text-dual">
 	       <span class="smini-hide fs-5 tracking-wider">TUNA<span class="fw-normal"> 수강신청</span></span>
 	     </a>
+	     <a class="d-lg-none btn btn-sm btn-alt-secondary ms-1" data-toggle="layout" data-action="sidebar_close" href="javascript:void(0)">
+           <i class="fa fa-fw fa-times"></i>
+         </a>
 	   </div>
 	   <!-- END Side Header -->
-	
 	   <!-- Sidebar Scrolling -->
 	   <div class="js-sidebar-scroll">
 	     <!-- Side Navigation -->
@@ -25,10 +27,9 @@
 	     	<li class="nav-main-item">
 	           <a class="nav-main-link" th:href="@{/stud/course/Warning}">
 	           	 <i class="nav-main-link-icon fa fa-basket-shopping"></i>
-	             <span class="nav-main-link-name fw-bold">수강신청유의사항</span>
+	             <span class="nav-main-link-name fw-bold">수강신청 유의사항</span>
 	           </a>
 	        </li>
-	     
 	     	<li class="nav-main-item">
 	           <a class="nav-main-link" th:href="@{/stud/course/Basket}">
 	           	 <i class="nav-main-link-icon fa fa-basket-shopping"></i>
@@ -53,8 +54,8 @@
 	             </li>
 	         	</ul>
 	         </li>
-	         	     	<li class="nav-main-item">
-	           <a class="nav-main-link" th:href="@{/stud/course/Application}">
+	         <li class="nav-main-item">
+	           <a class="nav-main-link" th:href="@{/stud/courseApplication}">
 	           	 <i class="nav-main-link-icon fa fa-check-to-slot"></i>
 	             <span class="nav-main-link-name fw-bold">수강신청</span>
 	           </a>
@@ -84,8 +85,6 @@
 	   <!-- END Sidebar Scrolling -->
 	 </nav>
 	 <!-- END Sidebar -->
-	 <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-	 <script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
 </th:block>
 </body>
 </html>
