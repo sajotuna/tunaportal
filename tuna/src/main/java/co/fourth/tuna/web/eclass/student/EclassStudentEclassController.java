@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -177,6 +178,7 @@ public class EclassStudentEclassController {
 		sb.setNo(Integer.parseInt(req.getParameter("sbjNo")));
 		List<SubjectVO> sbjli = map.selectOneSubTask(sv, sb);
 		model.addAttribute("sbjli", sbjli);
+		
 		return "eclass/stud/taskList";
 	}
 	
@@ -267,9 +269,8 @@ public class EclassStudentEclassController {
 	
 	//단건강의홈
 	@RequestMapping("/lectureHome")
-	public String lectureHome(Model model, EclassStudentHomeVO vo) {
-		vo.setSeasonCode(106);
-		vo.setSbjNo(18011);
+	public String lectureHome(Model model, EclassStudentHomeVO vo, HttpServletRequest req) {
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
 		List<Map<String, Object>> stn = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.singleTwoNotice", vo);
 		List<Map<String, Object>> stt = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.singleTwoTask", vo);
@@ -288,9 +289,9 @@ public class EclassStudentEclassController {
 	
 	//출석
 	@RequestMapping("/attendance")
-	public String studentAttendance(Model model, AttendanceVO vo, Authentication authentication) {
+	public String studentAttendance(Model model, AttendanceVO vo, HttpServletRequest req, Authentication authentication) {
 		vo.setStNo(Integer.parseInt(authentication.getName()));
-		vo.setSbjNo(18011);
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
 		List<Map<String, Object>> attd = sql.selectList("co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.studentAttendance", vo);
 		System.out.println(attd);
@@ -302,12 +303,16 @@ public class EclassStudentEclassController {
 	}
 	//사이드바 작업 열심히 해보자
 	@ModelAttribute("side")
-	public Map<String, Object> side(Authentication authentication, HttpServletRequest req ) {
+	public Map<String, Object> side(Authentication authentication, HttpServletRequest req) {
 		
 		EclassStudentHomeVO vo = new EclassStudentHomeVO();
 		
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		vo.setSeasonCode(106);
+		
+//		String seasonCd = req.getParameter("seasonCode");
+//		
+//		vo.setSeasonCode(Integer.parseInt(seasonCd));
 		
 		Map<String, Object> sidemap = new HashMap<String, Object>();
 		List<Map<String, Object>> list = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.subList", vo);

@@ -55,20 +55,20 @@
 										<div class="d-flex justify-content-center">
 											<div class="d-flex justify-content-center"
 												style="width: 50px">
-												<a class="" th:href="@{/stud/eclass/lectureNotice}"
+												<a class="" th:href="@{/stud/eclass/lectureNotice(sbjNo=${l.SBJNO})}"
 													style="color: black"><i class="far fa-2x fa-bell m-2"></i>
 													<p style="font-size: 8pt">공지</p> </a>
 											</div>
 											<div class="d-flex justify-content-center"
 												style="width: 50px">
-												<a class="" th:href="@{/stud/eclass/qnaList}"
+												<a class="" th:href="@{/stud/eclass/qnaList(sbjNo=${l.SBJNO})}"
 													style="color: black"><i
 													class="far fa-2x fa-circle-question m-2"></i>
 													<p style="font-size: 8pt">QnA</p> </a>
 											</div>
 											<div class="d-flex justify-content-center"
 												style="width: 50px">
-												<a class="" th:href="@{/stud/eclass/taskList}"
+												<a class="" th:href="@{/stud/eclass/taskList(sbjNo=${l.SBJNO})}"
 													style="color: black"><i
 													class="fa fa-2x fa-book-open m-2"></i>
 													<p style="font-size: 8pt">과제</p> </a>
@@ -85,10 +85,10 @@
 						<div class="block block-rounded" th:each="t : ${tt}">
 							<div
 								class="block-header block-header-default text-center bg-dark">
-								<h3 class="block-title" style="color: white" th:text="${t.NAME}"></h3>
+								<h3 class="block-title" style="color: white" th:text="${t.NAME}+'('+${t.SBJNO}+')'"></h3>
 							</div>
 							<div class="block-content text-lg-center bg-white">
-								<a th:href="@{/stud/eclass/taskSelect}" style="color: black"
+								<a th:href="@{/stud/eclass/taskSelect(sbjNo=${t.SBJNO}, no=${t.NO})}" style="color: black"
 									th:text="${t.TITLE}"></a>
 								<p class="text-danger fw-bold" th:text="'~'+${t.LIMITDATE}"></p>
 							</div>

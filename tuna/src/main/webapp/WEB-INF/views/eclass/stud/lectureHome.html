@@ -31,6 +31,9 @@
 							</div>
 							<div class="col-12" style="height:370px; overflow-y:scroll;">
 								<table class="table table-striped table-vcenter">
+								<tr th:if="${#strings.isEmpty(stn)}">
+								<td class="fw-semibold fs-sm text-center">공지사항이 등록되지 않습니다.</td>
+								</tr>
 								<tr th:each="stn : ${stn}">
 									<td class="fw-semibold fs-sm"
 										th:text="${stn.TITLE}+'  /  '+${stn.ENROLLDATE}"></td>
@@ -50,6 +53,9 @@
 								</div>
 								<div class="col-12" style="height:370px; overflow-y:scroll;">
 									<table class="table table-striped table-vcenter">
+									<tr th:if="${#strings.isEmpty(stt)}">
+									<td class="fw-semibold fs-sm text-center">과제가 등록되지 않았습니다.</td>
+									</tr>
 									<tr th:each="stt : ${stt}">
 										<td class="fw-semibold fs-sm"
 											th:text="${stt.TITLE}+'  /  '+${stt.LIMITDATE}"></td>
@@ -68,9 +74,12 @@
 								</div>
 								<div class="col-12" style="height:370px; overflow-y:scroll;">
 									<table class="table table-striped table-vcenter">
+									<tr th:if="${#strings.isEmpty(stq)}">
+									<td class="fw-semibold fs-sm text-center">질문이 등록되지 않았습니다.</td>
+									</tr>
 									<tr th:each="stq : ${stq}">
 										<td class="fw-semibold fs-sm"
-											th:text="${stq.TITLE}"></td>
+											th:text="${stq.TITLE}"><a class="fw-semibold fs-sm" th:href="@{/stud/eclass/taskList(no=${stq.no}, sbjNo=${stq.sbjNo})}"></a></td>
 									</tr>
 									</table>
 								</div>
