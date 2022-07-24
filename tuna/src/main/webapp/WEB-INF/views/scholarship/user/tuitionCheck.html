@@ -50,22 +50,11 @@ data-layout-decorate="~{layouts/navLayout}">
 
 <body>
 <main layout:fragment="main">
-  <div class="bg-body-light">
-    <div class="content content-full content-boxed">
-      <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-        <div class="flex-grow-1">
-          <h1 class="h1 fw-bold mb-2">
-            등록금 내역 조회
-          </h1>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div id="section">
 
     <div id="page-container">
       <div class="content content-boxed">
+      <h3 class="fw-bold">등록금 내역 조회</h3>
         <div class="bg-body-extra-light">
           <div style="padding: 40px;">
             <h1 style="text-align: center;">등록금 납입 확인서</h1>
@@ -160,8 +149,6 @@ data-layout-decorate="~{layouts/navLayout}">
       </div>
     </div>
   </div>
-</main>  
-
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
   <script>
@@ -230,7 +217,7 @@ data-layout-decorate="~{layouts/navLayout}">
 		  tuitionSum.innerHTML =''
 		  tuitionDate.innerHTML = ''
 		
-			fetch('/tuna/stud/tuition',{
+			fetch('moneyCheck',{
 				method : 'POST',
 				headers: {
 	                'header': header,
@@ -272,7 +259,7 @@ data-layout-decorate="~{layouts/navLayout}">
 				  
 			  })
 			  
-			fetch('/tuna/stud/TuitionScheduleFind',{
+			fetch('scheduleFind',{
 				method : 'POST',
 				headers: {
 	                'header': header,
@@ -292,6 +279,8 @@ data-layout-decorate="~{layouts/navLayout}">
 	}
 	
 	</script>
+</main>  
+
 
 </body>
 

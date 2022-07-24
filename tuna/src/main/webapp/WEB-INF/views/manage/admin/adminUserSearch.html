@@ -34,7 +34,7 @@
       <div id="page-container">
         <h3 class="h3 fw-bold mb-2">사용자 조회</h3>
         <div class="bg-body-extra-light" style="padding: 10px;">
-          <form th:action="@{/admin/adminUserSearch}" method="post" class="row">
+          <form th:action="@{/admin/admin/userSearch}" method="post" class="row" id = "checkFrm">
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
                 <input type="text" class="js-flatpickr form-control"
@@ -145,6 +145,18 @@
                     <a class="page-link" id = "pageingBtn" href="javascript:void(0)">4</a>
                   </li>
                   <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                  </li>
+                  <li class="page-item">
                     <a class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
                       <span aria-hidden="true">
                         <i class="fa fa-angle-double-right"></i>
@@ -169,42 +181,11 @@
     let no = document.querySelectorAll('#no');
     userName.forEach( function (btn,idx){
     	btn.addEventListener('click', function(){
-    		window.open("/tuna/admin/adminUserInfo?no="+no[idx+1].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
+    		window.open("userInfo?no="+no[idx+1].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
     	})
     })
     
-	document.addEventListener('DOMContentLoaded', function(){
-		
-		
-		let nextBtn = document.querySelector("#next")
-		let prevBtn = document.querySelector("#prev")
-		let pageingBtn = document.querySelectorAll("#pageingBtn");
-		nextBtn.addEventListener('click', function(){
-			pageingBtn.forEach(btn =>{
-				let a = btn.innerHTML
-				btn.innerHTML = parseInt(a)+4;
-			})
-		})
-		
-		prevBtn.addEventListener('click', function(){
-			pageingBtn.forEach(btn =>{
-				let a = btn.innerHTML
-				if (parseInt(a) > 4){
-					btn.innerHTML = parseInt(a)-4;
-				}
-				
-			})
-		})
-		
-		pageingBtn.forEach(btn =>{
-			btn.addEventListener('click',function(){
-				let a = btn.innerHTML
-				location.href = '/tuna/admin/adminUserSearch?pageNum='+parseInt(a)
-			})
-		})
-		
-		
-	})
+	
     
     </script>
        <th:block th:if = "${params != null && params != ''}">
@@ -212,6 +193,59 @@
 	document.addEventListener('DOMContentLoaded', function(){
 		let params = /*[[${params}]]*/ 'default';
 		
+		let nextBtn = document.querySelector("#next")
+		let prevBtn = document.querySelector("#prev")
+		let pageingBtn = document.querySelectorAll("#pageingBtn");
+		nextBtn.addEventListener('click', function(){
+			pageingBtn.forEach(btn =>{
+				let a = btn.innerHTML
+				btn.innerHTML = parseInt(a)+8;
+			})
+			tagInsert(pageingBtn[0].innerHTML)
+		})
+		
+		prevBtn.addEventListener('click', function(){
+			pageingBtn.forEach((btn,idx) =>{
+				let a = btn.innerHTML
+				if (parseInt(a) > 8){
+					btn.innerHTML = parseInt(a)-8;
+				}else{
+					params.pageNum = 1;
+					if(idx == 0){
+						btn.innerHTML = parseInt(params.pageNum) + idx
+					}
+					else{
+						btn.innerHTML = parseInt(pageingBtn[idx-1].innerHTML) + 1;
+					}
+				}
+			})
+			tagInsert(pageingBtn[0].innerHTML)
+		})
+		
+		pageingBtn.forEach((btn,idx) =>{
+			btn.innerHTML = parseInt(params.pageNum) + idx
+			
+			if(btn.innerHTML == params.pageNum){
+				btn.parentElement.setAttribute("class", "page-item active")
+			}
+			btn.addEventListener('click',function(){
+				
+				let a = btn.innerHTML
+				tagInsert(parseInt(a))
+			})
+		})
+		
+		function tagInsert(value){
+			let checkFrm = document.querySelector('#checkFrm')
+			let inputtag = document.createElement('input')
+	    	inputtag.setAttribute("name", "pageNum")
+	    	inputtag.setAttribute("type", "hidden")
+	    	inputtag.setAttribute("value", value)
+	    	
+	    	checkFrm.appendChild(inputtag)
+	    	checkFrm.submit()
+	    	
+		}
 		 switch(params.statecode){
 		 	case '201':
 		 		$('#201').attr('selected', 'selected')

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureEval.service.LectureEvalService;
 import co.fourth.tuna.domain.lectureEval.vo.LectureEvalVO;
 
@@ -23,7 +24,6 @@ public class LectureEvalController {
 	
 	@Autowired
 	private LectureEvalService evalDao;
-	
 	
 	@RequestMapping("/stud/course/Evaluation")
 	public String lectureEvaluation() {

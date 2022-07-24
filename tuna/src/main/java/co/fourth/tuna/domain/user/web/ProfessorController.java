@@ -34,9 +34,10 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping("/staff/proInfoUpdate")
-	public String proInfoUpdate(ProfessorVO vo, Authentication authentication) {
+	public String proInfoUpdate(RedirectAttributes ra,ProfessorVO vo, Authentication authentication) {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		professorDao.profUpdate(vo);
+		ra.addFlashAttribute("success", "회원정보가 수정되었습니다.");
 		return "redirect:/staff/userUpdate";
 	}
 	
@@ -52,13 +53,13 @@ public class ProfessorController {
 		if(enc.matches(beforepassword,oldpwd)) {
 			vo.setPwd(enc.encode(vo.getPwd()));
 			professorDao.staffPwdUpdate(vo);
-			System.out.println("비밀번호 변경");
 			message = "비밀번호가 변경 되었습니다.";
 		}else {
-			System.out.println("비밀번호 변경실패");
 			message = "비밀번호가 틀립니다.";
+			ra.addFlashAttribute("error", message);
+			return "redirect:/staff/pwdUpdate";
 		}
-		ra.addAttribute("message", message);
+		ra.addFlashAttribute("success", message);
 		return "redirect:/staff/pwdUpdate";
 	}
 	

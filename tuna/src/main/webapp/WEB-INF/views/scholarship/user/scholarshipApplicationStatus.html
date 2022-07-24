@@ -8,6 +8,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
+  
   <title>장학금 신청 현황</title>
 
   <style>
@@ -76,7 +80,7 @@
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sch.STATECODE)}"></td>
                       
                       <td class="fw-semibold fs-sm filebox">
-	                      <form th:action="@{/stud/scholarFileUpload(${_csrf.parameterName}=${_csrf.token})}" method = "POST" id = "frm" enctype="multipart/form-data">
+	                      <form th:action="@{/stud/scholar/FileUpload(${_csrf.parameterName}=${_csrf.token})}" method = "POST" id = "frm" enctype="multipart/form-data">
 	                      	<input type = "hidden" name = "no" th:value = "${sch.NO}">
 	                      	
 	                      	
@@ -132,6 +136,15 @@
       </div>
     </div>
   </div>
+  
+  <th:block th:if = "${(success != null && success != '')}">
+	<script th:inline="javascript">
+		let success = /*[[${success}]]*/ 'default';
+		if (success) {
+			Dialogs.dialog('success', '완료', success);
+		}
+	</script>
+</th:block>
   
 <script>
 	let forms = document.querySelectorAll('#frm')

@@ -39,7 +39,7 @@ public class UserController {
 	@Autowired
 	private BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
-	@RequestMapping("/admin/adminUserSearch")
+	@RequestMapping("/admin/admin/userSearch")
 	public String adminUserSearch(Model model, @RequestParam Map<String, Object> params, @RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum) {
 		
 		params.put("pageNum", pageNum);
@@ -63,7 +63,7 @@ public class UserController {
 	
 	
 	
-	@RequestMapping("/admin/adminUserInfo")
+	@RequestMapping("/admin/admin/userInfo")
 	public String adminUserInfo(Model model,String no) {
 		
 		if(no.length() == 5) {
@@ -101,9 +101,10 @@ public class UserController {
 	}
 	
 	@RequestMapping("/admin/adminInfoUpdate")
-	public String adminInfoUpdate(AdminVO vo,Authentication authentication) {
+	public String adminInfoUpdate(RedirectAttributes ra,AdminVO vo,Authentication authentication) {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		AdminDao.adminInfoUpdate(vo);
+		ra.addFlashAttribute("success", "회원정보가 수정되었습니다.");
 		return "redirect:/admin/adminUpdate";
 	}
 	
@@ -114,13 +115,13 @@ public class UserController {
 		if(enc.matches(beforepassword,oldpwd)) {
 			vo.setPwd(enc.encode(vo.getPwd()));
 			AdminDao.adminpwdUpdate(vo);    
-			System.out.println("비밀번호 변경");
 			message = "비밀번호가 변경 되었습니다.";
 		}else {
-			System.out.println("비밀번호 변경실패");
 			message = "비밀번호가 틀립니다.";
+			ra.addFlashAttribute("error", message);
+			return "redirect:/admin/pwdUpdate";
 		}
-		ra.addAttribute("message", message);
+		ra.addFlashAttribute("success", message);
 		return "redirect:/admin/pwdUpdate";
 	}
 	

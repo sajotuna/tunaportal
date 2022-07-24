@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.common.captcha.CaptchaUtil;
+import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
@@ -29,7 +30,8 @@ public class LectureApplyController {
 
 	@Autowired
 	private LectureApplyService LectureApplyDao;
-	
+	@Autowired
+	private YearService yearDao; 
 	@Autowired
 	private SqlSession SqlSession;
 	
@@ -44,12 +46,13 @@ public class LectureApplyController {
 
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
-		
+		params.put("seasonCode", yearDao.yearFind());
 		vo.setStNo(authentication.getName());
+		vo.setSeasonCode(yearDao.yearFind());
 		vo.setStateCode("402");
 		int grade = Integer.parseInt(LectureApplyDao.FindApplyGrade(vo));
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind", params);
-		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo.getStNo());
+		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo);
 		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo);
 		model.addAttribute("list", lists);
 		model.addAttribute("courList", courLists);
@@ -63,7 +66,7 @@ public class LectureApplyController {
 	public String courseApplyInsert(RedirectAttributes ra,Authentication authentication, LectureApplyVO vo, String sbjno){
 		
 		vo.setStNo(authentication.getName());
-		vo.setSeasonCode("106");
+		vo.setSeasonCode(yearDao.yearFind());
 		vo.setSbjNo(sbjno);
 		
 		int grade = Integer.parseInt(LectureApplyDao.FindApplyGrade(vo));
@@ -98,7 +101,8 @@ public class LectureApplyController {
 	public String courseApplicationLectureList(Model model, Authentication authentication, LectureApplyVO vo) {
 		
 		vo.setStNo(authentication.getName());
-		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo.getStNo());
+		vo.setSeasonCode(yearDao.yearFind());
+		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo);
 		
 		model.addAttribute("courList", courLists);
 		
@@ -149,6 +153,7 @@ public class LectureApplyController {
 	@RequestMapping("/stud/course/ApplyScheduleCheck")
 	public List<LectureBasketVO> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
 		vo.setStNo(authentication.getName());
+		vo.setSeasonCode(yearDao.yearFind());
 		return SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseSchedule", vo);
 	}
 	

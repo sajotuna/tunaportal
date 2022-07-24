@@ -1,30 +1,22 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+data-layout-decorate="~{layouts/navLayout}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
     <title>마이페이지</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
-    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
-    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
     
   </head>
   <body>
-    <div class="bg-body-light">
-      <div class="content content-full content-boxed">
-        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-          <div class="flex-grow-1">
-            <h1 class="h1 fw-bold mb-2">
-              내 정보수정
-            </h1>
-          </div>
-        </div>
-      </div>
-    </div>
-      <div id="section">
+<main layout:fragment="main">
+    
         <div class="content content-boxed">
+      		<h3 class="fw-bold">내 정보수정</h3>
           <div class="block block-rounded">
             <div id="page-container">
 
@@ -78,15 +70,48 @@
                     </div>
                     <div class="mb-3">
                       <div class="input-group">
-                        <th:block th:if = "${not #strings.isEmpty(vo.bank)}">
+                        
                         <span class="input-group-text">은행</span>
-                        <input type="text" class="form-control" name = "bacc" th:value = "${@codeList.getName(vo.bacc)}" >
+                        <select class="form-select" id="bacc" name="bacc" onchange="javascript:updateSuccess();">
+                        <th:block th:if = "${not #strings.isEmpty(vo.bacc)}">
+	                          <option th:value="${vo.bacc}" th:text="${@codeList.getName(vo.bacc)}"></option>
+	                    </th:block>
+	                    <th:block th:unless = "${not #strings.isEmpty(vo.bacc)}">
+	                    	  <option value ="" selected>은행선택</option>
+	                    </th:block>
+	                          <option value="35">경남은행</option>
+	                          <option value="29">광주은행</option>
+	                          <option value="7">국민은행</option>
+	                          <option value="5">기업은행</option>
+	                          <option value="15">농협중앙회</option>
+	                          <option value="17">농협회원조합</option>
+	                          <option value="25">대구은행</option>
+	                          <option value="47">도이치은행</option>
+	                          <option value="27">부산은행</option>
+	                          <option value="3">산업은행</option>
+	                          <option value="41">상호저축은행</option>
+	                          <option value="37">새마을금고</option>
+	                          <option value="11">수협중앙회</option>
+	                          <option value="36">신한금융투자</option>
+	                          <option value="60">신한은행</option>
+	                          <option value="39">신협중앙회</option>
+	                          <option value="9">외환은행</option>
+	                          <option value="19">우리은행</option>
+	                          <option value="56">우체국</option>
+	                          <option value="33">전북은행</option>
+	                          <option value="31">제주은행</option>
+	                          <option value="68">카카오뱅크</option>
+	                          <option value="67">케이뱅크</option>
+	                          <option value="59">하나은행</option>
+	                          <option value="23">한국씨티은행</option>
+	                          <option value="45">HSBC은행</option>
+	                          <option value="21">SC제일은행</option>
+                        </select>
+                     <th:block th:if = "${not #strings.isEmpty(vo.bank)}">
                         <span class="input-group-text">계좌번호</span>
                         <input type="text" class="form-control" name = "bank" th:value = "${vo.bank}" >
                       </th:block>
                       <th:block th:unless = "${not #strings.isEmpty(vo.bank)}">
-                        <span class="input-group-text">은행</span>
-                        <input type="text" name = "bacc" class="form-control" >
                         <span class="input-group-text">계좌번호</span>
                         <input type="text" name = "bank" class="form-control" >
                       </th:block>
@@ -124,7 +149,7 @@
                   <a th:href ="@{/home}" class = "btn btn-secondary">돌아가기</a>
               </div>
               <div class="m-2">
-                <button type="submit" class="btn btn-secondary">수정하기</button>
+                <button type="submit" class="btn btn-secondary" id = "updateBtn" disabled>수정하기</button>
               </div>
             </div>
             </form>
@@ -133,16 +158,31 @@
       </div>
     </div>
   </div>
-    
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+    <th:block th:if = "${(success != null && success != '')}">
+	<script th:inline="javascript">
+		let success = /*[[${success}]]*/ 'default';
+		if (success) {
+			Dialogs.dialog('success', '완료', success);
+		}
+	</script>
+	</th:block>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
     
+      let tagSelect = document.querySelectorAll('[type=text]')
+      let updateBtn = document.querySelector('#updateBtn')
+      tagSelect.forEach(tag =>{
+    	  tag.addEventListener('change', function(){
+        	  updateBtn.disabled = false;
+          })
+      })
+      function updateSuccess(){
+    	updateBtn.disabled = false;
+      }
     
       function showPopup(){
     	  let no = document.querySelector('#no')
-          window.open("/tuna/pwdUpdate?no="+no.value,"비밀번호변경","width=600, height=400, top=10, left=10");
+          window.open("pwdUpdate?no="+no.value,"비밀번호변경","width=600, height=400, top=10, left=10");
       }
 
       function execDaumPostcode() {
@@ -164,5 +204,6 @@
           }).open();
       }
   </script>
+  </main>
   </body>
 </html>
