@@ -1,4 +1,4 @@
-package co.fourth.tuna.util.captcha;
+package co.fourth.tuna.domain.common.captcha;
 
 import nl.captcha.text.producer.TextProducer;
 

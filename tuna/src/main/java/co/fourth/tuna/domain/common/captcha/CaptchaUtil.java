@@ -1,4 +1,4 @@
-package co.fourth.tuna.util.captcha;
+package co.fourth.tuna.domain.common.captcha;
 
 import java.awt.Color;
 import java.awt.Font;
