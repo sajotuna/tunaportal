@@ -20,7 +20,7 @@
 			<h3 class="fw-bold">학사공지 수정</h3>
 			<div class="block block-rounded">
 				<form
-					th:action="@{/admin/adminNoticeUpdate(${_csrf.parameterName}=${_csrf.token})}"
+					th:action="@{/admin/admin/adminNoticeUpdate(${_csrf.parameterName}=${_csrf.token})}"
 					class="block-content block-content-full" method="post"
 					enctype="multipart/form-data">
 					<div th:each="notice, i:${content}">
@@ -58,7 +58,7 @@
 					<div class="d-flex justify-content-end">
 						<button type="submit" id="sbmBtn" class="sbmBtn btn btn-outline-secondary me-2">수정</button>
 						<button type="button" class="btn btn-outline-secondary"
-							th:onclick="|location.href='@{/admin/adminNoticeList}'|">홈으로</button>
+							th:onclick="|location.href='@{/admin/admin/adminNoticeList}'|">홈으로</button>
 					</div>
 
 					</th:block>

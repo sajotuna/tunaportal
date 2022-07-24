@@ -49,13 +49,13 @@ public class PortalScheduleController {
 	
 
 	// admin
-	@RequestMapping("/admin/adminSchedule")
+	@RequestMapping("/admin/admin/adminSchedule")
 	public String adminSchedule() {
 		return "schedule/admin/adminSchedule";
 	}
 	
 
-	@GetMapping("/admin/adminScheduleList")
+	@GetMapping("/admin/admin/adminScheduleList")
 	@ResponseBody
 	public List<PortalScheduleVO> adminScheduleList(PortalScheduleVO vo) {
 
@@ -64,7 +64,7 @@ public class PortalScheduleController {
 		return list;
 	}
 
-	@PostMapping("/admin/adminScheduleInsert")
+	@PostMapping("/admin/admin/adminScheduleInsert")
 	@ResponseBody
 	public int scheduleInsert(@RequestBody PortalScheduleVO vo, Authentication authentication) {		
 		vo.setAdNo((authentication.getName()));
@@ -73,7 +73,7 @@ public class PortalScheduleController {
 		return scheduleDao.scheduleInsert(vo);
 	}
 	
-	@DeleteMapping("/admin/adminSchduleDelete")
+	@DeleteMapping("/admin/admin/adminSchduleDelete")
 	@ResponseBody
 	public int schduleDelete(@RequestBody PortalScheduleVO vo) {
 		logger.info("delete::" + vo);

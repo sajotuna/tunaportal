@@ -84,7 +84,7 @@
 					<div class="block-content d-flex justify-content-center ">
 						<nav aria-label="Page navigation">
 							<ul class="pagination pagination-sm">
-								<li class="page-item">
+								<li th:styleappend="${!paging.prev} ? 'display:none' :'display:inlink-block'"class="page-item">
 								<a class="page-link" th:onclick="|javascript:pagingPrev(${paging.range},${paging.rangeSize})|" tabindex="-1" aria-label="Previous">
 								 <span aria-hidden="true"> <i class="fa fa-angle-left"></i>
 									</span> <span class="visually-hidden">Previous</span>
@@ -95,7 +95,7 @@
 									<a th:text="${page}" class="page-link" th:onclick="|javascript:pagingNo(${page},${paging.range})|"></a>
 								</li>
 							
-								<li class="page-item"><a class="page-link"
+								<li th:styleappend="${!paging.next}? 'display:none' : 'display:linline-block'"class="page-item"><a class="page-link"
 									th:onclick="|javascript:pagingNext(${paging.range},${paging.rangeSize})|" aria-label="Next"> <span
 										aria-hidden="true"> <i class="fa fa-angle-right"></i>
 									</span> <span class="visually-hidden">Next</span>

@@ -86,7 +86,7 @@ background-color:rgb(64, 103, 135);
         	var calendarList = []
         	
     		$.ajax({
-    			url:getPathRootJump()+'admin/adminScheduleList',
+    			url:getPathRootJump()+'admin/admin/adminScheduleList',
     			method:'GET',
     			dataType :'json'
     		}).done(function(datas){
@@ -178,7 +178,7 @@ background-color:rgb(64, 103, 135);
                     	    	}	}
 	                			
 	                			 $.ajax({
-	                    		url:getPathRootJump()+'admin/adminScheduleInsert',
+	                    		url:getPathRootJump()+'admin/admin/adminScheduleInsert',
 	                    		method:'post',
 	                    		dataType:'json',
 	                    		contentType : 'application/json; charset=utf-8',
@@ -214,7 +214,7 @@ background-color:rgb(64, 103, 135);
 				                    function() {
 	                		  
 		                		 $.ajax({
-			                			url:getPathRootJump()+'admin/adminSchduleDelete',
+			                			url:getPathRootJump()+'admin/admin/adminSchduleDelete',
 			                			method:'DELETE',
 			                    		dataType:'json',
 			                    		contentType : 'application/json; charset=utf-8',
