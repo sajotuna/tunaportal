@@ -25,12 +25,12 @@
     </style>
 </head>
 <body>
-<th:block th:if = "${message != null && message != ''}">
+<th:block th:if = "${error != null && error != ''}">
 	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
     <script th:src="@{/resources/assets/js/dialog.js}"></script>
 	<script th:inline="javascript">
-		let message = /*[[${message}]]*/ 'default';
-		Dialogs.dialog('error', '접근 금지', message);
+		let error = /*[[${error}]]*/ 'default';
+		Dialogs.dialog('error', '접근 불가', error);
 	</script>
 </th:block>
 <div id="page-container">
@@ -347,7 +347,6 @@
    		
 	   	$(function() {
 	   		shortcutBanner();
-	   		message();
 		})
 		
 		// 기본 배너

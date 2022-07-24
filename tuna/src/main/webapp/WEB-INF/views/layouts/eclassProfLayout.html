@@ -5,14 +5,23 @@
 <head>
 	<meta charset="UTF-8">
 	<title>TUNA Portal</title>
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap">
     <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
+    <style>
+	    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+	    
+		* { 
+			font-family: Pretendard, -apple-system, BlinkMacSystemFont, 
+			             system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 
+			             'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+		}	
+    </style>
 </head>
 <body>
 	<div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow side-trans-enabled">
 		<th:block th:replace="layouts/aside/eclassProfSidebar :: sidebar"></th:block>	
 		<header th:replace="layouts/aside/header :: header"></header>
+		<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+		<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
 		<main id="main-container" layout:fragment="main"></main>
 	</div>
 </body>
