@@ -25,7 +25,7 @@ FROM ( SELECT
 		       LISTAGG(L.DAYCODE, '/') WITHIN GROUP (ORDER BY L.DAYCODE DESC)  OVER (PARTITION BY S.NO) AS   DAYCODE
 	      FROM SUBJECT S, LECTURESCHEDULE L, PROFESSOR P
 		  WHERE S.NO = L.SBJNO 
-		    AND S.PFNO = P.NO AND S.NO IN ( SELECT NO FROM SUBJECT) AND S.SEASONCODE = 106
+		    AND S.PFNO = P.NO AND S.NO IN ( SELECT NO FROM SUBJECT) AND S.SEASONCODE = #{seasonCode}
 		    <if test="deptCode != null and !deptCode.equals('')">AND S.DEPTCODE = #{deptCode} </if>
 			<if test="type != null and !type.equals('')"> AND S.TYPE = #{type} </if>
 			<if test="target != null and !target.equals('')"> AND S.TARGET = #{target} </if>
@@ -59,7 +59,7 @@ SELECT DISTINCT
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO
    AND S.NO IN ( SELECT NO FROM SUBJECT)
-   AND S.SEASONCODE = 106
+   AND S.SEASONCODE = #{seasonCode}
    AND STNO = #{stNo}
 </select>
 
@@ -86,7 +86,7 @@ SELECT DISTINCT
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO 
    AND S.NO IN ( SELECT NO FROM SUBJECT)
-   AND S.SEASONCODE = 106
+   AND S.SEASONCODE = #{seasonCode}
    AND STNO = #{stNo}
    <if test="stateCode != null and !stateCode.equals('')">AND L2.STATECODE = #{stateCode}</if>
 
@@ -104,7 +104,7 @@ SELECT
    AND S.PFNO = P.NO 
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO 
-   AND S.SEASONCODE = 106
+   AND S.SEASONCODE = #{seasonCode}
    AND STNO = #{stNo}
    <if test="stateCode != null and !stateCode.equals('')">AND STATECODE = #{stateCode}</if>
 </select>
@@ -121,7 +121,7 @@ SELECT
    AND S.PFNO = P.NO 
    AND S2.NO = L2.STNO 
    AND L2.SBJNO = S.NO 
-   AND S.SEASONCODE = 106
+   AND S.SEASONCODE = #{seasonCode}
    AND STNO = #{stNo}
    <if test="stateCode != null and !stateCode.equals('')">AND STATECODE = #{stateCode}</if>
 </select>

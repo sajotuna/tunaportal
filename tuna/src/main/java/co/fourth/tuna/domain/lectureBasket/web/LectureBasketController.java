@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureBasket.service.LectureBasketService;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
 
@@ -23,6 +24,8 @@ public class LectureBasketController {
 
 	@Autowired
 	private SqlSession SqlSession;
+	@Autowired
+	private YearService yearDao;
 	@Autowired
 	private LectureBasketService LectureBasketDao;
 
@@ -33,9 +36,9 @@ public class LectureBasketController {
 
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
-
+		params.put("seasonCode", yearDao.yearFind());
+		vo.setSeasonCode(yearDao.yearFind());
 		vo.setStNo(authentication.getName());
-		vo.setSeasonCode("401");
 		List<Map<String, Object>> lists = SqlSession
 				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind", params);
 		List<Map<String, Object>> baskLists = SqlSession
@@ -57,7 +60,7 @@ public class LectureBasketController {
 	public String basketInsert(RedirectAttributes ra, @RequestParam List<String> courcheck, LectureBasketVO vo,
 			Authentication authentication) {
 		vo.setStNo(authentication.getName());
-		vo.setSeasonCode("106");
+		vo.setSeasonCode(yearDao.yearFind());
 		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
 		
 		for (String sbj : courcheck) {
@@ -90,6 +93,7 @@ public class LectureBasketController {
 	@RequestMapping("/stud/course/BasketLectureList")
 	public String courseBasketLectureList(Model model, LectureBasketVO vo, Authentication authentication) {
 		vo.setStNo(authentication.getName());
+		vo.setSeasonCode(yearDao.yearFind());
 		List<Map<String, Object>> baskLists = SqlSession
 				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket", vo);
 		model.addAttribute("baskList", baskLists);
@@ -108,6 +112,7 @@ public class LectureBasketController {
 	@RequestMapping("/stud/course/BasketScheduleCheck")
 	public List<LectureBasketVO> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
 		vo.setStNo(authentication.getName());
+		vo.setSeasonCode(yearDao.yearFind());
 		return SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.BasketSchedule", vo);
 	}
 	

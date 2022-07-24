@@ -9,7 +9,9 @@
     <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
-    
+      <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
   </head>
   <body>
     <div class="bg-body-light">
@@ -136,6 +138,18 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    
+      <th:block th:if = "${(success != null && success != '') || (error != null && error != '')}">
+	<script th:inline="javascript">
+		let success = /*[[${success}]]*/ 'default';
+		let error = /*[[${error}]]*/ 'default';
+		if (success) {
+			Dialogs.dialog('success', '완료', success);
+		} else if (error) {
+			Dialogs.dialog('error', '실패', error);
+		}
+	</script>
+</th:block>
     
   </body>
 </html>

@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+data-layout-decorate="~{layouts/navLayout}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -9,22 +11,16 @@
     <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
-    
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
+  
   </head>
   <body>
-    <div class="bg-body-light">
-      <div class="content content-full content-boxed">
-        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-          <div class="flex-grow-1">
-            <h1 class="h1 fw-bold mb-2">
-              내 정보수정
-            </h1>
-          </div>
-        </div>
-      </div>
-    </div>
+<main layout:fragment="main">
       <div id="section">
         <div class="content content-boxed">
+        <h3 class="fw-bold">내 정보수정</h3>
           <div class="block block-rounded">
             <div id="page-container">
 
@@ -113,13 +109,20 @@
       </div>
     </div>
   </div>
-    
+    <th:block th:if = "${(success != null && success != '')}">
+	<script th:inline="javascript">
+		let success = /*[[${success}]]*/ 'default';
+		if (success) {
+			Dialogs.dialog('success', '완료', success);
+		}
+	</script>
+</th:block>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
       function showPopup(){
-          window.open("/tuna/staff/pwdUpdate?no="+no.value,"비밀번호변경","width=600, height=400, top=10, left=10");
+          window.open("pwdUpdate?no="+no.value,"비밀번호변경","width=600, height=400, top=10, left=10");
       }
 
       function execDaumPostcode() {
@@ -141,5 +144,6 @@
             }).open();
         }
   </script>
+  </main>
   </body>
 </html>

@@ -37,7 +37,7 @@
         <div class="row">
           <div class="col-lg-12 col-xl-12 bg-body-extra-light "style="padding: 10px;">
             <div class="m-4">
-              <form th:action="@{/stud/scolarShipApply}" method="post" id = "frm">
+              <form th:action="@{/stud/scholar/Apply}" method="post" id = "frm">
                 <div class="mb-4">
                   <div class="input-group">
                     <span class="input-group-text">소속</span>
@@ -161,9 +161,7 @@
 	  let token = document.querySelector('meta[name="_csrf"]').content;
 	  let radios = document.querySelectorAll("[type='radio']")		
 	  
-	  
-	  
-	  fetch("/tuna/stud/scholarApplyCheck",{
+	  fetch("ApplyCheck",{
 	  			headers: {
 	                'header': header,
 	              	'X-Requested-With': 'XMLHttpRequest',
@@ -186,9 +184,9 @@
 			  			}
 			  	  	})
 			    })
-	  if(check == 0){
-		  frm.submit();
-	  }
+		  if(check == 0){
+			  frm.submit();
+		  }
 	  })
   }  
   

@@ -32,7 +32,7 @@
 				SELECT NVL(MAX(no)+1,0)
 	    		  FROM scholarapply
 	</selectKey>
-insert into scholarapply values(#{no}, 501, null, 105, #{stNo}, #{schNo}, null, sysdate, null)
+insert into scholarapply values(#{no}, 501, null, #{seasonCode}, #{stNo}, #{schNo}, null, sysdate, null)
 
 </insert>
 
@@ -128,7 +128,7 @@ BETWEEN (#{pageNum}-1)*#{size}+1
 
 <select id = "scholarApplyCheck" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO" resultType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
 
-	select schno from scholarApply where stno = #{stNo}
+	select schno from scholarApply where stno = #{stNo} and seasonCode = #{seasonCode}
 </select>
 
 

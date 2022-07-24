@@ -34,7 +34,7 @@
       <div id="page-container">
         <h3 class="h3 fw-bold mb-2">사용자 조회</h3>
         <div class="bg-body-extra-light" style="padding: 10px;">
-          <form th:action="@{/admin/adminUserSearch}" method="post" class="row">
+          <form th:action="@{/admin/admin/userSearch}" method="post" class="row">
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
                 <input type="text" class="js-flatpickr form-control"
@@ -169,7 +169,7 @@
     let no = document.querySelectorAll('#no');
     userName.forEach( function (btn,idx){
     	btn.addEventListener('click', function(){
-    		window.open("/tuna/admin/adminUserInfo?no="+no[idx+1].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
+    		window.open("userInfo?no="+no[idx+1].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
     	})
     })
     
@@ -182,24 +182,31 @@
 		nextBtn.addEventListener('click', function(){
 			pageingBtn.forEach(btn =>{
 				let a = btn.innerHTML
+				btn.parentElement.classList.remove('active')
 				btn.innerHTML = parseInt(a)+4;
 			})
+			
+			setTimeout(() => location.href = 'userSearch?pageNum='+pageingBtn[0].innerHTML, 10);
+			
 		})
 		
 		prevBtn.addEventListener('click', function(){
 			pageingBtn.forEach(btn =>{
 				let a = btn.innerHTML
 				if (parseInt(a) > 4){
+					btn.parentElement.classList.remove('active')
 					btn.innerHTML = parseInt(a)-4;
 				}
-				
 			})
+			
+			setTimeout(() => location.href = 'userSearch?pageNum='+pageingBtn[0].innerHTML, 10);
+			
 		})
 		
 		pageingBtn.forEach(btn =>{
 			btn.addEventListener('click',function(){
 				let a = btn.innerHTML
-				location.href = '/tuna/admin/adminUserSearch?pageNum='+parseInt(a)
+				location.href = 'userSearch?pageNum='+parseInt(a)
 			})
 		})
 		
@@ -211,7 +218,33 @@
 <script th:inline="javascript">
 	document.addEventListener('DOMContentLoaded', function(){
 		let params = /*[[${params}]]*/ 'default';
+		let pageingBtn = document.querySelectorAll("#pageingBtn"); 
 		
+		 if(params.pageNum % 4 == 1){
+			pageingBtn[0].innerHTML = parseInt(params.pageNum)
+			pageingBtn[0].parentElement.setAttribute("class", "page-item active")
+			pageingBtn[1].innerHTML = parseInt(params.pageNum) + 1
+			pageingBtn[2].innerHTML = parseInt(params.pageNum) + 2
+			pageingBtn[3].innerHTML = parseInt(params.pageNum) + 3
+		}else if(params.pageNum % 4 == 2){
+			pageingBtn[0].innerHTML = parseInt(params.pageNum) - 1
+			pageingBtn[1].innerHTML = parseInt(params.pageNum)
+			pageingBtn[1].parentElement.setAttribute("class", "page-item active")
+			pageingBtn[2].innerHTML = parseInt(params.pageNum) + 1
+			pageingBtn[3].innerHTML = parseInt(params.pageNum) + 2
+		}else if(params.pageNum % 4 == 3){
+			pageingBtn[0].innerHTML = parseInt(params.pageNum) - 2
+			pageingBtn[1].innerHTML = parseInt(params.pageNum) - 1
+			pageingBtn[2].innerHTML = parseInt(params.pageNum) 
+			pageingBtn[2].parentElement.setAttribute("class", "page-item active")
+			pageingBtn[3].innerHTML = parseInt(params.pageNum) + 1
+		}else if(params.pageNum % 4 == 0){
+			pageingBtn[0].innerHTML = parseInt(params.pageNum) - 3
+			pageingBtn[1].innerHTML = parseInt(params.pageNum) - 2
+			pageingBtn[2].innerHTML = parseInt(params.pageNum) - 1
+			pageingBtn[3].innerHTML = parseInt(params.pageNum)
+			pageingBtn[3].parentElement.setAttribute("class", "page-item active")
+		} 
 		 switch(params.statecode){
 		 	case '201':
 		 		$('#201').attr('selected', 'selected')

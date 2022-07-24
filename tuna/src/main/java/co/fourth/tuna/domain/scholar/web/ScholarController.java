@@ -43,7 +43,7 @@ public class ScholarController {
 	@RequestMapping("/stud/scholar/Status")
 	public String scholarshipApplicationStatus(Model model,ScholarApplyVO vo,Authentication authentication) {
 		vo.setStNo(authentication.getName());
-		vo.setSeasonCode("105");
+		vo.setSeasonCode(yearDao.yearFind());
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.ScholarCheck", vo);
 		
 		model.addAttribute("list", lists);
@@ -58,23 +58,27 @@ public class ScholarController {
 		return "scholarship/user/scholarshipApplication";
 	}
 	
-	@RequestMapping("/stud/scolar/Apply")
-	public String ScolarShipApply(Model model, ScholarApplyVO vo, Authentication authentication) {
+	@RequestMapping("/stud/scholar/Apply")
+	public String ScolarShipApply(RedirectAttributes ra,Model model, ScholarApplyVO vo, Authentication authentication) {
 		vo.setStNo(authentication.getName());
+		vo.setSeasonCode(yearDao.yearFind());
 		ScholarDao.ScholarApply(vo);
 		
-		return "redirect:/stud/scholarshipApplicationStatus";
+		ra.addFlashAttribute("success", "장학금신청이 완료되었습니다. 파일을 제출해주세요.");
+		return "redirect:/stud/scholar/Status";
 	}
 	
 	@RequestMapping("/stud/scholar/FileUpload")
-	public String scholarFileUpload(ScholarApplyVO vo,@RequestParam(value = "file") MultipartFile file) {
+	public String scholarFileUpload(RedirectAttributes ra,ScholarApplyVO vo,@RequestParam(value = "file") MultipartFile file) {
 		
 		String[] scholarFile = fileService.upload(file, "ScholarFile");
 		vo.setFileName(scholarFile[0]);
 		vo.setUri(scholarFile[1]);
 		ScholarDao.FileUpLoad(vo);
 		
-		return "redirect:/stud/scholarshipApplicationStatus";
+		
+		ra.addFlashAttribute("success", "파일등록이 완료되었습니다.");
+		return "redirect:/stud/scholar/Status";
 	}
 	
 	@RequestMapping("/stud/scholar/Delete")
@@ -82,7 +86,7 @@ public class ScholarController {
 		
 		ScholarDao.ScholarDelete(vo);
 		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
-		return "redirect:/stud/scholarshipApplicationStatus";
+		return "redirect:/stud/scholar/Status";
 	}
 	
 	@RequestMapping("/stud/scholar/Search")
@@ -136,11 +140,11 @@ public class ScholarController {
 			}
 			else {
 				ra.addFlashAttribute("error", "지난학기에 신청한 장학금내역은 변경이 불가능합니다.");
-				return "redirect:/admin/adminScholarshipApplicationSearch";
+				return "redirect:/admin/admin/scholarSearch";
 			}
 		}
 		
-		return "redirect:/admin/adminScholarshipApplicationSearch";
+		return "redirect:/admin/admin/scholarSearch";
 	}
 	@RequestMapping("/admin/scholar/Reject")
 	public String scholarReject(RedirectAttributes ra,ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox, @RequestParam List<String> seasonCode) {
@@ -154,16 +158,17 @@ public class ScholarController {
 			}
 			else {
 				ra.addFlashAttribute("error", "지난학기에 신청한 장학금내역은 변경이 불가능합니다.");
-				return "redirect:/admin/adminScholarshipApplicationSearch";
+				return "redirect:/admin/admin/scholarSearch";
 			}
 		}
-		return "redirect:/admin/adminScholarshipApplicationSearch";
+		return "redirect:/admin/admin/scholarSearch";
 	}
 	
 	@ResponseBody
 	@GetMapping("/stud/scholar/ApplyCheck")
 	public List<ScholarApplyVO> scholarApplyCheck(ScholarApplyVO vo,Authentication authentication) {
 		vo.setStNo(authentication.getName());
+		vo.setSeasonCode(yearDao.yearFind());
 		return ScholarDao.scholarApplyCheck(vo);
 	}
 	

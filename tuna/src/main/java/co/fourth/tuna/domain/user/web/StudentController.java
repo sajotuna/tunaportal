@@ -29,9 +29,10 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/stud/userInfoUpdate")
-	public String userInfoUpdate(StudentVO vo, Authentication authentication) {
+	public String userInfoUpdate(RedirectAttributes ra,StudentVO vo, Authentication authentication) {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		StudentDao.studUpdate(vo);
+		ra.addFlashAttribute("success", "회원정보가 수정되었습니다.");
 		return "redirect:/stud/userUpdate";
 	}
 	
@@ -44,6 +45,7 @@ public class StudentController {
 	public String AdminUserUpdate(StudentVO vo,RedirectAttributes ra) {
 		StudentDao.AdminStudUpdate(vo);
 		ra.addAttribute("no", vo.getNo());
+		ra.addFlashAttribute("success", "회원정보가 수정되었습니다.");
 		return "redirect:/admin/adminUserInfo";
 	}
 	
@@ -54,14 +56,14 @@ public class StudentController {
 		if(enc.matches(beforepassword,oldpwd)) {
 			vo.setPwd(enc.encode(vo.getPwd()));
 			StudentDao.studPwdUpdate(vo);
-			System.out.println("비밀번호 변경");
 			message = "비밀번호가 변경 되었습니다.";
 		}else {
-			System.out.println("비밀번호 변경실패");
 			message = "비밀번호가 틀립니다.";
+			ra.addFlashAttribute("error", message);
+			return "redirect:/stud/pwdUpdate";
 		}
-		ra.addAttribute("message", message);
-		return "redirect:/pwdUpdate";
+		ra.addFlashAttribute("success", message);
+		return "redirect:/stud/pwdUpdate";
 	}
 	
 	

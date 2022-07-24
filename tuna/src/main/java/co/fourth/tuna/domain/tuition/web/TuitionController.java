@@ -35,7 +35,7 @@ public class TuitionController {
 	private PortalScheduleService portalDao;
 	
 	@ResponseBody
-	@RequestMapping("/stud/TuitionScheduleFind")
+	@RequestMapping("/stud/tuition/scheduleFind")
 	public PortalScheduleVO TuitionScheduleFind(PortalScheduleVO vo , @RequestBody Map<String, String> map) {
 		
 		vo.setSeasonCode(map.get("seasonCode"));
@@ -46,7 +46,7 @@ public class TuitionController {
 	
 	
 	@ResponseBody
-	@RequestMapping("/stud/tuition")
+	@RequestMapping("/stud/tuition/moneyCheck")
 	public List<tuitionGiveVO> adminScholarshipSearch(tuitionGiveVO vo , @RequestBody Map<String, Integer> map) {
 		
 		return SqlSession.selectList("co.fourth.tuna.domain.tuition.mapper.TuitionMapper.tuitionCheck",map);
