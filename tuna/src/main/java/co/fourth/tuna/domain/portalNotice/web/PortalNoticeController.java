@@ -1,11 +1,10 @@
 package co.fourth.tuna.domain.portalNotice.web;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.util.HtmlUtils;
 
-import co.fourth.tuna.domain.banner.vo.BannerVO;
 import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.common.service.PagingService;
 import co.fourth.tuna.domain.common.vo.PagingVO;
@@ -79,7 +76,7 @@ public class PortalNoticeController {
 	
 	// admin
 	// 전체조회
-	@RequestMapping("/admin/adminNoticeList")
+	@RequestMapping("/admin/admin/adminNoticeList")
 	public String adminNoticeList(Model model, PortalNoticeVO vo, @RequestParam(required = false, defaultValue = "1")int page,
 			@RequestParam(required = false, defaultValue = "1" ) int range) {
 		
@@ -99,7 +96,7 @@ public class PortalNoticeController {
 
 
 	// 단건조회
-	@RequestMapping("/admin/adminNoticeSelect")
+	@RequestMapping("/admin/admin/adminNoticeSelect")
 	public String adminNoticeSelect(PortalNoticeVO vo, Model model) {
 		model.addAttribute("content", noticeDao.noticeSelect(vo));
 
@@ -110,38 +107,44 @@ public class PortalNoticeController {
 
 	
 	// 공지등록폼
-	@RequestMapping("/admin/adminNoticeInsertForm")
+	@RequestMapping("/admin/admin/adminNoticeInsertForm")
 	public String adminNoticeInsertForm() {
 		return "notice/admin/adminNoticeInsert";
 	}
 
 	// 공지등록
-	@PostMapping("/admin/adminNoticeInsert")
-	public String adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo,Authentication authentication,
-			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
-
-		vo.setAdNo((authentication.getName()));
-		noticeDao.noticeInsert(vo);
-
-		for (MultipartFile file : files) {
-
-			String originName = file.getOriginalFilename();
-
-			if (originName != null && originName.length() != 0) {
-				String[] portalFile = fileService.upload(file, "PortalNotice");
-
-				fileVo.setName(portalFile[0]);
-				fileVo.setUri(portalFile[1]);
-				fileVo.setPnno(vo.getNo());
-				noticeDao.fileInsert(fileVo);
-			}
-
-		}
-		return "redirect:/admin/adminNoticeList";
-	}
+	/*
+	 * @PostMapping("/admin/admin/adminNoticeInsert") public String
+	 * adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo,Authentication
+	 * authentication,
+	 * 
+	 * @RequestParam(value = "file") MultipartFile[] files) throws IOException {
+	 * 
+	 * 
+	 * 
+	 * vo.setAdNo((authentication.getName())); noticeDao.noticeInsert(vo);
+	 * 
+	 * String text = vo.getContent(); String esc= HtmlUtils.htmlEscape(text);
+	 * 
+	 * vo.setContent(esc);
+	 * 
+	 * MultipartFile image = request.getFile("upload");
+	 * 
+	 * 
+	 * String originName = files.getOriginalFilename();
+	 * 
+	 * if (originName != null && originName.length() != 0) { String[] portalFile =
+	 * fileService.upload(files, "PortalNotice");
+	 * 
+	 * fileVo.setName(portalFile[0]); fileVo.setUri(portalFile[1]);
+	 * fileVo.setPnno(vo.getNo());
+	 * 
+	 * 
+	 * } return "redirect:/admin/admin/adminNoticeList"; }
+	 */
 
 	// 공지수정폼
-	@PostMapping("/admin/adminNoticeupdateForm")
+	@PostMapping("/admin/admin/adminNoticeupdateForm")
 	public String adminNoticeUpdateForm(PortalNoticeVO vo, Model model) {
 		model.addAttribute("content", noticeDao.noticeSelect(vo));
 		model.addAttribute("files", noticeDao.fileSelect(Integer.parseInt(vo.getNo())));
@@ -150,7 +153,7 @@ public class PortalNoticeController {
 	}
 
 	// 공지 수정
-	@PostMapping("/admin/adminNoticeUpdate")
+	@PostMapping("/admin/admin/adminNoticeUpdate")
 	public String adminNoticeUpdate(PortalNoticeVO vo, Authentication authentication, @RequestParam(value = "file") MultipartFile[] files)
 			throws IOException {
 		
@@ -172,22 +175,22 @@ public class PortalNoticeController {
 			}
 		}
 
-		return "redirect:/admin/adminNoticeList";
+		return "redirect:/admin/admin/adminNoticeList";
 
 	}
 	
 	
-	@PostMapping("/admin/fileUpload")
-	public int basicBannerInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo, @RequestParam(value = "file")MultipartFile file) {
-		
-		String[] fileInfo = fileService.upload(file, "PortalNotice");
-		
-		fileVo.setName(fileInfo[0]);
-		fileVo.setUri(fileInfo[1]);
-		fileVo.setPnno(vo.getNo());
-		
-		return noticeDao.fileInsert(fileVo);
-	}
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping("/fileUpload") public String fileUpload(Model model,
+	 * MultipartFile fileload, HttpServletRequest req) { String filename =
+	 * fileload.getOriginalFilename();
+	 * 
+	 * String fuploadPath = req.getServletContext().getRealPath("/upload/editor")
+	 * 
+	 * File file = new File(fuploadPath + "/" + newfilename); }
+	 */
 
 	// 파일삭제
 	@DeleteMapping("/fileDel")
@@ -198,7 +201,7 @@ public class PortalNoticeController {
 	}
 
 	// 공지삭제
-	@DeleteMapping("/admin/adminNoticeDelete")
+	@DeleteMapping("/admin/admin/adminNoticeDelete")
 	@ResponseBody
 	public int adminNoticeDelete(@RequestBody PortalNoticeVO vo) {
 		
@@ -217,7 +220,7 @@ public class PortalNoticeController {
 	}
 
 	// 공지검색
-	@GetMapping("/admin/adminSearch")
+	@GetMapping("/admin/admin/adminSearch")
 	@ResponseBody
 	public List<PortalNoticeVO> adminSearch(@RequestParam("state") int state, @RequestParam("key") String key,
 			@RequestParam(value="pageNum", required=false, defaultValue="1")int pageNum) {

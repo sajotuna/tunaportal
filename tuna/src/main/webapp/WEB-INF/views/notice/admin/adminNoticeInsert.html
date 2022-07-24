@@ -8,10 +8,6 @@
 <link rel="stylesheet"
 	th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
 <title>NoticeInsert</title>
-<link rel="stylesheet"
-	th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -22,7 +18,7 @@
 			<h3 class="fw-bold">학사공지 등록</h3>
 			<div class="block block-rounded">
 				<form
-					th:action="@{/admin/adminNoticeInsert(${_csrf.parameterName}=${_csrf.token})}"
+					th:action="@{/admin/admin/adminNoticeInsert(${_csrf.parameterName}=${_csrf.token})}"
 					class="block-content block-content-full" method="post"
 					enctype="multipart/form-data">
 					<div>
@@ -30,8 +26,9 @@
 							id="title" required placeholder="학사공지 등록">
 						<hr>
 					<div class="mb-4">
-					  <!-- CKEditor 5 Classic Container -->
-						<div id="js-ckeditor5-classic">Hello classic CKEditor 5!</div>
+			
+						<textarea id="js-ckeditor5-classic" name="content" placeholder="내용을 입력하세요"></textarea>
+						
 					</div>
 					</div>
 					<hr>
@@ -51,7 +48,7 @@
 						<button type="submit" id="sbmBtn"
 							class="btn btn-outline-secondary me-2">등록</button>
 						<button type="button" class="btn btn-outline-secondary"
-							th:onclick="|location.href='@{/admin/adminNoticeList}'|">홈으로</button>
+							th:onclick="|location.href='@{adminNoticeList}'|">홈으로</button>
 					</div>
 
 				</form>
@@ -59,65 +56,43 @@
 
 		</div>
 
-		<script>
-
-   
-/*    $('#sbmBtn').on('click', function(){
-	   if($("#content").val() =='' ){
-			Dialogs.dialog('error', 
-	               '', 
-	               '내용을 입력해주세요');
-			return false;
-		}	
-   }) */
-   </script>
-
-
-
+    <script th:src="@{/resources/assets/js/plugins/ckeditor5-classic/build/ckeditor.js}"></script>
 		<!-- Editor script -->
 		<script>
 
-		$(function(){
-			jsCkeditor5()
-		})
-		
-function jsCkeditor5(){
-	 let ckeditor5Full = document.querySelector('#js-ckeditor5-classic');
-	    // Init full text editor
-	    if (ckeditor5Full) {
-	      ClassicEditor
-	        .create(document.querySelector('#js-ckeditor5-classic'),
-	        		{
-						extraPlugins: [uploadAdapterPlugin],
-						language:'ko',
-						  image: {
-						      // Configure the available styles.
-						      styles: ["alignLeft", "alignCenter", "alignRight"],      
-						      // You need to configure the image toolbar, too, so it shows the new style
-						      // buttons as well as the resize buttons.
-						      toolbar: [
-						        "imageStyle:alignLeft",
-						        "imageStyle:alignCenter",
-						        "imageStyle:alignRight",
-						        "|",
-						        "imageTextAlternative",
-						      ],
-						    },
-						  })
-						    .then((editor) => {
-						      window.ckeditor = editor;
-						    })
-						    .catch((error) => {
-						      console.error("There was a problem initializing the editor.", error);
-						    });
-	    }
-}
+	    $(function() {
+	    	jsCkeditor5();
+	    })
+	 
+ function jsCkeditor5() {
+        let ckeditor5Full = document.querySelector('#js-ckeditor5-classic');
 
-  
+        if (ckeditor5Full) {
+          ClassicEditor
+            .create(document.querySelector('#js-ckeditor5-classic'),
+            		{
+            			ckfinder:{
+            				uploadUrl : ''
+            			},
+            			alignment: {
+            	            options: [ 'left', 'center', 'right' ]
+            	        },
+            			language:'ko',
 
+            		})
+            .then(editor => {
+              window.editor = editor;
+            })
+            .catch(error => {
+              console.error('There was a problem initializing the classic editor.', error);
+            });
+        }
+        
+        
+    }
 
 </script>
-		   <script th:src="@{resources/assets/js/plugins/ckeditor5-classic/build/ckeditor.js}"></script>
+
 		<script
 			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 		<script th:src="@{/resources/assets/js/dialog.js}"></script>
