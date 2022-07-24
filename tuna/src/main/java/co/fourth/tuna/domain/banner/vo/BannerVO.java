@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import co.fourth.tuna.domain.user.vo.AdminVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,6 @@ public class BannerVO {
 	private String url;
 	private int sequence;
 	private String adNo;
+	
+	private AdminVO admin;
 }
