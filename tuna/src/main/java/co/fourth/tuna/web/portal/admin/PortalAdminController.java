@@ -30,15 +30,13 @@ public class PortalAdminController {
 	// 배너 리스트
 	@GetMapping("/admin/admin/bannerList")
 	public String bannerList(Model model, 
-			 
-			@RequestParam(required = false, defaultValue = "1") int page,
+							 @RequestParam(required = false, defaultValue = "1") int page,
 			                 @RequestParam(required = false, defaultValue = "1") int range) {
 		
-		BannerPagingVO bvo = new BannerPagingVO(10);
+		PagingVO pvo = pagingDao.getPaging(new PagingVO("banner", 10));
 		
-		PagingVO pvo = pagingDao.getPaging(new PagingVO("banner", bvo.getListSize()));
-		
-		bvo.pageInfo(page, range, pvo.getPageCount(), 5);
+		BannerPagingVO bvo = new BannerPagingVO();
+		bvo.pageInfo(page, range, pvo.getPageCount(), 5, pvo.getSizePerPage());
 		
 		List<BannerVO> list = bannerDao.bannerListSelect(bvo.getStartList(), bvo.getEndList());
 			
