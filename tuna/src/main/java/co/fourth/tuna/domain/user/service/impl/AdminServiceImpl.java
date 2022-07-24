@@ -39,4 +39,10 @@ public class AdminServiceImpl implements AdminService {
 		return mapper.adminPwdFind(vo);
 	}
 
+	@Override
+	public boolean findEmail(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.findEmail(vo);
+	}
+
 }

@@ -39,7 +39,7 @@ public class LecturePlanController {
 	
 	@Autowired private CodeService codeService;
 	
-	@RequestMapping("/stud/CoursePlan")
+	@RequestMapping("/stud/course/plan")
 	public String CoursePlan(Model model, LecturePlanVO vo) {
 		List<Map<String,Object>> lists = sql.selectList("co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper.selectPlan", vo.getSbjNo());
 		//강의스케쥴

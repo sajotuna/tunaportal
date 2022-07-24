@@ -1,4 +1,4 @@
-package co.fourth.tuna.util.security;
+package co.fourth.tuna.domain.common.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

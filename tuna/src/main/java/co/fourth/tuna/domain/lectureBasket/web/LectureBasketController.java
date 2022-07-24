@@ -26,7 +26,7 @@ public class LectureBasketController {
 	@Autowired
 	private LectureBasketService LectureBasketDao;
 
-	@RequestMapping("/stud/courseBasket")
+	@RequestMapping("/stud/course/Basket")
 	public String courseBasket(Model model, LectureBasketVO vo, Authentication authentication, 
 							 @RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
 							  @RequestParam Map<String, Object> params ) {
@@ -52,7 +52,8 @@ public class LectureBasketController {
 		return "course/basket/courseBasket";
 	}
 
-	@RequestMapping("/stud/basketInsert")
+	@SuppressWarnings("null")
+	@RequestMapping("/stud/course/basketInsert")
 	public String basketInsert(RedirectAttributes ra, @RequestParam List<String> courcheck, LectureBasketVO vo,
 			Authentication authentication) {
 		vo.setStNo(authentication.getName());
@@ -66,39 +67,37 @@ public class LectureBasketController {
 			grade -= target;
 			if(grade < 0) {
 				ra.addFlashAttribute("error", "수강신청 가능한 학점이 없습니다.");
-				return "redirect:/stud/courseBasket";
+				return "redirect:/stud/course/Basket";
 			}
-			if(message == null || message.equals("")) {
-				LectureBasketDao.baskInsert(vo);
-			}else {
+			if(message != null) {
 				ra.addFlashAttribute("error", message);
-				return "redirect:/stud/courseBasket";
+				return "redirect:/stud/course/Basket";
 			}
 		}
 		ra.addFlashAttribute("success", "수강신청이 완료되었습니다.");
-		return "redirect:/stud/courseBasket";
+		return "redirect:/stud/course/Basket";
 
 	}
 
-	@RequestMapping("/stud/basketDelete")
+	@RequestMapping("/stud/course/basketDelete")
 	public String basketDelete(Authentication authentication, RedirectAttributes ra, LectureBasketVO vo) {
 		vo.setStNo(authentication.getName());
 		LectureBasketDao.baskDelete(vo);
 		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
-		return "redirect:/stud/courseBasket";
+		return "redirect:/stud/course/Basket";
 	}
 
-	@RequestMapping("/stud/courseBasketLectureList")
+	@RequestMapping("/stud/course/BasketLectureList")
 	public String courseBasketLectureList(Model model, LectureBasketVO vo, Authentication authentication) {
 		vo.setStNo(authentication.getName());
 		List<Map<String, Object>> baskLists = SqlSession
-				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket", vo.getStNo());
+				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket", vo);
 		model.addAttribute("baskList", baskLists);
 
 		return "course/basket/courseBasketLectureList";
 	}
 
-	@RequestMapping("/stud/courseBasketSchedule")
+	@RequestMapping("/stud/course/BasketSchedule")
 	public String courseBasketSchedule(Model model, LectureBasketVO vo, Authentication authentication) {
 
 		return "course/basket/courseBasketSchedule";
@@ -106,7 +105,7 @@ public class LectureBasketController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/stud/BasketSchedule")
+	@RequestMapping("/stud/course/BasketScheduleCheck")
 	public List<LectureBasketVO> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
 		vo.setStNo(authentication.getName());
 		return SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.BasketSchedule", vo);

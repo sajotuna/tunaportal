@@ -113,4 +113,18 @@
 			AND sbjno = #{sbjno}
 	</select>
 	
+	<update id="updateGradeByForm"
+		parameterType="co.fourth.tuna.domain.grade.vo.GradeFormVO">
+		UPDATE grade
+		<set>
+			<if test='middle != null'>middle = #{middle},</if>
+			<if test='finals != null'>finals = #{finals},</if>
+			<if test='attd != null'>attd = #{attd},</if>
+			<if test='task != null'>task = #{task},</if>
+			<if test='total != null'>total = #{total},</if>
+		</set>
+		WHERE
+			no = #{no}
+	</update>
+
 </mapper>

@@ -21,15 +21,11 @@ insert into LECTUREBASKET values (#{no}, 'y', #{seasonCode}, #{sbjNo}, #{stNo})
 </insert>
 
 <delete id ="baskDelete" statementType="CALLABLE" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
-
-	{ 
-		call LectureDelete(#{sbjNo},#{stNo})
-	}
-
+	delete from lecturebasket where stno = #{stNo} and sbjno = #{sbjNo}
 </delete>
 
 <select id = "basketApplyMsg" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO" resultType="String">
-	select BASKETROOMCHECK(#{sbjNo},#{stNo}) FROM dual
+	select BASKETROOMCHECK(#{sbjNo},#{stNo}, #{seasonCode}) FROM dual
 </select>
 
 <select id ="FindRoom" parameterType="map" resultType="boolean">

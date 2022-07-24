@@ -25,13 +25,13 @@ public class LectureEvalController {
 	private LectureEvalService evalDao;
 	
 	
-	@RequestMapping("/stud/lectureEvaluation")
+	@RequestMapping("/stud/course/Evaluation")
 	public String lectureEvaluation() {
 		return "course/evaluation/lectureEvaluation";
 	}
 	
 	
-	@RequestMapping("/stud/lectureEvaluationDetails")
+	@RequestMapping("/stud/course/Details")
 	public String lectureEvaluationDetails(LectureEvalVO vo, Model model, Authentication authentication) {
 		
 		vo.setStNo(authentication.getName());
@@ -42,7 +42,7 @@ public class LectureEvalController {
 	
 	
 	
-	@RequestMapping("/stud/lectureEvaluationSearch")
+	@RequestMapping("/stud/course/Search")
 	public String lectureEvaluationSearch(String proNo, Model model) {
 		
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.EvalAvgScore",proNo);
@@ -50,7 +50,7 @@ public class LectureEvalController {
 		return "course/evaluation/lectureEvaluationSearch";
 	}
 
-	@RequestMapping("/lecture/eval")
+	@RequestMapping("/stud/course/evalSuccess")
 	public String lectureEval(Authentication authentication, LectureEvalVO vo) {
 		vo.setEvalState("y");
 		vo.setStNo(authentication.getName());

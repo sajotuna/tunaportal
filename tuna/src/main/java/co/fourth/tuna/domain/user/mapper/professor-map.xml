@@ -50,5 +50,10 @@ select pwd from professor where no = #{no}
 
 </select>
 
+<select id = "findEmail" parameterType="co.fourth.tuna.domain.user.vo.ProfessorVO" resultType="boolean">
+SELECT case when count(*) >= 1 then 1 else 0 end as truefalse
+ from professor
+ where email = #{email}
+</select>
 
 </mapper>

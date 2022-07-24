@@ -14,7 +14,9 @@
 <link rel="apple-touch-icon" sizes="180x180"
 	th:href="@{/resources/assets/media/favicons/apple-touch-icon-180x180.png}">
 <!-- END Icons -->
-
+<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
 <!-- Stylesheets -->
 <!-- Fonts and OneUI framework -->
 <link rel="stylesheet"
@@ -40,7 +42,7 @@
 						<div class="p-4 p-xl-5 flex-grow-1 d-flex align-items-center">
 							<div class="w-100">
 								<a class="link-fx fw-semibold fs-2 text-white"
-									href="${pageContext.request.contextPath }/custom/login">
+									th:href="@{/custom/login}">
 									TUNA </a>
 							</div>
 						</div>
@@ -96,7 +98,7 @@
 												<input type="hidden" th:name="_csrf"
 													th:value="${_csrf.token}" />
 												<div class="mb-4">
-													<input type="text"
+													<input type="email"
 														class="form-control form-control-lg form-control-alt py-3"
 														id="reminder-credential" name="email"
 														placeholder="Email Insert....">
@@ -161,6 +163,21 @@
 	</div>
 	<!-- END Page Container -->
 
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    
+	<!-- Page JS Code -->
+	<script th:src="@{/resources/assets/js/pages/op_auth_reminder.min.js}"></script>
+	<th:block th:if = "${(success != null && success != '') || (error != null && error != '')}">
+		<script th:inline="javascript">
+			let success = /*[[${success}]]*/ 'default';
+			let error = /*[[${error}]]*/ 'default';
+			if (success) {
+				Dialogs.dialog('success', '완료', success);
+			} else if (error) {
+				Dialogs.dialog('error', '실패', error);
+			}
+		</script>
+	</th:block>
 	<!--
         OneUI JS
 
@@ -176,7 +193,5 @@
 	<script
 		th:src="@{/resources/assets/js/plugins/jquery-validation/jquery.validate.min.js}"></script>
 
-	<!-- Page JS Code -->
-	<script th:src="@{/resources/assets/js/pages/op_auth_reminder.min.js}"></script>
 </body>
 </html>

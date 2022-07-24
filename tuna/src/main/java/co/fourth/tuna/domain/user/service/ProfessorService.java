@@ -10,5 +10,6 @@ public interface ProfessorService {
 	public void staffEamilPwdUpdate(ProfessorVO vo);
 	public void staffPwdUpdate(ProfessorVO vo);
 	public String findStaffPwd(ProfessorVO vo);
+	public boolean findEmail(ProfessorVO vo);
 	
 }

@@ -59,7 +59,7 @@
                      <tr th:scope="row" th:each="sub, status : ${list}">
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.DEPTCODE)}"></td>
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
-                      <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
+                      <td class="fw-semibold fs-sm" id = "sbjno" th:text = "${sub.NO}" ></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.PRONAME}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
@@ -82,20 +82,20 @@
           </div>
         </div>
       </div>
-    </main>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
     <script>
-
-      let btns = document.querySelectorAll('button')
-      btns.forEach(btn =>{
+    document.addEventListener('DOMContentLoaded', function(){
+      let btns = document.querySelectorAll('button');
+      let sbjnos = document.querySelectorAll('#sbjno');
+      btns.forEach( function(btn,idx) {
         btn.addEventListener('click',function(){
-          
-          let sbjcode = btn.parentElement.parentElement.children[2].innerHTML
-          window.open("/tuna/stud/lectureEvaluation?sbjNo="+ sbjcode,"강의평가","width=1000, height=800, top=10, left=10");
+          window.open("Evaluation?sbjNo="+sbjnos[idx].innerHTML,"강의평가","width=1000, height=800, top=10, left=10");
         })
       })
+    })
     </script>
+    </main>
     
   </body>
 </html>

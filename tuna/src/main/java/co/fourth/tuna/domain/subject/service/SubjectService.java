@@ -2,6 +2,9 @@ package co.fourth.tuna.domain.subject.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
@@ -23,5 +26,8 @@ public interface SubjectService {
 //	List<Map<String, Object>> getMapsForLectureSchedule(int pageNum, int size);
 //	List<Map<String, Object>> getMapsForLectureScheduleByProf(ProfessorVO prof, int pageNum, int size);
 	
-	public ServiceResponseVO updateGradeRatio(GradeRatioVO grade);
+	@Transactional(rollbackFor = {Error.class, Exception.class})
+	public String updateSubject(GradeRatioVO grade, List<LecturePlanVO> plans);
+	@Transactional
+	public String updateGradeRatio(GradeRatioVO grade);
 }

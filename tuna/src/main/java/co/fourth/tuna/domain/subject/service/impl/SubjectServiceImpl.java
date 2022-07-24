@@ -4,18 +4,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.fourth.tuna.domain.common.mapper.LectureScheduleMapper;
-import co.fourth.tuna.domain.grade.vo.GradeVO;
 import co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper;
+import co.fourth.tuna.domain.lectureplan.service.LecturePlanService;
+import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 import co.fourth.tuna.domain.subject.mapper.GradeRatioMapper;
 import co.fourth.tuna.domain.subject.mapper.SubjectMapper;
 import co.fourth.tuna.domain.subject.service.SubjectService;
 import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
-import co.fourth.tuna.util.ResState;
-import co.fourth.tuna.util.ServiceResponseVO;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -28,6 +28,9 @@ public class SubjectServiceImpl implements SubjectService {
 	GradeRatioMapper gradeRatioMap;
 	@Autowired
 	LecturePlanMapper planMap;
+	
+	@Autowired
+	LecturePlanService lecPlanService;
 	
 	@Override
 	public SubjectVO findOne(SubjectVO vo) {
@@ -63,17 +66,29 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
-	public ServiceResponseVO updateGradeRatio(GradeRatioVO gradeRatio) {
+	@Transactional
+	public String updateGradeRatio(GradeRatioVO gradeRatio) {
 		int sum = gradeRatio.getAttd() + gradeRatio.getFinals() + gradeRatio.getMiddle() + gradeRatio.getTask();
 		
 		if(sum < 100 || sum > 100) {
-			return new ServiceResponseVO(ResState.ERROR, "합계값이 100이 되어야 합니다.");
+			throw new Error("평가기준 합계가 100이 되어야 합니다.");
 		}
 		
 		if(gradeRatioMap.updateGradeRatioByNo(gradeRatio) < 1) {
-			return new ServiceResponseVO(ResState.ERROR, "오류가 발생 했습니다.");
+			throw new Error("오류가 발생 했습니다."); 
 		}
-		return new ServiceResponseVO(ResState.SUCESS, "성공");
+		
+		return "성공";
+	}
+
+	@Override
+	@Transactional(rollbackFor = Error.class)
+	public String updateSubject(GradeRatioVO grade, List<LecturePlanVO> plans) {		
+		lecPlanService.updatePlanList(plans);
+		this.updateGradeRatio(grade);
+//		return new ServiceResponseVO(ResState.ERROR, e.getMessage());
+	
+		return "성공적으로 업데이트 되었습니다.";
 	}
 	
 	

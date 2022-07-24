@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskVO {
-	
 	//인덱스
 	private int no;
 	//제목
