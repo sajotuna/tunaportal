@@ -37,7 +37,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
         <h3 class="h3 fw-bold mb-2">수강신청</h3>
         <div class="bg-body-extra-light" style="padding: 10px;">
           <div class="m-4">
-            <form th:action="@{/stud/courseApplication}" method="post" class="row">
+            <form th:action="@{/stud/course/Application}" method="post" class="row">
               <div class="col-md-3 col-xl-2 col-10 fomrtag">
                 <div class="mb-5">
                   <select class="form-select" id="deptCode" name="deptCode">
@@ -200,7 +200,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
            </div>
             <div class="mb-5 ">
               <div class="block-contents">
-                <form th:action="@{/stud/courseApplyInsert}" method="post" id = "frm">
+                <form th:action="@{/stud/course/ApplyInsert}" method="post" id = "frm">
                   <div class="row">
                     <div class="col-md-3 col-xl-1 mt-4">
                       <label class="form-label" for="example-flatpickr-time-standalone-24">과목코드</label>
@@ -291,7 +291,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm" >
                       [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
                       </td>
-                      <th class="fw-semibold fs-sm"><a class = "btn" th:href = "@{/stud/courseDelete(sbjNo=${sub.NO})}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                      <th class="fw-semibold fs-sm"><a class = "btn" th:href = "@{/stud/course/ApplyDelete(sbjNo=${sub.NO})}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
 </svg></a></th>
                     </tr>
@@ -330,7 +330,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
       let proNo = document.querySelectorAll('[name="PRONO"]');
       proName.forEach((btn,idx) =>{
     	  btn.addEventListener('click', function(){
-    		  window.open("/tuna/stud/lectureEvaluationSearch?proNo="+proNo[idx].value, "강의평가조회", "width=650, height=600, top=10, left=10");
+    		  window.open("Search?proNo="+proNo[idx].value, "강의평가조회", "width=650, height=600, top=10, left=10");
     	  })
       })
     
@@ -338,7 +338,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
         let sbjNo = document.querySelectorAll('#sbjNo');
         subName.forEach( function (btn,idx){
         	btn.addEventListener('click', function(){
-      			window.open("/tuna/stud/CoursePlan?sbjNo="+sbjNo[idx].innerHTML, "강의계획서조회", "width=850, height=1000, top=10, left=10");
+      			window.open("plan?sbjNo="+sbjNo[idx].innerHTML, "강의계획서조회", "width=850, height=1000, top=10, left=10");
         	})
         })
     
@@ -417,7 +417,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 				btn.innerHTML = parseInt(a)+4;
 			})
 			
-			setTimeout(() => location.href = '/tuna/stud/courseApplication?pageNum='+pageingBtn[0].innerHTML, 10);
+			setTimeout(() => location.href = 'Application?pageNum='+pageingBtn[0].innerHTML, 10);
 			
 		})
 		
@@ -430,14 +430,14 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 				}
 			})
 			
-			setTimeout(() => location.href = '/tuna/stud/courseApplication?pageNum='+pageingBtn[0].innerHTML, 10);
+			setTimeout(() => location.href = 'Application?pageNum='+pageingBtn[0].innerHTML, 10);
 			
 		})
 		
 		pageingBtn.forEach(btn =>{
 			btn.addEventListener('click',function(){
 				let a = btn.innerHTML
-				location.href = '/tuna/stud/courseApplication?pageNum='+parseInt(a)
+				location.href = 'Application?pageNum='+parseInt(a)
 			})
 		})
 		

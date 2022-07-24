@@ -46,4 +46,10 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return mapper.findStaffPwd(vo);
 	}
 
+	@Override
+	public boolean findEmail(ProfessorVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.findEmail(vo);
+	}
+
 }

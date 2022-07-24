@@ -93,7 +93,8 @@ public class HomeController {
 		ProfessorVO provo = new ProfessorVO();
 		AdminVO adminvo = new AdminVO();
 		vo.setEmail(email);
-		
+		provo.setEmail(email);
+		adminvo.setEmail(email);
 		
 		Random rnd = new Random();
 		for (int i = 0; i < 10; i++) {
@@ -114,31 +115,36 @@ public class HomeController {
 		authCode = temp.toString();
 		
 		boolean emailCheck = StudentDao.findEmail(vo);
-		if(emailCheck == true) {
-			messageHelper.setFrom("lnsertgood123@gmail.com");
-			messageHelper.setTo(vo.getEmail());
-			messageHelper.setSubject("안녕하세요 TUNA대학입니다. 고객님의 임시비밀번호가 도착했습니다.");
-			messageHelper.setText("임시비밀번호 : " + authCode); // 메일 내용
-			mailSender.send(message);
-			if(Integer.parseInt(user) == 1) {
-				vo.setPwd(enc.encode(authCode));
-				StudentDao.studEamilPwdUpdate(vo);
-			}else if(Integer.parseInt(user) == 2) {
-				provo.setEmail(email);
-				provo.setPwd(enc.encode(authCode));
-				ProfessorDao.staffEamilPwdUpdate(provo);
-			}else if(Integer.parseInt(user) == 3) {
-				adminvo.setEmail(email);
-				adminvo.setPwd(enc.encode(authCode));
-				AdminDao.adminEamilPwdUpdate(adminvo);
-			}
-			msg = "회원님의 메일으로 임시비밀번호를 보냈습니다. 확인해주세요.";
+		boolean staffEmailCheck = ProfessorDao.findEmail(provo);
+		boolean AdminEmailCheck = AdminDao.findEmail(adminvo);
+		
+		
+		if(Integer.parseInt(user) == 1 && emailCheck == true) {
+			vo.setPwd(enc.encode(authCode));
+			StudentDao.studEamilPwdUpdate(vo);
 			
+		}else if(Integer.parseInt(user) == 2 && staffEmailCheck == true) {
+			provo.setPwd(enc.encode(authCode));
+			ProfessorDao.staffEamilPwdUpdate(provo);
+		}
+		else if(Integer.parseInt(user) == 3 && AdminEmailCheck == true) {
+			adminvo.setPwd(enc.encode(authCode));
+			AdminDao.adminEamilPwdUpdate(adminvo);
 		}else {
-			msg = "없는 이메일 계정입니다. 이메일을 다시한번 확인해주세요.";
+			msg = "없는 이메일 계정입니다. 다시 한번 확인해주세요.";
+			model.addAttribute("error", msg);
+			return "custom/pwdfind";
 		}
 		
-		model.addAttribute("message", msg);
+		messageHelper.setFrom("lnsertgood123@gmail.com");
+		messageHelper.setTo(vo.getEmail());
+		messageHelper.setSubject("안녕하세요 TUNA대학입니다. 고객님의 임시비밀번호가 도착했습니다.");
+		messageHelper.setText("임시비밀번호 : " + authCode); // 메일 내용
+		mailSender.send(message);
+		
+		msg = "회원님의 메일으로 임시비밀번호를 보냈습니다. 확인해주세요.";
+			
+		model.addAttribute("success", msg);
 
 		return "custom/pwdfind";
 	}

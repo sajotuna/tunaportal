@@ -42,7 +42,7 @@
 	           <div sec:authorize="isAuthenticated()">
 	            
 	            <h2 class="h6 fw-medium fw-medium text-muted mb-0">
-	                <a class="fw-semibold" href="#" ></a> 님, 환영합니다. 
+	                <a class="fw-semibold" href="#" th:text = "${#authentication.principal.name}" ></a> 님, 환영합니다. 
 	            </h2>
 	            </div>
 	            </div>
@@ -57,14 +57,14 @@
 	            <div sec:authorize="isAuthenticated()">
 	            <div class="dropdown d-inline-block">
 	                <button type="button" class="btn btn-sm btn-dark space-x-1" id="dropdown-analytics-overview" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                <i class="far fa-user opacity-50"></i>
-	                <span ></span>
-	                <i class="fa fa-fw fa-angle-down"></i>
+	                <i class="far fa-user opacity-50" ></i>
+	                <span th:text = "${#authentication.principal.name}"></span>
+	                <i class="fa fa-fw fa-angle-down" ></i>
 	                </button>
 	                <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
 	                    <div class="p-3 text-center bg-body-light border-bottom rounded-top">
 	                      <p class="mt-2 mb-0 fw-medium" ></p>
-	                      <p class="mb-0 text-muted fs-sm fw-medium">시각디자인학과</p>
+	                      <p class="mb-0 text-muted fs-sm fw-medium" th:text = "${@codeList.getName(#authentication.principal.deptCode)}"></p>
 	                    </div>
 	                    <th:block sec:authorize="hasRole('ROLE_STUDENT')">
 	                    <div class="p-2">
@@ -151,10 +151,10 @@
 								th:href="@{/eclass/student/home}"> <span class="nav-main-link-name">e-class</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/courseWarning}"> <span class="nav-main-link-name">수강신청</span>
+								th:href="@{/stud/course/Warning}"> <span class="nav-main-link-name">수강신청</span>
 							</a></li>
 							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/lectureEvaluationDetails}"> <span class="nav-main-link-name">강의평가</span>
+								th:href="@{/stud/course/Details}"> <span class="nav-main-link-name">강의평가</span>
 							</a></li>
 						</ul></li>
 		
@@ -186,7 +186,7 @@
 		            <div class="col-xl-3 col-md-6 d-none d-md-block">
 		                <div class="block block-rounded">
 		                    <div class="block-content box">
-		                        <button class="box-btn btn btn-dark fw-bold" th:onclick="|window.open('@{/stud/courseWarning}')|">수강신청</button>
+		                        <button class="box-btn btn btn-dark fw-bold" th:onclick="|window.open('@{/stud/course/Warning}')|">수강신청</button>
 		                    </div>
 		                </div>
 		            </div>

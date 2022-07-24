@@ -8,8 +8,6 @@
 	<security:http pattern="/resources/**" security="none" />
 
 	<security:http>
-		<security:intercept-url pattern="/home"
-			access="permitAll()" />
 		<security:intercept-url pattern="/custom/**"
 			access="permitAll()" />
 		<security:intercept-url pattern="/admin/**"

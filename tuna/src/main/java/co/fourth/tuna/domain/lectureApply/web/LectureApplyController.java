@@ -1,6 +1,5 @@
 package co.fourth.tuna.domain.lectureApply.web;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -21,11 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import co.fourth.tuna.domain.banner.web.BannerController;
+import co.fourth.tuna.domain.common.captcha.CaptchaUtil;
 import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
-import co.fourth.tuna.util.captcha.CaptchaUtil;
 import nl.captcha.Captcha;
 
 @Controller
@@ -37,12 +33,12 @@ public class LectureApplyController {
 	@Autowired
 	private SqlSession SqlSession;
 	
-	@RequestMapping("/stud/courseWarning")
+	@RequestMapping("/stud/course/Warning")
 	public String courseWarning() {
 		return "course/apply/courseWarning";
 	}
 	
-	@RequestMapping("/stud/courseApplication")
+	@RequestMapping("/stud/course/Application")
 	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication,@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
 			  @RequestParam Map<String, Object> params ) {
 
@@ -63,7 +59,7 @@ public class LectureApplyController {
 		return "course/apply/courseApplication";
 	}
 	
-	@RequestMapping("/stud/courseApplyInsert")
+	@RequestMapping("/stud/course/ApplyInsert")
 	public String courseApplyInsert(RedirectAttributes ra,Authentication authentication, LectureApplyVO vo, String sbjno){
 		
 		vo.setStNo(authentication.getName());
@@ -75,30 +71,30 @@ public class LectureApplyController {
 		
 		if(grade - target < 0) {
 			ra.addFlashAttribute("error", "수강신청 가능한 학점이 없습니다.");
-			return "redirect:/stud/courseBasket";
+			return "redirect:/stud/course/Application";
 		}
 		String message = LectureApplyDao.ApplyErrorMsg(vo);
 		
 		System.out.println(message);
 		if(message.equals("수강신청이 완료되었습니다.")) {
 			ra.addFlashAttribute("success", message);
-			return "redirect:/stud/courseApplication";
+			return "redirect:/stud/course/Application";
 		}
 		
 		ra.addFlashAttribute("error", message);
-		return "redirect:/stud/courseApplication";
+		return "redirect:/stud/course/Application";
 	}
 	
-	@RequestMapping("/stud/courseDelete")
+	@RequestMapping("/stud/course/ApplyDelete")
 	public String courseDelete(Authentication authentication,RedirectAttributes ra, LectureApplyVO vo) {
 		vo.setStNo(authentication.getName());
 		LectureApplyDao.CourseDelete(vo);
 		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
-		return "redirect:/stud/courseApplication";
+		return "redirect:/stud/course/Application";
 	}
 	
 	
-	@RequestMapping("/stud/courseApplicationLectureList")
+	@RequestMapping("/stud/course/ApplyLectureList")
 	public String courseApplicationLectureList(Model model, Authentication authentication, LectureApplyVO vo) {
 		
 		vo.setStNo(authentication.getName());
@@ -109,25 +105,20 @@ public class LectureApplyController {
 		return "course/apply/courseApplicationLectureList";
 	}
 	
-	@RequestMapping("/stud/courseApplicationSchedule")
+	@RequestMapping("/stud/course/ApplySchedule")
 	public String courseApplicationSchedule() {
 		return "course/apply/courseApplicationSchedule";
 	}
-	
-	@RequestMapping("/coursesreg")
-	public String coursesReg() {
-		return "course/apply/courseApplication";
-	}
 
 	// captcha 이미지 가져오는 메서드
-	@GetMapping("/stud/captchaImg.do")
+	@GetMapping("/stud/course/captchaImg.do")
 	@ResponseBody
 	public void captchaImg(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		new CaptchaUtil().getImgCaptCha(req, res);
 	}
 
 	// 전달받은 문자열로 음성 가져오는 메서드
-	@GetMapping("/stud/captchaAudio.do")
+	@GetMapping("/stud/course/captchaAudio.do")
 	@ResponseBody
 	public void captchaAudio(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		Captcha captcha = (Captcha) req.getSession().getAttribute(Captcha.NAME);
@@ -136,7 +127,7 @@ public class LectureApplyController {
 	}
 
 	// 사용자가 입력한 보안문자 체크하는 메서드
-	@PostMapping("/stud/chkAnswer.do")
+	@PostMapping("/stud/course/chkAnswer.do")
 	@ResponseBody
 	public String chkAnswer(HttpServletRequest req, HttpServletResponse res) {
 		String result = "";
@@ -155,7 +146,7 @@ public class LectureApplyController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/stud/CourseSchedule")
+	@RequestMapping("/stud/course/ApplyScheduleCheck")
 	public List<LectureBasketVO> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
 		vo.setStNo(authentication.getName());
 		return SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseSchedule", vo);
