@@ -39,7 +39,7 @@ public class UserController {
 	@Autowired
 	private BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
-	@RequestMapping("/admin/adminUserSearch")
+	@RequestMapping("/admin/admin/userSearch")
 	public String adminUserSearch(Model model, @RequestParam Map<String, Object> params, @RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum) {
 		
 		params.put("pageNum", pageNum);

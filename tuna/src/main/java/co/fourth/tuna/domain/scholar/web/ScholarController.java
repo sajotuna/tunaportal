@@ -40,7 +40,7 @@ public class ScholarController {
 	@Autowired
 	private YearService yearDao; 
 	
-	@RequestMapping("/stud/scholarshipApplicationStatus")
+	@RequestMapping("/stud/scholar/Status")
 	public String scholarshipApplicationStatus(Model model,ScholarApplyVO vo,Authentication authentication) {
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode("105");
@@ -50,7 +50,7 @@ public class ScholarController {
 		return "scholarship/user/scholarshipApplicationStatus";
 	}
 	
-	@RequestMapping("/stud/scholarshipApplication")
+	@RequestMapping("/stud/scholar/Application")
 	public String courseBasket(Model model, StudentVO vo, Authentication authentication) {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		vo = StudentDao.findById(vo);
@@ -58,7 +58,7 @@ public class ScholarController {
 		return "scholarship/user/scholarshipApplication";
 	}
 	
-	@RequestMapping("/stud/scolarShipApply")
+	@RequestMapping("/stud/scolar/Apply")
 	public String ScolarShipApply(Model model, ScholarApplyVO vo, Authentication authentication) {
 		vo.setStNo(authentication.getName());
 		ScholarDao.ScholarApply(vo);
@@ -66,7 +66,7 @@ public class ScholarController {
 		return "redirect:/stud/scholarshipApplicationStatus";
 	}
 	
-	@RequestMapping("/stud/scholarFileUpload")
+	@RequestMapping("/stud/scholar/FileUpload")
 	public String scholarFileUpload(ScholarApplyVO vo,@RequestParam(value = "file") MultipartFile file) {
 		
 		String[] scholarFile = fileService.upload(file, "ScholarFile");
@@ -77,7 +77,7 @@ public class ScholarController {
 		return "redirect:/stud/scholarshipApplicationStatus";
 	}
 	
-	@RequestMapping("/stud/scholarDelete")
+	@RequestMapping("/stud/scholar/Delete")
 	public String scholarDelete(RedirectAttributes ra,ScholarApplyVO vo) {
 		
 		ScholarDao.ScholarDelete(vo);
@@ -85,7 +85,7 @@ public class ScholarController {
 		return "redirect:/stud/scholarshipApplicationStatus";
 	}
 	
-	@RequestMapping("/stud/scholarshipApplicationSearch")
+	@RequestMapping("/stud/scholar/Search")
 	public String scholarshipApplicationSearch(Authentication authentication,Model model,ScholarApplyVO vo, @RequestParam(value = "year", required = false, defaultValue = "") String year) {
 		
 		vo.setSeasonCode(year);
@@ -98,7 +98,7 @@ public class ScholarController {
 		return "scholarship/user/scholarshipApplicationSearch";
 	}
 	
-	@RequestMapping("/admin/adminScholarshipApplicationSearch")
+	@RequestMapping("/admin/admin/scholarSearch")
 	public String adminScholarshipApplicationSearch(Model model, @RequestParam Map<String, Object> params, @RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum) {
 		
 		params.put("pageNum", pageNum);
@@ -124,7 +124,7 @@ public class ScholarController {
 	}
 	
 	
-	@RequestMapping("/admin/scholarCheck")
+	@RequestMapping("/admin/scholar/Check")
 	public String scholarCheck(RedirectAttributes ra,ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox, @RequestParam List<String> seasonCode) {
 		
 		vo.setStateCode("504");
@@ -142,7 +142,7 @@ public class ScholarController {
 		
 		return "redirect:/admin/adminScholarshipApplicationSearch";
 	}
-	@RequestMapping("/admin/scholarReject")
+	@RequestMapping("/admin/scholar/Reject")
 	public String scholarReject(RedirectAttributes ra,ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox, @RequestParam List<String> seasonCode) {
 		
 		vo.setStateCode("503");
@@ -160,11 +160,8 @@ public class ScholarController {
 		return "redirect:/admin/adminScholarshipApplicationSearch";
 	}
 	
-	
-	
-	
 	@ResponseBody
-	@GetMapping("/stud/scholarApplyCheck")
+	@GetMapping("/stud/scholar/ApplyCheck")
 	public List<ScholarApplyVO> scholarApplyCheck(ScholarApplyVO vo,Authentication authentication) {
 		vo.setStNo(authentication.getName());
 		return ScholarDao.scholarApplyCheck(vo);
