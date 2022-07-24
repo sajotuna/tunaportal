@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import co.fourth.tuna.domain.banner.service.BannerService;
 import co.fourth.tuna.domain.user.service.AdminService;
 import co.fourth.tuna.domain.user.service.ProfessorService;
 import co.fourth.tuna.domain.user.service.StudentService;
@@ -45,15 +46,19 @@ public class HomeController {
 	private JavaMailSender mailSender;
 	@Autowired
 	private BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+	
+	@Autowired
+	private BannerService bannerDao;
 
 	@RequestMapping(value = "/home")
 	public String home(HttpServletResponse response ,Locale locale, Model model,Authentication authentication) {
-		
+		model.addAttribute("bnList", bannerDao.sliderBannerSelect());
 		return "home";
 	}
 
 	@RequestMapping("/")
 	public String homepage(Locale locale, Model model) {
+		model.addAttribute("bnList", bannerDao.sliderBannerSelect());
 		return "home";
 	}
 
