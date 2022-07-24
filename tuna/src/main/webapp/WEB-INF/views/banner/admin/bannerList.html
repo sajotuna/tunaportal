@@ -34,8 +34,10 @@
 					<thead>
 						<tr>
 							<th width=150>분류</th>
-							<th width=180>등록일자</th>
-							<th width=150>등록자</th>
+							<th width=180 class="d-none d-xl-table-cell">등록일자</th>
+							<th width=180 class="d-none d-md-table-cell">게시 시작일</th>
+							<th width=180 class="d-none d-md-table-cell">게시 종료일</th>
+							<th width=150 class="d-none d-xl-table-cell">등록자</th>
 							<th width=150>이미지</th>
 							<th>파일명</th>
 							<th width=80></th>
@@ -45,8 +47,10 @@
 						<th:block th:each="bn, i:${bnList}">
 							<tr>
 								<td class="fw-semibold fs-sm">[[${@codeList.getName(bn.bannerCode)}]]</td>
-								<td class="fw-semibold fs-sm">[[${bn.enrollDate}]]</td>
-								<td class="fw-semibold fs-sm">[[${bn.adNo}]]</td>
+								<td class="d-none d-xl-table-cell fw-semibold fs-sm">[[${bn.enrollDate}]]</td>
+								<td class="d-none d-md-table-cell fw-semibold fs-sm">[[${bn.startDate}]]</td>
+								<td class="d-none d-md-table-cell fw-semibold fs-sm">[[${bn.endDate}]]</td>
+								<td class="d-none d-md-table-cell fw-semibold fs-sm">[[${bn.admin.name}]]</td>
 								<td class="fw-semibold fs-sm">
 									<div class="row">
 										<div class="img-section col-6">
@@ -56,8 +60,9 @@
 									</div>
 								</td>
 								<td class="fw-semibold fs-sm">
+									[[${bn.fileName}]]
 									<a th:href="@{/download(fileName=${bn.uri}, originName=${bn.fileName}, folder=banner)}">
-										<i class="fa fa-fw fa-download me-2"></i>[[${bn.fileName}]] 
+										<i class="fa fa-fw fa-download ms-2"></i> 
 									</a>
 									
 								</td>
@@ -101,7 +106,7 @@
 	
 	// 페이징 번호
 	function pagingNo(page, range) {
-		let url = getContextPath() + 'admin/bannerList';
+		let url = getContextPath() + 'admin/admin/bannerList';
 		url = url + '?page=' + page;
 		url = url + '&range=' + range;
 		

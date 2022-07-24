@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+<title>ckFinderTest</title>
+</head>
+<link rel="stylesheet" id="css-main" th:href="@{resources/assets/css/oneui.min.css}">
+<body>
+<div id="page-container" class="page-header-dark main-content-boxed">
+	<main id="main-container">
+		<div class="block block-rounded">
+			<div class="block-header block-header-default">
+				<h3 class="block-title">ckEditor5 + ckfinder</h3>
+				<div class="block-options">
+					<button type="button" class="btn-block-option">
+						<i class="si si-settings"></i>
+					</button>
+				</div>
+			</div>
+			<div class="block-content">
+					<div class="mb-4">
+					  <!-- CKEditor 5 Classic Container -->
+						<div id="ckfinder">ckEditor5와 ckfinder를 사용하여 이미지 업로드하기</div>
+					</div>
+					<button id="finderSubmitBtn" class="btn" type="button">등록</button>
+			</div>
+		</div>
+	</main>
+</div>
+	<script th:src="@{resources/assets/js/lib/jquery.min.js}"></script>
+	<script th:src="@{resources/assets/js/oneui.app.min.js}"></script>
+    <script th:src="@{resources/assets/js/plugins/ckeditor5-classic/build/ckeditor.js}"></script>
+	<script>
+	
+		let header = document.querySelector('meta[name="_csrf_header"]').content;
+	    let token = document.querySelector('meta[name="_csrf"]').content;
+	
+		document.addEventListener('DOMContentLoaded', function() {
+			ckfinder();
+	    })
+    
+	    // ckfinder
+	    function ckfinder() {
+	        let ckfinder = document.querySelector('#ckfinder');
+	
+	        if (ckfinder) {
+	          ClassicEditor
+	            .create(document.querySelector('#ckfinder'),
+	            		{
+	            			language:'ko',
+	            			ckfinder: {
+	            				uploadUrl: getContextPath() + 'ckfinderImage?_csrf=' + token
+	            			},
+	            			image: {
+	            			      styles: ["alignLeft", "alignCenter", "alignRight"],      
+	            			      toolbar: [
+	            			        "imageStyle:alignLeft",
+	            			        "imageStyle:alignCenter",
+	            			        "imageStyle:alignRight",
+	            			        "|",
+	            			        "imageTextAlternative",
+	            			      ]
+	            			 }
+	            		})
+	            .then(editor => {
+	              window.editor = editor;
+	            })
+	            .catch(error => {
+	              console.error('There was a problem initializing the classic editor.', error);
+	            });
+	        }
+	        
+	        finderSubmitBtn.addEventListener('click', function() {
+	        	
+	        	let editorContent = editor.getData();
+        	
+	        	fetch(getContextPath() + 'editorUpload', {
+	                method: "post",
+	                headers: {
+	                  'header': header,
+	                  'X-Requested-With': 'XMLHttpRequest',
+	                  'Content-Type': 'application/json',
+	                  'X-CSRF-Token': token
+	                },
+	                body: JSON.stringify({
+	                	editorContent: editorContent
+	                })
+	             })
+		    })
+	    }
+	    
+	    function getContextPath() {
+			var pathName = window.location.pathname.substring(1);
+			var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+			var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+			return path_root;
+		}
+	</script>
+</body>
+</html>

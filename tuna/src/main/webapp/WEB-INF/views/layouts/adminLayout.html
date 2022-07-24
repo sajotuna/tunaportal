@@ -21,7 +21,9 @@
 		<th:block th:replace="layouts/aside/adminSidebar :: sidebar"></th:block>	
 		<header th:replace="layouts/aside/header :: header"></header>
 		<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-		<script th:src="@{/resources/assets/js/lib/jquery.min.js}"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.js"
+ 				integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  				crossorigin="anonymous"></script>
 		<main id="main-container" layout:fragment="main"></main>
 	</div>
 </body>

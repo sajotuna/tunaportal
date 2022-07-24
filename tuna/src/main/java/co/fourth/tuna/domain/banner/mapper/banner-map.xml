@@ -9,7 +9,7 @@
 	</update>
 
 	<select id="sliderBannerSelect"
-		resultType="co.fourth.tuna.domain.banner.vo.BannerVO">
+		    resultType="co.fourth.tuna.domain.banner.vo.BannerVO">
 		SELECT *
 		FROM BANNER
 		WHERE BANNERCODE = '1301'
@@ -22,9 +22,17 @@
 		WHERE NO = #{no}
 	
 	</delete>
+	
+	<resultMap id="bannerListWithAdmin" type="co.fourth.tuna.domain.banner.vo.BannerVO">
+		<association property="admin"
+					 column="{no=adNo}"
+					 javaType="co.fourth.tuna.domain.user.vo.AdminVO"
+					 select="co.fourth.tuna.domain.user.mapper.AdminMapper.findById">
+		</association>
+	</resultMap>
 
 	<select id="bannerListSelect"
-		resultType="co.fourth.tuna.domain.banner.vo.BannerVO">
+		    resultMap="bannerListWithAdmin">
 		select *
 		from (select rownum as rnum,
 		             b.*
@@ -38,15 +46,21 @@
 		resultType="co.fourth.tuna.domain.banner.vo.BannerVO">
 		SELECT *
 		FROM BANNER
+		<if test="bannerCode == 1302">
 		WHERE NO = (
 						SELECT MAX(NO) 
 						FROM BANNER 
 						WHERE BANNERCODE = #{bannerCode}
-					)
+				   )
+		</if>
+	    <if test="bannerCode == 1303"> 
+	    WHERE BANNERCODE = #{bannerCode} 
+	    AND SYSDATE BETWEEN STARTDATE AND ENDDATE 
+	    </if>
 	</select>
 	
 	<insert id="bannerInsert"
-		parameterType="co.fourth.tuna.domain.banner.vo.BannerVO">
+		    parameterType="co.fourth.tuna.domain.banner.vo.BannerVO">
 		
 		<selectKey resultType="int" keyProperty="no" order="BEFORE">
 			SELECT CASE WHEN MAX(NO) != 0
