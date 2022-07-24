@@ -460,7 +460,7 @@ xmlns:th="http://www.thymeleaf.org"
 -->
                   <div class="tab-pane" id="btabs-static-grade" role="tabpanel" aria-labelledby="btabs-static-grade-tab">
                     <div style="overflow-y:scroll; height: 310px;">
-                      <table class="table table-hover table-vcenter text-center">
+                      <table id="subject-grade-table" class="table table-hover table-vcenter text-center">
                         <thead>
                           <tr>
                             <th style="width:10%">이름</th>
@@ -474,7 +474,7 @@ xmlns:th="http://www.thymeleaf.org"
                           </tr>
                         </thead>
                         <tbody>
-                          <tr class="m-0">
+                          <!-- <tr class="m-0">
                             
                             <td class="table-cell">
                               김철수
@@ -507,13 +507,13 @@ xmlns:th="http://www.thymeleaf.org"
                             <td><input type="number" class="form-control" placeholder=""></td>
                             <td><input type="number" class="form-control" placeholder="100" disabled></td>
                             <td><input type="number" class="form-control" placeholder="100" disabled></td>
-                          </tr>
+                          </tr> -->
                         </tbody>
                       </table>
                     </div>
                     <div class="pt-2 row">
                       <div class="offset-xl-10 col-xl-2">
-                        <button class="col-12 btn btn-dark">저장</button>
+                        <button class="col-12 btn btn-dark" onclick="studentsGradeSubmitEvent()">저장</button>
                       </div>
                     </div>
                     <p></p>
@@ -881,9 +881,17 @@ xmlns:th="http://www.thymeleaf.org"
             <div>결석</div>
           </div>
          -->
+<!--
+███████  ██████ ██████  ██ ██████  ████████ 
+██      ██      ██   ██ ██ ██   ██    ██    
+███████ ██      ██████  ██ ██████     ██    
+     ██ ██      ██   ██ ██ ██         ██    
+███████  ██████ ██   ██ ██ ██         ██    
+-->
           <script>
             // 상수데이터
             const TAB_ID = "tab-pane-";
+            const GRADE_STUD_ID = "student-";
 
             // 토큰
             let header = document.querySelector('meta[name="_csrf_header"]').content;
@@ -902,8 +910,9 @@ xmlns:th="http://www.thymeleaf.org"
             // 로딩 출력
             let loaderCurtain;
 
-
+            //
             let attendRadioGroups = [];
+            let studentsGradeTr = [];
 
             // 로드 이벤트
             window.addEventListener("DOMContentLoaded", function() {
@@ -973,8 +982,7 @@ xmlns:th="http://www.thymeleaf.org"
                   break;
                 case 6: // 성적
                   url = "/tuna/prof/students"
-                  resFunc = null;
-                  return;
+                  resFunc = setGradeContent;
                   break;
                 default:
                   return;
@@ -1015,6 +1023,15 @@ xmlns:th="http://www.thymeleaf.org"
               })
             }
 
+/*
+██████   █████  ███    ██ ███████ ██      
+██   ██ ██   ██ ████   ██ ██      ██      
+██████  ███████ ██ ██  ██ █████   ██      
+██      ██   ██ ██  ██ ██ ██      ██      
+██      ██   ██ ██   ████ ███████ ███████ 
+*/
+
+            
             // 공지사항 패널 세팅
             function setNoticeContent(notices) {
               let table = document.querySelector('#subject-notice-table');
@@ -1180,6 +1197,38 @@ xmlns:th="http://www.thymeleaf.org"
               table.appendChild(tbody);
               objTrColorChange();
             }
+
+            // 성적등록 패널
+            function setGradeContent(studList) {
+              let table = document.getElementById("subject-grade-table");
+              let tbody = table.getElementsByTagName('tbody')[0];
+              let trTags = tbody.getElementsByTagName('tr');
+              for(let tr of trTags){ tr.remove() };
+              for( let stud of studList ) {
+                let tr = document.createElement('tr');
+                tr.id = GRADE_STUD_ID+stud.gradeVO.no;
+                tr.data-
+                tr.classList.add('m-0');
+                tr.innerHTML = `
+                  <td class="table-cell">
+                    ${stud.name}
+                  </td>
+                  <td class="table-cell">
+                    ${stud.deptName}
+                  </td>
+                  <td class="table-cell">
+                    ${stud.no}
+                  </td>
+                  <td><input type="number" class="form-control" value="${stud.gradeVO.attd}" disabled></td>
+                  <td><input type="number" class="form-control" name="middle" value="${stud.gradeVO.middle}"></td>
+                  <td><input type="number" class="form-control" name="finals" value="${stud.gradeVO.finals}"></td>
+                  <td><input type="number" class="form-control" value="${stud.gradeVO.task}" disabled></td>
+                  <td><input type="number" class="form-control" value="${stud.gradeVO.total}" disabled></td>
+                `;
+                tbody.appendChild(tr);
+                studentsGradeTr.push(tr);
+              }
+            }
             
             // 이의신청 1건 조회
             function objTrClickEvent() {            	
@@ -1290,6 +1339,73 @@ xmlns:th="http://www.thymeleaf.org"
               <p></p>
               `
               subject_plan_tag.innerHTML = content;
+            }
+
+            function studentsGradeSubmitEvent() {
+              let gradeDatas = [];
+
+              Dialogs.dialog('checkConfirm',
+                '정말 등록하시겠습니까?',
+                 '',
+                function() {
+                  onLoaderCurtain();
+                  tabFlag.set(6, false);
+
+                  for(let tr of studentsGradeTr) {
+                    let gradeObj = {
+                      no: tr.id.slice(GRADE_STUD_ID.length),
+                      middle: tr.querySelector('input[name="middle"]').value,
+                      finals: tr.querySelector('input[name="finals"]').value
+                    }
+                    gradeDatas.push(gradeObj)
+                  }
+                  
+                  console.log(gradeDatas);
+
+                  fetch("/tuna/prof/updateGrades", {
+                    method: "POST",
+                    headers: {
+                      'header': header,
+                      'X-Requested-With': 'XMLHttpRequest',
+                      'Content-Type': 'application/json',
+                      'X-CSRF-Token': token
+                    },
+                    body: JSON.stringify(gradeDatas)
+                  })
+                  .then(async (res) => {
+                    console.log(res);
+                    let resBody = await res.text();
+                    console.log(resBody);
+                    if(res.ok) {
+                      Dialogs.dialog("success",
+                        "성공",
+                        resBody,
+                        function() {
+                          tabClickEvent(6);
+                        });
+                    } else {
+                      Dialogs.dialog("error",
+                      "실패",
+                      resBody,
+                      function() {
+                        console.log(resBody);
+                        tabClickEvent(6);
+                      })
+                    }
+
+                  })
+                  .catch((err) => {
+                    Dialogs.dialog("error",
+                      "오류",
+                      err,
+                      function() {
+                        console.error(err)
+                      })
+                  })
+                }
+              );
+
+              
             }
 
             function allStudentAttend() {

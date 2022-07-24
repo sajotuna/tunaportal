@@ -36,15 +36,16 @@ public class LecturePlanServiceImpl implements LecturePlanService{
 
 	@Override
 	@Transactional
-	public ServiceResponseVO updatePlanList(List<LecturePlanVO> planList) {
+	public String updatePlanList(List<LecturePlanVO> planList) {
 		List<LecturePlanVO> list = planList;
-		for(LecturePlanVO plan : list) {
+		for(LecturePlanVO plan : list) {			
 			if(mapper.updateOneByNo(plan) < 1) {
-				return new ServiceResponseVO(ResState.ERROR, "업데이트 중 오류 발생");
+				throw new Error("업데이트 도중 오류 발생");
 			}
+			
 		}
 		
-		return new ServiceResponseVO(ResState.SUCESS, "성공");
+		return "성공";
 	}
 
 

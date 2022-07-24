@@ -1,11 +1,10 @@
 package co.fourth.tuna.domain.subject.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,23 +41,30 @@ public class SubjectController {
 		return subjectDao.searchSubjectList(seasonCode, searchKey, key);
 	}
 	
-	@ResponseBody
-	@Transactional
 	@PostMapping("/professor/updateSubject")
-	public ResponseEntity updateSubject(
+	public ResponseEntity<String> updateSubject(
 			@RequestBody SubjectUpdateForm form) {
-		
-		ServiceResponseVO planResult = lecPlanService.updatePlanList(form.getPlans());
-		if(planResult.getState() == ResState.ERROR) {
-			return new ResponseEntity<>( planResult.getMessage(), HttpStatus.BAD_REQUEST );
+		HttpHeaders resHeaders = new HttpHeaders();
+		resHeaders.set(HttpHeaders.CONTENT_TYPE,
+				"application/json;charset=UTF-8");
+		String msg;
+		try {
+			msg = subjectDao.updateSubject(
+					form.getGradeRatio(),
+					form.getPlans());
+		} catch (Error e) {
+			return ResponseEntity.badRequest()
+				.headers(resHeaders)
+				.body(e.getMessage());
+		} catch ( Exception e) {
+			return ResponseEntity.badRequest()
+				.headers(resHeaders)
+				.body(e.getMessage());
 		}
 		
-		ServiceResponseVO subjectResult = subjectDao.updateGradeRatio(form.getGradeRatio());
-		if(subjectResult.getState() == ResState.ERROR) {
-			return new ResponseEntity<>( subjectResult.getMessage(), HttpStatus.BAD_REQUEST );
-		}
-		
-		return new ResponseEntity<>( "성공" ,HttpStatus.OK);
+		return ResponseEntity.ok()
+				.headers(resHeaders)
+				.body(msg);
 	}
 	
 }
