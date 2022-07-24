@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
-
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 
@@ -26,5 +25,7 @@ public interface LectureNoticeMapper {
 	LectureNoticeVO findOneWithSubjectById(LectureNoticeVO vo);
 	LectureNoticeVO findOneWithSubjectById(int id);
 	List<LectureNoticeVO> findListBySubjectId(int sbjno);
-
+	
+	int insertOneByLectureNoticeVO(
+			@Param("notice")LectureNoticeVO notice);
 }

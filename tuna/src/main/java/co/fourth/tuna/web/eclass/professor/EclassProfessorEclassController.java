@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import co.fourth.tuna.domain.common.service.CodeService;
 import co.fourth.tuna.domain.common.service.LectureScheduleService;
-import co.fourth.tuna.domain.common.service.PagingService;
 import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.common.vo.code.CodeMasterVO;
 import co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO;
@@ -43,13 +42,13 @@ import co.fourth.tuna.util.CustomDateUtills;
 @RequestMapping("/eclass/professor")
 public class EclassProfessorEclassController {
 	
-	@Autowired PagingService pagingService;
 	@Autowired SubjectService subjectService;
 	@Autowired LectureQnaService lectureService;
 	@Autowired LectureNoticeService noticeService;
 	@Autowired PortalScheduleService portalScheduleService;
 	@Autowired ObjectionService objectionService;
-  @Autowired
+	
+	@Autowired
 	LectureScheduleService lecScheduleService;
 	
 	@Autowired YearService yearService;
@@ -91,7 +90,21 @@ public class EclassProfessorEclassController {
 	}
 
 	@GetMapping("/noticeForm")
-	public String noticeFormView(Model model, HttpServletRequest req) {
+	public String noticeFormView(Model model,
+			HttpServletRequest req,
+			Authentication auth,
+			@RequestParam(value = "sbjno", required = false, defaultValue = "0") int sbjno) {
+		ProfessorVO prof = new ProfessorVO();
+		prof.setNo(Integer.parseInt(auth.getName()));
+		
+		int selected = sbjno;
+		List<SubjectVO> subjects = subjectService.findListByProfessorVO(prof);
+		if(selected < 1) {
+			selected = subjects.get(0).getNo();
+		}
+		
+		model.addAttribute("subjects", subjects);
+		model.addAttribute("selected", selected);
 		return req.getServletPath();
 	}
 
@@ -100,6 +113,7 @@ public class EclassProfessorEclassController {
 			HttpServletRequest req,
 			Authentication auth,
 			@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum) {
+		
 		ProfessorVO prof = new ProfessorVO();
 		prof.setNo(Integer.parseInt(auth.getName()));
 

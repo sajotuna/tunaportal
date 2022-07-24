@@ -79,4 +79,27 @@
 		FROM lecturenotice
 		WHERE sbjno = #{sbjno}
 	</select>
+	
+	<insert id="insertOneByLectureNoticeVO"
+		parameterType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO">
+		<selectKey resultType="int" keyProperty="no" order="BEFORE">
+			SELECT CASE 
+				WHEN MAX(no) != 0
+				THEN MAX(no) +1
+				ELSE 1 END
+				AS id
+			FROM lecturenotice
+		</selectKey>
+		INSERT INTO lecturenotice
+		VALUES (
+			#{no},
+			#{notice.content},
+			#{notice.title},
+			SYSDATE,
+			#{notice.sbjNo}
+		)
+	</insert>
+	
 </mapper>
+
+

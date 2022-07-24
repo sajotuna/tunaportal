@@ -8,21 +8,20 @@ xmlns:th="http://www.thymeleaf.org"
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>E-Class 공지 등록</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
-    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
-    <link rel="stylesheet" href="../assets/js/plugins/simplemde/simplemde.min.css">
+    <link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
   </head>
   <body>
 
-    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
-      <div id="page-overlay"></div>
+   <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+    <!--  <div id="page-overlay"></div>
 
       <aside id="side-overlay">
         <div class="content-header">
         </div>
         <div class="content-side">
         </div>
-      </aside>
+      </aside> -->
 
       <!--
 ███████ ██ ██████  ███████     ██████   █████  ██████  
@@ -31,13 +30,13 @@ xmlns:th="http://www.thymeleaf.org"
      ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
 ███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
       -->
-      <nav id="sidebar" aria-label="Main Navigation">
+      <!-- <nav id="sidebar" aria-label="Main Navigation">
         <div class="content-header">
 
         </div>
         <div class="js-sidebar-scroll">
         </div>
-      </nav>
+      </nav> -->
       <!-- SIDE BAR END -->
       
       <!--
@@ -47,9 +46,9 @@ xmlns:th="http://www.thymeleaf.org"
 ██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
 ██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
       -->
-      <header id="page-header">
+      <!--<header id="page-header">
         <div class="content-header">page-header</div>
-      </header>
+      </header>-->
       <!--HEADER END-->
 
 <!--
@@ -80,31 +79,45 @@ xmlns:th="http://www.thymeleaf.org"
           <div class="col-xxl-12">
             <div class="block block-rounded">
               <div class="block-content">
-                <form action="" method="POST" onsubmit="return false;">
+                <form th:action="@{/staff/eclass/notice}" method="POST">
                   <div class="row mt-2">
                     <label class="col-1 d-none d-xl-block" for="title_input">
                       제목
                     </label>
-                    <div class="h4 col-11 mb-1">
-                      <input id="title_input" type="text" class="col-11 form-control">
+                    <div class="h4 col-7 mb-1">
+                      <input id="title_input" name="title" type="text" class="col-12 form-control">
+                    </div>
+                    <label class="col-1 d-none d-xl-block" for="subject- selector">
+                      과목
+                    </label>
+                    <div class="col-3">
+                      <select id="subject-selector" name="sbjNo" class="form-select">
+                        <option
+                          th:each="subject : ${subjects}"
+                          th:value="${subject.no}"
+                          th:selected="${subject.no} == ${selected}"
+                        >
+                          <span th:text="${subject.name}">과목없음</span>
+                        </option>
+                      </select>
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <!-- 내용 입력-->
-                      <div class="col-12">
-                        <textarea class="js-simplemde" id="simplemde" name="simplemde"></textarea>
+                      <div class="offset-1 col-10">
+                        <textarea class="js-simplemde" id="simplemde" name="content"></textarea>
                       </div>
                   </div>
                   <hr>
-                  <div class="row mb-4">
+                  <!-- <div class="row mb-4">
                     <div class="col-2 text-start">
                       <p>첨부파일</p>
                     </div>
                     <div class="col-10">
                       <div class="dropzone" id="fileDropzone"></div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="row items-push">
                     <div class="col-6">
                       <input class="btn btn-primary col-xl-4 offset-xl-1" type="submit" value="등록">
@@ -127,7 +140,35 @@ xmlns:th="http://www.thymeleaf.org"
           </div>
         </div> -->
         <!-- 모달 리스트 END -->
-        
+        <!-- <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script> -->
+        <script th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
+        <script th:src="@{/resources/assets/js/plugins/dropzone/min/dropzone.min.js}"></script>
+        <script>
+          One.helpersOnLoad(['js-simplemde']);
+          //fileDropzone dropzone 설정할 태그의 id로 지정
+          // Dropzone.options.fileDropzone = {
+          //     url: 'Fileupload', //업로드할 url (ex)컨트롤러)
+          //     init: function () {
+          //         /* 최초 dropzone 설정시 init을 통해 호출 */
+          //         var submitButton = document.querySelector("#btn-upload-file");
+          //         var myDropzone = this; //closure
+          //         submitButton.addEventListener("click", function () {
+          //             console.log("업로드"); //tell Dropzone to process all queued files
+          //             myDropzone.processQueue();
+          //         });
+          //     },
+          //     autoProcessQueue: false, // 자동업로드 여부 (true일 경우, 바로 업로드 되어지며, false일 경우, 서버에는 올라가지 않은 상태임 processQueue() 호출시 올라간다.)
+          //     clickable: true, // 클릭가능여부
+          //     thumbnailHeight: 90, // Upload icon size
+          //     thumbnailWidth: 90, // Upload icon size
+          //     maxFiles: 1, // 업로드 파일수
+          //     maxFilesize: 10, // 최대업로드용량 : 10MB
+          //     parallelUploads: 1, // 동시파일업로드 수(이걸 지정한 수 만큼 여러파일을 한번에 컨트롤러에 넘긴다.)
+          //     addRemoveLinks: true, // 삭제버튼 표시 여부
+          //     dictRemoveFile: '삭제', // 삭제버튼 표시 텍스트
+          //     uploadMultiple: false, // 다중업로드 기능
+          // };
+        </script>
       </main>
 
 <!--
@@ -142,34 +183,6 @@ xmlns:th="http://www.thymeleaf.org"
       </footer> -->
     </div>
     
-    <script src="../assets/js/oneui.app.min.js"></script>
-    <script src="../assets/js/plugins/simplemde/simplemde.min.js"></script>
-    <script src="../assets/js/plugins/dropzone/min/dropzone.min.js"></script>
-    <script>
-      One.helpersOnLoad(['js-simplemde']);
-      //fileDropzone dropzone 설정할 태그의 id로 지정
-      Dropzone.options.fileDropzone = {
-          url: 'Fileupload', //업로드할 url (ex)컨트롤러)
-          init: function () {
-              /* 최초 dropzone 설정시 init을 통해 호출 */
-              var submitButton = document.querySelector("#btn-upload-file");
-              var myDropzone = this; //closure
-              submitButton.addEventListener("click", function () {
-                  console.log("업로드"); //tell Dropzone to process all queued files
-                  myDropzone.processQueue();
-              });
-          },
-          autoProcessQueue: false, // 자동업로드 여부 (true일 경우, 바로 업로드 되어지며, false일 경우, 서버에는 올라가지 않은 상태임 processQueue() 호출시 올라간다.)
-          clickable: true, // 클릭가능여부
-          thumbnailHeight: 90, // Upload icon size
-          thumbnailWidth: 90, // Upload icon size
-          maxFiles: 1, // 업로드 파일수
-          maxFilesize: 10, // 최대업로드용량 : 10MB
-          parallelUploads: 1, // 동시파일업로드 수(이걸 지정한 수 만큼 여러파일을 한번에 컨트롤러에 넘긴다.)
-          addRemoveLinks: true, // 삭제버튼 표시 여부
-          dictRemoveFile: '삭제', // 삭제버튼 표시 텍스트
-          uploadMultiple: false, // 다중업로드 기능
-      };
-    </script>
+   
   </body>
 </html>
