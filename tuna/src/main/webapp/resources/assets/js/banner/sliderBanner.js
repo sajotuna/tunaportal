@@ -58,12 +58,22 @@ function submit() {
 						  
 		} else if (job === 'delete') {
 			
-			Dialogs.dialog('warnConfirm', 
-	                       '정말로 삭제하시겠습니까?', 
-	                       '삭제한 사진은 복구할 수 없습니다.',
-	                       function() {
-								deleteAjax();
-						   });
+			console.log($('#tb input:radio:checked'));
+			
+			if($('#tb input:radio:checked').length) {
+				
+				Dialogs.dialog('warnConfirm', 
+		                       '정말로 삭제하시겠습니까?', 
+		                       '삭제한 사진은 복구할 수 없습니다.',
+		                       function() {
+									deleteAjax();
+							   });
+			} else {
+				Dialogs.dialog('error', 
+		                       '작업 실패', 
+		                       '선택된 사진이 없습니다.')
+			}
+			
 		}
 	})
 }
