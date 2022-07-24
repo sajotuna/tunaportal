@@ -54,7 +54,7 @@ public class TuitionController {
 	
 	
 	
-	@RequestMapping("/stud/tuitionCheck")
+	@RequestMapping("/stud/tuition/Check")
 	public String adminScholarshipApplicationSearch(Model model,StudentVO vo,Authentication authentication) {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		model.addAttribute("vo", studentDao.findById(vo));
