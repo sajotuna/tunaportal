@@ -322,10 +322,20 @@ xmlns:th="http://www.thymeleaf.org"
          ██    ██   ██ ███████ ██   ██ 
 -->
                   <div class="tab-pane pb-3" id="btabs-static-task" role="tabpanel" aria-labelledby="btabs-static-task-tab">
-                    <div style="overflow-y:scroll; height: 310px;">
-                      <table class="table table-hover table-vcenter ">
+                    <div style="overflow-y:scroll; overflow-x:scroll; height: 310px;">
+                      <table id="task-table" class="table table-hover table-vcenter ">
+                        <thead>
+                          <tr>
+                            <th>이름</th>
+                            <th>학과</th>
+                            <th>학번</th>
+                            <th style="width: 25%">제출</th>
+                            <th>제출시간</th>
+                            <th style="width: 90px">점수</th>
+                          </tr>
+                        </thead>
                         <tbody>
-                          <tr class="m-0">
+                          <!-- <tr class="m-0">
                             
                             <td class="table-cell">
                               <a class="" href="javascript:void(0);">김철수</a>
@@ -339,13 +349,16 @@ xmlns:th="http://www.thymeleaf.org"
                             <td class="table-cell">
                               <i class="fa fa-2x fa-file-arrow-down"></i>
                             </td>
-                            <td class="text-primary">
+                            <td class="table-cell text-primary">
                               <a href="javascript:void(0);">김철수_멸치족의 역사.zip (925 kb)</a>
                             </td>
-                            <td class="">
-                              2022-07-06 16:14
+                            <td class="table-cell">
+                              07-06 16:14
                             </td>
-                          </tr>
+                            <td class="table-cell">
+                              <input type="number" class="form-control" placeholder="">
+                            </td>
+                          </tr> -->
                         </tbody>
                       </table>
                     </div>
@@ -1212,7 +1225,48 @@ xmlns:th="http://www.thymeleaf.org"
             
             // 과제 패널
             function setTaskContent(studentList) {
+              let tbody = document.querySelector("#task-table tbody");
               console.log(studentList);
+
+              for( student of studentList) {
+                let tr = document.createElement('tr');
+                let fileName, uri, enrollDate, score;
+
+                if(!student.submitTask || !student.submitTask.fileName) {
+                  fileName = "미제출"
+                  uri = "javascript:void(0);"
+                  enrollDate = "--/-- --:--:--"
+                  score = 0;
+                } else {
+                  fileName = student.submitTask.fileName;
+                  uri = student.submitTask.uri; //TODO
+                  enrollDate = dateTimeToISO(student.submitTask.enrollDate);
+                  score = student.submitTask.score;
+                }
+                
+                tbody.appendChild(tr);
+                tr.classList.add("m-0");
+                tr.innerHTML = `
+                <td class="table-cell">
+                  <a class="" href="javascript:void(0);">${student.name}</a>
+                </td>
+                <td class="table-cell">
+                    ${student.deptName}
+                </td>
+                <td class="table-cell">
+                  ${student.no}
+                </td>
+                <td class="table-cell text-primary">
+                  <a href="${uri}">${fileName}</a>
+                </td>
+                <td class="table-cell">
+                  ${enrollDate}
+                </td>
+                <td class="table-cell">
+                  <input type="number" class="form-control" placeholder="" value="${score}">
+                </td>
+                `;
+              }
             }
 
             // 강의정보 패널
@@ -1482,9 +1536,7 @@ xmlns:th="http://www.thymeleaf.org"
                     body: JSON.stringify(gradeDatas)
                   })
                   .then(async (res) => {
-                    // console.log(res);
                     let resBody = await res.text();
-                    // console.log(resBody);
                     if(res.ok) {
                       Dialogs.dialog("success",
                         "성공",
@@ -1538,6 +1590,14 @@ xmlns:th="http://www.thymeleaf.org"
                 mDate = mDate.toISOString();
                 mDate = mDate.slice(0, mDate.indexOf('T'));
               return mDate;
+            }
+
+            function dateTimeToISO(dateNumber) {
+              let mDate = new Date(dateNumber);
+              let result = "";
+              mDate = mDate.toISOString();
+              result += mDate.split('T')[0].slice(5) + " " + mDate.split('T')[1].split('.')[0];
+              return result;
             }
 		  </script>
 	      <script th:src="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.js}"></script>
