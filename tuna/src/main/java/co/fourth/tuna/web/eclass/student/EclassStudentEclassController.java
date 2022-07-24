@@ -200,6 +200,9 @@ public class EclassStudentEclassController {
 			fts = taskDao.findSubmission(vo1);
 		}
 		
+		System.out.println("과제선택 시 no : "+req.getParameter("no"));
+		System.out.println("과제선택 시 sbjNo : "+req.getParameter("sbjNo"));
+		
 		model.addAttribute("tsk", tsk);
 		model.addAttribute("fts",fts);
 		
@@ -212,7 +215,6 @@ public class EclassStudentEclassController {
 			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
 		
 		vo.setNo(Integer.parseInt(req.getParameter("no")));
-		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
 		SubmitTaskVO vo1 = new SubmitTaskVO();
 		
@@ -226,6 +228,7 @@ public class EclassStudentEclassController {
 				vo1.setUri(tf[1]);
 				vo1.setStNo(Integer.parseInt(authentication.getName()));
 				vo1.setTaskNo(vo.getNo());
+				
 				
 				taskDao.taskSubmission(vo1);
 			}
