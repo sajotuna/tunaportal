@@ -45,8 +45,10 @@ function bannerDelete() {
 									if (success) {
 										Dialogs.dialog('success', 
 									                   '삭제 완료', 
-									                   '배너 사진 삭제가 완료되었습니다.');
-									    location.reload();
+									                   '배너 사진 삭제가 완료되었습니다.',
+									                   function() {
+															location.reload();
+												       });
 									} else {
 										error();
 									}
