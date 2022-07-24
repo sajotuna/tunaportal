@@ -10,19 +10,6 @@
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-    <style>
-    
-    .staff-box {
-   		height: 665px;
-   	}
-    
-    @media (max-width: 990px) {
-	  .staff-box {
-	    height: 100px;
-	  }
-	}
-    
-    </style>
 </head>
 <body>
 <th:block th:if = "${error != null && error != ''}">
@@ -296,23 +283,22 @@
 					 ██      ██   ██ ██    ██ ██      
 					 ██      ██   ██  ██████  ██     -->
 				<div class="row justify-content-center align-middle">
-					<div class="col-lg-3">
+					<div class="col-lg-4 col-xl-3">
 						<div class="block block-rounded staff-box">
 						       <button class="box-btn btn btn-outline-light text-primary-darker fw-bold" 
 						       		   th:onclick="|location.href='@{/portalNoticeList}'|">학사공지</button>
 						</div>
 					</div>
-				    <div class="col-lg-3">
+				    <div class="col-lg-4 col-xl-3">
 						<div class="block block-rounded staff-box">
-						    <button class="box-btn btn fw-bold banner"
-						    		th:onclick="|window.open('@{/eclass/professor/home}')|"
-						    		style="position:relative; border:none;">
-								<div class="text-gray-lighter" style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);">e-Class<br>교수</div>
-								<img class="banner-img" th:src="@{/display(fileName=home01.png, folder=home)}">
+						    <button class="box-btn btn fw-bold banner long-img-btn"
+						    		th:onclick="|window.open('@{/eclass/professor/home}')|">
+								<div class="text-gray-lighter long-img-div">e-Class<br>교수</div>
+								<img class="banner-img" th:src="@{/display(fileName=home-01.jpeg, folder=home)}">
 						    </button>
 						</div>
 				    </div>
-				    <div class="col-lg-3">
+				    <div class="col-lg-4 col-xl-3">
 					    <div class="block block-rounded staff-box">
 					        <button class="box-btn btn btn-primary fw-bold" th:onclick="|location.href='@{/portalSchedule}'|">학사일정</button>
 					    </div>
@@ -326,23 +312,22 @@
 					██   ██ ██   ██ ██  ██  ██ ██ ██  ██ ██ 
 					██   ██ ██████  ██      ██ ██ ██   ████  -->
 				<div class="row justify-content-center align-middle">
-					<div class="col-lg-3">
+					<div class="col-lg-4 col-xl-3">
 		                <div class="block block-rounded staff-box">
 	                        <button class="box-btn btn btn-outline-light text-primary-darker fw-bold" 
 	                        		th:onclick="|location.href='@{/portalNoticeList}'|">학사공지</button>
 		                </div>
 		            </div>
-		            <div class="col-lg-3">
+		            <div class="col-lg-4 col-xl-3">
 	                    <div class="block block-rounded staff-box">
-	                        <button class="box-btn btn btn-alt-info fw-bold text-dark banner" 
-	                        		th:onclick="|window.open('@{/admin/admin/userSearch}')|"
-	                        		style="position:relative; border:none;">
-	                       	   <div class="text-gray-lighter" style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);">관리자 페이지</div>
-	                       	   <img class="banner-img" th:src="@{/display(fileName=home01.png, folder=home)}">
+	                        <button class="box-btn btn btn-alt-info banner long-img-btn" 
+	                        		th:onclick="|window.open('@{/admin/admin/userSearch}')|">
+	                       	   <div class="text-gray-lighter long-img-div">관리자 페이지</div>
+	                       	   <img class="banner-img" th:src="@{/display(fileName=home-01.jpeg, folder=home)}">
 	                        </button>
 	                    </div>
 	                </div>
-					<div class="col-lg-3">
+					<div class="col-lg-4 col-xl-3">
 					    <div class="block block-rounded staff-box">
 					        <button class="box-btn btn btn-primary fw-bold" th:onclick="|location.href='@{/portalSchedule}'|">학사일정</button>
 					    </div>
