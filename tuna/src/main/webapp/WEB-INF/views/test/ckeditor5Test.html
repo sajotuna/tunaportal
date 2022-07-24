@@ -12,7 +12,7 @@
 	<main id="main-container">
 		<div class="block block-rounded">
 			<div class="block-header block-header-default">
-				<h3 class="block-title">Full Editor</h3>
+				<h3 class="block-title">ckEditor5</h3>
 				<div class="block-options">
 					<button type="button" class="btn-block-option">
 						<i class="si si-settings"></i>
@@ -20,13 +20,11 @@
 				</div>
 			</div>
 			<div class="block-content">
-				<form action="editorUpload" method="POST" onsubmit="return false;">
-					<div class="mb-4">
-					  <!-- CKEditor 5 Classic Container -->
-						<div id="js-ckeditor5-classic">Hello classic CKEditor 5!</div>
-					</div>
-					<button class="btn" type="button">등록</button>
-				</form>
+				<div class="mb-4">
+				  <!-- CKEditor 5 Classic Container -->
+					<div id="ckeditor">ckEditor5만 사용하여 이미지 업로드하기</div>
+				</div>
+				<button id="editorSubmitBtn" class="btn" type="button">등록</button>
 			</div>
 		</div>
 	</main>
@@ -37,32 +35,32 @@
     
     <script>
     
-    $(function() {
-    	jsCkeditor5();
+    let header = document.querySelector('meta[name="_csrf_header"]').content;
+    let token = document.querySelector('meta[name="_csrf"]').content;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    	ckeditor5();
     })
  
-    function jsCkeditor5() {
-        let ckeditor5Full = document.querySelector('#js-ckeditor5-classic');
+    function ckeditor5() {
+    	
+        let ckeditor5Full = document.querySelector('#ckeditor');
 
         if (ckeditor5Full) {
           ClassicEditor
-            .create(document.querySelector('#js-ckeditor5-classic'),
+            .create(document.querySelector('#ckeditor'),
             		{
             			extraPlugins: [uploadAdapterPlugin],
             			language:'ko',
             			image: {
-            			      // Configure the available styles.
             			      styles: ["alignLeft", "alignCenter", "alignRight"],      
-            			      // You need to configure the image toolbar, too, so it shows the new style
-            			      // buttons as well as the resize buttons.
             			      toolbar: [
             			        "imageStyle:alignLeft",
             			        "imageStyle:alignCenter",
             			        "imageStyle:alignRight",
             			        "|",
             			        "imageTextAlternative",
-            			      ],
-            			      nImageMaxWidthSize : 500
+            			      ]
             			    }
             		})
             .then(editor => {
@@ -76,13 +74,30 @@
         // 업로드 어댑터 인스턴스를 생성하는 FileRepository를 선언. (커스텀 업로드 어댑터 활성화)
         function uploadAdapterPlugin(editor) {
      	   editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
-     		   return new imagePreview(loader);
+     		   return new imageUpload(loader);
      	   }
         }
         
-      }
+        editorSubmitBtn.addEventListener('click', function() {
+
+        	let editorContent = editor.getData();
+        	
+        	fetch(getContextPath() + 'editorUpload', {
+                method: "post",
+                headers: {
+                  'header': header,
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify({
+                	editorContent: editorContent
+                })
+             })
+        })
+    }
     
-    class imagePreview {
+    class imageUpload {
         constructor(loader) {
             this.loader = loader; //파일 로더
         }
@@ -109,7 +124,7 @@
      	// 업로드 요청
         _initRequest() {
             const xhr = this.xhr = new XMLHttpRequest();
-            xhr.open('POST', 'editorImage', true)
+            xhr.open('POST', getContextPath() + 'ckeditorImage', true)
 			xhr.setRequestHeader('x-csrf-token', document.querySelector('meta[name="_csrf"]').getAttribute('content'));
             xhr.responseType = 'json';
         }
@@ -132,10 +147,10 @@
              	// 만약 업로드가 성공했다면, 업로드 프로미스를 적어도 default URL을 담은 객체와 함께 resolve하라. 
                 setTimeout(() => {
                 resolve({
-                    default: response.result.url  // 이 URL은 서버에 업로드된 이미지를 가리키며, 컨텐츠에 이미지를 표시하기 위해 사용된다.
+                    default: getContextPath() + `display?fileName=${response.url}&folder=test`  // 이 URL은 서버에 업로드된 이미지를 가리키며, 컨텐츠에 이미지를 표시하기 위해 사용된다.
                 })
                 }, 5000);
-                
+             	
             })
         }
 		
@@ -146,6 +161,14 @@
             this.xhr.send(data)
         }
     }
+    
+    function getContextPath() {
+		var pathName = window.location.pathname.substring(1);
+		var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+		var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+		return path_root;
+	}
+    
     </script>
 
 </body>
