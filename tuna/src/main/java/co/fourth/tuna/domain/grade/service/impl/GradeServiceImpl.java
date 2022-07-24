@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import co.fourth.tuna.domain.grade.mapper.GradeMapper;
 import co.fourth.tuna.domain.grade.service.GradeService;
 import co.fourth.tuna.domain.grade.vo.GradeFormVO;
-import co.fourth.tuna.domain.grade.vo.GradeVO;
 
 @Service
 public class GradeServiceImpl implements GradeService {
@@ -46,6 +45,16 @@ public class GradeServiceImpl implements GradeService {
 	@Transactional
 	public String updateGradeList(List<GradeFormVO> list) {
 		for(GradeFormVO form : list) {
+			if ( form.getAttd() != null && form.getAttd() > 100 
+				|| form.getMiddle() != null && form.getMiddle() > 100 
+				|| form.getFinals() != null && form.getFinals() > 100 
+				|| form.getTask() != null && form.getTask() > 100 )
+				throw new Error("100점을 넘을 수 없습니다.");
+			if( form.getAttd() != null && form.getAttd() < 0
+					|| form.getMiddle() != null && form.getMiddle() < 0
+					|| form.getFinals() != null && form.getFinals() < 0
+					|| form.getTask() != null && form.getTask() < 0 )
+				throw new Error("0점보다 작을 수 없습니다.");
 			if ( mapper.updateGradeByForm(form) < 1) {
 				throw new Error("수정에 실패 했습니다");
 			}

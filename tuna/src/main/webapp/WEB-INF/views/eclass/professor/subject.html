@@ -1203,6 +1203,7 @@ xmlns:th="http://www.thymeleaf.org"
               let table = document.getElementById("subject-grade-table");
               let tbody = table.getElementsByTagName('tbody')[0];
               let trTags = tbody.getElementsByTagName('tr');
+              studentsGradeTr = [];
               for(let tr of trTags){ tr.remove() };
               for( let stud of studList ) {
                 let tr = document.createElement('tr');
@@ -1359,8 +1360,6 @@ xmlns:th="http://www.thymeleaf.org"
                     }
                     gradeDatas.push(gradeObj)
                   }
-                  
-                  console.log(gradeDatas);
 
                   fetch("/tuna/prof/updateGrades", {
                     method: "POST",
