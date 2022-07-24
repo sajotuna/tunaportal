@@ -45,8 +45,10 @@
 											<thead>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="2">제목</th>
-													<th colspan="7" th:text="${tsk.TITLE}"><input
-														type="hidden" name="no" th:value="${tsk.NO}"></th>
+													<th colspan="7">[[${tsk.TITLE}]]
+													<input type="hidden" name="no" id="no" th:value="${tsk.NO}">
+													</th>
+													
 												</tr>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="2">작성일자</th>
@@ -123,7 +125,6 @@
 					return path_root;
 				}
 			</script>
-			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 		</main>
 	</div>
 </body>
