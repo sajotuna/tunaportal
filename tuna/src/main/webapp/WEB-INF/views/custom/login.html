@@ -20,12 +20,13 @@
 		<section id="main-container">
 			<!-- Page Content -->
 			<div class="bg-image">
-				<div class="row g-0 bg-primary-dark-op">
+				<div class="row g-0 bg-primary-dark-op" th:style="|background-image: url('@{/resources/assets/media/tuna_login.jpg}'); background-size:contain;|">
 					<!-- Meta Info Section -->
 					<div
 						class="hero-static col-lg-4 d-none d-lg-flex flex-column justify-content-center">
 						<div class="p-4 p-xl-5 flex-grow-1 d-flex align-items-center">
 							<div class="w-100">
+								<img th:src="@{/resources/assets/media/tuna_logo.png}" style="display:block;width:30%;">
 								<a class="link-fx fw-semibold fs-2 text-white"
 									th:href="@{/home}"> TUNA </a>
 								<p class="text-white-75 me-xl-8 mt-2">Welcome to your
