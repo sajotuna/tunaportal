@@ -70,15 +70,48 @@ data-layout-decorate="~{layouts/navLayout}">
                     </div>
                     <div class="mb-3">
                       <div class="input-group">
-                        <th:block th:if = "${not #strings.isEmpty(vo.bank)}">
+                        
                         <span class="input-group-text">은행</span>
-                        <input type="text" class="form-control" name = "bacc" th:value = "${@codeList.getName(vo.bacc)}" >
+                        <select class="form-select" id="bacc" name="bacc" onchange="javascript:updateSuccess();">
+                        <th:block th:if = "${not #strings.isEmpty(vo.bacc)}">
+	                          <option th:value="${vo.bacc}" th:text="${@codeList.getName(vo.bacc)}"></option>
+	                    </th:block>
+	                    <th:block th:unless = "${not #strings.isEmpty(vo.bacc)}">
+	                    	  <option value ="" selected>은행선택</option>
+	                    </th:block>
+	                          <option value="35">경남은행</option>
+	                          <option value="29">광주은행</option>
+	                          <option value="7">국민은행</option>
+	                          <option value="5">기업은행</option>
+	                          <option value="15">농협중앙회</option>
+	                          <option value="17">농협회원조합</option>
+	                          <option value="25">대구은행</option>
+	                          <option value="47">도이치은행</option>
+	                          <option value="27">부산은행</option>
+	                          <option value="3">산업은행</option>
+	                          <option value="41">상호저축은행</option>
+	                          <option value="37">새마을금고</option>
+	                          <option value="11">수협중앙회</option>
+	                          <option value="36">신한금융투자</option>
+	                          <option value="60">신한은행</option>
+	                          <option value="39">신협중앙회</option>
+	                          <option value="9">외환은행</option>
+	                          <option value="19">우리은행</option>
+	                          <option value="56">우체국</option>
+	                          <option value="33">전북은행</option>
+	                          <option value="31">제주은행</option>
+	                          <option value="68">카카오뱅크</option>
+	                          <option value="67">케이뱅크</option>
+	                          <option value="59">하나은행</option>
+	                          <option value="23">한국씨티은행</option>
+	                          <option value="45">HSBC은행</option>
+	                          <option value="21">SC제일은행</option>
+                        </select>
+                     <th:block th:if = "${not #strings.isEmpty(vo.bank)}">
                         <span class="input-group-text">계좌번호</span>
                         <input type="text" class="form-control" name = "bank" th:value = "${vo.bank}" >
                       </th:block>
                       <th:block th:unless = "${not #strings.isEmpty(vo.bank)}">
-                        <span class="input-group-text">은행</span>
-                        <input type="text" name = "bacc" class="form-control" >
                         <span class="input-group-text">계좌번호</span>
                         <input type="text" name = "bank" class="form-control" >
                       </th:block>
@@ -116,7 +149,7 @@ data-layout-decorate="~{layouts/navLayout}">
                   <a th:href ="@{/home}" class = "btn btn-secondary">돌아가기</a>
               </div>
               <div class="m-2">
-                <button type="submit" class="btn btn-secondary">수정하기</button>
+                <button type="submit" class="btn btn-secondary" id = "updateBtn" disabled>수정하기</button>
               </div>
             </div>
             </form>
@@ -136,6 +169,16 @@ data-layout-decorate="~{layouts/navLayout}">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
     
+      let tagSelect = document.querySelectorAll('[type=text]')
+      let updateBtn = document.querySelector('#updateBtn')
+      tagSelect.forEach(tag =>{
+    	  tag.addEventListener('change', function(){
+        	  updateBtn.disabled = false;
+          })
+      })
+      function updateSuccess(){
+    	updateBtn.disabled = false;
+      }
     
       function showPopup(){
     	  let no = document.querySelector('#no')

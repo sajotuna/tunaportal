@@ -35,16 +35,6 @@
 
 <update id = "AdminStudUpdate" 
 	parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
-	
-	<selectKey  keyColumn="deptCode,stateCode" resultType="co.fourth.tuna.domain.user.vo.StudentVO" keyProperty="deptCode,stateCode" order="BEFORE">
-		select no stateCode, (select no deptcode
-                      from publiccode
-                      where codename = #{deptCode}) deptCode
-		from publiccode
-		where codename = #{stateCode}
-	
-	</selectKey>
-	
 	update student
 	set DEPTCODE = #{deptCode}, NAME = #{name}, STATECODE = #{stateCode}
 	WHERE no = #{no}

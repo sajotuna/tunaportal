@@ -100,7 +100,7 @@ data-layout-decorate="~{layouts/navLayout}">
                   <a th:href ="@{/home}" class = "btn btn-secondary">돌아가기</a>
               </div>
               <div class="m-2">
-                <button type="submit" class="btn btn-secondary">수정하기</button>
+                <button type="submit" class="btn btn-secondary" id = "updateBtn" disabled>수정하기</button>
               </div>
             </div>
             </form>
@@ -121,6 +121,14 @@ data-layout-decorate="~{layouts/navLayout}">
     <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+    
+    let tagSelect = document.querySelectorAll('[type=text]')
+    let updateBtn = document.querySelector('#updateBtn')
+    tagSelect.forEach(tag =>{
+  	  tag.addEventListener('change', function(){
+      	  updateBtn.disabled = false;
+        })
+    })
       function showPopup(){
           window.open("pwdUpdate?no="+no.value,"비밀번호변경","width=600, height=400, top=10, left=10");
       }

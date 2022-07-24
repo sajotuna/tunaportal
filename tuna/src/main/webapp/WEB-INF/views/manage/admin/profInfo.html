@@ -45,11 +45,28 @@
                         <div class="mb-3">
                           <div class="input-group">
                             <span class="input-group-text">소속</span>
-                            <input type="text" class="form-control" name = "deptcode" th:value = "${@codeList.getName(vo.deptcode)}" >
+                            <select class="form-select" id="deptcode" name="deptCode" onchange="javascript:updateSuccess();">
+			                    <option selected value="${vo.deptcode}" th:text = "${@codeList.getName(vo.deptcode)}"></option>
+				                  <option value="801" id="801">기계공학과</option>
+				                  <option value="805" id="805">항공우주공학과</option>
+				                  <option value="810" id="810">생명공학과</option>
+				                  <option value="806" id="806">바이오및뇌공학과</option>
+				                  <option value="809" id="809">정보보안학과</option>
+				                  <option value="803" id="803">컴퓨터공학과</option>
+				                  <option value="808" id="808">무기재료공학과</option>
+				                  <option value="802" id="802">전기전자공학과</option>
+				                  <option value="804" id="804">화학공학과</option>
+				                  <option value="807" id="807">정보통신학과</option>
+			                  </select>
                             <span class="input-group-text">이름</span>
                             <input type="text" class="form-control" th:value = "${vo.name}" name = "name">
                             <span class="input-group-text">재적상태</span>
-                            <input type="text" class="form-control" name = "stateCode" th:value = "${@codeList.getName(vo.stateCode)}" >
+                            <select class="form-select" id="stateCode" name="stateCode" onchange="javascript:updateSuccess();">
+	                  			<option th:value = "${vo.stateCode}" th:text = "${@codeList.getName(vo.stateCode)}"></option>
+		                 		<option value="201" id = "201">재직</option>
+                  				<option value="202" id = "202">휴직</option>
+                  				<option value="203" id = "203">퇴직</option>
+		                	</select>
                           </div>
                     </div>
                     <div class="mb-3">
@@ -105,7 +122,7 @@
                   <a href="#" class="btn btn-secondary" onclick="javascript:window.close()">닫기</a>
               </div>
               <div class="m-2">
-                <button type="submit" class="btn btn-secondary">수정하기</button>
+              <button type="submit" class="btn btn-secondary" id = "updateBtn" disabled>수정하기</button>
               </div>
             </div>
             </form>
@@ -129,5 +146,19 @@
 		}
 	</script>
 </th:block>
+	<script>
+		let tagSelect = document.querySelectorAll('[type=text]')
+	    let updateBtn = document.querySelector('#updateBtn')
+	    tagSelect.forEach(tag =>{
+	  	  tag.addEventListener('change', function(){
+	      	  updateBtn.disabled = false;
+	        })
+	    })
+	    
+	    function updateSuccess(){
+	    	updateBtn.disabled = false;
+	    }
+	    
+	</script>
   </body>
 </html>

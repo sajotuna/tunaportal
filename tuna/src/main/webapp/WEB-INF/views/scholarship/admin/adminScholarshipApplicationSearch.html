@@ -35,7 +35,7 @@
       <div id="page-container">
         <h3 class="h3 fw-bold mb-2">장학신청 조회</h3>
         <div class=" bg-body-extra-light" style="padding: 10px;">
-        <form th:action="@{/admin/admin/scholarSearch}" method="post" class="row">
+        <form th:action="@{/admin/admin/scholarSearch}" method="post" id="checkFrm" class="row">
           <div class="col-md-4 col-xl-3 fomrtag">
             <div class="mb-2">
               <select class="form-select" id="year" name="year">
@@ -179,17 +179,29 @@
                   </a>
                 </li>
                 <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">1</a>
+                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
                 </li>
                 <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">2</a>
+                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
                 </li>
                 <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">3</a>
+                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
                 </li>
                 <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">4</a>
+                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
                 </li>
+                <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                  </li>
                 <li class="page-item">
                   <a class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
                     <span aria-hidden="true">
@@ -252,80 +264,65 @@
     	frm.action = "../scholar/Reject";
     	frm.submit();
     }
-    
-      document.addEventListener('DOMContentLoaded', function(){
-  		
-  		
-  		let nextBtn = document.querySelector("#next")
-  		let prevBtn = document.querySelector("#prev")
-  		let pageingBtn = document.querySelectorAll("#pageingBtn");
-  		nextBtn.addEventListener('click', function(){
-  			pageingBtn.forEach(btn =>{
-  				let a = btn.innerHTML
-  				btn.parentElement.classList.remove('active')
-  				btn.innerHTML = parseInt(a)+4;
-  			})
-  			
-  			setTimeout(() => location.href = 'scholarSearch?pageNum='+pageingBtn[0].innerHTML, 10);
-  			
-  		})
-  		
-  		prevBtn.addEventListener('click', function(){
-  			pageingBtn.forEach(btn =>{
-  				let a = btn.innerHTML
-  				if (parseInt(a) > 4){
-  					btn.parentElement.classList.remove('active')
-  					btn.innerHTML = parseInt(a)-4;
-  				}
-  			})
-  			
-  			setTimeout(() => location.href = 'scholarSearch?pageNum='+pageingBtn[0].innerHTML, 10);
-  			
-  		})
-  		
-  		pageingBtn.forEach(btn =>{
-  			btn.addEventListener('click',function(){
-  				let a = btn.innerHTML
-  				location.href = 'scholarSearch?pageNum='+parseInt(a)
-  			})
-  		})
-  		
-  		
-  	})
-    
 
   </script>
    <th:block th:if = "${params != null && params != ''}">
 <script th:inline="javascript">
 	document.addEventListener('DOMContentLoaded', function(){
 		let params = /*[[${params}]]*/ 'default';
-		let pageingBtn = document.querySelectorAll("#pageingBtn"); 
+		let nextBtn = document.querySelector("#next")
+		let prevBtn = document.querySelector("#prev")
+		let pageingBtn = document.querySelectorAll("#pageingBtn");
+		nextBtn.addEventListener('click', function(){
+			pageingBtn.forEach(btn =>{
+				let a = btn.innerHTML
+				btn.innerHTML = parseInt(a)+8;
+			})
+			tagInsert(pageingBtn[0].innerHTML)
+		})
 		
-		 if(params.pageNum % 4 == 1){
-			pageingBtn[0].innerHTML = parseInt(params.pageNum)
-			pageingBtn[0].parentElement.setAttribute("class", "page-item active")
-			pageingBtn[1].innerHTML = parseInt(params.pageNum) + 1
-			pageingBtn[2].innerHTML = parseInt(params.pageNum) + 2
-			pageingBtn[3].innerHTML = parseInt(params.pageNum) + 3
-		}else if(params.pageNum % 4 == 2){
-			pageingBtn[0].innerHTML = parseInt(params.pageNum) - 1
-			pageingBtn[1].innerHTML = parseInt(params.pageNum)
-			pageingBtn[1].parentElement.setAttribute("class", "page-item active")
-			pageingBtn[2].innerHTML = parseInt(params.pageNum) + 1
-			pageingBtn[3].innerHTML = parseInt(params.pageNum) + 2
-		}else if(params.pageNum % 4 == 3){
-			pageingBtn[0].innerHTML = parseInt(params.pageNum) - 2
-			pageingBtn[1].innerHTML = parseInt(params.pageNum) - 1
-			pageingBtn[2].innerHTML = parseInt(params.pageNum) 
-			pageingBtn[2].parentElement.setAttribute("class", "page-item active")
-			pageingBtn[3].innerHTML = parseInt(params.pageNum) + 1
-		}else if(params.pageNum % 4 == 0){
-			pageingBtn[0].innerHTML = parseInt(params.pageNum) - 3
-			pageingBtn[1].innerHTML = parseInt(params.pageNum) - 2
-			pageingBtn[2].innerHTML = parseInt(params.pageNum) - 1
-			pageingBtn[3].innerHTML = parseInt(params.pageNum)
-			pageingBtn[3].parentElement.setAttribute("class", "page-item active")
-		} 
+		prevBtn.addEventListener('click', function(){
+			pageingBtn.forEach((btn,idx) =>{
+				let a = btn.innerHTML
+				if (parseInt(a) > 8){
+					btn.innerHTML = parseInt(a)-8;
+				}else{
+					params.pageNum = 1;
+					if(idx == 0){
+						btn.innerHTML = parseInt(params.pageNum) + idx
+					}
+					else{
+						btn.innerHTML = parseInt(pageingBtn[idx-1].innerHTML) + 1;
+					}
+				}
+			})
+			tagInsert(pageingBtn[0].innerHTML)
+		})
+		
+		pageingBtn.forEach((btn,idx) =>{
+			btn.innerHTML = parseInt(params.pageNum) + idx
+			
+			if(btn.innerHTML == params.pageNum){
+				btn.parentElement.setAttribute("class", "page-item active")
+			}
+			btn.addEventListener('click',function(){
+				
+				let a = btn.innerHTML
+				tagInsert(parseInt(a))
+			})
+		})
+		
+		function tagInsert(value){
+			let checkFrm = document.querySelector('#checkFrm')
+			let inputtag = document.createElement('input')
+	    	inputtag.setAttribute("name", "pageNum")
+	    	inputtag.setAttribute("type", "hidden")
+	    	inputtag.setAttribute("value", value)
+	    	
+	    	checkFrm.appendChild(inputtag)
+	    	checkFrm.submit()
+	    	
+		}
 		 switch(params.year){
 		 	case '108':
 		 		$('#108').attr('selected', 'selected')
