@@ -52,6 +52,7 @@ public class LectureBasketController {
 		return "course/basket/courseBasket";
 	}
 
+	@SuppressWarnings("null")
 	@RequestMapping("/stud/basketInsert")
 	public String basketInsert(RedirectAttributes ra, @RequestParam List<String> courcheck, LectureBasketVO vo,
 			Authentication authentication) {
@@ -65,17 +66,15 @@ public class LectureBasketController {
 			int target = LectureBasketDao.subjectTarget(vo);
 			grade -= target;
 			if(grade < 0) {
-				ra.addFlashAttribute("message", "수강신청 가능한 학점이 없습니다.");
+				ra.addFlashAttribute("error", "수강신청 가능한 학점이 없습니다.");
 				return "redirect:/stud/courseBasket";
 			}
-			if(message == null || message.equals("")) {
-				LectureBasketDao.baskInsert(vo);
-			}else {
-				ra.addFlashAttribute("message", message);
+			if(message != null) {
+				ra.addFlashAttribute("error", message);
 				return "redirect:/stud/courseBasket";
 			}
 		}
-		ra.addFlashAttribute("message", "수강신청이 완료되었습니다.");
+		ra.addFlashAttribute("success", "수강신청이 완료되었습니다.");
 		return "redirect:/stud/courseBasket";
 
 	}
@@ -84,7 +83,7 @@ public class LectureBasketController {
 	public String basketDelete(Authentication authentication, RedirectAttributes ra, LectureBasketVO vo) {
 		vo.setStNo(authentication.getName());
 		LectureBasketDao.baskDelete(vo);
-		ra.addFlashAttribute("message", "삭제가 완료되었습니다.");
+		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
 		return "redirect:/stud/courseBasket";
 	}
 

@@ -11,6 +11,9 @@
   <meta name="_csrf_header" th:content="${_csrf.headerName}">
 
   <title>장학금 신청</title>
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
   <style>
     tr {
       text-align: center;
@@ -176,7 +179,7 @@
 			  		radios.forEach(radio=>{
 			  			if(radio.checked == true){
 			  				if(radio.value == val.schNo){
-			  					alert('동일한장학금은 신청이 불가능합니다.');
+			  					Dialogs.dialog('error', '실패', '동일한장학금은 신청이 불가능합니다.');
 			  					check++;
 			  					return;
 			  				}

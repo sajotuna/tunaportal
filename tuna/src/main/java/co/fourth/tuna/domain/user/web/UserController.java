@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.user.service.AdminService;
 import co.fourth.tuna.domain.user.service.ProfessorService;
@@ -34,7 +36,9 @@ public class UserController {
 	private SqlSession SqlSession;
 	@Autowired 
 	private ProfessorService professorDao;
-	
+	@Autowired
+	private BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+
 	@RequestMapping("/admin/adminUserSearch")
 	public String adminUserSearch(Model model, @RequestParam Map<String, Object> params, @RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum) {
 		
@@ -75,8 +79,6 @@ public class UserController {
 			model.addAttribute("vo", vo);
 			return "manage/admin/studentInfo";
 		}
-		
-		
 	}
 	
 	@PostMapping("/prof/students")
@@ -85,4 +87,49 @@ public class UserController {
 			@RequestBody Map<String, Integer> reqData) {
 		return StudentDao.findListBySubjectId(reqData.get("sbjno"));
 	}
+	
+	@RequestMapping("/admin/adminUpdate")
+	public String adminUpdate(Model model, AdminVO vo,Authentication authentication) {
+		vo.setNo(Integer.parseInt(authentication.getName()));
+		model.addAttribute("vo", AdminDao.findById(vo));
+		return "manage/user/adminUpdate";
+	}
+	
+	@RequestMapping("/admin/pwdUpdate")
+	public String pwdUpdate() {
+		return "manage/user/adminPwdUpdate";
+	}
+	
+	@RequestMapping("/admin/adminInfoUpdate")
+	public String adminInfoUpdate(AdminVO vo,Authentication authentication) {
+		vo.setNo(Integer.parseInt(authentication.getName()));
+		AdminDao.adminInfoUpdate(vo);
+		return "redirect:/admin/adminUpdate";
+	}
+	
+	@RequestMapping("/admin/userpwdUpdate")
+	public String userpwdUpdate(RedirectAttributes ra,Model model, String beforepassword, AdminVO vo){
+		String oldpwd = AdminDao.adminPwdFind(vo);
+		String message = "";
+		if(enc.matches(beforepassword,oldpwd)) {
+			vo.setPwd(enc.encode(vo.getPwd()));
+			AdminDao.adminpwdUpdate(vo);    
+			System.out.println("비밀번호 변경");
+			message = "비밀번호가 변경 되었습니다.";
+		}else {
+			System.out.println("비밀번호 변경실패");
+			message = "비밀번호가 틀립니다.";
+		}
+		ra.addAttribute("message", message);
+		return "redirect:/admin/pwdUpdate";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

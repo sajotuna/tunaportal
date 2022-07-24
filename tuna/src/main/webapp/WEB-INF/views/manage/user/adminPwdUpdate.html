@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>비밀번호 수정</title>
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
+</head>
+
+<body>
+  
+  <div class="bg-body-light">
+    <div class="content content-full content-boxed">
+      <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+        <div class="flex-grow-1">
+          <h1 class="h1 fw-bold mb-2">
+            비밀번호 수정
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+      <div id="section">
+      <div id="page-container">
+        <div class="content content-boxed ">
+          <div class="bg-body-extra-light">
+              <div class="row">
+                <div class="col-10 m-4">
+                  <form th:action="@{/admin/userpwdUpdate}" method="post" id = "frm">
+                    <div class="mb-4">
+                      <div class="input-group">
+                        <input type="password" class="form-control" id="beforepassword"
+                          name="beforepassword" placeholder="기존 비밀번호">
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <div class="input-group">
+                        <input type="password" class="form-control" id="pwd"
+                          name="pwd" placeholder="변경 비밀번호">
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <div class="input-group">
+                        <input type="password" class="form-control" id="afterpassword1"
+                          name="afterpassword1" placeholder="비밀번호 확인">
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <div class="center">
+                        <a href="#" class="btn btn-info" onclick="javascript:window.close()">닫기</a>
+                        <button type = "button" onclick ="javascript:userPwdUpdate();" class="btn btn-info">변경</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+	<script>
+		function userPwdUpdate(){
+			
+			var reg = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$"
+			
+			let pwd = document.querySelector('#pwd');
+			let afterpassword1 = document.querySelector('#afterpassword1');
+			
+			if(fn_checkPass(pwd.value) == false)
+			{
+				alert("비밀번호는 소문자, 대문자, 숫자, 특수문자 \n조합하여 8자리 이상으로 구성하세요.");
+			}else {
+				if(pwd.value == afterpassword1.value){
+					let inputtag = document.createElement('input')
+	 		    	inputtag.setAttribute("name", "no")
+	 		    	inputtag.setAttribute("type", "hidden")
+	 		    	inputtag.setAttribute("value", getParam("no"))
+			    	  
+	 		    	frm.appendChild(inputtag)
+	 		    	frm.submit();
+				}else{
+					alert("비밀번호가 서로 다릅니다. 확인해주세요.")
+					
+				}
+			}
+			pwd.value = '';
+			afterpassword1.value = '';
+		}
+		
+		function fn_checkPass(password) {
+
+			var checkPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+
+			if (checkPass.test(password)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		
+		function getParam(name)
+        {
+            var curr_url = location.search.substr(location.search.indexOf("?") + 1);
+            var svalue = "";
+            curr_url = curr_url.split("&");
+            for (var i = 0; i < curr_url.length; i++)
+            {
+                temp = curr_url[i].split("=");
+                if ([temp[0]] == name) { svalue = temp[1]; }
+            }
+            return svalue;
+        }
+	</script>
+</body>
+
+</html>

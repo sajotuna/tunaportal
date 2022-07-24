@@ -9,7 +9,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 	
   <title>장학신청조회</title>
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
   <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
   <style>
 
     h5 {
@@ -209,13 +212,17 @@
     </div>
   </div>
   </div>
-  <th:block th:if = "${message != null && message != ''}">
-	<script th:inline="javascript">
-		let message = /*[[${message}]]*/ 'default';
-		alert(message);
-		
-	</script>
-</th:block>
+	<th:block th:if = "${(success != null && success != '') || (error != null && error != '')}">
+		<script th:inline="javascript">
+			let success = /*[[${success}]]*/ 'default';
+			let error = /*[[${error}]]*/ 'default';
+			if (success) {
+				Dialogs.dialog('success', '완료', success);
+			} else if (error) {
+				Dialogs.dialog('error', '실패', error);
+			}
+		</script>
+	</th:block>
   <!-- Page JS Plugins -->
   <script th:src="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.js}"></script>
 

@@ -70,7 +70,7 @@
 SELECT CASE WHEN MAX(NO) != 0 THEN MAX(NO) + 1 ELSE 1 END FROM LECTUREQNA
 </selectKey>
 INSERT INTO LECTUREQNA
-VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, default)
+VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{visible})
 </insert>
 
 <!-- 목록 subject으로 찾기 -->

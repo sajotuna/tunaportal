@@ -46,105 +46,26 @@ function submit() {
 		let job = $(this).data('job');
 	
 		if (job === 'submit') {
-			$('#tb tr').each(function(idx) {
-				sequenceAjax(this, idx);
-			})
-			pageDialogs.dialog(job);
 			
+			Dialogs.dialog('checkConfirm', 
+	                       '순서를 변경하시겠습니까?', 
+	                       '설정한 순서대로 배너의 순서를 변경합니다.',
+	                       function() {
+								$('#tb tr').each(function(idx) {
+									sequenceAjax(this, idx);
+								})
+						  });
+						  
 		} else if (job === 'delete') {
-			pageDialogs.dialog(job);
+			
+			Dialogs.dialog('warnConfirm', 
+	                       '정말로 삭제하시겠습니까?', 
+	                       '삭제한 사진은 복구할 수 없습니다.',
+	                       function() {
+								deleteAjax();
+						   });
 		}
-		
 	})
-	
-}
-
-// dialog
-class pageDialogs {
-	
-	static dialog(job, txt) {
-		
-	    let toast = Swal.mixin({
-	      buttonsStyling: false,
-	      target: '#page-container',
-	      customClass: {
-	        confirmButton: 'btn btn-dark m-1',
-	        cancelButton: 'btn btn-light m-1',
-	        input: 'form-control'
-	      }
-	    });
-	    
-	    success();
-	    
-	    function success() {
-	    	
-	    	if(job === 'upload') {
-	    		
-	    		toast.fire({
-		
-		    			title:'업로드 완료', 
-		    			text:'이제 사진 순서를 변경한 후 미리보기에서 등록할 수 있습니다.', 
-		    			icon: 'success',
-		    			confirmButtonText: '확인'
-		    			
-	    		}).then(result => {
-	    			if (result.value) location.reload();
-	    		});
-	    		
-	    	} else if (job === 'submit') {
-	    		
-	    		toast.fire({
-	    			
-		  	          title: '등록 완료',
-		  	          text: '메인 페이지로 돌아가 배너를 확인해 보세요.',
-		  	          icon: 'success',
-		  	          showCancelButton: true,
-		  	          customClass: {
-		  	            confirmButton: 'btn btn-dark m-1',
-		  	            cancelButton: 'btn btn-light m-1'
-		  	          },
-		  	          confirmButtonText: '메인으로 가기',
-		  	          cancelButtonText: '취소',
-	  	          
-	  	        }).then(result => {
-	  	          if (result.value) location.href = '/tuna/admin';
-	  	          else if (result.dismiss === 'cancel') location.reload();
-	  	        });
-	    		
-	    	} else if (job === 'delete') {
-	    		
-	    		toast.fire({
-	    			
-	  	          title: '정말로 삭제하시겠습니까?',
-	  	          text: '이 작업은 취소할 수 없습니다.',
-	  	          icon: 'warning',
-	  	          showCancelButton: true,
-	  	          customClass: {
-	  	            confirmButton: 'btn btn-danger m-1',
-	  	            cancelButton: 'btn btn-light m-1'
-	  	          },
-	  	          confirmButtonText: '삭제하기',
-	  	          cancelButtonText: '취소',
-			  	          
-	  	       }).then(result => {
-		  	        if (result.value) deleteAjax();
-		  	   });
-	    	} else if (job === 'success') {
-	    		
-				toast.fire({
-						
-						title:'삭제 완료', 
-						text:'삭제가 정상적으로 처리되었습니다.', 
-						icon: 'success',
-						confirmButtonText: '확인'
-					  	          
-				}).then(result => { 
-					location.reload(); 
-				});
-	    		
-	    	}
-	  	}
-	}
 }
 
 // 위로 이동
@@ -165,9 +86,7 @@ function trDown() {
 	})
 }
 
-function getContextPath() {
-	var pathName = window.location.pathname.substring(1);
-	var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
-	var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
-	return path_root;
+function error() {
+	Dialogs.dialog('error', '작업 실패', '작업이 정상적으로 처리되지 않았습니다.')
 }
+
