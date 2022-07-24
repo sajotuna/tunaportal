@@ -1,9 +1,10 @@
 package co.fourth.tuna.domain.portalNotice.web;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,36 +113,35 @@ public class PortalNoticeController {
 	}
 
 	// 공지등록
-	@PostMapping("/admin/admin/adminNoticeInsert")
-	public String adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo,Authentication authentication,
-			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
-
-		
-		
-		vo.setAdNo((authentication.getName()));
-		noticeDao.noticeInsert(vo);
-		
-		String text = vo.getContent();
-		String esc= HtmlUtils.htmlEscape(text);
-		
-		vo.setContent(esc);
-
-		for (MultipartFile file : files) {
-
-			String originName = file.getOriginalFilename();
-
-			if (originName != null && originName.length() != 0) {
-				String[] portalFile = fileService.upload(file, "PortalNotice");
-
-				fileVo.setName(portalFile[0]);
-				fileVo.setUri(portalFile[1]);
-				fileVo.setPnno(vo.getNo());
-				noticeDao.fileInsert(fileVo);
-			}
-
-		}
-		return "redirect:/admin/admin/adminNoticeList";
-	}
+	/*
+	 * @PostMapping("/admin/admin/adminNoticeInsert") public String
+	 * adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo,Authentication
+	 * authentication,
+	 * 
+	 * @RequestParam(value = "file") MultipartFile[] files) throws IOException {
+	 * 
+	 * 
+	 * 
+	 * vo.setAdNo((authentication.getName())); noticeDao.noticeInsert(vo);
+	 * 
+	 * String text = vo.getContent(); String esc= HtmlUtils.htmlEscape(text);
+	 * 
+	 * vo.setContent(esc);
+	 * 
+	 * MultipartFile image = request.getFile("upload");
+	 * 
+	 * 
+	 * String originName = files.getOriginalFilename();
+	 * 
+	 * if (originName != null && originName.length() != 0) { String[] portalFile =
+	 * fileService.upload(files, "PortalNotice");
+	 * 
+	 * fileVo.setName(portalFile[0]); fileVo.setUri(portalFile[1]);
+	 * fileVo.setPnno(vo.getNo());
+	 * 
+	 * 
+	 * } return "redirect:/admin/admin/adminNoticeList"; }
+	 */
 
 	// 공지수정폼
 	@PostMapping("/admin/admin/adminNoticeupdateForm")
@@ -180,17 +180,17 @@ public class PortalNoticeController {
 	}
 	
 	
-	@PostMapping("/admin/fileUpload")
-	public int basicBannerInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo, @RequestParam(value = "file")MultipartFile file) {
-		
-		String[] fileInfo = fileService.upload(file, "PortalNotice");
-		
-		fileVo.setName(fileInfo[0]);
-		fileVo.setUri(fileInfo[1]);
-		fileVo.setPnno(vo.getNo());
-		
-		return noticeDao.fileInsert(fileVo);
-	}
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping("/fileUpload") public String fileUpload(Model model,
+	 * MultipartFile fileload, HttpServletRequest req) { String filename =
+	 * fileload.getOriginalFilename();
+	 * 
+	 * String fuploadPath = req.getServletContext().getRealPath("/upload/editor")
+	 * 
+	 * File file = new File(fuploadPath + "/" + newfilename); }
+	 */
 
 	// 파일삭제
 	@DeleteMapping("/fileDel")
