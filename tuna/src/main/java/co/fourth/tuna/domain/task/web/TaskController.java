@@ -1,23 +1,24 @@
 package co.fourth.tuna.domain.task.web;
 
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import co.fourth.tuna.domain.subject.mapper.SubjectMapper;
-import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.domain.task.service.TaskService;
 import co.fourth.tuna.domain.task.vo.TaskVO;
-import co.fourth.tuna.domain.user.vo.StudentVO;
 
 @Controller
 public class TaskController {
 	
 	@Autowired private SubjectMapper map;
+	@Autowired private TaskService service;
+	
 //	@RequestMapping("/eclass/student/taskList")
 //	public String taskList(Model model) {
 //		
@@ -42,5 +43,31 @@ public class TaskController {
 //		
 //		return "eclass/stud/taskSelect";
 //	}
-
+	
+	@PostMapping(value="/staff/insertTask")
+	public ResponseEntity<String> insertTask(
+			@RequestBody TaskVO task) {
+		ResponseEntity<String> resEntity = null;
+		HttpHeaders resHeaders = new HttpHeaders();
+		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		
+		try {
+			resEntity = new ResponseEntity<String>(
+					service.insertTaskByVO(task),
+					resHeaders,
+					HttpStatus.OK);
+		} catch (Error e) {
+			resEntity = new ResponseEntity<String>(
+					e.getMessage(),
+					resHeaders,
+					HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			resEntity = new ResponseEntity<String>(
+					e.getMessage(),
+					resHeaders,
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		return resEntity;
+	}
 }

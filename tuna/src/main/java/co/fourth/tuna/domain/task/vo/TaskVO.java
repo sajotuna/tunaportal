@@ -21,6 +21,8 @@ public class TaskVO {
 	private Date limitDate;
 	//과목코드
 	private int sbjNo;
+	// 내용
+	private String content;
 	//시작시간
 	private Date startDate;
 	

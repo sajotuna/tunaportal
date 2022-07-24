@@ -21,4 +21,7 @@ public interface TaskService {
 	
 	//제출한 파일 삭제
 	public void deleteSubmitTask(SubmitTaskVO vo);
+	
+	// 과제 등록
+	public String insertTaskByVO(TaskVO vo);
 }
