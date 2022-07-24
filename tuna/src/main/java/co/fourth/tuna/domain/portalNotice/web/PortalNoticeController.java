@@ -1,7 +1,11 @@
 package co.fourth.tuna.domain.portalNotice.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import co.fourth.tuna.domain.banner.vo.BannerVO;
 import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.common.service.PagingService;
 import co.fourth.tuna.domain.common.vo.PagingVO;
@@ -69,6 +76,7 @@ public class PortalNoticeController {
 		return "notice/user/portalNoticeSelect";
 	}
 
+	
 	// admin
 	// 전체조회
 	@RequestMapping("/admin/adminNoticeList")
@@ -100,6 +108,7 @@ public class PortalNoticeController {
 		return "notice/admin/adminNoticeSelect";
 	}
 
+	
 	// 공지등록폼
 	@RequestMapping("/admin/adminNoticeInsertForm")
 	public String adminNoticeInsertForm() {
@@ -165,6 +174,19 @@ public class PortalNoticeController {
 
 		return "redirect:/admin/adminNoticeList";
 
+	}
+	
+	
+	@PostMapping("/admin/fileUpload")
+	public int basicBannerInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo, @RequestParam(value = "file")MultipartFile file) {
+		
+		String[] fileInfo = fileService.upload(file, "PortalNotice");
+		
+		fileVo.setName(fileInfo[0]);
+		fileVo.setUri(fileInfo[1]);
+		fileVo.setPnno(vo.getNo());
+		
+		return noticeDao.fileInsert(fileVo);
 	}
 
 	// 파일삭제

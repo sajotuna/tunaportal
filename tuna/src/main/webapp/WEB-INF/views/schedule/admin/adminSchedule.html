@@ -145,8 +145,8 @@ background-color:rgb(64, 103, 135);
 								+ '<input type="text" required id="title" class="form-control  mb-2" placeholder="일정을 입력하세요">'	,                		  
 								showCancelButton:true,
 								confirmButtonColor: 'rgb(17, 64, 105)',
-	                		  preConfirm: function () {
-	                			    return new Promise(function (resolve) {
+	                		 	preConfirm: function () {
+	                			    return new Promise(function (resolve) { 
 	                			      resolve([
 	                			        $('#title').val(),
 	                			        $('#scheduleSelect').val(),
@@ -156,25 +156,26 @@ background-color:rgb(64, 103, 135);
 	                			  },
 	                	
 	                		}).then(function(result){
+	                			 if (result.isConfirmed) {
 	                			
 	                			if($("#scheduleSelect").val() == 9999){
 	                				Dialogs.dialog('error', 
 	            		                    '', 
 	            		                    '일정사항을 선택해주세요.');
-                    	    		return false;
+                    	    		return;
                     	    		}
                     			else if($("#seasonSelect").val() == 9999){
                     				Dialogs.dialog('error', 
                 		                    '', 
                 		                    '학기를 선택해주세요.');
-                    	    		return false;
+                    	    		return;
                     	    		}
                     			else if($("#title").val() =='' ||$("#title").val() =='null' ){
                     				Dialogs.dialog('error', 
                 		                    '', 
                 		                    '일정을 입력해주세요.');
-                    	    		return false;
-                    	    	}	
+                    	    		return;
+                    	    	}	}
 	                			
 	                			 $.ajax({
 	                    		url:getPathRootJump()+'admin/adminScheduleInsert',
@@ -222,6 +223,7 @@ background-color:rgb(64, 103, 135);
 			    							xhr.setRequestHeader(header, token);
 			    						}
 			                		 }).done(function(){
+
 			                			 arg.event.remove()
 			                		 })
 	                		  
