@@ -30,16 +30,17 @@
 		<p class="h3 fw-bold">전체 배너 관리</p>
 		<div class="block block-rounded mb-2">
 			<div class="mb-4 scroll-table-div">
-				<table class="table table-vcenter scroll-table">
+				<table class="table table-striped table-vcenter scroll-table">
 					<thead>
 						<tr>
-							<th width=150>분류</th>
-							<th width=180 class="d-none d-xl-table-cell">등록일자</th>
-							<th width=180 class="d-none d-md-table-cell">게시 시작일</th>
-							<th width=180 class="d-none d-md-table-cell">게시 종료일</th>
-							<th width=150 class="d-none d-xl-table-cell">등록자</th>
-							<th width=150>이미지</th>
+							<th width=100>분류</th>
+							<th width=120 class="d-none d-xxl-table-cell">등록일자</th>
+							<th width=120 class="d-none d-md-table-cell">게시 시작일</th>
+							<th width=120 class="d-none d-md-table-cell">게시 종료일</th>
+							<th width=100 class="d-none d-xxl-table-cell">등록자</th>
+							<th width=120>이미지</th>
 							<th>파일명</th>
+							<th class="d-none d-xxl-table-cell">URL</th>
 							<th width=80></th>
 						</tr>
 					</thead>
@@ -47,10 +48,10 @@
 						<th:block th:each="bn, i:${bnList}">
 							<tr>
 								<td class="fw-semibold fs-sm">[[${@codeList.getName(bn.bannerCode)}]]</td>
-								<td class="d-none d-xl-table-cell fw-semibold fs-sm">[[${bn.enrollDate}]]</td>
+								<td class="d-none d-xxl-table-cell fw-semibold fs-sm">[[${bn.enrollDate}]]</td>
 								<td class="d-none d-md-table-cell fw-semibold fs-sm">[[${bn.startDate}]]</td>
 								<td class="d-none d-md-table-cell fw-semibold fs-sm">[[${bn.endDate}]]</td>
-								<td class="d-none d-md-table-cell fw-semibold fs-sm">[[${bn.admin.name}]]</td>
+								<td class="d-none d-xxl-table-cell fw-semibold fs-sm">[[${bn.admin.name}]]</td>
 								<td class="fw-semibold fs-sm">
 									<div class="row">
 										<div class="img-section col-6">
@@ -66,6 +67,7 @@
 									</a>
 									
 								</td>
+								<td class="d-none d-xxl-table-cell fw-semibold fs-sm">[[${bn.url}]]</td>
 								<td><button class="btn btn-dark btn-sm bnDelete"
 											th:data-uri=${bn.uri} th:data-no=${bn.no}>삭제</button></td>
 							</tr>

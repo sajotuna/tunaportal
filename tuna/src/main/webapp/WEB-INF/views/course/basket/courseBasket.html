@@ -51,13 +51,13 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
   <div id="section">
 
     <div id="page-container">
-      <div class="content content-boxed ">
-        <h3 class="h3 fw-bold mb-2">수강꾸러미</h3>
+      <div class="content content-full content-boxed">
+        <h3 class="h3 fw-bold mt-3 mb-4">수강꾸러미</h3>
         <div class="bg-body-extra-light" style="padding: 10px;">
           <div class="m-4">
             <form th:action="@{/stud/course/Basket}" method="post" class="row" id= "checkFrm">
-              <div class="col-md-3 col-xl-2 fomrtag">
-               <div class="mb-5">
+              <div class="col-xxl-3 col-md-6">
+                <div class="mb-3 mb-md-4">
                   <select class="form-select" id="deptCode" name="deptCode">
                     <option selected value="">학부(과)</option>
 	                  <option value="801" id="801">기계공학과</option>
@@ -73,8 +73,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </select>
                 </div>
               </div>
-              <div class="col-md-3 col-xl-2 col-10 fomrtag">
-                <div class="mb-2">
+              <div class="col-xxl-2 col-md-6">
+                <div class="mb-3 mb-md-4">
                   <select class="form-select"  id="type" name="type">
                     <option selected value = "">이수구분</option>
                     <option value="701" id = "701">전공필수</option>
@@ -84,8 +84,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </select>
                 </div>
               </div>
-              <div class="col-md-3 col-xl-2 col-10 fomrtag">
-                <div class="mb-2">
+              <div class="col-xxl-2 col-md-6">
+                <div class="mb-3 mb-md-4">
                   <select class="form-select"  id="target" name="target">
                     <option selected value = "">학년</option>
                     <option value="1" id = "1">1학년</option>
@@ -95,26 +95,24 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </select>
                 </div>
               </div>
-              <div class="col-md-3 col-xl-2 col-10 fomrtag">
-                <div class="mb-2">
+              <div class="col-xxl-3 col-md-6">
+                <div class="mb-3 mb-md-4">
                   <input type="text" placeholder="과목명을 입력..." class="form-control"
                    id="name" name="name">
                 </div>
               </div>
-              <div class="col-md-2 col-xl-1 fomrtag">
-                <div class="mb-2 ">
-                  <button type="submit" class="btn btn-secondary col-sm-12">조회</button>
+              <div class="col-xxl-2">
+                <div class="mb-4">
+                  <button type="submit" class="btn btn-secondary col-12">조회</button>
                 </div>
-              </div>
-
+              </div>            
             </form>
-            <div class="mb-5 ">
-              <div class="block block-rounded block-themed">
+            <form th:action="@{/stud/course/basketInsert}" method="post">
+              <div class="block block-rounded block-themed mb-4">
                 <div class="block-header bg-primary-darker">
                   <h1 class="block-title">[개설과목]</h1>
                   </div>
-              <form th:action="@{/stud/course/basketInsert}" method="post">
-              <table class="table table-striped table-vcenter">
+              <table class="table table-striped table-vcenter m-0">
                 <thead>
                   <tr>
                     <th class="d-none d-sm-table-cell" style="width: 20px;">선택</th>
@@ -146,13 +144,13 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </tbody>
 
               </table>
-              <div class="d-flex justify-content-end">
-                <div class="m-4">
-                  <input type="submit" value="신청" class="btn btn-info">
-                </div>
+            </div>
+           	<div class="row mb-5">
+           	  <div class="col-xxl-2 mb-3 mb-xxl-0 d-flex justify-content-center">
+                  <input type="submit" value="수강꾸러미 신청" class="btn btn-info col-12">
               </div>
-			</form>
-              <ul class="pagination justify-content-center">
+           	  <div class="col-xxl-4 offset-xxl-6">
+              <ul class="pagination justify-content-center m-0">
                 <li class="page-item">
                   <a class="page-link" href="javascript:void(0)" tabindex="-1" aria-label="Previous" id = "prev">
                     <span aria-hidden="true">
@@ -194,16 +192,18 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </a>
                 </li>
               </ul>
-            </div>
-           <div class="mb-5 ">
-              <div class="block block-rounded block-themed">
+              </div>
+              
+	   		</div>
+          </form>
+              <div class="block block-rounded block-themed m-0">
                 <div class="block-header bg-primary-darker">
                   <h1 class="block-title">[수강꾸러미]</h1>
                   <div class = "d-flex justify-content-end">
                   		<h1 class = "block-title">수강신청가능한 학점 : [[${grade}]]</h1>
                   </div>
                 </div>
-              <table class="table table-striped table-vcenter">
+              <table class="table table-striped table-vcenter m-0">
                   <thead>
                     <tr>
                     
@@ -238,8 +238,6 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </tbody>
                 </table>
             </div>
-          </div>
-        </div>
         </div>
       </div>
     </div>
