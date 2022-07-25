@@ -38,7 +38,7 @@
 									<div
 										class="block-header block-header-default text-center bg-dark">
 										<h3 class="block-title text-white">
-										<a class="text-white" th:href="@{/stud/eclass/lectureHome}" th:text="${l.NAME}+'('+${l.SBJNO}+')'"></a>
+										<a class="text-white" th:href="@{/stud/eclass/lectureHome(no = ${l.NO}, sbjNo = ${l.SBJNO})}" th:text="${l.NAME}+'('+${l.SBJNO}+')'"></a>
 										</h3>
 									</div>
 									<div class="col-12">

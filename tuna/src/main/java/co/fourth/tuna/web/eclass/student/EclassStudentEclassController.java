@@ -2,6 +2,7 @@ package co.fourth.tuna.web.eclass.student;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,8 +123,6 @@ public class EclassStudentEclassController {
 		model.addAttribute("map", map);
 		model.addAttribute("sbjNo",req.getParameter("sbjNo"));
 		
-		System.out.println(qna);
-		
 		return "eclass/stud/qnaList";
 	}
 	
@@ -139,8 +138,6 @@ public class EclassStudentEclassController {
 		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
 		model.addAttribute("qs", qs);
 		model.addAttribute("sbjNo", vo.getSbjNo());
-		
-		System.out.println("단건조회 : " + qs);
 		
 		return "eclass/stud/qnaSelect";
 	}
@@ -210,10 +207,6 @@ public class EclassStudentEclassController {
 		if(taskDao.findSubmission(vo1).size() != 0) {
 			fts = taskDao.findSubmission(vo1);
 		}
-		
-		System.out.println("tsk : "+ tsk);
-		System.out.println("과제선택 시 no : "+req.getParameter("no"));
-		System.out.println("과제선택 시 sbjNo : "+req.getParameter("sbjNo"));
 		
 		model.addAttribute("tsk", tsk);
 		model.addAttribute("fts",fts);
@@ -296,7 +289,6 @@ public class EclassStudentEclassController {
 		List<Map<String, Object>> stf = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.singleTwoFile", vo);
 		
 		model.addAttribute("stn", stn);
-		
 		model.addAttribute("stt", stt);
 		model.addAttribute("stq", stq);
 		model.addAttribute("stf", stf);
@@ -312,7 +304,6 @@ public class EclassStudentEclassController {
 		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
 		List<Map<String, Object>> attd = sql.selectList("co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.studentAttendance", vo);
-		System.out.println(attd);
 		
 		model.addAttribute("attd", attd);
 		
