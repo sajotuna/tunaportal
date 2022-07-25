@@ -149,8 +149,8 @@ SELECT
 
 </delete>	
 
-<select id = "subjectTarget" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO" resultType="int">
-	select target 
+<select id = "subjectTarget" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO" resultType="String">
+	select target
 	from subject
 	where no = #{sbjNo}
 </select>		

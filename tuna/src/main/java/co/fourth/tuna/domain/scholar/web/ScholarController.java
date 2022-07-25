@@ -129,8 +129,11 @@ public class ScholarController {
 	
 	
 	@RequestMapping("/admin/scholar/Check")
-	public String scholarCheck(RedirectAttributes ra,ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox, @RequestParam List<String> seasonCode) {
-		
+	public String scholarCheck(RedirectAttributes ra,ScholarApplyVO vo, @RequestParam(defaultValue = "") List<String> scholarCheckbox, @RequestParam List<String> seasonCode) {
+		if(scholarCheckbox.isEmpty()) {
+			ra.addFlashAttribute("error", "심사에 통과할 학생을 선택해주세요.");
+			return "redirect:/admin/admin/scholarSearch";
+		}
 		vo.setStateCode("504");
 		String year = yearDao.yearFind();
 		for(int i =0; i<scholarCheckbox.size(); i++) {
@@ -147,7 +150,12 @@ public class ScholarController {
 		return "redirect:/admin/admin/scholarSearch";
 	}
 	@RequestMapping("/admin/scholar/Reject")
-	public String scholarReject(RedirectAttributes ra,ScholarApplyVO vo, @RequestParam List<String> scholarCheckbox, @RequestParam List<String> seasonCode) {
+	public String scholarReject(RedirectAttributes ra,ScholarApplyVO vo,  @RequestParam(defaultValue = "") List<String> scholarCheckbox, @RequestParam List<String> seasonCode) {
+		
+		if(scholarCheckbox.isEmpty()) {
+			ra.addFlashAttribute("error", "심사를 거절할 학생을 선택해주세요.");
+			return "redirect:/admin/admin/scholarSearch";
+		}
 		
 		vo.setStateCode("503");
 		String year = yearDao.yearFind();

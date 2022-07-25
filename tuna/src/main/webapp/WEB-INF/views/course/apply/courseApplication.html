@@ -360,6 +360,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
     
     var header = $("meta[name='_csrf_header']").attr('content');
     var token = $("meta[name='_csrf']").attr('content');
+    
 		window.onload = function() {
 			getImage(); // 이미지 가져오기
 
@@ -377,8 +378,15 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 								}).done(function(result) {
 									console.log(result);
 									if (result == '200') {
-										
-										frm.submit();
+										let sbjno = document.querySelector('#sbjno')
+										if(sbjno.value == '' || sbjno.value == null){
+											Dialogs.dialog('error', '수강신청 실패', '과목코드를 입력해주세요.')
+											getImage();
+											document.querySelector('#answer').setAttribute(
+													'value', '');
+										}else{
+											frm.submit();
+										}
 										// 성공 코드
 									} else {
 										Dialogs.dialog('error', '수강신청 실패', '자동입력방지 코드가 틀립니다.')
