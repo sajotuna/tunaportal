@@ -93,7 +93,7 @@ public class UserController {
 	@ResponseBody
 	public List<StudentWithSubmitTaskVO> getStudentsWithSubmitTasks(
 			@RequestBody Map<String, Integer> reqData){
-		System.out.println(reqData.get("taskno"));
+//		System.out.println(reqData.get("taskno"));
 		return StudentDao.findListWithSubmitTaskByTaskId(reqData.get("taskno"));
 	}
 	

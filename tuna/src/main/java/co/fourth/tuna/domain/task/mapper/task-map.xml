@@ -68,6 +68,7 @@ WHERE NO = #{no}
 	SELECT * 
 	FROM task
 	WHERE sbjno = #{sbjno}
+	ORDER BY no DESC
 </select>
 
 <select id="findSubmitTasksByTaskIdAndStudentId"

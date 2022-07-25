@@ -34,6 +34,8 @@ public class SubjectServiceImpl implements SubjectService {
 	LecturePlanService lecPlanService;
 	@Autowired
 	YearService yearService;
+	@Autowired
+	SubjectService subjectService;
 	
 	@Override
 	public SubjectVO findOne(SubjectVO vo) {
@@ -75,8 +77,7 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
-	@Transactional
-	public String updateGradeRatio(GradeRatioVO gradeRatio) {
+	public String updateGradeRatio(GradeRatioVO gradeRatio) throws Error {
 		int sum = gradeRatio.getAttd() + gradeRatio.getFinals() + gradeRatio.getMiddle() + gradeRatio.getTask();
 		
 		if(sum < 100 || sum > 100) {
@@ -92,9 +93,10 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	@Transactional(rollbackFor = Error.class)
-	public String updateSubject(GradeRatioVO grade, List<LecturePlanVO> plans) {		
+	public String updateSubject(GradeRatioVO grade, List<LecturePlanVO> plans) throws Error {		
 		lecPlanService.updatePlanList(plans);
-		this.updateGradeRatio(grade);
+		subjectService.updateGradeRatio(grade);
+		// TODO 트랜잭션 https://ppqqpqpq.tistory.com/60
 //		return new ServiceResponseVO(ResState.ERROR, e.getMessage());
 	
 		return "성공적으로 업데이트 되었습니다.";

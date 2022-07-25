@@ -56,4 +56,9 @@ public class TaskServiceImpl implements TaskService {
 		return "등록 성공";
 	}
 
+	@Override
+	public List<TaskVO> findListBySubjectId(int sbjno) {
+		return map.findListBySubjectId(sbjno);
+	}
+
 }
