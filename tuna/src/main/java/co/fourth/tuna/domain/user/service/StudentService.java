@@ -18,4 +18,5 @@ public interface StudentService {
 	public String findStudPwd(StudentVO vo);
 	public boolean findEmail(StudentVO vo);
 	public void studEamilPwdUpdate(StudentVO vo);
+	public void freshmanPwdUpdate(StudentVO vo);
 }

@@ -70,9 +70,15 @@ public class LectureApplyController {
 		vo.setSbjNo(sbjno);
 		
 		int grade = Integer.parseInt(LectureApplyDao.FindApplyGrade(vo));
-		int target = LectureApplyDao.subjectTarget(vo);
+		String target = LectureApplyDao.subjectTarget(vo);
 		
-		if(grade - target < 0) {
+		if(target == null || target == "") {
+			ra.addFlashAttribute("error", "잘못된 과목코드입니다. 과목코드를 제대로 입력해주세요.");
+			return "redirect:/stud/course/Application";
+		}
+		
+		
+		if(grade - Integer.parseInt(target) < 0) {
 			ra.addFlashAttribute("error", "수강신청 가능한 학점이 없습니다.");
 			return "redirect:/stud/course/Application";
 		}

@@ -235,45 +235,48 @@
 				let sbjNo = $(this).data('sbjno');
 				let content = $('#content').val();
 				
-				Dialogs.dialog('checkConfirm',
-							   '정말로 등록하시겠습니까?',
-							   '한 번 등록한 이의신청은 변경할 수 없습니다.',
-							   function() {
-									
-									$.ajax({
-										
-										url: getContextPath() + 'stud/portal/objection',
-										type: 'PUT',
-										data: JSON.stringify({ stNo:userNo,
-											    			   sbjNo:sbjNo,
-											   				   content:content }),
-									    contentType : 'application/json',
-										dataType: 'json',
-										beforeSend: function (xhr) {
-										       xhr.setRequestHeader(header, token);
-											}
-										
-									}).done(function(result) {
-										if(result) {
-											
-											Dialogs.dialog('success', 
-									                       '이의신청 완료', 
-									                       '성적 이의신청이 완료되었습니다.');
-											
-											objectionListSelectAjax();
-											
-											let datas = ['pfname', 'sbjname', 'objstate', 'content', 'answer'];
-											for (data of datas) {
-												$(`#${data}`).text('');
-											}
-											$('#content').val('').attr('disabled', true);
-											$('#objectionTb tr').removeClass('table-primary');
-											$('#objInsertBtn').attr('disabled', true);
-										}
-									})
+				if(!content) {
+					Dialogs.dialog('error',
+							  	   '등록 불가',
+							 	   '내용을 작성해 주세요.');
+				} else {
 					
-				               });
-				
+					Dialogs.dialog(
+						'checkConfirm',
+						'정말로 등록하시겠습니까?',
+						'한 번 등록한 이의신청은 변경할 수 없습니다.',
+						function() {
+							$.ajax({
+								url: getContextPath() + 'stud/portal/objection',
+								type: 'PUT',
+								data: JSON.stringify({ stNo:userNo,
+									    			   sbjNo:sbjNo,
+									   				   content:content }),
+							    contentType : 'application/json',
+								dataType: 'json',
+								beforeSend: function (xhr) {
+								       xhr.setRequestHeader(header, token);
+									}
+								
+							}).done(function(result) {
+								if(result) {
+									Dialogs.dialog('success', 
+							                       '이의신청 완료', 
+							                       '성적 이의신청이 완료되었습니다.');
+									
+									objectionListSelectAjax();
+									
+									let datas = ['pfname', 'sbjname', 'objstate', 'content', 'answer'];
+									for (data of datas) {
+										$(`#${data}`).text('');
+									}
+									$('#content').val('').attr('disabled', true);
+									$('#objectionTb tr').removeClass('table-primary');
+									$('#objInsertBtn').attr('disabled', true);
+								}
+						})
+          			});
+				}
 			});
 		}
 		

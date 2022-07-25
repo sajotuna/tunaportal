@@ -20,7 +20,7 @@ and e.sbjno = l2.sbjno
 
 <select id = "CourseEval" parameterType="co.fourth.tuna.domain.lectureEval.vo.LectureEvalVO" resultType="map">
 
-select  DISTINCT
+select
         s.no,
         s.name, 
         s.type, 
@@ -29,13 +29,14 @@ select  DISTINCT
         p.name proname, 
         e.evalstate,
         l2.roomcode
-from subject s, professor p, lectureapply l, lectureeval e, lectureschedule l2
-where s.no = l.sbjno
+from subject s, professor p, lectureapply l, lectureeval e, (select DISTINCT roomcode, sbjno from lectureschedule) l2
+where s.no = e.sbjno
   and s.pfno = p.no 
-  and l.stno = #{stNo} 
+  and e.stno = l.stno
+  and e.stno = #{stNo} 
   and s.seasoncode = 106 
   and l.sbjno = e.sbjno
-  and l2.sbjno = s.no
+  and l2.sbjno = e.sbjno
 
 
 </select>

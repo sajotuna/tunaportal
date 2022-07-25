@@ -72,11 +72,22 @@
 			
 			let pwd = document.querySelector('#pwd');
 			let afterpassword1 = document.querySelector('#afterpassword1');
-			
+			let beforepassword = document.querySelector('#beforepassword');
 			if(fn_checkPass(pwd.value) == false)
 			{
 				alert("비밀번호는 소문자, 대문자, 숫자, 특수문자 \n조합하여 8자리 이상으로 구성하세요.");
 			}else {
+				
+				if(beforepassword.value == '' || beforepassword.value == null){
+					alert("기존 비밀번호를 입력해주세요.")
+					return;
+				}
+				
+				if(beforepassword.value == pwd.value){
+					alert("기존 비밀번호로 변경이 불가능합니다.")
+					return;
+				}
+				
 				if(pwd.value == afterpassword1.value){
 					let inputtag = document.createElement('input')
 	 		    	inputtag.setAttribute("name", "no")
@@ -119,17 +130,25 @@
             return svalue;
         }
 	</script>
-	  <th:block th:if = "${(success != null && success != '') || (error != null && error != '')}">
+	   <th:block th:if = "${success != null && success != ''}">
+      	<script th:inline = "javascript">
+      	let success = /*[[${success}]]*/ 'default';
+      	
+      	opener.success(success)
+      	window.close();
+      	
+      	
+      	</script>
+      </th:block>
+      
+     <th:block th:if = "${error != null && error != ''}">
 	<script th:inline="javascript">
-		let success = /*[[${success}]]*/ 'default';
 		let error = /*[[${error}]]*/ 'default';
-		if (success) {
-			Dialogs.dialog('success', '완료', success);
-		} else if (error) {
+		if (error) {
 			Dialogs.dialog('error', '실패', error);
 		}
 	</script>
-</th:block>
+	</th:block>  
 </body>
 
 </html>

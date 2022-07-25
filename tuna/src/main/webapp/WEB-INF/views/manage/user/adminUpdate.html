@@ -133,6 +133,9 @@ data-layout-decorate="~{layouts/navLayout}">
     	  let no = document.querySelector('#no')
           window.open("pwdUpdate?no="+no.value,"비밀번호변경","width=600, height=400, top=10, left=10");
       }
+    function updateSuccess(){
+    	updateBtn.disabled = false;
+      }
 
       function execDaumPostcode() {
             new daum.Postcode({

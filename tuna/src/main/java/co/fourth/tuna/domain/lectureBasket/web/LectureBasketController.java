@@ -55,15 +55,22 @@ public class LectureBasketController {
 		return "course/basket/courseBasket";
 	}
 
-	@SuppressWarnings("null")
+	@SuppressWarnings({ "null"})
 	@RequestMapping("/stud/course/basketInsert")
-	public String basketInsert(RedirectAttributes ra, @RequestParam List<String> courcheck, LectureBasketVO vo,
+	public String basketInsert(RedirectAttributes ra, @RequestParam(defaultValue = "") List<String> courcheck, LectureBasketVO vo,
 			Authentication authentication) {
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
 		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
+		System.out.println(courcheck + "==========1q9eu129eu9saj9djsad9==========");
+		
+		if(courcheck.isEmpty()) {
+			ra.addFlashAttribute("error", "수강꾸러미에 담을 과목을 체크해주세요");
+			return "redirect:/stud/course/Basket";
+		}
 		
 		for (String sbj : courcheck) {
+			
 			vo.setSbjNo(sbj);
 			String message = LectureBasketDao.basketApplyMsg(vo);
 			int target = LectureBasketDao.subjectTarget(vo);

@@ -58,7 +58,7 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	}
 
 	@Override
-	public int subjectTarget(LectureApplyVO vo) {
+	public String subjectTarget(LectureApplyVO vo) {
 		// TODO Auto-generated method stub
 		return mapper.subjectTarget(vo);
 	}

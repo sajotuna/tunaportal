@@ -1,7 +1,10 @@
 package co.fourth.tuna.domain.user.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +19,8 @@ public class StudentController {
 	
 	@Autowired 
 	private StudentService StudentDao;
-
+	 @Autowired
+	    private AuthenticationManager authenticationManager; 
 	@Autowired
 	private BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
@@ -65,6 +69,25 @@ public class StudentController {
 		ra.addFlashAttribute("success", message);
 		return "redirect:/stud/pwdUpdate";
 	}
+	
+	@RequestMapping("/stud/freshmanUpdate")
+	public String freshmanUpdate(Authentication authentication, RedirectAttributes ra, StudentVO vo) {
+		vo.setNo(Integer.parseInt(authentication.getName()));
+		vo.setPwd(enc.encode(vo.getPwd()));
+		StudentDao.freshmanPwdUpdate(vo);
+		String message = "비밀번호 및 이메일이 변경 되었습니다.";
+		ra.addFlashAttribute("success", message);
+		
+		vo = StudentDao.findById(vo);
+		
+		authentication = authenticationManager.authenticate(
+    			new UsernamePasswordAuthenticationToken(vo.getNo(), vo.getPwd()));
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		return "redirect:/home";
+		
+	}
+	
 	
 	
 }

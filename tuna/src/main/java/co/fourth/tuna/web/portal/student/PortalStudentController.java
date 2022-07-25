@@ -12,8 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.fourth.tuna.domain.common.service.CodeService;
 import co.fourth.tuna.domain.common.service.DateCheckService;
 import co.fourth.tuna.domain.common.service.YearService;
+import co.fourth.tuna.domain.common.vo.code.CodeMasterVO;
+import co.fourth.tuna.domain.common.vo.code.CodeVO;
 import co.fourth.tuna.domain.grade.service.GradeService;
 
 @Controller
@@ -24,13 +27,15 @@ public class PortalStudentController {
 	@Autowired GradeService gradeDao;
 	@Autowired YearService yearDao;
 	@Autowired DateCheckService dateCheckDao;
+	@Autowired CodeService codeService;
 	
 	// 강의/성적 조회
 	@RequestMapping("/stud/portal/subjectAndReport")
 	public String subjectAndRoport(Authentication authentication, Model model) {
 		
+		String presentSeason = yearDao.yearFind();
 		List<Map<String, Object>> avgGrades = gradeDao.avgGradeSelect(Integer.parseInt(authentication.getName()),
-																	  yearDao.yearFind());
+																	  presentSeason);
 		
 		int totalPoint = 0;
 		double totalAvg = 0;
@@ -49,6 +54,10 @@ public class PortalStudentController {
 		model.addAttribute("totalPoint", totalPoint);
 		model.addAttribute("totalGrade", totalGrade);
 		model.addAttribute("totalPct", totalPct);
+		
+		CodeMasterVO seasonCodeVOs = codeService.findById("100");
+		List<CodeVO> seasonCodes = seasonCodeVOs.getChildren();
+		model.addAttribute("seasonCodes", seasonCodes);
 		
 		return "portal/stud/subjectAndReport";
 	}

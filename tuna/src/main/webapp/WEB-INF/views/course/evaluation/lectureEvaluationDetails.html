@@ -12,7 +12,9 @@
     <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
-  
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
     <style>
       tr{
         text-align: center;
@@ -59,13 +61,18 @@
                      <tr th:scope="row" th:each="sub, status : ${list}">
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.DEPTCODE)}"></td>
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
-                      <td class="fw-semibold fs-sm" id = "sbjno" th:text = "${sub.NO}" ></td>
+                      <th:block th:if ="${sub.EVALSTATE.toString().equals('N') }">
+                      	<td class="fw-semibold fs-sm" id = "sbjno" th:text = "${sub.NO}" ></td>
+                      </th:block>
+                      <th:block th:unless = "${sub.EVALSTATE.toString().equals('N') }">
+                      	<td class="fw-semibold fs-sm" th:text = "${sub.NO}" ></td>
+                       </th:block>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.PRONAME}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <th:block th:if ="${sub.EVALSTATE.toString().equals('N') }">
-                      <td class="fw-semibold fs-sm"><button type="button" style="outline: 0; border: 0; background-color: white;">
+                      <td class="fw-semibold fs-sm"><button type="button" id = "evalBtn" style="outline: 0; border: 0; background-color: white;">
                         <i class="fa fa-pencil-alt"></i>
                       </button></td>
                       </th:block>
@@ -86,7 +93,7 @@
     <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function(){
-      let btns = document.querySelectorAll('button');
+      let btns = document.querySelectorAll('#evalBtn');
       let sbjnos = document.querySelectorAll('#sbjno');
       btns.forEach( function(btn,idx) {
         btn.addEventListener('click',function(){
@@ -94,6 +101,11 @@
         })
       })
     })
+    
+    function success(success){
+    	  Dialogs.dialog('success', '완료', success);
+      }
+    
     </script>
     </main>
     
