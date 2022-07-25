@@ -10,6 +10,45 @@
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+	
+	<style>
+	 .modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .modal .bg {
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modalBox {
+          position: absolute;
+          background-color: #fff;
+          width: 600px;
+          height: 600px;
+          padding: 15px;
+        }
+
+        .modalBox button {
+          display: block;
+          width: 80px;
+          margin: 0 auto;
+        }
+
+        .hidden {
+          display: none;
+        }
+	
+	</style>
+
 </head>
 <body>
 <th:block th:if = "${error != null && error != ''}">
@@ -20,9 +59,75 @@
 		Dialogs.dialog('error', '접근 불가', error);
 	</script>
 </th:block>
+<th:block th:if = "${(success != null && success != '')}">
+	<script th:inline="javascript">
+		let success = /*[[${success}]]*/ 'default';
+		Dialogs.dialog('success', '완료', success);
+	</script>
+
+</th:block>
 <div id="page-container">
+
+
+<div class="modal hidden ">
+  <div class="bg"></div>
+  <div class="modalBox ">
+  
+    <p class = "text-center">신입생 유의사항<br>
+    신입생은 비밀번호 변경 및 이메일을 입력해야만 포탈이용이 가능합니다.</p>
+    <h3 class="fw-bold text-center">이메일 변경</h3>
+	   <form th:action="@{/stud/freshmanUpdate}" method="post" id = "frm">
+    <div class = "d-flex justify-content-center">
+	    <div class = "col-8">
+	    <div class="input-group">
+	         <input type="email" class="form-control" id="email"
+	                          name="email" placeholder="이메일을 입력하세요..." >
+	    </div>
+    	</div>
+    </div>
+    <h3 class="fw-bold text-center mt-4">비밀번호 변경</h3>
+    
+    <div class="row">
+    			<div class = "d-flex justify-content-center">
+                  <div class = "col-8">
+                    <div class="mb-2">
+                      <div class="input-group">
+                        <input type="password" class="form-control" id="pwd"
+                          name="pwd" placeholder="변경 비밀번호" >
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div class = "d-flex justify-content-center">
+                    <div class = "col-8">
+                    <div class="mb-2">
+                      <div class="input-group">
+                        <input type="password" class="form-control" id="pwd1"
+                          name="pwd1" placeholder="비밀번호 확인" >
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="mb-2">
+                      <div class="center">
+                        <button type = "button" onclick ="javascript:freshmanUpdate();" class="btn btn-info">변경</button>
+                      </div>
+                    </div>
+              </div>
+               </form>
+       </div>
+    <button class="closeBtn">✖</button>
+  </div>
 	<!-- Main Container -->
 	<main id="main-container">
+<div id="loaderCurtain" class ="d-none">
+                    <div class="overflow-hidden bg-white-95 position-absolute top-0 start-0 w-100 h-100 opacity-75" style = "z-index : 100"></div>
+                    <span class="position-absolute top-50 start-50 translate-middle">
+                      <div class="spinner-border text-secondary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </span>
+                  </div>
 	    <!-- Hero -->
 	    <div class="bg-body-light">
 	        <div class="content content-full content-boxed">
@@ -401,8 +506,81 @@
 			var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
 			return path_root;
 		}
+	   	
+	   	function freshmanUpdate(){
+	   		
+	   		var reg = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$"
+				
+				let pwd = document.querySelector('#pwd');
+				let pwd1 = document.querySelector('#pwd1');
+				let email = document.querySelector('#email');
+				
+				if(email.value == '' || email.value == null){
+					alert("이메일을 입력해주세요.")
+					return;
+				}
+				if(pwd.value == '' || pwd.value == null){
+					alert("변경 할 비밀번호를 입력해주세요.")
+					return;
+				}
+				if(pwd1.value == '' || pwd1.value == null){
+					alert("비밀번호 확인을 입력해주세요.")
+					return;
+				}
+				
+				if(fn_checkPass(pwd.value) == false)
+				{
+					alert("비밀번호는 소문자, 대문자, 숫자, 특수문자 \n조합하여 8자리 이상으로 구성하세요.");
+				}else {
+											
+					
+					if(pwd.value == pwd1.value){
+						
+		 		    	frm.submit();
+					}else{
+						alert("비밀번호가 서로 다릅니다. 확인해주세요.")
+						
+					}
+				}
+				pwd.value = '';
+				pwd1.value = '';
+			}
+			
+			function fn_checkPass(password) {
+
+				var checkPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+
+				if (checkPass.test(password)) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+	   		
+	   		
+	   		
+	   	
    	
    	</script>
+   	
+   	<th:block th:if = "${#authentication.principal.chpwd != null && #authentication.principal.chpwd != ''}">
+	   	
+	   	<script th:inline = "javascript">
+		   	let chpwd = /*[[${#authentication.principal.chpwd}]]*/ 'default';	
+		   	console.log(chpwd)
+		   	loaderCurtain = document.querySelector('#loaderCurtain');
+		   	if(chpwd == '0'){
+		   		loaderCurtain.classList.remove('d-none');
+		   		document.querySelector(".modal").classList.remove("hidden");
+		   		const close = () => {
+		   		    document.querySelector(".modal").classList.add("hidden");
+		   		}
+		   		document.querySelector(".closeBtn").addEventListener("click", close);
+		   	}
+		   	
+	   	</script>
+   	<th:block>
+   	
    	
 </body>
 </html>

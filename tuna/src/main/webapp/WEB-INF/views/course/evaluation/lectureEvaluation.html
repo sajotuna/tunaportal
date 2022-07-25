@@ -272,6 +272,15 @@
       </div>
     </div>
   </div>
+  
+  <th:block th:if = "${success != null && success != ''}">
+      	<script th:inline = "javascript">
+	      	let success = /*[[${success}]]*/ 'default';
+	      	opener.success(success)
+	      	window.close();
+      	</script>
+  </th:block>
+  
   <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
   <script>
  

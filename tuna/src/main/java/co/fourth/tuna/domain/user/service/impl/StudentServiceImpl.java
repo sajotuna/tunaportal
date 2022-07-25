@@ -143,6 +143,12 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 		return mapper.findListWithSubmitTaskByTaskId(taskno);
 	}
 
+	@Override
+	public void freshmanPwdUpdate(StudentVO vo) {
+		mapper.freshmanPwdUpdate(vo);
+		
+	}
+
 	
 	
 

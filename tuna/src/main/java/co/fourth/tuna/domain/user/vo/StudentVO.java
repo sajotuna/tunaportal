@@ -34,6 +34,7 @@ public class StudentVO implements UserDetails{
 	private String deptCode;
 	private Date enterDate;
 	private String role;
+	private String chpwd;
 	
 	private TuitionVO tuitionvo;
 	private ScholarStudentVO scholarstudentvo;
@@ -44,6 +45,14 @@ public class StudentVO implements UserDetails{
 	
 	
 	
+	public String getChpwd() {
+		return chpwd;
+	}
+
+	public void setChpwd(String chpwd) {
+		this.chpwd = chpwd;
+	}
+
 	public int getNo() {
 		return no;
 	}

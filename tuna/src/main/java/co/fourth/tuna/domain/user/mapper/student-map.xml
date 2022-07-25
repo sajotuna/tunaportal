@@ -21,12 +21,6 @@
 
 
 <update id = "studUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
-	<selectKey resultType="String" keyProperty="bacc" order="BEFORE">
-		select no bacc
-		from publiccode
-		where codename = #{bacc}
-	</selectKey>
-
 	update student 
 	set tel = #{tel}, email = #{email}, zip = #{zip}, addr = #{addr}, bacc = #{bacc}, bank = #{bank}
 	where no = #{no}
@@ -112,6 +106,13 @@ SELECT case when count(*) >= 1 then 1 else 0 end as truefalse
 update student set pwd = #{pwd} where email = #{email}
 
 </update>
+
+<update id = "freshmanPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
+
+update student set pwd = #{pwd}, email = #{email}, chpwd = 1 where no = #{no}
+
+</update>
+
 
 
 </mapper>
