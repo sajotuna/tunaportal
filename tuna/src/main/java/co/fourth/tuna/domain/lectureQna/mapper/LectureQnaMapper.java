@@ -23,6 +23,8 @@ public interface LectureQnaMapper {
 	
 	//질문작성
 	public void insertOneQna(LectureQnaVO vo);
+	//질문삭제
+	public void delOneQna(LectureQnaVO vo);
 	
 
 	// ckw 서브젝트로 목록 조회

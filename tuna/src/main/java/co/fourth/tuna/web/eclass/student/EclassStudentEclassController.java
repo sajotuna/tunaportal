@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -103,23 +102,27 @@ public class EclassStudentEclassController {
 	}
 	
 	@RequestMapping("/qnaList")
-	public String qnaList(Model model, LectureQnaVO vo, HttpServletRequest req, @RequestParam HashMap<String, Object> map, @RequestParam(value="pageNum", required=false, defaultValue= "1" ) int pageNum) {
+	public String qnaList(Model model, LectureQnaVO vo, HttpServletRequest req,
+			@RequestParam HashMap<String, Object> map, 
+			@RequestParam(value="pageNum", required=false, defaultValue= "1" ) int pageNum) {
 		
 		map.put("sbjNo", vo.getSbjNo());
 		map.put("pageNum", pageNum);
 		map.put("size", 5);
 		List<Map<String, Object>> qna = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
 		
-		map.put("sbjNo", vo.getSbjNo());
-		map.put("pageNum", pageNum);
-		map.put("size", 100);
-		List<Map<String, Object>> qna2 = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
-		
-		int pageCount = (int)Math.ceil((double)qna2.size()/(5));
+//		map.put("sbjNo", vo.getSbjNo());
+//		map.put("pageNum", pageNum);
+//		map.put("size", 100);
+//		List<Map<String, Object>> qna2 = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
+//		
+//		int pageCount = (int)Math.ceil((double)qna.size()/(5));
 		
 		model.addAttribute("qna", qna);
-		model.addAttribute("pgcnt", pageCount);
+		model.addAttribute("map", map);
 		model.addAttribute("sbjNo",req.getParameter("sbjNo"));
+		
+		System.out.println(qna);
 		
 		return "eclass/stud/qnaList";
 	}
@@ -154,17 +157,25 @@ public class EclassStudentEclassController {
 	
 	//질의응답등록
 	@RequestMapping("/insertOneQna")
-	public String insertOneQna(Model model, LectureQnaVO vo, 
+	public String insertOneQna(Model model, LectureQnaVO vo, RedirectAttributes redir,
 			HttpServletRequest req, Authentication authentication) {
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		vo.setVisible(Integer.parseInt(req.getParameter("visibleCheck")));
-		 
+		 		
+		model.addAttribute("sbjNo", vo.getSbjNo());
 		qnaDao.insertOneQna(vo);
 		
-		model.addAttribute("sbjNo", vo.getSbjNo());
+		redir.addAttribute("no", vo.getNo());
+		redir.addAttribute("sbjNo", vo.getSbjNo());
 		
-		return "eclass/stud/qnaList";
+		return "redirect:/stud/eclass/qnaSelect";
+	}
+	
+	@DeleteMapping("delOneQna")
+	public void delOneQna(@RequestBody LectureQnaVO vo) {
+		qnaDao.delOneQna(vo);
+		
 	}
 
 	
@@ -200,6 +211,7 @@ public class EclassStudentEclassController {
 			fts = taskDao.findSubmission(vo1);
 		}
 		
+		System.out.println("tsk : "+ tsk);
 		System.out.println("과제선택 시 no : "+req.getParameter("no"));
 		System.out.println("과제선택 시 sbjNo : "+req.getParameter("sbjNo"));
 		
@@ -211,10 +223,10 @@ public class EclassStudentEclassController {
 	
 	//과제 등록
 	@RequestMapping("/taskInsert")
-	public String taskSubmission(TaskVO vo, Authentication authentication, HttpServletRequest req, 
+	public String taskSubmission(TaskVO vo, Authentication authentication, 
+			RedirectAttributes redir,
 			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
 		
-		vo.setNo(Integer.parseInt(req.getParameter("no")));
 		
 		SubmitTaskVO vo1 = new SubmitTaskVO();
 		
@@ -233,6 +245,9 @@ public class EclassStudentEclassController {
 				taskDao.taskSubmission(vo1);
 			}
 		}
+		
+		redir.addAttribute("no", vo.getNo());
+		redir.addAttribute("sbjNo", vo.getSbjNo());
 		
 		return "redirect:/stud/eclass/taskSelect";
 	}

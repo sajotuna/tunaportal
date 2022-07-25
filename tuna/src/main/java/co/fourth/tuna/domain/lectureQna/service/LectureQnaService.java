@@ -13,6 +13,9 @@ public interface LectureQnaService {
 	//질문등록
 	public void insertOneQna(LectureQnaVO vo);
 	
+	//질문삭제
+	public void delOneQna(LectureQnaVO vo);
+	
 	//lectureQnaMapper과 동일한 메소드
 //	List<LectureQnaVO> qnaList(String key);
 	
