@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureEval.service.LectureEvalService;
@@ -51,14 +52,12 @@ public class LectureEvalController {
 	}
 
 	@RequestMapping("/stud/course/evalSuccess")
-	public String lectureEval(Authentication authentication, LectureEvalVO vo) {
+	public String lectureEval(RedirectAttributes ra,Authentication authentication, LectureEvalVO vo) {
 		vo.setEvalState("y");
 		vo.setStNo(authentication.getName());
-		System.out.println(vo);
-		
 		evalDao.EvalSucess(vo);
-		
-		return "close";
+		ra.addFlashAttribute("success", "강의평가가 완료되었습니다.");
+		return "redirect:/stud/course/Evaluation";
 	}
 	
 	// 강의 계획서 조회 - 강의 평가 모달

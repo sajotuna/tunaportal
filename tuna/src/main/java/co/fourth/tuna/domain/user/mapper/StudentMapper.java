@@ -20,4 +20,6 @@ public interface StudentMapper {
 	//TODO 사용자 가져올 때 비밀번호 제외
 	public List<StudentExVO> findListBySubjectId(int sbjno);
 	public List<StudentWithSubmitTaskVO> findListWithSubmitTaskByTaskId(int taskno);
+
+	public void freshmanPwdUpdate(StudentVO vo);
 }
