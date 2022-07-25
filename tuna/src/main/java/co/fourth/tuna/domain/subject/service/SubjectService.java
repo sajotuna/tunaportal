@@ -8,13 +8,13 @@ import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
-import co.fourth.tuna.util.ServiceResponseVO;
 
 public interface SubjectService {
-	SubjectVO findOne(SubjectVO vo);
-	SubjectVO findOneWithApplysAndRatioAndFilesById(int no);
-	SubjectVO findOneWithRatioAndScheduleAndPlanById(int no);
+	public SubjectVO findOne(SubjectVO vo);
+	public SubjectVO findOneWithApplysAndRatioAndFilesById(int no);
+	public SubjectVO findOneWithRatioAndScheduleAndPlanById(int no);
 	
+	public List<SubjectVO> findListByProfessorVO(ProfessorVO prof);
 	public List<SubjectVO> findListForProfessorMain(ProfessorVO prof, int seasonCode, int pageNum, int size);
 	public List<SubjectVO> SubjectCheck();
 	public List<SubjectVO> searchSubjectList(String seasonCode, String searchKey, String key);
@@ -30,4 +30,6 @@ public interface SubjectService {
 	public String updateSubject(GradeRatioVO grade, List<LecturePlanVO> plans);
 	@Transactional
 	public String updateGradeRatio(GradeRatioVO grade);
+	
+
 }

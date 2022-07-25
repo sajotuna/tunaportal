@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.fourth.tuna.domain.common.mapper.LectureScheduleMapper;
+import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper;
 import co.fourth.tuna.domain.lectureplan.service.LecturePlanService;
 import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
@@ -31,12 +32,19 @@ public class SubjectServiceImpl implements SubjectService {
 	
 	@Autowired
 	LecturePlanService lecPlanService;
+	@Autowired
+	YearService yearService;
 	
 	@Override
 	public SubjectVO findOne(SubjectVO vo) {
 		return map.findOne(vo);
 	}
-
+	
+	@Override
+	public List<SubjectVO> findListByProfessorVO(ProfessorVO prof) {
+		return map.findListByProfessorVO(prof, Integer.parseInt( yearService.yearFind() ) );
+	}
+	
 	@Override
 	public List<SubjectVO> findListForProfessorMain(ProfessorVO prof, int seasonCode, int pageNum, int size) {
 		return map.findListForProfessorMain(prof, seasonCode, pageNum, size);
@@ -55,6 +63,7 @@ public class SubjectServiceImpl implements SubjectService {
 	public SubjectVO findOneWithApplysAndRatioAndFilesById(int no) {
 		return map.findOneWithApplysAndRatioAndFilesById(no);
 	}
+	
 
 	@Override
 	public SubjectVO findOneWithRatioAndScheduleAndPlanById(int no) {

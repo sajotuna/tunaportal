@@ -23,6 +23,7 @@ import co.fourth.tuna.domain.user.vo.AdminVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
 import co.fourth.tuna.domain.user.vo.StudentExVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
+import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
 
 
 @Controller
@@ -87,6 +88,15 @@ public class UserController {
 			@RequestBody Map<String, Integer> reqData) {
 		return StudentDao.findListBySubjectId(reqData.get("sbjno"));
 	}
+	
+	@PostMapping("/staff/task/students")
+	@ResponseBody
+	public List<StudentWithSubmitTaskVO> getStudentsWithSubmitTasks(
+			@RequestBody Map<String, Integer> reqData){
+		System.out.println(reqData.get("taskno"));
+		return StudentDao.findListWithSubmitTaskByTaskId(reqData.get("taskno"));
+	}
+	
 	
 	@RequestMapping("/admin/adminUpdate")
 	public String adminUpdate(Model model, AdminVO vo,Authentication authentication) {

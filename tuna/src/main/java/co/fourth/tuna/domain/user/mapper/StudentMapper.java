@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.fourth.tuna.domain.user.vo.StudentExVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
+import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
 
 public interface StudentMapper {
 	public StudentVO findById(StudentVO vo);
@@ -18,4 +19,5 @@ public interface StudentMapper {
 	public void studEamilPwdUpdate(StudentVO vo);
 	//TODO 사용자 가져올 때 비밀번호 제외
 	public List<StudentExVO> findListBySubjectId(int sbjno);
+	public List<StudentWithSubmitTaskVO> findListWithSubmitTaskByTaskId(int taskno);
 }

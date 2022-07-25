@@ -14,6 +14,10 @@ public interface SubjectMapper {
 	public SubjectVO findOneById(int no);
 	public SubjectVO findOneWithApplysAndRatioAndFilesById(int no);
 	
+	public List<SubjectVO> findListByProfessorVO(
+			@Param("prof")ProfessorVO vo, 
+			@Param("seasonCode")int seasonCode);
+	
 	public ArrayList<SubjectVO> findListForProfessorMain(
 			@Param("prof") ProfessorVO vo, 
 			@Param("seasonCode")int code,

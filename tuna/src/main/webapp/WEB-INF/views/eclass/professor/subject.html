@@ -322,10 +322,20 @@ xmlns:th="http://www.thymeleaf.org"
          ██    ██   ██ ███████ ██   ██ 
 -->
                   <div class="tab-pane pb-3" id="btabs-static-task" role="tabpanel" aria-labelledby="btabs-static-task-tab">
-                    <div style="overflow-y:scroll; height: 310px;">
-                      <table class="table table-hover table-vcenter ">
+                    <div style="overflow-y:scroll; overflow-x:scroll; height: 310px;">
+                      <table id="task-table" class="table table-hover table-vcenter ">
+                        <thead>
+                          <tr>
+                            <th>이름</th>
+                            <th>학과</th>
+                            <th>학번</th>
+                            <th style="width: 25%">제출</th>
+                            <th>제출시간</th>
+                            <th style="width: 90px">점수</th>
+                          </tr>
+                        </thead>
                         <tbody>
-                          <tr class="m-0">
+                          <!-- <tr class="m-0">
                             
                             <td class="table-cell">
                               <a class="" href="javascript:void(0);">김철수</a>
@@ -339,13 +349,16 @@ xmlns:th="http://www.thymeleaf.org"
                             <td class="table-cell">
                               <i class="fa fa-2x fa-file-arrow-down"></i>
                             </td>
-                            <td class="text-primary">
+                            <td class="table-cell text-primary">
                               <a href="javascript:void(0);">김철수_멸치족의 역사.zip (925 kb)</a>
                             </td>
-                            <td class="">
-                              2022-07-06 16:14
+                            <td class="table-cell">
+                              07-06 16:14
                             </td>
-                          </tr>
+                            <td class="table-cell">
+                              <input type="number" class="form-control" placeholder="">
+                            </td>
+                          </tr> -->
                         </tbody>
                       </table>
                     </div>
@@ -541,7 +554,7 @@ xmlns:th="http://www.thymeleaf.org"
 						<div class="block-header block-header-default bg-dark">
 							<h3 class="block-title text-gray-lighter">과제 등록</h3>
 							<div class="block-options">
-								<button type="button" class="btn-block-option"
+								<button type="button" class="close-btn btn-block-option"
 									data-bs-dismiss="modal" aria-label="Close">
 									<i class="fa fa-fw fa-times"></i>
 								</button>
@@ -549,23 +562,23 @@ xmlns:th="http://www.thymeleaf.org"
 						</div>
 						<div class="block-content block-content-full text-center">
 							<div class="fw-semibold fs-sm m-3">
-								<input class="form-control" type="text" placeholder="제목을 입력하세요." style="width:100%;">
+								<input id="task-title" class="form-control" type="text" placeholder="제목을 입력하세요." style="width:100%;">
 							</div>
 							<div class="fw-semibold fs-sm m-3">
-				                <div class="input-daterange input-group" data-date-format="yyyy-mm-dd" data-week-start="1" data-autoclose="true" data-today-highlight="true">
-							      <input type="text" class="form-control date" id="" name="" placeholder="제출 시작일" 
+                  <div class="input-daterange input-group" data-date-format="yyyy-mm-dd" data-week-start="1" data-autoclose="true" data-today-highlight="true">
+							      <input type="text" class="form-control date" id="task-start-input" name="" placeholder="제출 시작일" 
 							             data-week-start="1" data-autoclose="true" data-today-highlight="true">
 							      <span class="input-group-text fw-semibold">
 							        <i class="fa fa-fw fa-arrow-right"></i>
 							      </span>
-							      <input type="text" class="form-control date" id="" name="" placeholder="제출 종료일" 
+							      <input type="text" class="form-control date" id="task-limit-input" name="" placeholder="제출 종료일" 
 							             data-week-start="1" data-autoclose="true" data-today-highlight="true">
 							    </div>
 			                </div>
 							<div class="fw-semibold fs-sm m-3">
-								<textarea class="form-control mb-0" placeholder="내용을 입력하세요." style="width:100%; height:300px; resize:none;"></textarea>
+								<textarea id="task-content" class="form-control mb-0" placeholder="내용을 입력하세요." style="width:100%; height:300px; resize:none;"></textarea>
 							</div>
-								<button class="btn btn-sm btn-dark px-3 mb-3">등록</button>
+								<button class="submitBtn btn btn-sm btn-dark px-3 mb-3">등록</button>
 						</div>
 					</div>
 					
@@ -897,10 +910,12 @@ xmlns:th="http://www.thymeleaf.org"
             let header = document.querySelector('meta[name="_csrf_header"]').content;
             let token = document.querySelector('meta[name="_csrf"]').content;
 
-            // url 파라미터
+            //  파라미터
             let url = new URL(window.location.href);
             let params = new URLSearchParams(url.searchParams);
             let sbjno = params.get('no'); // 파라미터
+
+            let taskno = 8; // TODO 
 
             // 탭 제어
             let tabFlag = new Map();
@@ -921,6 +936,7 @@ xmlns:th="http://www.thymeleaf.org"
               tabContents = document.querySelectorAll("#subject-tab-content>div");
 
               initSubject();
+              initTaskInsertForm();
               objTrClickEvent();
               objUpdateClickEvent();
 
@@ -939,11 +955,84 @@ xmlns:th="http://www.thymeleaf.org"
                 tabPanel.children[i].setAttribute('id', TAB_ID+i);
                 tabFlag.set(i, false);
               }
-               //
+              
                loaderCurtain = document.querySelector('#loaderCurtain');
                tabClickEvent(0);
             }
 
+            function initTaskInsertForm() {
+              let modal = document.getElementById('taskInsertFrm');
+
+              modal.addEventListener('click', function(e) {
+                if(e.target.classList.contains('submitBtn')){
+                  Dialogs.dialog('checkConfirm',
+                    '정말 등록하시겠습니까?',
+                    '',
+                    function() {
+                      onLoaderCurtain();
+                      tabFlag.set(1, false);
+                      
+                      let task = {
+                        title : modal.querySelector("#task-title").value,
+                        content : modal.querySelector('#task-content').value,
+                        startDate : modal.querySelector('#task-start-input').value,
+                        limitDate : modal.querySelector("#task-limit-input").value,
+                        sbjNo : sbjno
+                      }
+
+                      fetch('/tuna/staff/insertTask', {
+                        method: "POST",
+                        headers: {
+                          'header': header,
+                          'X-Requested-with': 'XMLHttpRequest',
+                          'Content-Type': 'application/json',
+                          'X-CSRF-Token': token
+                        },
+                        body: JSON.stringify(task)
+                      })
+                      .then( async (res) => {
+                        let resBody = await res.text();
+
+                        if(res.ok) {
+                          Dialogs.dialog('success',
+                            "성공",
+                            resBody,
+                            function() {
+                              modal.getElementsByClassName("close-btn")[0].click()
+                            });
+                        } else {
+                          Dialogs.dialog('error',
+                          '실패',
+                          resBody,
+                          function() {
+                            console.error(resBody);
+                          });
+                        }
+                      })
+                      .catch((err) => {
+                        Dialogs.dialog('error',
+                        '오류',
+                        err,
+                        function() {
+                          console.error(err);
+                        })
+                      })
+                      .finally(()=>{
+                        tabClickEvent(1);
+                      }) // fetch END
+                    }) // Dialog END
+                }
+              }) 
+
+            } // initTaskInsert END
+
+/*
+████████  █████  ██████       ██████ ██      ██  ██████ ██   ██ 
+   ██    ██   ██ ██   ██     ██      ██      ██ ██      ██  ██  
+   ██    ███████ ██████      ██      ██      ██ ██      █████   
+   ██    ██   ██ ██   ██     ██      ██      ██ ██      ██  ██  
+   ██    ██   ██ ██████       ██████ ███████ ██  ██████ ██   ██ 
+*/
             //
             function tabClickEvent(tabIdx) {
               let url = "";
@@ -966,7 +1055,8 @@ xmlns:th="http://www.thymeleaf.org"
                   resFunc = setAttendanceContent;
                   break;
                 case 2: // 과제
-                  break;
+                  reqTaskContent(tabIdx, taskno, "/tuna/staff/task/students", setTaskContent);
+                  return;
                 case 3: // 문의
                   url = "/tuna/prof/lecQna";
                   resFunc = setQnaContent;
@@ -988,7 +1078,7 @@ xmlns:th="http://www.thymeleaf.org"
                   return;
                   break;
               }
-              reqSbjContent(tabIdx, sbj, url, resFunc)
+                reqSbjContent(tabIdx, sbj, url, resFunc);
 
             }
             function reqSbjContent(tabIdx, sbjno, url, resFunc) {
@@ -1006,6 +1096,34 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify({
                   sbjno: sbjno
+                })
+              })
+              .then(result => result.json())
+              .then(result => {
+                resFunc(result);
+
+                offloaderCurtain();
+                tabFlag.set(tabIdx, true);
+              })
+              .catch((err) => {
+                console.error('fetch 오류', err);
+
+                offloaderCurtain();
+                tabFlag.set(tabIdx, false);
+              })
+            }
+
+            function reqTaskContent(tabIdx, taskno, url, resFunc) {
+              fetch(url, {
+                method: "POST",
+                headers: {
+                  'header': header,
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify({
+                  taskno: taskno
                 })
               })
               .then(result => result.json())
@@ -1104,6 +1222,52 @@ xmlns:th="http://www.thymeleaf.org"
               });
 
             }
+            
+            // 과제 패널
+            function setTaskContent(studentList) {
+              let tbody = document.querySelector("#task-table tbody");
+              console.log(studentList);
+
+              for( student of studentList) {
+                let tr = document.createElement('tr');
+                let fileName, uri, enrollDate, score;
+
+                if(!student.submitTask || !student.submitTask.fileName) {
+                  fileName = "미제출"
+                  uri = "javascript:void(0);"
+                  enrollDate = "--/-- --:--:--"
+                  score = 0;
+                } else {
+                  fileName = student.submitTask.fileName;
+                  uri = student.submitTask.uri; //TODO
+                  enrollDate = dateTimeToISO(student.submitTask.enrollDate);
+                  score = student.submitTask.score;
+                }
+                
+                tbody.appendChild(tr);
+                tr.classList.add("m-0");
+                tr.innerHTML = `
+                <td class="table-cell">
+                  <a class="" href="javascript:void(0);">${student.name}</a>
+                </td>
+                <td class="table-cell">
+                    ${student.deptName}
+                </td>
+                <td class="table-cell">
+                  ${student.no}
+                </td>
+                <td class="table-cell text-primary">
+                  <a href="${uri}">${fileName}</a>
+                </td>
+                <td class="table-cell">
+                  ${enrollDate}
+                </td>
+                <td class="table-cell">
+                  <input type="number" class="form-control" placeholder="" value="${score}">
+                </td>
+                `;
+              }
+            }
 
             // 강의정보 패널
             function setPlanContent(planList) {
@@ -1146,7 +1310,7 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
             function setQnaContent(qnaList) {
-              console.log(qnaList);
+              // console.log(qnaList);
               let qna_content = document.getElementById("qna-content");
               let ulTag = qna_content.getElementsByTagName("ul")[0];
               let qnaContent = "";
@@ -1203,6 +1367,7 @@ xmlns:th="http://www.thymeleaf.org"
               let table = document.getElementById("subject-grade-table");
               let tbody = table.getElementsByTagName('tbody')[0];
               let trTags = tbody.getElementsByTagName('tr');
+              studentsGradeTr = [];
               for(let tr of trTags){ tr.remove() };
               for( let stud of studList ) {
                 let tr = document.createElement('tr');
@@ -1359,8 +1524,6 @@ xmlns:th="http://www.thymeleaf.org"
                     }
                     gradeDatas.push(gradeObj)
                   }
-                  
-                  console.log(gradeDatas);
 
                   fetch("/tuna/prof/updateGrades", {
                     method: "POST",
@@ -1373,15 +1536,12 @@ xmlns:th="http://www.thymeleaf.org"
                     body: JSON.stringify(gradeDatas)
                   })
                   .then(async (res) => {
-                    console.log(res);
                     let resBody = await res.text();
-                    console.log(resBody);
                     if(res.ok) {
                       Dialogs.dialog("success",
                         "성공",
                         resBody,
                         function() {
-                          tabClickEvent(6);
                         });
                     } else {
                       Dialogs.dialog("error",
@@ -1389,7 +1549,6 @@ xmlns:th="http://www.thymeleaf.org"
                       resBody,
                       function() {
                         console.log(resBody);
-                        tabClickEvent(6);
                       })
                     }
 
@@ -1401,7 +1560,11 @@ xmlns:th="http://www.thymeleaf.org"
                       function() {
                         console.error(err)
                       })
+                      
                   })
+                  .finally(()=> {
+                    tabClickEvent(6);
+                  }) // fetch END
                 }
               );
 
@@ -1427,6 +1590,14 @@ xmlns:th="http://www.thymeleaf.org"
                 mDate = mDate.toISOString();
                 mDate = mDate.slice(0, mDate.indexOf('T'));
               return mDate;
+            }
+
+            function dateTimeToISO(dateNumber) {
+              let mDate = new Date(dateNumber);
+              let result = "";
+              mDate = mDate.toISOString();
+              result += mDate.split('T')[0].slice(5) + " " + mDate.split('T')[1].split('.')[0];
+              return result;
             }
 		  </script>
 	      <script th:src="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.js}"></script>

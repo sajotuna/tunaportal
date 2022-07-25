@@ -50,8 +50,9 @@ public class GradeController {
 	@PostMapping("/prof/updateGrades")
 	public ResponseEntity<String> updateGrades(
 			@RequestBody List<GradeFormVO> grades) {
+		
 		HttpHeaders resHeaders = new HttpHeaders();
-		resHeaders.set(HttpHeaders.CONTENT_TYPE, "application/json;charset");
+		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		
 		ResponseEntity<String> resEntity = null;
 		try {

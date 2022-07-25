@@ -40,6 +40,15 @@ public class LectureNoticeServiceImpl implements LectureNoticeService {
 		return map.findListBySubjectId(sbjno);
 	}
 
+	@Override
+	public String insertLectureNotice(LectureNoticeVO vo) {
+		if(map.insertOneByLectureNoticeVO(vo) < 1) {
+			return "실패";
+		}
+		
+		return "성공";
+	}
+
 
 
 }

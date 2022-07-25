@@ -42,4 +42,18 @@ public class TaskServiceImpl implements TaskService {
 		map.deleteSubmitTask(vo);
 	}
 
+	@Override
+	public String insertTaskByVO(TaskVO vo) {
+		if(vo.getTitle().isBlank()) {
+			throw new Error("제목이 없습니다.");
+		}
+		if(vo.getLimitDate() == null) {
+			throw new Error("마감일이 없습니다.");
+		}
+		if(map.insertTaskByVO(vo) < 1) {
+			throw new Error("등록 실패");
+		}
+		return "등록 성공";
+	}
+
 }

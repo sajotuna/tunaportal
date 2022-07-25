@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,5 +58,12 @@ public class LectureNoticeController {
 	public List<LectureNoticeVO> lectureNotices(@RequestBody Map<String,Integer> data) {
 		// TODO 내 강의인지 확인
 		return service.findListBySubjectId(data.get("sbjno"));
+	}
+	
+	@PostMapping("/staff/eclass/notice")
+	public String writeNotice(Authentication auth,
+			LectureNoticeVO notice) {
+		service.insertLectureNotice(notice);
+		return "redirect:/eclass/professor/noticeList";
 	}
 }

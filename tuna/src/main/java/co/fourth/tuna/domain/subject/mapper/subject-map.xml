@@ -4,6 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.subject.mapper.SubjectMapper">
 	
+
 	<resultMap id="subjectMap" type="co.fourth.tuna.domain.subject.vo.SubjectVO">
 		<association property="professorVO" column="{no=pfno}" javaType="co.fourth.tuna.domain.user.vo.ProfessorVO" 
 			select="co.fourth.tuna.domain.user.mapper.ProfessorMapper.findById" />
@@ -113,6 +114,13 @@
 		ORDER BY no
 	</select>
 	
+	<select id="findListByProfessorVO"
+		resultType="co.fourth.tuna.domain.subject.vo.SubjectVO">
+		SELECT *
+		FROM subject
+		WHERE pfno = #{prof.no}
+			AND seasoncode = #{seasonCode}	
+	</select>
 	<select id="findListForProfessorMain"
 		resultMap="subjectListDataMap">
 		SELECT *

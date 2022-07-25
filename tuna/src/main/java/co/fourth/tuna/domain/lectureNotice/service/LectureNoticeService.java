@@ -19,4 +19,6 @@ public interface LectureNoticeService {
 
 	LectureNoticeVO findById(int no);
 	List<LectureNoticeVO> findListBySubjectId(int sbjno);
+	
+	String insertLectureNotice(LectureNoticeVO vo);
 }
