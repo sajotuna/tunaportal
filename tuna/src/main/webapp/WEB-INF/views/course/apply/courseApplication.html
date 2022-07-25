@@ -33,13 +33,13 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 
   <div id="section">
     <div id="page-container">
-      <div class="content content-boxed">
-        <h3 class="h3 fw-bold mb-2">수강신청</h3>
+      <div class="content content-full content-boxed">
+        <h3 class="h3 fw-bold mt-3 mb-4">수강신청</h3>
         <div class="bg-body-extra-light" style="padding: 10px;">
           <div class="m-4">
             <form th:action="@{/stud/course/Application}" method="post" id = "checkFrm" class="row">
-              <div class="col-md-3 col-xl-2 col-10 fomrtag">
-                <div class="mb-5">
+              <div class="col-xxl-3 col-md-6">
+                <div class="mb-3 mb-md-4">
                   <select class="form-select" id="deptCode" name="deptCode">
                     <option selected value="">학부(과)</option>
 	                  <option value="801" id="801">기계공학과</option>
@@ -55,8 +55,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </select>
                 </div>
               </div>
-              <div class="col-md-3 col-xl-2 col-10 fomrtag">
-                <div class="mb-2">
+              <div class="col-xxl-2 col-md-6">
+                <div class="mb-3 mb-md-4">
                   <select class="form-select"  id="type" name="type">
                     <option selected value = "">이수구분</option>
                     <option value="701" id = "701">전공필수</option>
@@ -66,8 +66,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </select>
                 </div>
               </div>
-              <div class="col-md-3 col-xl-2 col-10 fomrtag">
-                <div class="mb-2">
+              <div class="col-xxl-2 col-md-6">
+                <div class="mb-3 mb-md-4">
                   <select class="form-select"  id="target" name="target">
                     <option selected value = "">학년</option>
                     <option value="1" id = "1">1학년</option>
@@ -77,18 +77,17 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   </select>
                 </div>
               </div>
-              <div class="col-md-3 col-xl-2 col-10 fomrtag">
-                <div class="mb-2">
+              <div class="col-xxl-3 col-md-6">
+                <div class="mb-3 mb-md-4">
                   <input type="text" placeholder="과목명을 입력..." class="form-control"
                    id="name" name="name">
                 </div>
               </div>
-              <div class="col-md-2 col-xl-1 fomrtag">
-                <div class="mb-2 ">
-                  <button type="submit" class="btn btn-secondary col-sm-10 col-10">조회</button>
+              <div class="col-xxl-2">
+                <div class="mb-4">
+                  <button type="submit" class="btn btn-secondary col-12">조회</button>
                 </div>
               </div>
-
             </form>
             
             <div class="mb-5 ">
@@ -210,60 +209,65 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                 </table>
               </div>
            </div>
-            <div class="mb-5 ">
-              <div class="block-contents">
-                <form th:action="@{/stud/course/ApplyInsert}" method="post" id = "frm">
-                  <div class="row">
-                    <div class="col-md-3 col-xl-1 mt-4">
-                      <label class="form-label" for="example-flatpickr-time-standalone-24">과목코드</label>
-                    </div>
-                    <div class="col-md-4 col-xl-3 mt-3">
-                      <input type="text" class="form-control" id="sbjno"
-                        name="sbjno">
-                    </div>
-
-                    <div class="col-md-4 col-xl-4">
-                      <div style="overflow: hidden">
-                        <div class="d-flex justify-content-center">
-                          <img title="캡차이미지" th:src="@{/stud/course/captchaImg.do}" alt="캡차이미지" />
-                          <div id="ccaudio" style="display: none"></div>
-                            <div class="block-contents">
-                              <div class="col-12">
-                              <button id="reload" type="button" onclick="javaScript:getImage()" class=" btn "><svg
-                                  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                  class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                                  <path fill-rule="evenodd"
-                                    d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                                  <path
-                                    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                                </svg></button>
-                              </div>
-                              <div class="col-12">
-                              <button id="soundOn" type="button" class=" btn" style="margin: 0 auto;"
-                                onclick="javaScript:audio()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                  fill="currentColor" class="bi bi-volume-up" viewBox="0 0 16 16">
-                                  <path
-                                    d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
-                                  <path
-                                    d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
-                                  <path
-                                    d="M10.025 8a4.486 4.486 0 0 1-1.318 3.182L8 10.475A3.489 3.489 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.486 4.486 0 0 1 10.025 8zM7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12V4zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11z" />
-                                </svg></button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4 col-xl-3 mt-3">
-                        <input id="answer" type="text" class="form-control" value="">
-                      </div>
-                      <div class="col-md-2 col-xl-1 mt-3">
-                        <input id="check" class="btn btn-info col-12" type="button" value="확인" />
-                      </div>
-                    </div>
-
-                    
-                </form>
+            <div class="mb-5">
+              <div class="block block-rounded bg-gray">
+              	<div class="block-content block-content-full">
+	                <form th:action="@{/stud/course/ApplyInsert}" method="post" id = "frm">
+	                  <div class="row justify-content-center">
+	                    <div class="col-xxl-3 col-md-12 mb-4 mb-xxl-0 d-flex justify-content-center">
+		                    <div class="col-12">
+		                      <p class="mb-2 fw-semibold">과목코드</p>
+		                      <input type="text" class="form-control" id="sbjno"
+		                        name="sbjno">
+		                    </div>
+	                    </div>
+	                    <div class="col-xxl-3 mb-3 mb-xxl-0">
+	                      <div style="overflow: hidden">
+	                        <div class="d-flex justify-content-xxl-end justify-content-center">
+	                          <img title="캡차이미지" th:src="@{/stud/course/captchaImg.do}" alt="캡차이미지" />
+	                          <div id="ccaudio" style="display: none"></div>
+	                            <div class="block-contents">
+	                              <div class="col-12">
+	                              <button id="reload" type="button" onclick="javaScript:getImage()" class=" btn "><svg
+	                                  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+	                                  class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+	                                  <path fill-rule="evenodd"
+	                                    d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+	                                  <path
+	                                    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+	                                </svg></button>
+	                              </div>
+	                              <div class="col-12">
+	                              <button id="soundOn" type="button" class=" btn" style="margin: 0 auto;"
+	                                onclick="javaScript:audio()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+	                                  fill="currentColor" class="bi bi-volume-up" viewBox="0 0 16 16">
+	                                  <path
+	                                    d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
+	                                  <path
+	                                    d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
+	                                  <path
+	                                    d="M10.025 8a4.486 4.486 0 0 1-1.318 3.182L8 10.475A3.489 3.489 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.486 4.486 0 0 1 10.025 8zM7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12V4zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11z" />
+	                                </svg></button>
+	                              </div>
+	                            </div>
+	                          </div>
+	                        </div>
+	                      </div>
+	                      <div class="col-xxl-3 d-flex justify-content-center">
+		                    <div class="col-12">
+		                        <p class="mb-2 fw-semibold">자동입력방지코드</p>
+		                        <input id="answer" type="text" class="form-control" value="">
+	                      	</div>
+	                      </div>
+	                      <div class="col-xxl-2">
+		                        <p class="mb-2">&nbsp;</p>
+		                        <input id="check" class="btn btn-primary col-12" type="button" value="확인" />
+	                      </div>
+	                    </div>
+	
+	                    
+	                </form>
+                </div>
               </div>
             </div>
 
