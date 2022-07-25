@@ -365,10 +365,10 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                     <div class="pt-2 row justify-content-center">
                       <div class="col-xxl-8 col-10 mb-xsl-0 mb-2">
-                        <select class="form-select" id="example-select" name="example-select">
-                          <option value="1">과제 #1</option>
+                        <select class="form-select" id="task-selector" name="example-select">
+                          <!-- <option value="1">과제 #1</option>
                           <option value="2">과제 #2</option>
-                          <option value="3">과제 #3</option>
+                          <option value="3">과제 #3</option> -->
                         </select>
                       </div>
                       <div class="col-xxl-2 col-10 mb-xsl-0 mb-2">
@@ -934,6 +934,25 @@ xmlns:th="http://www.thymeleaf.org"
             // 상수데이터
             const TAB_ID = "tab-pane-";
             const GRADE_STUD_ID = "student-";
+            const REST_URL = {
+              PROGRESS_CONTENT : "/tuna/prof/lecPlans",
+              ATTENDANCE_CONTENT : "/tuna/prof/students",
+              TASK_CONTENT : "/tuna/staff/task/content",
+              QNA_CONTENT : "/tuna/prof/lecQna",
+              NOTICE_CONTENT : "/tuna/prof/lecNotices",
+              OBJECTION_CONTENT : "/tuna/prof/objections",
+              GRADE_CONTENT : "/tuna/prof/students",
+
+              GRDAE_UPDATE : "/tuna/prof/updateGrades",
+              TASK_INSERT : '/tuna/staff/insertTask',
+              OBJECTION_GET : '/tuna/staff/eclass/objection?objNo=',
+              OBJECTION_PUT : '/tuna/staff/eclass/objection',
+              OBJECTION_LIST : "/tuna/prof/objections",
+            };
+            // const TAB_BTN_NUM = {
+
+            // }
+            
 
             // 토큰
             let header = document.querySelector('meta[name="_csrf_header"]').content;
@@ -944,7 +963,7 @@ xmlns:th="http://www.thymeleaf.org"
             let params = new URLSearchParams(url.searchParams);
             let sbjno = params.get('no'); // 파라미터
 
-            let taskno = 8; // TODO 
+            let taskno = 0; // TODO 과제 선택
 
             // 탭 제어
             let tabFlag = new Map();
@@ -1009,7 +1028,7 @@ xmlns:th="http://www.thymeleaf.org"
                         sbjNo : sbjno
                       }
 
-                      fetch('/tuna/staff/insertTask', {
+                      fetch( REST_URL.TASK_INSERT, {
                         method: "POST",
                         headers: {
                           'header': header,
@@ -1064,8 +1083,8 @@ xmlns:th="http://www.thymeleaf.org"
 */
             //
             function tabClickEvent(tabIdx) {
-              let url = "";
-              let sbj = sbjno;
+              let reqURL = "";
+              let sbj = {};
               let resFunc = {};
 
               if(tabFlag.get(tabIdx)){ 
@@ -1076,40 +1095,50 @@ xmlns:th="http://www.thymeleaf.org"
               
               switch(tabIdx) {
                 case 0: // 진도
-                  url = "/tuna/prof/lecPlans";
+                  reqURL = REST_URL.PROGRESS_CONTENT;
                   resFunc = setPlanContent;
+                  sbj = sbjno;
                   break;
                 case 1: // 출결
-                  url = "/tuna/prof/students";
+                  reqURL = REST_URL.ATTENDANCE_CONTENT;
                   resFunc = setAttendanceContent;
+                  sbj = sbjno;
                   break;
                 case 2: // 과제
-                  reqTaskContent(tabIdx, taskno, "/tuna/staff/task/students", setTaskContent);
+                  reqURL = REST_URL.TASK_CONTENT;
+                  resFunc = setTaskContent;
+                  sbj = {sbjno: sbjno, taskno: taskno};
+                  reqTaskContent(tabIdx, sbj, reqURL, resFunc)
                   return;
                 case 3: // 문의
-                  url = "/tuna/prof/lecQna";
+                  reqURL = REST_URL.QNA_CONTENT;
                   resFunc = setQnaContent;
+                  sbj = sbjno;
                   break;
                 case 4: // 공지
                   //reqNoticeContent(tabIdx);
-                  url = "/tuna/prof/lecNotices";
+                  reqURL = REST_URL.NOTICE_CONTENT;
                   resFunc = setNoticeContent;
+                  sbj = sbjno;
                   break;
                 case 5: // 이의
-                  url = "/tuna/prof/objections";
+                  reqURL = REST_URL.OBJECTION_CONTENT;
                   resFunc = setObjectionContent;
+                  sbj = sbjno;
                   break;
                 case 6: // 성적
-                  url = "/tuna/prof/students"
+                  reqURL = REST_URL.GRADE_CONTENT;
                   resFunc = setGradeContent;
+                  sbj = sbjno;
                   break;
                 default:
                   return;
                   break;
               }
-                reqSbjContent(tabIdx, sbj, url, resFunc);
+              reqSbjContent(tabIdx, sbj, reqURL, resFunc);
 
             }
+
             function reqSbjContent(tabIdx, sbjno, url, resFunc) {
               // console.log(tabIdx);
               // console.log(sbjno);
@@ -1142,7 +1171,7 @@ xmlns:th="http://www.thymeleaf.org"
               })
             }
 
-            function reqTaskContent(tabIdx, taskno, url, resFunc) {
+            function reqTaskContent(tabIdx, data, url, resFunc) {
               fetch(url, {
                 method: "POST",
                 headers: {
@@ -1151,9 +1180,9 @@ xmlns:th="http://www.thymeleaf.org"
                   'Content-Type': 'application/json',
                   'X-CSRF-Token': token
                 },
-                body: JSON.stringify({
-                  taskno: taskno
-                })
+                body: JSON.stringify(
+                  data
+                )
               })
               .then(result => result.json())
               .then(result => {
@@ -1167,8 +1196,8 @@ xmlns:th="http://www.thymeleaf.org"
 
                 offloaderCurtain();
                 tabFlag.set(tabIdx, false);
-              })
-            }
+              });
+            };
 
 /*
 ██████   █████  ███    ██ ███████ ██      
@@ -1253,11 +1282,39 @@ xmlns:th="http://www.thymeleaf.org"
             }
             
             // 과제 패널
-            function setTaskContent(studentList) {
-              let tbody = document.querySelector("#task-table tbody");
-              console.log(studentList);
+            function setTaskContent(taskContent) {
+              // console.log(taskContent);
+              setTaskList(taskContent.tasks);
+              setTaskStudents(taskContent.students);
+            }
 
-              for( student of studentList) {
+            function setTaskList(tasks) {
+              let selector = document.querySelector("#task-selector");
+              selector.innerHTML = "";
+              selector.onchange=taskChangeEvent;
+
+              for( task of tasks ) {
+                let option = document.createElement("option");
+                option.selected = (task.no==taskno)?true:false;
+                option.value = task.no;
+                option.innerText = task.title;
+                selector.appendChild(option);
+              }
+            }
+
+            function taskChangeEvent(e) {
+              let selectedTask = e.target.selectedOptions[0].value;
+              taskno = selectedTask;
+              console.log(taskno);
+              tabFlag.set(2, false);
+              tabClickEvent(2);
+            }
+
+            function setTaskStudents(students) {
+              let tbody = document.querySelector("#task-table tbody");
+              tbody.innerHTML = "";
+
+              for( student of students) {
                 let tr = document.createElement('tr');
                 let fileName, uri, enrollDate, score;
 
@@ -1268,7 +1325,7 @@ xmlns:th="http://www.thymeleaf.org"
                   score = 0;
                 } else {
                   fileName = student.submitTask.fileName;
-                  uri = student.submitTask.uri; //TODO
+                  uri = student.submitTask.uri; //TODO 다운로드 링크
                   enrollDate = dateTimeToISO(student.submitTask.enrollDate);
                   score = student.submitTask.score;
                 }
@@ -1430,7 +1487,7 @@ xmlns:th="http://www.thymeleaf.org"
            		    if(e.target.parentNode.className.search('objTr') != -1){
            		    	let objNo = e.target.parentNode.getAttribute('data-objno');
            		    	
-           		    	fetch('/tuna/staff/eclass/objection?objNo='+objNo)
+           		    	fetch(REST_URL.OBJECTION_GET+objNo)
 	           	              .then(result => result.json())
 	           	              .then(result => {
 	           	            	  if(result) {
@@ -1467,7 +1524,7 @@ xmlns:th="http://www.thymeleaf.org"
 		 					       '정말로 등록하시겠습니까?',
 		 					       '한 번 등록된 답변은 수정할 수 없습니다.',
 		 					       function() {
-            							fetch('/tuna/staff/eclass/objection', {
+            							fetch(REST_URL.OBJECTION_PUT, {
 	            				                method: "PUT",
 	            				                headers: {
 	            				                  'header': header,
@@ -1493,7 +1550,7 @@ xmlns:th="http://www.thymeleaf.org"
 		            				            	 objUpdateBtn.setAttribute('disabled', true);
 		            				            	 
 		            				            	 objectionTb.remove();
-		            				                 reqSbjContent(5, sbjno, '/tuna/prof/objections', setObjectionContent);
+		            				                 reqSbjContent(5, sbjno, REST_URL.OBJECTION_LIST, setObjectionContent);
 	            				            	 
 	            				            	 } else {
 	            				            		 Dialogs.dialog('error',
@@ -1554,7 +1611,7 @@ xmlns:th="http://www.thymeleaf.org"
                     gradeDatas.push(gradeObj)
                   }
 
-                  fetch("/tuna/prof/updateGrades", {
+                  fetch(REST_URL.GRDAE_UPDATE, {
                     method: "POST",
                     headers: {
                       'header': header,

@@ -35,8 +35,7 @@ public class LecturePlanServiceImpl implements LecturePlanService{
 	}
 
 	@Override
-	@Transactional
-	public String updatePlanList(List<LecturePlanVO> planList) {
+	public String updatePlanList(List<LecturePlanVO> planList) throws Error {
 		List<LecturePlanVO> list = planList;
 		for(LecturePlanVO plan : list) {			
 			if(mapper.updateOneByNo(plan) < 1) {

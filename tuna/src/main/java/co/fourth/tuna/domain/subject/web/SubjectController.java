@@ -18,9 +18,6 @@ import co.fourth.tuna.domain.lectureplan.service.LecturePlanService;
 import co.fourth.tuna.domain.subject.service.SubjectService;
 import co.fourth.tuna.domain.subject.vo.SubjectUpdateForm;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
-import co.fourth.tuna.util.ResState;
-import co.fourth.tuna.util.ServiceResponseVO;
-
 
 @Controller
 public class SubjectController {
