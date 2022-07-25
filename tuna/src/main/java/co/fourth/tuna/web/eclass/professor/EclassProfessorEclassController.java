@@ -232,8 +232,11 @@ public class EclassProfessorEclassController {
 			                        Model model) {
 		
 		List<Map<String, Object>> list = objectionService.objectionListOfProf(Integer.parseInt(authentication.getName()), "all");
-
 		model.addAttribute("objList", list);
+		
+		CodeMasterVO seasonCodes = codeService.findById("100");
+		model.addAttribute("seasonCodes", seasonCodes);
+		
 		return req.getServletPath();
 	}
 
