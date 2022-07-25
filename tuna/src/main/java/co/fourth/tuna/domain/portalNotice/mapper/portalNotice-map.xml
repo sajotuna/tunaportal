@@ -25,9 +25,7 @@ FROM  (SELECT ROWNUM as RNUM,
 				<if test="state == 3">content like '%'||#{key}||'%'</if>
 			   ORDER BY ENROLLDATE DESC)a
 			  )b
-WHERE RNUM
-	  BETWEEN  #{startList}
-	  AND 		#{endList}
+<![CDATA[ WHERE #{startList}<RNUM  AND RNUM<=#{endList}]]>
 </select>
 
 <!-- 유저 전체조회 -->

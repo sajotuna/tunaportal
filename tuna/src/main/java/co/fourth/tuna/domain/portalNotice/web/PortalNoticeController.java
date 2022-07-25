@@ -1,10 +1,9 @@
 package co.fourth.tuna.domain.portalNotice.web;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.HtmlUtils;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.common.service.PagingService;
@@ -45,20 +44,21 @@ public class PortalNoticeController {
 	// user
 	// 전체조회
 	@RequestMapping("/portalNoticeList")
-	public String portalnoticeList(Model model, PortalNoticeVO vo, @RequestParam(required = false, defaultValue = "1")int page,
-			@RequestParam(required = false, defaultValue = "1" ) int range ){
-	
-		NoticePagingVO nvo =new NoticePagingVO(10);
-		
+	public String portalnoticeList(Model model, PortalNoticeVO vo,
+			@RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "1") int range) {
+
+		NoticePagingVO nvo = new NoticePagingVO(10);
+
 		PagingVO pvo = pagingDao.getPaging(new PagingVO("portalnotice", nvo.getListSize()));
 
 		nvo.pageInfo(page, range, pvo.getPageCount(), 5);
-		
+
 		List<PortalNoticeVO> notices = noticeDao.portalNoticeList(1, "전체", nvo.getStartList(), nvo.getEndList());
-		
+
 		model.addAttribute("notices", notices);
 		model.addAttribute("paging", nvo);
-		
+
 		return "notice/user/portalNoticeList";
 
 	}
@@ -73,27 +73,26 @@ public class PortalNoticeController {
 		return "notice/user/portalNoticeSelect";
 	}
 
-	
 	// admin
 	// 전체조회
 	@RequestMapping("/admin/admin/adminNoticeList")
-	public String adminNoticeList(Model model, PortalNoticeVO vo, @RequestParam(required = false, defaultValue = "1")int page,
-			@RequestParam(required = false, defaultValue = "1" ) int range) {
-		
-		NoticePagingVO nvo =new NoticePagingVO(10);
-		
+	public String adminNoticeList(Model model, PortalNoticeVO vo,
+			@RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "1") int range) {
+
+		NoticePagingVO nvo = new NoticePagingVO(10);
+
 		PagingVO pvo = pagingDao.getPaging(new PagingVO("portalnotice", nvo.getListSize()));
 
-		nvo.pageInfo(page, range, pvo.getPageCount(), 5);
-		
+		nvo.pageInfo(page, range, pvo.getPageCount(), 10);
+
 		List<PortalNoticeVO> notices = noticeDao.adminNoticeList(1, "전체", nvo.getStartList(), nvo.getEndList());
-		
+
 		model.addAttribute("notices", notices);
 		model.addAttribute("paging", nvo);
-		
+
 		return "notice/admin/adminNoticeList";
 	}
-
 
 	// 단건조회
 	@RequestMapping("/admin/admin/adminNoticeSelect")
@@ -105,43 +104,52 @@ public class PortalNoticeController {
 		return "notice/admin/adminNoticeSelect";
 	}
 
-	
 	// 공지등록폼
 	@RequestMapping("/admin/admin/adminNoticeInsertForm")
 	public String adminNoticeInsertForm() {
 		return "notice/admin/adminNoticeInsert";
 	}
 
+	
+	// Editor 이미지 업로드
+	@PostMapping("/ckImage")
+	@ResponseBody
+	public Map<String, String> ckfinderImage(MultipartHttpServletRequest request) throws Exception {
+		
+		MultipartFile image = request.getFile("upload");
+		Map<String, String> result = new HashMap<>();
+		
+		String[] fileInfo = fileService.upload(image, "PortalNotice");
+		
+		result.put("uploaded", "true");
+		result.put("url", "/tuna/display?fileName=" + fileInfo[1] + "&folder=PortalNotice");
+		
+		return result;
+
+	}
+
 	// 공지등록
-	/*
-	 * @PostMapping("/admin/admin/adminNoticeInsert") public String
-	 * adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo,Authentication
-	 * authentication,
-	 * 
-	 * @RequestParam(value = "file") MultipartFile[] files) throws IOException {
-	 * 
-	 * 
-	 * 
-	 * vo.setAdNo((authentication.getName())); noticeDao.noticeInsert(vo);
-	 * 
-	 * String text = vo.getContent(); String esc= HtmlUtils.htmlEscape(text);
-	 * 
-	 * vo.setContent(esc);
-	 * 
-	 * MultipartFile image = request.getFile("upload");
-	 * 
-	 * 
-	 * String originName = files.getOriginalFilename();
-	 * 
-	 * if (originName != null && originName.length() != 0) { String[] portalFile =
-	 * fileService.upload(files, "PortalNotice");
-	 * 
-	 * fileVo.setName(portalFile[0]); fileVo.setUri(portalFile[1]);
-	 * fileVo.setPnno(vo.getNo());
-	 * 
-	 * 
-	 * } return "redirect:/admin/admin/adminNoticeList"; }
-	 */
+	@PostMapping("/admin/admin/adminNoticeInsert")
+	public String adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo, Authentication authentication,
+			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
+
+		
+		vo.setAdNo((authentication.getName()));
+		noticeDao.noticeInsert(vo);
+
+		logger.info("insert 확인" + vo);
+		for (MultipartFile file : files) {
+			String originName = file.getOriginalFilename();
+			if (originName != null && originName.length() != 0) {
+				String[] portalFile = fileService.upload(file, "PortalNotice");
+				fileVo.setName(portalFile[0]);
+				fileVo.setUri(portalFile[1]);
+				fileVo.setPnno(vo.getNo());
+				noticeDao.fileInsert(fileVo);
+			}
+		}
+		return "redirect:/admin/admin/adminNoticeList";
+	}
 
 	// 공지수정폼
 	@PostMapping("/admin/admin/adminNoticeupdateForm")
@@ -154,9 +162,9 @@ public class PortalNoticeController {
 
 	// 공지 수정
 	@PostMapping("/admin/admin/adminNoticeUpdate")
-	public String adminNoticeUpdate(PortalNoticeVO vo, Authentication authentication, @RequestParam(value = "file") MultipartFile[] files)
-			throws IOException {
-		
+	public String adminNoticeUpdate(PortalNoticeVO vo, Authentication authentication,
+			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
+
 		vo.setAdNo((authentication.getName()));
 		noticeDao.noticeUpdate(vo);
 
@@ -178,19 +186,7 @@ public class PortalNoticeController {
 		return "redirect:/admin/admin/adminNoticeList";
 
 	}
-	
-	
-	/*
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping("/fileUpload") public String fileUpload(Model model,
-	 * MultipartFile fileload, HttpServletRequest req) { String filename =
-	 * fileload.getOriginalFilename();
-	 * 
-	 * String fuploadPath = req.getServletContext().getRealPath("/upload/editor")
-	 * 
-	 * File file = new File(fuploadPath + "/" + newfilename); }
-	 */
+
 
 	// 파일삭제
 	@DeleteMapping("/fileDel")
@@ -204,16 +200,15 @@ public class PortalNoticeController {
 	@DeleteMapping("/admin/admin/adminNoticeDelete")
 	@ResponseBody
 	public int adminNoticeDelete(@RequestBody PortalNoticeVO vo) {
-		
+
 		List<PortalNoticeFileVO> list = noticeDao.fileSelect(Integer.parseInt(vo.getNo()));
-		
-		logger.info("list ::" + list.toString());	
-		
-		for(int i=0; i<list.size(); i++) {
-			logger.info("uri ::" + list.get(i).getUri());	
+
+		logger.info("list ::" + list.toString());
+
+		for (int i = 0; i < list.size(); i++) {
+			logger.info("uri ::" + list.get(i).getUri());
 			fileService.delete(list.get(i).getUri(), "portalNotice");
 		}
-		
 
 		return noticeDao.noticeDelete(vo);
 
@@ -223,9 +218,9 @@ public class PortalNoticeController {
 	@GetMapping("/admin/admin/adminSearch")
 	@ResponseBody
 	public List<PortalNoticeVO> adminSearch(@RequestParam("state") int state, @RequestParam("key") String key,
-			@RequestParam(value="pageNum", required=false, defaultValue="1")int pageNum) {
-		
-		int size = 10;		
+			@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum) {
+
+		int size = 10;
 		return noticeDao.adminNoticeList(state, key, pageNum, size);
 	}
 
