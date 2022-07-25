@@ -152,7 +152,8 @@ xmlns:th="http://www.thymeleaf.org"
                     </ul>
                   </div>
                   <div class="col-10 offset-1 col-xxl-4 offset-xxl-8 px-3 pb-3">
-                    <button class="col-12 btn btn-primary">
+                    <button class="col-12 btn btn-primary"
+                    		data-bs-toggle="modal" data-bs-target="#fileInsertFrm">
                       업로드
                     </button>
                   </div>
@@ -546,6 +547,34 @@ xmlns:th="http://www.thymeleaf.org"
 ██      ██  ██████  ██████  ██   ██ ███████
 -->
         <!-- 모달 리스트 -->
+        <!-- 강의 자료 등록 Modal -->
+		<div class="modal" id="fileInsertFrm" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg"role="document">
+				<div class="modal-content">
+					<div class="block block-rounded block-transparent mb-0">
+						<div class="block-header block-header-default bg-dark">
+							<h3 class="block-title text-gray-lighter">강의 자료 등록</h3>
+							<div class="block-options">
+								<button type="button" class="close-btn btn-block-option"
+									data-bs-dismiss="modal" aria-label="Close">
+									<i class="fa fa-fw fa-times"></i>
+								</button>
+							</div>
+						</div>
+						<div class="block-content block-content-full text-center">
+							<div class="fw-semibold fs-sm m-3">
+								<input id="task-title" class="form-control" type="text" placeholder="제목을 입력하세요." style="width:100%;">
+							</div>
+							<div class="fw-semibold fs-sm m-3">
+								<input type="file" id="task-content" class="form-control mb-0"></input>
+							</div>
+								<button class="submitBtn btn btn-sm btn-dark px-3 mb-3">등록</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END 강의 자료 등록 -->
         <!-- 과제 등록 Modal -->
 		<div class="modal" id="taskInsertFrm" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-lg"role="document">
@@ -916,8 +945,8 @@ xmlns:th="http://www.thymeleaf.org"
 
               GRDAE_UPDATE : "/tuna/prof/updateGrades",
               TASK_INSERT : '/tuna/staff/insertTask',
-              OBJECTION_GET : '/tuna/eclass/professor/objection?objNo=',
-              OBJECTION_PUT : '/tuna/eclass/professor/objection',
+              OBJECTION_GET : '/tuna/staff/eclass/objection?objNo=',
+              OBJECTION_PUT : '/tuna/staff/eclass/objection',
               OBJECTION_LIST : "/tuna/prof/objections",
             };
             // const TAB_BTN_NUM = {
