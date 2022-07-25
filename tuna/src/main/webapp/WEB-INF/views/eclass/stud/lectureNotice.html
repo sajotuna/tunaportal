@@ -49,6 +49,9 @@
 											<th class="text-center" colspan="7"><a th:href="@{/stud/eclass/lectureNoticeSelect(no = ${n.NO}, sbjNo = ${n.SBJNO})}" th:text="${n.TITLE}" style="color:black"></a></th>
 											<th class="text-center" colspan="3" th:text="${n.ENROLLDATE}"></th>
 										</tr>
+										<tr th:if=${#lists.isEmpty(notice)}>
+										<th class="fw-bold text-center" colspan="10" rowspan="5">공지가 등록되지 않았습니다.</th>
+										</tr>
 									</tbody>
 								</table>
 							</div>

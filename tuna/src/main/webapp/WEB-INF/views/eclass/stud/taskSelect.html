@@ -42,11 +42,13 @@
 											id="DataTables_Table_0"
 											aria-describedby="DataTables_Table_0_info"
 											th:each="tsk : ${tsk}">
+											
 											<thead>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="2">제목</th>
 													<th colspan="7">[[${tsk.TITLE}]]
 													<input type="hidden" name="no" id="no" th:value="${tsk.NO}">
+													<input type="hidden" name="sbjNo" id="sbjNo" th:value="${tsk.SBJNO}">
 													</th>
 													
 												</tr>

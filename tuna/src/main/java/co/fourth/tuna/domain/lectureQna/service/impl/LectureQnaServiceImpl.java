@@ -45,6 +45,11 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 		 mapper.insertOneQna(vo);
 	}
 
+	@Override
+	public void delOneQna(LectureQnaVO vo) {
+		mapper.delOneQna(vo);
+	}
+
 	
 	//mapper 주입, 오버라이딩
 }

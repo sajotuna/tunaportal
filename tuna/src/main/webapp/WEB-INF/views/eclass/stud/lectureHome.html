@@ -31,12 +31,15 @@
 							</div>
 							<div class="col-12" style="height:370px; overflow-y:scroll;">
 								<table class="table table-striped table-vcenter">
-								<tr th:if="${#strings.isEmpty(stn)}">
-								<td class="fw-semibold fs-sm text-center">공지사항이 등록되지 않습니다.</td>
-								</tr>
 								<tr th:each="stn : ${stn}">
-									<td class="fw-semibold fs-sm"
-										th:text="${stn.TITLE}+'  /  '+${stn.ENROLLDATE}"></td>
+								<input type="hidden" th:value="${stn.NO}">
+								<input type="hidden" th:value="${stn.SBJNO}">
+									<td class="fw-semibold fs-sm">
+										<a th:href="@{/stud/eclass/lectureNoticeSelect(no = ${stn.NO}, sbjNo = ${stn.SBJNO})}" style="color:black" th:text="${stn.TITLE}+'/'+${stn.ENROLLDATE}"></a>
+										</td>
+								</tr>
+								<tr th:if="${#lists.isEmpty(stn)}">
+								<td class="fw-semibold fs-sm text-center">공지사항이 등록되지 않습니다.</td>
 								</tr>
 								</table>
 							</div>
@@ -53,12 +56,15 @@
 								</div>
 								<div class="col-12" style="height:370px; overflow-y:scroll;">
 									<table class="table table-striped table-vcenter">
-									<tr th:if="${#strings.isEmpty(stt)}">
+									<tr th:if="${#lists.isEmpty(stt)}">
 									<td class="fw-semibold fs-sm text-center">과제가 등록되지 않았습니다.</td>
 									</tr>
 									<tr th:each="stt : ${stt}">
-										<td class="fw-semibold fs-sm"
-											th:text="${stt.TITLE}+'  /  '+${stt.LIMITDATE}"></td>
+									<input type="hidden" th:value="${stt.NO}">
+									<input type="hidden" th:value="${stt.SBJNO}">
+										<td class="fw-semibold fs-sm">
+											<a th:href="@{/stud/eclass/taskSelect(no=${stt.NO},sbjNo=${stt.SBJNO})}" style="color:black" th:text="${stt.TITLE}"></a>
+											</td>
 									</tr>
 									</table>
 								</div>
@@ -74,12 +80,15 @@
 								</div>
 								<div class="col-12" style="height:370px; overflow-y:scroll;">
 									<table class="table table-striped table-vcenter">
-									<tr th:if="${#strings.isEmpty(stq)}">
+									<tr th:if="${#lists.isEmpty(stq)}">
 									<td class="fw-semibold fs-sm text-center">질문이 등록되지 않았습니다.</td>
 									</tr>
 									<tr th:each="stq : ${stq}">
-										<td class="fw-semibold fs-sm"
-											th:text="${stq.TITLE}"><a class="fw-semibold fs-sm" th:href="@{/stud/eclass/taskList(no=${stq.no}, sbjNo=${stq.sbjNo})}"></a></td>
+									<input type="hidden" th:value="${stq.NO}">
+									<input type="hidden" th:value="${stq.SBJNO}">
+										<td class="fw-semibold fs-sm">
+									<a th:href="@{/stud/eclass/qnaSelect(no=${stq.NO},sbjNo=${stq.SBJNO})}" style="color: black"> [[${stq.TITLE}]] </a>
+									</td>
 									</tr>
 									</table>
 								</div>

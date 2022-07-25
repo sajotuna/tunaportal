@@ -49,7 +49,7 @@
 												</tr>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="3">내용</th>
-													<th colspan="7" th:text="${qs.content}"></th>
+													<th colspan="7" style="height:300px; overflow-y:scroll;"  th:text="${qs.CONTENT}"></th>
 												</tr>
 											</thead>
 										</table>
@@ -59,11 +59,11 @@
 											aria-describedby="DataTables_Table_0_info">
 											<tbody>
 												<tr th:if="${#strings.isEmpty(qs.ANSWER)}">
-													<th class="text-center" th:text="'등록된 답변이 없습니다'"></th>
+													<th class="text-center" style="height:150px;"  th:text="'등록된 답변이 없습니다'"></th>
 												</tr>
 												<tr th:if="${not #strings.isEmpty(qs.ANSWER)}">
 													<th class="text-center" tabindex="0" colspan="3">답변</th>
-													<th colspan="7" th:text="${qs.ANSWER}+${qs.ANSWERDATE}"></th>
+													<th colspan="7" style="height:150px; overflow-y:scroll;"  th:text="${qs.ANSWER}+${qs.ANSWERDATE}"></th>
 												</tr>
 											</tbody>
 										</table>

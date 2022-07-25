@@ -4,7 +4,7 @@
 
 <resultMap type="HashMap" id="ClobToString">
 
-	<result property="content" column="CONTENT" jdbcType="CLOB" javaType="java.lang.String" />
+	<result property="CONTENT" column="CONTENT" jdbcType="CLOB" javaType="java.lang.String" />
 	<result property="ANSWER" column="ANSWER" jdbcType="CLOB" javaType="java.lang.String" />
 
 </resultMap>
@@ -34,7 +34,7 @@
     (SELECT
    		Q.NO, 
 	    Q.TITLE, 
-	    TO_CHAR(Q.CONTENT), 
+	    TO_CHAR(Q.CONTENT) CONTENT, 
 	    Q.ANSWER, TO_CHAR(Q.ENROLLDATE, 'MM/DD HH24:MI') ENROLLDATE, 
 	    Q.SBJNO,
 	    TO_CHAR(Q.ANSWERDATE, 'MM/DD HH24:MI') ANSWERDATE, 
@@ -43,9 +43,9 @@
   		ROWNUM RN
 	FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
 	WHERE Q.SBJNO = #{sbjNo}
-    and s.no = l.stno
-    and q.sbjno = l.sbjno
-    ORDER BY RN DESC)
+    AND S.NO = L.STNO
+    AND Q.SBJNO = L.SBJNO
+    ORDER BY NO DESC)
     WHERE RN 
     	BETWEEN (#{pageNum}-1) * #{size} +1
     	AND #{pageNum}*#{size}
@@ -53,9 +53,17 @@
 	</select>
 	
 	<!-- 질문단건조회 -->
-	<select id="qnaSelect" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO" resultMap="ClobToString">
+	<select id="qnaSelect" resultType="map" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 	
-	SELECT Q.*, S.NAME, L.SBJNO
+	SELECT Q.NO, 
+		   Q.TITLE,
+		   TO_CHAR(Q.CONTENT) CONTENT,
+		   TO_CHAR(Q.ENROLLDATE, 'MM/DD HH24:MI:SS') ENROLLDATE,
+		   TO_CHAR(Q.ANSWER) ANSWER,
+		   TO_CHAR(Q.ANSWERDATE, 'MM/DD HH24:MI:SS') ANSWERDATE,
+		   Q.VISIBLE,
+		   S.NAME, 
+		   L.SBJNO
 	FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
 	WHERE S.NO = #{stNo}
     AND S.NO = L.STNO
@@ -72,6 +80,14 @@ SELECT CASE WHEN MAX(NO) != 0 THEN MAX(NO) + 1 ELSE 1 END FROM LECTUREQNA
 INSERT INTO LECTUREQNA
 VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{visible})
 </insert>
+
+<delete id="delOneQna" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+	DELETE FROM LECTUREQNA 
+	WHERE SBJNO = #{sbjNo} 
+	AND NO = #{no}
+	AND STNO = #{stNo}
+	</delete>
+	
 
 <!-- 목록 subject으로 찾기 -->
 	<select id="findBySubjectId"
