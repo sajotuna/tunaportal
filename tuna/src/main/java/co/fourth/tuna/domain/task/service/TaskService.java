@@ -2,6 +2,7 @@ package co.fourth.tuna.domain.task.service;
 
 import java.util.List;
 
+import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 
@@ -26,4 +27,8 @@ public interface TaskService {
 	public String insertTaskByVO(TaskVO vo);
 	
 	public List<TaskVO> findListBySubjectId(int sbjno);
+	
+	public String updateSubmitTaskScoreByVO(EclassSubmitTaskScoreForm form);
+	
+	public List<SubmitTaskVO> findListByStudentIdAndTaskId(int stno, int taskno);
 }

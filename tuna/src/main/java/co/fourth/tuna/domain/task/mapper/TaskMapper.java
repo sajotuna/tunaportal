@@ -31,4 +31,9 @@ public interface TaskMapper {
 			@Param("stno")int stno);
 	
 	public int insertTaskByVO(TaskVO vo);
+	public int updateSubmitTaskByVO(SubmitTaskVO vo);
+	public List<SubmitTaskVO> findSubmitTaskListByStudentIdAndTaskId(
+			@Param("stno")int stno,
+			@Param("taskno")int taskno
+		);
 }

@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.subject.mapper.SubjectMapper;
 import co.fourth.tuna.domain.task.service.TaskService;
+import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
 import co.fourth.tuna.domain.task.vo.EclassTaskContentVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 import co.fourth.tuna.domain.user.service.StudentService;
-import co.fourth.tuna.domain.user.vo.StudentVO;
 import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
 
 @Controller
@@ -108,6 +108,11 @@ public class TaskController {
 	}
 	
 	//
-//	@PoastMapping(value="/staff/eclass/updateSubmitTaskScore")
-//	public List<SubmitTaskVO> 
+	@PostMapping(value="/staff/eclass/updateSubmitTaskScore")
+	public ResponseEntity<String> updateSubmitTaskScore(
+			@RequestBody EclassSubmitTaskScoreForm data) {
+		taskService.updateSubmitTaskScoreByVO(data);
+		
+		return null;
+	}
 }
