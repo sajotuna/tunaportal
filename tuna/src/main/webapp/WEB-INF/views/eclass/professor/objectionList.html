@@ -157,49 +157,53 @@
 			let objNo = $(this).data('objno');
 			let answer = $('#answer').val();
 			
-			Dialogs.dialog('checkConfirm',
-					       '정말로 등록하시겠습니까?',
-					       '한 번 등록된 답변은 수정할 수 없습니다.',
-					       function() {
+			if(!content) {
+				Dialogs.dialog('error',
+					  		   '등록 불가',
+					 	   	   '내용을 작성해 주세요.');
+			} else {
+				
+				Dialogs.dialog(
+					'checkConfirm',
+					'정말로 등록하시겠습니까?',
+					'한 번 등록된 답변은 수정할 수 없습니다.',
+					function() {
 					
-								$.ajax({
-									
-									url: getContextPath() + 'staff/eclass/objection',
-									type: 'PUT',
-									data: JSON.stringify(
-											{no:objNo, 
-										     answer:answer}
-										  ),
-									contentType: 'application/json',
-									dataType: 'json',
-									beforeSend: function (xhr) {
-									       xhr.setRequestHeader(header, token);
-										}
-									
-								}).done(function() {
-									
-									Dialogs.dialog('success',
-										           '등록 완료',
-										           '성적 이의신청 답변 등록이 완료되었습니다.');
-								
-									$('#objstate').text('답변 완료');
-									$('#answer').attr('disabled', true);
-									$('#objUpdateBtn').attr('disabled', true);
-									seasonObjListSelectAjax($('#seasonCode').val());
-									
-								}).fail(function() {
-									
-									Dialogs.dialog('error',
-										      	   '등록 실패',
-										    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
-									
-								})
-								
-								
-						   });
-
+						$.ajax({
+							
+							url: getContextPath() + 'staff/eclass/objection',
+							type: 'PUT',
+							data: JSON.stringify(
+									{no:objNo, 
+								     answer:answer}
+								  ),
+							contentType: 'application/json',
+							dataType: 'json',
+							beforeSend: function (xhr) {
+							       xhr.setRequestHeader(header, token);
+								}
+							
+						}).done(function() {
+							
+							Dialogs.dialog('success',
+								           '등록 완료',
+								           '성적 이의신청 답변 등록이 완료되었습니다.');
+						
+							$('#objstate').text('답변 완료');
+							$('#answer').attr('disabled', true);
+							$('#objUpdateBtn').attr('disabled', true);
+							seasonObjListSelectAjax($('#seasonCode').val());
+							
+						}).fail(function() {
+							
+							Dialogs.dialog('error',
+								      	   '등록 실패',
+								    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
+							
+						})
+					});
+			}
 		})
-		
 	}
 	
 	// 이의신청 1건 조회
