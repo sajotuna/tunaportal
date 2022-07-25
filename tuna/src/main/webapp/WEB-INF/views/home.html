@@ -10,45 +10,42 @@
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-	
-	<style>
-	 .modal {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+<style>
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-        .modal .bg {
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.6);
-        }
+.modal .bg {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+}
 
-        .modalBox {
-          position: absolute;
-          background-color: #fff;
-          width: 600px;
-          height: 600px;
-          padding: 15px;
-        }
+.modalBox {
+	position: absolute;
+	background-color: #fff;
+	width: 600px;
+	height: 600px;
+	padding: 15px;
+}
 
-        .modalBox button {
-          display: block;
-          width: 80px;
-          margin: 0 auto;
-        }
+.modalBox button {
+	display: block;
+	width: 80px;
+	margin: 0 auto;
+}
 
-        .hidden {
-          display: none;
-        }
-	
-	</style>
-
+.hidden {
+	display: none;
+}
+</style>
 </head>
 <body>
 <th:block th:if = "${error != null && error != ''}">
@@ -69,65 +66,61 @@
 <div id="page-container">
 
 
-<div class="modal hidden ">
+<div class="modal hidden">
   <div class="bg"></div>
-  <div class="modalBox ">
+  <div class="modalBox d-flex justify-content-center align-items-center">
   
-    <p class = "text-center">신입생 유의사항<br>
-    신입생은 비밀번호 변경 및 이메일을 입력해야만 포탈이용이 가능합니다.</p>
-    <h3 class="fw-bold text-center">이메일 변경</h3>
+  	<div class="column">
+  	
+  	<div class="col-12">
+    <p class = "text-center mb-5">
+    신입생 여러분, 입학을 환영합니다.<br>
+    현재는 정보 등록 이후 포탈 이용이 가능합니다.<br>
+    아래에서 이메일 등록 및 비밀번호 변경을 해주세요.</p>
+    </div>
+    <div class="block block-rounded bg-dark">
+    <div class="block-content block-content-full">
 	   <form th:action="@{/stud/freshmanUpdate}" method="post" id = "frm">
-    <div class = "d-flex justify-content-center">
-	    <div class = "col-8">
+    <h3 class="fw-bold text-center text-gray-lighter">이메일 등록</h3>
 	    <div class="input-group">
 	         <input type="email" class="form-control" id="email"
 	                          name="email" placeholder="이메일을 입력하세요..." >
 	    </div>
-    	</div>
-    </div>
-    <h3 class="fw-bold text-center mt-4">비밀번호 변경</h3>
+    <h3 class="fw-bold text-center mt-4 text-gray-lighter">비밀번호 변경</h3>
     
-    <div class="row">
-    			<div class = "d-flex justify-content-center">
-                  <div class = "col-8">
                     <div class="mb-2">
                       <div class="input-group">
                         <input type="password" class="form-control" id="pwd"
                           name="pwd" placeholder="변경 비밀번호" >
                       </div>
                     </div>
-                    </div>
-                    </div>
-                    <div class = "d-flex justify-content-center">
-                    <div class = "col-8">
                     <div class="mb-2">
                       <div class="input-group">
                         <input type="password" class="form-control" id="pwd1"
                           name="pwd1" placeholder="비밀번호 확인" >
                       </div>
                     </div>
-                    </div>
-                    </div>
                     <div class="mb-2">
                       <div class="center">
-                        <button type = "button" onclick ="javascript:freshmanUpdate();" class="btn btn-info">변경</button>
+                        <button type = "button" onclick ="javascript:freshmanUpdate();" class="btn btn-light">변경</button>
                       </div>
                     </div>
-              </div>
                </form>
+               </div>
+               </div>
+                    </div>
        </div>
-    <button class="closeBtn">✖</button>
   </div>
 	<!-- Main Container -->
 	<main id="main-container">
-<div id="loaderCurtain" class ="d-none">
-                    <div class="overflow-hidden bg-white-95 position-absolute top-0 start-0 w-100 h-100 opacity-75" style = "z-index : 100"></div>
-                    <span class="position-absolute top-50 start-50 translate-middle">
-                      <div class="spinner-border text-secondary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                      </div>
-                    </span>
-                  </div>
+		<div id="loaderCurtain" class ="d-none">
+          <div class="overflow-hidden bg-white-95 position-absolute top-0 start-0 w-100 h-100 opacity-75" style = "z-index : 100"></div>
+          <div class="position-absolute top-50 start-50 translate-middle">
+            <div class="spinner-border text-secondary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
 	    <!-- Hero -->
 	    <div class="bg-body-light">
 	        <div class="content content-full content-boxed">
