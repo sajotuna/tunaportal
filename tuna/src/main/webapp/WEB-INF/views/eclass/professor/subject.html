@@ -364,19 +364,28 @@ xmlns:th="http://www.thymeleaf.org"
                       </table>
                     </div>
                     <div class="pt-2 row justify-content-center">
-                      <div class="col-xxl-8 col-10 mb-xsl-0 mb-2">
+                      <div class="col-xxl-2 col-10 mb-xsl-0 mb-2">
+                        <button type="button" 
+                          class="col-12 btn btn-primary"
+                          data-bs-toggle="modal" 
+                          data-bs-target="#taskInsertFrm">과제 등록
+                        </button>
+					            </div>
+                      <div class="col-xxl-5 col-10 mb-xsl-0 mb-2">
                         <select class="form-select" id="task-selector" name="example-select">
                           <!-- <option value="1">과제 #1</option>
                           <option value="2">과제 #2</option>
                           <option value="3">과제 #3</option> -->
                         </select>
                       </div>
-                      <div class="col-xxl-2 col-10 mb-xsl-0 mb-2">
-                        <button type="button" class="col-12 btn btn-primary"
-							data-bs-toggle="modal" data-bs-target="#taskInsertFrm">과제 등록</button>
-					  </div>
+                      <div class="col-xxl-2 col-10 mb-xsl-0 mb-2 align-self-center">
+                        <span>마감 : </span><span id="task-limit">테스트</span>
+                      </div>
                       <div class="col-xxl-2 col-10">
                         <button class="col-12 btn btn-dark">전체 다운로드</button>
+                      </div>
+                      <div class="col-xxl-1 col-10">
+                        <button id="task-score-submit" class="col-12 btn btn-primary">적용</button>
                       </div>
                     </div>
                   </div> <!-- task TAB END -->
@@ -976,6 +985,7 @@ xmlns:th="http://www.thymeleaf.org"
             //
             let attendRadioGroups = [];
             let studentsGradeTr = [];
+            let studentsTaskTr = [];
 
             // 로드 이벤트
             window.addEventListener("DOMContentLoaded", function() {
@@ -985,9 +995,9 @@ xmlns:th="http://www.thymeleaf.org"
 
               initSubject();
               initTaskInsertForm();
+              initTaskScoreSubmit();
               objTrClickEvent();
               objUpdateClickEvent();
-
             });
 
             // 초기화 세팅
@@ -1073,6 +1083,28 @@ xmlns:th="http://www.thymeleaf.org"
               }) 
 
             } // initTaskInsert END
+
+            function initTaskScoreSubmit() {
+              let submitBtn = document.getElementById("task-score-submit");
+              let submitTaskList;
+
+              submitBtn.addEventListener('click', function(e){
+                submitTaskList = [];
+                
+                for( tr of studentsTaskTr ) {
+                  console.log(tr);
+                  console.log(tr.data_submit_no);
+                  let score = tr.querySelector(".task-score-input").value;
+                  console.log(score);
+                  let submitTask = {
+                    no: tr.data_submit_no,
+                    score: score
+                  }
+                  submitTaskList.push(submitTask)
+                }
+                console.log(submitTaskList);
+              })
+            } // initTaskScoreSubmit;
 
 /*
 ████████  █████  ██████       ██████ ██      ██  ██████ ██   ██ 
@@ -1290,22 +1322,29 @@ xmlns:th="http://www.thymeleaf.org"
 
             function setTaskList(tasks) {
               let selector = document.querySelector("#task-selector");
+              let limitTag = document.querySelector("#task-limit");
               selector.innerHTML = "";
               selector.onchange=taskChangeEvent;
+              if(taskno == 0) {
+                  taskno = tasks[0].no;
+              }
 
-              for( task of tasks ) {
+              for(task of tasks ) {
                 let option = document.createElement("option");
-                option.selected = (task.no==taskno)?true:false;
                 option.value = task.no;
                 option.innerText = task.title;
                 selector.appendChild(option);
+                if(task.no == taskno) {
+                  option.selected = true;
+                  limitTag.innerText = dateNumberToISO(task.limitDate);
+                }
               }
             }
 
             function taskChangeEvent(e) {
               let selectedTask = e.target.selectedOptions[0].value;
               taskno = selectedTask;
-              console.log(taskno);
+              // console.log(taskno);
               tabFlag.set(2, false);
               tabClickEvent(2);
             }
@@ -1316,21 +1355,27 @@ xmlns:th="http://www.thymeleaf.org"
 
               for( student of students) {
                 let tr = document.createElement('tr');
-                let fileName, uri, enrollDate, score;
+                let fileName, uri, enrollDate, score, disabled;
+                
+                tbody.appendChild(tr);
+                
+                studentsTaskTr = [];
+                studentsTaskTr.push(tr);
 
                 if(!student.submitTask || !student.submitTask.fileName) {
                   fileName = "미제출"
                   uri = "javascript:void(0);"
                   enrollDate = "--/-- --:--:--"
                   score = 0;
-                } else {
+                  disabled = "disabled"
+                } else { //
                   fileName = student.submitTask.fileName;
                   uri = student.submitTask.uri; //TODO 다운로드 링크
                   enrollDate = dateTimeToISO(student.submitTask.enrollDate);
                   score = student.submitTask.score;
+                  tr.data_submit_no = student.submitTask.no;
                 }
                 
-                tbody.appendChild(tr);
                 tr.classList.add("m-0");
                 tr.innerHTML = `
                 <td class="table-cell">
@@ -1349,7 +1394,7 @@ xmlns:th="http://www.thymeleaf.org"
                   ${enrollDate}
                 </td>
                 <td class="table-cell">
-                  <input type="number" class="form-control" placeholder="" value="${score}">
+                  <input type="number" class="form-control task-score-input" placeholder="" value="${score}" ${disabled}>
                 </td>
                 `;
               }

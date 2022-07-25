@@ -106,4 +106,8 @@ public class TaskController {
 		
 		return list;
 	}
+	
+	//
+//	@PoastMapping(value="/staff/eclass/updateSubmitTaskScore")
+//	public List<SubmitTaskVO> 
 }
