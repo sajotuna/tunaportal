@@ -125,7 +125,7 @@ public class PortalNoticeController {
 		MultipartFile image = request.getFile("upload");
 		Map<String, String> result = new HashMap<>();
 		
-		String[] fileInfo = fileService.upload(image, "PortalNotice");
+		String[] fileInfo = fileService.upload(image, "PortalNotice/image");
 		
 		result.put("uploaded", "true");
 		result.put("url", "/tuna/display?fileName=" + fileInfo[1] + "&folder=PortalNotice");
