@@ -14,4 +14,6 @@ public interface BannerService {
 	List<BannerVO> sliderBannerSelect();
 	int sliderBannerUpdate(BannerVO vo);
 	
+	int getBannerCnt();
+	
 }

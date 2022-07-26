@@ -16,5 +16,7 @@ public interface BannerMapper {
 	
 	List<BannerVO> sliderBannerSelect();
 	int sliderBannerUpdate(BannerVO vo);
+	
+	int getBannerCnt();
 
 }

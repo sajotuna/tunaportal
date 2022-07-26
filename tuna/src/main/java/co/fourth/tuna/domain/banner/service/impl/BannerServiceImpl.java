@@ -44,5 +44,10 @@ public class BannerServiceImpl implements BannerService {
 		return map.sliderBannerUpdate(vo);
 	}
 
+	@Override
+	public int getBannerCnt() {
+		return map.getBannerCnt();
+	}
+
 
 }
