@@ -15,139 +15,147 @@
 <body>
 	<main layout:fragment="main">
 		<!--title start-->
-		<div class="content content-boxed">
-			<h3 class="fw-bold">학사공지 목록</h3>
-			<!--title end-->
-			<div class="block block-rounded">
-				<div class="block-content">
-					<div class="row">
-						<!-- Search Form (visible on larger screens) -->
-						<form id="frm" class="row d-flex justify-content-end" action=""
-							method="post">
-							<input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
-							<div class="col-2">
-								<select name="state" id="state" class="form-select">
-									<option value="1">전체보기</option>
-									<option value="2">제목</option>
-									<option value="3">내용</option>
-								</select>
-							</div>
-							<div class="col-3 p-0">
-								<div class="input-group">
-									<input type="text" class="form-control form-control-alt"
-										id="key" name="key" placeholder="Search">
-									<button id="searchBtn" type="button" onclick="searchList()"
-										class="btn btn-alt-secondary">
-										<i class="fa fa-search"></i>
-									</button>
+		<div class="mt-3">
+			<div class="content content-full">
+				<h3 class="fw-bold">학사공지 목록</h3>
+				<!--title end-->
+				<div class="block block-rounded">
+					<div class="block-content">
+						<div class="row">
+							<!-- Search Form (visible on larger screens) -->
+							<form id="frm" class="row d-flex justify-content-end" action=""
+								method="post">
+								<input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
+								<div class="col-2">
+									<select name="state" id="state" class="form-select">
+										<option value="1">전체보기</option>
+										<option value="2">제목</option>
+										<option value="3">내용</option>
+									</select>
 								</div>
-							</div>
-						</form>
-					</div>
-					<!-- END Search Form -->
-
-
-					<!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
-					<table id="tb"
-						class="js-table-checkable table table-hover table-vcenter">
-						<!--thead 표 제목-->
-						<thead>
-							<tr>
-								<th class="text-center" style="width: 70px;">
-									<div class="form-check d-inline-block">
-										<input class="form-check-input" type="checkbox" value=""
-											id="check-all" name="check-all"> <label
-											class="form-check-label" for="check-all"></label>
+								<div class="col-3 p-0">
+									<div class="input-group">
+										<input type="text" class="form-control form-control-alt"
+											id="key" name="key" placeholder="Search">
+										<button id="searchBtn" type="button" onclick="searchList()"
+											class="btn btn-alt-secondary">
+											<i class="fa fa-search"></i>
+										</button>
 									</div>
-								</th>
-								<th class="text-center" style="width: 10%;">#</th>
-								<th style="text-align: center">제목</th>
-								<th style="text-align: center; width: 10%; height: 10%;">첨부파일</th>
-								<th class="d-none d-sm-table-cell"
-									style="text-align: center; width: 20%;">Date</th>
-							</tr>
+								</div>
+							</form>
+						</div>
+						<!-- END Search Form -->
 
-						</thead>
-						<!--tbody 표 내용-->
-						<tbody>
 
-							<th:block class="text-center" scope="row"
-								th:if="${not #strings.isEmpty(notices)}">
-
-								<tr th:each="notices, i:${notices}" th:data-no=${notices.no}>
-									<td class="text-center"><input
-										class="form-check-input text-center check" type="checkbox"
-										value=""> <label class="form-check-label"></label></td>
-									<td class="text-center" id="nocheck">[[${notices.no}]]</td>
-									<td><a
-										th:href="@{/admin/admin/adminNoticeSelect(no=${notices.no})}">[[${notices.title}]]</a></td>
-									<td><th:block th:if="${notices.fileyn == 'Y'}">
-											<p style="text-align: center; margin: 0 0 0 0">
-												<i class="far fa fa-file"></i>
-											</p>
-										</th:block></td>
-									<td class="fs-sm text-muted text-center">[[${notices.enrollDate}]]</td>
+						<!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
+						<table id="tb"
+							class="js-table-checkable table table-hover table-vcenter">
+							<!--thead 표 제목-->
+							<thead>
+								<tr>
+									<th class="text-center" style="width: 70px;">
+										<div class="form-check d-inline-block">
+											<input class="form-check-input" type="checkbox" value=""
+												id="check-all" name="check-all"> <label
+												class="form-check-label" for="check-all"></label>
+										</div>
+									</th>
+									<th class="text-center" style="width: 10%;">#</th>
+									<th style="text-align: center">제목</th>
+									<th style="text-align: center; width: 10%; height: 10%;">첨부파일</th>
+									<th class="d-none d-sm-table-cell"
+										style="text-align: center; width: 20%;">Date</th>
 								</tr>
 
-							</th:block>
-							<th:block class="text-center" scope="row"
-								th:if="${#strings.isEmpty(notices)}">
-								<tr th:each="notices, i:${notices}" th:data-no=${notices.no}>
-								<td class="text-center">해당 내용이 없습니다.</td>
-								</tr>
-							</th:block>
-						</tbody>
+							</thead>
+							<!--tbody 표 내용-->
+							<tbody>
 
-					</table>
-					<div class="p-1 d-flex justify-content-center">
-						<button type="button" class="btn btn-outline-secondary m-1"
-							th:onclick="|location.href='@{/admin/admin/adminNoticeInsertForm}'|">등록</button>
-						<button type="button"
-							class="btn submit-btn btn-outline-secondary m-1 push"
-							data-job="delete" id="delBtn">삭제</button>
+								<th:block class="text-center" scope="row"
+									th:if="${not #strings.isEmpty(notices)}">
+
+									<tr th:each="notices, i:${notices}" th:data-no=${notices.no}>
+										<td class="text-center"><input
+											class="form-check-input text-center check" type="checkbox"
+											value=""> <label class="form-check-label"></label></td>
+										<td class="text-center" id="nocheck">[[${notices.no}]]</td>
+										<td><a
+											th:href="@{/admin/admin/adminNoticeSelect(no=${notices.no})}">[[${notices.title}]]</a></td>
+										<td><th:block th:if="${notices.fileyn == 'Y'}">
+												<p style="text-align: center; margin: 0 0 0 0">
+													<i class="far fa fa-file"></i>
+												</p>
+											</th:block></td>
+										<td class="fs-sm text-muted text-center">[[${notices.enrollDate}]]</td>
+									</tr>
+
+								</th:block>
+								<th:block class="text-center" scope="row"
+									th:if="${#strings.isEmpty(notices)}">
+									<tr th:each="notices, i:${notices}" th:data-no=${notices.no}>
+										<td class="text-center">해당 내용이 없습니다.</td>
+									</tr>
+								</th:block>
+							</tbody>
+
+						</table>
+						<div class="p-1 d-flex justify-content-center">
+							<button type="button" class="btn btn-outline-secondary m-1"
+								th:onclick="|location.href='@{/admin/admin/adminNoticeInsertForm}'|">등록</button>
+							<button type="button"
+								class="btn submit-btn btn-outline-secondary m-1 push"
+								data-job="delete" id="delBtn">삭제</button>
+						</div>
+
+
+						<div class="block-content d-flex justify-content-center ">
+							<nav aria-label="Page navigation">
+								<ul class="pagination pagination-sm">
+									<li
+										th:styleappend="${!paging.prev} ? 'display:none' :'display:inlink-block'"
+										class="page-item"><a class="page-link"
+										th:onclick="|javascript:pagingPrev(${paging.range},${paging.rangeSize})|"
+										tabindex="-1" aria-label="Previous"> <span
+											aria-hidden="true"> <i class="fa fa-angle-left"></i>
+										</span> <span class="visually-hidden">Previous</span>
+									</a></li>
+									<li
+										th:each="page: ${#numbers.sequence(paging.startPage, paging.endPage)}"
+										th:classappend="${page == paging.page} ? ' active'"
+										class="page-itme"><a th:text="${page}" class="page-link"
+										th:onclick="|javascript:pagingNo(${page},${paging.range})|"></a>
+									</li>
+
+									<li
+										th:styleappend="${!paging.next}? 'display:none' : 'display:linline-block'"
+										class="page-item"><a class="page-link"
+										th:onclick="|javascript:pagingNext(${paging.range},${paging.rangeSize})|"
+										aria-label="Next"> <span aria-hidden="true"> <i
+												class="fa fa-angle-right"></i>
+										</span> <span class="visually-hidden">Next</span>
+									</a></li>
+								</ul>
+							</nav>
+						</div>
+
+
 					</div>
-
-
-					<div class="block-content d-flex justify-content-center ">
-						<nav aria-label="Page navigation">
-							<ul class="pagination pagination-sm">
-								<li
-									th:styleappend="${!paging.prev} ? 'display:none' :'display:inlink-block'"
-									class="page-item"><a class="page-link"
-									th:onclick="|javascript:pagingPrev(${paging.range},${paging.rangeSize})|"
-									tabindex="-1" aria-label="Previous"> <span
-										aria-hidden="true"> <i class="fa fa-angle-left"></i>
-									</span> <span class="visually-hidden">Previous</span>
-								</a></li>
-								<li
-									th:each="page: ${#numbers.sequence(paging.startPage, paging.endPage)}"
-									th:classappend="${page == paging.page} ? 'active'"
-									class="page-itme"><a th:text="${page}" class="page-link"
-									th:onclick="|javascript:pagingNo(${page},${paging.range})|"></a>
-								</li>
-
-								<li
-									th:styleappend="${!paging.next}? 'display:none' : 'display:linline-block'"
-									class="page-item"><a class="page-link"
-									th:onclick="|javascript:pagingNext(${paging.range},${paging.rangeSize})|"
-									aria-label="Next"> <span aria-hidden="true"> <i
-											class="fa fa-angle-right"></i>
-									</span> <span class="visually-hidden">Next</span>
-								</a></li>
-							</ul>
-						</nav>
-					</div>
-
-
 				</div>
 			</div>
-
 		</div>
 		<script>
 		var header = $("meta[name='_csrf_header']").attr('content');
 		var token = $("meta[name='_csrf']").attr('content');
 
-
+	    $('#key').on('keypress', function () {
+	        if (event.keyCode == 13) 
+	            $('#searchBtn').click();
+	        return false;
+	       
+	    })
+		
+		
 		//검색기능
 		function searchList() {
 			let state= $("#state").val();
@@ -158,7 +166,15 @@
 				data : {state:state,key:key},
 				dataType : "json",
 				success : function(rs){
-					htmlConvert(rs);
+					$('#key').focus();
+					if(rs.length==0){					
+						Dialogs.dialog('info', 
+			                    '', 
+			                    '검색결과가 없습니다.');
+					}
+					else{
+						htmlConvert(rs);		
+					}					
 				},
 				error : function(){
 					alert('오류')
@@ -308,6 +324,7 @@
 		<script>One.helpersOnLoad(['one-table-tools-checkable', 'one-table-tools-sections']);</script>
 		<script
 			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+		<script th:src="@{/resources/assets/js/dialog.js}"></script>
 	</main>
 </body>
 </html>

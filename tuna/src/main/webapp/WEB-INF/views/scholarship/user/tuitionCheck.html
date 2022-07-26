@@ -31,12 +31,11 @@ data-layout-decorate="~{layouts/navLayout}">
       text-align: center;
     }
 
-    .text {
-      font-size: 30px;
-      margin-top: 70px;
-      vertical-align: middle;
-    }
-
+	.text{
+		font-size:20px;
+		margin-top:70px;
+		vertical-align:middle;
+	}
     .text img {
       position: absolute;
       text-align: center;
@@ -44,6 +43,9 @@ data-layout-decorate="~{layouts/navLayout}">
       left: 50px;
       width: 200px;
     }
+    
+    
+
   </style>
 
 </head>
@@ -52,11 +54,13 @@ data-layout-decorate="~{layouts/navLayout}">
 <main layout:fragment="main">
   <div id="section">
 
+
     <div id="page-container">
       <div class="content content-boxed">
       <h3 class="fw-bold">등록금 내역 조회</h3>
         <div class="bg-body-extra-light">
-          <div style="padding: 40px;">
+          <div style="padding: 40px;"> 
+                  <div id = "pdf_wrap">
             <h1 style="text-align: center;">등록금 납입 확인서</h1>
             <div class="d-flex justify-content-end">
 	            <div class="col-md-3 col-xl-2">
@@ -132,11 +136,10 @@ data-layout-decorate="~{layouts/navLayout}">
             <p>가상계좌 : 220-13-304766</p>
 
             <p>문의처 : 입학관리 담당자 최규완 (010-XXXX-XXXX)</p>
-
-            <div id="tuna" class="text">TUNA대학교 수입징수관
-              <img src="TUNA도장2.png" style="position: absolute; margin-top: 860px; margin-left : -100px; width: 150px;">
+			<div class="text-center">
+              <img th:src="@{/resources/assets/media/tuna_stamp.png}" style="width:500px;">
+              </div>
             </div>
-            
             <br>
             <br>
 
@@ -150,11 +153,17 @@ data-layout-decorate="~{layouts/navLayout}">
     </div>
   </div>
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type = "text/javascript" src = "https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
   <script>
     $('#app').on('click', function () {
       window.print();
     })
+    
+       
+    
+    
   </script>
  <script th:inline="javascript">
   	 document.addEventListener("DOMContentLoaded", function(){
@@ -191,6 +200,7 @@ data-layout-decorate="~{layouts/navLayout}">
   
 	     	
 	</script>
+	
 	
 	<script>
 	
