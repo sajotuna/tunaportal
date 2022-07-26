@@ -122,7 +122,7 @@ BETWEEN (#{pageNum}-1)*#{size}+1
 </select>
 <update id = "scholarUpdate" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
 	
-	update scholarApply set statecode = #{stateCode} where no = #{no}
+	update scholarApply set statecode = #{stateCode} where no = #{no} and statecode <![CDATA[<>]]> 501 and statecode <![CDATA[<>]]> 505
 	
 </update>
 
@@ -131,7 +131,23 @@ BETWEEN (#{pageNum}-1)*#{size}+1
 	select schno from scholarApply where stno = #{stNo} and seasonCode = #{seasonCode}
 </select>
 
+<update id = "scholarCheckUpdate" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
 
+	update scholarApply set statecode = 502 where seasoncode = #{seasonCode} and statecode = 501
+
+</update>
+<update id = "scholarSuccessUpdate" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
+
+	update scholarApply set statecode = 505 where seasoncode = #{seasonCode} and statecode = 504
+
+</update>
+
+<insert id="scholarStudentGiveMoney" statementType="CALLABLE" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
+	{ call scholarSelection( 
+		#{seasonCode}
+		)
+	}
+</insert>
 
 
 

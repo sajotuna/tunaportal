@@ -13,4 +13,7 @@ public interface ScholarService {
 	public void ScholarDelete(ScholarApplyVO vo);
 	public void scholarUpdate(ScholarApplyVO vo);
 	public List<ScholarApplyVO> scholarApplyCheck(ScholarApplyVO vo);
+	public void scholarCheckUpdate (ScholarApplyVO vo);
+	public void scholarSuccessUpdate (ScholarApplyVO vo);
+	public void scholarStudentGiveMoney (ScholarApplyVO vo);
 }

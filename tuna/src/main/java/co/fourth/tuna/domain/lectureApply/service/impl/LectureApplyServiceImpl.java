@@ -67,6 +67,11 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	public List<Map<String, Object>> mySubjectList(LectureApplyVO vo) {
 		return mapper.mySubjectList(vo);
 	}
+
+	@Override
+	public void LectureApplySchedule(LectureApplyVO vo) {
+		mapper.LectureApplySchedule(vo);
+	}
 	
 	
 }
