@@ -33,15 +33,9 @@ public class PortalAdminController {
 							 @RequestParam(required = false, defaultValue = "1") int page,
 			                 @RequestParam(required = false, defaultValue = "1") int range) {
 		
-		ListPagingVO pvo = pagingDao.getPaging(new ListPagingVO("banner", 10));
 		
-		ListPagingVO bvo = new ListPagingVO();
-		bvo.pageInfo(page, range, pvo.getPageCount(), 5, pvo.getSizePerPage());
-		
-		List<BannerVO> list = bannerDao.bannerListSelect(bvo.getStartList(), bvo.getEndList());
-			
-		model.addAttribute("bnList", list);
-		model.addAttribute("paging", bvo);
+		model.addAttribute("bnList", null);
+		model.addAttribute("paging", null);
 		
 		return "banner/admin/bannerList";
 		
