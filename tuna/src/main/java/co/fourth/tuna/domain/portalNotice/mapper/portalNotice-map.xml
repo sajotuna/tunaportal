@@ -92,7 +92,6 @@ parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
 UPDATE PORTALNOTICE
 SET TITLE = #{title},
     CONTENT = #{content},
-    ENROLLDATE = sysDate,
     VISIBLE = #{visible},
     aDNO = #{adNo}
 WHERE NO = #{no}
