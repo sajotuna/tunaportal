@@ -49,6 +49,12 @@ public class LectureNoticeServiceImpl implements LectureNoticeService {
 		return "성공";
 	}
 
+	@Override
+	public void noticeUpdate(LectureNoticeVO notice) {
+		map.noticeUpdate(notice);
+		
+	}
+
 
 
 }

@@ -81,6 +81,7 @@ xmlns:th="http://www.thymeleaf.org"
               <div class="block-content">
                 <!-- <table class="table table-vcenter">
                 </table> -->
+                <form th:action = @{/eclass/professor/noticeUpdate} method = "post">
                 <div class="row mt-2">
                   <div class="col-1 d-none d-xl-block">
                     <p>제목</p>
@@ -88,6 +89,8 @@ xmlns:th="http://www.thymeleaf.org"
                   <div class="h4 col-11 mb-1">
                     <p th:text="${notice.title}">제목 데이터가 없습니다</p>
                   </div>
+                  <input type = "hidden" th:value = "${notice.no}" name = "no">
+                  <input type = "hidden" th:value = "${notice.title}" name = "title">
                 </div>
                 <div class="d-none d-lg-block">
                   <div class="row">
@@ -103,15 +106,17 @@ xmlns:th="http://www.thymeleaf.org"
                 </div>
                 <hr>
                 <div class="row">
-                  <p class="col-12 px-5" th:text=${notice.content}>
+                  <p class="col-12 px-5" th:utext=${notice.content}>
                     내용 데이터가 없습니다!
                   </p>
+                  <input type = "hidden" th:value = "${notice.content}" name = "content">
                 </div>
                 <hr>
                 <div class="ps-3 pb-3 row">
 					<button class="col-1 me-2 btn btn-primary">삭제</button>
-					<button class="col-1 me-2 btn btn-dark">수정</button>
+					<input type = "submit" class="col-1 me-2 btn btn-dark" value = "수정">
                 </div>
+                </form>
               </div>
             </div> <!-- block end-->
             
