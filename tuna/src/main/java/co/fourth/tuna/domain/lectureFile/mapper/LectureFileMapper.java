@@ -13,4 +13,5 @@ public interface LectureFileMapper {
 	public List<LectureFileVO> findListBySbjno(int sbjno);
 	public int insertLectureFileByLectureFileVO(
 			@Param(value="lectureFile")LectureFileVO vo);
+	public int deleteLectureFileByLectureFileId(int no);
 }

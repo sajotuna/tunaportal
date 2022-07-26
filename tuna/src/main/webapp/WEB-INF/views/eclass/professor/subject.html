@@ -129,17 +129,18 @@ xmlns:th="http://www.thymeleaf.org"
                   <div class="" id="subject_files" style="height: 222px; overflow-y: scroll;">
                     <ul class="nav-items push">
                       <th:block th:if="${not #lists.isEmpty(subject.lectureFileList)}">
-                        <li th:each="file:${subject.lectureFileList}" class="p-2 list-group-item d-flex fs-sm text-primary-dark">
+                        <li th:data_uri="${file.uri}" th:data_fileName="${file.fileName}"
+                        th:id="'lecture-file-'+${file.no}" th:each="file:${subject.lectureFileList}" class="p-2 list-group-item d-flex fs-sm text-primary-dark">
                           <div class="flex-grow-1 m-0 row justify-content-between">
                             <div class="col">
                               <i class="far fa- fa-file"></i>&nbsp
-                              <a href="javascript:void(0)"><span th:text="${file.fileName}">이름 데이터 없음</span></a>
+                              <a th:href="@{/download(fileName=${file.uri}, originName=${file.fileName}, folder=LectureFile)}"><span th:text="${file.fileName}">이름 데이터 없음</span></a>
                             </div>
                             <div class="col-3">
                               <span th:text="${file.enrollDate}">??-??-??</span>
                             </div>
-                            <div href="javascript:void(0)" class="col-1 ">
-                              <button class="btn-block-option text-danger p-0">
+                            <div class="col-1 ">
+                              <button th:onclick="'deleteLectureFileEvent('+${file.no}+')'" class="btn-block-option text-danger p-0">
                                 <i class="fa fa-fw fa-times"></i>
                               </button>
                             </div>
@@ -943,6 +944,8 @@ xmlns:th="http://www.thymeleaf.org"
             // 상수데이터
             const TAB_ID = "tab-pane-";
             const GRADE_STUD_ID = "student-";
+            const LECTURE_FILE_ID = "lecture-file-";
+
             const REST_URL = {
               PROGRESS_CONTENT : "/tuna/prof/lecPlans",
               ATTENDANCE_CONTENT : "/tuna/prof/students",
@@ -960,6 +963,7 @@ xmlns:th="http://www.thymeleaf.org"
 
               SUBMIT_TASK_GRADE_UPDATE : "/tuna/staff/eclass/updateSubmitTaskScore",
               SUBMIT_LECTURE_FILE_UPLOAD : "/tuna/staff/insertSubjectFile",
+              LECTURE_FILE_DELETE : "/tuna/staff/deleteSubjectFile"
             };
             // const TAB_BTN_NUM = {
 
@@ -1021,8 +1025,6 @@ xmlns:th="http://www.thymeleaf.org"
               
                loaderCurtain = document.querySelector('#loaderCurtain');
                tabClickEvent(0);
-
-               // 강의자료 업로드 버튼
                
             }
 
@@ -1791,6 +1793,33 @@ xmlns:th="http://www.thymeleaf.org"
               );
 
               
+            }
+
+            function deleteLectureFileEvent(no) {
+              let li = document.querySelector("#"+LECTURE_FILE_ID+no);
+              let lectureFile = {
+                no: no,
+                fileName: li.data_fileName,
+                uri: li.data_uri
+              }
+
+              Dialogs.dialog('checkConfirm',
+                '정말 삭제하시겠습니까?',
+                '되돌릴 수 없습니다.',
+                function() {
+                  fetch(REST_URL.LECTURE_FILE_DELETE, {
+                    method: "POST",
+                    headers: {
+                      'header': header,
+                      'X-Requested-with':'XMLHttpRequest',
+                      'Content-Type':'application/json',
+                      'X-CSRF-Token': token,
+                    },
+                    body: JSON.stringify(lectureFile)
+                  }).then(res => {
+                    li.remove();
+                  })
+                })
             }
 
             function allStudentAttend() {

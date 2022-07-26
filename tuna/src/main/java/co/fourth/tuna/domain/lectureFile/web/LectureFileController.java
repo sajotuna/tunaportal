@@ -27,7 +27,6 @@ public class LectureFileController {
 		ResponseEntity<String> res = null;
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		System.out.println("here!!");
 		try {
 			String[] fileInfo = fileService.upload(file, "lectureFile");
 			filevo.setFileName(fileInfo[0]);
@@ -48,5 +47,25 @@ public class LectureFileController {
 		return res;
 	}
 	
+	@PostMapping("/staff/deleteSubjectFile")
+	public ResponseEntity<String> deleteLectureFile(LectureFileVO file) {
+		ResponseEntity<String> res = null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		
+		try {
+			res = new ResponseEntity<String>(
+					lectureFileService.deleteLecturefileByLectureFileVO(file),
+					headers,
+					HttpStatus.OK);
+		} catch( Throwable e ) {
+			res = new ResponseEntity<String>(
+					e.getMessage(),
+					headers,
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		return res;
+	}
 	
 }

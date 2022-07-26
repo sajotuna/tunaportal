@@ -30,5 +30,10 @@
 		)
 	</insert>
 	
+	<delete id="deleteLectureFileByLectureFileId"
+		>
+		DELETE FROM lecturefile
+		WHERE no = #{no}
+	</delete>
 	
 </mapper>
