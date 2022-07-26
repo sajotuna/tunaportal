@@ -957,6 +957,8 @@ xmlns:th="http://www.thymeleaf.org"
               OBJECTION_GET : '/tuna/staff/eclass/objection?objNo=',
               OBJECTION_PUT : '/tuna/staff/eclass/objection',
               OBJECTION_LIST : "/tuna/prof/objections",
+
+              SUBMIT_TASK_GRADE_UPDATE : "/tuna/staff/eclass/updateSubmitTaskScore",
             };
             // const TAB_BTN_NUM = {
 
@@ -976,6 +978,7 @@ xmlns:th="http://www.thymeleaf.org"
 
             // 탭 제어
             let tabFlag = new Map();
+            let onTab;
             let tabPanel; // 탭 패널
             let tabContents; // 탭 컨탠츠
             
@@ -1099,13 +1102,20 @@ xmlns:th="http://www.thymeleaf.org"
                   // console.log(score);
                   let submitTask = {
                     no: tr.data_submit_no,
-                    stNo: tr.data_stuno,
+                    stNo: tr.data_stno,
                     score: score
                   }
                   submitTaskList.push(submitTask)
+
+                  requestObj = {
+                    sbjno: sbjno,
+                    taskno: taskno,
+                    submitTaskList: submitTaskList
+                  }
                 }
-                
-                fetch("/staff/eclass/updateSubmitTaskScore", {
+                console.log(requestObj);
+
+                fetch(REST_URL.SUBMIT_TASK_GRADE_UPDATE, {
                   method: "POST",
                   headers: {
                     'header': header,
@@ -1113,11 +1123,35 @@ xmlns:th="http://www.thymeleaf.org"
                     'Content-Type': 'application/json',
                     'X-CSRF-Token': token
                   },
-                  body: JSON.stringify(submitTaskList)
+                  body: JSON.stringify(requestObj)
                 })
-                .then( res => {
-                  console.log(res);
+                .then( async (res) => {
+                  let resBody = await res.text();
+
+                  if(res.ok) {
+                    Dialogs.dialog('success', 
+                    "성공",
+                    resBody,
+                    function() {
+
+                    })
+                  } else {
+                    Dialogs.dialog('error',
+                    '실패',
+                    resBody,
+                    function() {
+                      console.error(resBody);
+                    })
+                  }
                   // TODO dialog
+                })
+                .catch((err) => {
+                  Dialogs.dialog('error',
+                  '오류',
+                  err,
+                  function() {
+                    console.error(err);
+                  })
                 })
               })
 
@@ -1136,10 +1170,15 @@ xmlns:th="http://www.thymeleaf.org"
               let sbj = {};
               let resFunc = {};
 
-              if(tabFlag.get(tabIdx)){ 
+              // if(tabFlag.get(tabIdx)){ 
+              //   offloaderCurtain();
+              //   return; 
+              // };
+              if(onTab == tabIdx) {
                 offloaderCurtain();
-                return; 
-              };
+                return;
+              }
+              onTab = tabIdx;
               onLoaderCurtain();
               
               switch(tabIdx) {
@@ -1290,6 +1329,7 @@ xmlns:th="http://www.thymeleaf.org"
             function setAttendanceContent(students) {
               let table = document.querySelector('#subject-attendance-table');
               let tbody = table.firstElementChild;
+              tbody.innerHTML = "";
               students.forEach(student => {
                 let tr = document.createElement('tr');
                 let innerHTML = `
@@ -1361,8 +1401,8 @@ xmlns:th="http://www.thymeleaf.org"
             function taskChangeEvent(e) {
               let selectedTask = e.target.selectedOptions[0].value;
               taskno = selectedTask;
-              // console.log(taskno);
-              tabFlag.set(2, false);
+              //tabFlag.set(2, false);
+              onTab = 0;
               tabClickEvent(2);
             }
 
@@ -1391,7 +1431,7 @@ xmlns:th="http://www.thymeleaf.org"
                   enrollDate = dateTimeToISO(student.submitTask.enrollDate);
                   score = student.submitTask.score;
                   tr.data_submit_no = student.submitTask.no;
-                  tr.data_studno = student.no;
+                  tr.data_stno = student.no;
                 }
                 
                 tr.classList.add("m-0");
