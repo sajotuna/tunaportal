@@ -14,7 +14,6 @@ public interface LectureApplyService {
 	public void CourseInsert(LectureApplyVO vo);
 	public String ApplyErrorMsg(LectureApplyVO vo);
 	public String subjectTarget(LectureApplyVO vo);
-	
+	public void LectureApplySchedule(LectureApplyVO vo);
 	public List<Map<String, Object>> mySubjectList(LectureApplyVO vo);
-	
 }

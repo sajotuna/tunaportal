@@ -188,5 +188,13 @@ SELECT
 	AND L.SEASONCODE = #{seasonCode}
 
 </select>
+<insert id="LectureApplySchedule" statementType="CALLABLE" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
+	{ call courseApply( 
+		#{seasonCode}
+		)
+	}
+</insert>
+
+
 
 </mapper>

@@ -154,6 +154,12 @@
       </div>
     </div>
   </div>
+  <th:block th:if = "${error != null && error != ''}">
+  <script th:inline="javascript">
+		let error = /*[[${error}]]*/ 'default';
+		Dialogs.dialog('error', '접근 불가', error);
+	</script>
+  </th:block>
   <script>
   let check = 0;
   function ScholarApply(){

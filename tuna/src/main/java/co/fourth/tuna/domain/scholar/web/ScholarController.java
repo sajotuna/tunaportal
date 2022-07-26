@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.fourth.tuna.domain.common.service.DateCheckService;
 import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.scholar.service.ScholarService;
@@ -39,6 +40,8 @@ public class ScholarController {
 
 	@Autowired
 	private YearService yearDao; 
+	@Autowired
+	private DateCheckService DataDao;
 	
 	@RequestMapping("/stud/scholar/Status")
 	public String scholarshipApplicationStatus(Model model,ScholarApplyVO vo,Authentication authentication) {
@@ -60,6 +63,12 @@ public class ScholarController {
 	
 	@RequestMapping("/stud/scholar/Apply")
 	public String ScolarShipApply(RedirectAttributes ra,Model model, ScholarApplyVO vo, Authentication authentication) {
+		
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1107") != 1) {
+			ra.addFlashAttribute("error", "현재 장학금 신청기간이 아닙니다.");
+			return "redirect:/stud/scholar/Application";
+		}
+		
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
 		ScholarDao.ScholarApply(vo);
@@ -70,12 +79,16 @@ public class ScholarController {
 	
 	@RequestMapping("/stud/scholar/FileUpload")
 	public String scholarFileUpload(RedirectAttributes ra,ScholarApplyVO vo,@RequestParam(value = "file") MultipartFile file) {
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1107") != 1) {
+			ra.addFlashAttribute("error", "현재 장학금 신청기간이 아닙니다.");
+			return "redirect:/stud/scholar/Status";
+		}
+		
 		
 		String[] scholarFile = fileService.upload(file, "ScholarFile");
 		vo.setFileName(scholarFile[0]);
 		vo.setUri(scholarFile[1]);
 		ScholarDao.FileUpLoad(vo);
-		
 		
 		ra.addFlashAttribute("success", "파일등록이 완료되었습니다.");
 		return "redirect:/stud/scholar/Status";
@@ -83,6 +96,11 @@ public class ScholarController {
 	
 	@RequestMapping("/stud/scholar/Delete")
 	public String scholarDelete(RedirectAttributes ra,ScholarApplyVO vo) {
+		
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1107") != 1) {
+			ra.addFlashAttribute("error", "현재 장학금 신청기간이 아닙니다.");
+			return "redirect:/stud/scholar/Status";
+		}
 		
 		ScholarDao.ScholarDelete(vo);
 		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
