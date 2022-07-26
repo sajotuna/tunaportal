@@ -101,5 +101,27 @@ WHERE NO = #{no}
 	
 </insert>
 
+<update id="updateSubmitTaskByVO"
+	parameterType="co.fourth.tuna.domain.task.vo.SubmitTaskVO">
+	UPDATE submittask
+	<set>
+		<if test='fileName != null'>fileName = #{fileName},</if>
+		<if test='uri != null'>uri = #{uri},</if>
+		<if test='enrollDate != null'>enrolldate = #{enrollDate},</if>
+		<if test='score != null'>score = #{score},</if>
+	</set>
+	WHERE
+		no = #{no}
+</update>
+
+<select id="findSubmitTaskListByStudentId"
+	parameterType="int">
+	SELECT *
+	FROM submittad
+	WHERE stno = #{stno}
+		AND taskno = #{taskno}
+</select>
 
 </mapper>
+
+
