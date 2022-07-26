@@ -4,14 +4,16 @@ import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class LectureFileVO {
-	private int no;
+	private Integer no;
 	private String title;
 	private Date enrollDate;
 	private String fileName;
 	private String uri;
-	private int sbjNo;
+	private Integer sbjNo;
 }

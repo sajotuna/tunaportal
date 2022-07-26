@@ -572,10 +572,10 @@ xmlns:th="http://www.thymeleaf.org"
 						</div>
 						<div class="block-content block-content-full text-center">
 							<div class="fw-semibold fs-sm m-3">
-								<input id="task-title" class="form-control" type="text" placeholder="제목을 입력하세요." style="width:100%;">
+								<input class="input-title form-control" type="text" placeholder="제목을 입력하세요." style="width:100%;">
 							</div>
 							<div class="fw-semibold fs-sm m-3">
-								<input type="file" id="task-content" class="form-control mb-0"></input>
+								<input type="file" class="input-file form-control mb-0"></input>
 							</div>
 								<button class="submitBtn btn btn-sm btn-dark px-3 mb-3">등록</button>
 						</div>
@@ -959,6 +959,7 @@ xmlns:th="http://www.thymeleaf.org"
               OBJECTION_LIST : "/tuna/prof/objections",
 
               SUBMIT_TASK_GRADE_UPDATE : "/tuna/staff/eclass/updateSubmitTaskScore",
+              SUBMIT_LECTURE_FILE_UPLOAD : "/tuna/staff/insertSubjectFile",
             };
             // const TAB_BTN_NUM = {
 
@@ -1001,11 +1002,12 @@ xmlns:th="http://www.thymeleaf.org"
               initTaskScoreSubmit();
               objTrClickEvent();
               objUpdateClickEvent();
+              initFileInsertForm();
             });
 
             // 초기화 세팅
             function initSubject() {
-              // 이벤트 등록
+              // 탭클릭 이벤트 등록
               tabPanel.addEventListener('click', function(ele) {
                 let id = ele.target.parentNode.id;
                 id = id.slice(id.indexOf(TAB_ID)+TAB_ID.length);
@@ -1019,6 +1021,9 @@ xmlns:th="http://www.thymeleaf.org"
               
                loaderCurtain = document.querySelector('#loaderCurtain');
                tabClickEvent(0);
+
+               // 강의자료 업로드 버튼
+               
             }
 
             function initTaskInsertForm() {
@@ -1156,6 +1161,34 @@ xmlns:th="http://www.thymeleaf.org"
               })
 
             } // initTaskScoreSubmit END
+            
+            function initFileInsertForm() {
+              let fileInsertForm = document.querySelector("#fileInsertFrm");
+              let title = fileInsertForm.querySelector(".input-title");
+              let file = fileInsertForm.querySelector(".input-file");
+
+              fileInsertForm.addEventListener('click', function(ele) {
+                let formData = new FormData();
+                formData.append('file', file.files[0]);
+                formData.append('title', title.value);
+                formData.append('sbjNo', sbjno);
+                
+                console.log(file.files[0]);
+
+                if(ele.target.classList.contains('submitBtn')) {
+                    fetch( REST_URL.SUBMIT_LECTURE_FILE_UPLOAD+'?_csrf='+token, {
+                      method: 'post',
+                      body: formData
+                  }).then( (res) => {
+                    console.log(res);
+                  })
+                }
+              });
+            }
+
+            function submitFileInsertForm() {
+
+            }
 
 /*
 ████████  █████  ██████       ██████ ██      ██  ██████ ██   ██ 
