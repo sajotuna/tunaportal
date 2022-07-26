@@ -196,31 +196,41 @@
     }
 	
 	function search() {
+		
+		$('#inputTxt').on('keypress', function(e) {
+			if (e.keyCode == 13) searchEvent();
+			return false;
+		})
+		
 		$('#search').on('click', function () {
+			searchEvent();
+		})
+	}
+	
+	function searchEvent() {
+		
+		// value check
+		let elemAry = [{'element':$('#lecturePlanSelect'), 'message':'옵션을 선택해 주세요.'},
+					   {'element':$('#inputTxt'), 'message':'빈 칸을 입력해 주세요.'}];
+		
+		for (let obj of elemAry) {
 			
-			// value check
-			let elemAry = [{'element':$('#lecturePlanSelect'), 'message':'옵션을 선택해 주세요.'},
-						   {'element':$('#inputTxt'), 'message':'빈 칸을 입력해 주세요.'}];
-			
-			for (let obj of elemAry) {
-				
-				let condition = obj.element.length && !obj.element.val();
-				if(obj.element.attr('id') === 'lecturePlanSelect') {
-					condition = (obj.element.length && obj.element.val() === 'noSelect');
-				}
-				
-				if(condition) {
-					cautionIn(obj.element, obj.message);
-					return;
-				} else {
-					cautionOut(obj.element);
-				}
+			let condition = obj.element.length && !obj.element.val();
+			if(obj.element.attr('id') === 'lecturePlanSelect') {
+				condition = (obj.element.length && obj.element.val() === 'noSelect');
 			}
 			
-			searchSubjectsAjax();
-			
-		}) 
-	}
+			if(condition) {
+				cautionIn(obj.element, obj.message);
+				return;
+			} else {
+				cautionOut(obj.element);
+			}
+		}
+		
+		searchSubjectsAjax();
+		
+	}	
 	
 	// form 입력값 없을 때 경고 텍스트 in
 	function cautionIn(target, txt) {
