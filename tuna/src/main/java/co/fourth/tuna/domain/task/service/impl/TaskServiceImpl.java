@@ -87,7 +87,7 @@ public class TaskServiceImpl implements TaskService {
 			}
 			int avg = (int) Math.floor(sum/cnt);
 			GradeFormVO grade = new GradeFormVO();
-			grade.set
+			//grade.set
 		}
 		return "등록 성공";
 	}
