@@ -90,6 +90,8 @@
 									<div class="dataTables_paginate paging_simple_numbers"
 										id="DataTables_Table_0_paginate">
 										<nav aria-label="Page navigation">
+										<form th:action=@{/stud/eclass/qnaList} id="pageIn">
+										<input type="hidden">
 											<ul class="pagination justify-content-center">
 												<li class="page-item"><a class="page-link"
 													href="javascript:void(0)" tabindex="-1"
@@ -121,6 +123,7 @@
 													</span> <span class="visually-hidden">Next</span>
 												</a></li>
 											</ul>
+											</form>
 										</nav>
 									</div>
 								</div>
@@ -174,7 +177,41 @@
 				let a = btn.innerHTML
 				tagInsert(parseInt(a))
 			})
-		})		
+		})
+		
+		function tagInsert(value){
+			let checkFrm = document.querySelector('#pageIn')
+			let inputtag = document.createElement('input')
+	    	let sbjnotag = document.createElement('input')
+			inputtag.setAttribute("name", "pageNum")
+	    	inputtag.setAttribute("type", "hidden")
+	    	inputtag.setAttribute("value", value)
+	    	
+	    	
+	    	sbjnotag.setAttribute("name", "sbjNo")
+	    	sbjnotag.setAttribute("type", "hidden")
+	    	sbjnotag.setAttribute("value", getParam("sbjNo"))
+	    	
+	    	
+	    	checkFrm.appendChild(sbjnotag)
+	    	checkFrm.appendChild(inputtag)
+	    	checkFrm.submit()
+	    	
+		}
+		
+		function getParam(name)
+        {
+            var curr_url = location.search.substr(location.search.indexOf("?") + 1);
+            var svalue = "";
+            curr_url = curr_url.split("&");
+            for (var i = 0; i < curr_url.length; i++)
+            {
+                temp = curr_url[i].split("=");
+                if ([temp[0]] == name) { svalue = temp[1]; }
+            }
+            return svalue;
+        }
+		
 	})
 </script>
 </th:block>

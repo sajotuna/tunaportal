@@ -2,12 +2,12 @@ package co.fourth.tuna.web.eclass.student;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -28,6 +28,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.common.service.YearService;
+import co.fourth.tuna.domain.lectureFile.service.LectureFileService;
+import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
 import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
 import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
 import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
@@ -50,6 +52,7 @@ public class EclassStudentEclassController {
 	@Autowired SqlSession sql;
 	@Autowired LectureNoticeService service;
 	@Autowired TaskService taskDao;
+	@Autowired LectureFileService fileDao;
 	@Autowired LectureQnaService qnaDao;
 	@Autowired private FileService fileService;
 	@Autowired YearService year;
@@ -256,8 +259,19 @@ public class EclassStudentEclassController {
 
 	//자료실
 	@RequestMapping("/download") 
-	public String download() {
-		
+	public String download(LectureFileVO vo, Model model, Authentication authentication) {
+						
+//		vo.getNo();
+//		vo.getSbjNo();
+//		
+//		List<Map<String, Object>> fileList = sql.selectList("co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.lectureFileList", vo);
+//		List<Map<String, Object>> fileCat = sql.selectList("co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.lectureFileDownload", vo);
+//				
+//		fileDao.lectureFileDownload(vo);
+//		
+//		model.addAttribute("fileList",fileList);
+//		model.addAttribute("fileCat", fileCat);
+//		
 		return "eclass/stud/download";
 	}
 	
