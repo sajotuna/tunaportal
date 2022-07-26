@@ -33,6 +33,7 @@ public class PortalAdminController {
 							 @RequestParam(required = false, defaultValue = "1") int page,
 			                 @RequestParam(required = false, defaultValue = "1") int range) {
 		
+		
 		model.addAttribute("bnList", null);
 		model.addAttribute("paging", null);
 		
