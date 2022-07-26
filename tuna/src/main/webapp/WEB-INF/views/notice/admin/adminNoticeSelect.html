@@ -6,7 +6,11 @@
 <meta charset="UTF-8">
 	<meta name="_csrf" th:content="${_csrf.token}">
   	<meta name="_csrf_header" th:content="${_csrf.headerName}">
-<title>adminNoticeSelect</title>
+<title>학사공지관리/상세보기</title>
+<style>
+img{
+width:100%;}
+</style>
 </head>
 <body>
 	<main layout:fragment="main">
@@ -41,7 +45,7 @@
 						</div>
 						<!--제목 end-->
 						<hr>
-						<div th:each="content, i:${content}">[[${content.content}]]
+						<div th:each="content, i:${content}" th:utext="${content.content}">
 
 						</div>
 						<hr>
@@ -79,7 +83,6 @@
 
 		</div>
 
-		<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 	</main>
 </body>
 </html>

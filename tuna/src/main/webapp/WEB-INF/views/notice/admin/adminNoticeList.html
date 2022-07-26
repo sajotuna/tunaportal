@@ -10,7 +10,7 @@
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
 <link rel="stylesheet"
 	th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-<title>adminNoticeList</title>
+<title>학사공지관리</title>
 </head>
 <body>
 	<main layout:fragment="main">
@@ -90,6 +90,12 @@
 								</tr>
 
 							</th:block>
+							<th:block class="text-center" scope="row"
+								th:if="${#strings.isEmpty(notices)}">
+								<tr th:each="notices, i:${notices}" th:data-no=${notices.no}>
+								<td class="text-center">해당 내용이 없습니다.</td>
+								</tr>
+							</th:block>
 						</tbody>
 
 					</table>
@@ -105,20 +111,27 @@
 					<div class="block-content d-flex justify-content-center ">
 						<nav aria-label="Page navigation">
 							<ul class="pagination pagination-sm">
-								<li th:styleappend="${!paging.prev} ? 'display:none' :'display:inlink-block'"class="page-item">
-								<a class="page-link" th:onclick="|javascript:pagingPrev(${paging.range},${paging.rangeSize})|" tabindex="-1" aria-label="Previous">
-								 <span aria-hidden="true"> <i class="fa fa-angle-left"></i>
+								<li
+									th:styleappend="${!paging.prev} ? 'display:none' :'display:inlink-block'"
+									class="page-item"><a class="page-link"
+									th:onclick="|javascript:pagingPrev(${paging.range},${paging.rangeSize})|"
+									tabindex="-1" aria-label="Previous"> <span
+										aria-hidden="true"> <i class="fa fa-angle-left"></i>
 									</span> <span class="visually-hidden">Previous</span>
 								</a></li>
-								<li th:each="page: ${#numbers.sequence(paging.startPage, paging.endPage)}"
+								<li
+									th:each="page: ${#numbers.sequence(paging.startPage, paging.endPage)}"
 									th:classappend="${page == paging.page} ? 'active'"
-									class = "page-itme">
-									<a th:text="${page}" class="page-link" th:onclick="|javascript:pagingNo(${page},${paging.range})|"></a>
+									class="page-itme"><a th:text="${page}" class="page-link"
+									th:onclick="|javascript:pagingNo(${page},${paging.range})|"></a>
 								</li>
-							
-								<li th:styleappend="${!paging.next}? 'display:none' : 'display:linline-block'"class="page-item"><a class="page-link"
-									th:onclick="|javascript:pagingNext(${paging.range},${paging.rangeSize})|" aria-label="Next"> <span
-										aria-hidden="true"> <i class="fa fa-angle-right"></i>
+
+								<li
+									th:styleappend="${!paging.next}? 'display:none' : 'display:linline-block'"
+									class="page-item"><a class="page-link"
+									th:onclick="|javascript:pagingNext(${paging.range},${paging.rangeSize})|"
+									aria-label="Next"> <span aria-hidden="true"> <i
+											class="fa fa-angle-right"></i>
 									</span> <span class="visually-hidden">Next</span>
 								</a></li>
 							</ul>

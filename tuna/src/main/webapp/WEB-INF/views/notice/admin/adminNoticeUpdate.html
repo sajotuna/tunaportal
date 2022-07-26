@@ -11,7 +11,7 @@
 	th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
 	<link rel="stylesheet"
 	th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-<title>NoticeUpdate</title>
+<title>학사공지수정</title>
 </head>
 <body>
 	<!--폼 시작-->
@@ -20,6 +20,7 @@
 			<h3 class="fw-bold">학사공지 수정</h3>
 			<div class="block block-rounded">
 				<form
+					onsubmit="return formCheck()"
 					th:action="@{/admin/admin/adminNoticeUpdate(${_csrf.parameterName}=${_csrf.token})}"
 					class="block-content block-content-full" method="post"
 					enctype="multipart/form-data">
@@ -28,8 +29,10 @@
 						<input type="text" name="title" class="mb-4 form-control"
 							id="title" th:value="${notice.title}" required>
 						<hr>
-						<textarea class="js-simplemde" id="content" name="content"
-							required>[[${notice.content}]]</textarea>
+					<div class="mb-4">
+					  <!-- CKEditor 5 Classic Container -->
+						<textarea name ="content" id="ckfinder">[[${notice.content}]]</textarea>
+					</div>
 						<hr>
 						<div class="row mb-3">
 							<div class="col-6">
@@ -66,19 +69,67 @@
 			</div>
 
 		</div>
+		<!-- Editor script -->
+		 <script th:src="@{/resources/assets/js/plugins/ckeditor5-classic/build/ckeditor.js}"></script>
 		<script>
+			let header = document.querySelector('meta[name="_csrf_header"]').content;
+		    let token = document.querySelector('meta[name="_csrf"]').content;
+			
+		    $(function() {
+		    	ckfinder();
+		    })
+		    
+	    
+  		    function formCheck(){
+	    	if (window.editor.getData() == "") {  //then   window.editor = editor;
+				Dialogs.dialog('error', 
+	                    '', 
+	                    '내용을 입력해주세요.');
+	            return false; 
+            window.editor.editing.view.focus();    
+     		} else {
+    				 return true;
+     				}
+			
+			} 
+	     
+
+		 
+	 function ckfinder() {
+	        let ckfinder = document.querySelector('#ckfinder');
+
+	        if (ckfinder) {
+	          ClassicEditor
+	            .create(document.querySelector('#ckfinder'),
+	            		{
+	            			language:'ko',
+	            			ckfinder:{
+	            				uploadUrl : getContextPath() + 'ckImage?_csrf=' + token
+	            			},
+	            			image: {
+	          			      styles: ["alignLeft", "alignCenter", "alignRight"],      
+	          			      toolbar: [
+	          			        "imageStyle:alignLeft",
+	          			        "imageStyle:alignCenter",
+	          			        "imageStyle:alignRight",
+	          			        "|",
+	          			        "imageTextAlternative",
+	          			      ]
+	          			 }           			
+
+	            		})
+	            .then(editor => {
+	              window.editor = editor;
+	            })
+	            .catch(error => {
+	              console.error('There was a problem initializing the classic editor.', error);
+	            });
+	        }
+       
+	    }
 		
-/* 		   $('.sbmBtn').on('click', function(){
-			   if($("#content").val() =='' ||$("#content").val() =='null' ){
-					Dialogs.dialog('error', 
-			               '', 
-			               '내용을 입력해주세요');
-					return false;
-				}	
-		   }) */
-		
-		
-			$('.delBtn').on('click', function() {
+		    //파일삭제 
+		$('.delBtn').on('click', function() {
 				var header = $("meta[name='_csrf_header']").attr('content');
 				var token = $("meta[name='_csrf']").attr('content');
 
@@ -116,19 +167,13 @@
 				return path_root;
 			}
 			
-			   
 
 
 			
 		</script>
 		<script
-			th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
-		<script
 			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 		<script th:src="@{/resources/assets/js/dialog.js}"></script>
-		<script>
-			One.helpersOnLoad([ 'js-simplemde' ]);
-		</script>
 	</main>
 </body>
 </html>

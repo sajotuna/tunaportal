@@ -4,15 +4,29 @@
 	data-layout-decorate="~{layouts/navLayout}">
 <head>
 <meta charset="UTF-8">
-<title>portalNoticeList</title>
-
+<title>학사공지 </title>
+<style>
+img{
+width:100%;}
+</style>
 </head>
 <body>
 		<main layout:fragment="main">
 		<!--title start-->
-		<div class="content content-boxed">
-			<h3 class="fw-bold">학사공지 목록</h3>
+		<div class="bg-body-light">
+			<div class="content content-full content-boxed">
+				<div
+					class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+					<div class="flex-grow-1">
+						<h1 class="h1 fw-bold mb-2">학사공지</h1>
+						<h2 class="fs-base lh-base fw-medium text-muted mb-0">
+							Notice</h2>
+					</div>
+				</div>
+			</div>
+		</div>
 			<!--title end-->
+			<div class="content content-boxed">
 			<div class="block block-rounded">
 				<div class="block-content">
 					<div class="row">
@@ -104,11 +118,10 @@
 						</nav>
 					</div>
 
-
 				</div>
 			</div>
+</div>
 
-		</div>
 		<script>
 		var header = $("meta[name='_csrf_header']").attr('content');
 		var token = $("meta[name='_csrf']").attr('content');
@@ -117,9 +130,11 @@
 		//검색기능
 		function searchList() {
 			let state= $("#state").val();
-			let key = $("#key").val();			
+			let key = $("#key").val();		
+			
+			console.log(key)
 			$.ajax({
-				url : getPathRootJump() + "admin/adminSearch",
+				url : getPathRootJump() + "admin/admin/adminSearch",
 				type: "get",
 				data : {state:state,key:key},
 				dataType : "json",
@@ -144,9 +159,7 @@
 					td.html(`<p style="text-align: center; margin: 0 0 0 0"> <i class="far fa fa-file"></i></p>`)
 				}
 				
-				
-				if(n.visible == "Y") {
-				
+				if(n.visible == "Y") {			
 					var row = $("<tr/>").append(
 							  $("<td/>").addClass("text-center").css("width","10px").html(n.no),
 							  $("<td/>").html(`<a href="portalNoticeSelect?no=${n.no}"> ${n.title} </a>`),
