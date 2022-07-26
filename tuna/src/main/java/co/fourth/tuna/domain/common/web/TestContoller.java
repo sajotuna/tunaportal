@@ -48,9 +48,10 @@ public class TestContoller {
 	//single file test
 	@RequestMapping("/admin/singleTest")
 	@ResponseBody
-	public void singleTest(@RequestParam(value = "file")MultipartFile file) {
+	public void singleTest(@RequestParam(value = "file")MultipartFile file, String text) {
 		String[] fileInfo = fileService.upload(file, "test");
 		logger.info("single :: originname " + fileInfo[0] + " :: filename " +fileInfo[1]);
+		logger.info("single :: text " + text);
 	}
 	
 	@RequestMapping("/dialogTest")
