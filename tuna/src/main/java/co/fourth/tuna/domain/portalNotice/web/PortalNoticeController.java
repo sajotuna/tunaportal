@@ -23,9 +23,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.common.service.PagingService;
+import co.fourth.tuna.domain.common.vo.ListPagingVO;
 import co.fourth.tuna.domain.common.vo.PagingVO;
 import co.fourth.tuna.domain.portalNotice.service.PortalNoticeService;
-import co.fourth.tuna.domain.portalNotice.vo.NoticePagingVO;
 import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO;
 import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO;
 
@@ -48,16 +48,15 @@ public class PortalNoticeController {
 			@RequestParam(required = false, defaultValue = "1") int page,
 			@RequestParam(required = false, defaultValue = "1") int range) {
 
-		NoticePagingVO nvo = new NoticePagingVO(10);
+		ListPagingVO pvo = new ListPagingVO();
+		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("Y"), 10, 10);
+		
 
-		PagingVO pvo = pagingDao.getPaging(new PagingVO("portalnotice", nvo.getListSize()));
-
-		nvo.pageInfo(page, range, pvo.getPageCount(), 5);
-
-		List<PortalNoticeVO> notices = noticeDao.portalNoticeList(1, "전체", nvo.getStartList(), nvo.getEndList());
+		List<PortalNoticeVO> notices = noticeDao.adminNoticeList(1, "전체", pvo.getStartList(), pvo.getEndList());
 
 		model.addAttribute("notices", notices);
-		model.addAttribute("paging", nvo);
+		model.addAttribute("paging", pvo);
+		
 
 		return "notice/user/portalNoticeList";
 
@@ -80,16 +79,23 @@ public class PortalNoticeController {
 			@RequestParam(required = false, defaultValue = "1") int page,
 			@RequestParam(required = false, defaultValue = "1") int range) {
 
-		NoticePagingVO nvo = new NoticePagingVO(10);
+		/*
+		 * NoticePagingVO nvo = new NoticePagingVO();
+		 * 
+		 * PagingVO pvo = pagingDao.getPaging(new PagingVO("portalNotice", 10));
+		 * 
+		 * nvo.pageInfo(page, range, pvo.getPageCount(), 10, nvo.getListSize());
+		 */
+		
+		ListPagingVO pvo = new ListPagingVO();
+		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N"), 10, 10);
+		
 
-		PagingVO pvo = pagingDao.getPaging(new PagingVO("portalnotice", nvo.getListSize()));
-
-		nvo.pageInfo(page, range, pvo.getPageCount(), 10);
-
-		List<PortalNoticeVO> notices = noticeDao.adminNoticeList(1, "전체", nvo.getStartList(), nvo.getEndList());
+		List<PortalNoticeVO> notices = noticeDao.adminNoticeList(1, "전체", pvo.getStartList(), pvo.getEndList());
 
 		model.addAttribute("notices", notices);
-		model.addAttribute("paging", nvo);
+		model.addAttribute("paging", pvo);
+		
 
 		return "notice/admin/adminNoticeList";
 	}

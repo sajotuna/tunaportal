@@ -23,6 +23,8 @@ public interface PortalNoticeMapper {
 	int noticeDelete(PortalNoticeVO vo);
 
 	int noticeUpdate(PortalNoticeVO vo);
+	
+	int getNoticeCnt(String visible);
 
 	//파일
 	List<PortalNoticeFileVO> fileList();

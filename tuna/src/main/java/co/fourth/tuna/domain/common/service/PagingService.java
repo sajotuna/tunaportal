@@ -1,6 +1,6 @@
 package co.fourth.tuna.domain.common.service;
 
-import co.fourth.tuna.domain.common.vo.PagingVO;
+import co.fourth.tuna.domain.common.vo.ListPagingVO;
 
 public interface PagingService {
 	/**
@@ -10,5 +10,5 @@ public interface PagingService {
 	 * ex) vo.tableName("테이블"), vo.sizePerPage(10);
 	 * @return vo (vo.length() vo.page())
 	 */
-	public PagingVO getPaging(PagingVO vo);
+	public ListPagingVO getPaging(ListPagingVO vo);
 }

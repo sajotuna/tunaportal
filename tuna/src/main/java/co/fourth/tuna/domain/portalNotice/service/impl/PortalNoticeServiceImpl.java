@@ -67,6 +67,11 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 		return map.fileAllDelete(vo);
 	}
 
+	@Override
+	public int getNoticeCnt(String visible) {
+		return map.getNoticeCnt(visible);
+	}
+
 
 
 }
