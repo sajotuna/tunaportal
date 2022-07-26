@@ -22,4 +22,5 @@ public interface LectureNoticeService {
 	
 	public String insertLectureNotice(LectureNoticeVO vo);
 	public void noticeUpdate(LectureNoticeVO notice);
+	public int noticeDelete(LectureNoticeVO notice);
 }

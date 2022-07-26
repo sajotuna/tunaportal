@@ -29,4 +29,5 @@ public interface LectureNoticeMapper {
 	public int insertOneByLectureNoticeVO(
 			@Param("notice")LectureNoticeVO notice);
 	public void noticeUpdate(LectureNoticeVO notice);
+	public int noticeDelete(LectureNoticeVO notice);
 }

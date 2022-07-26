@@ -100,8 +100,12 @@
 		)
 	</insert>
 	<update id = "noticeUpdate" parameterType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO">
-		UPDATE LECTURENOTICE set content = #{content}, title = #{title}, enrolldate = sysdate where no = #{no}
+		UPDATE LECTURENOTICE SET CONTENT = #{content}, TITLE = #{title}, ENROLLDATE = sysdate WHERE NO = #{no}
 	</update>
+	
+	<delete id ="noticeDelete" parameterType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO">
+		DELETE FROM LECTURENOTICE WHERE NO = #{no}
+	</delete>
 
 </mapper>
 

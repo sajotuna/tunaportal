@@ -86,9 +86,16 @@ public class LectureNoticeController {
 		service.noticeUpdate(notice);
 		ra.addFlashAttribute("success", "공지사항 수정이 완료되었습니다.");
 		ra.addAttribute("no", notice.getNo());
-		ra.addAttribute("content", notice.getContent());
-		ra.addAttribute("title", notice.getTitle());
-		return "redirect:/eclass/professor/noticeUpdate";
+		return "redirect:/eclass/professor/notice";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/eclass/professor/noticeDelete")
+	public int noticeDelete(@RequestBody LectureNoticeVO notice) {
+		
+		return service.noticeDelete(notice);
+		
+	}
+	
 
 }

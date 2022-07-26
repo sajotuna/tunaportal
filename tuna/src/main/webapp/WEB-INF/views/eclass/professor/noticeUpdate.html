@@ -9,8 +9,10 @@ xmlns:th="http://www.thymeleaf.org"
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="_csrf" th:content="${_csrf.token}">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
-
-    <title>E-Class 공지 수정</title>
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
+   <title>E-Class 공지 수정</title>
     
   </head>
   <body>
@@ -81,7 +83,7 @@ xmlns:th="http://www.thymeleaf.org"
           <div class="col-xxl-12">
             <div class="block block-rounded">
               <div class="block-content">
-                <form th:action="@{/eclass/professor/updateNotice}" method="POST">
+                <form th:action="@{/eclass/professor/updateNotice}" method="POST" id = "frm">
                   <div class="row mt-2">
                     <label class="col-1 d-none d-xl-block" for="title_input">
                       제목
@@ -102,7 +104,7 @@ xmlns:th="http://www.thymeleaf.org"
                   
                   <div class="row items-push">
                     <div class="col-6">
-                      <input class="btn btn-primary col-xl-4 offset-xl-1" type="submit" value="수정">
+                      <input class="btn btn-primary col-xl-4 offset-xl-1" id= "nBtn" type="button" value="수정">
                     </div>
                   </div>
                 </form>
@@ -143,6 +145,26 @@ xmlns:th="http://www.thymeleaf.org"
 	
 	    document.addEventListener('DOMContentLoaded', function() {
 			ckfinder();
+			
+			let nBtn = document.querySelector('#nBtn')
+            let title = document.querySelector('#title_input')
+            nBtn.addEventListener('click', function(){
+          	  
+        	  if(window.editor.getData() == "") {
+        	    Dialogs.dialog('error', '실패', '내용을 입력 해주세요.');
+                window.editor.editing.view.focus(); 
+                return;
+              } 
+          	  
+          	  if(title.value == '' || title.value == null){
+          		  Dialogs.dialog('error', '실패', '제목을 입력 해주세요.');
+          		  return;
+          	  }
+          	  
+          	  frm.submit();
+          	  
+            })
+			
 	    })
       
       function ckfinder() {

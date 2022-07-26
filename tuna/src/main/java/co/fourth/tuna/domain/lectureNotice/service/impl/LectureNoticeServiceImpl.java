@@ -55,6 +55,12 @@ public class LectureNoticeServiceImpl implements LectureNoticeService {
 		
 	}
 
+	@Override
+	public int noticeDelete(LectureNoticeVO notice) {
+		return map.noticeDelete(notice);
+		
+	}
+
 
 
 }

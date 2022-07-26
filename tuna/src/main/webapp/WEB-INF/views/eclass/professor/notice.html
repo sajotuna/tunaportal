@@ -6,10 +6,14 @@ xmlns:th="http://www.thymeleaf.org"
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
     <title>E-Class 공지 상세</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
     <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+  	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
   </head>
   <body>
 
@@ -113,7 +117,7 @@ xmlns:th="http://www.thymeleaf.org"
                 </div>
                 <hr>
                 <div class="ps-3 pb-3 row">
-					<button class="col-1 me-2 btn btn-primary">삭제</button>
+					<input type ="button" class="col-1 me-2 btn btn-primary" onclick = "javascript:noticeDel();" value = "삭제">
 					<input type = "submit" class="col-1 me-2 btn btn-dark" value = "수정">
                 </div>
                 </form>
@@ -133,6 +137,47 @@ xmlns:th="http://www.thymeleaf.org"
           </div>
         </div> -->
         <!-- 모달 리스트 END -->
+    <script>
+    function noticeDel(){
+    	Dialogs.dialog('warnConfirm', '해당공지를 삭제 하시겠습니까?', '확인을 누르시면 삭제가 진행 됩니다.', noticeDelete);
+    }
+    
+    function noticeDelete(){
+    	let no = document.querySelector("[name = no]").value
+    	let header = document.querySelector('meta[name="_csrf_header"]').content;
+        let token = document.querySelector('meta[name="_csrf"]').content;
+
+    	
+    	fetch('noticeDelete',{
+    		method : "POST",
+    		 headers: {
+                 'header': header,
+                 'X-Requested-with': 'XMLHttpRequest',
+                 'Content-Type': 'application/json; charset=utf-8',
+                 'X-CSRF-Token': token
+               },
+    		body : JSON.stringify({"no":no})
+    	}).then(result => {
+    		  location.href = document.referrer
+    	})
+    }
+    	
+    
+    
+    </script>    
+        
+    <script src="../assets/js/oneui.app.min.js"></script>
+        <th:block th:if = "${(success != null && success != '') || (error != null && error != '')}">
+		<script th:inline="javascript">
+			let success = /*[[${success}]]*/ 'default';
+			let error = /*[[${error}]]*/ 'default';
+			if (success) {
+				Dialogs.dialog('success', '완료', success);
+			} else if (error) {
+				Dialogs.dialog('error', '실패', error);
+			}
+		</script>
+	</th:block>
         
       </main>
 
@@ -148,6 +193,5 @@ xmlns:th="http://www.thymeleaf.org"
       </footer> -->
     </div>
     
-    <script src="../assets/js/oneui.app.min.js"></script>
   </body>
 </html>
