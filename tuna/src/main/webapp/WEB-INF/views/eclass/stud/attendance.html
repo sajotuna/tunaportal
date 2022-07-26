@@ -47,25 +47,72 @@
 									<div class="row">
 										<div class="col-2 col-xs-2 col-lg-2 col-md-2 col-sm-2">
 											<div class="row">
-												<div class="block block-rounded" th:each="num : ${#numbers.sequence(1, 16)}">
-													<p class="p-3 block block-rounded border bg-white m-0 text-center fw-bold" th:text="${num}+주차"></p>
+												<div class="block block-rounded"
+													th:each="num : ${#numbers.sequence(1, 16)}">
+													<p
+														class="p-3 block block-rounded border bg-white m-0 text-center fw-bold"
+														th:text="${num}+주차"></p>
 												</div>
 											</div>
 										</div>
 										<div class="col-5">
 											<div class="row">
-												<div class="col-5 col-xs-5 col-lg-5 col-md-5 col-sm-5" th:each="at : ${attd}">
-													<div class="block block-rounded" th:if="${#strings.isEmpty(at.STATECODE)}">
-														<p class="p-3 block block-rounded bg-light border m-0 text-center fw-bold" th:text="${at.CLASSDATE}"></p>
+												<div class="col-5 col-xs-5 col-lg-5 col-md-5 col-sm-5"
+													th:each="mj : ${major}">
+													<div class="block block-rounded"
+														th:if="${#strings.isEmpty(mj.STATECODE)} and ${#lists.isEmpty(refin)}">
+														<p
+															class="p-3 block block-rounded bg-light border m-0 text-center fw-bold"
+															th:text="${mj.CLASSDATE}"></p>
 													</div>
-													<div class="block block-rounded" th:if="${at.STATECODE} == '1401'">
-													<p class="p-3 block block-rounded bg-success-light text-success border m-0 text-center fw-bold" th:text="${at.CLASSDATE}"></p>
+													<div class="block block-rounded"
+														th:if="${mj.STATECODE} == '1401'">
+														<p
+															class="p-3 block block-rounded bg-success-light text-success border m-0 text-center fw-bold"
+															th:text="${mj.CLASSDATE}"></p>
 													</div>
-													<div class="block block-rounded" th:if="${at.STATECODE} == '1402'">
-													<p class="p-3 block block-rounded bg-danger-light text-danger text-success border m-0 text-center fw-bold" th:text="${at.CLASSDATE}"></p>
+													<div class="block block-rounded"
+														th:if="${mj.STATECODE} == '1402'">
+														<p
+															class="p-3 block block-rounded bg-danger-light text-danger text-success border m-0 text-center fw-bold"
+															th:text="${mj.CLASSDATE}"></p>
 													</div>
-													<div class="block block-rounded" th:if="${at.STATECODE} == '1403'">
-													<p class="p-3 block block-rounded bg-warning-light text-warning text-success border m-0 text-center fw-bold" th:text="${at.CLASSDATE}"></p>
+													<div class="block block-rounded"
+														th:if="${mj.STATECODE} == '1403'">
+														<p
+															class="p-3 block block-rounded bg-warning-light text-warning text-success border m-0 text-center fw-bold"
+															th:text="${mj.CLASSDATE}"></p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-5">
+											<div class="row">
+												<div class="col-7 col-xs-7 col-lg-7 col-md-7 col-sm-7"
+													th:each="rf : ${refin}">
+													<div class="block block-rounded"
+														th:if="${#strings.isEmpty(rf.STATECODE)} and ${#lists.isEmpty(major)}">
+														<p
+															class="p-3 block block-rounded bg-light border m-0 text-center fw-bold"
+															th:text="${rf.CLASSDATE}"></p>
+													</div>
+													<div class="block block-rounded"
+														th:if="${rf.STATECODE} == '1401'">
+														<p
+															class="p-3 block block-rounded bg-success-light text-success border m-0 text-center fw-bold"
+															th:text="${rf.CLASSDATE}"></p>
+													</div>
+													<div class="block block-rounded"
+														th:if="${rf.STATECODE} == '1402'">
+														<p
+															class="p-3 block block-rounded bg-danger-light text-danger text-success border m-0 text-center fw-bold"
+															th:text="${rf.CLASSDATE}"></p>
+													</div>
+													<div class="block block-rounded"
+														th:if="${rf.STATECODE} == '1403'">
+														<p
+															class="p-3 block block-rounded bg-warning-light text-warning text-success border m-0 text-center fw-bold"
+															th:text="${rf.CLASSDATE}"></p>
 													</div>
 												</div>
 											</div>

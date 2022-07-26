@@ -32,14 +32,12 @@
 						<div class="block  block-rounded col-7">
 							<div class="row">
 								<div class="row block-content">
-									<div id="accordion">
-										<h3 class="h4 col-7 text-center">3주차 강의자료</h3>
+									<div id="accordion" th:each="lf : ${lectureFile}">
+										<h3 class="h4 col-7 text-center" th:text="${lf.TITLE}"></h3>
 										<div>
-											<P>2022/07/10</P>
-											<ul>
-												<li>java.pdf</li>
-												<li>index.html</li>
-												<li>oh shit</li>
+											<P th:text="${lf.ENROLLDATE}"></P>
+											<ul th:each="fl : ${file}">
+												<li th:text="${fl.FILENAME}"></li>
 											</ul>
 										</div>
 									</div>

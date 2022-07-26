@@ -1,13 +1,13 @@
 package co.fourth.tuna.web.eclass.student;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -56,6 +56,7 @@ public class EclassStudentEclassController {
 	@Autowired LectureQnaService qnaDao;
 	@Autowired private FileService fileService;
 	@Autowired YearService year;
+	@Autowired String fileDir;
 	
 	@RequestMapping("/")
 	public void Eclass() {
@@ -259,19 +260,19 @@ public class EclassStudentEclassController {
 
 	//자료실
 	@RequestMapping("/download") 
-	public String download(LectureFileVO vo, Model model, Authentication authentication) {
-						
-//		vo.getNo();
-//		vo.getSbjNo();
-//		
-//		List<Map<String, Object>> fileList = sql.selectList("co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.lectureFileList", vo);
-//		List<Map<String, Object>> fileCat = sql.selectList("co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.lectureFileDownload", vo);
-//				
-//		fileDao.lectureFileDownload(vo);
-//		
-//		model.addAttribute("fileList",fileList);
-//		model.addAttribute("fileCat", fileCat);
-//		
+	public String download(LectureFileVO vo, Model model, HttpServletRequest req) {
+		
+		vo.getSbjNo();
+		List<Map<String, Object>> lectureFile = sql.selectList("co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.lectureFileList", vo);
+		model.addAttribute("lectureFile", lectureFile);
+		
+		vo.setNo(((BigDecimal) lectureFile.get(0).get("NO")).intValue());
+		System.out.println("되나"+lectureFile.get(0).get("NO"));
+	
+		
+		List<Map<String, Object>> fileDown = sql.selectList("co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.lectureFileDownload", vo);
+		model.addAttribute("file", fileDown);
+		
 		return "eclass/stud/download";
 	}
 	
@@ -319,8 +320,15 @@ public class EclassStudentEclassController {
 		
 		List<Map<String, Object>> attd = sql.selectList("co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.studentAttendance", vo);
 		
-		model.addAttribute("attd", attd);
-		
+		if(attd.size() > 16) {
+			List<Map<String, Object>> major = attd; 
+			model.addAttribute("major", major);
+			System.out.println("전공"+major);
+		}else{
+			List<Map<String, Object>> refin = attd;
+			model.addAttribute("refin", refin);
+			System.out.println("교양"+refin);
+		};
 		
 		return "eclass/stud/attendance";
 	}

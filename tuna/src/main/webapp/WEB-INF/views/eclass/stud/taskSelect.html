@@ -74,7 +74,7 @@
 															<a th:href="@{/download(fileName=${fts.uri}, originName=${fts.fileName}, folder=task)}" class="mb-0 fw-bold"> [[${fts.fileName}]] </a>
 															<button th:data-uri=${fts.uri} th:data-no=${fts.no}
 																type="button" class="btn btn-sm delBtn">
-																<i class="fa fa-fw fa-sm fa-times" id="x"></i>
+																<i class="fa fa-fw fa-sm fa-times" id="delbtn"></i>
 															</button>
 															<br>
 														</th:block>
@@ -150,20 +150,18 @@
 			    leadingZeros(now.getMonth() + 1, 2) + "-" +
 			    leadingZeros(now.getDate(), 2);
 			  newnow = Date.parse(now);
-			  if(limitDate < newnow){
+			  if(limitDate > newnow){
 				  /* console.log(whDate); */
-				  console.log(limitDate);
-				  console.log(newnow);
 				  console.log("과제제출일미경과")
 				  document.getElementById("file").style.display = "block";
 				  document.getElementById("button").style.display = "block";
+
 			  }else{
 				  /* console.log(whDate); */
-				  console.log(limitDate);
-				  console.log(newnow);
 				  console.log("과제제출일경과")
 				  document.getElementById("file").style.display = "none";
 				  document.getElementById("button").style.display = "none";
+				  document.getElementById("delbtn").style.display = "none";
 			  }
 			}
 				

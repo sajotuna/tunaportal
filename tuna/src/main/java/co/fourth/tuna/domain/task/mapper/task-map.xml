@@ -29,7 +29,7 @@ AND T.SBJNO = #{sbjNo}
 </select> -->
 
 <select id="taskList" resultType="co.fourth.tuna.domain.task.vo.TaskVO">
-SELECT * FROM TASK WHERE SBJNO = #{sbjNo}
+SELECT * FROM TASK WHERE SBJNO = #{sbjNo} ORDER BY NO DESC
 </select>
 
 <select id="taskSelect" resultType="map" parameterType="co.fourth.tuna.domain.task.vo.TaskVO">
