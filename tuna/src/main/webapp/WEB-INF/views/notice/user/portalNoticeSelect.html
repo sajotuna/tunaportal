@@ -5,8 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <style>
-figure{
-width:100%}
+	figure {
+		flex: 0 0 auto;
+  		width: 100%;
+	}
+	
+	@media (max-width: 800px) {
+	
+		figure img {
+			width:100%;
+		}
+	
+	}
 </style>
 <title>학사공지 상세조회</title>
 </head>
@@ -14,12 +24,12 @@ width:100%}
 	<main layout:fragment="main">
 		<!--title start-->
 		<div class="bg-body-light">
-			<div class="content content-full content-boxed">
+			<div class="content content-full content-boxed mt-3">
 				<div
 					class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
 					<div class="flex-grow-1 mb-1 mb-md-0">
 						<p class="h3 fw-bold mb-2">학사공지</p>
-						<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">학사공지 상세조회</p>
+						<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">포탈 공지사항 조회 및 검색</p>
 						</h2>
 					</div>
 				</div>
@@ -43,7 +53,7 @@ width:100%}
 						</div>
 						<!--제목 end-->
 						<hr>
-						<div th:each="content, i:${content}" th:utext="${content.content}">
+						<div class="row p-5" th:each="content, i:${content}" th:utext="${content.content}">
 
 						</div>
 						<hr>
@@ -54,7 +64,7 @@ width:100%}
 						</th:block>
 							<hr>
 							<div class="p-1 d-flex justify-content-end">
-								<button type="button" class="btn btn-outline-secondary m-1"
+								<button type="button" class="btn btn-outline-secondary m-1 mb-4"
 									th:onclick="|location.href='@{/portalNoticeList}'|">목록</button>
 							</div>
 

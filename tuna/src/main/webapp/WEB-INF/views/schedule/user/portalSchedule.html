@@ -24,7 +24,7 @@
 					class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
 					<div class="flex-grow-1 mb-1 mb-md-0">
 						<p class="h3 fw-bold mb-2">학사일정</p>
-						<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">학사일정</p>
+						<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">연도학기별 학사일정 조회 및 검색</p>
 					</div>
 				</div>
 			</div>
@@ -35,21 +35,16 @@
 			<div class="block block-rounded">
 				<div class="block-header block-header-default">
 					<div class="block-title">
-						<div class="row">
-							<div class="col-3">
-								<select id="seasonSelect" name="seasonCode" class="form-select">
+								<select style="width:200px" id="seasonSelect" name="seasonCode" class="form-select">
 									<th:block th:each="seasonCode : ${seasonCodes}">
 										<option th:value="${seasonCode.no}" th:text="${seasonCode.codeName}"
 											th:selected=${seasonCodes}>#</option>
 									</th:block>
-								</select>
-							</div>
-
-						</div>
+								</select>			
 					</div>
 					<div class="block-obtions">
 						<!--search start-->
-						<div class="input-group">
+						<div class="input-group" style="width:200px">
 							<input type="text" id="searchText" class="form-control form-control-alt"
 								placeholder="Search">
 							<button id="searchBtn" class="btn btn-alt-secondary">
