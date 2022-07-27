@@ -1,8 +1,8 @@
 package co.fourth.tuna.web.eclass.student;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +28,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.common.service.YearService;
+import co.fourth.tuna.domain.lectureFile.service.LectureFileService;
+import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
 import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
 import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
 import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
@@ -50,9 +52,11 @@ public class EclassStudentEclassController {
 	@Autowired SqlSession sql;
 	@Autowired LectureNoticeService service;
 	@Autowired TaskService taskDao;
+	@Autowired LectureFileService fileDao;
 	@Autowired LectureQnaService qnaDao;
 	@Autowired private FileService fileService;
 	@Autowired YearService year;
+	@Autowired String fileDir;
 	
 	@RequestMapping("/")
 	public void Eclass() {
@@ -169,7 +173,7 @@ public class EclassStudentEclassController {
 		return "redirect:/stud/eclass/qnaSelect";
 	}
 	
-	@DeleteMapping("delOneQna")
+	@DeleteMapping("/delOneQna")
 	public void delOneQna(@RequestBody LectureQnaVO vo) {
 		qnaDao.delOneQna(vo);
 		
@@ -256,7 +260,18 @@ public class EclassStudentEclassController {
 
 	//자료실
 	@RequestMapping("/download") 
-	public String download() {
+	public String download(LectureFileVO vo, Model model, HttpServletRequest req) {
+		
+		vo.getSbjNo();
+		List<Map<String, Object>> lectureFile = sql.selectList("co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.lectureFileList", vo);
+		model.addAttribute("lectureFile", lectureFile);
+		
+		vo.setNo(((BigDecimal) lectureFile.get(0).get("NO")).intValue());
+		System.out.println("되나"+lectureFile.get(0).get("NO"));
+	
+		
+		List<Map<String, Object>> fileDown = sql.selectList("co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.lectureFileDownload", vo);
+		model.addAttribute("file", fileDown);
 		
 		return "eclass/stud/download";
 	}
@@ -305,8 +320,15 @@ public class EclassStudentEclassController {
 		
 		List<Map<String, Object>> attd = sql.selectList("co.fourth.tuna.domain.attendance.mapper.AttendanceMapper.studentAttendance", vo);
 		
-		model.addAttribute("attd", attd);
-		
+		if(attd.size() > 16) {
+			List<Map<String, Object>> major = attd; 
+			model.addAttribute("major", major);
+			System.out.println("전공"+major);
+		}else{
+			List<Map<String, Object>> refin = attd;
+			model.addAttribute("refin", refin);
+			System.out.println("교양"+refin);
+		};
 		
 		return "eclass/stud/attendance";
 	}
