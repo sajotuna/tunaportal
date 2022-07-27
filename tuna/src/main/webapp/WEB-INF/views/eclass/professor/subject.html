@@ -949,7 +949,8 @@ xmlns:th="http://www.thymeleaf.org"
 
             const REST_URL = {
               PROGRESS_CONTENT : "/tuna/prof/lecPlans",
-              ATTENDANCE_CONTENT : "/tuna/prof/students",
+              //ATTENDANCE_CONTENT : "/tuna/prof/students",
+              ATTENDANCE_CONTENT : "/tuna/staff/attendance",
               TASK_CONTENT : "/tuna/staff/task/content",
               QNA_CONTENT : "/tuna/prof/lecQna",
               NOTICE_CONTENT : "/tuna/prof/lecNotices",
@@ -978,7 +979,7 @@ xmlns:th="http://www.thymeleaf.org"
             //  파라미터
             let g_url = new URL(window.location.href);
             let params = new URLSearchParams(g_url.searchParams);
-            let sbjno = params.get('no'); // 파라미터
+            let sbjno = params.get('no')*1; // 파라미터
             let msg = params.get('msg');
 
             let taskno = 0; // TODO 과제 선택
@@ -1384,11 +1385,11 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
             // 출결 패널 세팅
-            function setAttendanceContent(students) {
+            function setAttendanceContent(data) {
               let table = document.querySelector('#subject-attendance-table');
               let tbody = table.firstElementChild;
               tbody.innerHTML = "";
-              students.forEach(student => {
+              data.students.forEach(student => {
                 let tr = document.createElement('tr');
                 let innerHTML = `
                 <td class="table-cell" style="width: 54px;">
@@ -1420,6 +1421,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                   </div>
                 </td>`;
+                // TODO 날짜 넣기
                 
                 tr.innerHTML = innerHTML;
                 attendRadioGroups.push(tr);
@@ -1485,7 +1487,7 @@ xmlns:th="http://www.thymeleaf.org"
                   disabled = "disabled"
                 } else { //
                   fileName = student.submitTask.fileName;
-                  uri = student.submitTask.uri; //TODO 다운로드 링크
+                  uri = `/tuna/download?fileName=${student.submitTask.fileName}&originName=${student.submitTask.uri}&folder=lectureFile`;
                   enrollDate = dateTimeToISO(student.submitTask.enrollDate);
                   score = student.submitTask.score;
                   tr.data_submit_no = student.submitTask.no;
@@ -1615,11 +1617,12 @@ xmlns:th="http://www.thymeleaf.org"
               let tbody = table.getElementsByTagName('tbody')[0];
               let trTags = tbody.getElementsByTagName('tr');
               studentsGradeTr = [];
-              for(let tr of trTags){ tr.remove() };
+              //for(let tr of trTags){ tr.remove() };
+              tbody.innerHTML = "";
               for( let stud of studList ) {
                 let tr = document.createElement('tr');
                 tr.id = GRADE_STUD_ID+stud.gradeVO.no;
-                tr.data-
+                tr.data_stno = stud.no;
                 tr.classList.add('m-0');
                 tr.innerHTML = `
                   <td class="table-cell">

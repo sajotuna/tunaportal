@@ -1,5 +1,7 @@
 package co.fourth.tuna.domain.attendance.mapper;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -16,4 +18,15 @@ public interface AttendanceMapper {
 	
 	//단일과목 출석 조회
 	public String studentAttendance(AttendanceVO vo);
+	// 가장 가까운 출결 가져오기
+	// TODO sysdate 바꿀건가요??
+	public Date selectThisAttendanceBySubjectId(int sbjno);
+	
+	// 해당 날짜 출결 가져오기
+	public List<AttendanceVO> findAttendanceByDateAndSubjectId(LocalDate date, int sbjno);
+	// 해당 날짜 학생 출결 가져오기
+	public AttendanceVO findAttendanceByDateAndSubjectIdAndStudentId(
+			LocalDate date, 
+			int sbjno, 
+			int stno);
 }

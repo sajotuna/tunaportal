@@ -26,5 +26,29 @@
 		AND sbjno = #{sbjno}
 		ORDER BY stno
 	</select>
-		
+	
+	<select id="selectThisAttendanceBySubjectId"
+		resultType="java.sql.Date">
+		SELECT MIN(classdate) local_date
+		FROM attendance
+		WHERE sbjno = #{sbjno} 
+			AND classdate > SYSDATE
+	</select>
+	
+	<select id="findAttendanceByDateAndSubjectId">
+		SELECT no, statecode, stno, sbjno, classdate
+		FROM attendance
+		WHERE classdate = #{date}
+    	AND sbjno = #{sbjno}
+	</select>
+	
+	<select id="findAttendanceByDateAndSubjectIdAndStudentId"
+		resultType="co.fourth.tuna.domain.attendance.vo.AttendanceVO">
+		SELECT no, statecode, stno, sbjno, classdate
+		FROM attendance
+		WHERE classdate = #{date}
+	    AND sbjno = #{sbjno}
+	    AND stno = #{stno}
+	</select>
+	
 </mapper>
