@@ -84,7 +84,7 @@
 										<div class="d-flex justify-content-center">
 											<button type="submit" id="button" class="btn btn-primary m-2">등록</button>
 											<button type="button"
-												th:onclick="|location.href='@{/stud/eclass/taskList}'|"
+												th:onclick="|location.href='@{/stud/eclass/taskList(sbjNo=${param.sbjNo})}'|"
 												class="btn btn-dark m-2">취소</button>
 										</div>
 									</div>

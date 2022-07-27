@@ -72,9 +72,9 @@
 										</table>
 										<div class="d-flex justify-content-center">
 											<button type="button"
-												th:onclick="|location.href='@{/stud/eclass/qnaList}?sbjNo=${sbjNo}'|"
+												th:onclick="|location.href='@{/stud/eclass/qnaList}?sbjNo=${param.sbjNo}'|"
 												class="btn btn-dark m-2">목록으로</button>
-												<button type="button"
+												<button th:if="${#authentication.principal.username} == ${qs.STNO}" type="button"
 												th:onclick="|location.href='@{/stud/eclass/delOneQna}?no=${no}&sbjNo=${sbjNo}'|"
 												class="btn btn-warning m-2">삭제</button>
 										</div>

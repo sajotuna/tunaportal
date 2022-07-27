@@ -57,7 +57,7 @@
 											</tr>
 											<tr
 												th:if="${q.VISIBLE} == 0 and ${not #strings.isEmpty(qna)}">
-												<td class="text-center" th:text="${i.index+1}"></td>
+												<td class="text-center" th:text="${q.ROWNUM}"></td>
 												<td class="text-center" colspan="7"><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
 													style="color: black"> [[${q.TITLE}]] </a></td>
@@ -71,7 +71,7 @@
 											</tr>
 											<tr
 												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} != ${q.STNO}">
-												<td class="text-center" th:text="${i.index+1}"></td>
+												<td class="text-center" th:text="${q.ROWNUM}"></td>
 												<td class="text-center fw-bold" colspan="11">비공개 질문입니다.</td>
 												<td class="text-center text-danger fw-bold" colspan="2"
 													th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
@@ -80,7 +80,7 @@
 											</tr>
 											<tr
 												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} == ${q.STNO}">
-												<td class="text-center" th:text="${i.index+1}"></td>
+												<td class="text-center" th:text="${q.ROWNUM}"></td>
 												<td class="text-center" colspan="7"><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
 													style="color: black"> [[${q.TITLE}]] </a></td>

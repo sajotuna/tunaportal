@@ -66,7 +66,8 @@ public class EclassStudentEclassController {
 	
 	@RequestMapping("/lectureNotice")
 	public String lectureNotice(Model model, LectureNoticeVO vo, HttpServletRequest req,  Authentication authentication) {
-		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
+//		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
+		vo.getSbjNo();
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> notice = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeList", vo);
 		
@@ -79,7 +80,7 @@ public class EclassStudentEclassController {
 	public String lectureNoticeSelect(Model model, LectureNoticeVO vo, HttpServletRequest req, Authentication authentication) {
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
-		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
+		vo.getSbjNo();
 		vo.setNo(Integer.parseInt(req.getParameter("no")));
 		List<Map<String, Object>> ns = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeSelect", vo);
 		
@@ -99,6 +100,8 @@ public class EclassStudentEclassController {
 		String[] plan = lists.get(0).values().toString().split(",");
 		
 		String[] weekplan = plan[11].split("~");
+		
+		System.out.println("외않나옴?" + lectureSchedule.get(0));
 		
 		model.addAttribute("sc", lectureSchedule.get(0));
 		model.addAttribute("plan", lists.get(0));
@@ -138,7 +141,6 @@ public class EclassStudentEclassController {
 		vo.setSbjNo(req.getParameter("sbjNo"));
 		vo.getVisible();
 		
-		vo.setStNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
 		model.addAttribute("qs", qs);
 		model.addAttribute("sbjNo", vo.getSbjNo());
@@ -195,6 +197,8 @@ public class EclassStudentEclassController {
 		sv.setNo(Integer.parseInt(authentication.getName()));
 		sb.setNo(Integer.parseInt(req.getParameter("sbjNo")));
 		List<SubjectVO> sbjli = map.selectOneSubTask(sv, sb);
+		
+		System.out.println("rownum"+sbjli);
 		model.addAttribute("sbjli", sbjli);
 		
 		return "eclass/stud/taskList";

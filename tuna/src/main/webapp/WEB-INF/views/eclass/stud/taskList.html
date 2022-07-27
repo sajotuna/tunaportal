@@ -26,28 +26,46 @@
 						<h3 class="h3 fw-bold mb-2">과제</h3>
 					</div>
 				</div>
-				<div class="block" th:each="s : ${sbjli}">
-					<div class="row" th:each="i, t : ${s.taskList}">
-						<div class="col-12">
-							<div class="row block-content border">
-								<h4 class="h4 fw-bold mb-2 col-2 text-center" th:text="${t.index+1}"></h4>
-								<h4 class="h4 mb-2 col-7 text-center">
-									<a th:href="@{/stud/eclass/taskSelect(no=${i.no},sbjNo=${i.sbjNo})}" style="color:black" th:text="${i.title}"></a>
-								</h4>
-								<h4 class="h4 text-center col-3" th:text="${i.limitDate}"></h4>
-							</div>
-						</div>
-					</div>
-					<div class="row" th:if="${#lists.isEmpty(s.taskList)}">
-						<div class="col-12">
-							<div class="row block-content border">
-								<h4 class="h4 mb-2 text-center">과제가 등록되지 않았습니다.</h4>
+				<div class="block block-rounded" th:each="s : ${sbjli}">
+					<div class="block-content block-content-full">
+						<div id="DataTables_Table_0_wrapper"
+							class="dataTables_wrapper dt-bootstrap5 no-footer">
+							<div class="row">
+								<div class="col-sm-12">
+									<table
+										class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
+										id="DataTables_Table_0"
+										aria-describedby="DataTables_Table_0_info">
+										<thead>
+											<tr>
+												<th class="text-center" style="width: 80px;" tabindex="0"
+													rowspan="1">번호</th>
+												<th class="text-center" tabindex="0" colspan="7">제목</th>
+												<th class="text-center" rowspan="1" colspan="3">작성일자</th>
+												<th class="text-center" rowspan="1" colspan="3">마감일자</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="i, t : ${s.taskList}">
+												<th class="text-center" th:text="${i.rowNum}"></th>
+												<th class="text-center" colspan="7"><a
+													th:href="@{/stud/eclass/taskSelect(no=${i.no},sbjNo=${i.sbjNo})}"
+													th:text="${i.title}" style="color: black"></a></th>
+												<th class="text-center" colspan="3" th:text="${i.startDate}"></th>
+												<th class="text-center" colspan="3" th:text="${i.limitDate}"></th>
+											</tr>
+											<tr th:if=${#lists.isEmpty(s.taskList)}>
+												<th class="fw-bold text-center" colspan="13" rowspan="5">과제가
+													등록되지 않았습니다.</th>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</main>
 	</div>
 </body>

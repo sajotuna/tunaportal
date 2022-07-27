@@ -25,7 +25,8 @@ public class TaskVO {
 	private String content;
 	//시작시간
 	private Date startDate;
-	
+	//rownum
+	private int rowNum;
 	
 	private List<SubmitTaskVO> submitTaskList;
 }
