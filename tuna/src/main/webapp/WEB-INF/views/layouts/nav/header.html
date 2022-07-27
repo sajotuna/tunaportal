@@ -133,9 +133,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 							class="nav-main-link-name" th:text = "${#authentication.principal.name}"></span>
 					</a>
 						<ul class="nav-main-submenu nav-main-submenu-right">
-							<li class="nav-main-item">
-								<span class="nav-main-link nav-main-link-name" th:text = "${@codeList.getName(#authentication.principal.deptCode)}"></span>
-							</li>
 							<th:block sec:authorize="hasRole('ROLE_STUDENT')">
 							<li class="nav-main-item">
 								<a class="nav-main-link" th:href="@{/stud/userUpdate}">

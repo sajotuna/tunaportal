@@ -59,6 +59,18 @@ public class PortalStudentController {
 		List<CodeVO> seasonCodes = seasonCodeVOs.getChildren();
 		model.addAttribute("seasonCodes", seasonCodes);
 		
+		CodeMasterVO mySeasonCodeVOs = codeService.findById("100");
+		List<CodeVO> mySeasonCodes = mySeasonCodeVOs.getChildren();
+		
+		for (int i=0; i<mySeasonCodes.size(); i++) {
+			if (Integer.valueOf(mySeasonCodes.get(i).getNo()) >= Integer.valueOf(presentSeason)) {
+				mySeasonCodes.remove(i);
+				i--;
+			}
+		}
+		
+		model.addAttribute("mySeasonCodes", mySeasonCodes);
+		
 		return "portal/stud/subjectAndReport";
 	}
 	
