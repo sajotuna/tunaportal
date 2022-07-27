@@ -26,7 +26,7 @@ public interface AttendanceMapper {
 	public List<AttendanceVO> findAttendanceByDateAndSubjectId(LocalDate date, int sbjno);
 	// 해당 날짜 학생 출결 가져오기
 	public AttendanceVO findAttendanceByDateAndSubjectIdAndStudentId(
-			LocalDate date, 
-			int sbjno, 
-			int stno);
+			@Param("date")LocalDate date, 
+			@Param("sbjno")int sbjno, 
+			@Param("stno")int stno);
 }
