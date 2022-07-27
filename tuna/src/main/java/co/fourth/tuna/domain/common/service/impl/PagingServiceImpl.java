@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import co.fourth.tuna.domain.common.mapper.PagingMapper;
 import co.fourth.tuna.domain.common.service.PagingService;
-import co.fourth.tuna.domain.common.vo.PagingVO;
+import co.fourth.tuna.domain.common.vo.ListPagingVO;
 
 @Service
 public class PagingServiceImpl implements PagingService {
@@ -14,7 +14,7 @@ public class PagingServiceImpl implements PagingService {
 	PagingMapper map;
 	
 	@Override
-	public PagingVO getPaging(PagingVO vo) {
+	public ListPagingVO getPaging(ListPagingVO vo) {
 		return map.getPaging(vo);
 	}
 

@@ -1,7 +1,7 @@
 package co.fourth.tuna.domain.common.mapper;
 
-import co.fourth.tuna.domain.common.vo.PagingVO;
+import co.fourth.tuna.domain.common.vo.ListPagingVO;
 
 public interface PagingMapper {
-	public PagingVO getPaging(PagingVO vo);
+	public ListPagingVO getPaging(ListPagingVO vo);
 }

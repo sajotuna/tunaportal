@@ -53,6 +53,14 @@ WHERE RNUM
 	  BETWEEN  #{startList}
 	  AND 		#{endList}
 </select>
+
+<!-- 전체 카운트 -->
+<select id="getNoticeCnt" parameterType="String" resultType="int">
+SELECT COUNT(*) AS totalCnt
+FROM PORTALNOTICE 
+<if test="visible eq 'Y'.toString()">where visible='Y'</if>
+</select>
+
 <!-- 단건조회 -->
 <select id="noticeSelect" 
 	parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"
@@ -84,7 +92,6 @@ parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
 UPDATE PORTALNOTICE
 SET TITLE = #{title},
     CONTENT = #{content},
-    ENROLLDATE = sysDate,
     VISIBLE = #{visible},
     aDNO = #{adNo}
 WHERE NO = #{no}

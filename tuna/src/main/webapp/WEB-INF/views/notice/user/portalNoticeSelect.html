@@ -40,7 +40,7 @@
 						</div>
 						<!--제목 end-->
 						<hr>
-						<div th:each="content, i:${content}">[[${content.content}]]
+						<div th:each="content, i:${content}" th:utext="${content.content}">
 
 						</div>
 						<hr>
