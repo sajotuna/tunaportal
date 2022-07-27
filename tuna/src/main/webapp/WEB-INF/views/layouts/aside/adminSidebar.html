@@ -24,35 +24,16 @@
 	     <div class="content-side">
 	       <ul class="nav-main"> 
 	         <li class="nav-main-item">
-	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+	           <a class="nav-main-link" th:href="@{/admin/admin/userSearch}">
 	             <i class="nav-main-link-icon fa fa-circle-user"></i>
 	             <span class="nav-main-link-name fw-bold">사용자 관리</span>
 	           </a>
-	           <ul class="nav-main-submenu">
-	             <li class="nav-main-item">
-	               <a class="nav-main-link" href="#">
-	                 <span class="nav-main-link-name">사용자 로그 조회</span>
-	               </a>
-	             </li>
-	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/admin/admin/userSearch}">
-	                 <span class="nav-main-link-name">사용자 조회 및 관리</span>
-	               </a>
-	             </li>
-	           </ul>
 	         </li>
 	         <li class="nav-main-item">
-	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+	           <a class="nav-main-link"  th:href="@{/admin/admin/scholarSearch}">
 	             <i class="nav-main-link-icon fa fa-graduation-cap"></i>
-	             <span class="nav-main-link-name fw-bold">장학 신청</span>
+	             <span class="nav-main-link-name fw-bold">장학 신청 관리</span>
 	           </a>
-	           <ul class="nav-main-submenu">
-	             <li class="nav-main-item">
-	               <a class="nav-main-link" th:href="@{/admin/admin/scholarSearch}">
-	                 <span class="nav-main-link-name">사용자 장학신청 조회</span>
-	               </a>
-	             </li>
-	            </ul>
 	         </li>
 	         <li class="nav-main-item">
 	           <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
