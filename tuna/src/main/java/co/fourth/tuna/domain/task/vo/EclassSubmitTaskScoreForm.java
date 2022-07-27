@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EclassSubmitTaskScoreForm {
+	Integer sbjno;
 	Integer taskno;
 	List<SubmitTaskVO> submitTaskList;
 }

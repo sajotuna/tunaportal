@@ -19,6 +19,9 @@ import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.grade.service.GradeService;
 import co.fourth.tuna.domain.grade.vo.GradeFormVO;
 import co.fourth.tuna.domain.grade.vo.GradeVO;
+import co.fourth.tuna.domain.task.service.TaskService;
+import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
+import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
 
 @RestController
 public class GradeController {
@@ -27,6 +30,8 @@ public class GradeController {
 	private GradeService gradeDao;
 	@Autowired
 	private YearService yearDao;
+	@Autowired
+	private TaskService taskService;
 	
 	// 보관 성적 조회 - 과목별 성적 내역
 	@RequestMapping("/stud/portal/subjectGrade")
@@ -57,7 +62,7 @@ public class GradeController {
 		ResponseEntity<String> resEntity = null;
 		try {
 			resEntity = new ResponseEntity<String>(
-					gradeDao.updateGradeList(grades), 
+					gradeDao.updateGradeListByGradeNo(grades), 
 					resHeaders, 
 					HttpStatus.OK);
 		} catch (Error e) {
@@ -76,5 +81,25 @@ public class GradeController {
 				
 	}
 	
-	
+	@PostMapping(value="/staff/eclass/updateSubmitTaskScore")
+	public ResponseEntity<String> updateSubmitTaskScore(
+			@RequestBody EclassSubmitTaskScoreForm data) {
+		HttpHeaders resHeaders = new HttpHeaders();
+		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		ResponseEntity<String> res = null;
+		
+		try {
+			res = new ResponseEntity<String>(
+					gradeDao.updateSubmitTaskGrade(data),
+					resHeaders,
+					HttpStatus.OK);
+		} catch (Throwable e) {
+			res = new ResponseEntity<String>(
+					e.getMessage(),
+					resHeaders,
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		return res;
+	}
 }

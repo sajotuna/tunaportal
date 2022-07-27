@@ -1,10 +1,11 @@
 package co.fourth.tuna.domain.lectureFile.service;
 
+import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
 import java.util.List;
 
-import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
-
 public interface LectureFileService {
+	public String insertLectureFileByLectureFileVO(LectureFileVO vo);
+	public String deleteLecturefileByLectureFileVO(LectureFileVO vo);
 
 	//자료실 목록 조회
 	public LectureFileVO lectureFileList(LectureFileVO vo);

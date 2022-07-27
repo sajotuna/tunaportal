@@ -12,4 +12,33 @@
 		FROM LECTUREFILE
 		WHERE NO = #{no}
 	</select>
+	
+	<insert id="insertLectureFileByLectureFileVO"
+		parameterType="co.fourth.tuna.domain.lectureFile.vo.LectureFileVO">
+		<selectKey resultType="int" keyProperty="no"  order="BEFORE">
+			SELECT CASE
+				WHEN MAX(no) != 0
+				THEN MAX(no) +1
+				ELSE 1 END
+				AS id
+			FROM lecturefile
+		</selectKey>
+		INSERT INTO lecturefile
+			(NO, TITLE, ENROLLDATE, URI, SBJNO, FILENAME)
+		VALUES (
+			#{no},
+			#{lectureFile.title},
+			SYSDATE,
+			#{lectureFile.uri},
+			#{lectureFile.sbjNo},
+			#{lectureFile.fileName}
+		)
+	</insert>
+	
+	<delete id="deleteLectureFileByLectureFileId"
+		>
+		DELETE FROM lecturefile
+		WHERE no = #{no}
+	</delete>
+	
 </mapper>

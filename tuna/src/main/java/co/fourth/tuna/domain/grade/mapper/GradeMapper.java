@@ -22,5 +22,7 @@ public interface GradeMapper {
 				@Param("stno")int stno, 
 				@Param("sbjno")int sbjno);
 	
-	public int updateGradeByForm(GradeFormVO vo);
+	public int updateGradeByGradeNo(GradeFormVO vo);
+	public int updateGradeByStudentNoAndSubjectNo(GradeFormVO vo);
+	
 }

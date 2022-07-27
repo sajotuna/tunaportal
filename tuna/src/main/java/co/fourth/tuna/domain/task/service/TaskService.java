@@ -30,5 +30,6 @@ public interface TaskService {
 	
 	public String updateSubmitTaskScoreByVO(EclassSubmitTaskScoreForm form);
 	
-	public List<SubmitTaskVO> findListByStudentIdAndTaskId(int stno, int taskno);
+	public SubmitTaskVO findSubmitTaskByStudentIdAndTaskId(int stno, int taskno);
+	
 }
