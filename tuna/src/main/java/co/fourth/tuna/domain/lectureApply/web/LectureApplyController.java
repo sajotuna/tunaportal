@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.common.captcha.CaptchaUtil;
+import co.fourth.tuna.domain.common.service.DateCheckService;
 import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
@@ -34,6 +35,8 @@ public class LectureApplyController {
 	private YearService yearDao; 
 	@Autowired
 	private SqlSession SqlSession;
+	@Autowired
+	private DateCheckService DataDao;
 	
 	@RequestMapping("/stud/course/Warning")
 	public String courseWarning() {
@@ -44,6 +47,12 @@ public class LectureApplyController {
 	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication,@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
 			  @RequestParam Map<String, Object> params ) {
 
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
+			model.addAttribute("error", "현재 수강신청 열람기간이 아닙니다.");
+			return "schedule/date/courseDate";
+		}
+		
+		
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		params.put("seasonCode", yearDao.yearFind());

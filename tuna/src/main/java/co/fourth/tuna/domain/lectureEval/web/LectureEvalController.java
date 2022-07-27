@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.fourth.tuna.domain.common.service.DateCheckService;
 import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureEval.service.LectureEvalService;
 import co.fourth.tuna.domain.lectureEval.vo.LectureEvalVO;
@@ -22,10 +23,12 @@ public class LectureEvalController {
 
 	@Autowired
 	private SqlSession SqlSession;
-	
 	@Autowired
 	private LectureEvalService evalDao;
-	
+	@Autowired
+	private DateCheckService DataDao;
+	@Autowired
+	private YearService yearDao; 
 	@RequestMapping("/stud/course/Evaluation")
 	public String lectureEvaluation() {
 		return "course/evaluation/lectureEvaluation";
@@ -34,7 +37,10 @@ public class LectureEvalController {
 	
 	@RequestMapping("/stud/course/Details")
 	public String lectureEvaluationDetails(LectureEvalVO vo, Model model, Authentication authentication) {
-		
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1105") != 1) {
+			model.addAttribute("error", "현재 강의평가 열람기간이 아닙니다.");
+			return "/home";
+		}
 		vo.setStNo(authentication.getName());
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.CourseEval", vo);
 		model.addAttribute("list", lists);

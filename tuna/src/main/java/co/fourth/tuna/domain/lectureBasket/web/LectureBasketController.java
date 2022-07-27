@@ -1,6 +1,5 @@
 package co.fourth.tuna.domain.lectureBasket.web;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.fourth.tuna.domain.common.service.DateCheckService;
 import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureBasket.service.LectureBasketService;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
@@ -29,11 +28,20 @@ public class LectureBasketController {
 	@Autowired
 	private LectureBasketService LectureBasketDao;
 
+	@Autowired
+	private DateCheckService DataDao;
+	
 	@RequestMapping("/stud/course/Basket")
 	public String courseBasket(Model model, LectureBasketVO vo, Authentication authentication, 
 							 @RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
 							  @RequestParam Map<String, Object> params ) {
 
+		
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1103") != 1) {
+			model.addAttribute("error", "현재 수강꾸러미 열람기간이 아닙니다.");
+			return "schedule/date/basketDate";
+		}
+		
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		params.put("seasonCode", yearDao.yearFind());
@@ -62,7 +70,6 @@ public class LectureBasketController {
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
 		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
-		System.out.println(courcheck + "==========1q9eu129eu9saj9djsad9==========");
 		
 		if(courcheck.isEmpty()) {
 			ra.addFlashAttribute("error", "수강꾸러미에 담을 과목을 체크해주세요");
@@ -107,7 +114,7 @@ public class LectureBasketController {
 
 		return "course/basket/courseBasketLectureList";
 	}
-
+	
 	@RequestMapping("/stud/course/BasketSchedule")
 	public String courseBasketSchedule(Model model, LectureBasketVO vo, Authentication authentication) {
 

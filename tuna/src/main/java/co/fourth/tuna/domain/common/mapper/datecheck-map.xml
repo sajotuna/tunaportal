@@ -3,7 +3,7 @@
 <mapper namespace="co.fourth.tuna.domain.common.mapper.DateCheckMapper">
 
 	<select id="accessDateCheck" resultType="int">
-		SELECT COUNT(*) AS AVAILABILITY
+		SELECT CASE WHEN COUNT(*) >= 1 THEN 1 ELSE 0 END AS AVAILABILITY
 		FROM PORTALSCHEDULE
 		WHERE SEASONCODE = #{seasonCode}
 		AND SCHEDULECODE = #{scheduleCode}

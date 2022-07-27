@@ -127,11 +127,6 @@ public class EclassProfessorEclassController {
 		return req.getServletPath();
 	}
 
-	@GetMapping("/noticeUpdate")
-	public String noticeUpdateView(Model model, HttpServletRequest req) {
-		return req.getServletPath();
-	}
-
 	@GetMapping("/qna")
 	public String qnaView(Model model, HttpServletRequest req) {
 		return req.getServletPath();
