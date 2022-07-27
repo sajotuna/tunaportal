@@ -41,4 +41,11 @@
 		WHERE no = #{no}
 	</delete>
 	
+	<select id="findListBySbjno"
+		resultType="co.fourth.tuna.domain.lectureFile.vo.LectureFileVO">
+		SELECT *
+		FROM lecturefile
+		WHERE sbjno = #{sbjno}
+	</select>
+	
 </mapper>
