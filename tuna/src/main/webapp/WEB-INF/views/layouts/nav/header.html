@@ -44,43 +44,87 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								th:href="@{/portalSchedule}"> <span class="nav-main-link-name">학사일정</span>
 							</a></li>
 						</ul></li>
-						
-					<li class="nav-main-item"><a
-						class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
-						aria-haspopup="true" aria-expanded="false" href="#"><span
-							class="nav-main-link-name">조회</span>
-					</a>
-						<ul class="nav-main-submenu">
-							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/portal/subjectAndReport}"> <span class="nav-main-link-name">강의/성적 조회</span>
-							</a></li>
-							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/scholarshipApplication}" target="_blank"> <span class="nav-main-link-name">장학 신청 및 조회</span>
-							</a></li>
-							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/tuitionCheck}"> <span class="nav-main-link-name">등록금납입확인서</span>
-							</a></li>
-							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/portal/currentSemesterGrade}"> <span class="nav-main-link-name">당해학기 성적 조회</span>
-							</a></li>
-						</ul></li>
-						
-					<li class="nav-main-item"><a
-						class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
-						aria-haspopup="true" aria-expanded="false" href="#"><span
-							class="nav-main-link-name">강의</span>
-					</a>
-						<ul class="nav-main-submenu">
-							<li class="nav-main-item"><a class="nav-main-link"
-								href="javascript:void(0)" target="_blank"> <span class="nav-main-link-name">e-class</span>
-							</a></li>
-							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/courseWarning}" target="_blank"> <span class="nav-main-link-name">수강신청</span>
-							</a></li>
-							<li class="nav-main-item"><a class="nav-main-link"
-								th:href="@{/stud/lectureEvaluationDetails}"> <span class="nav-main-link-name">강의평가</span>
-							</a></li>
-						</ul></li>
+					
+					<th:block sec:authorize="hasRole('ROLE_STAFF')">
+			 	    <!-- ██████  ██████   ██████  ███████ 
+						 ██   ██ ██   ██ ██    ██ ██      
+						 ██████  ██████  ██    ██ █████   
+						 ██      ██   ██ ██    ██ ██      
+						 ██      ██   ██  ██████  ██     -->	
+						<li class="nav-main-item"><a
+							class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+							aria-haspopup="true" aria-expanded="false" href="#"><span
+								class="nav-main-link-name">교수</span>
+						</a>
+							<ul class="nav-main-submenu">
+								<li class="nav-main-item"><a class="nav-main-link"
+									th:href="@{/eclass/professor/home}" target='_blank'> <span class="nav-main-link-name">e-Class 교수</span>
+								</a></li>
+							</ul></li>
+					</th:block>
+					
+					<th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
+					<!-- █████  ██████  ███    ███ ██ ███    ██ 
+						██   ██ ██   ██ ████  ████ ██ ████   ██ 
+						███████ ██   ██ ██ ████ ██ ██ ██ ██  ██ 
+						██   ██ ██   ██ ██  ██  ██ ██ ██  ██ ██ 
+						██   ██ ██████  ██      ██ ██ ██   ████  -->		
+						<li class="nav-main-item"><a
+							class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+							aria-haspopup="true" aria-expanded="false" href="#"><span
+								class="nav-main-link-name">관리자</span>
+						</a>
+							<ul class="nav-main-submenu">
+								<li class="nav-main-item"><a class="nav-main-link"
+									th:href="@{/admin/admin/userSearch}" target='_blank'> <span class="nav-main-link-name">관리자 페이지</span>
+								</a></li>
+							</ul></li>
+					</th:block>
+					
+					<th:block sec:authorize="hasRole('ROLE_STUDENT')">
+					<!-- ███████ ████████ ██    ██ ██████  
+						 ██         ██    ██    ██ ██   ██ 
+						 ███████    ██    ██    ██ ██   ██ 
+						      ██    ██    ██    ██ ██   ██ 
+						 ███████    ██     ██████  ██████   -->
+						<li class="nav-main-item"><a
+							class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+							aria-haspopup="true" aria-expanded="false" href="#"><span
+								class="nav-main-link-name">조회</span>
+						</a>
+							<ul class="nav-main-submenu">
+								<li class="nav-main-item"><a class="nav-main-link"
+									th:href="@{/stud/portal/subjectAndReport}"> <span class="nav-main-link-name">강의/성적 조회</span>
+								</a></li>
+								<li class="nav-main-item"><a class="nav-main-link"
+									th:href="@{/stud/scholarshipApplication}" target="_blank"> <span class="nav-main-link-name">장학 신청 및 조회</span>
+								</a></li>
+								<li class="nav-main-item"><a class="nav-main-link"
+									th:href="@{/stud/tuitionCheck}"> <span class="nav-main-link-name">등록금납입확인서</span>
+								</a></li>
+								<li class="nav-main-item"><a class="nav-main-link"
+									th:href="@{/stud/portal/currentSemesterGrade}"> <span class="nav-main-link-name">당해학기 성적 조회</span>
+								</a></li>
+							</ul></li>
+							
+						<li class="nav-main-item"><a
+							class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+							aria-haspopup="true" aria-expanded="false" href="#"><span
+								class="nav-main-link-name">강의</span>
+						</a>
+							<ul class="nav-main-submenu">
+								<li class="nav-main-item"><a class="nav-main-link"
+									href="javascript:void(0)" target="_blank"> <span class="nav-main-link-name">e-class</span>
+								</a></li>
+								<li class="nav-main-item"><a class="nav-main-link"
+									th:href="@{/stud/courseWarning}" target="_blank"> <span class="nav-main-link-name">수강신청</span>
+								</a></li>
+								<li class="nav-main-item"><a class="nav-main-link"
+									th:href="@{/stud/lectureEvaluationDetails}"> <span class="nav-main-link-name">강의평가</span>
+								</a></li>
+							</ul></li>
+					</th:block>
+					
 					<th:block sec:authorize="isAuthenticated()">
 					<li class="nav-main-item ms-lg-auto"><a
 						class="nav-main-link nav-main-link-submenu" data-toggle="submenu"

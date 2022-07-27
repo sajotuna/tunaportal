@@ -14,148 +14,152 @@ data-layout-decorate="~{layouts/navLayout}">
   </head>
   <body>
 <main layout:fragment="main">
-    
-        <div class="content content-boxed">
-      		<h3 class="fw-bold">내 정보수정</h3>
-          <div class="block block-rounded">
-            <div id="page-container">
-
-              <div class = "content content-boxed">
-                
-                  <div class="row">
-                    <div class="col-md-6 col-xl-4 ">
-                      <div class="mb-4">
-                        <h4>기본 정보
-                        <button class="btn btn btn-outline-secondary"  onclick="showPopup();">비밀번호변경</button></h4>
-                      </div>
-                    </div>
-                    <form th:action="@{/stud/userInfoUpdate}" method="post">
-                    <div class="row">
-                      <div class="col-lg-12 col-xl-12">
-                      
-                        <div class="mb-3">
-                          <div class="input-group">
-                            <span class="input-group-text">소속</span>
-                            <input type="text" class="form-control" th:value = "${@codeList.getName(vo.deptCode)}" readonly>
-                            <span class="input-group-text">이름</span>
-                            <input type="text" class="form-control" th:value = "${vo.name}" readonly>
-                            <span class="input-group-text">생년월일</span>
-                            <input type="text" class="form-control" th:value = "${vo.birth}" readonly>
-                          </div>
-                    </div>
-                    <div class="mb-3">
-                      <div class="input-group">
-                        <span class="input-group-text">학번</span>
-                        <input type="text" class="form-control" id = "no" th:value = "${vo.no}" readonly>
-                        <span class="input-group-text">학년</span>
-                        <input type="text" class="form-control" th:value = "${vo.sy}" readonly>
-                        <span class="input-group-text">입학날짜</span>
-                        <input type="text" class="form-control" th:value = "${vo.enterDate}" readonly>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <div class="input-group">
-                        <span class="input-group-text">재적상태</span>
-                        <input type="text" class="form-control" th:value = "${@codeList.getName(vo.stateCode)}" readonly>
-                        <span class="input-group-text">전화번호</span>
-                        <input type="text" class="form-control" name = "tel" th:value = "${vo.tel}">
-                        <span class="input-group-text">이메일</span>
-                        <th:block th:if = "${not #strings.isEmpty(vo.email)}">
-                      	<input type="text" class="form-control" name = "email" th:value = "${vo.email}">
-	                    </th:block>
-	                    <th:block th:unless = "${not #strings.isEmpty(vo.email)}">
-	                      	<input type="text" class="form-control" name = "email"  placeholder = "이메일 주소를 입력하세요...">
-	                    </th:block>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <div class="input-group">
-                        
-                        <span class="input-group-text">은행</span>
-                        <select class="form-select" id="bacc" name="bacc" onchange="javascript:updateSuccess();">
-                        <th:block th:if = "${not #strings.isEmpty(vo.bacc)}">
-	                          <option th:value="${vo.bacc}" th:text="${@codeList.getName(vo.bacc)}"></option>
-	                    </th:block>
-	                    <th:block th:unless = "${not #strings.isEmpty(vo.bacc)}">
-	                    	  <option value ="" selected>은행선택</option>
-	                    </th:block>
-	                          <option value="35">경남은행</option>
-	                          <option value="29">광주은행</option>
-	                          <option value="7">국민은행</option>
-	                          <option value="5">기업은행</option>
-	                          <option value="15">농협중앙회</option>
-	                          <option value="17">농협회원조합</option>
-	                          <option value="25">대구은행</option>
-	                          <option value="47">도이치은행</option>
-	                          <option value="27">부산은행</option>
-	                          <option value="3">산업은행</option>
-	                          <option value="41">상호저축은행</option>
-	                          <option value="37">새마을금고</option>
-	                          <option value="11">수협중앙회</option>
-	                          <option value="36">신한금융투자</option>
-	                          <option value="60">신한은행</option>
-	                          <option value="39">신협중앙회</option>
-	                          <option value="9">외환은행</option>
-	                          <option value="19">우리은행</option>
-	                          <option value="56">우체국</option>
-	                          <option value="33">전북은행</option>
-	                          <option value="31">제주은행</option>
-	                          <option value="68">카카오뱅크</option>
-	                          <option value="67">케이뱅크</option>
-	                          <option value="59">하나은행</option>
-	                          <option value="23">한국씨티은행</option>
-	                          <option value="45">HSBC은행</option>
-	                          <option value="21">SC제일은행</option>
-                        </select>
-                     <th:block th:if = "${not #strings.isEmpty(vo.bank)}">
-                        <span class="input-group-text">계좌번호</span>
-                        <input type="text" class="form-control" name = "bank" th:value = "${vo.bank}" >
-                      </th:block>
-                      <th:block th:unless = "${not #strings.isEmpty(vo.bank)}">
-                        <span class="input-group-text">계좌번호</span>
-                        <input type="text" name = "bank" class="form-control" >
-                      </th:block>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-xl-4 ">
-                  <div class="mb-4">
-                    <h4>현 주소</h4>
-                  </div>
-                </div>
-                
-                <div class="row mb-2">
-                  <div class="col-4">
-                    <div class = "row">
-                      <div class = "col-10">
-                      <input type="text" class="form-control" id="postcode" name = "zip" th:value = "${vo.zip}">
-                    </div>
-                    <div class = "col-2">
-                      <button type="button" class="btn btn-secondary" onclick="execDaumPostcode()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                        </svg>
-                      </button>
-                    </div>
-                    </div>  
-                  </div>
-                  <div class="col-8">
-                    <input type="text" id="address" name = "addr" class="form-control" th:value = "${vo.addr}"><br>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                  <div class="m-2">
-                  <a th:href ="@{/home}" class = "btn btn-secondary">돌아가기</a>
-              </div>
-              <div class="m-2">
-                <button type="submit" class="btn btn-secondary" id = "updateBtn" disabled>수정하기</button>
-              </div>
-            </div>
-            </form>
-          </div>
-        </div>
-      </div>
+    <!-- Hero -->
+	<div class="bg-body-light">
+		<div class="content content-full content-boxed">
+			<div
+				class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
+				<div class="flex-grow-1 mb-1 mb-md-0">
+					<p class="h3 fw-bold mb-2">내 정보 수정</p>
+					<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">
+						기본 정보 수정 및 비밀번호 변경</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END Hero -->
+        <div class="mt-3">
+          <div class="content content-full content-boxed">
+	          <div class="block block-rounded mb-4">
+	              <div class = "block-content block-content-full p-5">
+	                  <div class="column">
+	                      <div class="mb-4">
+	                        <h4>기본 정보
+	                        <button class="btn btn-sm btn-outline-secondary ms-3"  onclick="showPopup();">비밀번호변경</button></h4>
+	                      </div>
+	                    <form th:action="@{/stud/userInfoUpdate}" method="post">
+	                    <div class="row mb-4">
+	                      <div class="col-lg-12 col-xl-12">
+	                        <div class="mb-3">
+	                          <div class="input-group">
+	                            <span class="input-group-text">소속</span>
+	                            <input type="text" class="form-control" th:value = "${@codeList.getName(vo.deptCode)}" readonly>
+	                            <span class="input-group-text">이름</span>
+	                            <input type="text" class="form-control" th:value = "${vo.name}" readonly>
+	                            <span class="input-group-text">생년월일</span>
+	                            <input type="text" class="form-control" th:value = "${vo.birth}" readonly>
+	                          </div>
+	                    	</div>
+	                    <div class="mb-3">
+	                      <div class="input-group">
+	                        <span class="input-group-text">학번</span>
+	                        <input type="text" class="form-control" id = "no" th:value = "${vo.no}" readonly>
+	                        <span class="input-group-text">학년</span>
+	                        <input type="text" class="form-control" th:value = "${vo.sy}" readonly>
+	                        <span class="input-group-text">입학날짜</span>
+	                        <input type="text" class="form-control" th:value = "${vo.enterDate}" readonly>
+	                      </div>
+	                    </div>
+	                    <div class="mb-3">
+	                      <div class="input-group">
+	                        <span class="input-group-text">재적상태</span>
+	                        <input type="text" class="form-control" th:value = "${@codeList.getName(vo.stateCode)}" readonly>
+	                        <span class="input-group-text">전화번호</span>
+	                        <input type="text" class="form-control" name = "tel" th:value = "${vo.tel}">
+	                        <span class="input-group-text">이메일</span>
+	                        <th:block th:if = "${not #strings.isEmpty(vo.email)}">
+	                      	<input type="text" class="form-control" name = "email" th:value = "${vo.email}">
+		                    </th:block>
+		                    <th:block th:unless = "${not #strings.isEmpty(vo.email)}">
+		                      	<input type="text" class="form-control" name = "email"  placeholder = "이메일 주소를 입력하세요...">
+		                    </th:block>
+	                      </div>
+	                    </div>
+	                    <div class="mb-3">
+	                      <div class="input-group">
+	                        
+	                        <span class="input-group-text">은행</span>
+	                        <select class="form-select" id="bacc" name="bacc" onchange="javascript:updateSuccess();">
+	                        <th:block th:if = "${not #strings.isEmpty(vo.bacc)}">
+		                          <option th:value="${vo.bacc}" th:text="${@codeList.getName(vo.bacc)}"></option>
+		                    </th:block>
+		                    <th:block th:unless = "${not #strings.isEmpty(vo.bacc)}">
+		                    	  <option value ="" selected>은행선택</option>
+		                    </th:block>
+		                          <option value="35">경남은행</option>
+		                          <option value="29">광주은행</option>
+		                          <option value="7">국민은행</option>
+		                          <option value="5">기업은행</option>
+		                          <option value="15">농협중앙회</option>
+		                          <option value="17">농협회원조합</option>
+		                          <option value="25">대구은행</option>
+		                          <option value="47">도이치은행</option>
+		                          <option value="27">부산은행</option>
+		                          <option value="3">산업은행</option>
+		                          <option value="41">상호저축은행</option>
+		                          <option value="37">새마을금고</option>
+		                          <option value="11">수협중앙회</option>
+		                          <option value="36">신한금융투자</option>
+		                          <option value="60">신한은행</option>
+		                          <option value="39">신협중앙회</option>
+		                          <option value="9">외환은행</option>
+		                          <option value="19">우리은행</option>
+		                          <option value="56">우체국</option>
+		                          <option value="33">전북은행</option>
+		                          <option value="31">제주은행</option>
+		                          <option value="68">카카오뱅크</option>
+		                          <option value="67">케이뱅크</option>
+		                          <option value="59">하나은행</option>
+		                          <option value="23">한국씨티은행</option>
+		                          <option value="45">HSBC은행</option>
+		                          <option value="21">SC제일은행</option>
+	                        </select>
+	                     <th:block th:if = "${not #strings.isEmpty(vo.bank)}">
+	                        <span class="input-group-text">계좌번호</span>
+	                        <input type="text" class="form-control" name = "bank" th:value = "${vo.bank}" >
+	                      </th:block>
+	                      <th:block th:unless = "${not #strings.isEmpty(vo.bank)}">
+	                        <span class="input-group-text">계좌번호</span>
+	                        <input type="text" name = "bank" class="form-control" >
+	                      </th:block>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="mb-4">
+	                    <h4>현 주소</h4>
+	                </div>
+	                <div class="row mb-2">
+	                  <div class="col-4">
+	                    <div class = "row">
+	                      <div class = "col-10">
+	                      <input type="text" class="form-control" id="postcode" name = "zip" th:value = "${vo.zip}">
+	                    </div>
+	                    <div class = "col-2">
+	                      <button type="button" class="btn btn-secondary" onclick="execDaumPostcode()">
+	                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+	                          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+	                        </svg>
+	                      </button>
+	                    </div>
+	                    </div>  
+	                  </div>
+	                  <div class="col-8">
+	                    <input type="text" id="address" name = "addr" class="form-control" th:value = "${vo.addr}"><br>
+	                  </div>
+	                </div>
+	                <div class="d-flex justify-content-end">
+	                  <div class="m-2">
+	                  <a th:href ="@{/home}" class = "btn btn-secondary">돌아가기</a>
+	              </div>
+	              <div class="m-2">
+	                <button type="submit" class="btn btn-secondary" id = "updateBtn" disabled>수정하기</button>
+	              </div>
+	            </div>
+	            </form>
+	          </div>
+	        </div>
+	    </div>
     </div>
   </div>
     <th:block th:if = "${(success != null && success != '')}">

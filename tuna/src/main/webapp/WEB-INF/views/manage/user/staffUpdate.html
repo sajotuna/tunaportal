@@ -18,25 +18,32 @@ data-layout-decorate="~{layouts/navLayout}">
   </head>
   <body>
 <main layout:fragment="main">
-      <div id="section">
-        <div class="content content-boxed">
-        <h3 class="fw-bold">내 정보수정</h3>
-          <div class="block block-rounded">
-            <div id="page-container">
-
-              <div class = "content content-boxed">
-                
-                  <div class="row">
-                    <div class="col-md-6 col-xl-4 ">
+	<!-- Hero -->
+	<div class="bg-body-light">
+		<div class="content content-full content-boxed">
+			<div
+				class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
+				<div class="flex-grow-1 mb-1 mb-md-0">
+					<p class="h3 fw-bold mb-2">내 정보 수정</p>
+					<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">
+						기본 정보 수정 및 비밀번호 변경</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END Hero -->
+	<div class="mt-3">
+        <div class="content content-full content-boxed">
+          <div class="block block-rounded mb-4">
+              <div class = "block-content block-content-full p-5">
+                  <div class="column">
                       <div class="mb-4">
                         <h4>기본 정보
-                        <button class="btn btn btn-outline-secondary"  onclick="showPopup();">비밀번호변경</button></h4>
+                        <button class="btn btn-sm btn-outline-secondary ms-3"  onclick="showPopup();">비밀번호변경</button></h4>
                       </div>
-                    </div>
                     <form th:action="@{/staff/proInfoUpdate}" method="post">
-                    <div class="row">
+                    <div class="row mb-4">
                       <div class="col-lg-12 col-xl-12">
-                      
                         <div class="mb-3">
                           <div class="input-group">
                             <span class="input-group-text">소속</span>
@@ -46,7 +53,7 @@ data-layout-decorate="~{layouts/navLayout}">
                             <span class="input-group-text">재적상태</span>
                             <input type="text" class="form-control" th:value = "${@codeList.getName(vo.stateCode)}" readonly>
                           </div>
-                    </div>
+                    	</div>
                     <div class="mb-3">
                       <div class="input-group">
                         <span class="input-group-text">교번</span>
@@ -70,12 +77,9 @@ data-layout-decorate="~{layouts/navLayout}">
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 col-xl-4 ">
-                  <div class="mb-4">
+                <div class="mb-4">
                     <h4>현 주소</h4>
-                  </div>
                 </div>
-                
                 <div class="row mb-2">
                   <div class="col-4">
                     <div class = "row">
@@ -106,8 +110,8 @@ data-layout-decorate="~{layouts/navLayout}">
             </form>
           </div>
         </div>
-      </div>
     </div>
+  </div>
   </div>
     <th:block th:if = "${(success != null && success != '')}">
 	<script th:inline="javascript">
