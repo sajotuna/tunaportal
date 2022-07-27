@@ -296,22 +296,23 @@ xmlns:th="http://www.thymeleaf.org"
       ███████    ██     ██████  ██████  ███████ ██   ████    ██  
 -->
                   <div class="tab-pane pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
-                    <div style="overflow-y:scroll; height: 310px;">
-                      <table id="subject-attendance-table" class="table table-hover table-vcenter">
-                        <tbody>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="pt-2 row">
-                      <div class="col-xl-2">
-                        <button class="col-12 btn btn-dark">상세보기</button>
+                    <div class="row">
+                      <div class="col-xl-2 align-self-center">
+                        <span class="fs-lg fw-bold">yy-MM-dd (요)</span>
                       </div>
-                      <div class="offset-xxl-6 col-xl-2">
+                      <div class="offset-6 col-xl-2">
                         <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
                       </div>
                       <div class="col-xl-2">
                         <button class="col-12 btn btn-primary">적용</button>
                       </div>
+                    </div>
+                    <hr class="mb-0">
+                    <div style="overflow-y:scroll; height: 300px;">
+                      <table id="subject-attendance-table" class="table table-hover table-vcenter">
+                        <tbody>
+                        </tbody>
+                      </table>
                     </div>
                     
                   </div> <!-- student TAB CONTENT END -->
@@ -1022,8 +1023,12 @@ xmlns:th="http://www.thymeleaf.org"
               // 탭 제어 초기화
               for(let i = 0; i < tabPanel.children.length; i++) {
                 tabPanel.children[i].setAttribute('id', TAB_ID+i);
-                if(i == msg) {
-                  tabPanel.children[i].querySelector('button').click();
+                if(!msg) {
+                  tabPanel.children[0].querySelector('button').click();
+                } else {
+                  if(i == msg) {
+                    tabPanel.children[i].querySelector('button').click();
+                  }
                 }
               }
               
