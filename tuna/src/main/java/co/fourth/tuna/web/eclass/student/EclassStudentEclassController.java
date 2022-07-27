@@ -138,7 +138,6 @@ public class EclassStudentEclassController {
 		;
 		//인덱스 부여하여 vo에 setting
 //		vo.setNo(Integer.parseInt(req.getParameter("no")));
-		vo.setSbjNo(req.getParameter("sbjNo"));
 		vo.getVisible();
 		
 		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
