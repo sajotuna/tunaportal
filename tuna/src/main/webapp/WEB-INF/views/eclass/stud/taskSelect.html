@@ -150,7 +150,7 @@
 			    leadingZeros(now.getMonth() + 1, 2) + "-" +
 			    leadingZeros(now.getDate(), 2);
 			  newnow = Date.parse(now);
-			  if(limitDate > newnow){
+			  if(limitDate >= newnow){
 				  /* console.log(whDate); */
 				  console.log("과제제출일미경과")
 				  document.getElementById("file").style.display = "block";

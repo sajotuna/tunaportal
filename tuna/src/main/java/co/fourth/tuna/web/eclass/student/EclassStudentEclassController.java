@@ -134,7 +134,7 @@ public class EclassStudentEclassController {
 	public String qnaSelect(Model model, LectureQnaVO vo, HttpServletRequest req, Authentication authentication) {
 		;
 		//인덱스 부여하여 vo에 setting
-		vo.setNo(Integer.parseInt(req.getParameter("no")));
+//		vo.setNo(Integer.parseInt(req.getParameter("no")));
 		vo.setSbjNo(req.getParameter("sbjNo"));
 		vo.getVisible();
 		
@@ -142,6 +142,7 @@ public class EclassStudentEclassController {
 		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
 		model.addAttribute("qs", qs);
 		model.addAttribute("sbjNo", vo.getSbjNo());
+		model.addAttribute("no", vo.getNo());
 		
 		return "eclass/stud/qnaSelect";
 	}
@@ -173,9 +174,14 @@ public class EclassStudentEclassController {
 		return "redirect:/stud/eclass/qnaSelect";
 	}
 	
-	@DeleteMapping("/delOneQna")
-	public void delOneQna(@RequestBody LectureQnaVO vo) {
+	@RequestMapping("/delOneQna")
+	public String delOneQna(LectureQnaVO vo, RedirectAttributes redir,Authentication authentication) {
+		vo.setStNo(Integer.parseInt(authentication.getName()));
 		qnaDao.delOneQna(vo);
+		redir.addFlashAttribute("success", "삭제가 완료되었습니다.");
+		redir.addAttribute("sbjNo", vo.getSbjNo());
+		
+		return "redirect:/stud/eclass/qnaList";
 		
 	}
 
@@ -260,18 +266,19 @@ public class EclassStudentEclassController {
 
 	//자료실
 	@RequestMapping("/download") 
-	public String download(LectureFileVO vo, Model model, HttpServletRequest req) {
+	public String download(LectureFileVO vo, 
+			Model model) {
 		
-		vo.getSbjNo();
-		List<Map<String, Object>> lectureFile = sql.selectList("co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.lectureFileList", vo);
-		model.addAttribute("lectureFile", lectureFile);
+		model.addAttribute("lectureFile", fileDao.lectureFileList(vo));
 		
-		vo.setNo(((BigDecimal) lectureFile.get(0).get("NO")).intValue());
-		System.out.println("되나"+lectureFile.get(0).get("NO"));
-	
+//		System.out.println("되나"+lectureFile.get(0).get("NO"));
+
 		
-		List<Map<String, Object>> fileDown = sql.selectList("co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper.lectureFileDownload", vo);
-		model.addAttribute("file", fileDown);
+		
+//		List<LectureFileVO> fileList = new ArrayList<>();
+//		if(fileDao.lectureFileDownload(vo).size() != 0) {
+//			fileList = fileDao.lectureFileDownload(vo);
+//		}
 		
 		return "eclass/stud/download";
 	}
@@ -280,8 +287,12 @@ public class EclassStudentEclassController {
 	@Autowired private SubjectMapper map;
 	@RequestMapping("/home")
 	public String home(Model model, EclassStudentHomeVO vo, Authentication authentication) {
+		
+		if(vo.getSeasonCode() == null) {
+			vo.setSeasonCode(Integer.parseInt(year.yearFind()));
+		}
+		
 		vo.setNo(Integer.parseInt(authentication.getName()));
-		vo.setSeasonCode(106);
 		List<Map<String, Object>> list = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.subList", vo);
 		model.addAttribute("list", list);
 		
@@ -334,20 +345,25 @@ public class EclassStudentEclassController {
 	}
 	//사이드바 작업 열심히 해보자
 	@ModelAttribute("side")
-	public Map<String, Object> side(Authentication authentication, HttpServletRequest req) {
+	public Map<String, Object> side(Authentication authentication,
+			Model model,
+			HttpServletRequest req,
+			@RequestParam(value = "seasonCode", 
+						  required = false) String seasonCode) {
+		
+		if(seasonCode == null) {
+			seasonCode = year.yearFind();
+		}
 		
 		EclassStudentHomeVO vo = new EclassStudentHomeVO();
-		
 		vo.setNo(Integer.parseInt(authentication.getName()));
-		vo.setSeasonCode(106);
-		
-//		String seasonCd = req.getParameter("seasonCode");
-//		
-//		vo.setSeasonCode(Integer.parseInt(seasonCd));
+		vo.setSeasonCode(Integer.parseInt(seasonCode));
 		
 		Map<String, Object> sidemap = new HashMap<String, Object>();
 		List<Map<String, Object>> list = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.subList", vo);
 		sidemap.put("side", list);
+		
+		model.addAttribute("seasonCode", seasonCode);
 		
 		return sidemap;
 	}

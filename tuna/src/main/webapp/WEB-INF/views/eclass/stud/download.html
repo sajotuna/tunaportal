@@ -32,12 +32,12 @@
 						<div class="block  block-rounded col-7">
 							<div class="row">
 								<div class="row block-content">
-									<div id="accordion">
-										<h3 class="h4 col-7 text-center" th:text="${lf.TITLE}"></h3>
+									<div class="accordion">
+										<h3 class="h4 col-7 text-center" th:text="${lf.title}"></h3>
 										<div>
-											<P th:text="${lf.ENROLLDATE}"></P>
-											<ul th:each="fl : ${file}">
-												<li th:text="${fl.FILENAME}"></li>
+											<P th:text="${lf.enrollDate}"></P>
+											<ul>
+												<li><a th:href="@{/download(fileName=${lf.uri}, originName=${lf.fileName}, folder=lectureFile)}">[[${lf.fileName}]]</a></li>
 											</ul>
 										</div>
 									</div>
@@ -49,9 +49,10 @@
 			</div>
 			<script type="text/javascript">
 				$(function() {
-					$("#accordion").accordion({
+					console.log($(".accordion"))
+					$(".accordion").accordion({
 						collapsible : true
-					});
+					})
 				});
 				
 			</script>

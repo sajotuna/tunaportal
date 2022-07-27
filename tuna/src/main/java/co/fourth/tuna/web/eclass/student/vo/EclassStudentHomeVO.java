@@ -8,11 +8,11 @@ import lombok.Setter;
 public class EclassStudentHomeVO {
 
 	//학번
-	private int no;
+	private Integer no;
 	//연도학기
-	private int seasonCode;
+	private Integer seasonCode;
 	//과목이름
 	private String sbjName;
 	//과목코드
-	private int sbjNo;
+	private Integer sbjNo;
 }

@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
 
 <title>질의응답상세</title>
 </head>
@@ -71,6 +74,9 @@
 											<button type="button"
 												th:onclick="|location.href='@{/stud/eclass/qnaList}?sbjNo=${sbjNo}'|"
 												class="btn btn-dark m-2">목록으로</button>
+												<button type="button"
+												th:onclick="|location.href='@{/stud/eclass/delOneQna}?no=${no}&sbjNo=${sbjNo}'|"
+												class="btn btn-warning m-2">삭제</button>
 										</div>
 									</div>
 								</div>
@@ -79,7 +85,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xxl-12"></div>
+		
 		</main>
 	</div>
 	<!-- content END -->
