@@ -68,8 +68,8 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 	}
 
 	@Override
-	public int getNoticeCnt(String visible) {
-		return map.getNoticeCnt(visible);
+	public int getNoticeCnt(String visible, int state, String key) {
+		return map.getNoticeCnt(visible, state, key);
 	}
 
 

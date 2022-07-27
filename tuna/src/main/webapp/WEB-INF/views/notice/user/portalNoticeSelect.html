@@ -4,7 +4,10 @@
     data-layout-decorate="~{layouts/navLayout}">
 <head>
 <meta charset="UTF-8">
-
+<style>
+figure{
+width:100%}
+</style>
 <title>학사공지 상세조회</title>
 </head>
 <body>
@@ -13,10 +16,10 @@
 		<div class="bg-body-light">
 			<div class="content content-full content-boxed">
 				<div
-					class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-					<div class="flex-grow-1">
-						<h1 class="h1 fw-bold mb-2">학사공지</h1>
-						<h2 class="fs-base lh-base fw-medium text-muted mb-0">notice
+					class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
+					<div class="flex-grow-1 mb-1 mb-md-0">
+						<p class="h3 fw-bold mb-2">학사공지</p>
+						<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">학사공지 상세조회</p>
 						</h2>
 					</div>
 				</div>
@@ -59,7 +62,6 @@
 					</div>
 		</div>
 
-		<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 	</main>
 </body>
 </html>
