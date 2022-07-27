@@ -31,7 +31,7 @@
 </div>
 	<script th:src="@{resources/assets/js/lib/jquery.min.js}"></script>
 	<script th:src="@{resources/assets/js/oneui.app.min.js}"></script>
-    <script th:src="@{resources/assets/js/plugins/ckeditor5-classic/build/ckeditor.js}"></script>
+    <script th:src="@{resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
 	<script>
 	
 		let header = document.querySelector('meta[name="_csrf_header"]').content;
@@ -53,6 +53,31 @@
 	            			ckfinder: {
 	            				uploadUrl: getContextPath() + 'ckfinderImage?_csrf=' + token
 	            			},
+	            			fontColor: {
+	            	            colors: [
+	            	                {
+	            	                    color: 'hsl(0, 0%, 0%)',
+	            	                    label: 'Black'
+	            	                },
+	            	                {
+	            	                    color: 'hsl(0, 0%, 30%)',
+	            	                    label: 'Dim grey'
+	            	                },
+	            	                {
+	            	                    color: 'hsl(0, 0%, 60%)',
+	            	                    label: 'Grey'
+	            	                },
+	            	                {
+	            	                    color: 'hsl(0, 0%, 90%)',
+	            	                    label: 'Light grey'
+	            	                },
+	            	                {
+	            	                    color: 'hsl(0, 0%, 100%)',
+	            	                    label: 'White',
+	            	                    hasBorder: true
+	            	                }
+	            	            ]
+	            	        },
 	            			image: {
 	            			      styles: ["alignLeft", "alignCenter", "alignRight"],      
 	            			      toolbar: [
@@ -61,7 +86,25 @@
 	            			        "imageStyle:alignRight",
 	            			        "|",
 	            			        "imageTextAlternative",
-	            			      ]
+	            			      ],
+	            			      resizeUnit: 'px',
+            		            resizeOptions: [
+            		                {
+            		                    name: 'resizeImage:original',
+            		                    label: 'Original',
+            		                    value: null
+            		                },
+            		                {
+            		                    name: 'resizeImage:100',
+            		                    label: '100px',
+            		                    value: '100'
+            		                },
+            		                {
+            		                    name: 'resizeImage:200',
+            		                    label: '200px',
+            		                    value: '200'
+            		                }
+            		            ]
 	            			 }
 	            		})
 	            .then(editor => {

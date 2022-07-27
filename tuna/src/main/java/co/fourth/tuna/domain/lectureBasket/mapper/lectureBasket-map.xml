@@ -14,9 +14,8 @@ insert into LECTUREBASKET values (#{no}, 'y', #{seasonCode}, #{sbjNo}, #{stNo})
  -->
 <insert id="baskInsert" statementType="CALLABLE" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
 	{ call courseBasket( 
-		#{sbjNo},
-		#{seasonCode}, 
-		#{stNo}) 
+		#{seasonCode}
+		) 
 	}
 </insert>
 

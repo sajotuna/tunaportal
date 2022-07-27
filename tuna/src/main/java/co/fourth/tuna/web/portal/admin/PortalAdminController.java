@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.fourth.tuna.domain.banner.service.BannerService;
-import co.fourth.tuna.domain.banner.vo.BannerPagingVO;
 import co.fourth.tuna.domain.banner.vo.BannerVO;
 import co.fourth.tuna.domain.common.service.PagingService;
-import co.fourth.tuna.domain.common.vo.PagingVO;
+import co.fourth.tuna.domain.common.vo.ListPagingVO;
 
 @Controller
 public class PortalAdminController {
@@ -33,15 +32,13 @@ public class PortalAdminController {
 							 @RequestParam(required = false, defaultValue = "1") int page,
 			                 @RequestParam(required = false, defaultValue = "1") int range) {
 		
-		PagingVO pvo = pagingDao.getPaging(new PagingVO("banner", 10));
+		ListPagingVO vo = new ListPagingVO();
+		vo.pageInfo(page, range, bannerDao.getBannerCnt(), 5, 9);
 		
-		BannerPagingVO bvo = new BannerPagingVO();
-		bvo.pageInfo(page, range, pvo.getPageCount(), 5, pvo.getSizePerPage());
+		List<BannerVO> list = bannerDao.bannerListSelect(vo.getStartList(), vo.getEndList());
 		
-		List<BannerVO> list = bannerDao.bannerListSelect(bvo.getStartList(), bvo.getEndList());
-			
 		model.addAttribute("bnList", list);
-		model.addAttribute("paging", bvo);
+		model.addAttribute("paging", vo);
 		
 		return "banner/admin/bannerList";
 		

@@ -68,7 +68,7 @@
 													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
 											</tr>
 											<tr
-												th:if="${q.VISIBLE} == 1 and ${not #strings.isEmpty(qna)}">
+												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} != ${q.STNO}">
 												<td class="text-center" th:text="${i.index+1}"></td>
 												<td class="text-center fw-bold" colspan="11">비공개 질문입니다.</td>
 												<td class="text-center text-danger fw-bold" colspan="2"
@@ -76,6 +76,19 @@
 												<td class="text-center" colspan="2"
 													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
 											</tr>
+											<tr th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} == ${q.STNO}">
+											<td class="text-center" th:text="${i.index+1}"></td>
+												<td class="text-center" colspan="7"><a
+													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
+													style="color: black"> [[${q.TITLE}]] </a></td>
+												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
+												<td class="text-center" colspan="2"
+													th:text="${q.ENROLLDATE}"></td>
+												<td class="text-center text-danger fw-bold" colspan="2"
+													th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
+												<td class="text-center" colspan="2"
+													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
+													</tr>
 										</tbody>
 									</table>
 								</div>
@@ -90,6 +103,8 @@
 									<div class="dataTables_paginate paging_simple_numbers"
 										id="DataTables_Table_0_paginate">
 										<nav aria-label="Page navigation">
+										<form th:action=@{/stud/eclass/qnaList} id="pageIn">
+										<input type="hidden">
 											<ul class="pagination justify-content-center">
 												<li class="page-item"><a class="page-link"
 													href="javascript:void(0)" tabindex="-1"
@@ -121,6 +136,7 @@
 													</span> <span class="visually-hidden">Next</span>
 												</a></li>
 											</ul>
+											</form>
 										</nav>
 									</div>
 								</div>
@@ -174,7 +190,41 @@
 				let a = btn.innerHTML
 				tagInsert(parseInt(a))
 			})
-		})		
+		})
+		
+		function tagInsert(value){
+			let checkFrm = document.querySelector('#pageIn')
+			let inputtag = document.createElement('input')
+	    	let sbjnotag = document.createElement('input')
+			inputtag.setAttribute("name", "pageNum")
+	    	inputtag.setAttribute("type", "hidden")
+	    	inputtag.setAttribute("value", value)
+	    	
+	    	
+	    	sbjnotag.setAttribute("name", "sbjNo")
+	    	sbjnotag.setAttribute("type", "hidden")
+	    	sbjnotag.setAttribute("value", getParam("sbjNo"))
+	    	
+	    	
+	    	checkFrm.appendChild(sbjnotag)
+	    	checkFrm.appendChild(inputtag)
+	    	checkFrm.submit()
+	    	
+		}
+		
+		function getParam(name)
+        {
+            var curr_url = location.search.substr(location.search.indexOf("?") + 1);
+            var svalue = "";
+            curr_url = curr_url.split("&");
+            for (var i = 0; i < curr_url.length; i++)
+            {
+                temp = curr_url[i].split("=");
+                if ([temp[0]] == name) { svalue = temp[1]; }
+            }
+            return svalue;
+        }
+		
 	})
 </script>
 </th:block>

@@ -16,7 +16,7 @@
 <body>
 	<!--폼 시작-->
 	<main layout:fragment="main">
-		<div class="content content-boxed">
+		<div class="content content-full">
 			<h3 class="fw-bold">학사공지 수정</h3>
 			<div class="block block-rounded">
 				<form
@@ -66,11 +66,10 @@
 
 					</th:block>
 				</form>
-			</div>
-
+			</div>	
 		</div>
 		<!-- Editor script -->
-		 <script th:src="@{/resources/assets/js/plugins/ckeditor5-classic/build/ckeditor.js}"></script>
+		<script th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
 		<script>
 			let header = document.querySelector('meta[name="_csrf_header"]').content;
 		    let token = document.querySelector('meta[name="_csrf"]').content;
@@ -93,40 +92,6 @@
 			
 			} 
 	     
-
-		 
-	 function ckfinder() {
-	        let ckfinder = document.querySelector('#ckfinder');
-
-	        if (ckfinder) {
-	          ClassicEditor
-	            .create(document.querySelector('#ckfinder'),
-	            		{
-	            			language:'ko',
-	            			ckfinder:{
-	            				uploadUrl : getContextPath() + 'ckImage?_csrf=' + token
-	            			},
-	            			image: {
-	          			      styles: ["alignLeft", "alignCenter", "alignRight"],      
-	          			      toolbar: [
-	          			        "imageStyle:alignLeft",
-	          			        "imageStyle:alignCenter",
-	          			        "imageStyle:alignRight",
-	          			        "|",
-	          			        "imageTextAlternative",
-	          			      ]
-	          			 }           			
-
-	            		})
-	            .then(editor => {
-	              window.editor = editor;
-	            })
-	            .catch(error => {
-	              console.error('There was a problem initializing the classic editor.', error);
-	            });
-	        }
-       
-	    }
 		
 		    //파일삭제 
 		$('.delBtn').on('click', function() {
@@ -174,6 +139,8 @@
 		<script
 			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 		<script th:src="@{/resources/assets/js/dialog.js}"></script>
+		<script th:src="@{/resources/assets/js/editor.js}"></script>
+		
 	</main>
 </body>
 </html>

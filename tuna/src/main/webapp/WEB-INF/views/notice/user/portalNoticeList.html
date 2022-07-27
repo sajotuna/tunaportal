@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	data-layout-decorate="~{layouts/navLayout}">
+
 <head>
-<meta charset="UTF-8">
-<title>학사공지 </title>
-<style>
-img{
-width:100%;}
-</style>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+	<title>학사공지 </title>
+	<style>
+	</style>
 </head>
+
 <body>
-		<main layout:fragment="main">
+	<main layout:fragment="main">
 		<!--title start-->
 		<div class="bg-body-light">
-			<div class="content content-full content-boxed">
-				<div
-					class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+			<div class="content content-full">
+				<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
 					<div class="flex-grow-1">
 						<h1 class="h1 fw-bold mb-2">학사공지</h1>
 						<h2 class="fs-base lh-base fw-medium text-muted mb-0">
@@ -25,14 +24,13 @@ width:100%;}
 				</div>
 			</div>
 		</div>
-			<!--title end-->
-			<div class="content content-boxed">
+		<!--title end-->
+		<div class="content content-boxed">
 			<div class="block block-rounded">
 				<div class="block-content">
 					<div class="row">
 						<!-- Search Form (visible on larger screens) -->
-						<form id="frm" class="row d-flex justify-content-end" action=""
-							method="post">
+						<form id="frm" class="row d-flex justify-content-end" action="" method="post">
 							<input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
 							<div class="col-2">
 								<select name="state" id="state" class="form-select">
@@ -43,8 +41,8 @@ width:100%;}
 							</div>
 							<div class="col-3 p-0">
 								<div class="input-group">
-									<input type="text" class="form-control form-control-alt"
-										id="key" name="key" placeholder="Search">
+									<input type="text" class="form-control form-control-alt" id="key" name="key"
+										placeholder="Search">
 									<button id="searchBtn" type="button" onclick="searchList()"
 										class="btn btn-alt-secondary">
 										<i class="fa fa-search"></i>
@@ -57,156 +55,170 @@ width:100%;}
 
 
 					<!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
-					<table id="tb"
-						class="js-table-checkable table table-hover table-vcenter">
+					<table id="tb" class="js-table-checkable table table-hover table-vcenter">
 						<!--thead 표 제목-->
 						<thead>
 							<tr>
 								<th class="text-center" style="width: 10%;">#</th>
 								<th style="text-align: center">제목</th>
 								<th style="text-align: center; width: 10%; height: 10%;">첨부파일</th>
-								<th class="d-none d-sm-table-cell"
-									style="text-align: center; width: 20%;">Date</th>
+								<th class="d-none d-sm-table-cell" style="text-align: center; width: 20%;">Date</th>
 							</tr>
 
 						</thead>
 						<!--tbody 표 내용-->
-													<th:block class="text-center" scope="row"
-								th:if="${not #strings.isEmpty(notices)}"  th:each="notices, i:${notices}">
-								<input type="hidden" name="visible" value="${notices.visible}">
-							<th:div th:if =" ${notices.visible =='Y'}">
+						<th:block class="text-center" scope="row" th:if="${not #strings.isEmpty(notices)}"
+							th:each="notices, i:${notices}">
+							<input type="hidden" name="visible" value="${notices.visible}">
+							<th:div th:if=" ${notices.visible =='Y'}">
 								<tr th:data-no=${notices.no}>
 									<td class="text-center" id="nocheck">[[${notices.no}]]</td>
-									<td><a
-										th:href="@{/portalNoticeSelect(no=${notices.no})}">[[${notices.title}]]</a></td>
+									<td><a th:href="@{/portalNoticeSelect(no=${notices.no})}">[[${notices.title}]]</a>
+									</td>
 									<td class="">
-										
-											<th:block th:if="${notices.fileyn == 'Y'}">
-												<p style="text-align: center; margin: 0 0 0 0">
-													<i class="far fa fa-file"></i>
-												</p>
-											</th:block>
-										
+
+										<th:block th:if="${notices.fileyn == 'Y'}">
+											<p style="text-align: center; margin: 0 0 0 0">
+												<i class="far fa fa-file"></i>
+											</p>
+										</th:block>
+
 									</td>
 									<td class="fs-sm text-muted text-center">[[${notices.enrollDate}]]</td>
 								</tr>
-</th:div>
-							</th:block>
+							</th:div>
+						</th:block>
 					</table>
 
 
 					<div class="block-content d-flex justify-content-center ">
-						<nav aria-label="Page navigation">
+						<nav class="d-flex justify-content-center" aria-label="Page navigation">
 							<ul class="pagination pagination-sm">
-								<li th:styleappend="${!paging.prev} ? 'display:none' :'display:inlink-block'"class="page-item">
-								<a class="page-link" th:onclick="|javascript:pagingPrev(${paging.range},${paging.rangeSize})|" tabindex="-1" aria-label="Previous">
-								 <span aria-hidden="true"> <i class="fa fa-angle-left"></i>
-									</span> <span class="visually-hidden">Previous</span>
-								</a></li>
+								<li th:styleappend="${!paging.prev} ? 'display:none' : 'display:inline-block'"
+									class="page-item"><a class="page-link"
+										th:onclick="|javascript:pagingPrev(${paging.range}, ${paging.rangeSize})|"
+										tabindex="-1" aria-label="Previous"> <span><i
+												class="fa fa-angle-double-left"></i></span>
+									</a></li>
 								<li th:each="page: ${#numbers.sequence(paging.startPage, paging.endPage)}"
-									th:classappend="${page == paging.page} ? 'active'"
-									class = "page-itme">
-									<a th:text="${page}" class="page-link" th:onclick="|javascript:pagingNo(${page},${paging.range})|"></a>
+									th:classappend="${page == paging.page} ? 'active'" class="page-item"><a
+										th:text="${page}" class="page-link page"
+										th:onclick="|javascript:pagingNo(${page},${paging.range})|">#</a>
 								</li>
-							
-								<li th:styleappend="${!paging.next}? 'display:none' : 'display:linline-block'"class="page-item"><a class="page-link"
-									th:onclick="|javascript:pagingNext(${paging.range},${paging.rangeSize})|" aria-label="Next"> <span
-										aria-hidden="true"> <i class="fa fa-angle-right"></i>
-									</span> <span class="visually-hidden">Next</span>
-								</a></li>
+								<li th:styleappend="${!paging.next} ? 'display:none' : 'display:inline-block'"
+									class="page-item"><a class="page-link"
+										th:onclick="|javascript:pagingNext(${paging.range}, ${paging.rangeSize})|"
+										aria-label="Next"> <span><i class="fa fa-angle-double-right"></i></span>
+									</a></li>
 							</ul>
 						</nav>
 					</div>
 
 				</div>
 			</div>
-</div>
+		</div>
 
 		<script>
-		var header = $("meta[name='_csrf_header']").attr('content');
-		var token = $("meta[name='_csrf']").attr('content');
+			var header = $("meta[name='_csrf_header']").attr('content');
+			var token = $("meta[name='_csrf']").attr('content');
+
+			$('#key').on('keypress', function () {
+				if (event.keyCode == 13)
+					$('#searchBtn').click();
+				return false;
+
+			})
 
 
-		//검색기능
-		function searchList() {
-			let state= $("#state").val();
-			let key = $("#key").val();		
-			
-			console.log(key)
-			$.ajax({
-				url : getPathRootJump() + "admin/admin/adminSearch",
-				type: "get",
-				data : {state:state,key:key},
-				dataType : "json",
-				success : function(rs){
-					htmlConvert(rs);
-				},
-				error : function(){
-					alert('오류')
-				}
-			})	
-		}
+			//검색기능
+			function searchList() {
+				let state = $("#state").val();
+				let key = $("#key").val();
 
-		
-		function htmlConvert(rs){
-			$("tbody").remove();
-			let tbody = $("<tbody/>");
-			$.each(rs,function(index, n){ 
-				//파일 있을때
-				var td = $("<td/>").addClass("text-center filecheck")
-				
-				if(n.fileyn == "Y"){
-					td.html(`<p style="text-align: center; margin: 0 0 0 0"> <i class="far fa fa-file"></i></p>`)
-				}
-				
-				if(n.visible == "Y") {			
-					var row = $("<tr/>").append(
-							  $("<td/>").addClass("text-center").css("width","10px").html(n.no),
-							  $("<td/>").html(`<a href="portalNoticeSelect?no=${n.no}"> ${n.title} </a>`),
-							  td,
-							  $("<td/>").addClass("fs-sm text-muted text-center").html(n.enrollDate)
+				$.ajax({
+					url: getPathRootJump() + "admin/admin/adminSearch",
+					type: "get",
+					data: {state: state, key: key},
+					dataType: "json",
+					success: function (rs) {
+						$('#key').focus();
+						if (rs.length == 0) {
+							Dialogs.dialog('info',
+								'',
+								'검색결과가 없습니다.');
+						}
+						else {
+							htmlConvert(rs);
+						}
+					},
+					error: function () {
+						alert('오류')
+					}
+				})
+			}
+
+
+			function htmlConvert(rs) {
+				$("tbody").remove();
+				let tbody = $("<tbody/>");
+				$.each(rs, function (index, n) {
+					//파일 있을때
+					var td = $("<td/>").addClass("text-center filecheck")
+
+					if (n.fileyn == "Y") {
+						td.html(`<p style="text-align: center; margin: 0 0 0 0"> <i class="far fa fa-file"></i></p>`)
+					}
+
+					if (n.visible == "Y") {
+						var row = $("<tr/>").append(
+							$("<td/>").addClass("text-center").css("width", "10px").html(n.no),
+							$("<td/>").html(`<a href="portalNoticeSelect?no=${n.no}"> ${n.title} </a>`),
+							td,
+							$("<td/>").addClass("fs-sm text-muted text-center").html(n.enrollDate)
 						);
-					tbody.append(row);
-				}
-				$("#tb").append(tbody);
-			})//forEach end
-			
-		}
-		
+						tbody.append(row);
+					}
+					$("#tb").append(tbody);
+				})//forEach end
 
-		// 페이징 번호
-		   function pagingNo(page, range) {
-		      let url = getPathRootJump() + 'portalNoticeList';
-		      url = url + '?page=' + page;
-		      url = url + '&range=' + range;
-		      
-		      location.href=url;
-		   }
-		   
-		   // 페이징 이전
-		   function pagingPrev(range, rangeSize) {
-		      let moveRange = (range-1)
-		      pagingNo(((moveRange-1) * rangeSize + 1), moveRange);
-		   }
-		   
-		   // 페이징 다음
-		   function pagingNext(range, rangeSize) {
-		      let moveRange = (range+1)
-		      pagingNo(((moveRange-1) * rangeSize + 1), moveRange);
-		   }
-		
+			}
 
 
-		function getPathRootJump() {
-		    var pathName = window.location.pathname.substring(1);
-		    var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
-		    var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
-		    return path_root;
-		 }
+			// 페이징 번호
+			function pagingNo(page, range) {
+				let url = getPathRootJump() + 'portalNoticeList';
+				url = url + '?page=' + page;
+				url = url + '&range=' + range;
+
+				location.href = url;
+			}
+
+			// 페이징 이전
+			function pagingPrev(range, rangeSize) {
+				let moveRange = (range - 1)
+				pagingNo(((moveRange - 1) * rangeSize + 1), moveRange);
+			}
+
+			// 페이징 다음
+			function pagingNext(range, rangeSize) {
+				let moveRange = (range + 1)
+				pagingNo(((moveRange - 1) * rangeSize + 1), moveRange);
+			}
 
 
-</script>
 
+			function getPathRootJump() {
+				var pathName = window.location.pathname.substring(1);
+				var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+				var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+				return path_root;
+			}
+
+
+		</script>
+		<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+		<script th:src="@{/resources/assets/js/dialog.js}"></script>
 	</main>
 </body>
+
 </html>

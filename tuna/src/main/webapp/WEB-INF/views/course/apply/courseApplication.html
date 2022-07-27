@@ -90,13 +90,12 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
               </div>
             </form>
             
-            <div class="mb-5 ">
               <div class="block block-rounded block-themed">
                 <div class="block-header bg-primary-darker">
                   <h1 class="block-title">[개설과목]</h1>
                 </div>
-
-                <table class="table table-striped table-vcenter">
+				<div class="mb-3" style="overflow-x:scroll; overflow-y: hidden;">
+                <table class="table table-striped table-vcenter m-0"  style="width:1152px;">
 
                   <thead>
                     <tr>
@@ -128,6 +127,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     
                   </tbody>
                 </table>
+                </div>
                 
               </div>
                 <ul class="pagination justify-content-center">
@@ -140,28 +140,31 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     </a>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">1</a>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">2</a>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">3</a>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">4</a>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">5</a>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">6</a>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">7</a>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)"></a>
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">8</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">9</a>
                   </li>
                   <li class="page-item">
                     <a class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
@@ -172,8 +175,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     </a>
                   </li>
                 </ul>
-            </div>
-            <div class="mb-5">
+            <div class="my-5">
               <div class="block block-rounded block-themed">
                 <div class="block-header bg-primary-darker">
                   <h1 class="block-title">[수강꾸러미 목록]</h1>
@@ -270,9 +272,6 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                 </div>
               </div>
             </div>
-
-
-            <div class="mb-5">
               <div class="block block-rounded block-themed">
                 <div class="block-header bg-primary-darker">
                   <h1 class="block-title">[수강신청 목록]</h1>
@@ -280,7 +279,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                   		<h1 class = "block-title">수강신청가능한 학점 : [[${grade}]]</h1>
                   </div>
                 </div>
-                <table class="table table-striped table-vcenter">
+                <div style="overflow-x:scroll; overflow-y: hidden;">
+                <table class="table table-striped table-vcenter m-0" style="width:1152px;">
                   <thead>
                     <tr>
                       <th class="d-none d-sm-table-cell" style="width: 100px;">이수구분</th>
@@ -313,8 +313,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     </tr>
                   </tbody>
                 </table>
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
@@ -441,7 +441,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		nextBtn.addEventListener('click', function(){
 			pageingBtn.forEach(btn =>{
 				let a = btn.innerHTML
-				btn.innerHTML = parseInt(a)+8;
+				btn.innerHTML = parseInt(a)+9;
 			})
 			tagInsert(pageingBtn[0].innerHTML)
 		})
@@ -449,8 +449,8 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		prevBtn.addEventListener('click', function(){
 			pageingBtn.forEach((btn,idx) =>{
 				let a = btn.innerHTML
-				if (parseInt(a) > 8){
-					btn.innerHTML = parseInt(a)-8;
+				if (parseInt(a) > 9){
+					btn.innerHTML = parseInt(a)-9;
 				}else{
 					params.pageNum = 1;
 					if(idx == 0){
@@ -465,7 +465,13 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		})
 		
 		pageingBtn.forEach((btn,idx) =>{
-			btn.innerHTML = parseInt(params.pageNum) + idx
+			if(params.pageNum > (pageingBtn.length)/2){
+				pageingBtn[Math.ceil((pageingBtn.length-1)/2)].innerHTML = params.pageNum
+				if(Math.ceil((pageingBtn.length-1)/2) > idx)
+					pageingBtn[idx].innerHTML = params.pageNum - Math.ceil((pageingBtn.length-1)/2) + idx
+				else
+					pageingBtn[idx].innerHTML = params.pageNum - (Math.ceil((pageingBtn.length-1)/2) - idx)
+			}
 			
 			if(btn.innerHTML == params.pageNum){
 				btn.parentElement.setAttribute("class", "page-item active")
