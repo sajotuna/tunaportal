@@ -35,8 +35,6 @@ public class LectureFileServiceImpl implements LectureFileService {
 		
 		return "삭제 성공";
 	}
-
-	@Autowired LectureFileMapper map;
 	
 	@Override
 	public LectureFileVO lectureFileList(LectureFileVO vo) {
