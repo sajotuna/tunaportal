@@ -48,13 +48,17 @@ public class UserController {
 		
 		if(params.get("year") != null && !params.get("year").equals("")) {
 			String Date = (String)params.get("year");
+			
 			System.out.println(Date.substring(0, Date.indexOf(" ")) +"~"+ (Date.substring(Date.lastIndexOf(" "),Date.length())).trim());
 			
 			params.put("startDate", Date.substring(0, Date.indexOf(" ")));
 			params.put("endDate", (Date.substring(Date.lastIndexOf(" "),Date.length())).trim());
 		}
 		
+		
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.user.mapper.AdminMapper.adminUserCheck", params);
+		
+		params.put("pageSize", Math.ceil(AdminDao.AdminUserCount()/10));
 		
 		model.addAttribute("list", lists);
 		model.addAttribute("params", params);
@@ -80,6 +84,7 @@ public class UserController {
 			model.addAttribute("vo", vo);
 			return "manage/admin/studentInfo";
 		}
+		
 	}
 	
 	@PostMapping("/prof/students")

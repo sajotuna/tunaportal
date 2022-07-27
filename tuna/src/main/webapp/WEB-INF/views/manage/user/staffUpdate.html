@@ -156,6 +156,7 @@ data-layout-decorate="~{layouts/navLayout}">
                     document.getElementById('postcode').value = data.zonecode;
                     document.getElementById("address").value = addr;
                     document.getElementById("address").focus();
+                    updateBtn.disabled = false;
                 }
             }).open();
         }

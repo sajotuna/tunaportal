@@ -22,6 +22,7 @@
       margin-left: 50px;
       margin-top: 10px;
     }
+    
   </style>
 
 </head>
@@ -29,7 +30,7 @@
 <body>
 <main layout:fragment="main">
   <div id="section">
-    <div class="content content-boxed">
+    <div class="content content-full">
 
       <div id="page-container">
         <h3 class="h3 fw-bold mb-2">사용자 조회</h3>
@@ -48,7 +49,7 @@
             </div>
             <div class="col-md-4 col-xl-4 fomrtag">
               <div class="mb-2">
-                <input type="text" placeholder="학번/교번" class="form-control" id="no"
+                <input type="number" placeholder="학번/교번" class="form-control" id="no"
                   name="no">
               </div>
             </div>
@@ -133,39 +134,39 @@
                     </a>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">1</a>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">1</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">2</a>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">2</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">3</a>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">3</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">4</a>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">4</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">5</a>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">5</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">6</a>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">6</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">7</a>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">7</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">8</a>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">8</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">9</a>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">9</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
+                    <button class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
                       <span aria-hidden="true">
                         <i class="fa fa-angle-double-right"></i>
                       </span>
                       <span class="visually-hidden">Next</span>
-                    </a>
+                    </button>
                   </li>
                 </ul>
           </div>
@@ -196,13 +197,18 @@
 	document.addEventListener('DOMContentLoaded', function(){
 		let params = /*[[${params}]]*/ 'default';
 		
+		console.log(params.pageSize)
+		
 		let nextBtn = document.querySelector("#next")
 		let prevBtn = document.querySelector("#prev")
 		let pageingBtn = document.querySelectorAll("#pageingBtn");
 		nextBtn.addEventListener('click', function(){
-			pageingBtn.forEach(btn =>{
+			pageingBtn.forEach((btn,idx) =>{
+				
 				let a = btn.innerHTML
-				btn.innerHTML = parseInt(a)+9;
+				btn.innerHTML = parseInt(params.pageNum)+idx;
+			
+				
 			})
 			tagInsert(pageingBtn[0].innerHTML)
 		})
@@ -210,16 +216,10 @@
 		prevBtn.addEventListener('click', function(){
 			pageingBtn.forEach((btn,idx) =>{
 				let a = btn.innerHTML
-				if (parseInt(a) > 9){
-					btn.innerHTML = parseInt(a)-9;
-				}else{
-					params.pageNum = 1;
-					if(idx == 0){
-						btn.innerHTML = parseInt(params.pageNum) + idx
-					}
-					else{
-						btn.innerHTML = parseInt(pageingBtn[idx-1].innerHTML) + 1;
-					}
+				btn.innerHTML = parseInt(params.pageNum)-1;
+				
+				if (parseInt(params.pageNum) <= 1){
+					btn.innerHTML = params.pageNum;
 				}
 			})
 			tagInsert(pageingBtn[0].innerHTML)
@@ -233,6 +233,13 @@
 					pageingBtn[idx].innerHTML = params.pageNum - Math.ceil((pageingBtn.length-1)/2) + idx
 				else
 					pageingBtn[idx].innerHTML = params.pageNum - (Math.ceil((pageingBtn.length-1)/2) - idx)
+				
+				if(parseInt(pageingBtn[idx].innerHTML) > parseInt(params.pageSize)){
+					pageingBtn[idx].disabled = true;
+				}
+				if(parseInt(params.pageNum) == parseInt(params.pageSize)){
+					nextBtn.disabled = true;
+				}
 			}
 			
 			if(btn.innerHTML == params.pageNum){

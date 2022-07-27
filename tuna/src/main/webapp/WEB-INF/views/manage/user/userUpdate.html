@@ -173,13 +173,14 @@ data-layout-decorate="~{layouts/navLayout}">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
     
-      let tagSelect = document.querySelectorAll('[type=text]')
-      let updateBtn = document.querySelector('#updateBtn')
-      tagSelect.forEach(tag =>{
-    	  tag.addEventListener('change', function(){
-        	  updateBtn.disabled = false;
-          })
-      })
+    	  let tagSelect = document.querySelectorAll('[type=text]')
+          let updateBtn = document.querySelector('#updateBtn')
+          tagSelect.forEach(tag =>{
+        	  tag.addEventListener('change', function(){
+            	  updateBtn.disabled = false;
+              })
+          })  
+      
       function updateSuccess(){
     	updateBtn.disabled = false;
       }
@@ -209,6 +210,7 @@ data-layout-decorate="~{layouts/navLayout}">
                   document.getElementById('postcode').value = data.zonecode;
                   document.getElementById("address").value = addr;
                   document.getElementById("address").focus();
+                  updateBtn.disabled = false;
               }
           }).open();
       }
