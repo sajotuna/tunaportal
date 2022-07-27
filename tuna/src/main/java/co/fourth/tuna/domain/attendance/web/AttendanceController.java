@@ -41,8 +41,7 @@ public class AttendanceController {
 		LocalDate closetDate = service.findThisAttendanceBySubjectId(sbjno);
 		List<StudentWithAttendanceVO> students = studentService.findStudentWithAttendanceListBySubjectIdAndDate(sbjno, closetDate);
 		SubjectAttendanceRestVO result = new SubjectAttendanceRestVO(students, closetDate);
-//		return result;
-		return null;
+		return result;
 	}
 	
 //	@RequestMapping("/eclass/student/attendance")

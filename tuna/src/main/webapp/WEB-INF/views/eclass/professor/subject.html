@@ -298,13 +298,13 @@ xmlns:th="http://www.thymeleaf.org"
                   <div class="tab-pane pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
                     <div class="row">
                       <div class="col-xl-2 align-self-center">
-                        <span class="fs-lg fw-bold">yy-MM-dd (요)</span>
+                        <span class="fs-lg fw-bold" id="attendance_date_text">yy-MM-dd (요)</span>
                       </div>
                       <div class="offset-6 col-xl-2">
                         <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
                       </div>
                       <div class="col-xl-2">
-                        <button class="col-12 btn btn-primary">적용</button>
+                        <button class="col-12 btn btn-primary" id="attendance_submit">적용</button>
                       </div>
                     </div>
                     <hr class="mb-0">
@@ -946,6 +946,7 @@ xmlns:th="http://www.thymeleaf.org"
             const TAB_ID = "tab-pane-";
             const GRADE_STUD_ID = "student-";
             const LECTURE_FILE_ID = "lecture-file-";
+            const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
             const REST_URL = {
               PROGRESS_CONTENT : "/tuna/prof/lecPlans",
@@ -1388,6 +1389,12 @@ xmlns:th="http://www.thymeleaf.org"
             function setAttendanceContent(data) {
               let table = document.querySelector('#subject-attendance-table');
               let tbody = table.firstElementChild;
+
+              let date_text = document.querySelector('#attendance_date_text');
+              let mdate = new Date(data.date)
+              let weekday = (dateToKoreanWeekday(mdate));
+              date_text.innerText = `${data.date} (${weekday})`;
+
               tbody.innerHTML = "";
               data.students.forEach(student => {
                 let tr = document.createElement('tr');
@@ -1899,6 +1906,11 @@ xmlns:th="http://www.thymeleaf.org"
               mDate = mDate.toISOString();
               result += mDate.split('T')[0].slice(5) + " " + mDate.split('T')[1].split('.')[0];
               return result;
+            }
+
+            function dateToKoreanWeekday(date) {
+              console.log(date);
+              return WEEKDAY[date.getDay()];
             }
 		  </script>
 	      <script th:src="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.js}"></script>
