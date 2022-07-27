@@ -125,7 +125,7 @@ public class PortalNoticeController {
 		MultipartFile image = request.getFile("upload");
 		Map<String, String> result = new HashMap<>();
 		
-		String[] fileInfo = fileService.upload(image, "PortalNotice");
+		String[] fileInfo = fileService.upload(image, "PortalNotice/image");
 		
 		result.put("uploaded", "true");
 		result.put("url", "/tuna/display?fileName=" + fileInfo[1] + "&folder=PortalNotice");
@@ -224,10 +224,14 @@ public class PortalNoticeController {
 	@GetMapping("/admin/admin/adminSearch")
 	@ResponseBody
 	public List<PortalNoticeVO> adminSearch(@RequestParam("state") int state, @RequestParam("key") String key,
-			@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum) {
+			@RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "1") int range) {
 
-		int size = 10;
-		return noticeDao.adminNoticeList(state, key, pageNum, size);
+		ListPagingVO pvo = new ListPagingVO();
+		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N"), 10, 10);
+		
+		
+		return noticeDao.adminNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
 	}
 
 }

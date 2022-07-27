@@ -10,6 +10,9 @@ xmlns:th="http://www.thymeleaf.org"
     <title>E-Class 전체 공지</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
     <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
   </head>
   <body>
 
@@ -140,6 +143,12 @@ xmlns:th="http://www.thymeleaf.org"
         </div> -->
         <!-- 모달 리스트 END -->
         
+        <th:block th:if = "${(#strings.equals(param.msg, '4'))}">
+			<script th:inline="javascript">
+				Dialogs.dialog('success', '완료', '삭제가 완료되었습니다.');
+			</script>
+		</th:block>
+        
       </main>
 
 <!--
@@ -154,6 +163,5 @@ xmlns:th="http://www.thymeleaf.org"
       </footer> -->
     </div>
     
-    <script src="../assets/js/oneui.app.min.js"></script>
   </body>
 </html>

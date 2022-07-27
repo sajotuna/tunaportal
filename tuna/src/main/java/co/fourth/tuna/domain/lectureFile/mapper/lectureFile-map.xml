@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper">
-	<select id="findListBySbjno"
-		resultType="co.fourth.tuna.domain.lectureFile.vo.LectureFileVO">
+	<select id="lectureFileList" resultType="map" parameterType="co.fourth.tuna.domain.lectureFile.vo.LectureFileVO">
 		SELECT *
-		FROM lecturefile
-		WHERE sbjno = #{sbjno}
+		FROM LECTUREFILE
+		WHERE SBJNO = #{sbjNo}
+	</select>
+	
+	<select id="lectureFileDownload" resultType="map" parameterType="co.fourth.tuna.domain.lectureFile.vo.LectureFileVO">
+		SELECT *
+		FROM LECTUREFILE
+		WHERE NO = #{no}
 	</select>
 </mapper>
