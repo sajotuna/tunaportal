@@ -52,15 +52,21 @@ data-layout-decorate="~{layouts/navLayout}">
 
 <body>
 <main layout:fragment="main">
-  <div id="section">
-
-
-    <div id="page-container">
-      <div class="content content-boxed">
-      <h3 class="fw-bold">등록금 내역 조회</h3>
+    <!-- Hero -->
+	<div class="bg-body-light">
+		<div class="content content-full content-boxed">
+			<div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
+				<div class="flex-grow-1 mb-1 mb-md-0">
+					<p class="h3 fw-bold mb-2">등록금 납입 조회</p>
+					<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">등록금 납입 확인서 조회 및 출력</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END Hero -->
+    <div class="content content-full content-boxed">
         <div class="bg-body-extra-light">
-          <div style="padding: 40px;"> 
-                  <div id = "pdf_wrap">
+          <div class="p-5"> 
             <h1 style="text-align: center;">등록금 납입 확인서</h1>
             <div class="d-flex justify-content-end">
 	            <div class="col-md-3 col-xl-2">
@@ -80,7 +86,7 @@ data-layout-decorate="~{layouts/navLayout}">
 	           </div>
             </div>
             <embed height="1000px" width = "1150px" target="_self">
-            <table class="table table-striped table-vcenter table-bordered">
+            <table class="table table-striped table-vcenter table-bordered mb-5">
               <thead>
                 <tr>
                   <th class="fw-semibold fs-sm">대학</th>
@@ -130,19 +136,15 @@ data-layout-decorate="~{layouts/navLayout}">
               </tbody>
             </table>
 
-            <p>위 금액을 납부하시길 바랍니다.</p>
-            <p>납부기간 : <span id = "tuitionDate"></span></p>
-            <p>납부장소 : 대구은행</p>
-            <p>가상계좌 : 220-13-304766</p>
+            <p class="ms-4 mb-4">위 금액을 납부하시길 바랍니다.</p>
+            <p class="ms-4 mb-2">납부기간 : <span id = "tuitionDate"></span></p>
+            <p class="ms-4 mb-2">납부장소 : 대구은행</p>
+            <p class="ms-4 mb-4">가상계좌 : 220-13-304766</p>
 
-            <p>문의처 : 입학관리 담당자 최규완 (010-XXXX-XXXX)</p>
-			<div class="text-center">
+            <p class="ms-4 mb-0">문의처 : 입학관리 담당자 최규완 (010-XXXX-XXXX)</p>
+			<div class="row justify-content-center">
               <img th:src="@{/resources/assets/media/tuna_stamp.png}" style="width:500px;">
-              </div>
             </div>
-            <br>
-            <br>
-
             <div class="d-flex justify-content-center">
               <button id="app" class="btn btn-secondary">출력</button>
             </div>
@@ -150,8 +152,6 @@ data-layout-decorate="~{layouts/navLayout}">
         </div>
         
       </div>
-    </div>
-  </div>
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script type = "text/javascript" src = "https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
