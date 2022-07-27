@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,7 +49,8 @@ public class LectureFileController {
 	}
 	
 	@PostMapping("/staff/deleteSubjectFile")
-	public ResponseEntity<String> deleteLectureFile(LectureFileVO file) {
+	public ResponseEntity<String> deleteLectureFile(
+			@RequestBody LectureFileVO file) {
 		ResponseEntity<String> res = null;
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
