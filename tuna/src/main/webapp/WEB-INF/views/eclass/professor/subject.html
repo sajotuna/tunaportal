@@ -978,6 +978,7 @@ xmlns:th="http://www.thymeleaf.org"
             let url = new URL(window.location.href);
             let params = new URLSearchParams(url.searchParams);
             let sbjno = params.get('no'); // 파라미터
+            let msg = params.get('msg');
 
             let taskno = 0; // TODO 과제 선택
 
@@ -1023,8 +1024,13 @@ xmlns:th="http://www.thymeleaf.org"
                 tabFlag.set(i, false);
               }
               
-               loaderCurtain = document.querySelector('#loaderCurtain');
-               tabClickEvent(0);
+                loaderCurtain = document.querySelector('#loaderCurtain');
+
+                if(!msg) {
+                  tabClickEvent(0);
+                } else {
+                  tabClickEvent(msg);
+                }
                
             }
 
