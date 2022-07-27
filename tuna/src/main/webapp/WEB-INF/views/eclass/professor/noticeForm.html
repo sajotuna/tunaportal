@@ -6,10 +6,14 @@ xmlns:th="http://www.thymeleaf.org"
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
     <title>E-Class 공지 등록</title>
     <link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
+  	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
   </head>
   <body>
 
@@ -79,7 +83,7 @@ xmlns:th="http://www.thymeleaf.org"
           <div class="col-xxl-12">
             <div class="block block-rounded">
               <div class="block-content">
-                <form th:action="@{/staff/eclass/notice}" method="POST">
+                <form th:action="@{/staff/eclass/notice}" method="POST" id = "frm">
                   <div class="row mt-2">
                     <label class="col-1 d-none d-xl-block" for="title_input">
                       제목
@@ -106,7 +110,7 @@ xmlns:th="http://www.thymeleaf.org"
                   <div class="row">
                     <!-- 내용 입력-->
                       <div class="offset-1 col-10">
-                        <textarea class="js-simplemde" id="simplemde" name="content"></textarea>
+                       <textarea name="content" id="ckfinder"></textarea>
                       </div>
                   </div>
                   <hr>
@@ -120,7 +124,7 @@ xmlns:th="http://www.thymeleaf.org"
                   </div> -->
                   <div class="row items-push">
                     <div class="col-6">
-                      <input class="btn btn-primary col-xl-4 offset-xl-1" type="submit" value="등록">
+                      <input class="btn btn-primary col-xl-4 offset-xl-1" id="nBtn" type="button" value="등록">
                     </div>
                   </div>
                 </form>
@@ -140,8 +144,9 @@ xmlns:th="http://www.thymeleaf.org"
           </div>
         </div> -->
         <!-- 모달 리스트 END -->
-        <!-- <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script> -->
-        <script th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
+        <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
+        <script
+			th:src="@{/resources/assets/js/plugins/ckeditor5-classic/build/ckeditor.js}"></script>
         <script th:src="@{/resources/assets/js/plugins/dropzone/min/dropzone.min.js}"></script>
         <script>
           One.helpersOnLoad(['js-simplemde']);
@@ -168,6 +173,76 @@ xmlns:th="http://www.thymeleaf.org"
           //     dictRemoveFile: '삭제', // 삭제버튼 표시 텍스트
           //     uploadMultiple: false, // 다중업로드 기능
           // };
+        let header = document.querySelector('meta[name="_csrf_header"]').content;
+    	let token = document.querySelector('meta[name="_csrf"]').content;
+        
+	
+	    document.addEventListener('DOMContentLoaded', function() {
+			ckfinder();
+			
+			let nBtn = document.querySelector('#nBtn')
+            let title = document.querySelector('#title_input')
+            nBtn.addEventListener('click', function(){
+          	  
+        	  if(window.editor.getData() == "") {
+        	    Dialogs.dialog('error', '실패', '내용을 입력 해주세요.');
+                window.editor.editing.view.focus(); 
+                return;
+              } 
+          	  
+          	  if(title.value == '' || title.value == null){
+          		  Dialogs.dialog('error', '실패', '제목을 입력 해주세요.');
+          		  return;
+          	  }
+          	  
+          	  frm.submit();
+          	  
+            })
+			
+	    })
+      
+      function ckfinder() {
+          let ckfinder = document.querySelector('#ckfinder');
+
+          if (ckfinder) {
+            ClassicEditor
+              .create(document.querySelector('#ckfinder'),         		
+              		{   
+              			language:'ko',
+              			ckfinder:{
+              				uploadUrl : getContextPath() + 'ckImage?_csrf=' + token
+              			},
+              			image: {
+            			      styles: [ "alignLeft", "alignCenter", "alignRight"],      
+            			      toolbar: [
+            			        "imageStyle:alignLeft",
+            			        "imageStyle:alignCenter",
+            			        "imageStyle:alignRight",
+            			        "|",
+            			        "imageTextAlternative",
+
+            			      ]
+            			 }           			
+
+              		})
+              .then(editor => {
+                window.editor = editor;
+              })
+              .catch(error => {
+                console.error('There was a problem initializing the classic editor.', error);
+              });
+          }
+          
+     
+      }
+      function getContextPath() {
+			var pathName = window.location.pathname.substring(1);
+			var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+			var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+			return path_root;
+		}
+          
+          
         </script>
       </main>
 

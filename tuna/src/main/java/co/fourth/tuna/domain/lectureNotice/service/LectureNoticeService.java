@@ -9,16 +9,18 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 public interface LectureNoticeService {
 	// (학생)강의공지조회
-	List<LectureNoticeVO> noticeList(LectureNoticeVO vo);
+	public List<LectureNoticeVO> noticeList(LectureNoticeVO vo);
 
 	// (학생)강의공지단건조회
-	LectureNoticeVO noticeSelect(LectureNoticeVO vo);
+	public LectureNoticeVO noticeSelect(LectureNoticeVO vo);
 
-	List<LectureNoticeVO> findByProfessor(@Param("prof") ProfessorVO prof, @Param("pageNum") int pageNum,
+	public List<LectureNoticeVO> findByProfessor(@Param("prof") ProfessorVO prof, @Param("pageNum") int pageNum,
 			@Param("size") int size);
 
-	LectureNoticeVO findById(int no);
-	List<LectureNoticeVO> findListBySubjectId(int sbjno);
+	public LectureNoticeVO findById(int no);
+	public List<LectureNoticeVO> findListBySubjectId(int sbjno);
 	
-	String insertLectureNotice(LectureNoticeVO vo);
+	public String insertLectureNotice(LectureNoticeVO vo);
+	public void noticeUpdate(LectureNoticeVO notice);
+	public int noticeDelete(LectureNoticeVO notice);
 }

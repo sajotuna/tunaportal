@@ -50,6 +50,22 @@ public class ScholarServiceImpl implements ScholarService {
 	public List<ScholarApplyVO> scholarApplyCheck(ScholarApplyVO vo) {
 		return mapper.scholarApplyCheck(vo);
 	}
+
+	@Override
+	public void scholarCheckUpdate(ScholarApplyVO vo) {
+		mapper.scholarCheckUpdate(vo);
+	}
+
+	@Override
+	public void scholarSuccessUpdate(ScholarApplyVO vo) {
+		mapper.scholarSuccessUpdate(vo);
+	}
+
+	@Override
+	public void scholarStudentGiveMoney(ScholarApplyVO vo) {
+		mapper.scholarStudentGiveMoney(vo);
+		
+	}
 	
 	
 }

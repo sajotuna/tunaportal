@@ -15,7 +15,6 @@ import co.fourth.tuna.domain.banner.service.BannerService;
 import co.fourth.tuna.domain.banner.vo.BannerVO;
 import co.fourth.tuna.domain.common.service.PagingService;
 import co.fourth.tuna.domain.common.vo.ListPagingVO;
-import co.fourth.tuna.domain.common.vo.ListPagingVO;
 
 @Controller
 public class PortalAdminController {
@@ -33,9 +32,13 @@ public class PortalAdminController {
 							 @RequestParam(required = false, defaultValue = "1") int page,
 			                 @RequestParam(required = false, defaultValue = "1") int range) {
 		
+		ListPagingVO vo = new ListPagingVO();
+		vo.pageInfo(page, range, bannerDao.getBannerCnt(), 5, 9);
 		
-		model.addAttribute("bnList", null);
-		model.addAttribute("paging", null);
+		List<BannerVO> list = bannerDao.bannerListSelect(vo.getStartList(), vo.getEndList());
+		
+		model.addAttribute("bnList", list);
+		model.addAttribute("paging", vo);
 		
 		return "banner/admin/bannerList";
 		

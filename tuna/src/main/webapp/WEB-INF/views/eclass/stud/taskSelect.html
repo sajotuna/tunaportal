@@ -54,11 +54,11 @@
 												</tr>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="2">작성일자</th>
-													<th colspan="7" th:text="${tsk.STARTDATE}"></th>
+													<th colspan="7" id="startDate" th:text="${tsk.STARTDATE}"></th>
 												</tr>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="2">마감일자</th>
-													<th colspan="7" th:text="${tsk.LIMITDATE}"></th>
+													<th colspan="7" id="limitDate" th:text="${tsk.LIMITDATE}"></th>
 												</tr>
 												<tr>
 													<th class="text-center" tabindex="0" colspan="2">내용</th>
@@ -68,13 +68,13 @@
 													<th class="text-center" tabindex="0" colspan="2">파일</th>
 													<th colspan="7"><input
 														class="form-control fw-semibold fs-sm"
-														id="example-file-input file" name="file" type="file"
+														id="file" name="file" type="file"
 														multiple="multiple">
 														<th:block th:each="fts : ${fts}" id="fileList">
 															<a th:href="@{/download(fileName=${fts.uri}, originName=${fts.fileName}, folder=task)}" class="mb-0 fw-bold"> [[${fts.fileName}]] </a>
 															<button th:data-uri=${fts.uri} th:data-no=${fts.no}
 																type="button" class="btn btn-sm delBtn">
-																<i class="fa fa-fw fa-sm fa-times"></i>
+																<i class="fa fa-fw fa-sm fa-times" id="delbtn"></i>
 															</button>
 															<br>
 														</th:block>
@@ -82,7 +82,7 @@
 											</thead>
 										</table>
 										<div class="d-flex justify-content-center">
-											<button type="submit" class="btn btn-primary m-2">등록</button>
+											<button type="submit" id="button" class="btn btn-primary m-2">등록</button>
 											<button type="button"
 												th:onclick="|location.href='@{/stud/eclass/taskList}'|"
 												class="btn btn-dark m-2">취소</button>
@@ -94,7 +94,7 @@
 					</div>
 				</form>
 			</div>
-			<script>
+			<script th:inline="javascript">
 				$('.delBtn').on('click', function() {
 									var header = $("meta[name='_csrf_header']").attr('content');
 									var token = $("meta[name='_csrf']").attr('content');
@@ -126,6 +126,45 @@
 							+ window.location.host + '/' + webName + '/';
 					return path_root;
 				}
+				
+			/* 날짜비교 */
+			function leadingZeros(n, digits) {
+			    var zero = '';
+			    n = n.toString();
+
+			    if (n.length < digits) {
+			        for (i = 0; i < digits - n.length; i++)
+			            zero += '0';
+			    }
+			    return zero + n;
+			}
+			var limitDate = new Date();
+			limitDate = document.getElementById("limitDate").innerHTML;
+			limitDate = Date.parse(limitDate);
+			var now = new Date();
+			
+
+			if(limitDate){
+			  now = 
+			    leadingZeros(now.getFullYear(), 4) + "-" +
+			    leadingZeros(now.getMonth() + 1, 2) + "-" +
+			    leadingZeros(now.getDate(), 2);
+			  newnow = Date.parse(now);
+			  if(limitDate > newnow){
+				  /* console.log(whDate); */
+				  console.log("과제제출일미경과")
+				  document.getElementById("file").style.display = "block";
+				  document.getElementById("button").style.display = "block";
+
+			  }else{
+				  /* console.log(whDate); */
+				  console.log("과제제출일경과")
+				  document.getElementById("file").style.display = "none";
+				  document.getElementById("button").style.display = "none";
+				  document.getElementById("delbtn").style.display = "none";
+			  }
+			}
+				
 			</script>
 		</main>
 	</div>
