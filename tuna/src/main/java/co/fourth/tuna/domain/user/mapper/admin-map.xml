@@ -7,7 +7,8 @@
 </select>
 
 <select id ="adminUserCheck" parameterType="map" resultType="map">
-SELECT u.*,ROWNUM
+SELECT s.*
+FROM (SELECT u.*,ROWNUM RN
 FROM
     (SELECT LOGIN.* FROM
         (SELECT S2.NO, S2.NAME, S2.STATECODE, S2.SY, (SELECT  NVL(ROUND(SUM((CASE  WHEN G.TOTAL BETWEEN 95 AND 100 THEN 4.5
@@ -26,8 +27,8 @@ FROM
         UNION
         SELECT NO, NAME, STATECODE, NULL, NULL, DEPTCODE, HIREDATE
     FROM PROFESSOR
-    ) LOGIN) u
-WHERE ROWNUM 
+    ) LOGIN) u) s
+WHERE RN
 BETWEEN (#{pageNum}-1)*#{size}+1
     AND #{pageNum}*#{size}
     <if test="startDate != null and !startDate.equals('') and endDate != null and !endDate.equals('')">
