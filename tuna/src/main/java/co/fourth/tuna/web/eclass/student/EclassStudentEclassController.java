@@ -173,7 +173,7 @@ public class EclassStudentEclassController {
 		return "redirect:/stud/eclass/qnaSelect";
 	}
 	
-	@DeleteMapping("delOneQna")
+	@DeleteMapping("/delOneQna")
 	public void delOneQna(@RequestBody LectureQnaVO vo) {
 		qnaDao.delOneQna(vo);
 		
