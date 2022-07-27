@@ -17,10 +17,10 @@
 		<!--title start-->
 		<div class="mt-3">
 			<div class="content content-full">
-				<h3 class="fw-bold">학사공지관리</h3>
+				<h3 class="fw-bold">공지사항 관리</h3>
 				<!--title end-->
 				<div class="block block-rounded">
-					<div class="block-content">
+					<div class="p-5">
 						<div class="row">
 							<!-- Search Form (visible on larger screens) -->
 							<form id="frm"  class="row d-flex justify-content-end" action="/tuna/admin/admin/adminNoticeList"
@@ -50,21 +50,21 @@
 
 						<!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
 						<table id="tb"
-							class="js-table-checkable table table-hover table-vcenter">
+							class="js-table-checkable table table-hover table-vcenter mt-3">
 							<!--thead 표 제목-->
 							<thead>
 								<tr>
-									<th class="text-center" style="width: 70px;">
+									<th class="text-center d-none d-lg-table-cell" style="width: 70px;">
 										<div class="form-check d-inline-block">
 											<input class="form-check-input" type="checkbox" value=""
 												id="check-all" name="check-all"> <label
 												class="form-check-label" for="check-all"></label>
 										</div>
 									</th>
-									<th class="text-center" style="width: 10%;">#</th>
-									<th style="text-align: center">제목</th>
-									<th style="text-align: center; width: 10%; height: 10%;">첨부파일</th>
-									<th class="d-none d-sm-table-cell"
+									<th class="text-center d-none d-lg-table-cell" style="width: 10%;">#</th>
+									<th class="d-none d-lg-table-cell" style="text-align: center">제목</th>
+									<th class="d-none d-lg-table-cell"style="text-align: center; width: 15%; height: 10%;">첨부파일</th>
+									<th class="d-none d-lg-table-cell"
 										style="text-align: center; width: 20%;">Date</th>
 								</tr>
 
@@ -95,11 +95,7 @@
 								<th:block
 									th:if="${#lists.isEmpty(notices)}">									
 										<tr class="text-center">
-										<td></td>
-										<td></td>
-										<td>해당 내용이 없습니다.</td>
-										<td></td>
-										<td></td>
+										<td colspan="5">해당 내용이 없습니다.</td>
 										</tr>
 									
 								</th:block>
@@ -120,7 +116,7 @@
 									th:if="${!#lists.isEmpty(notices)}">
 					<div class="block-content d-flex justify-content-center ">
 						<nav class="d-flex justify-content-center" aria-label="Page navigation">
-							<ul class="pagination pagination-sm">
+							<ul class="pagination pagination-sm m-0">
 								<li th:styleappend="${!paging.prev} ? 'display:none' : 'display:inline-block'"
 									class="page-item"><a class="page-link"
 										th:onclick="|javascript:pagingPrev(${paging.range}, ${paging.rangeSize})|"
@@ -151,6 +147,7 @@
 		var header = $("meta[name='_csrf_header']").attr('content');
 		var token = $("meta[name='_csrf']").attr('content');
 
+		
 		
 	    
 	       // 페이징 번호

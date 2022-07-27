@@ -91,12 +91,14 @@
 				search()
 			})
 
-			$('#searchText').on('keypress', function () {
-				if (event.keyCode == 13)
-					$('#searchBtn').click();
-				return false;
+		
+	    $('#searchText').on('keypress', function () {
+	        if (event.keyCode == 13) 
+	            $('#searchBtn').click();
+	        return;
+	       
+	    })
 
-			})
 
 			function search() {
 				let searchList = [];

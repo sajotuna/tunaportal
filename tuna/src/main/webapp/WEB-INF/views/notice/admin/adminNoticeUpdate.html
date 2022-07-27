@@ -11,13 +11,20 @@
 	th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
 	<link rel="stylesheet"
 	th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-<title>학사공지수정</title>
+<title>공지사항 수정</title>
+<style>
+.ck-editor__editable {
+    min-height: 380px;
+}
+</style>
 </head>
 <body>
 	<!--폼 시작-->
 	<main layout:fragment="main">
+			<!--title start-->
+		<div class="mt-3">
 		<div class="content content-full">
-			<h3 class="fw-bold">학사공지 수정</h3>
+			<h3 class="fw-bold">공지사항 수정</h3>
 			<div class="block block-rounded">
 				<form
 					onsubmit="return formCheck()"
@@ -63,9 +70,10 @@
 						<button type="button" class="btn btn-outline-secondary"
 							th:onclick="|location.href='@{/admin/admin/adminNoticeList}'|">홈으로</button>
 					</div>
-
+			
 					</th:block>
 				</form>
+			</div>
 			</div>	
 		</div>
 		<!-- Editor script -->
