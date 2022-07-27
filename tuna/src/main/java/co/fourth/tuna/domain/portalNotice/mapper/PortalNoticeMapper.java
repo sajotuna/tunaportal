@@ -24,7 +24,7 @@ public interface PortalNoticeMapper {
 
 	int noticeUpdate(PortalNoticeVO vo);
 	
-	int getNoticeCnt(String visible);
+	int getNoticeCnt(@Param("visible")String visible, @Param("state")int state, @Param("key")String key);
 
 	//파일
 	List<PortalNoticeFileVO> fileList();

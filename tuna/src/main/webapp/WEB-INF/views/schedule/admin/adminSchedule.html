@@ -14,17 +14,10 @@
 	rel='stylesheet'>
 <link rel="stylesheet"
 	th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-			
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="fullcalendar.css">
 <meta charset="UTF-8">
 <title>학사일정관리</title>
 <style>
 /* body 스타일 */
-html, body {
-	overflow: hidden;
-	font-size: 14px;
-}
 
 .fc-header-toolbar {
 	padding-top: 1em;
@@ -58,17 +51,18 @@ background-color:rgb(64, 103, 135);
 
 <body >
 	<main layout:fragment="main">
+	
 		<!-- title start -->
 		<div class="content content-full mt-3">
 			<h3 class="fw-bold">학사일정 관리</h3>
-			<div class="block block-rounded px-5 pb-5 pt-4">
+			<div  class="block block-rounded px-5 pb-5 pt-4">
 				<!-- calendar 태그 -->
 				<div id='calendar-container'>
-					<div id='calendar'></div>
+					<div id='calendar' style="height:100px"></div>
 				</div>
 			</div>
-		</div>
-
+		
+</div>
 
 		<script th:inline="javascript">
 		var header = $("meta[name='_csrf_header']").attr('content');
@@ -105,8 +99,8 @@ background-color:rgb(64, 103, 135);
 	            var calendarEl = $('#calendar')[0];
 	            // full-calendar 생성하기
 	            var calendar = new FullCalendar.Calendar(calendarEl, {
-	                height: '700px', // calendar 높이 설정
-	                expandRows: true, // 화면에 맞게 높이 재설정
+	                height: "630px", // calendar 높이 설정
+	                contentHeight: "630px",
 	                // 해더에 표시할 툴바
 	                headerToolbar: {
 	                    left: '',

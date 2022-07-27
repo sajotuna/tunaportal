@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.common.service.PagingService;
 import co.fourth.tuna.domain.common.vo.ListPagingVO;
-import co.fourth.tuna.domain.common.vo.PagingVO;
 import co.fourth.tuna.domain.portalNotice.service.PortalNoticeService;
 import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeFileVO;
 import co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO;
@@ -45,20 +44,35 @@ public class PortalNoticeController {
 	// 전체조회
 	@RequestMapping("/portalNoticeList")
 	public String portalnoticeList(Model model, PortalNoticeVO vo,
-			@RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(value="state" , required=false, defaultValue="1") int state,
+			@RequestParam(value="key", required=false, defaultValue="1") String key,
+			@RequestParam( required = false, defaultValue = "1") int page,
 			@RequestParam(required = false, defaultValue = "1") int range) {
+			//@RequestParam(value="admin") String admin
 
 		ListPagingVO pvo = new ListPagingVO();
-		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("Y"), 10, 10);
+		List<PortalNoticeVO> notices = null;
+		String retn = "";
 		
+/*		if(admin.equals("admin")) {
+			pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N"), 10, 10);
+			notices = noticeDao.adminNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
+			re = "notice/admin/adminNoticeList";
+		} else { }*/
+		
+		
+			pvo.pageInfo(page, range, noticeDao.getNoticeCnt("Y",state,key), 10, 10);
+			notices = noticeDao.portalNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
+			retn = "notice/user/portalNoticeList";
 
-		List<PortalNoticeVO> notices = noticeDao.adminNoticeList(1, "전체", pvo.getStartList(), pvo.getEndList());
+
 
 		model.addAttribute("notices", notices);
 		model.addAttribute("paging", pvo);
 		
+		
 
-		return "notice/user/portalNoticeList";
+		return retn;
 
 	}
 
@@ -76,23 +90,16 @@ public class PortalNoticeController {
 	// 전체조회
 	@RequestMapping("/admin/admin/adminNoticeList")
 	public String adminNoticeList(Model model, PortalNoticeVO vo,
+			@RequestParam(value="state" , required=false, defaultValue="1") int state,
+			@RequestParam(value="key", required=false, defaultValue="1") String key,
 			@RequestParam(required = false, defaultValue = "1") int page,
 			@RequestParam(required = false, defaultValue = "1") int range) {
 
-		/*
-		 * NoticePagingVO nvo = new NoticePagingVO();
-		 * 
-		 * PagingVO pvo = pagingDao.getPaging(new PagingVO("portalNotice", 10));
-		 * 
-		 * nvo.pageInfo(page, range, pvo.getPageCount(), 10, nvo.getListSize());
-		 */
-		
 		ListPagingVO pvo = new ListPagingVO();
-		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N"), 10, 10);
 		
-
-		List<PortalNoticeVO> notices = noticeDao.adminNoticeList(1, "전체", pvo.getStartList(), pvo.getEndList());
-
+		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N",state, key), 10, 10);
+		List<PortalNoticeVO> notices = noticeDao.adminNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
+		
 		model.addAttribute("notices", notices);
 		model.addAttribute("paging", pvo);
 		
@@ -128,7 +135,7 @@ public class PortalNoticeController {
 		String[] fileInfo = fileService.upload(image, "PortalNotice/image");
 		
 		result.put("uploaded", "true");
-		result.put("url", "/tuna/display?fileName=" + fileInfo[1] + "&folder=PortalNotice");
+		result.put("url", "/tuna/display?fileName=" + fileInfo[1] + "&folder=PortalNotice/image");
 		
 		return result;
 
@@ -220,18 +227,6 @@ public class PortalNoticeController {
 
 	}
 
-	// 공지검색
-	@GetMapping("/admin/admin/adminSearch")
-	@ResponseBody
-	public List<PortalNoticeVO> adminSearch(@RequestParam("state") int state, @RequestParam("key") String key,
-			@RequestParam(required = false, defaultValue = "1") int page,
-			@RequestParam(required = false, defaultValue = "1") int range) {
 
-		ListPagingVO pvo = new ListPagingVO();
-		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N"), 10, 10);
-		
-		
-		return noticeDao.adminNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
-	}
 
 }

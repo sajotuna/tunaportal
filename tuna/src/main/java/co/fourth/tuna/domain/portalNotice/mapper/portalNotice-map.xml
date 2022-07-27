@@ -34,13 +34,7 @@ FROM  (SELECT ROWNUM as RNUM,
 SELECT b.* , fileSelect(no) FILEYN
 FROM  (SELECT ROWNUM as RNUM,
 			  a.*
-		FROM (SELECT
-				  	NO,
-				  	TITLE,
-				  	CONTENT,
-				  	ENROLLDATE,
-				  	VISIBLE,
-				  	ADNO
+		FROM (SELECT *
 	   			FROM PORTALNOTICE
 				WHERE 
 				<if test="state == 1">1 = 1 </if>
@@ -58,7 +52,11 @@ WHERE RNUM
 <select id="getNoticeCnt" parameterType="String" resultType="int">
 SELECT COUNT(*) AS totalCnt
 FROM PORTALNOTICE 
-<if test="visible eq 'Y'.toString()">where visible='Y'</if>
+WHERE 
+<if test="state == 1">1 = 1 </if>
+<if test="state == 2">title like '%'||#{key}||'%' </if>
+<if test="state == 3">content like '%'||#{key}||'%'</if>
+<if test="visible eq 'Y'.toString()">AND visible='Y'</if>
 </select>
 
 <!-- 단건조회 -->
