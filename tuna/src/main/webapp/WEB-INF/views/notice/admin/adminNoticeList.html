@@ -109,7 +109,7 @@
 						</div>
 
 
-						<div class="block-content d-flex justify-content-center ">
+						<div id="pagingDiv" class="block-content d-flex justify-content-center ">
 							<nav aria-label="Page navigation">
 								<ul class="pagination pagination-sm">
 									<li
@@ -185,8 +185,10 @@
 		
 		function htmlConvert(rs){
 			$("tbody").remove();
+			$('#pagingDiv').remove();
 			let tbody = $("<tbody/>");
-			$.each(rs,function(index, n){ 
+			$.each(rs,function(index, n){
+				//표 붙이기
 				var td = $("<td/>").addClass("text-center filecheck")
 				if(n.fileyn == "Y"){
 					td.html(`<p style="text-align: center; margin: 0 0 0 0"> <i class="far fa fa-file"></i></p>`)
@@ -201,6 +203,8 @@
 						  $("<td/>").addClass("fs-sm text-muted text-center").html(n.enrollDate)
 					);
 				tbody.append(row); 
+				//페이징 붙이기
+				var div= $('<div/>')				
 
 				
 			})//forEach end
