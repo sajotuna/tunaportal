@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	data-layout-decorate="~{layouts/navLayout}">
+
 <head>
-<meta charset="UTF-8">
-<title>portalSchedule</title>
-<style>
-.searchClass {
-	color :rgb(0, 65, 121);
-	background-color : rgb(207, 230, 250);
-	font-weight :bold;
-}
-</style>
+	<meta charset="UTF-8">
+	<title>학사일정</title>
+	<style>
+		.searchClass {
+			color: rgb(0, 65, 121);
+			background-color: rgb(207, 230, 250);
+			font-weight: bold;
+		}
+	</style>
 </head>
+
 <body>
 
 	<main layout:fragment="main">
 		<!--title start-->
 		<div class="bg-body-light">
-			<div class="content content-full-">
+			<div class="content content-full content-boxed">
 				<div
-					class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-					<div class="flex-grow-1">
-						<h1 class="h1 fw-bold mb-2">학사일정</h1>
-						<h2 class="fs-base lh-base fw-medium text-muted mb-0">
-							학사일정</h2>
+					class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
+					<div class="flex-grow-1 mb-1 mb-md-0">
+						<p class="h3 fw-bold mb-2">학사일정</p>
+						<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">학사일정</p>
 					</div>
 				</div>
 			</div>
@@ -39,9 +39,8 @@
 							<div class="col-3">
 								<select id="seasonSelect" name="seasonCode" class="form-select">
 									<th:block th:each="seasonCode : ${seasonCodes}">
-										<option th:value="${seasonCode.no}"
-												th:text="${seasonCode.codeName}"
-												th:selected=${seasonCodes}>#</option>
+										<option th:value="${seasonCode.no}" th:text="${seasonCode.codeName}"
+											th:selected=${seasonCodes}>#</option>
 									</th:block>
 								</select>
 							</div>
@@ -51,10 +50,9 @@
 					<div class="block-obtions">
 						<!--search start-->
 						<div class="input-group">
-							<input type="text" id="searchText"
-								class="form-control form-control-alt" placeholder="Search">
-							<button id="searchBtn" 
-								class="btn btn-alt-secondary">
+							<input type="text" id="searchText" class="form-control form-control-alt"
+								placeholder="Search">
+							<button id="searchBtn" class="btn btn-alt-secondary">
 								<i class="fa fa-search"></i>
 							</button>
 						</div>
@@ -65,22 +63,21 @@
 
 				<!-- content start -->
 				<div class="block-content">
-					<table
-						class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
+					<table class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
 						id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
 						<thead>
 							<tr>
-								<th class="text-center" tabindex="0"
-									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">월</th>
-								<th class="text-center" tabindex="0"
-									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">일</th>
+								<th class="text-center" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+									colspan="1">월</th>
+								<th class="text-center" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+									colspan="1">일</th>
 								<th class="text-center" tabindex="0" style="width: 70%"
 									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">학사내용</th>
 							</tr>
 						</thead>
 						<!-- thead end -->
 						<tbody id="scheduleList">
-						
+
 						</tbody>
 					</table>
 				</div>
@@ -88,99 +85,108 @@
 			</div>
 		</div>
 		<script>
-$(function(){
-	seasonSelect()
-	makeSchedule()
-	search()
-})
-
-
-function search(){
-	let searchList = [];
-	
-	$('#searchBtn').on('click',function(){
-		searchList.push($('#searchText').val());
-		let prevSearch = searchList[searchList.length-2];
-		
-		if(searchList.length > 0){
-			$(".searchList:contains('"+prevSearch+"')").each(function(){
-				var prevReqex = new RegExp(prevSearch, 'gi');
-				$(this).html($(this).text().replace(prevReqex, prevSearch));
+			$(function () {
+				seasonSelect()
+				makeSchedule()
+				search()
 			})
-		}
-		var search= $('#searchText').val();
-		$(".searchList:contains('"+search+"')").each(function(){
-			var reqex = new RegExp(search, 'gi');
-			$(this).html($(this).text().replace(reqex, "<span class='searchClass'>" +search +"</span>"));
-		})
-		$('#searchText').val('');
-	})
-}
 
- 
-
-//selectBox 선택할 때 event
-function seasonSelect(){
-$('#seasonSelect').on('change', makeSchedule)
-}
-
-//seasonCode의 schedule list를 가져오는 function
-function makeSchedule(){
-	let seasonCode = $('select[id=seasonSelect]').val();
-	$.ajax({
-		url:getPathRootJump()+'portalScheduleList',
-		type:'GET',
-		data:{seasonCode:seasonCode},
-		dataType:'json'
-	}).done(function(schedules) {
-	
-		$('#scheduleList').html('');
-		for(schedule of schedules){			
-
-			//day표시하기 ('2020-11-11' or '2020 ~ 2020')
-			if(schedule.startDate==schedule.endDate){
-				var day= schedule.startDate
-			} else {
-				var day=(schedule.startDate.concat(` ~ ${schedule.endDate}`))
-			}
-			
-			//tbody에 tr붙이기
-			$('#scheduleList').append($('<tr>')
-					  .append($('<td>').addClass('text-center fs-sm sorting_1 col-1 rowCheck').html(('0'+schedule.month).substr(-2)))
-					  .append($('<td>').addClass('fw-semibold fs-sm text-center').html(day))
-					  .append($('<td>').addClass('d-none d-sm-table-cell fs-sm searchList').html(schedule.content))		
-						)			
-			  
-		}//for end
-
- 		//rowspan function 
- 		$('.rowCheck').each(function(){
- 
-  			var rows = $(".rowCheck:contains('" + $(this).html() + "')");
- 			if(rows.length>1){
- 				rows.eq(0).attr('rowspan', rows.length);
- 				rows.not(':eq(0)').remove();
- 			}
-
- 		})//rowspan end	
 		
-	
-	})//end done
-	
+	    $('#searchText').on('keypress', function () {
+	        if (event.keyCode == 13) 
+	            $('#searchBtn').click();
+	        return;
+	       
+	    })
 
-	
-}
+
+			function search() {
+				let searchList = [];
+
+				$('#searchBtn').on('click', function () {
+					searchList.push($('#searchText').val());
+					let prevSearch = searchList[searchList.length - 2];
+
+					if (searchList.length > 0) {
+						$(".searchList:contains('" + prevSearch + "')").each(function () {
+							var prevReqex = new RegExp(prevSearch, 'gi');
+							$(this).html($(this).text().replace(prevReqex, prevSearch));
+						})
+					}
+					var search = $('#searchText').val();
+					$(".searchList:contains('" + search + "')").each(function () {
+						var reqex = new RegExp(search, 'gi');
+						$(this).html($(this).text().replace(reqex, "<span class='searchClass'>" + search + "</span>"));
+					})
+					$('#searchText').val('');
+				})
+			}
 
 
-</script>
+
+			//selectBox 선택할 때 event
+			function seasonSelect() {
+				$('#seasonSelect').on('change', makeSchedule)
+			}
+
+			//seasonCode의 schedule list를 가져오는 function
+			function makeSchedule() {
+				let seasonCode = $('select[id=seasonSelect]').val();
+				$.ajax({
+					url: getPathRootJump() + 'portalScheduleList',
+					type: 'GET',
+					data: {seasonCode: seasonCode},
+					dataType: 'json'
+				}).done(function (schedules) {
+
+					$('#scheduleList').html('');
+					for (schedule of schedules) {
+
+						//day표시하기 ('2020-11-11' or '2020 ~ 2020')
+						if (schedule.startDate == schedule.endDate) {
+							var day = schedule.startDate
+						} else {
+							var day = (schedule.startDate.concat(` ~ ${schedule.endDate}`))
+						}
+
+						//tbody에 tr붙이기
+						$('#scheduleList').append($('<tr>')
+							.append($('<td>').addClass('text-center fs-sm sorting_1 col-1 rowCheck').html(('0' + schedule.month).substr(-2)))
+							.append($('<td>').addClass('fw-semibold fs-sm text-center').html(day))
+							.append($('<td>').addClass('fs-sm searchList').html(schedule.content))
+						)
+
+					}//for end
+
+					//rowspan function 
+					$('.rowCheck').each(function () {
+
+						var rows = $(".rowCheck:contains('" + $(this).html() + "')");
+						if (rows.length > 1) {
+							rows.eq(0).attr('rowspan', rows.length);
+							rows.not(':eq(0)').remove();
+						}
+
+					})//rowspan end	
+
+
+				})//end done
+
+
+
+			}
+
+
+		</script>
 		<script>
-		function getPathRootJump() {
-		    var pathName = window.location.pathname.substring(1);
-		    var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
-		    var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
-		    return path_root;
-		 }
-</script>
+			function getPathRootJump() {
+				var pathName = window.location.pathname.substring(1);
+				var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+				var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+				return path_root;
+			}
+		</script>
 	</main>
 </body>
+
 </html>

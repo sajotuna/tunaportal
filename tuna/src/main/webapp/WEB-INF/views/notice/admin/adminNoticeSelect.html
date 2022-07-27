@@ -8,14 +8,26 @@
   	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <title>학사공지관리/상세보기</title>
 <style>
+	figure {
+		flex: 0 0 auto;
+  		width: 100%;
+	}
+	
+	@media (max-width: 800px) {
+	
+		figure img {
+			width:100%;
+		}
+	
+	}
 </style>
 </head>
 <body>
 	<main layout:fragment="main">
-		<div class="content content-full">
-		<h3 class="fw-bold">학사공지 조회</h3>
+		<div class="content content-full mt-3">
+		<h3 class="fw-bold">공지사항 조회</h3>
 				<div class="block block-rounded">				
-					<div class="block-content">
+					<div class="block-content block-content-full">
 						<div class="row d-flex justify-content-center py-sm-3">
 							<div th:each="content, i:${content}"
 								class="text-center fs-sm push">
@@ -28,7 +40,7 @@
 						</div>
 						<!--제목 end-->
 						<hr>
-						<div th:each="content, i:${content}" th:utext="${content.content}">
+						<div class="row p-5" th:each="content, i:${content}" th:utext="${content.content}">
 
 						</div>
 						<hr>

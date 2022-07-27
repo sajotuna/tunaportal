@@ -7,9 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <title>질의응답</title>
-<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
-  <script th:src="@{/resources/assets/js/dialog.js}"></script>
+<link rel="stylesheet"
+	th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+<script
+	th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+<script th:src="@{/resources/assets/js/dialog.js}"></script>
 </head>
 <body>
 	<div id="page-container"
@@ -76,8 +78,9 @@
 												<td class="text-center" colspan="2"
 													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
 											</tr>
-											<tr th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} == ${q.STNO}">
-											<td class="text-center" th:text="${i.index+1}"></td>
+											<tr
+												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} == ${q.STNO}">
+												<td class="text-center" th:text="${i.index+1}"></td>
 												<td class="text-center" colspan="7"><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
 													style="color: black"> [[${q.TITLE}]] </a></td>
@@ -88,7 +91,7 @@
 													th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
 												<td class="text-center" colspan="2"
 													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
-													</tr>
+											</tr>
 										</tbody>
 									</table>
 								</div>
@@ -103,39 +106,39 @@
 									<div class="dataTables_paginate paging_simple_numbers"
 										id="DataTables_Table_0_paginate">
 										<nav aria-label="Page navigation">
-										<form th:action=@{/stud/eclass/qnaList} id="pageIn">
-										<input type="hidden">
-											<ul class="pagination justify-content-center">
-												<li class="page-item"><a class="page-link"
-													href="javascript:void(0)" tabindex="-1"
-													aria-label="Previous" id="prev"> <span
-														aria-hidden="true"> <i
-															class="fa fa-angle-double-left"></i>
-													</span> <span class="visually-hidden">Previous</span>
-												</a></li>
-												<li class="page-item"><a class="page-link"
-													id="pageingBtn" href="javascript:void(0)"></a></li>
-												<li class="page-item"><a class="page-link"
-													id="pageingBtn" href="javascript:void(0)"></a></li>
-												<li class="page-item"><a class="page-link"
-													id="pageingBtn" href="javascript:void(0)"></a></li>
-												<li class="page-item"><a class="page-link"
-													id="pageingBtn" href="javascript:void(0)"></a></li>
-												<li class="page-item"><a class="page-link"
-													id="pageingBtn" href="javascript:void(0)"></a></li>
-												<li class="page-item"><a class="page-link"
-													id="pageingBtn" href="javascript:void(0)"></a></li>
-												<li class="page-item"><a class="page-link"
-													id="pageingBtn" href="javascript:void(0)"></a></li>
-												<li class="page-item"><a class="page-link"
-													id="pageingBtn" href="javascript:void(0)"></a></li>
-												<li class="page-item"><a class="page-link"
-													href="javascript:void(0)" aria-label="Next" id="next">
-														<span aria-hidden="true"> <i
-															class="fa fa-angle-double-right"></i>
-													</span> <span class="visually-hidden">Next</span>
-												</a></li>
-											</ul>
+											<form th:action=@{/stud/eclass/qnaList} id="pageIn">
+												<input type="hidden">
+												<ul class="pagination justify-content-center">
+													<li class="page-item"><a class="page-link"
+														href="javascript:void(0)" tabindex="-1"
+														aria-label="Previous" id="prev"> <span
+															aria-hidden="true"> <i
+																class="fa fa-angle-double-left"></i>
+														</span> <span class="visually-hidden">Previous</span>
+													</a></li>
+													<li class="page-item"><a class="page-link"
+														id="pageingBtn" href="javascript:void(0)"></a></li>
+													<li class="page-item"><a class="page-link"
+														id="pageingBtn" href="javascript:void(0)"></a></li>
+													<li class="page-item"><a class="page-link"
+														id="pageingBtn" href="javascript:void(0)"></a></li>
+													<li class="page-item"><a class="page-link"
+														id="pageingBtn" href="javascript:void(0)"></a></li>
+													<li class="page-item"><a class="page-link"
+														id="pageingBtn" href="javascript:void(0)"></a></li>
+													<li class="page-item"><a class="page-link"
+														id="pageingBtn" href="javascript:void(0)"></a></li>
+													<li class="page-item"><a class="page-link"
+														id="pageingBtn" href="javascript:void(0)"></a></li>
+													<li class="page-item"><a class="page-link"
+														id="pageingBtn" href="javascript:void(0)"></a></li>
+													<li class="page-item"><a class="page-link"
+														href="javascript:void(0)" aria-label="Next" id="next">
+															<span aria-hidden="true"> <i
+																class="fa fa-angle-double-right"></i>
+														</span> <span class="visually-hidden">Next</span>
+													</a></li>
+												</ul>
 											</form>
 										</nav>
 									</div>
@@ -145,8 +148,8 @@
 					</div>
 				</div>
 			</div>
-<th:block th:if="${qna != null && qna != ''}">
-		<script th:inline="javascript">
+			<th:block th:if="${qna != null && qna != ''}">
+				<script th:inline="javascript">
 	document.addEventListener('DOMContentLoaded', function(){
 		let map = /*[[${map}]]*/ 'default';
 		
@@ -227,7 +230,16 @@
 		
 	})
 </script>
-</th:block>
+			</th:block>
+			<th:block th:if="${(success != null && success != '')}">
+				<script th:inline="javascript">
+					let success = /*[[${success}]]*/ 'default';
+					if (success) {
+						Dialogs.dialog('success', '완료', success);
+					}
+				</script>
+			</th:block>
+
 		</main>
 	</div>
 </body>

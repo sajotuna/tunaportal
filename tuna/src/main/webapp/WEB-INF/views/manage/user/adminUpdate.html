@@ -45,27 +45,27 @@ data-layout-decorate="~{layouts/navLayout}">
                       <div class="col-lg-12 col-xl-12">
                         <div class="mb-3">
                           <div class="input-group">
-                            <span class="input-group-text">소속</span>
+                            <span class="input-group-text d-none d-md-block">소속</span>
                             <input type="text" class="form-control" th:value = "${@codeList.getName(vo.deptcode)}" readonly>
-                            <span class="input-group-text">이름</span>
+                            <span class="input-group-text d-none d-md-block">이름</span>
                             <input type="text" class="form-control" th:value = "${vo.name}" readonly>
-                            <span class="input-group-text">재적상태</span>
+                            <span class="input-group-text d-none d-md-block">재적상태</span>
                             <input type="text" class="form-control" th:value = "${@codeList.getName(vo.stateCode)}" readonly>
                           </div>
                    		 </div>
                     <div class="mb-3">
                       <div class="input-group">
-                        <span class="input-group-text">교번</span>
+                        <span class="input-group-text d-none d-md-block">교번</span>
                         <input type="text" class="form-control" id= "no" th:value = "${vo.no}" readonly>
-                        <span class="input-group-text">입사일</span>
+                        <span class="input-group-text d-none d-md-block">입사일</span>
                         <input type="text" class="form-control" th:value = "${vo.hireDate}" readonly>
                       </div>
                     </div>
                     <div class="mb-3">
                       <div class="input-group">
-                        <span class="input-group-text">전화번호</span>
+                        <span class="input-group-text d-none d-md-block">전화번호</span>
                         <input type="text" class="form-control" name = "tel" th:value = "${vo.tel}">
-                        <span class="input-group-text">이메일</span>
+                        <span class="input-group-text d-none d-md-block">이메일</span>
                         <th:block th:if = "${not #strings.isEmpty(vo.email)}">
                       	<input type="text" class="form-control" name = "email" th:value = "${vo.email}">
 	                    </th:block>
@@ -94,7 +94,7 @@ data-layout-decorate="~{layouts/navLayout}">
                     </div>
                     </div>  
                   </div>
-                  <div class="col-8">
+                  <div class="col-12 col-lg-8 mt-3 mt-lg-0">
                     <input type="text" id="address" name = "addr" class="form-control" th:value = "${vo.addr}"><br>
                   </div>
                 </div>
