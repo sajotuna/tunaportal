@@ -16,6 +16,9 @@ public interface LectureQnaService {
 	//질문삭제
 	public void delOneQna(LectureQnaVO vo);
 	
+	//페이지네이션
+	public int lectureQnaPagingCount(LectureQnaVO vo);
+	
 	//lectureQnaMapper과 동일한 메소드
 //	List<LectureQnaVO> qnaList(String key);
 	

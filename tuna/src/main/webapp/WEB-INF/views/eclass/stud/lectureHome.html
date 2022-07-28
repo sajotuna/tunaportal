@@ -87,10 +87,10 @@
 									<a th:href="@{/stud/eclass/qnaSelect(no=${stq.NO},sbjNo=${stq.SBJNO})}" style="color: black"> [[${stq.TITLE}]] </a>
 									</td>
 										<td class="fw-semibold fs-sm" th:if="${stq.VISIBLE} == 1 and ${#authentication.principal.username} != ${stq.STNO}">
-									비공개질문입니다.
+									비공개질문입니다.<i class="fa fa-2x fa-lock me-2" style="font-size:10px; line-height:10px;"></i>
 									</td>
 									<td class="fw-semibold fs-sm" th:if="${stq.VISIBLE} == 1 and ${#authentication.principal.username} == ${stq.STNO}">
-									<a th:href="@{/stud/eclass/qnaSelect(no=${stq.NO},sbjNo=${stq.SBJNO})}" style="color: black"> [[${stq.TITLE}]] </a>
+									<a th:href="@{/stud/eclass/qnaSelect(no=${stq.NO},sbjNo=${stq.SBJNO})}" style="color: black">[[${stq.TITLE}]] <i class="fa fa-2x fa-lock me-2" style="font-size:10px; line-height:10px;"></i> </a>
 									</td>
 									</tr>
 									</table>

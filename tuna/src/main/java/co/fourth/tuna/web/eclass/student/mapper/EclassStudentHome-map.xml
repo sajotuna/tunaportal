@@ -22,6 +22,7 @@
 		WHERE T.SBJNO = L.SBJNO
 		AND L.SBJNO = S.NO
 		AND L.STNO = #{no}
+		AND L.SEASONCODE = #{seasonCode}
 		ORDER BY T.NO DESC)
 		WHERE ROWNUM <=5
 		]]>

@@ -28,9 +28,14 @@
 						<h3 class="h3 fw-bold mb-2">과제</h3>
 					</div>
 				</div>
-				<form
-					th:action="@{taskInsert(${_csrf.parameterName}=${_csrf.token})}"
+				<th:block th:if="${#lists.isEmpty(fts)}">
+				<form th:action="@{taskInsert(${_csrf.parameterName}=${_csrf.token})}"
 					method="post" enctype="multipart/form-data">
+				</th:block>
+			<th:block th:unless ="${#lists.isEmpty(fts)}">
+				<form th:action="@{updateTaskFile(${_csrf.parameterName}=${_csrf.token})}"
+					method="post" enctype="multipart/form-data">
+				</th:block>
 					<div class="block block-rounded">
 						<div class="block-content block-content-full">
 							<div id="DataTables_Table_0_wrapper"
@@ -68,10 +73,10 @@
 													<th class="text-center" tabindex="0" colspan="2">파일</th>
 													<th colspan="7"><input
 														class="form-control fw-semibold fs-sm"
-														id="file" name="file" type="file"
-														multiple="multiple">
+														id="file" name="file" type="file">
 														<th:block th:each="fts : ${fts}" id="fileList">
 															<a th:href="@{/download(fileName=${fts.uri}, originName=${fts.fileName}, folder=task)}" class="mb-0 fw-bold"> [[${fts.fileName}]] </a>
+															<input type="hidden" name="fileNo" id="fileNo" th:value="${fts.no}">
 															<button th:data-uri=${fts.uri} th:data-no=${fts.no}
 																type="button" class="btn btn-sm delBtn">
 																<i class="fa fa-fw fa-sm fa-times" id="delbtn"></i>
