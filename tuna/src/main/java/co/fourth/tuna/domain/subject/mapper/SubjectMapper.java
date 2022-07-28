@@ -32,6 +32,8 @@ public interface SubjectMapper {
 	public List<SubjectVO> findSbjByStud(@Param("stud") StudentVO vo, @Param("seasonCode") int code);
 	public List<SubjectVO> selectOneSubTask(@Param("stud") StudentVO vo, @Param("sbj") SubjectVO sbjvo);
 	
+	public int subjectCount();
+	
 	//public ArrayList<SubjectVO>findListForLectureSchedule(@Param("pageNum")int start, @Param("size")int size);
 	//public ArrayList<Map<String, Object>>findListForLectureScheduleByProf(@Param("prof")ProfessorVO prof, @Param("pageNum")int pageNum, @Param("size")int size);
 	

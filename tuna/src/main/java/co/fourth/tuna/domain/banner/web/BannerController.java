@@ -35,9 +35,9 @@ public class BannerController {
 	}
 	
 	// 기본, 옵션 배너 1건 조회
-	@GetMapping("/{bannerCode}")
+	@GetMapping("/all/{bannerCode}")
 	public BannerVO optionBannerSelect(@PathVariable String bannerCode) {
-		return bannerDao.bannerSelect(bannerCode);
+			return bannerDao.bannerSelect(bannerCode);	
 	}
 	
 	// 슬라이드 배너 순서 변경

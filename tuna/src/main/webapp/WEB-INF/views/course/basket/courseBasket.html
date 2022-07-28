@@ -29,6 +29,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
     .fomrtag {
       margin-left: 50px;
     }
+    button:disabled,
+	button[disabled]{
+	  color: rgba(87, 87, 87, 0.49);
+}
   </style>
 
 </head>
@@ -154,49 +158,47 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
            	  <div class="col-xxl-4 offset-xxl-6 row">
               <ul class="pagination justify-content-center m-0">
                 <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)" tabindex="-1" aria-label="Previous" id = "prev">
-                    <span aria-hidden="true">
-                      <i class="fa fa-angle-double-left"></i>
-                    </span>
-                    <span class="visually-hidden">Previous</span>
-                  </a>
+                  <button type ="button" class="page-link" href="javascript:void(0)" tabindex="-1" aria-label="Previous" id = "prev">
+                      <span aria-hidden="true">
+                        <i class="fa fa-angle-double-left"></i>
+                      </span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
                 </li>
-                <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">1</a>
-
-                </li>
-                <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">2</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">3</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">4</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">5</a>
-                </li>
-                <li class="page-item">
-
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">6</a>
+                 <li class="page-item">
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">1</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">7</a>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">2</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">8</a>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">3</button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">9</a>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">4</button>
+                  </li>
+                  <li class="page-item">
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">5</button>
+                  </li>
+                  <li class="page-item">
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">6</button>
+                  </li>
+                  <li class="page-item">
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">7</button>
+                  </li>
+                  <li class="page-item">
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">8</button>
+                  </li>
+                  <li class="page-item">
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">9</button>
                   </li>
                 <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
-                    <span aria-hidden="true">
-                      <i class="fa fa-angle-double-right"></i>
-                    </span>
-                    <span class="visually-hidden">Next</span>
-                  </a>
+                  <button type ="button" class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
+                      <span aria-hidden="true">
+                        <i class="fa fa-angle-double-right"></i>
+                      </span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
                 </li>
               </ul>
          
@@ -280,38 +282,35 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		let prevBtn = document.querySelector("#prev")
 		let pageingBtn = document.querySelectorAll("#pageingBtn");
 		nextBtn.addEventListener('click', function(){
-			pageingBtn.forEach(btn =>{
-				let a = btn.innerHTML
-				btn.innerHTML = parseInt(a)+9;
-			})
-			tagInsert(pageingBtn[0].innerHTML)
+			tagInsert(parseInt(params.pageNum)+1)
 		})
 		
 		prevBtn.addEventListener('click', function(){
-			pageingBtn.forEach((btn,idx) =>{
-				let a = btn.innerHTML
-				if (parseInt(a) > 9){
-					btn.innerHTML = parseInt(a)-9;
+				if(parseInt(params.pageNum) == 1){
+					prevBtn.disabled = true;
 				}else{
-					params.pageNum = 1;
-					if(idx == 0){
-						btn.innerHTML = parseInt(params.pageNum) + idx
-					}
-					else{
-						btn.innerHTML = parseInt(pageingBtn[idx-1].innerHTML) + 1;
-					}
+					tagInsert(parseInt(params.pageNum)-1)	
 				}
 			})
-			tagInsert(pageingBtn[0].innerHTML)
-		})
-		
+				
 		pageingBtn.forEach((btn,idx) =>{
+			
 			if(params.pageNum > (pageingBtn.length)/2){
 				pageingBtn[Math.ceil((pageingBtn.length-1)/2)].innerHTML = params.pageNum
 				if(Math.ceil((pageingBtn.length-1)/2) > idx)
 					pageingBtn[idx].innerHTML = params.pageNum - Math.ceil((pageingBtn.length-1)/2) + idx
 				else
 					pageingBtn[idx].innerHTML = params.pageNum - (Math.ceil((pageingBtn.length-1)/2) - idx)
+				
+				if(parseInt(pageingBtn[idx].innerHTML) > parseInt(params.pageSize)){
+					pageingBtn[idx].disabled = true;
+				}
+				if(parseInt(params.pageNum) == parseInt(params.pageSize)){
+					nextBtn.disabled = true;
+				}
+				if(parseInt(params.pageNum) == 1){
+					prevBtn.disabled = true;
+				}
 			}
 			
 			if(btn.innerHTML == params.pageNum){
