@@ -119,7 +119,7 @@ xmlns:th="http://www.thymeleaf.org"
                       <a class="page-link" onclick="javascript:pageBtnClick(this);" th:text="${num}"></a>
                     </li>
                     <li class="page-item">
-                      <a class="page-link" href="javascript:void(0)" aria-label="Next">
+                      <a class="page-link" onclick = "" aria-label="Next">
                         <span aria-hidden="true">
                           <i class="fa fa-angle-right"></i>
                         </span>
@@ -154,10 +154,22 @@ xmlns:th="http://www.thymeleaf.org"
 		
 		<script>
 		
-		function pageBtnClick(e){
-			
-			location.href = 'noticeList?pageNum='+e.innerHTML;
-		}
+	   function pageBtnClick(e){
+		  location.href = 'noticeList?pageNum='+e.innerHTML;
+	   }
+	   function prevBtn(pageNum) {
+		   if(pageNum-1 == 0){
+			   pageNum = 2;
+		   }
+		   location.href = 'noticeList?pageNum='+pageNum-1;
+	   }
+		   
+	   function NextBtn(pageNum, pageCount) {
+		   if(pageNum > pageCount){
+			   pageNum = pageCount
+		   }
+		   location.href = 'noticeList?pageNum='+pageNum+1;
+	   }
 		
 		</script>
 		
