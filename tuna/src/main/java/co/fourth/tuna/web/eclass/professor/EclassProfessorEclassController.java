@@ -133,7 +133,11 @@ public class EclassProfessorEclassController {
 	}
 
 	@GetMapping("/qnaList")
-	public String qnaListView(Model model, HttpServletRequest req) {
+	public String qnaListView(Model model, HttpServletRequest req, Authentication auth) {
+		ProfessorVO prof = new ProfessorVO();
+		prof.setNo(Integer.parseInt(auth.getName()));
+		List<LectureQnaVO> qnaList = lectureService.findByProfessor(prof, 1, 5);
+		model.addAttribute("qnaList", qnaList);
 		return req.getServletPath();
 	}
 

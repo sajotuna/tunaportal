@@ -116,7 +116,7 @@ xmlns:th="http://www.thymeleaf.org"
                       </a>
                     </li>
                     <li class="page-item" th:each="num : ${#numbers.sequence(1,pageCount)}">
-                      <a class="page-link" href="javascript:pageBtnClick();" th:text="${num}"></a>
+                      <a class="page-link" onclick="javascript:pageBtnClick(this);" th:text="${num}"></a>
                     </li>
                     <li class="page-item">
                       <a class="page-link" href="javascript:void(0)" aria-label="Next">
@@ -154,10 +154,9 @@ xmlns:th="http://www.thymeleaf.org"
 		
 		<script>
 		
-		function pageBtnClick(){
+		function pageBtnClick(e){
 			
-			console.log(this.value)
-			//location.href = 'noticeList?pageNum+'
+			location.href = 'noticeList?pageNum='+e.innerHTML;
 		}
 		
 		</script>
