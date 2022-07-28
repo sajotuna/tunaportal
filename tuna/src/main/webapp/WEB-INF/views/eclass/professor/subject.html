@@ -700,9 +700,6 @@ xmlns:th="http://www.thymeleaf.org"
                 <div class="block-content tab-content">
                   <div class="tab-pane active" id="btabs-info" role="tabpanel" aria-labelledby="btabs-info-tab">
                     <div class="row row-cols-auto">
-                      <div class="col">
-                        <img class="img-avatar64" src="../assets/media/avatars/avatar1.jpg">
-                      </div>
                       <div class="col-1 d-none d-lg-block text-end">
                         <div>이름</div>
                         <div>학번</div>
@@ -1462,7 +1459,7 @@ xmlns:th="http://www.thymeleaf.org"
                   <i class="fa fa-2x fa-circle-user"></i>
                 </td>
                 <td class="table-cell">
-                  <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);">
+                  <a class="student-selector" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);" data-stno="${student.no}" data-sbjno="${sbjno}">
                     ${student.name}</a>
                 </td>
                 <td class="table-cell">
@@ -1936,6 +1933,35 @@ xmlns:th="http://www.thymeleaf.org"
                     })
                   })
                 })
+            }
+            
+            function studentClickEvent() {
+            	let studentSelectors = document.querySelectorAll(".student-selector");
+            	
+            	for (let i=0; i<studentSelectors.length; i++) {
+            		studentSelectors[i].addEventListener('click', function(e) {
+            			let stNo = e.target.dataset.stno;
+            			let sbjNo = e.target.dataset.sbjno;
+            			fetch('/tuna/prof/eclass/student/student', {
+            				method: "POST",
+            				headers: {
+				                  'header': header,
+				                  'X-Requested-With': 'XMLHttpRequest',
+				                  'Content-Type': 'application/json',
+				                  'X-CSRF-Token': token
+				            },
+			                body: JSON.stringify({
+			                	stNo:stNo,
+			                	sbjNo:sbjNo
+			                })
+            			})
+            			.then(result => result.json())
+            			.then(result => {
+            				console.log(result);
+            			})
+
+            		})
+            	}
             }
 
             function allStudentAttend() {
