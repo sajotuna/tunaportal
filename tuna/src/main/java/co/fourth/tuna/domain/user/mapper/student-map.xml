@@ -181,7 +181,7 @@ update student set pwd = #{pwd}, email = #{email}, chpwd = 1 where no = #{no}
 		</include>) AS deptname
 	FROM
 		student
-	WEHRE
+	WHERE
 		no = #{stno}
 </select>
 

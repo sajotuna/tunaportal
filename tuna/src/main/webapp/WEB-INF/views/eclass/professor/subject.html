@@ -1045,7 +1045,11 @@ xmlns:th="http://www.thymeleaf.org"
                
             }
 /*
-
+██     ███    ██     ██     ████████ 
+██     ████   ██     ██        ██    
+██     ██ ██  ██     ██        ██    
+██     ██  ██ ██     ██        ██    
+██     ██   ████     ██        ██    
 */
             function initTaskInsertForm() {
               let modal = document.getElementById('taskInsertFrm');
@@ -1470,7 +1474,7 @@ xmlns:th="http://www.thymeleaf.org"
                   <i class="fa fa-2x fa-circle-user"></i>
                 </td>
                 <td class="table-cell">
-                  <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);" data-stno="${student.no}" data-sbjno="${sbjno}">
+                  <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);" onclick="studentClickEvent()" data_stno="${student.no}" >
                     ${student.name}</a>
                 </td>
                 <td class="table-cell">
@@ -1947,32 +1951,26 @@ xmlns:th="http://www.thymeleaf.org"
             }
             
             function studentClickEvent() {
-            	let studentSelectors = document.querySelectorAll(".student-selector");
-            	
-            	for (let i=0; i<studentSelectors.length; i++) {
-            		studentSelectors[i].addEventListener('click', function(e) {
-            			let stNo = e.target.dataset.stno;
-            			let sbjNo = e.target.dataset.sbjno;
-            			fetch('/tuna/prof/eclass/student/student', {
-            				method: "POST",
-            				headers: {
-				                  'header': header,
-				                  'X-Requested-With': 'XMLHttpRequest',
-				                  'Content-Type': 'application/json',
-				                  'X-CSRF-Token': token
-				            },
-			                body: JSON.stringify({
-			                	stNo:stNo,
-			                	sbjNo:sbjNo
-			                })
-            			})
-            			.then(result => result.json())
-            			.then(result => {
-            				console.log(result);
-            			})
+              let stNo = event.target.getAttribute('data_stno')
+              // let sbjNo = event.target.dataset.sbjno;
+              let student = {
+                no: stNo
+              }
+              fetch(REST_URL.STUDENT_DETAIL, {
+                method: "POST",
+                headers: {
+                      'header': header,
+                      'X-Requested-With': 'XMLHttpRequest',
+                      'Content-Type': 'application/json',
+                      'X-CSRF-Token': token
+                },
+                body: JSON.stringify(student)
+              })
+              .then(result => result.json())
+              .then(result => {
+                console.log(result);
+              })
 
-            		})
-            	}
             }
 
             function allStudentAttend() {

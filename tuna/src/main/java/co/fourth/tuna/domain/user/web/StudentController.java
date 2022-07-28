@@ -97,7 +97,8 @@ public class StudentController {
 	}
 	
 	@PostMapping("/staff/student")
-	public ResponseEntity<EclassStudentDetailPageVO> getStudentDetail(Authentication auth, 
+	public ResponseEntity<EclassStudentDetailPageVO> getStudentDetail(
+			Authentication auth, 
 			@RequestBody StudentVO student) {
 		HttpHeaders resHeaders = new HttpHeaders();
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);

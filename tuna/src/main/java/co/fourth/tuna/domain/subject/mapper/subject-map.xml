@@ -203,4 +203,26 @@
 	WHERE L.STNO = #{stud.no}
 	AND S.NO = #{sbj.no}
 	</select>
+	
+	<select id="selectListByStudentIdAndPrfessorId"
+		resultType="co.fourth.tuna.domain.subject.vo.SubjectWithAttendanceVO">
+		SELECT
+			s.NO          ,
+			s.NAME        ,
+			s.TARGET      ,
+			s.TYPE        ,
+			s.POINT       ,
+			s.LIMIT       ,
+			s.DEPTCODE    ,
+			s.SEASONCODE  ,
+			s.PFNO        ,
+			s."GROUP"       ,
+			s.SBJGROUP
+		FROM
+			subject s
+		JOIN lectureapply l
+			on (s.no = l.sbjno)
+		WHERE l.stno = ${stno}
+			AND s.pfno = ${pfno}
+	</select>
 </mapper>
