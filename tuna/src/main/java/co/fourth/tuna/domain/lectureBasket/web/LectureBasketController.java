@@ -39,10 +39,10 @@ public class LectureBasketController {
 							  @RequestParam Map<String, Object> params ) {
 
 		
-//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1103") != 1) {
-//			model.addAttribute("error", "현재 수강꾸러미 열람기간이 아닙니다.");
-//			return "schedule/date/basketDate";
-//		}
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1103") != 1) {
+			model.addAttribute("error", "현재 수강꾸러미 열람기간이 아닙니다.");
+			return "schedule/date/basketDate";
+		}
 		
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
