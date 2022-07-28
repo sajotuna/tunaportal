@@ -29,4 +29,6 @@ public interface AttendanceMapper {
 			@Param("date")LocalDate date, 
 			@Param("sbjno")int sbjno, 
 			@Param("stno")int stno);
+	
+	public int updateAttendanceByAttendanceId(AttendanceVO vo);
 }

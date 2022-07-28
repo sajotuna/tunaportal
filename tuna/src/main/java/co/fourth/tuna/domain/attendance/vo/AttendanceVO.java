@@ -15,11 +15,11 @@ public class AttendanceVO {
 	//출결상태
 	private String stateCode;
 	//학번
-	private int stNo;
+	private Integer stNo;
 	//인덱스
-	private int no;
+	private Integer no;
 	//과목코드
-	private int sbjNo;
+	private Integer sbjNo;
 	//날짜
 	private Date classDate;
 }

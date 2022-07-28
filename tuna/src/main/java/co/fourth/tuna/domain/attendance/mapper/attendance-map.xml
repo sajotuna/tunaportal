@@ -51,4 +51,16 @@
 	    AND stno = #{stno}
 	</select>
 	
+	<update id="updateAttendanceByAttendanceId"
+		parameterType="co.fourth.tuna.domain.attendance.vo.AttendanceVO">
+		UPDATE attendance
+		<set>
+			<if test="stateCode != null">statecode = #{stateCode},</if>
+			<if test="stNo != null">stno = #{stNo},</if>
+			<if test="sbjNo != null">	sbjno = #{sbjNo},</if>
+		</set>
+		WHERE
+			no = #{no}
+	</update>
+	
 </mapper>

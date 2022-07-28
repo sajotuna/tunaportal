@@ -6,8 +6,12 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,9 +53,24 @@ public class AttendanceController {
 	@PostMapping("/staff/insert/attendance")
 	public ResponseEntity<String> submitsAttendance(
 			@RequestBody List<AttendanceVO> attendanceList) {
-		// TODO sbjno 가 내강의인지 체크하기
+		HttpHeaders resHeaders = new HttpHeaders();
+		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		ResponseEntity<String> res = null;
 		
-		return null;
+		// TODO sbjno 가 내강의인지 체크하기
+		try {
+			res = new ResponseEntity<String>(
+					service.updateAttendanceList(attendanceList),
+					resHeaders,
+					HttpStatus.OK);
+		} catch (Throwable e) {
+			res = new ResponseEntity<String>(
+					e.getMessage(),
+					resHeaders,
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		return res;
 	}
 	
 //	@RequestMapping("/eclass/student/attendance")
