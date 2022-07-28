@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import co.fourth.tuna.domain.attendance.mapper.AttendanceMapper;
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
@@ -59,7 +60,7 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 			attens = attenMap.findListByStudentIdAndSubjectId(student.getNo(), sbjno);
 			student.setAttendanceList(attens);
 			GradeVO grade = gradeMap.findOneByStudentIdAndSubjectId(student.getNo(), sbjno);
-			grade.setAttd(computeAttendanceScore(attens)); 
+			grade.setAttd(computeAttendanceScore(attens));
 			
 			student.setGradeVO(grade);
 			for(TaskVO task : tasks) {
@@ -93,7 +94,11 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 				}
 			}
 		}
-		score = score - (absence*100)/count - (lateness/3*100)/count;
+		
+		// 결석 계산
+		if(absence > 0) score -= (absence*100)/count;
+		// 지각 계산
+		if(lateness > 0) score -= (lateness/3*100)/count;
 
 		return score;
 	}

@@ -9,4 +9,5 @@ public interface AdminMapper {
 	public void adminpwdUpdate(AdminVO vo);
 	public String adminPwdFind(AdminVO vo);
 	public boolean findEmail(AdminVO vo);
+	public int AdminUserCount();
 }

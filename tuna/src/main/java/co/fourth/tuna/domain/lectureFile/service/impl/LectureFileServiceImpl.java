@@ -37,12 +37,12 @@ public class LectureFileServiceImpl implements LectureFileService {
 	}
 	
 	@Override
-	public LectureFileVO lectureFileList(LectureFileVO vo) {
+	public List<LectureFileVO> lectureFileList(LectureFileVO vo) {
 		return map.lectureFileList(vo);
 	}
 
 	@Override
-	public List<LectureFileVO> lectureFileDownload(LectureFileVO vo) {
+	public LectureFileVO lectureFileDownload(LectureFileVO vo) {
 		return map.lectureFileDownload(vo);
 	}
 

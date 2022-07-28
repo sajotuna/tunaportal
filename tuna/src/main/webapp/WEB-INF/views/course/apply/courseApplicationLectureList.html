@@ -47,7 +47,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <th class="fw-semibold fs-sm" th:text="${@codeList.getName(sub.TYPE)}"></th>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NO}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.NAME}"></td>
-                      <td class="fw-semibold fs-sm"><a href="javascript:showPopup();" th:text = "${sub.PRONAME}"></a></td>
+                      <td class="fw-semibold fs-sm"th:text = "${sub.PRONAME}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sub.ROOMCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>

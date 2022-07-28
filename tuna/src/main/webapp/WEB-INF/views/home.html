@@ -182,7 +182,7 @@
 	    <!-- Main Navigation -->
 	    <th:block sec:authorize="hasRole('ROLE_STUDENT')">
 	    <div class="bg-primary-darker">
-			<div id="main-navigation" class="d-md-none mt-2 mt-lg-0">
+			<div id="main-navigation" class="d-md-none">
 				<ul class="nav-main nav-main-dark nav-main-horizontal nav-main-hover">
 					<li class="nav-main-item">
 						<a class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
@@ -214,12 +214,12 @@
 								</a>
 							</li>
 							<li class="nav-main-item">
-								<a class="nav-main-link" th:href="@{/stud/scholarshipApplication}"> 
+								<a class="nav-main-link" th:href="@{/stud/scholar/Application}" target="_blank"> 
 									<span class="nav-main-link-name">장학 신청 및 조회</span>
 								</a>
 							</li>
 							<li class="nav-main-item">
-								<a class="nav-main-link" th:href="@{/stud/tuitionCheck}">
+								<a class="nav-main-link" th:href="@{/stud/tuition/Check}">
 									<span class="nav-main-link-name">등록금납입확인서</span>
 								</a>
 							</li>
@@ -236,12 +236,12 @@
 						</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item">
-								<a class="nav-main-link" th:href="@{/stud/eclass/home}">
+								<a class="nav-main-link" th:href="@{/stud/eclass/home}" target="_blank">
 									<span class="nav-main-link-name">e-class</span>
 								</a>	
 							</li>
 							<li class="nav-main-item">
-								<a class="nav-main-link" th:href="@{/stud/course/Warning}">
+								<a class="nav-main-link" th:href="@{/stud/course/Warning}" target="_blank">
 									<span class="nav-main-link-name">수강신청</span>
 								</a>
 							</li>

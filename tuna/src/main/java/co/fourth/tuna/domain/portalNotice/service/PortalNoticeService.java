@@ -29,6 +29,6 @@ public interface PortalNoticeService {
 	
 	int fileAllDelete(PortalNoticeFileVO fileVo);
 
-	int getNoticeCnt(String visible);
+	int getNoticeCnt(String visible, int state, String key);
 
 }

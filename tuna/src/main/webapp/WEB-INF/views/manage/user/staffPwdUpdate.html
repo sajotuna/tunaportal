@@ -66,6 +66,13 @@
       </div>
     <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 	<script>
+	
+		document.addEventListener('keyup', function(){
+			if (window.event.keyCode == 13) {
+				userPwdUpdate()
+			}
+		})
+	
 		function userPwdUpdate(){
 			
 			var reg = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$"

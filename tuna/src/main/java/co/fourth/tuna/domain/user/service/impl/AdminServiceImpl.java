@@ -35,14 +35,17 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public String adminPwdFind(AdminVO vo) {
-		// TODO Auto-generated method stub
 		return mapper.adminPwdFind(vo);
 	}
 
 	@Override
 	public boolean findEmail(AdminVO vo) {
-		// TODO Auto-generated method stub
 		return mapper.findEmail(vo);
+	}
+
+	@Override
+	public int AdminUserCount() {
+		return mapper.AdminUserCount();
 	}
 
 }
