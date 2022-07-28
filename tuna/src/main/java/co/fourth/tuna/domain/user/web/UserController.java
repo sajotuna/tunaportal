@@ -140,16 +140,5 @@ public class UserController {
 		return "redirect:/admin/pwdUpdate";
 	}
 	
-	@RequestMapping("/prof/eclass/student/student")
-	@ResponseBody
-	public List<StudentWithSubmitTaskVO> studentSelect(@RequestBody int sbjNo, 
-									@RequestBody int stNo) {
-		return StudentDao.findOneStudentBysubjectNo(sbjNo, stNo);
-	}
-	
-	
-	
-	
-	
 	
 }
