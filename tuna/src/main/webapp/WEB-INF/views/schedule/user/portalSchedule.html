@@ -35,12 +35,12 @@
 			<div class="block block-rounded">
 				<div class="block-header block-header-default">
 					<div class="block-title">
-								<select style="width:200px" id="seasonSelect" name="seasonCode" class="form-select">
-									<th:block th:each="seasonCode : ${seasonCodes}">
-										<option th:value="${seasonCode.no}" th:text="${seasonCode.codeName}"
-											th:selected=${seasonCodes}>#</option>
-									</th:block>
-								</select>			
+						<select style="width:200px" id="seasonSelect" name="seasonCode" class="form-select">
+							<th:block th:each="seasonCode : ${seasonCodes}">
+								<option th:value="${seasonCode.no}" th:text="${seasonCode.codeName}"
+									th:selected=${seasonCodes}>#</option>
+							</th:block>
+						</select>
 					</div>
 					<div class="block-obtions">
 						<!--search start-->
@@ -86,13 +86,13 @@
 				search()
 			})
 
-		
-	    $('#searchText').on('keypress', function () {
-	        if (event.keyCode == 13) 
-	            $('#searchBtn').click();
-	        return;
-	       
-	    })
+
+			$('#searchText').on('keypress', function () {
+				if (event.keyCode == 13)
+					$('#searchBtn').click();
+				return;
+
+			})
 
 
 			function search() {
@@ -113,7 +113,14 @@
 						var reqex = new RegExp(search, 'gi');
 						$(this).html($(this).text().replace(reqex, "<span class='searchClass'>" + search + "</span>"));
 					})
-					$('#searchText').val('');
+
+					$('html,body').animate({
+						scrollTop: $(".searchClass").offset().top
+					},'smooth');
+
+
+
+
 				})
 			}
 
@@ -135,23 +142,33 @@
 				}).done(function (schedules) {
 
 					$('#scheduleList').html('');
-					for (schedule of schedules) {
 
-						//day표시하기 ('2020-11-11' or '2020 ~ 2020')
-						if (schedule.startDate == schedule.endDate) {
-							var day = schedule.startDate
-						} else {
-							var day = (schedule.startDate.concat(` ~ ${schedule.endDate}`))
-						}
-
-						//tbody에 tr붙이기
+					if (schedules.length == 0) {
 						$('#scheduleList').append($('<tr>')
-							.append($('<td>').addClass('text-center fs-sm sorting_1 col-1 rowCheck').html(('0' + schedule.month).substr(-2)))
-							.append($('<td>').addClass('fw-semibold fs-sm text-center').html(day))
-							.append($('<td>').addClass('fs-sm searchList').html(schedule.content))
-						)
+							.append(`<td class="text-center" colspan="3">해당 내용이 없습니다.</td>`))
+					} else {
 
-					}//for end
+						$('#scheduleList').html('');
+						for (schedule of schedules) {
+
+							//day표시하기 ('2020-11-11' or '2020 ~ 2020')
+							if (schedule.startDate == schedule.endDate) {
+								var day = schedule.startDate
+							} else {
+								var day = (schedule.startDate.concat(` ~ ${schedule.endDate}`))
+							}
+
+							$('#scheduleList').append($('<tr>')
+								.append($('<td>').addClass('text-center fs-sm sorting_1 col-1 rowCheck').html(('0' + schedule.month).substr(-2)))
+								.append($('<td>').addClass('fw-semibold fs-sm text-center').html(day))
+								.append($('<td>').addClass('fs-sm searchList').html(schedule.content))
+							)
+
+							//tbody에 tr붙이기
+
+
+						}//for end
+					}
 
 					//rowspan function 
 					$('.rowCheck').each(function () {

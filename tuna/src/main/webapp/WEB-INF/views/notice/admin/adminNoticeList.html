@@ -20,8 +20,7 @@
 				<h3 class="fw-bold">공지사항 관리</h3>
 				<!--title end-->
 				<div class="block block-rounded">
-					<div class="p-5">
-	
+					<div class="p-3 p-sm-5 ">
 							<!-- Search Form (visible on larger screens) -->
 							<form id="frm"  class="row d-flex justify-content-end" action="/tuna/admin/admin/adminNoticeList"
 								method="post">
@@ -47,8 +46,6 @@
 			
 						<!-- END Search Form -->
 
-
-						<!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
 						<table id="tb"
 							class="js-table-checkable table table-hover table-vcenter mt-3">
 							<!--thead 표 제목-->
@@ -98,7 +95,8 @@
 								
 							</tbody>
 
-						</table>
+						</table><!-- table End -->
+						
 						<div class="p-1 d-flex justify-content-center">
 							<button type="button" class="btn btn-outline-secondary m-1"
 								th:onclick="|location.href='@{/admin/admin/adminNoticeInsertForm}'|">등록</button>
@@ -108,8 +106,7 @@
 						</div>
 
 
-							<th:block 
-									th:if="${!#lists.isEmpty(notices)}">
+					<th:block	th:if="${!#lists.isEmpty(notices)}">
 					<div class="block-content d-flex justify-content-center ">
 						<nav class="d-flex justify-content-center" aria-label="Page navigation">
 							<ul class="pagination pagination-sm m-0">
@@ -142,9 +139,14 @@
 		<script>
 		var header = $("meta[name='_csrf_header']").attr('content');
 		var token = $("meta[name='_csrf']").attr('content');
+		
+		$(function(){
+			history.replaceState({}, null, location.pathname);
+			Delete()
+			
+		})
 
-		
-		
+
 	    
 	       // 페이징 번호
 		   function pagingNo(page, range) {
@@ -169,14 +171,15 @@
 		
 		
 
-			//삭제버튼 클릭했을 때 이벤트 
-		$('#delBtn').on('click',function(){		 
-		let job =$(this).data('job');
+		//삭제버튼 클릭했을 때 이벤트 
+		function Delete(){
+			$('#delBtn').on('click',function(){		 
+				let job =$(this).data('job');
 
- 			pageDialogs.dialog(job)		 		 
-				 
-			 })//onclick end
-		
+		 			pageDialogs.dialog(job)		 		 
+						 
+					 })//onclick end
+		}
 
 				//삭제 다이얼로그 클래스
 				class pageDialogs{

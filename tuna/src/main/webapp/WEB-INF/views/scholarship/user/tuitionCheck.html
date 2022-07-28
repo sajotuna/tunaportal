@@ -146,9 +146,8 @@
 								</div>
 							</div>
 							<div class="d-flex justify-content-center">
-								<button id="create_pdf" class="btn btn-secondary">
-
-									<i class="fa fa-file-pdf m-3"></i>PDF
+								<button id="create_pdf" class="d-none d-md-table-cell btn btn-secondary">
+									<i class="fa fa-file-pdf m-1"></i>PDF
 								</button>
 							</div>
 						</div>
@@ -169,14 +168,16 @@
 				html2canvas($('#pdf_wrap')[0]).then(function (canvas) {
 					var doc = new jsPDF('p', 'mm', 'a4'); //jspdf객체 생성
 					var imgData = canvas.toDataURL('image/png'); //캔버스를 이미지로 변환
-					var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
-					var pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준
+					var imgWidth = 180; // 이미지 가로 길이(mm) / A4 기준 210mm
+					var pageHeight = imgWidth * 1.3; // 출력 페이지 세로 길이 계산 A4 기준
 					var imgHeight = canvas.height * imgWidth / canvas.width;
 					var heightLeft = imgHeight;
 					var margin = 10; // 출력 페이지 여백설정
 					var doc = new jsPDF('p', 'mm');
 					var position = 0;
 					doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight); //이미지를 기반으로 pdf생성
+					
+
 					doc.save('tuna_등록금납입확인서.pdf'); //pdf저장
 				});
 			});
@@ -241,19 +242,19 @@
 				tuitionDate.innerHTML = ''
 
 				fetch('moneyCheck', {
-						method: 'POST',
-						headers: {
-							'header': header,
-							'X-Requested-With': 'XMLHttpRequest',
-							"Content-Type": "application/json",
-							'X-CSRF-Token': token
-						},
-						body: JSON.stringify({
-							"seasonCode": seasonCode,
-							"stNo": stNo,
-							"deptCode": deptCode
-						})
-					}).then(result => result.json())
+					method: 'POST',
+					headers: {
+						'header': header,
+						'X-Requested-With': 'XMLHttpRequest',
+						"Content-Type": "application/json",
+						'X-CSRF-Token': token
+					},
+					body: JSON.stringify({
+						"seasonCode": seasonCode,
+						"stNo": stNo,
+						"deptCode": deptCode
+					})
+				}).then(result => result.json())
 					.then(result => {
 						result.forEach((val, idx) => {
 
@@ -282,17 +283,17 @@
 					})
 
 				fetch('scheduleFind', {
-						method: 'POST',
-						headers: {
-							'header': header,
-							'X-Requested-With': 'XMLHttpRequest',
-							"Content-Type": "application/json",
-							'X-CSRF-Token': token
-						},
-						body: JSON.stringify({
-							"seasonCode": seasonCode
-						})
-					}).then(result => result.json())
+					method: 'POST',
+					headers: {
+						'header': header,
+						'X-Requested-With': 'XMLHttpRequest',
+						"Content-Type": "application/json",
+						'X-CSRF-Token': token
+					},
+					body: JSON.stringify({
+						"seasonCode": seasonCode
+					})
+				}).then(result => result.json())
 					.then(result => {
 
 						tuitionDate.innerHTML = result.startDate + '~' + result.endDate

@@ -87,7 +87,7 @@ public class PortalStudentController {
 		
 		int result = dateCheckDao.accessDateCheck(yearDao.yearFind(), "1106");
 		
-		if (result > 0) {
+//		if (result > 0) {
 			
 			boolean findN = false;
 			for (int i=0; i<grades.size(); i++) {
@@ -103,10 +103,10 @@ public class PortalStudentController {
 			model.addAttribute("total", total);
 			return "portal/stud/currentSemesterGrade";
 			
-		} else {
-			redirectAttributes.addFlashAttribute("error", "지금은 성적 조회 기간이 아닙니다.");
-			return "redirect:/home";
-		}
+//		} else {
+//			redirectAttributes.addFlashAttribute("error", "지금은 성적 조회 기간이 아닙니다.");
+//			return "redirect:/home";
+//		}
 		
 	}
 	

@@ -61,7 +61,7 @@ public class PortalNoticeController {
 		} else { }*/
 		
 		
-			pvo.pageInfo(page, range, noticeDao.getNoticeCnt("Y",state,key), 10, 10);
+			pvo.pageInfo(page, range, noticeDao.getNoticeCnt("Y",state,key), 5, 10);
 			notices = noticeDao.portalNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
 			retn = "notice/user/portalNoticeList";
 
@@ -97,7 +97,7 @@ public class PortalNoticeController {
 
 		ListPagingVO pvo = new ListPagingVO();
 		
-		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N",state, key), 10, 10);
+		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N",state, key), 5, 10);
 		List<PortalNoticeVO> notices = noticeDao.adminNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
 		
 		model.addAttribute("notices", notices);

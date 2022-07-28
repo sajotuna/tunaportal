@@ -198,13 +198,12 @@ background-color:rgb(64, 103, 135);
 	                  },//end select
 	                  
 	                  //삭제 이벤트
-	                  eventClick:function(arg){	                	    	  
+	                  eventClick:function(arg){	   
 	                	    	  var result = arg.event._def.title.substr(0, 29);
-	                	  Dialogs.dialog('warnConfirm', 
+	                	  		  Dialogs.dialog('warnConfirm', 
 	                			  '삭제하시겠습니까?', 
 	                			  '* '+ result + ' *', 
-				                    function() {
-	                		  
+				                    function() {	                		  
 		                		 $.ajax({
 			                			url:getPathRootJump()+'admin/admin/adminSchduleDelete',
 			                			method:'DELETE',
@@ -220,8 +219,7 @@ background-color:rgb(64, 103, 135);
 			                		 })
 	                		  
 										
-									});
-	                		 
+									});                		 
 	                	 
 	                  }
 	                  // 이벤트 
