@@ -10,15 +10,6 @@
 	</association>
 </resultMap>
 
-<resultMap id="oneStudentWithSubmitTaskMap"
-	type="co.fourth.tuna.domain.user.vo.StudentExVO">
-	<collection property="submitTaskList"
-				select="co.fourth.tuna.domain.task.mapper.TaskMapper.findSubmitTaskListByStudentIdAndTaskId"
-				column="{stNo=no, sbjNo=sbjno}">
-	</collection>
-</resultMap>
-	
-
 <select id = "findById" 
 	parameterType="co.fourth.tuna.domain.user.vo.StudentVO" resultType="co.fourth.tuna.domain.user.vo.StudentVO">
 	select* from student where no = #{no}
@@ -165,13 +156,6 @@ update student set pwd = #{pwd}, email = #{email}, chpwd = 1 where no = #{no}
     ON s.no = l.stno
 	WHERE sbjno = #{sbjno}
 	
-</select>
-
-<select id="findOneStudentBysubjectNo"
-	resultMap="oneStudentWithSubmitTaskMap">
-	SELECT *
-	FROM student
-	WHERE no = #{no}
 </select>
 
 </mapper>

@@ -88,6 +88,11 @@ public class TaskServiceImpl implements TaskService {
 	public SubmitTaskVO findSubmitTaskByStudentIdAndTaskId(int stno, int taskno) {
 		return map.findSubmitTaskListByStudentIdAndTaskId(stno, taskno);
 	}
+
+	@Override
+	public List<SubmitTaskVO> findSubmitTaskListByStudentIdAndSubjectId(int stNo, int sbjNo) {
+		return map.findSubmitTaskListByStudentIdAndSubjectId(stNo, sbjNo);
+	}
 	
 
 }
