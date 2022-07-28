@@ -8,6 +8,7 @@
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.2</org.springframework-version>
 		<org.aspectj-version>1.9.0</org.aspectj-version>
