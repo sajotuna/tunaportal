@@ -6,12 +6,14 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.attendance.service.AttendanceService;
+import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
 import co.fourth.tuna.web.eclass.professor.vo.SubjectAttendanceRestVO;
@@ -42,6 +44,14 @@ public class AttendanceController {
 		List<StudentWithAttendanceVO> students = studentService.findStudentWithAttendanceListBySubjectIdAndDate(sbjno, closetDate);
 		SubjectAttendanceRestVO result = new SubjectAttendanceRestVO(students, closetDate);
 		return result;
+	}
+	
+	@PostMapping("/staff/insert/attendance")
+	public ResponseEntity<String> submitsAttendance(
+			@RequestBody List<AttendanceVO> attendanceList) {
+		// TODO sbjno 가 내강의인지 체크하기
+		
+		return null;
 	}
 	
 //	@RequestMapping("/eclass/student/attendance")
