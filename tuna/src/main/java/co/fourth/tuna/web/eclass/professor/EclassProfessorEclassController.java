@@ -117,9 +117,9 @@ public class EclassProfessorEclassController {
 		ProfessorVO prof = new ProfessorVO();
 		prof.setNo(Integer.parseInt(auth.getName()));
 
-		List<LectureNoticeVO> noticeList = noticeService.findByProfessor(prof, pageNum, 20);
+		List<LectureNoticeVO> noticeList = noticeService.findByProfessor(prof, pageNum, 15);
 		List<LectureNoticeVO> noticeList2 = noticeService.findByProfessor(prof, pageNum, 999);
-		int pageCount = (int) Math.ceil((double) noticeList2.size() / (20 + 1));
+		int pageCount = (int) Math.ceil((double) noticeList2.size() / (15 + 1));
 
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("pageCount", pageCount);

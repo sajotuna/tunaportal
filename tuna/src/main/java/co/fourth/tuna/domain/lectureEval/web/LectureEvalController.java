@@ -37,17 +37,15 @@ public class LectureEvalController {
 	
 	@RequestMapping("/stud/course/Details")
 	public String lectureEvaluationDetails(RedirectAttributes ra,LectureEvalVO vo, Model model, Authentication authentication) {
-		if(DataDao.accessDateCheck(yearDao.yearFind(), "1105") != 1) {
-			ra.addFlashAttribute("error", "현재 강의평가 열람기간이 아닙니다.");
-			return "redirect:/home";
-		}
+//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1105") != 1) {
+//			ra.addFlashAttribute("error", "현재 강의평가 열람기간이 아닙니다.");
+//			return "redirect:/home";
+//		}
 		vo.setStNo(authentication.getName());
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.CourseEval", vo);
 		model.addAttribute("list", lists);
 		return "course/evaluation/lectureEvaluationDetails";
 	}
-	
-	
 	
 	@RequestMapping("/stud/course/Search")
 	public String lectureEvaluationSearch(String proNo, Model model) {

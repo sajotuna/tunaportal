@@ -116,7 +116,7 @@ xmlns:th="http://www.thymeleaf.org"
                       </a>
                     </li>
                     <li class="page-item" th:each="num : ${#numbers.sequence(1,pageCount)}">
-                      <a class="page-link" href="javascript:void(0)" th:text="${num}">00</a>
+                      <a class="page-link" href="javascript:pageBtnClick();" th:text="${num}"></a>
                     </li>
                     <li class="page-item">
                       <a class="page-link" href="javascript:void(0)" aria-label="Next">
@@ -151,6 +151,17 @@ xmlns:th="http://www.thymeleaf.org"
 				Dialogs.dialog('success', '완료', '삭제가 완료되었습니다.');
 			</script>
 		</th:block>
+		
+		<script>
+		
+		function pageBtnClick(){
+			
+			console.log(this.value)
+			//location.href = 'noticeList?pageNum+'
+		}
+		
+		</script>
+		
         
       </main>
 
