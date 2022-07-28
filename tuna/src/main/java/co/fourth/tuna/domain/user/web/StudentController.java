@@ -117,6 +117,7 @@ public class StudentController {
 					result,
 					resHeaders,
 					HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
 		}
 		
 		return res;

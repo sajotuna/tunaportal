@@ -1949,7 +1949,15 @@ xmlns:th="http://www.thymeleaf.org"
                   })
                 })
             }
+
             
+/* @ student
+ ██████      ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ 
+██    ██     ██         ██    ██    ██ ██   ██ ██      ████   ██    ██    
+██ ██ ██     ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    
+██ ██ ██          ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██    
+ █ ████      ███████    ██     ██████  ██████  ███████ ██   ████    ██    
+*/
             function studentClickEvent() {
               let stNo = event.target.getAttribute('data_stno')
               // let sbjNo = event.target.dataset.sbjno;
@@ -1968,7 +1976,7 @@ xmlns:th="http://www.thymeleaf.org"
               })
               .then(result => result.json())
               .then(result => {
-                console.log(result);
+                //console.log(result);
               })
 
             }

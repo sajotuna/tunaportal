@@ -32,6 +32,6 @@ public interface SubjectService {
 	@Transactional
 	public String updateGradeRatio(GradeRatioVO grade);
 	
-	public List<SubjectWithAttendanceVO> getListByStudentIdAndProfessorId(int stuno, int pfno);
+	public List<SubjectWithAttendanceVO> getListByStudentIdAndProfessorId(int stno, int pfno);
 
 }

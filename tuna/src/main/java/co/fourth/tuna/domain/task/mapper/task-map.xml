@@ -131,15 +131,17 @@ WHERE NO = #{no}
 <select id="selectSubmitTaskWithTaskListByStudentIdAndSubjectId"
 	resultType="co.fourth.tuna.domain.task.vo.SubmitTaskWithTaskVO">
 	SELECT
-		FILENAME  ,
-		ENROLLDATE,
-		SCORE     ,
-		STNO      ,
-		TASKNO    ,
-		URI
-	FROM submittask
-	WHERE stno = #{stno} 
-		AND sbjno = #{sbjno}
+		s.FILENAME  ,
+		s.ENROLLDATE,
+		s.SCORE     ,
+		s.STNO      ,
+		s.TASKNO    ,
+		s.URI
+	FROM submittask s
+	JOIN task t
+		ON (s.taskno = t.no)
+	WHERE s.stno = #{stno} 
+		AND t.sbjno = #{sbjno}
 </select>
 
 <select id="selectOneByTaskId"

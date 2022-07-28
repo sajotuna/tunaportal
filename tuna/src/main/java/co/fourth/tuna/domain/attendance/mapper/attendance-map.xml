@@ -73,7 +73,7 @@
 			CLASSDATE
 		FROM
 			attendance
-		WHERE stno = #{snto}
+		WHERE stno = #{stno}
 			AND sbjno = #{sbjno}
 	</select>
 	

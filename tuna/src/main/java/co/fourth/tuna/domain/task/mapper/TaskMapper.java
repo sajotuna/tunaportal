@@ -45,7 +45,8 @@ public interface TaskMapper {
 			);
 	
 	public List<SubmitTaskWithTaskVO> selectSubmitTaskWithTaskListByStudentIdAndSubjectId(
-			int stno, int sbjno);
+			@Param("stno")int stno, 
+			@Param("sbjno")int sbjno);
 	
 	public TaskVO selectOneByTaskId(int taskno);
 }

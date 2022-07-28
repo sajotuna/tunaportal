@@ -137,7 +137,7 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 			VISIBLE
 		FROM
 			lectureqna
-		WHERE stno = #{snto}
+		WHERE stno = #{stno}
 			AND sbjno = #{sbjno}
 		
 	</select>

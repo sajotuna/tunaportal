@@ -116,13 +116,13 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
-	public List<SubjectWithAttendanceVO> getListByStudentIdAndProfessorId(int stuno, int pfno) {
-		List<SubjectWithAttendanceVO> subjectList = map.selectListByStudentIdAndPrfessorId(stuno, pfno);
+	public List<SubjectWithAttendanceVO> getListByStudentIdAndProfessorId(int stno, int pfno) {
+		List<SubjectWithAttendanceVO> subjectList = map.selectListByStudentIdAndPrfessorId(stno, pfno);
 		for(SubjectWithAttendanceVO subject : subjectList) {
-			subject.setAttendanceList(attendanceService.getListByStudentIdAndSbjno(stuno, subject.getNo()));
-			subject.setGrade(gradeService.getOneByStudentIdAndSubjectId(stuno, subject.getNo()));
-			subject.setSubmitTaskList(taskService.getSubmitTaskWithTaskListByStudentIdAndSubjectId(stuno, subject.getNo()));
-			subject.setQnaList(lecQnaService.getListByStudentIdAndSubjectId(stuno, subject.getNo()));
+			subject.setAttendanceList(attendanceService.getListByStudentIdAndSbjno(stno, subject.getNo()));
+			subject.setGrade(gradeService.getOneByStudentIdAndSubjectId(stno, subject.getNo()));
+			subject.setSubmitTaskList(taskService.getSubmitTaskWithTaskListByStudentIdAndSubjectId(stno, subject.getNo()));
+			subject.setQnaList(lecQnaService.getListByStudentIdAndSubjectId(stno, subject.getNo()));
 		}
 		return subjectList;
 	}
