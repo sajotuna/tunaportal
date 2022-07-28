@@ -25,6 +25,7 @@
 			default-target-url="/home"
 			authentication-failure-handler-ref="customLoginFailureHandler"
 		 />
+		 <security:access-denied-handler error-page="/error/403"/>
 		 <security:logout logout-url="/logout" invalidate-session="true" logout-success-url="/custom/login"/>
 		 <security:csrf disabled="false" />
 	
