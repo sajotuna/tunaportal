@@ -32,18 +32,18 @@ WHERE RN
 BETWEEN (#{pageNum}-1)*#{size}+1
     AND #{pageNum}*#{size}
     <if test="startDate != null and !startDate.equals('') and endDate != null and !endDate.equals('')">
-      AND u.ENTERDATE BETWEEN TO_DATE(#{startDate},'rrrr-MM-dd') AND TO_DATE(#{endDate},'rrrr-MM-dd')
+      AND s.ENTERDATE BETWEEN TO_DATE(#{startDate},'rrrr-MM-dd') AND TO_DATE(#{endDate},'rrrr-MM-dd')
       </if>
     <if test="deptCode != null and !deptCode.equals('')">
-    AND u.DEPTCODE = #{deptCode}
+    AND s.DEPTCODE = #{deptCode}
     </if>
     <if test="statecode != null and !statecode.equals('')">
-    AND u.STATECODE = #{statecode}
+    AND s.STATECODE = #{statecode}
     </if>
     <if test="no != null and !no.equals('')">
-    AND u.no = #{no}
+    AND s.no = #{no}
     </if>
-     
+    ORDER BY s.no DESC 
 
 </select>
 

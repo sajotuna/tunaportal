@@ -24,6 +24,7 @@ import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
+import co.fourth.tuna.domain.subject.service.SubjectService;
 import nl.captcha.Captcha;
 
 @Controller
@@ -37,6 +38,8 @@ public class LectureApplyController {
 	private SqlSession SqlSession;
 	@Autowired
 	private DateCheckService DataDao;
+	@Autowired
+	private SubjectService sbjDao;
 	
 	@RequestMapping("/stud/course/Warning")
 	public String courseWarning() {
@@ -47,15 +50,16 @@ public class LectureApplyController {
 	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication,@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
 			  @RequestParam Map<String, Object> params ) {
 
-		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
-			model.addAttribute("error", "현재 수강신청 열람기간이 아닙니다.");
-			return "schedule/date/courseDate";
-		}
+//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
+//			model.addAttribute("error", "현재 수강신청 열람기간이 아닙니다.");
+//			return "schedule/date/courseDate";
+//		}
 		
 		
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		params.put("seasonCode", yearDao.yearFind());
+		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount()/10));
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
 		vo.setStateCode("402");

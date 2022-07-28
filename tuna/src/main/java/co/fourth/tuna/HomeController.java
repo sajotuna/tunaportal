@@ -56,11 +56,11 @@ public class HomeController {
 		return "home";
 	}
 
-	@RequestMapping("/")
-	public String homepage(Locale locale, Model model) {
-		model.addAttribute("bnList", bannerDao.sliderBannerSelect());
-		return "home";
-	}
+//	@RequestMapping("/")
+//	public String homepage(Locale locale, Model model) {
+//		model.addAttribute("bnList", bannerDao.sliderBannerSelect());
+//		return "home";
+//	}
 
 	@RequestMapping("/logout")
 	public void logout() {

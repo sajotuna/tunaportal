@@ -101,6 +101,12 @@ public class SubjectServiceImpl implements SubjectService {
 	
 		return "성공적으로 업데이트 되었습니다.";
 	}
+
+	@Override
+	public int subjectCount() {
+		// TODO Auto-generated method stub
+		return map.subjectCount();
+	}
 	
 	
 	
