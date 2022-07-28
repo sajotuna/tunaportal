@@ -6,6 +6,7 @@ import java.util.List;
 import co.fourth.tuna.domain.user.vo.StudentExVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
+import co.fourth.tuna.domain.user.vo.StudentWithLectureQnaVO;
 import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
 
 public interface StudentService {
@@ -22,5 +23,6 @@ public interface StudentService {
 	public boolean findEmail(StudentVO vo);
 	public void studEamilPwdUpdate(StudentVO vo);
 	public void freshmanPwdUpdate(StudentVO vo);
+	public List<StudentWithSubmitTaskVO> findOneStudentBysubjectNo(int sbjNo, int stNo);
 	
 }

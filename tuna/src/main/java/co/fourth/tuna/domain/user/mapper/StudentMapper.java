@@ -2,6 +2,8 @@ package co.fourth.tuna.domain.user.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import co.fourth.tuna.domain.user.vo.StudentExVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
@@ -25,4 +27,7 @@ public interface StudentMapper {
 	public List<StudentWithAttendanceVO> findStudentWithAttendanceListBySubjectId(int sbjno);
 
 	public void freshmanPwdUpdate(StudentVO vo);
+	
+	public List<StudentWithSubmitTaskVO> findOneStudentBysubjectNo(@Param("sbjNo")int sbjNo, 
+																	@Param("stNo")int stNo);
 }
