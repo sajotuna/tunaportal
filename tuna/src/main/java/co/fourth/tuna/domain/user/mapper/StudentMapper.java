@@ -2,6 +2,7 @@ package co.fourth.tuna.domain.user.mapper;
 
 import java.util.List;
 import co.fourth.tuna.domain.user.vo.StudentExVO;
+import co.fourth.tuna.domain.user.vo.StudentWithSubjectsVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
 import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
@@ -24,4 +25,5 @@ public interface StudentMapper {
 	public List<StudentWithAttendanceVO> findStudentWithAttendanceListBySubjectId(int sbjno);
 
 	public void freshmanPwdUpdate(StudentVO vo);
+	public StudentWithSubjectsVO selectOneByStudentId(int stno);
 }

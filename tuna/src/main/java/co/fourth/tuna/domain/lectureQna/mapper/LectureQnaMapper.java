@@ -38,4 +38,7 @@ public interface LectureQnaMapper {
 	
 	public List<LectureQnaVO> findListBySubjectId(int sbjno);
 	
+	public List<LectureQnaVO> selectListByStudentIdAndSubjectId(
+			@Param("stno")int stno, 
+			@Param("sbjno")int sbjno);
 }

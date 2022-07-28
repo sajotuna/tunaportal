@@ -158,4 +158,31 @@ update student set pwd = #{pwd}, email = #{email}, chpwd = 1 where no = #{no}
 	
 </select>
 
+<select id="selectOneByStudentId"
+	resultType="co.fourth.tuna.domain.user.vo.StudentWithSubjectsVO">
+	SELECT
+		NO        ,
+		EMAIL     ,
+		NAME      ,
+		TEL       ,
+		ZIP       ,
+		ADDR      ,
+		SY        ,
+		STATECODE ,
+		BIRTH     ,
+		BACC      ,
+		BANK      ,
+		DEPTCODE  ,
+		ENTERDATE ,
+		ROLE      ,
+		CHPWD     ,
+		(<include refid="co.fourth.tuna.domain.common.mapper.CodeMapper.findCodeNameSql">
+			<property name="no" value="deptcode" />
+		</include>) AS deptname
+	FROM
+		student
+	WEHRE
+		no = #{stno}
+</select>
+
 </mapper>

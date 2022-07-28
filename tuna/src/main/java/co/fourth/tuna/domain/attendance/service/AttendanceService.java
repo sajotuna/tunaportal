@@ -17,4 +17,7 @@ public interface AttendanceService {
 	
 	// 출석부 업데이트
 	public String updateAttendanceList(List<AttendanceVO> list);
+	
+	// 
+	public List<AttendanceVO> getListByStudentIdAndSbjno(int stno, int sbjno);
 }

@@ -123,4 +123,23 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 		WHERE sbjno = ${sbjno}
 	</select>
 	
+	<select id="selectListByStudentIdAndSubjectId" 
+		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+		SELECT
+			NO         ,
+			TITLE      ,
+			CONTENT    ,
+			ANSWER     ,
+			ENROLLDATE ,
+			STNO       ,
+			SBJNO      ,
+			ANSWERDATE ,
+			VISIBLE
+		FROM
+			lectureqna
+		WHERE stno = #{snto}
+			AND sbjno = #{sbjno}
+		
+	</select>
+	
 </mapper>

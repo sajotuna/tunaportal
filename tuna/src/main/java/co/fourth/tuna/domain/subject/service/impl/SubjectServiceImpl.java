@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.fourth.tuna.domain.attendance.service.AttendanceService;
 import co.fourth.tuna.domain.common.mapper.LectureScheduleMapper;
 import co.fourth.tuna.domain.common.service.YearService;
+import co.fourth.tuna.domain.grade.service.GradeService;
+import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
 import co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper;
 import co.fourth.tuna.domain.lectureplan.service.LecturePlanService;
 import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
@@ -16,6 +19,8 @@ import co.fourth.tuna.domain.subject.mapper.SubjectMapper;
 import co.fourth.tuna.domain.subject.service.SubjectService;
 import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.domain.subject.vo.SubjectWithAttendanceVO;
+import co.fourth.tuna.domain.task.service.TaskService;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 @Service
@@ -36,6 +41,14 @@ public class SubjectServiceImpl implements SubjectService {
 	YearService yearService;
 	@Autowired
 	SubjectService subjectService;
+	@Autowired
+	AttendanceService attendanceService;
+	@Autowired
+	GradeService gradeService;
+	@Autowired
+	TaskService taskService;
+	@Autowired
+	LectureQnaService lecQnaService;
 	
 	@Override
 	public SubjectVO findOne(SubjectVO vo) {
@@ -100,6 +113,18 @@ public class SubjectServiceImpl implements SubjectService {
 //		return new ServiceResponseVO(ResState.ERROR, e.getMessage());
 	
 		return "성공적으로 업데이트 되었습니다.";
+	}
+
+	@Override
+	public List<SubjectWithAttendanceVO> getListByStudentIdAndProfessorId(int stuno, int pfno) {
+		List<SubjectWithAttendanceVO> subjectList = map.selectListByStudentIdAndPrfessorId(stuno, pfno);
+		for(SubjectWithAttendanceVO subject : subjectList) {
+			subject.setAttendanceList(attendanceService.getListByStudentIdAndSbjno(stuno, subject.getNo()));
+			subject.setGrade(gradeService.getOneByStudentIdAndSubjectId(stuno, subject.getNo()));
+			subject.setSubmitTaskList(taskService.getSubmitTaskWithTaskListByStudentIdAndSubjectId(stuno, subject.getNo()));
+			subject.setQnaList(lecQnaService.getListByStudentIdAndSubjectId(stuno, subject.getNo()));
+		}
+		return subjectList;
 	}
 	
 	

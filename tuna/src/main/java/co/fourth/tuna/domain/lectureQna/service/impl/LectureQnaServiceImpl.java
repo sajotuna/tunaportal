@@ -50,6 +50,12 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 		mapper.delOneQna(vo);
 	}
 
+	@Override
+	public List<LectureQnaVO> getListByStudentIdAndSubjectId(
+				int stno, int sbjno) {
+		return mapper.selectListByStudentIdAndSubjectId(stno, sbjno);
+	}
+
 	
 	//mapper 주입, 오버라이딩
 }

@@ -63,4 +63,19 @@
 			no = #{no}
 	</update>
 	
+	<select id="selectListByStudentIdAndSbjectId"
+		resultType="co.fourth.tuna.domain.attendance.vo.AttendanceVO">
+		SELECT
+			STATECODE ,
+			STNO      ,
+			NO        ,
+			SBJNO     ,
+			CLASSDATE
+		FROM
+			attendance
+		WHERE stno = #{snto}
+			AND sbjno = #{sbjno}
+	</select>
+	
 </mapper>
+

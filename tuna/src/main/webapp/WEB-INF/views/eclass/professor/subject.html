@@ -707,7 +707,8 @@ xmlns:th="http://www.thymeleaf.org"
                       </div>
                       <div class="col-3 fw-bold">
                         <div class="align-items-center">
-                          <div>김철수</div>
+                          <div><span>김철수</span>&nbsp;
+                            <span class="fw-medium fs-sm text-muted">[물리학과]</span></div>
                           <div>10530999</div>
                           <div>010-3333-4444</div>
                         </div>
@@ -949,6 +950,7 @@ xmlns:th="http://www.thymeleaf.org"
             const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
             const REST_URL = {
+              STUDENT_DETAIL : "/tuna/staff/student",
               PROGRESS_CONTENT : "/tuna/prof/lecPlans",
               //ATTENDANCE_CONTENT : "/tuna/prof/students",
               ATTENDANCE_CONTENT : "/tuna/staff/attendance",
@@ -968,6 +970,7 @@ xmlns:th="http://www.thymeleaf.org"
               SUBMIT_LECTURE_FILE_UPLOAD : "/tuna/staff/insertSubjectFile",
               SUBMIT_ATTENDANCES : "/tuna/staff/insert/attendance",
               LECTURE_FILE_DELETE : "/tuna/staff/deleteSubjectFile",
+
             };
             // const TAB_BTN_NUM = {
 
@@ -1467,7 +1470,7 @@ xmlns:th="http://www.thymeleaf.org"
                   <i class="fa fa-2x fa-circle-user"></i>
                 </td>
                 <td class="table-cell">
-                  <a class="student-selector" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);" data-stno="${student.no}" data-sbjno="${sbjno}">
+                  <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);" data-stno="${student.no}" data-sbjno="${sbjno}">
                     ${student.name}</a>
                 </td>
                 <td class="table-cell">

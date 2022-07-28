@@ -52,4 +52,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return "업데이트 성공";
 	}
 
+	@Override
+	public List<AttendanceVO> getListByStudentIdAndSbjno(int stno, int sbjno) {
+		return map.selectListByStudentIdAndSbjectId(stno, sbjno);
+	}
+
 }

@@ -128,6 +128,35 @@ WHERE NO = #{no}
 	AND SBJNO = #{sbjNo}
 </select>
 
+<select id="selectSubmitTaskWithTaskListByStudentIdAndSubjectId"
+	resultType="co.fourth.tuna.domain.task.vo.SubmitTaskWithTaskVO">
+	SELECT
+		FILENAME  ,
+		ENROLLDATE,
+		SCORE     ,
+		STNO      ,
+		TASKNO    ,
+		URI
+	FROM submittask
+	WHERE stno = #{stno} 
+		AND sbjno = #{sbjno}
+</select>
+
+<select id="selectOneByTaskId"
+	resultType="co.fourth.tuna.domain.task.vo.TaskVO">
+	SELECT 
+		NO        ,
+		TITLE     ,
+		LIMITDATE ,
+		SBJNO     ,
+		CONTENT   ,
+		STARTDATE 
+	FROM 
+		task
+	WHERE
+		no = #{taskno}
+</select>
+
 </mapper>
 
 

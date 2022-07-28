@@ -24,5 +24,4 @@ public interface GradeMapper {
 	
 	public int updateGradeByGradeNo(GradeFormVO vo);
 	public int updateGradeByStudentNoAndSubjectNo(GradeFormVO vo);
-	
 }

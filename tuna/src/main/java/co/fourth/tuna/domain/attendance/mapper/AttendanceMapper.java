@@ -31,4 +31,6 @@ public interface AttendanceMapper {
 			@Param("stno")int stno);
 	
 	public int updateAttendanceByAttendanceId(AttendanceVO vo);
+	
+	public List<AttendanceVO> selectListByStudentIdAndSbjectId(int stno, int sbjno);
 }
