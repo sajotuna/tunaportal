@@ -14,8 +14,11 @@
 	</select>
 	
 	<select id="selectSc" resultType="map" parameterType="co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO">
-	SELECT *
-	FROM LECTURESCHEDULE WHERE SBJNO = #{sbjNo}
+	SELECT DISTINCT
+    ROOMCODE,
+    LISTAGG(TIMECODE, '/') WITHIN GROUP (ORDER BY DAYCODE DESc) OVER (PARTITION BY SBJNO) AS TIMECODE,
+    LISTAGG(DAYCODE, '/') WITHIN GROUP (ORDER BY DAYCODE DESC) OVER (PARTITION BY SBJNO) AS DAYCODE
+	FROM LECTURESCHEDULE WHERE SBJNO =  #{sbjNo}
 	</select>
 	
 	<resultMap id="lecturePlanMap"

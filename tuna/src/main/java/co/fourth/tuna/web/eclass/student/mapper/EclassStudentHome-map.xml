@@ -50,7 +50,7 @@
 	</select>
 	<select id="singleTwoQna" resultType="map" parameterType="co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO">
 	<![CDATA[
-		SELECT DISTINCT T.NO, T.TITLE, S.NAME, T.SBJNO
+		SELECT DISTINCT T.NO, T.TITLE, S.NAME, T.SBJNO, T.VISIBLE, T.STNO
 		FROM LECTUREQNA T, LECTUREAPPLY L, SUBJECT S, STUDENT U
 		WHERE T.SBJNO = L.SBJNO
         AND L.SBJNO = S.NO

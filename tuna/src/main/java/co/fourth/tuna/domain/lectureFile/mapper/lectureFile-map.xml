@@ -5,6 +5,7 @@
 		SELECT *
 		FROM LECTUREFILE
 		WHERE SBJNO = #{sbjNo}
+		ORDER BY NO DESC
 	</select>
 	
 	<insert id="insertLectureFileByLectureFileVO"

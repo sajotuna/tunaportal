@@ -71,7 +71,7 @@ tr {
 											</tr>
 											<tr>
 												<th class="fw-semibold fs-sm">요일/교시</th>
-												<th class="fw-semibold fs-sm" colspan="4" th:text="${sc.DAYCODE}+${sc.TIMECODE}"></th>
+												<th class="fw-semibold fs-sm" colspan="4" th:utext="${sc.DAYCODE}+'<br/>'+${sc.TIMECODE}"></th>
 												<th class="fw-semibold fs-sm">학점</th>
 												<th class="fw-semibold fs-sm" colspan="4" th:text="${plan.POINT}"></th>
 											</tr>

@@ -18,6 +18,7 @@ public class LectureNoticeVO {
 	private int sbjNo;
 	private int stNo;
 	private int seasonCode;
+	private int rowNum;
 	
 	private SubjectVO subjectVO;
 }

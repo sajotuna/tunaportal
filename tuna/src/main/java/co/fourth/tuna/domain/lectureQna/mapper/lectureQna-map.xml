@@ -29,7 +29,7 @@
 <!-- 질문목록 -->
 	<select id="qnaList" resultType="map" parameterType="HashMap">
 	<![CDATA[
-		SELECT *
+	SELECT q.*, ROWNUM
 	FROM
     (SELECT
    		Q.NO, 
@@ -45,10 +45,11 @@
 	FROM STUDENT S, LECTUREQNA Q
 	WHERE Q.SBJNO = #{sbjNo}
     AND S.NO = Q.STNO
-    ORDER BY q.NO DESC)
+    ORDER BY Q.NO) Q
     WHERE RN 
     	BETWEEN (#{pageNum}-1) * #{size} +1
     	AND #{pageNum}*#{size}
+    	ORDER BY ROWNUM DESC
 
     ]]>
 	</select>
@@ -64,11 +65,12 @@
 		   TO_CHAR(Q.ANSWERDATE, 'MM/DD HH24:MI:SS') ANSWERDATE,
 		   Q.VISIBLE,
 		   S.NAME, 
-		   L.SBJNO
+		   L.SBJNO,
+		   Q.STNO
 	FROM STUDENT S, LECTUREQNA Q, LECTUREAPPLY L
-	WHERE S.NO = #{stNo}
-    AND S.NO = L.STNO
-    AND L.SBJNO = Q.SBJNO
+	WHERE  L.SBJNO = Q.SBJNO
+    AND L.STNO = S.NO
+    AND Q.STNO = S.NO
 	AND Q.SBJNO = #{sbjNo}
 	AND Q.NO = #{no}
 	</select>

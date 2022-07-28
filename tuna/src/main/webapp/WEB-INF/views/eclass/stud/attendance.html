@@ -50,7 +50,7 @@
 												<div class="block block-rounded"
 													th:each="num : ${#numbers.sequence(1, 16)}">
 													<p
-														class="p-3 block block-rounded border bg-white m-0 text-center fw-bold"
+														class="p-3 block block-rounded border bg-light m-0 text-center fw-bold"
 														th:text="${num}+주차"></p>
 												</div>
 											</div>
@@ -63,7 +63,7 @@
 													<div class="block block-rounded"
 														th:if="${#strings.isEmpty(mj.STATECODE)} and ${#lists.isEmpty(refin)}">
 														<p
-															class="p-3 block block-rounded bg-light border m-0 text-center fw-bold"
+															class="p-3 block block-rounded bg-white border m-0 text-center fw-bold"
 															th:text="${mj.CLASSDATE}"></p>
 													</div>
 													<div class="block block-rounded"
@@ -96,7 +96,7 @@
 													<div class="block block-rounded"
 														th:if="${#strings.isEmpty(rf.STATECODE)} and ${#lists.isEmpty(major)}">
 														<p
-															class="p-3 block block-rounded bg-light border m-0 text-center fw-bold"
+															class="p-3 block block-rounded bg-white border m-0 text-center fw-bold"
 															th:text="${rf.CLASSDATE}"></p>
 													</div>
 													<div class="block block-rounded"

@@ -11,25 +11,22 @@
 	
 	<!-- 단일과목 공지전체 -->
 	<select id="noticeList" resultType="map" parameterType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO">
-	SELECT N.NO, N.TITLE, N.SBJNO, TO_CHAR(N.ENROLLDATE, 'YYYY-MM-DD HH24:MI') ENROLLDATE
-	FROM LECTUREAPPLY L JOIN LECTURENOTICE N
-	ON(L.SBJNO = N.SBJNO)
-	JOIN SUBJECT J
-	ON(J.NO = N.SBJNO)
-	WHERE N.SBJNO = #{sbjNo}
-	ORDER BY N.NO DESC
+SELECT N.*, ROWNUM FROM
+(SELECT DISTINCT N.NO, N.TITLE, N.SBJNO, TO_CHAR(N.ENROLLDATE, 'YYYY-MM-DD HH24:MI') ENROLLDATE
+	FROM LECTUREAPPLY L, LECTURENOTICE N
+	WHERE L.SBJNO = N.SBJNO
+	AND N.SBJNO = #{sbjNo}
+	ORDER BY N.NO) N
+    ORDER BY ROWNUM DESC
 	</select>
 	
 	<!-- 단일과목 1개 공지 -->
 	<select id="noticeSelect" resultType="map" parameterType="co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO" resultMap="ClobToString">
 
-	SELECT N.NO, N.TITLE, N.CONTENT AS "CONTENT", TO_CHAR(N.ENROLLDATE, 'YYYY-MM-DD HH24:MI') ENROLLDATE
-	FROM LECTUREAPPLY L JOIN LECTURENOTICE N
-	ON(L.SBJNO = N.SBJNO)
-	JOIN SUBJECT J
-	ON(J.NO = N.SBJNO)
-	WHERE N.SBJNO = #{sbjNo}
-	AND N.NO = #{no}
+	  SELECT NO, TITLE, CONTENT, TO_CHAR(ENROLLDATE, 'YYYY-MM-DD HH24:MI') ENROLLDATE
+    FROM LECTURENOTICE WHERE 
+    SBJNO = #{sbjNo} 
+    AND NO = #{no}
 	</select>
 	
 	<resultMap id="lectureNoticeMapWithSubject" 

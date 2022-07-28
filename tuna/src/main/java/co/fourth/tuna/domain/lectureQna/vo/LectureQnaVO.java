@@ -25,6 +25,7 @@ public class LectureQnaVO {
 	private int stNo;
 	private String sbjNo;
 	private int visible;
+	private int rowNum;
 	
 	private StudentVO studentVO;
 	private SubjectVO subjectVO;
