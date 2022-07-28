@@ -6,7 +6,7 @@ var userNo = $("meta[name='userNo']").attr('content');
 function banner(bannerCode) {
 	$.ajax({
 		
-		url: getContextPath() + `${bannerCode}`,
+		url: getContextPath() + `admin/banner/${bannerCode}`,
 		type: 'GET',
 		dataType: 'json'
 		

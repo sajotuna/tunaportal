@@ -29,14 +29,14 @@ public class BannerController {
 	@Autowired String fileDir;
 	
 	// 슬라이드 배너 조회
-	@RequestMapping("/sliderBanner")
-	public List<BannerVO> sliderBanner(Model model) {
+	@RequestMapping("/{user}/banner/sliderBanner")
+	public List<BannerVO> sliderBanner(@PathVariable String user, Model model) {
 		return bannerDao.sliderBannerSelect();
 	}
 	
 	// 기본, 옵션 배너 1건 조회
-	@GetMapping("/all/{bannerCode}")
-	public BannerVO optionBannerSelect(@PathVariable String bannerCode) {
+	@GetMapping("/{user}/banner/{bannerCode}")
+	public BannerVO optionBannerSelect(@PathVariable String user, @PathVariable String bannerCode) {
 			return bannerDao.bannerSelect(bannerCode);	
 	}
 	

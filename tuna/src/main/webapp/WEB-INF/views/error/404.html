@@ -1,52 +1,37 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-data-layout-decorate="~{layouts/navLayout}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-    <title>404</title>
-
-    <meta name="description" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-    <meta name="author" content="pixelcave">
-    <meta name="robots" content="noindex, nofollow">
-
-    <!-- Open Graph Meta -->
-    <meta property="og:title" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework">
-    <meta property="og:site_name" content="OneUI">
-    <meta property="og:description" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-
-    <!-- Icons -->
-    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-    <link rel="shortcut icon" th:src="@{/resources/assets/media/favicons/favicon.png}">
-    <link rel="icon" type="image/png" sizes="192x192" th:src="@{/resources/assets/media/favicons/favicon-192x192.png}">
-    <link rel="apple-touch-icon" sizes="180x180" th:src="@{/resources/assets/media/favicons/apple-touch-icon-180x180.png}">
-    <!-- END Icons -->
-
-    <!-- Stylesheets -->
-    <!-- Fonts and OneUI framework -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-
-
+    <title>404 Error</title>
+    <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.css}">
+    <style>
+	    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+	    
+		* { 
+			font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+		}	
+    </style>
   </head>
   <body>
-  <main layout:fragment="main">
-          <div class="hero bg-body-extra-light">
+  <div id="page-container">
+  	<main id="main-container">
+        <div class="hero bg-body-extra-light">
           <div class="hero-inner text-center">
             <div class="bg-body-extra-light">
               <div class="content content-full overflow-hidden">
                 <div class="py-4">
                   <!-- Error Header -->
-                  <h1 class="display-1 fw-bolder text-city">
+                  <img th:src="@{/resources/assets/media/error-icon.png}" width=100>
+                  <h1 class="display-1 fw-bolder text-primary">
                     404
                   </h1>
-                  <h2 class="h4 fw-normal text-muted mb-5">
-                    We are sorry but the page you are looking for was not found..
+                  <h2 class="h4 fw-normal text-muted mb-4">
+                    죄송합니다. 요청하신 페이지를 찾을 수 없습니다.
                   </h2>
+                  <p>방문하시려는 페이지의 주소가 잘못 입력되었거나,<br>
+					페이지의 주소가 변경 혹은 삭제되어 요청하신 페이지를 찾을 수 없습니다.<br>
+					입력하신 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.</p>
                   <!-- END Error Header -->
 
                   <!-- Search Form -->
@@ -54,9 +39,9 @@ data-layout-decorate="~{layouts/navLayout}">
                   <!-- END Search Form -->
                   <div class="content content-full text-muted fs-sm fw-medium">
               <!-- Error Footer -->
-              <p class="mb-1">
-                Would you like to let us know about it?
-              </p>
+              <a class="h5 link-fx text-primary-light" th:href="@{/home}">
+                홈으로 돌아가기
+              </a>
               <!-- END Error Footer -->
             </div>
               </div>
@@ -66,14 +51,6 @@ data-layout-decorate="~{layouts/navLayout}">
             </div>
         <!-- END Page Content -->
       </main>
-      <!-- END Main Container -->
-    <!-- END Page Container -->
-
-    <!--
-        OneUI JS
-
-        Core libraries and functionality
-        webpack is putting everything together at assets/_js/main/app.js
-    -->
+    </div>
   </body>
 </html>
