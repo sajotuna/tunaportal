@@ -298,13 +298,13 @@ xmlns:th="http://www.thymeleaf.org"
                   <div class="tab-pane pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
                     <div class="row">
                       <div class="col-xl-2 align-self-center">
-                        <span class="fs-lg fw-bold">yy-MM-dd (요)</span>
+                        <span class="fs-lg fw-bold" id="attendance_date_text">yy-MM-dd (요)</span>
                       </div>
                       <div class="offset-6 col-xl-2">
                         <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
                       </div>
                       <div class="col-xl-2">
-                        <button class="col-12 btn btn-primary">적용</button>
+                        <button class="col-12 btn btn-primary" id="attendance_submit">적용</button>
                       </div>
                     </div>
                     <hr class="mb-0">
@@ -946,10 +946,12 @@ xmlns:th="http://www.thymeleaf.org"
             const TAB_ID = "tab-pane-";
             const GRADE_STUD_ID = "student-";
             const LECTURE_FILE_ID = "lecture-file-";
+            const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
             const REST_URL = {
               PROGRESS_CONTENT : "/tuna/prof/lecPlans",
-              ATTENDANCE_CONTENT : "/tuna/prof/students",
+              //ATTENDANCE_CONTENT : "/tuna/prof/students",
+              ATTENDANCE_CONTENT : "/tuna/staff/attendance",
               TASK_CONTENT : "/tuna/staff/task/content",
               QNA_CONTENT : "/tuna/prof/lecQna",
               NOTICE_CONTENT : "/tuna/prof/lecNotices",
@@ -978,7 +980,7 @@ xmlns:th="http://www.thymeleaf.org"
             //  파라미터
             let g_url = new URL(window.location.href);
             let params = new URLSearchParams(g_url.searchParams);
-            let sbjno = params.get('no'); // 파라미터
+            let sbjno = params.get('no')*1; // 파라미터
             let msg = params.get('msg');
 
             let taskno = 0; // TODO 과제 선택
@@ -1384,11 +1386,17 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
             // 출결 패널 세팅
-            function setAttendanceContent(students) {
+            function setAttendanceContent(data) {
               let table = document.querySelector('#subject-attendance-table');
               let tbody = table.firstElementChild;
+
+              let date_text = document.querySelector('#attendance_date_text');
+              let mdate = new Date(data.date)
+              let weekday = (dateToKoreanWeekday(mdate));
+              date_text.innerText = `${data.date} (${weekday})`;
+
               tbody.innerHTML = "";
-              students.forEach(student => {
+              data.students.forEach(student => {
                 let tr = document.createElement('tr');
                 let innerHTML = `
                 <td class="table-cell" style="width: 54px;">
@@ -1420,6 +1428,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                   </div>
                 </td>`;
+                // TODO 날짜 넣기
                 
                 tr.innerHTML = innerHTML;
                 attendRadioGroups.push(tr);
@@ -1485,7 +1494,7 @@ xmlns:th="http://www.thymeleaf.org"
                   disabled = "disabled"
                 } else { //
                   fileName = student.submitTask.fileName;
-                  uri = student.submitTask.uri; //TODO 다운로드 링크
+                  uri = `/tuna/download?fileName=${student.submitTask.fileName}&originName=${student.submitTask.uri}&folder=lectureFile`;
                   enrollDate = dateTimeToISO(student.submitTask.enrollDate);
                   score = student.submitTask.score;
                   tr.data_submit_no = student.submitTask.no;
@@ -1615,11 +1624,12 @@ xmlns:th="http://www.thymeleaf.org"
               let tbody = table.getElementsByTagName('tbody')[0];
               let trTags = tbody.getElementsByTagName('tr');
               studentsGradeTr = [];
-              for(let tr of trTags){ tr.remove() };
+              //for(let tr of trTags){ tr.remove() };
+              tbody.innerHTML = "";
               for( let stud of studList ) {
                 let tr = document.createElement('tr');
                 tr.id = GRADE_STUD_ID+stud.gradeVO.no;
-                tr.data-
+                tr.data_stno = stud.no;
                 tr.classList.add('m-0');
                 tr.innerHTML = `
                   <td class="table-cell">
@@ -1896,6 +1906,11 @@ xmlns:th="http://www.thymeleaf.org"
               mDate = mDate.toISOString();
               result += mDate.split('T')[0].slice(5) + " " + mDate.split('T')[1].split('.')[0];
               return result;
+            }
+
+            function dateToKoreanWeekday(date) {
+              console.log(date);
+              return WEEKDAY[date.getDay()];
             }
 		  </script>
 	      <script th:src="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.js}"></script>

@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.user.service.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import co.fourth.tuna.domain.user.mapper.StudentMapper;
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentExVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
+import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
 import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
 
 @Service
@@ -76,6 +78,8 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 		
 		return students;
 	}
+	
+	
 	
 	public int computeAttendanceScore(List<AttendanceVO> attens) {
 		int score = 100; // 100점 만점
@@ -153,6 +157,20 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 		mapper.freshmanPwdUpdate(vo);
 		
 	}
+
+	@Override
+	public List<StudentWithAttendanceVO> findStudentWithAttendanceListBySubjectIdAndDate(int sbjno, LocalDate date) {
+		//LocalDate closetDate = attenMap.selectThisAttendanceBySubjectId(sbjno);
+		List<StudentWithAttendanceVO> students = 
+			mapper.findStudentWithAttendanceListBySubjectId(sbjno);
+		for(StudentWithAttendanceVO stud : students) {
+			stud.setAttendance(attenMap.findAttendanceByDateAndSubjectIdAndStudentId(date, sbjno, stud.getNo()));
+		}
+		
+		return students;
+	}
+	
+	
 
 	
 	

@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.fourth.tuna.domain.user.vo.StudentExVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
+import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
 import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
 
 public interface StudentMapper {
@@ -18,8 +19,10 @@ public interface StudentMapper {
 	public boolean findEmail(StudentVO vo);
 	public void studEamilPwdUpdate(StudentVO vo);
 	//TODO 사용자 가져올 때 비밀번호 제외
+	public List<StudentVO> findStudentsBySubjectId(int sbjno);
 	public List<StudentExVO> findListBySubjectId(int sbjno);
 	public List<StudentWithSubmitTaskVO> findListWithSubmitTaskByTaskId(int taskno);
+	public List<StudentWithAttendanceVO> findStudentWithAttendanceListBySubjectId(int sbjno);
 
 	public void freshmanPwdUpdate(StudentVO vo);
 }
