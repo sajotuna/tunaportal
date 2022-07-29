@@ -790,6 +790,9 @@ xmlns:th="http://www.thymeleaf.org"
                         <div class="block block-rounded block-themed block-bordered border-1">
                           <div class="block-header bg-primary-darker">
                             <div class="block-title">참치 분해학</div>
+                            <div>
+                              <button class="btn btn-sm btn-primary">적용</button>
+                            </div>
                           </div>
                           <div class="block-content p-0" style="overflow-x: scroll;">
                             <table class="table table-vcenter table-bordered text-center mb-0 table-bordered border-dark border-2">
@@ -1989,7 +1992,7 @@ xmlns:th="http://www.thymeleaf.org"
 
                 if(res.ok) {
                   setDetailUserInfo(resBody.student)
-                  setDetailUserAttendance(resBody.student);
+                  // setDetailUserAttendance(resBody.student);
                   setDetailUserGrade(resBody.student);
                 } else {
                   Dialogs.dialog('error',
@@ -2112,6 +2115,9 @@ xmlns:th="http://www.thymeleaf.org"
                 <div class="block block-rounded block-themed block-bordered border-1">
                   <div class="block-header bg-primary-darker">
                     <div class="block-title">${subject.name}</div>
+                    <div>
+                      <button class="btn btn-sm btn-primary">적용</button>
+                    </div>
                   </div>
                   <div class="block-content p-0" style="overflow-x: scroll;">
                     <table class="table table-vcenter table-bordered text-center mb-0 table-bordered border-dark border-2">
