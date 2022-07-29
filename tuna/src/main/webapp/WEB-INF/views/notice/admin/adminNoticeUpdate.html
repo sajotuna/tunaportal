@@ -59,8 +59,14 @@
 
 							<div class="col-6">
 								<select id="visible" name="visible" class="form-select">
-									<option value="Y">공개</option>
+									<th:block th:if="${notice.visible=='Y'}">
+									<option selected value="Y">공개</option>
 									<option value="N">비공개</option>
+									</th:block>
+									<th:block th:if="${notice.visible=='N'}">
+									<option value="Y">공개</option>
+									<option selected value="N">비공개</option>
+									</th:block>
 								</select>
 							</div>
 						</div>
@@ -84,6 +90,7 @@
 			
 		    $(function() {
 		    	ckfinder();
+		    	fileDelete();
 		    })
 		    
 	    
@@ -102,7 +109,8 @@
 	     
 		
 		    //파일삭제 
-		$('.delBtn').on('click', function() {
+		    function fileDelete(){
+		    		$('.delBtn').on('click', function() {
 				var header = $("meta[name='_csrf_header']").attr('content');
 				var token = $("meta[name='_csrf']").attr('content');
 
@@ -130,6 +138,8 @@
 					}
 				})
 			})
+		    }
+
 
 			function getContextPath() {
 				var pathName = window.location.pathname.substring(1);

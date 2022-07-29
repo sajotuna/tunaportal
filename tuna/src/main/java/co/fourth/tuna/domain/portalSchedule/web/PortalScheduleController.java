@@ -43,16 +43,16 @@ public class PortalScheduleController {
 		model.addAttribute("presentCode",yearService.yearFind());
 		model.addAttribute("seasonCodes",seasonCodes);
 		
+		
 		return "schedule/user/portalSchedule";
 	}
 
 	// user
 	@GetMapping("/portalScheduleList")
 	@ResponseBody
-	public List<PortalScheduleVO> portalScheduleList( PortalScheduleVO vo) {
+	public List<PortalScheduleVO> portalScheduleList(PortalScheduleVO vo) {
 
-
-		
+	
 		if(vo.getSeasonCode()==null) {
 			vo.setSeasonCode(yearService.yearFind());
 		}

@@ -42,5 +42,10 @@ public interface TaskMapper {
 			@Param("taskno")int taskno
 		);
 	
+	public List<SubmitTaskVO> findSubmitTaskListByStudentIdAndSubjectId(
+			@Param("stNo")int stNo,
+			@Param("sbjNo")int sbjNo
+			);
+	
 	
 }

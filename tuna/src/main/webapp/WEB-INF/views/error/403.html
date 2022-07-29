@@ -1,0 +1,62 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>403 Error</title>
+	<link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.css}">
+    <style>
+	    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+	    
+		* { 
+			font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+		}	
+    </style>
+  </head>
+  <body>
+    
+
+<div id="page-container">
+  	<main id="main-container">
+        <!-- Page Content -->
+        <div class="hero bg-body-extra-light">
+          <div class="hero-inner text-center">
+            <div class="bg-body-extra-light">
+              <div class="content content-full overflow-hidden">
+                <div class="py-4">
+                  <!-- Error Header -->
+                  <img th:src="@{/resources/assets/media/error-icon.png}" width=100>
+                  <h1 class="display-1 fw-bolder text-primary">
+                    403
+                  </h1>
+                  <h2 class="h4 fw-normal text-muted mb-4">
+                    죄송합니다. 접근 권한이 없습니다.
+                  </h2>
+                  <p class="mb-3">웹 서버가 내용을 표시하지 못하도록 구성되었습니다.<br>
+					아래의 담당자에게 문의해 주세요.<br>
+			      </p>
+			      <small class="fw-semibold">관리부 권태현<br>010-5123-8847</small>
+                  <!-- END Error Header -->
+
+                  <!-- Search Form -->
+                  
+                  <!-- END Search Form -->
+                </div>
+              </div>
+            </div>
+            <div class="content content-full text-muted fs-sm fw-medium">
+              <!-- Error Footer -->
+              <a class="h5 link-fx text-primary-light" th:href="@{/home}">
+                홈으로 돌아가기
+              </a>
+              <!-- END Error Footer -->
+            </div>
+          </div>
+        </div>
+        <!-- END Page Content -->
+    </main>
+    <!-- END Main Container -->
+</div>
+    
+  </body>
+</html>

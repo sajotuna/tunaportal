@@ -58,7 +58,7 @@ public class UserController {
 		
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.user.mapper.AdminMapper.adminUserCheck", params);
 		
-		params.put("pageSize", Math.ceil(AdminDao.AdminUserCount()/10));
+		params.put("pageSize", Math.ceil((double)AdminDao.AdminUserCount()/10));
 		
 		model.addAttribute("list", lists);
 		model.addAttribute("params", params);
@@ -139,13 +139,6 @@ public class UserController {
 		ra.addFlashAttribute("success", message);
 		return "redirect:/admin/pwdUpdate";
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

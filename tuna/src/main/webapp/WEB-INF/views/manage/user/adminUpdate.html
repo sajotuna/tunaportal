@@ -64,7 +64,7 @@ data-layout-decorate="~{layouts/navLayout}">
                     <div class="mb-3">
                       <div class="input-group">
                         <span class="input-group-text d-none d-md-block">전화번호</span>
-                        <input type="text" class="form-control" name = "tel" th:value = "${vo.tel}">
+                        <input type="number" onchange = "javascript:disable();" maxlength="11" oninput="maxLengthCheck(this)" class="form-control" name = "tel" th:value = "${vo.tel}">
                         <span class="input-group-text d-none d-md-block">이메일</span>
                         <th:block th:if = "${not #strings.isEmpty(vo.email)}">
                       	<input type="text" class="form-control" name = "email" th:value = "${vo.email}">
@@ -123,7 +123,15 @@ data-layout-decorate="~{layouts/navLayout}">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+    function maxLengthCheck(object){
+        if (object.value.length > object.maxLength){
+          object.value = object.value.slice(0, object.maxLength);
+        }    
+      }
     
+    function disable(){
+    	updateBtn.disabled = false;
+    }
     let tagSelect = document.querySelectorAll('[type=text]')
     let updateBtn = document.querySelector('#updateBtn')
     tagSelect.forEach(tag =>{

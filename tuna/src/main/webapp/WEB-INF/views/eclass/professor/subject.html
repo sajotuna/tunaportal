@@ -296,24 +296,26 @@ xmlns:th="http://www.thymeleaf.org"
       ███████    ██     ██████  ██████  ███████ ██   ████    ██  
 -->
                   <div class="tab-pane pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
-                    <div class="row">
-                      <div class="col-xl-2 align-self-center">
-                        <span class="fs-lg fw-bold" id="attendance_date_text">yy-MM-dd (요)</span>
+                    <form id="subject-attendance-form">
+                      <div class="row">
+                        <div class="col-xl-3 align-self-center">
+                          <span class="fs-lg fw-bold" id="attendance_date_text">yy-MM-dd (요)</span>
+                        </div>
+                        <div class="offset-5 col-xl-2">
+                          <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
+                        </div>
+                        <div class="col-xl-2">
+                          <button class="col-12 btn btn-primary" id="attendance_submit">적용</button>
+                        </div>
                       </div>
-                      <div class="offset-6 col-xl-2">
-                        <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
+                      <hr class="mb-0">
+                      <div style="overflow-y:scroll; height: 300px;">
+                        <table id="subject-attendance-table" class="table table-hover table-vcenter">
+                            <tbody>
+                            </tbody>
+                        </table>
                       </div>
-                      <div class="col-xl-2">
-                        <button class="col-12 btn btn-primary" id="attendance_submit">적용</button>
-                      </div>
-                    </div>
-                    <hr class="mb-0">
-                    <div style="overflow-y:scroll; height: 300px;">
-                      <table id="subject-attendance-table" class="table table-hover table-vcenter">
-                        <tbody>
-                        </tbody>
-                      </table>
-                    </div>
+                    </form>
                     
                   </div> <!-- student TAB CONTENT END -->
 
@@ -698,9 +700,6 @@ xmlns:th="http://www.thymeleaf.org"
                 <div class="block-content tab-content">
                   <div class="tab-pane active" id="btabs-info" role="tabpanel" aria-labelledby="btabs-info-tab">
                     <div class="row row-cols-auto">
-                      <div class="col">
-                        <img class="img-avatar64" src="../assets/media/avatars/avatar1.jpg">
-                      </div>
                       <div class="col-1 d-none d-lg-block text-end">
                         <div>이름</div>
                         <div>학번</div>
@@ -946,6 +945,7 @@ xmlns:th="http://www.thymeleaf.org"
             const TAB_ID = "tab-pane-";
             const GRADE_STUD_ID = "student-";
             const LECTURE_FILE_ID = "lecture-file-";
+            const RADIO_GROUP_NAME = "radio-group-";
             const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
             const REST_URL = {
@@ -966,7 +966,8 @@ xmlns:th="http://www.thymeleaf.org"
 
               SUBMIT_TASK_GRADE_UPDATE : "/tuna/staff/eclass/updateSubmitTaskScore",
               SUBMIT_LECTURE_FILE_UPLOAD : "/tuna/staff/insertSubjectFile",
-              LECTURE_FILE_DELETE : "/tuna/staff/deleteSubjectFile"
+              SUBMIT_ATTENDANCES : "/tuna/staff/insert/attendance",
+              LECTURE_FILE_DELETE : "/tuna/staff/deleteSubjectFile",
             };
             // const TAB_BTN_NUM = {
 
@@ -995,7 +996,6 @@ xmlns:th="http://www.thymeleaf.org"
             let loaderCurtain;
 
             //
-            let attendRadioGroups = [];
             let studentsGradeTr = [];
             let studentsTaskTr = [];
 
@@ -1034,14 +1034,16 @@ xmlns:th="http://www.thymeleaf.org"
                 }
               }
               
-                if(!msg) {
-                  tabClickEvent(0);
-                } else {
-                  tabClickEvent(msg*1);
-                }
+              if(!msg) {
+                tabClickEvent(0);
+              } else {
+                tabClickEvent(msg*1);
+              }
                
             }
+/*
 
+*/
             function initTaskInsertForm() {
               let modal = document.getElementById('taskInsertFrm');
 
@@ -1213,9 +1215,60 @@ xmlns:th="http://www.thymeleaf.org"
               });
             }
 
-            function submitFileInsertForm() {
+            function setAttendanceSubmitEvent() {
+              let attendanceForm = document.querySelector("#subject-attendance-form");
+              let radios = attendanceForm.querySelectorAll('input[type="radio"]');
+              let attendanceList = [];
 
+              attendanceForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                for(const radio of radios) {
+                  if(radio.checked){
+                    let attendanceObj = {
+                      no : radio.name.slice(RADIO_GROUP_NAME.length),
+                      value : radio.value,
+                      sbjno : sbjno,
+                    }
+                    attendanceList.push(attendanceObj);
+                  }
+                }
+
+                fetch(REST_URL.SUBMIT_ATTENDANCES, {
+                  method: "POST",
+                  headers: {
+                    'header' : header,
+                    'X-Requested-with': 'XMLHttpRequest',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': token
+                  },
+                  body: JSON.stringify(attendanceList)
+                })
+                .then( async (res) => {
+                  let resBody = await res.text();
+
+                  if(res.ok) {
+                    Dialogs.dialog('success',
+                    '성공',
+                    resBody,
+                    function() {
+                      // TODO tab click event (탭 새로고침)
+                    })
+                  }
+                }).catch((err) => {
+                  Dialogs.dialog('error',
+                  '오류',
+                  err,
+                  function() {
+                    console.error(err);
+                  })
+                })
+                .finally(()=>{
+                  //TODO tab click event
+                })
+
+              });
             }
+            
 
 /*
 ████████  █████  ██████       ██████ ██      ██  ██████ ██   ██ 
@@ -1388,7 +1441,7 @@ xmlns:th="http://www.thymeleaf.org"
             // 출결 패널 세팅
             function setAttendanceContent(data) {
               let table = document.querySelector('#subject-attendance-table');
-              let tbody = table.firstElementChild;
+              let tbody = table.querySelector('tbody');
 
               let date_text = document.querySelector('#attendance_date_text');
               let mdate = new Date(data.date)
@@ -1398,12 +1451,15 @@ xmlns:th="http://www.thymeleaf.org"
               tbody.innerHTML = "";
               data.students.forEach(student => {
                 let tr = document.createElement('tr');
+                tr.data_attendance_id = student.attendance.no;
+                let stateCode = student.attendance.stateCode;
+
                 let innerHTML = `
                 <td class="table-cell" style="width: 54px;">
                   <i class="fa fa-2x fa-circle-user"></i>
                 </td>
                 <td class="table-cell">
-                  <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);">
+                  <a class="student-selector" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);" data-stno="${student.no}" data-sbjno="${sbjno}">
                     ${student.name}</a>
                 </td>
                 <td class="table-cell">
@@ -1415,25 +1471,25 @@ xmlns:th="http://www.thymeleaf.org"
                 <td class="table-cell">
                   <div class="atten-radio-group space-x-4">
                     <div class="form-check form-check-inline">
-                      <input class="radio-attend form-check-input" type="radio" id="atten-radio-attend-${student.no}" name="radio-group-${student.no}" value="1401">
-                      <label class="form-check-label" for="atten-radio-attend-${student.no}">출석</label>
+                      <input class="radio-attend form-check-input" type="radio" id="atten-radio-attend-${student.attendance.no}" name="${RADIO_GROUP_NAME+student.attendance.no}" value="1401" ${stateCode=="1401"?"checked":""}>
+                      <label class="form-check-label" for="atten-radio-attend-${student.attendance.no}">출석</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="radio-absence form-check-input" type="radio" id="atten-radio-absence-${student.no}" name="radio-group-${student.no}" value="1402">
-                      <label class="form-check-label" for="atten-radio-absence-${student.no}">결석</label>
+                      <input class="radio-absence form-check-input" type="radio" id="atten-radio-absence-${student.attendance.no}" name="${RADIO_GROUP_NAME+student.attendance.no}" value="1402" ${stateCode=="1402"?"checked":""}>
+                      <label class="form-check-label" for="atten-radio-absence-${student.attendance.no}">결석</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="radio-lateness form-check-input" type="radio" id="atten-radio-lateness-${student.no}" name="radio-group-${student.no}" value="1403">
-                      <label class="form-check-label" for="atten-radio-lateness-${student.no}">지각</label>
+                      <input class="radio-lateness form-check-input" type="radio" id="atten-radio-lateness-${student.attendance.no}" name="${RADIO_GROUP_NAME+student.attendance.no}" value="1403" ${stateCode=="1403"?"checked":""}>
+                      <label class="form-check-label" for="atten-radio-lateness-${student.attendance.no}">지각</label>
                     </div>
                   </div>
                 </td>`;
                 // TODO 날짜 넣기
                 
                 tr.innerHTML = innerHTML;
-                attendRadioGroups.push(tr);
                 tbody.appendChild(tr);
               });
+              setAttendanceSubmitEvent();
 
             }
             
@@ -1878,6 +1934,35 @@ xmlns:th="http://www.thymeleaf.org"
                   })
                 })
             }
+            
+            function studentClickEvent() {
+            	let studentSelectors = document.querySelectorAll(".student-selector");
+            	
+            	for (let i=0; i<studentSelectors.length; i++) {
+            		studentSelectors[i].addEventListener('click', function(e) {
+            			let stNo = e.target.dataset.stno;
+            			let sbjNo = e.target.dataset.sbjno;
+            			fetch('/tuna/prof/eclass/student/student', {
+            				method: "POST",
+            				headers: {
+				                  'header': header,
+				                  'X-Requested-With': 'XMLHttpRequest',
+				                  'Content-Type': 'application/json',
+				                  'X-CSRF-Token': token
+				            },
+			                body: JSON.stringify({
+			                	stNo:stNo,
+			                	sbjNo:sbjNo
+			                })
+            			})
+            			.then(result => result.json())
+            			.then(result => {
+            				console.log(result);
+            			})
+
+            		})
+            	}
+            }
 
             function allStudentAttend() {
               let attendRadios = document.querySelectorAll('.radio-attend');
@@ -1909,7 +1994,7 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
             function dateToKoreanWeekday(date) {
-              console.log(date);
+              //console.log(date);
               return WEEKDAY[date.getDay()];
             }
 		  </script>

@@ -134,9 +134,9 @@ AND NO = #{no}
 	resultType="co.fourth.tuna.domain.task.vo.SubmitTaskVO"
 	parameterType="int">
 	SELECT *
-	FROM submittask
-	WHERE stno = #{stno}
-		AND taskno = #{taskno}
+	FROM SUBMITTASK
+	WHERE STNO = #{STNO}
+	AND SBJNO = #{sbjNo}
 </select>
 
 </mapper>

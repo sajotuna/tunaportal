@@ -36,4 +36,6 @@ public interface TaskService {
 	
 	public SubmitTaskVO findSubmitTaskByStudentIdAndTaskId(int stno, int taskno);
 	
+	public List<SubmitTaskVO> findSubmitTaskListByStudentIdAndSubjectId(int stNo, int sbjNo);
+	
 }
