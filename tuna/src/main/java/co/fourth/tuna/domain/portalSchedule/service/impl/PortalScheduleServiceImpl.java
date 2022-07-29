@@ -41,10 +41,10 @@ public class PortalScheduleServiceImpl implements PortalScheduleService {
 		return map.findOneBySeasonCode(season, schedule);
 	}
 
-	@Override
-	public List<PortalScheduleVO> scheduleSearch(String key) {
-		return map.scheduleSearch(key);
-	}
+//	@Override
+//	public List<PortalScheduleVO> scheduleSearch(String key) {
+//		return map.scheduleSearch(key);
+//	}
 
 	@Override
 	public PortalScheduleVO findTuitionSchedule(PortalScheduleVO vo) {
