@@ -876,7 +876,7 @@ xmlns:th="http://www.thymeleaf.org"
                   </div> <!-- 출결관리 탭 END -->
 
                   <div class="tab-pane" id="btabs-grade" role="tabpanel" aria-labelledby="btabs-grade-tab">
-                    <div class="col-12">
+                    <div id="grade-block-list" class="col-12">
 
                       <div class="block block-rounded block-themed block-bordered border-1">
                         <div class="block-header bg-primary-darker">
@@ -889,13 +889,11 @@ xmlns:th="http://www.thymeleaf.org"
                             <thead>
                               <tr>
                                 <th style="min-width: 90px;">출결</th>
-                                <th style="min-width: 110px;">중간고사</th>
-                                <th style="min-width: 110px;">기말고사</th>
-                                <th style="min-width: 160px;">과제과제과제과#1</th>
-                                <th style="min-width: 160px;">과제 #2</th>
-                                <th style="min-width: 160px;">과제 #3</th>
-                                <th style="min-width: 110px;">과제평균</th>
-                                <th style="min-width: 110px;">총점</th>
+                                <th style="min-width: 90px;">중간고사</th>
+                                <th style="min-width: 90px;">기말고사</th>
+                                <th style="min-width: 90px;">과제평균</th>
+                                <th style="min-width: 90px;">총점</th>
+                                <th style="min-width: 120px;"></th>
                               </tr>
                             </thead>
                             <tbody>
@@ -903,11 +901,9 @@ xmlns:th="http://www.thymeleaf.org"
                                 <td><input type="number" class="form-control" placeholder="10" disabled></td>
                                 <td><input type="number" class="form-control" placeholder=""></td>
                                 <td><input type="number" class="form-control" placeholder=""></td>
-                                <td><input type="number" class="form-control" placeholder=""></td>
-                                <td><input type="number" class="form-control" placeholder=""></td>
-                                <td><input type="number" class="form-control" placeholder=""></td>
                                 <td><input type="number" class="form-control" placeholder="100" disabled></td>
                                 <td><input type="number" class="form-control" placeholder="100" disabled></td>
+                                <td><button class="btn btn-primary">적용</button></td>
                               </tr>
                             </tbody>
                           </table>
@@ -1994,7 +1990,7 @@ xmlns:th="http://www.thymeleaf.org"
                 if(res.ok) {
                   setDetailUserInfo(resBody.student)
                   setDetailUserAttendance(resBody.student);
-                  //setDetailUserGrade(resBody.student);
+                  setDetailUserGrade(resBody.student);
                 } else {
                   Dialogs.dialog('error',
                   '학생정보 가져오기 실패',
@@ -2192,7 +2188,54 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
             // 성적 세팅
-            function setDetailUserGrade() {
+            function setDetailUserGrade(student) {
+              //btabs-grade
+              let detail_grade = document.querySelector('#btabs-grade');
+              let blockParent = detail_grade.querySelector('#grade-block-list');
+              let blocks = detail_grade.querySelectorAll('.block');
+              for(let block of blocks) {
+                block.remove();
+              }
+
+              for(let subject of student.subjectList) {
+                let block = document.createElement('div');
+                blockParent.appendChild(block);
+
+                let blockHTML = `
+                  <div class="block block-rounded block-themed block-bordered border-1">
+                    <div class="block-header bg-primary-darker">
+                      <div class="block-title">
+                        ${subject.name}
+                      </div>
+                    </div>
+                    <div class="block-content p-0" style="overflow-x: scroll;">
+                      <table class="table table-hover table-vcenter text-center m-0">
+                        <thead>
+                          <tr>
+                            <th style="min-width: 90px;">출결</th>
+                                <th style="min-width: 90px;">중간고사</th>
+                                <th style="min-width: 90px;">기말고사</th>
+                                <th style="min-width: 90px;">과제평균</th>
+                                <th style="min-width: 90px;">총점</th>
+                                <th style="min-width: 120px;"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="m-0">
+                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.attd}" disabled></td>
+                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.middle}"></td>
+                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.finals}"></td>
+                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.task}" disabled></td>
+                            <td><input type="number" class="form-control" placeholder=""  value="${subject.grade.total}" disabled></td>
+                            <td><button class="btn btn-primary">적용</button></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                `;
+                block.innerHTML = blockHTML;
+              }
 
             }
 
