@@ -17,6 +17,7 @@ import co.fourth.tuna.domain.common.service.DateCheckService;
 import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureBasket.service.LectureBasketService;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
+import co.fourth.tuna.domain.subject.service.SubjectService;
 
 @Controller
 public class LectureBasketController {
@@ -27,7 +28,8 @@ public class LectureBasketController {
 	private YearService yearDao;
 	@Autowired
 	private LectureBasketService LectureBasketDao;
-
+	@Autowired
+	private SubjectService sbjDao;
 	@Autowired
 	private DateCheckService DataDao;
 	
@@ -45,6 +47,7 @@ public class LectureBasketController {
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		params.put("seasonCode", yearDao.yearFind());
+		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount()/10));
 		vo.setSeasonCode(yearDao.yearFind());
 		vo.setStNo(authentication.getName());
 		List<Map<String, Object>> lists = SqlSession

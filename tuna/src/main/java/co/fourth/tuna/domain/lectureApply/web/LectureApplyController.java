@@ -24,6 +24,7 @@ import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
+import co.fourth.tuna.domain.subject.service.SubjectService;
 import nl.captcha.Captcha;
 
 @Controller
@@ -37,6 +38,8 @@ public class LectureApplyController {
 	private SqlSession SqlSession;
 	@Autowired
 	private DateCheckService DataDao;
+	@Autowired
+	private SubjectService sbjDao;
 	
 	@RequestMapping("/stud/course/Warning")
 	public String courseWarning() {
@@ -56,6 +59,7 @@ public class LectureApplyController {
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		params.put("seasonCode", yearDao.yearFind());
+		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount()/10));
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
 		vo.setStateCode("402");

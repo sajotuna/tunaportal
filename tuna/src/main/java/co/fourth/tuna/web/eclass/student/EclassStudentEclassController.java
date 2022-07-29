@@ -117,18 +117,12 @@ public class EclassStudentEclassController {
 		map.put("sbjNo", vo.getSbjNo());
 		map.put("pageNum", pageNum);
 		map.put("size", 5);
+		map.put("listSize", Math.ceil((double)qnaDao.lectureQnaPagingCount(vo)/5));
 		List<Map<String, Object>> qna = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
-		
-//		map.put("sbjNo", vo.getSbjNo());
-//		map.put("pageNum", pageNum);
-//		map.put("size", 100);
-//		List<Map<String, Object>> qna2 = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
-//		
-//		int pageCount = (int)Math.ceil((double)qna.size()/(5));
 		
 		model.addAttribute("qna", qna);
 		model.addAttribute("map", map);
-		model.addAttribute("sbjNo",req.getParameter("sbjNo"));
+		model.addAttribute("sbjNo", vo.getSbjNo());
 		
 		return "eclass/stud/qnaList";
 	}
@@ -166,7 +160,6 @@ public class EclassStudentEclassController {
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		vo.setVisible(Integer.parseInt(req.getParameter("visibleCheck")));
 		 		
-		model.addAttribute("sbjNo", vo.getSbjNo());
 		qnaDao.insertOneQna(vo);
 		
 		redir.addAttribute("no", vo.getNo());
@@ -197,7 +190,6 @@ public class EclassStudentEclassController {
 		sb.setNo(Integer.parseInt(req.getParameter("sbjNo")));
 		List<SubjectVO> sbjli = map.selectOneSubTask(sv, sb);
 		
-		System.out.println("rownum"+sbjli);
 		model.addAttribute("sbjli", sbjli);
 		
 		return "eclass/stud/taskList";
@@ -231,9 +223,12 @@ public class EclassStudentEclassController {
 	@RequestMapping("/taskInsert")
 	public String taskSubmission(TaskVO vo, Authentication authentication, 
 			RedirectAttributes redir,
-			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
+			@RequestParam(value = "file", defaultValue="") MultipartFile[] files) throws IOException {
 		
-		
+		if(files.toString().equals("")) {
+			return "redirect:/stud/eclass/taskSelect";
+		}
+			
 		SubmitTaskVO vo1 = new SubmitTaskVO();
 		
 		for(MultipartFile file : files) {
@@ -266,6 +261,34 @@ public class EclassStudentEclassController {
 		
 	}
 	
+	@RequestMapping("/updateTaskFile")
+	public String updateLectureFile(TaskVO vo, Authentication authentication, 
+			RedirectAttributes redir, HttpServletRequest req,
+			@RequestParam(value = "file", defaultValue="") MultipartFile[] files) throws IOException {
+		
+		SubmitTaskVO vo1 = new SubmitTaskVO();
+		
+		for(MultipartFile file : files) {
+			String ogn = file.getOriginalFilename();
+			
+			if(ogn != null && ogn.length() != 0) {
+				String[] tf = fileService.upload(file, "task");
+				
+				vo1.setFileName(tf[0]);
+				vo1.setUri(tf[1]);
+				vo1.setTaskNo(vo.getNo());
+				vo1.setNo(Integer.parseInt(req.getParameter("fileNo")));
+				
+				taskDao.updateTaskFile(vo1);
+			}
+		}
+		
+		redir.addAttribute("no", vo.getNo());
+		redir.addAttribute("sbjNo", vo.getSbjNo());
+		
+		return "redirect:/stud/eclass/taskSelect";
+		
+	}
 
 	//자료실
 	@RequestMapping("/download") 

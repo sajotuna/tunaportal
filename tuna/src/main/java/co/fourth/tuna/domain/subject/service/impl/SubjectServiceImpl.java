@@ -125,6 +125,12 @@ public class SubjectServiceImpl implements SubjectService {
 			subject.setQnaList(lecQnaService.getListByStudentIdAndSubjectId(stno, subject.getNo()));
 		}
 		return subjectList;
+  }
+
+	public int subjectCount() {
+		// TODO Auto-generated method stub
+		return map.subjectCount();
+
 	}
 	
 	

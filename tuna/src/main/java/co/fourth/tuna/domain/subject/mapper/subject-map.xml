@@ -204,6 +204,7 @@
 	AND S.NO = #{sbj.no}
 	</select>
 	
+
 	<select id="selectListByStudentIdAndPrfessorId"
 		resultType="co.fourth.tuna.domain.subject.vo.SubjectWithAttendanceVO">
 		SELECT
@@ -225,4 +226,12 @@
 		WHERE l.stno = ${stno}
 			AND s.pfno = ${pfno}
 	</select>
+
+	<select id = "subjectCount" resultType = "int">
+	
+	SELECT COUNT(*) FROM SUBJECT
+	
+	</select>
+	
+
 </mapper>

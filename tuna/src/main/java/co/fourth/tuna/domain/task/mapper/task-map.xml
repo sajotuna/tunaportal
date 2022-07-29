@@ -69,6 +69,17 @@ DELETE FROM SUBMITTASK
 WHERE NO = #{no}
 </delete>
 
+
+<update id="updateTaskFile">
+UPDATE SUBMITTASK 
+SET 
+FILENAME = #{fileName}, 
+URI=#{uri} 
+WHERE TASKNO = #{taskNo} 
+AND NO = #{no}
+</update>
+	
+
 <select id="findListBySubjectId"
 	resultMap="taskMap">
 	SELECT * 

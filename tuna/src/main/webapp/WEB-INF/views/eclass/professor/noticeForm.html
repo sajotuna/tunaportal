@@ -9,8 +9,6 @@ xmlns:th="http://www.thymeleaf.org"
 	<meta name="_csrf" th:content="${_csrf.token}">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
     <title>E-Class 공지 등록</title>
-    <link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
-    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
   	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
   <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
   <script th:src="@{/resources/assets/js/dialog.js}"></script>
@@ -144,9 +142,8 @@ xmlns:th="http://www.thymeleaf.org"
           </div>
         </div> -->
         <!-- 모달 리스트 END -->
-        <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
         <script
-			th:src="@{/resources/assets/js/plugins/ckeditor5-classic/build/ckeditor.js}"></script>
+			th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
         <script th:src="@{/resources/assets/js/plugins/dropzone/min/dropzone.min.js}"></script>
         <script>
           One.helpersOnLoad(['js-simplemde']);

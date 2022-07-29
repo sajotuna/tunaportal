@@ -13,6 +13,7 @@
 		SELECT O.*, OBJECTIONSTATE(O.SBJNO, O.STNO) AS OBJSTATE
 		FROM OBJECTION O
 		WHERE sbjno = #{sbjno}
+		ORDER BY O.NO DESC
 	</select>
 	
 	<resultMap id="objectionWithGrade" type="co.fourth.tuna.domain.objection.vo.ObjectionVO">
@@ -60,6 +61,7 @@
 		AND PT.NO = S.TYPE
 		AND S.PFNO = ${pfNo}
 		<if test="seasonCode != 'all'">AND S.SEASONCODE = #{seasonCode}</if>
+		ORDER BY O.NO DESC
 	
 	</select>
 
