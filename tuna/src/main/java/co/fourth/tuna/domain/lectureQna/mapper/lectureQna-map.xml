@@ -35,10 +35,11 @@
    		Q.NO, 
 	    Q.TITLE, 
 	    TO_CHAR(Q.CONTENT) CONTENT, 
-	    Q.ANSWER, TO_CHAR(Q.ENROLLDATE, 'MM/DD HH24:MI') ENROLLDATE, 
+	    TO_CHAR(Q.ANSWER) ANSWER,
+	    TO_CHAR(Q.ENROLLDATE, 'MM/DD HH24:MI') ENROLLDATE, 
+	    TO_CHAR(Q.ANSWERDATE, 'MM/DD HH24:MI') ANSWERDATE, 
 	    Q.SBJNO,
 	    Q.STNO,
-	    TO_CHAR(Q.ANSWERDATE, 'MM/DD HH24:MI') ANSWERDATE, 
 	    Q.VISIBLE,
 	    S.NAME,  
   		ROWNUM RN
@@ -60,9 +61,9 @@
 	SELECT Q.NO, 
 		   Q.TITLE,
 		   TO_CHAR(Q.CONTENT) CONTENT,
-		   TO_CHAR(Q.ENROLLDATE, 'MM/DD HH24:MI:SS') ENROLLDATE,
+		   TO_CHAR(Q.ENROLLDATE, 'YYYY/MM/DD HH24:MI:SS') ENROLLDATE,
 		   TO_CHAR(Q.ANSWER) ANSWER,
-		   TO_CHAR(Q.ANSWERDATE, 'MM/DD HH24:MI:SS') ANSWERDATE,
+		   TO_CHAR(Q.ANSWERDATE, 'YYYY/MM/DD HH24:MI:SS') ANSWERDATE,
 		   Q.VISIBLE,
 		   S.NAME, 
 		   L.SBJNO,
@@ -74,6 +75,11 @@
 	AND Q.SBJNO = #{sbjNo}
 	AND Q.NO = #{no}
 	</select>
+ 
+ <!-- 페이지네이션 -->
+ <select id="lectureQnaPagingCount" resultType="int" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+ SELECT COUNT(*) FROM LECTUREQNA WHERE SBJNO = #{sbjNo}
+ </select>
  
 <!-- 질문작성 -->
 <insert id="insertOneQna" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
@@ -90,6 +96,7 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 	AND NO = #{no}
 	AND STNO = #{stNo}
 	</delete>
+
 	
 
 <!-- 목록 subject으로 찾기 -->

@@ -92,13 +92,9 @@
 	         </li>
 	       </ul>
 	     </div>
-	     <!-- END Side Navigation -->
 	   </div>
-	   <!-- END Sidebar Scrolling -->
-	 </nav>
-	 <!-- END Sidebar -->
-</th:block>
-<script>
+<th:block>
+<script th:inline="javascript">
 document.addEventListener("DOMContentLoaded", function(){
 		 let selectedYear = /*[[${seasonCode}]]*/ 'default';
 		 
@@ -112,11 +108,11 @@ document.addEventListener("DOMContentLoaded", function(){
 		 	case '104':
 		 		$('#104').attr('selected', 'selected')
 		 		break;
-
 		 }
 	 })
-
-    	
 </script>
+</th:block>
+	 </nav>
+</th:block>
 </body>
 </html>

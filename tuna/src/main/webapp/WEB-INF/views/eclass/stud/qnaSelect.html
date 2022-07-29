@@ -37,24 +37,24 @@
 											class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
 											id="DataTables_Table_0"
 											aria-describedby="DataTables_Table_0_info">
-											<thead>
+											<tbody>
 												<tr>
-													<th class="text-center" tabindex="0" colspan="3">제목</th>
+													<th class="text-center" tabindex="0" colspan="3" style="width:150px;">제목</th>
 													<th colspan="7" th:text="${qs.TITLE}"></th>
 												</tr>
 												<tr>
-													<th class="text-center" tabindex="0" colspan="3">작성자</th>
+													<th class="text-center" tabindex="0" colspan="3" style="width:150px;">작성자</th>
 													<th colspan="7" th:text="${qs.NAME}"></th>
 												</tr>
 												<tr>
-													<th class="text-center" tabindex="0" colspan="3">작성일</th>
+													<th class="text-center" tabindex="0" colspan="3" style="width:150px;">작성일</th>
 													<th colspan="7" th:text="${qs.ENROLLDATE}"></th>
 												</tr>
 												<tr>
-													<th class="text-center" tabindex="0" colspan="3">내용</th>
-													<th colspan="7" style="height:300px; overflow-y:scroll;"  th:text="${qs.CONTENT}"></th>
+													<th class="text-center" tabindex="0" colspan="3" style="width:150px;">내용</th>
+													<th colspan="7" style="height:300px; width:500px; overflow-y:scroll;"  th:text="${qs.CONTENT}"></th>
 												</tr>
-											</thead>
+											</tbody>
 										</table>
 										<table
 											class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
@@ -65,8 +65,11 @@
 													<th class="text-center" style="height:150px;"  th:text="'등록된 답변이 없습니다'"></th>
 												</tr>
 												<tr th:if="${not #strings.isEmpty(qs.ANSWER)}">
-													<th class="text-center" tabindex="0" colspan="3">답변</th>
-													<th colspan="7" style="height:150px; overflow-y:scroll;"  th:text="${qs.ANSWER}+${qs.ANSWERDATE}"></th>
+													<th class="text-center" tabindex="0" colspan="3" rowspan="2" style="width:150px;">답변</th>
+													<th colspan="7" th:text="${qs.ANSWERDATE}" style="width:500px;"></th>													
+												</tr>
+												<tr>
+												<th colspan="7" style="height:150px; width:500px; overflow-y:scroll;"  th:text="${qs.ANSWER}"></th>
 												</tr>
 											</tbody>
 										</table>

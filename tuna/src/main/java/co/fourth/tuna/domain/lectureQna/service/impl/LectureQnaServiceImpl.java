@@ -50,6 +50,12 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 		mapper.delOneQna(vo);
 	}
 
+	//페이지네이션
+	@Override
+	public int lectureQnaPagingCount(LectureQnaVO vo) {
+		return mapper.lectureQnaPagingCount(vo);
+	}
+
 	
 	//mapper 주입, 오버라이딩
 }
