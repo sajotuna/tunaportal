@@ -18,6 +18,15 @@
 	button[disabled]{
 	  color: rgba(87, 87, 87, 0.49);
 }
+
+table tr td{
+	text-overflow : ellipsis;
+	overflow : hidden;
+	white-space : nowrap;
+	max-width : 200px;
+	
+}
+
 </style>
 </head>
 <body>
@@ -45,60 +54,60 @@
 							<div class="row">
 								<div class="col-sm-12" style="height:370px;">
 									<table
-										class="table table-bordered  table-vcenter js-dataTable-full dataTable no-footer"
+										class="table table-bordered js-dataTable-full dataTable no-footer"
 										id="DataTables_Table_0"
 										aria-describedby="DataTables_Table_0_info">
 										<thead>
 											<tr>
-												<td class="text-center fw-bold" style="width: 80px;" tabindex="0"
+												<td class="text-center fw-bold bg-dark text-white" style="width: 50px;" tabindex="0"
 													rowspan="1">번호</td>
-												<td class="text-center fw-bold" tabindex="0" colspan="7">제목</td>
-												<td class="text-center fw-bold" tabindex="0" colspan="2">작성자</td>
-												<td class="text-center fw-bold" rowspan="1" colspan="2">작성일자</td>
-												<td class="text-center fw-bold" rowspan="1" colspan="2">답변여부</td>
+												<td class="text-center fw-bold bg-dark text-white" style="width: 700px;">제목</td>
+												<td class="text-center fw-bold bg-dark text-white" style="width: 100px;">작성자</td>
+												<td class="text-center fw-bold bg-dark text-white" style="width: 100px;">작성일자</td>
+												<td class="text-center fw-bold bg-dark text-white" style="width: 50px;">답변여부</td>
 											</tr>
 										</thead>
 										<tbody th:each="q : ${qna}">
 											<tr
 												th:if="${q.VISIBLE} == 0 and ${not #strings.isEmpty(qna)}">
-												<td class="text-center" colspan="1" th:text="${q.ROWNUM}"></td>
-												<td class="text-center" colspan="7" style="width:200px"><a
+												<td class="text-center" th:text="${q.ROWNUM}"></td>
+												<td class="text-center"><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
-													style="color: black"> [[${q.TITLE}]] </a></td>
-												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
-												<td class="text-center" colspan="2"
+													style="color: black">[[${q.TITLE}]]</a></td>
+												<td class="text-center" th:text="${q.NAME}"></td>
+												<td class="text-center" 
 													th:text="${q.ENROLLDATE}"></td>
-												<td class="text-center text-danger fw-bold" colspan="2"
+												<td class="text-center text-danger fw-bold"
 													th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
-												<td class="text-center" colspan="2"
+												<td class="text-center"
 													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
 											</tr>
 											<tr
 												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} != ${q.STNO}">
-												<td class="text-center" colspan="1" th:text="${q.ROWNUM}"></td>
-												<td class="text-center" colspan="11">비공개 질문입니다.<i class="fa fa-2x fa-lock ms-2" style="font-size:10px; line-height:10px;"></i></td>
+												<td class="text-center"  th:text="${q.ROWNUM}"></td>
+												<td class="text-center" colspan="3">비공개 질문입니다.<i class="fa fa-2x fa-lock ms-2" style="font-size:10px; line-height:10px;"></i></td>
 												<td class="text-center text-danger fw-bold" colspan="2"
 													th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
-												<td class="text-center" colspan="2"
+												<td class="text-center" 
 													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
 											</tr>
 											<tr
 												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} == ${q.STNO}">
-												<td class="text-center" colspan="1" th:text="${q.ROWNUM}"></td>
-												<td class="text-center" colspan="7"><a
+												<td class="text-center" th:text="${q.ROWNUM}"></td>
+												<td class="text-center"><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
-													style="color: black; width:200px"> [[${q.TITLE}]]<i class="fa fa-2x fa-lock ms-2" style="font-size:10px; line-height:10px;"></i></a></td>
-												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
-												<td class="text-center" colspan="2"
+													style="color: black;"> [[${q.TITLE}]]<i class="fa fa-2x fa-lock ms-2" style="font-size:10px; line-height:10px;"></i></a></td>
+												<td class="text-center"th:text="${q.NAME}"></td>
+												<td class="text-center"
 													th:text="${q.ENROLLDATE}"></td>
-												<td class="text-center text-danger fw-bold" colspan="2"
+												<td class="text-center text-danger fw-bold"
 													th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
-												<td class="text-center" colspan="2"
+												<td class="text-center"
 													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
 											</tr>
 										</tbody>
 											<tr th:if="${#lists.isEmpty(qna)}">
-												<td class="text-center" colspan="14">질문이 등록되지 않았습니다.</td>
+												<td class="text-center" colspan="5">질문이 등록되지 않았습니다.</td>
 											</tr>
 									</table>
 								</div>
