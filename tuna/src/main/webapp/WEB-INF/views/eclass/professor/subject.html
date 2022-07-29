@@ -697,7 +697,16 @@ xmlns:th="http://www.thymeleaf.org"
 ██  ██  ██       ██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
 ██      ██        ██████  ██████  ██   ████    ██    ███████ ██   ████    ██
 -->
-                <div class="block-content tab-content">
+                <div id="user_detail_modal" class="block-content tab-content">
+                  <div id="userDetailCurtain" class="">
+                    <div class="overflow-hidden bg-white-95 position-absolute top-0 start-0 w-100 h-100 opacity-75"></div>
+                    <span class="position-absolute top-50 start-50 translate-middle">
+                      <div class="spinner-border text-secondary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </span>
+                  </div>
+
                   <div class="tab-pane active" id="btabs-info" role="tabpanel" aria-labelledby="btabs-info-tab">
                     <div class="row row-cols-auto">
                       <div class="col-1 d-none d-lg-block text-end">
@@ -707,10 +716,10 @@ xmlns:th="http://www.thymeleaf.org"
                       </div>
                       <div class="col-3 fw-bold">
                         <div class="align-items-center">
-                          <div><span>김철수</span>&nbsp;
-                            <span class="fw-medium fs-sm text-muted">[물리학과]</span></div>
-                          <div>10530999</div>
-                          <div>010-3333-4444</div>
+                          <div><span id="detail-name">######</span>&nbsp;
+                            <span id="detail-dept" class="fw-medium fs-sm text-muted">####</span></div>
+                          <div id="detail-no">########</div>
+                          <div id="detail-phone">###-####-####</div>
                         </div>
                       </div>
                       <div class="col-1 d-none d-lg-block text-end">
@@ -719,9 +728,9 @@ xmlns:th="http://www.thymeleaf.org"
                         <div>주소</div>
                       </div>
                       <div class="col fw-bold">
-                        <div>abc@gmail.com</div>
-                        <div>990505</div>
-                        <div>대구광역시 중구 남일동 중앙대로 403</div>
+                        <div id="detail-email">###@#####.###</div>
+                        <div id="detail-birth">##/##/##</div>
+                        <div id="detail-addr">########## #### ###### ######## ###</div>
                       </div>
                     </div>
                     <p></p>
@@ -735,18 +744,18 @@ xmlns:th="http://www.thymeleaf.org"
                           </div>
                           <div class="block-content py-0" style="overflow-y:scroll; height: 200px;">
                             <table class="table table-hover table-vcenter fs-sm">
-                              <tbody>
-                                <tr>
+                              <tbody id="">
+                                <!-- <tr>
                                   <td>참치공학</td>
                                   <td>과제#1</td>
                                   <td class="table-cell">
                                     <i class="fa fa-file-arrow-down"></i>
                                   </td>
                                   <td class="text-primary">
-                                    <a href="javascript:void(0);">김철수_멸치족의 역사.zip (925 kb)</a>
+                                    <a href="javascript:void(0);">김철수_멸치족의 역사.zip</a>
                                   </td>
                                   <td>22-07-06 16:14</td>
-                                </tr>
+                                </tr> -->
                               </tbody>
                             </table>
                           </div>
@@ -994,9 +1003,11 @@ xmlns:th="http://www.thymeleaf.org"
             let onTab = -1;
             let tabPanel; // 탭 패널
             let tabContents; // 탭 컨탠츠
+            let userDetailModal; //
             
             // 로딩 출력
             let loaderCurtain;
+            let userDetailCurtain;
 
             //
             let studentsGradeTr = [];
@@ -1008,6 +1019,8 @@ xmlns:th="http://www.thymeleaf.org"
               tabPanel = document.querySelector("#subject-tab-panel");
               tabContents = document.querySelectorAll("#subject-tab-content>div");
               loaderCurtain = document.querySelector('#loaderCurtain');
+              userDetailCurtain = document.querySelector('#userDetailCurtain');
+              userDetailModal = document.querySelector('#user_detail_modal');
 
               initSubject();
               initTaskInsertForm();
@@ -1964,6 +1977,7 @@ xmlns:th="http://www.thymeleaf.org"
               let student = {
                 no: stNo
               }
+              onUserDetailCurtain();
               fetch(REST_URL.STUDENT_DETAIL, {
                 method: "POST",
                 headers: {
@@ -1974,11 +1988,50 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify(student)
               })
-              .then(result => result.json())
-              .then(result => {
-                //console.log(result);
+              .then( async (res) => {
+                let resBody = await res.json();
+
+                if(res.ok) {
+                  setDetailUserInfo(resBody.student)
+                } else {
+                  Dialogs.dialog('error',
+                  '학생정보 가져오기 실패',
+                  resBody.msg,
+                  function() {
+                    console.error(resBody.msg);
+                  });
+                }
+              })
+              .catch((err) => {
+                Dialogs.dialog('error',
+                '오류',
+                err,
+                function() {
+                  console.error(err);
+                })
+              }).finally(()=> {
+                offUserDetailCurtaion();
               })
 
+            }
+
+            function setDetailUserInfo(student) {
+              console.log(student);
+              let detail_name = userDetailModal.querySelector("#detail-name");
+              let detail_dept = userDetailModal.querySelector("#detail-dept");
+              let detail_no = userDetailModal.querySelector('#detail-no');
+              let detail_phone = userDetailModal.querySelector('#detail-phone');
+              let detail_email = userDetailModal.querySelector('#detail-email');
+              let detail_birth = userDetailModal.querySelector('#detail-birth');
+              let detail_addr = userDetailModal.querySelector('#detail-addr');
+
+              detail_name.innerText = student.name;
+              detail_dept.innerText = student.deptName;
+              detail_no.innerText = student.no;
+              detail_phone.innerText = student.tel;
+              detail_email.innerText = student.email;
+              detail_birth.innerText = student.birth;
+              detail_addr.innerText = student.addr;
             }
 
             function allStudentAttend() {
@@ -1986,6 +2039,13 @@ xmlns:th="http://www.thymeleaf.org"
               for( let atRadio of attendRadios ) {
                 atRadio.checked = true;
               }
+            }
+
+            function onUserDetailCurtain() {
+              userDetailCurtain.classList.remove('d-none');
+            }
+            function offUserDetailCurtaion() {
+              userDetailCurtain.classList.add('d-none');
             }
 
             function onLoaderCurtain() {
