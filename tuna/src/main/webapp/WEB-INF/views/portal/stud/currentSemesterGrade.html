@@ -72,14 +72,17 @@
 								<td class="fw-semibold fs-sm" th:text="${grade.NAME}">#</td>
 								<td class="fw-semibold fs-sm" th:text="${grade.POINT}">#</td>
 								<td class="fw-semibold fs-sm">
-									<th:block th:if="${grade.EVALSTATE == 'Y'}" th:text="${grade.ALPHABET}" />
+									<th:block th:if="${grade.EVALSTATE == 'y'}" th:text="${grade.ALPHABET}" />
 									<th:block th:if="${grade.EVALSTATE == 'N'}" th:text="비공개" />
 								</td>
 								<td class="text-center fw-semibold fs-sm">
-									<th:block th:if="${grade.EVALSTATE == 'Y'}" th:text="${grade.TOTAL}" />
+									<th:block th:if="${grade.EVALSTATE == 'y'}" th:text="${grade.TOTAL}" />
 									<th:block th:if="${grade.EVALSTATE == 'N'}" th:text="비공개" />
 								</td>
-								<td class="text-center fw-semibold fs-sm" th:text="${grade.EVALSTATE}">#</td>
+								<td class="text-center fw-semibold fs-sm">
+									<th:block th:if="${grade.EVALSTATE == 'y'}" th:text="O" />
+									<th:block th:if="${grade.EVALSTATE == 'N'}" th:text="X" />
+								</td>
 							</tr>
 						</th:block>
 					</tbody>
@@ -105,8 +108,10 @@
 						<tbody>
 							<tr>
 								<td scope="row" class="text-center fw-semibold fs-sm" th:text="${total.COUNT}">0</td>
-								<td class="text-center fw-semibold fs-sm" th:text="${total.SUM}">0</td>
-								<td class="text-center fw-semibold fs-sm" th:text="${total.AVG}">0</td>
+								<td class="text-center fw-semibold fs-sm" th:if="${total.SUM != null}" th:text="${total.SUM}">0</td>
+								<td class="text-center fw-semibold fs-sm" th:if="${total.SUM == null}" th:text="0"></td>
+								<td class="text-center fw-semibold fs-sm" th:if="${total.AVG != null}" th:text="${#numbers.formatDecimal(total.AVG,1,2)}">0</td>
+								<td class="text-center fw-semibold fs-sm" th:if="${total.AVG == null}" th:text="0"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -154,7 +159,7 @@
 									</thead>
 									<tbody id="objectionTb">
 										<th:block th:each="grade, i:${grades}">
-											<th:block th:if="${grade.EVALSTATE == 'Y'}">
+											<th:block th:if="${grade.EVALSTATE == 'y'}">
 												<tr th:data-pfname="${grade.PFNAME}" 
 													th:data-sbjno="${grade.NO}" 
 													th:data-sbjname="${grade.NAME}" 
@@ -166,7 +171,7 @@
 													<td class="fw-semibold fs-sm" th:text="${grade.POINT}">#</td>
 													<td class="fw-semibold fs-sm" th:text="${grade.ALPHABET}">#</td>
 													<td class="fw-semibold fs-sm" th:text="${grade.TOTAL}">#</td>
-													<td class="fw-semibold fs-sm" th:text="${grade.EVALSTATE}">#</td>
+													<td class="fw-semibold fs-sm">O</td>
 													<td class="fw-semibold fs-sm table-danger" th:id="${grade.NO}">미신청</td>
 												</tr>
 											</th:block>

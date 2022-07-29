@@ -39,8 +39,7 @@
 
 		<div class="content content-boxed">
 				<div class="block block-rounded">
-					<div class="block-content">
-
+					<div class="block-content block-content-full">
 						<div class="row d-flex justify-content-center py-sm-3">
 							<div th:each="content, i:${content}"
 								class="text-center fs-sm push">
@@ -73,5 +72,9 @@
 		</div>
 
 	</main>
+	<script>
+			//get방식 파라메터 숨기기
+		history.replaceState({}, null, location.pathname);
+	</script>
 </body>
 </html>

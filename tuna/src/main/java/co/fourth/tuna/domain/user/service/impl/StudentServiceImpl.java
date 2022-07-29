@@ -170,11 +170,6 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 		return students;
 	}
 
-	@Override
-	public List<StudentWithSubmitTaskVO> findOneStudentBysubjectNo(int sbjNo, int stNo) {
-		return mapper.findOneStudentBysubjectNo(sbjNo, stNo);
-	}
-	
 	
 
 	

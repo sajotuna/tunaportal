@@ -203,4 +203,11 @@
 	WHERE L.STNO = #{stud.no}
 	AND S.NO = #{sbj.no}
 	</select>
+	
+	<select id = "subjectCount" resultType = "int">
+	
+	SELECT COUNT(*) FROM SUBJECT
+	
+	</select>
+	
 </mapper>
