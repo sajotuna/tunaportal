@@ -144,8 +144,8 @@ public class EclassStudentEclassController {
 	
 	//질의응답작성폼
 	@RequestMapping("/qnaInsert")
-	public String qnaInsert(Model model, LectureQnaVO vo, 
-							HttpServletRequest req, 
+	public String qnaInsert(Model model, LectureQnaVO vo, RedirectAttributes redir,
+							HttpServletRequest req,
 							Authentication authentication) {
 		model.addAttribute("sbjNo",req.getParameter("sbjNo"));
 		
@@ -162,6 +162,8 @@ public class EclassStudentEclassController {
 		 		
 		qnaDao.insertOneQna(vo);
 		
+		redir.addFlashAttribute("question", "정말 등록하시겠습니까? 등록하시면 삭제 및 수정이 불가능합니다.");
+		redir.addFlashAttribute("success", "질문 등록이 완료되었습니다.");
 		redir.addAttribute("no", vo.getNo());
 		redir.addAttribute("sbjNo", vo.getSbjNo());
 		
