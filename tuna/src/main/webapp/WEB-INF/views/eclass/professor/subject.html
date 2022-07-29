@@ -786,7 +786,7 @@ xmlns:th="http://www.thymeleaf.org"
 
                   <div class="tab-pane" id="btabs-attendance" role="tabpanel" aria-labelledby="btabs-attendance-tab">
                     <div class="row">
-                      <div class="col-12">
+                      <div id="atten-block-list" class="col-12">
                         <div class="block block-rounded block-themed block-bordered border-1">
                           <div class="block-header bg-primary-darker">
                             <div class="block-title">참치 분해학</div>
@@ -869,7 +869,7 @@ xmlns:th="http://www.thymeleaf.org"
                           </div>
                         </div>
 
-                        
+
                       </div>
                     </div> 
                     
@@ -1993,6 +1993,8 @@ xmlns:th="http://www.thymeleaf.org"
 
                 if(res.ok) {
                   setDetailUserInfo(resBody.student)
+                  setDetailUserAttendance(resBody.student);
+                  //setDetailUserGrade(resBody.student);
                 } else {
                   Dialogs.dialog('error',
                   '학생정보 가져오기 실패',
@@ -2091,6 +2093,107 @@ xmlns:th="http://www.thymeleaf.org"
                   `;
                 }
               }
+              
+            }
+            
+            // 출결 세팅
+            function setDetailUserAttendance(student) {
+              let detail_attendance = document.querySelector('#btabs-attendance');
+              let blockParent = detail_attendance.querySelector('#atten-block-list');
+              let blocks = detail_attendance.querySelectorAll('.block');
+              for(let block of blocks) {
+                block.remove();
+              }
+
+              for(let subject of student.subjectList) {
+                let block = document.createElement('div');
+                blockParent.appendChild(block);
+                let attenCnt = 0; //출석 수
+                let absenceCnt = 0; //결석
+                let latenessCnt = 0; // 지각
+                
+                let blockHTML = `
+                <div class="block block-rounded block-themed block-bordered border-1">
+                  <div class="block-header bg-primary-darker">
+                    <div class="block-title">${subject.name}</div>
+                  </div>
+                  <div class="block-content p-0" style="overflow-x: scroll;">
+                    <table class="table table-vcenter table-bordered text-center mb-0 table-bordered border-dark border-2">
+                      <thead>
+                        <tr>
+                          <th class="p-1" style="min-width: 50px;">종합</th>`;
+                for(let atten of subject.attendanceList){
+                  let attenDate = dateNumberToISO(atten.classDate).slice(5).replace('-','/');
+                  let th = document.createElement('th');
+                  th.classList.add("p-0");
+                  th.style.width = "50px";
+                  th.innerText = attenDate;
+                  if(atten.stateCode == "1401") {
+                    attenCnt++;
+                  } else if(atten.stateCode == "1402") {
+                    absenceCnt++;
+                  } else if(atten.stateCode == "1403") {
+                    latenessCnt++;
+                  }
+
+                  blockHTML += th.outerHTML;
+                }
+                  blockHTML +=
+                        `</tr>
+                      </thead>
+                      <tbody>
+                        <tr class="m-0">
+                          <td class="p-0">
+                            <div class="p-1">${attenCnt}</div>
+                            <div class="p-1">${absenceCnt}</div>
+                            <div class="p-1">${latenessCnt}</div>
+                          </td>`;
+                  for(let atten of subject.attendanceList) {
+                    if(!atten.stateCode) continue;
+                    let td = document.createElement('td');
+                    td.classList.add('p-0');
+                    td.innerHTML = `
+                            <div>
+                              <input type="radio" class="btn-check" name="atten${atten.no}" id="atten_atten${atten.no}" autocomplete="off" ${atten.stateCode=="1401"?"checked":""} />
+                              <label class="btn btn-outline-success p-1" for="atten_atten${atten.no}">출석</label>
+                            </div>
+                            <div>
+                              <input type="radio" class="btn-check" name="atten${atten.no}" id="atten_late${atten.no}" autocomplete="off" ${atten.stateCode=="1402"?"checked":""} />
+                              <label class="btn btn-outline-warning p-1" for="atten_late${atten.no}">지각</label>
+                            </div>
+                            <div>
+                              <input type="radio" class="btn-check" name="atten${atten.no}" id="atten_absen${atten.no}" autocomplete="off" ${atten.stateCode=="1403"?"checked":""} />
+                              <label class="btn btn-outline-danger p-1" for="atten_absen${atten.no}">결석</label> 
+                            </div>
+                    `;
+                    blockHTML += td.outerHTML;
+                  }
+                          // <td class="p-0">
+                          //   <div>
+                          //     <input type="radio" class="btn-check" name="atten0301" id="atten0301-1" autocomplete="off" checked />
+                          //     <label class="btn btn-outline-success p-1" for="atten0301-1">출석</label>
+                          //   </div>
+                          //   <div>
+                          //     <input type="radio" class="btn-check" name="atten0301" id="atten0301-2" autocomplete="off" />
+                          //     <label class="btn btn-outline-warning p-1" for="atten0301-2">지각</label>
+                          //   </div>
+                          //   <div>
+                          //     <input type="radio" class="btn-check" name="atten0301" id="atten0301-3" autocomplete="off" />
+                          //     <label class="btn btn-outline-danger p-1" for="atten0301-3">결석</label> 
+                          //   </div>
+                    blockHTML+=`
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                `;
+                block.innerHTML = blockHTML;
+              }
+            }
+
+            // 성적 세팅
+            function setDetailUserGrade() {
+
             }
 
             function allStudentAttend() {
@@ -2136,9 +2239,8 @@ xmlns:th="http://www.thymeleaf.org"
 
             function textCutter(text, size) {
               let textSize = new Blob([text]).size;
-              console.log(text);
               let targetSize = (size/(textSize/text.length));
-              console.log(targetSize);
+
               if(textSize < size-3) {
                 return text;
               }
