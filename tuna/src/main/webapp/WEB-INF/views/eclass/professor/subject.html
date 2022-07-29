@@ -744,7 +744,7 @@ xmlns:th="http://www.thymeleaf.org"
                           </div>
                           <div class="block-content py-0" style="overflow-y:scroll; height: 200px;">
                             <table class="table table-hover table-vcenter fs-sm">
-                              <tbody id="">
+                              <tbody id="detail-task-list">
                                 <!-- <tr>
                                   <td>참치공학</td>
                                   <td>과제#1</td>
@@ -769,14 +769,14 @@ xmlns:th="http://www.thymeleaf.org"
                             <div class="block-title">문의내역</div>
                           </div>
                           <div class="block-content py-0" style="overflow-y:scroll; height: 200px;">
-                            <ul class="nav-items push fs-sm">
-                              <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                            <ul id="detail-qna-list" class="nav-items push fs-sm">
+                              <!-- <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
                                 <div class="col-2 text-center">참치공학</div>
                                 <div class="col-1 d-none d-lg-block text-center text-danger">대기</div>
                                 <div class="col-1 d-none d-lg-block text-center text-gray">비공개</div>
                                 <div class="col-7">안녕하세요 교수님? 궁금한게 있는데요</div>
                                 <div class="col-1 d-none d-lg-block text-center">07-06</div>
-                              </a></li>
+                              </a></li> -->
                             </ul>
                           </div>
                         </div>
@@ -2025,13 +2025,72 @@ xmlns:th="http://www.thymeleaf.org"
               let detail_birth = userDetailModal.querySelector('#detail-birth');
               let detail_addr = userDetailModal.querySelector('#detail-addr');
 
+              let detail_task_list = userDetailModal.querySelector('#detail-task-list');
+              detail_task_list.innerHTML = "";
+              let detail_qna_list = userDetailModal.querySelector('#detail-qna-list');
+              detail_qna_list.innerHTML = "";
+
               detail_name.innerText = student.name;
               detail_dept.innerText = student.deptName;
               detail_no.innerText = student.no;
               detail_phone.innerText = student.tel;
               detail_email.innerText = student.email;
-              detail_birth.innerText = student.birth;
+              detail_birth.innerText = dateNumberToISO(student.birth);
               detail_addr.innerText = student.addr;
+
+              for( let subject of student.subjectList) {
+                // 제출 과제
+                for( let submitTask of subject.submitTaskList ) {
+                  let url = `/tuna/download?fileName=${submitTask.fileName}&originName=${submitTask.uri}&folder=lectureFile`;
+                  let tr = document.createElement('tr');
+                  detail_task_list.appendChild(tr);
+                  tr.innerHTML = `
+                    <td>${subject.name}</td>
+                    <td>${submitTask.task.title}</td>
+                    <td class="table-cell">
+                      <i class="fa fa-file-arrow-down"></i>
+                    </td>
+                    <td class="text-primary">
+                      <a href="${url}">${submitTask.fileName}</a>
+                    </td>
+                    <td>${dateTimeToISO(submitTask.enrollDate)}</td>`;
+                }
+
+                //문의
+                for( let qna of subject.qnaList ) {
+                  let li = document.createElement('li');
+                  let answer_txt = '';
+                  let answer_class = "";
+                  let visible_txt = "";
+                  let visible_class
+
+                  if(!qna.answer) {
+                    answer_txt = "대기";
+                  } else {
+                    answer_txt = "완료";
+                    answer_class = 'text-danger';
+                  }
+
+                  if(qna.visible == 0) {
+                    visible_txt = "비공개"
+                    visible_class = "text-gray";
+                  } else {
+                    visible_txt = "공개"
+                  }
+
+                  detail_qna_list.appendChild(li);
+                  // TODO
+                  li.innerHTML = `
+                  <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                    <div class="col-2 text-center">${subject.name}</div>
+                    <div class="col-1 d-none d-lg-block text-center"><span class="${answer_class}">${answer_txt}</span></div>
+                    <div class="col-1 d-none d-lg-block text-center ${visible_class}">${visible_txt}</div>
+                    <div class="col-7">${textCutter(qna.title, 40)}</div>
+                    <div class="col-1 d-none d-lg-block text-center">${dateNumberToISO(qna.enrollDate)}</div>
+                  </a></li>
+                  `;
+                }
+              }
             }
 
             function allStudentAttend() {
@@ -2068,6 +2127,17 @@ xmlns:th="http://www.thymeleaf.org"
               mDate = mDate.toISOString();
               result += mDate.split('T')[0].slice(5) + " " + mDate.split('T')[1].split('.')[0];
               return result;
+            }
+
+            function textCutter(text, size) {
+              let textSize = new Blob([text]).size;
+              console.log(text);
+              let targetSize = (size/(textSize/text.length));
+              console.log(targetSize);
+              if(textSize < size-3) {
+                return text;
+              }
+              return text.slice(0, targetSize)+"...";
             }
 
             function dateToKoreanWeekday(date) {
