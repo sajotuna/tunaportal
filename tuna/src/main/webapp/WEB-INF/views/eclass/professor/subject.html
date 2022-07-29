@@ -2033,7 +2033,7 @@ xmlns:th="http://www.thymeleaf.org"
               detail_name.innerText = student.name;
               detail_dept.innerText = student.deptName;
               detail_no.innerText = student.no;
-              detail_phone.innerText = student.tel;
+              detail_phone.innerText = stringToTelStyle(student.tel);
               detail_email.innerText = student.email;
               detail_birth.innerText = dateNumberToISO(student.birth);
               detail_addr.innerText = student.addr;
@@ -2079,7 +2079,7 @@ xmlns:th="http://www.thymeleaf.org"
                   }
 
                   detail_qna_list.appendChild(li);
-                  // TODO
+                  // TODO 
                   li.innerHTML = `
                   <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
                     <div class="col-2 text-center">${subject.name}</div>
@@ -2126,6 +2126,11 @@ xmlns:th="http://www.thymeleaf.org"
               let result = "";
               mDate = mDate.toISOString();
               result += mDate.split('T')[0].slice(5) + " " + mDate.split('T')[1].split('.')[0];
+              return result;
+            }
+
+            function stringToTelStyle(text){
+              let result = text.slice(0, 3)+"-"+text.slice(3, 7)+"-"+text.slice(7, 11)
               return result;
             }
 
