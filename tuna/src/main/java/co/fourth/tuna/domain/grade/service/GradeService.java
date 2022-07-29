@@ -24,4 +24,5 @@ public interface GradeService {
 	public String updateGradeListByStudentNoAndSbjectNo(List<GradeFormVO> vo);
 	
 	public String updateSubmitTaskGrade(EclassSubmitTaskScoreForm form);
+	public GradeVO getOneByStudentIdAndSubjectId(int stno, int sbjno);
 }

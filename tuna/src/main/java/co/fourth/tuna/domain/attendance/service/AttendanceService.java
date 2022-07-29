@@ -14,4 +14,10 @@ public interface AttendanceService {
 	public LocalDate findThisAttendanceBySubjectId(int sbjno);
 	// 해당 날짜 출결 출석부
 	public List<AttendanceVO> findAttendanceByDateAndSubjectId(LocalDate date, int sbjno);
+	
+	// 출석부 업데이트
+	public String updateAttendanceList(List<AttendanceVO> list);
+	
+	// 
+	public List<AttendanceVO> getListByStudentIdAndSbjno(int stno, int sbjno);
 }

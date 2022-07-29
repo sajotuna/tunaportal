@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.domain.subject.vo.SubjectWithAttendanceVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 
@@ -31,9 +32,15 @@ public interface SubjectMapper {
 
 	public List<SubjectVO> findSbjByStud(@Param("stud") StudentVO vo, @Param("seasonCode") int code);
 	public List<SubjectVO> selectOneSubTask(@Param("stud") StudentVO vo, @Param("sbj") SubjectVO sbjvo);
+
+	public List<SubjectWithAttendanceVO> selectListByStudentIdAndPrfessorId(
+			@Param("stno")int stno, 
+			@Param("pfno")int pfno);
+
 	
 	public int subjectCount();
 	
+
 	//public ArrayList<SubjectVO>findListForLectureSchedule(@Param("pageNum")int start, @Param("size")int size);
 	//public ArrayList<Map<String, Object>>findListForLectureScheduleByProf(@Param("prof")ProfessorVO prof, @Param("pageNum")int pageNum, @Param("size")int size);
 	

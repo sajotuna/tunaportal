@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
+import co.fourth.tuna.domain.task.vo.SubmitTaskWithTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 
 public interface TaskService {
@@ -38,4 +39,7 @@ public interface TaskService {
 	
 	public List<SubmitTaskVO> findSubmitTaskListByStudentIdAndSubjectId(int stNo, int sbjNo);
 	
+	public List<SubmitTaskWithTaskVO> getSubmitTaskWithTaskListByStudentIdAndSubjectId(int stno, int sbjno);
+	
+	public TaskVO getTaskByTaskId(int taskno);
 }

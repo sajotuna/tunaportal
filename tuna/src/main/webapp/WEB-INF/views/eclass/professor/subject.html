@@ -296,7 +296,7 @@ xmlns:th="http://www.thymeleaf.org"
       ███████    ██     ██████  ██████  ███████ ██   ████    ██  
 -->
                   <div class="tab-pane pb-3" id="btabs-static-student" role="tabpanel" aria-labelledby="btabs-static-student-tab">
-                    <form id="subject-attendance-form">
+                    <form id="subject-attendance-form" onsubmit="return false;">
                       <div class="row">
                         <div class="col-xl-3 align-self-center">
                           <span class="fs-lg fw-bold" id="attendance_date_text">yy-MM-dd (요)</span>
@@ -305,7 +305,7 @@ xmlns:th="http://www.thymeleaf.org"
                           <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
                         </div>
                         <div class="col-xl-2">
-                          <button class="col-12 btn btn-primary" id="attendance_submit">적용</button>
+                          <button class="col-12 btn btn-primary submit_button" id="attendance_submit">적용</button>
                         </div>
                       </div>
                       <hr class="mb-0">
@@ -707,7 +707,8 @@ xmlns:th="http://www.thymeleaf.org"
                       </div>
                       <div class="col-3 fw-bold">
                         <div class="align-items-center">
-                          <div>김철수</div>
+                          <div><span>김철수</span>&nbsp;
+                            <span class="fw-medium fs-sm text-muted">[물리학과]</span></div>
                           <div>10530999</div>
                           <div>010-3333-4444</div>
                         </div>
@@ -949,6 +950,7 @@ xmlns:th="http://www.thymeleaf.org"
             const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
             const REST_URL = {
+              STUDENT_DETAIL : "/tuna/staff/student",
               PROGRESS_CONTENT : "/tuna/prof/lecPlans",
               //ATTENDANCE_CONTENT : "/tuna/prof/students",
               ATTENDANCE_CONTENT : "/tuna/staff/attendance",
@@ -968,6 +970,7 @@ xmlns:th="http://www.thymeleaf.org"
               SUBMIT_LECTURE_FILE_UPLOAD : "/tuna/staff/insertSubjectFile",
               SUBMIT_ATTENDANCES : "/tuna/staff/insert/attendance",
               LECTURE_FILE_DELETE : "/tuna/staff/deleteSubjectFile",
+
             };
             // const TAB_BTN_NUM = {
 
@@ -1042,7 +1045,11 @@ xmlns:th="http://www.thymeleaf.org"
                
             }
 /*
-
+██     ███    ██     ██     ████████ 
+██     ████   ██     ██        ██    
+██     ██ ██  ██     ██        ██    
+██     ██  ██ ██     ██        ██    
+██     ██   ████     ██        ██    
 */
             function initTaskInsertForm() {
               let modal = document.getElementById('taskInsertFrm');
@@ -1102,7 +1109,7 @@ xmlns:th="http://www.thymeleaf.org"
                         })
                       })
                       .finally(()=>{
-                        tabClickEvent(1);
+                        tabClickEvent(2);
                       }) // fetch END
                     }) // Dialog END
                 }
@@ -1216,18 +1223,18 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
             function setAttendanceSubmitEvent() {
-              let attendanceForm = document.querySelector("#subject-attendance-form");
+              let attendanceForm = document.querySelector("#btabs-static-student");
+              let submitBtn = attendanceForm.querySelector(".submit_button");
               let radios = attendanceForm.querySelectorAll('input[type="radio"]');
               let attendanceList = [];
 
-              attendanceForm.addEventListener('submit', function(event) {
-                event.preventDefault();
+              submitBtn.addEventListener('click', function(event) {
                 for(const radio of radios) {
                   if(radio.checked){
                     let attendanceObj = {
                       no : radio.name.slice(RADIO_GROUP_NAME.length),
-                      value : radio.value,
-                      sbjno : sbjno,
+                      stateCode : radio.value,
+                      sbjNo : sbjno,
                     }
                     attendanceList.push(attendanceObj);
                   }
@@ -1245,13 +1252,22 @@ xmlns:th="http://www.thymeleaf.org"
                 })
                 .then( async (res) => {
                   let resBody = await res.text();
-
+                  console.log(resBody);
                   if(res.ok) {
                     Dialogs.dialog('success',
-                    '성공',
+                    '입력 성공',
                     resBody,
                     function() {
-                      // TODO tab click event (탭 새로고침)
+
+                    })
+                  } else {
+                    Dialogs.dialog('error',
+                    '입력 실패',
+                    resBody,
+                    function() {
+                      console.error(resBody);
+                      onTab = -1;
+                      tabClickEvent(1);
                     })
                   }
                 }).catch((err) => {
@@ -1259,11 +1275,10 @@ xmlns:th="http://www.thymeleaf.org"
                   '오류',
                   err,
                   function() {
-                    console.error(err);
+                    console.error(err)
+                    onTab = -1;
+                    tabClickEvent(onTab);
                   })
-                })
-                .finally(()=>{
-                  //TODO tab click event
                 })
 
               });
@@ -1459,7 +1474,7 @@ xmlns:th="http://www.thymeleaf.org"
                   <i class="fa fa-2x fa-circle-user"></i>
                 </td>
                 <td class="table-cell">
-                  <a class="student-selector" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);" data-stno="${student.no}" data-sbjno="${sbjno}">
+                  <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);" onclick="studentClickEvent()" data_stno="${student.no}" >
                     ${student.name}</a>
                 </td>
                 <td class="table-cell">
@@ -1934,34 +1949,36 @@ xmlns:th="http://www.thymeleaf.org"
                   })
                 })
             }
-            
-            function studentClickEvent() {
-            	let studentSelectors = document.querySelectorAll(".student-selector");
-            	
-            	for (let i=0; i<studentSelectors.length; i++) {
-            		studentSelectors[i].addEventListener('click', function(e) {
-            			let stNo = e.target.dataset.stno;
-            			let sbjNo = e.target.dataset.sbjno;
-            			fetch('/tuna/prof/eclass/student/student', {
-            				method: "POST",
-            				headers: {
-				                  'header': header,
-				                  'X-Requested-With': 'XMLHttpRequest',
-				                  'Content-Type': 'application/json',
-				                  'X-CSRF-Token': token
-				            },
-			                body: JSON.stringify({
-			                	stNo:stNo,
-			                	sbjNo:sbjNo
-			                })
-            			})
-            			.then(result => result.json())
-            			.then(result => {
-            				console.log(result);
-            			})
 
-            		})
-            	}
+            
+/* @ student
+ ██████      ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ 
+██    ██     ██         ██    ██    ██ ██   ██ ██      ████   ██    ██    
+██ ██ ██     ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    
+██ ██ ██          ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██    
+ █ ████      ███████    ██     ██████  ██████  ███████ ██   ████    ██    
+*/
+            function studentClickEvent() {
+              let stNo = event.target.getAttribute('data_stno')
+              // let sbjNo = event.target.dataset.sbjno;
+              let student = {
+                no: stNo
+              }
+              fetch(REST_URL.STUDENT_DETAIL, {
+                method: "POST",
+                headers: {
+                      'header': header,
+                      'X-Requested-With': 'XMLHttpRequest',
+                      'Content-Type': 'application/json',
+                      'X-CSRF-Token': token
+                },
+                body: JSON.stringify(student)
+              })
+              .then(result => result.json())
+              .then(result => {
+                //console.log(result);
+              })
+
             }
 
             function allStudentAttend() {

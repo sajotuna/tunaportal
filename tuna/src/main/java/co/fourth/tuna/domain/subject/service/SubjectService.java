@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
+import co.fourth.tuna.domain.subject.vo.SubjectWithAttendanceVO;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
 
 public interface SubjectService {
@@ -31,5 +32,6 @@ public interface SubjectService {
 	@Transactional
 	public String updateGradeRatio(GradeRatioVO grade);
 	
+	public List<SubjectWithAttendanceVO> getListByStudentIdAndProfessorId(int stno, int pfno);
 
 }

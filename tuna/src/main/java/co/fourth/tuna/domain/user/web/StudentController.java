@@ -1,6 +1,10 @@
 package co.fourth.tuna.domain.user.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -8,10 +12,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.fourth.tuna.domain.task.vo.EclassStudentDetailPageVO;
 import co.fourth.tuna.domain.user.service.StudentService;
+import co.fourth.tuna.domain.user.vo.StudentWithSubjectsVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 
 @Controller
@@ -88,6 +96,31 @@ public class StudentController {
 		
 	}
 	
-	
+	@PostMapping("/staff/student")
+	public ResponseEntity<EclassStudentDetailPageVO> getStudentDetail(
+			Authentication auth, 
+			@RequestBody StudentVO student) {
+		HttpHeaders resHeaders = new HttpHeaders();
+		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		ResponseEntity<EclassStudentDetailPageVO> res = null;
+		EclassStudentDetailPageVO result = new EclassStudentDetailPageVO();
+		
+		try {
+			result.setStudent(StudentDao.getOneByStudentId(student.getNo(), Integer.parseInt(auth.getName())));
+			res = new ResponseEntity<EclassStudentDetailPageVO>(
+					result,
+					resHeaders,
+					HttpStatus.OK);
+		} catch ( Throwable e ) {
+			result.setMsg(e.getMessage());
+			res = new ResponseEntity<EclassStudentDetailPageVO>(
+					result,
+					resHeaders,
+					HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
+		}
+		
+		return res;
+	}
 	
 }

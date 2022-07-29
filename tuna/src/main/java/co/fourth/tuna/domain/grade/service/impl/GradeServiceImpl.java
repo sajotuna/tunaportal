@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.fourth.tuna.domain.grade.mapper.GradeMapper;
 import co.fourth.tuna.domain.grade.service.GradeService;
 import co.fourth.tuna.domain.grade.vo.GradeFormVO;
+import co.fourth.tuna.domain.grade.vo.GradeVO;
 import co.fourth.tuna.domain.task.service.TaskService;
 import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
@@ -130,6 +131,11 @@ public class GradeServiceImpl implements GradeService {
 		}
 		
 		return "성공적으로 등록 되었습니다.";
+	}
+
+	@Override
+	public GradeVO getOneByStudentIdAndSubjectId(int stno, int sbjno) {
+		return mapper.findOneByStudentIdAndSubjectId(stno, sbjno);
 	}
 	
 	// TODO 성적 등록시 total 계산해서 넣기

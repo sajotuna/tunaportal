@@ -13,6 +13,7 @@ import co.fourth.tuna.domain.task.mapper.TaskMapper;
 import co.fourth.tuna.domain.task.service.TaskService;
 import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
+import co.fourth.tuna.domain.task.vo.SubmitTaskWithTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 
 @Service
@@ -22,6 +23,8 @@ public class TaskServiceImpl implements TaskService {
 	TaskMapper map;
 	@Autowired
 	GradeService gradeService;
+	@Autowired
+	TaskService service;
 	
 	@Override
 	public TaskVO taskList(TaskVO vo) {
@@ -97,6 +100,21 @@ public class TaskServiceImpl implements TaskService {
 	public List<SubmitTaskVO> findSubmitTaskListByStudentIdAndSubjectId(int stNo, int sbjNo) {
 		return map.findSubmitTaskListByStudentIdAndSubjectId(stNo, sbjNo);
 	}
+
+	@Override
+	public List<SubmitTaskWithTaskVO> getSubmitTaskWithTaskListByStudentIdAndSubjectId(int stno, int sbjno) {
+		List<SubmitTaskWithTaskVO> list = map.selectSubmitTaskWithTaskListByStudentIdAndSubjectId(stno, sbjno);
+		for(SubmitTaskWithTaskVO submitTask : list) {
+			submitTask.setTask(service.getTaskByTaskId(submitTask.getTaskNo()));
+		}
+		return list;
+	}
+
+	@Override
+	public TaskVO getTaskByTaskId(int taskno) {
+		return map.selectOneByTaskId(taskno);
+	}
+	
 	
 
 }

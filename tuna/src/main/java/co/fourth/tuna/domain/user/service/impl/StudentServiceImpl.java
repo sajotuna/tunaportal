@@ -15,12 +15,14 @@ import co.fourth.tuna.domain.attendance.mapper.AttendanceMapper;
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.grade.mapper.GradeMapper;
 import co.fourth.tuna.domain.grade.vo.GradeVO;
+import co.fourth.tuna.domain.subject.service.SubjectService;
 import co.fourth.tuna.domain.task.mapper.TaskMapper;
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 import co.fourth.tuna.domain.user.mapper.StudentMapper;
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentExVO;
+import co.fourth.tuna.domain.user.vo.StudentWithSubjectsVO;
 import co.fourth.tuna.domain.user.vo.StudentVO;
 import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
 import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
@@ -36,6 +38,9 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 	private TaskMapper taskMap;
 	@Autowired
 	private GradeMapper gradeMap;
+	
+	@Autowired
+	private SubjectService subjectService;
 	
 	@Override
 	public StudentVO findById(StudentVO vo) {
@@ -168,6 +173,14 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 		}
 		
 		return students;
+	}
+
+	@Override
+	public StudentWithSubjectsVO getOneByStudentId(int stno, int pfno) {
+		StudentWithSubjectsVO student = mapper.selectOneByStudentId(stno);
+		student.setSubjectList(subjectService.getListByStudentIdAndProfessorId(stno, pfno));
+		
+		return student;
 	}
 
 	

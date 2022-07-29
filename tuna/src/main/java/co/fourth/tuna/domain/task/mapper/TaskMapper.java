@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
+import co.fourth.tuna.domain.task.vo.SubmitTaskWithTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 
 public interface TaskMapper {
@@ -47,5 +48,9 @@ public interface TaskMapper {
 			@Param("sbjNo")int sbjNo
 			);
 	
+	public List<SubmitTaskWithTaskVO> selectSubmitTaskWithTaskListByStudentIdAndSubjectId(
+			@Param("stno")int stno, 
+			@Param("sbjno")int sbjno);
 	
+	public TaskVO selectOneByTaskId(int taskno);
 }
