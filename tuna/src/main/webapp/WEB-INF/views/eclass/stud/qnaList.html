@@ -43,7 +43,7 @@
 						<div id="DataTables_Table_0_wrapper"
 							class="dataTables_wrapper dt-bootstrap5 no-footer">
 							<div class="row">
-								<div class="col-sm-12" style="height:370px; overflow-y:scroll;">
+								<div class="col-sm-12" style="height:370px;">
 									<table
 										class="table table-bordered  table-vcenter js-dataTable-full dataTable no-footer"
 										id="DataTables_Table_0"
@@ -61,44 +61,44 @@
 										<tbody th:each="q : ${qna}">
 											<tr
 												th:if="${q.VISIBLE} == 0 and ${not #strings.isEmpty(qna)}">
-												<td class="text-center fw-bold" colspan="1" th:text="${q.ROWNUM}"></td>
-												<td class="text-center fw-bold" colspan="7" style="width:200px"><a
+												<td class="text-center" colspan="1" th:text="${q.ROWNUM}"></td>
+												<td class="text-center" colspan="7" style="width:200px"><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
 													style="color: black"> [[${q.TITLE}]] </a></td>
-												<td class="text-center fw-bold" colspan="2" th:text="${q.NAME}"></td>
-												<td class="text-center fw-bold" colspan="2"
+												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
+												<td class="text-center" colspan="2"
 													th:text="${q.ENROLLDATE}"></td>
 												<td class="text-center text-danger fw-bold" colspan="2"
 													th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
-												<td class="text-center fw-bold" colspan="2"
+												<td class="text-center" colspan="2"
 													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
 											</tr>
 											<tr
 												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} != ${q.STNO}">
-												<td class="text-center fw-bold" colspan="1" th:text="${q.ROWNUM}"></td>
-												<td class="text-center fw-bold" colspan="11">비공개 질문입니다.<i class="fa fa-2x fa-lock ms-2" style="font-size:10px; line-height:10px;"></i></td>
+												<td class="text-center" colspan="1" th:text="${q.ROWNUM}"></td>
+												<td class="text-center" colspan="11">비공개 질문입니다.<i class="fa fa-2x fa-lock ms-2" style="font-size:10px; line-height:10px;"></i></td>
 												<td class="text-center text-danger fw-bold" colspan="2"
 													th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
-												<td class="text-center fw-bold" colspan="2"
+												<td class="text-center" colspan="2"
 													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
 											</tr>
 											<tr
 												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} == ${q.STNO}">
-												<td class="text-center fw-bold" colspan="1" th:text="${q.ROWNUM}"></td>
-												<td class="text-center fw-bold" colspan="7"><a
+												<td class="text-center" colspan="1" th:text="${q.ROWNUM}"></td>
+												<td class="text-center" colspan="7"><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
 													style="color: black; width:200px"> [[${q.TITLE}]]<i class="fa fa-2x fa-lock ms-2" style="font-size:10px; line-height:10px;"></i></a></td>
-												<td class="text-center fw-bold" colspan="2" th:text="${q.NAME}"></td>
-												<td class="text-center fw-bold" colspan="2"
+												<td class="text-center" colspan="2" th:text="${q.NAME}"></td>
+												<td class="text-center" colspan="2"
 													th:text="${q.ENROLLDATE}"></td>
 												<td class="text-center text-danger fw-bold" colspan="2"
 													th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
-												<td class="text-center fw-bold" colspan="2"
+												<td class="text-center" colspan="2"
 													th:if="${#strings.isEmpty(q.ANSWER)}">미답변</td>
 											</tr>
 										</tbody>
 											<tr th:if="${#lists.isEmpty(qna)}">
-												<td class="text-center fw-bold" colspan="14">질문이 등록되지 않았습니다.</td>
+												<td class="text-center" colspan="14">질문이 등록되지 않았습니다.</td>
 											</tr>
 									</table>
 								</div>
