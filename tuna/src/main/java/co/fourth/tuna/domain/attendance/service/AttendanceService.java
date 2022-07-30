@@ -20,4 +20,5 @@ public interface AttendanceService {
 	
 	// 
 	public List<AttendanceVO> getListByStudentIdAndSbjno(int stno, int sbjno);
+	
 }

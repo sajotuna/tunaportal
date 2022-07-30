@@ -73,6 +73,30 @@ public class AttendanceController {
 		return res;
 	}
 	
+	@PostMapping("/staff/update/attendance")
+	public ResponseEntity<String> updateAttendance(
+			@RequestBody List<AttendanceVO> list) {
+
+		HttpHeaders resHeaders = new HttpHeaders();
+		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		ResponseEntity<String> res = null;
+		
+		try {
+			res = new ResponseEntity<String>(
+					service.updateAttendanceList(list),
+					resHeaders,
+					HttpStatus.OK);
+		} catch (Throwable e) {
+			res = new ResponseEntity<String>(
+					e.getMessage(),
+					resHeaders,
+					HttpStatus.BAD_REQUEST);
+					
+		}
+		
+		return res;
+	}
+	
 //	@RequestMapping("/eclass/student/attendance")
 //	public String studentAttendance(Model model, AttendanceVO vo) {
 //		vo.setStNo(13168019);
