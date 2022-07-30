@@ -58,7 +58,7 @@ public class StudentController {
 		StudentDao.AdminStudUpdate(vo);
 		ra.addAttribute("no", vo.getNo());
 		ra.addFlashAttribute("success", "회원정보가 수정되었습니다.");
-		return "redirect:/admin/adminUserInfo";
+		return "redirect:/admin/admin/userInfo";
 	}
 	
 	@RequestMapping("/stud/userpwdUpdate")

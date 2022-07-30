@@ -9,6 +9,17 @@ xmlns:th="http://www.thymeleaf.org"
 
     <title>E-Class 전체 문의</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <style>
+  table tr td{
+	text-overflow : ellipsis;
+	overflow : hidden;
+	white-space : nowrap;
+	max-width : 200px;
+}
+  
+  </style>
+  
+  
   </head>
   <body>
 
@@ -73,21 +84,24 @@ xmlns:th="http://www.thymeleaf.org"
         </div> content header END -->
 
         <div class="content">
-
-          
-
-          <div class="col-xxl-12">
-            <h3 class="h3 fw-bold ms-3">전체 문의</h3>
-            <div class="block block-rounded">
-              <div class="block-content">
-
+				<div class="row">
+					<div class="col-12">
+						<h3 class="h3 fw-bold mb-2">전체문의</h3>
+					</div>
+				</div>
+           <div class="block block-rounded">
+					<div class="block-content block-content-full">
+						<div id="DataTables_Table_0_wrapper"
+							class="dataTables_wrapper dt-bootstrap5 no-footer">
+							<div class="row">
+                <div class="col-sm-12" style="height:370px;">
                 <table class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
-                    <tr class="fw-bold">
-                      <td style="width: 100px">번호</td>
-                      <td class="text-start">제목</td>
-                      <td style="width: 15%">과목명</td>
-                      <td style="width: 20%">작성자</td>
-                      <td style="width: 15%">작성일자</td>
+                    <tr class="text-center fw-bold bg-dark text-white">
+                      <td style="width: 100px" >번호</td>
+                      <td >제목</td>
+                      <td style="width: 15%" >과목명</td>
+                      <td style="width: 20%" >작성자</td>
+                      <td style="width: 15%" >작성일자</td>
                     </tr>
                   <th:block th:each = "qna : ${qnaList}">
                    <tbody>
@@ -98,7 +112,7 @@ xmlns:th="http://www.thymeleaf.org"
                       <th style="width: 15%">등록일시</th>
                     </tr> -->
                   
-                    <tr>
+                    <tr onclick="qnaDetail(this)">
                       <td th:text = "${qna.no}"></td>
                       <td class="text-start" th:text = "${qna.title}"></td>
                       <td th:text = "${qna.subjectVO.name}"></td>
@@ -110,40 +124,43 @@ xmlns:th="http://www.thymeleaf.org"
                 </table>
                 <nav aria-label="Page navigation">
                   <ul class="pagination pagination-sm justify-content-center">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="javascript:void(0)" aria-label="Previous">
-                        <span aria-hidden="true">
-                          <i class="fa fa-angle-left"></i>
-                        </span>
-                        <span class="visually-hidden">Previous</span>
-                      </a>
-                    </li>
-                    <li class="page-item active">
-                      <a class="page-link" onclick="javascript:pageBtnClick(this);" href="javascript:void(0)">1</a>
-                    </li>
-                    
                     <li class="page-item">
-                      <a class="page-link" href="javascript:void(0)" aria-label="Next">
-                        <span aria-hidden="true">
-                          <i class="fa fa-angle-right"></i>
-                        </span>
-                        <span class="visually-hidden">Next</span>
-                      </a>
+                      <button class="page-link" onclick="javascript:pageBtnClick(this);" style="width:25pt;height:25pt; font-size:16px;">1</button>
                     </li>
                   </ul>
                 </nav>
               </div>
+</div>
 
+            </div>
             </div> <!-- block end-->
 
           </div> <!-- col-12 end -->
 
         </div> <!-- content END -->
-
+		<th:block th:if = "${pageNum != null || pageNum != ''}">
+			<script th:inline="javascript">
+				let btns = document.querySelectorAll('li > button')
+				let pageNum = /*[[${param.pageNum}]]*/
+				console.log(pageNum)
+				btns.forEach(btn=>{
+					if(btn.innerHTML == pageNum){
+						btn.parentElement.setAttribute("class", "page-item active")
+					}
+				})
+				
+			</script>
+		</th:block>
 		<script>
 		function pageBtnClick(e){
 			location.href = 'qnaList?pageNum='+e.innerHTML;
 		}
+		
+		function qnaDetail(e){
+			console.log(e.children[0].innerHTML);
+			location.href = 'qna';
+		}
+		
 		</script>
       </main>
 

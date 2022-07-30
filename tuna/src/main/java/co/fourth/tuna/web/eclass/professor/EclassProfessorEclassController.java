@@ -41,20 +41,27 @@ import co.fourth.tuna.util.CustomDateUtills;
 @Controller
 @RequestMapping("/eclass/professor")
 public class EclassProfessorEclassController {
-	
-	@Autowired SubjectService subjectService;
-	@Autowired LectureQnaService lectureService;
-	@Autowired LectureNoticeService noticeService;
-	@Autowired PortalScheduleService portalScheduleService;
-	@Autowired ObjectionService objectionService;
-	
+
+	@Autowired
+	SubjectService subjectService;
+	@Autowired
+	LectureQnaService lectureService;
+	@Autowired
+	LectureNoticeService noticeService;
+	@Autowired
+	PortalScheduleService portalScheduleService;
+	@Autowired
+	ObjectionService objectionService;
+
 	@Autowired
 	LectureScheduleService lecScheduleService;
-	
-	@Autowired YearService yearService;
-	
-	@Autowired CodeService codeService;
-  
+
+	@Autowired
+	YearService yearService;
+
+	@Autowired
+	CodeService codeService;
+
 	private String profPath = "eclass/professor";
 
 	private static final Logger logger = LoggerFactory.getLogger(EclassProfessorEclassController.class);
@@ -64,10 +71,10 @@ public class EclassProfessorEclassController {
 //		logger.info(req.getRequestURI()); //tuna/eclass/professor/notice
 //		logger.info(req.getRequestURL().toString()); //http://localhost/tuna/eclass/professor/notice
 //		logger.info(req.getServletPath()); //eclass/professor/notice
-		
+
 		ProfessorVO prof = new ProfessorVO();
-		prof.setNo(Integer.parseInt(auth.getName()) );
-		
+		prof.setNo(Integer.parseInt(auth.getName()));
+
 		int season = Integer.parseInt(yearService.yearFind());
 
 		List<SubjectVO> subList = subjectService.findListForProfessorMain(prof, season, 1, 5);
@@ -90,35 +97,31 @@ public class EclassProfessorEclassController {
 	}
 
 	@GetMapping("/noticeForm")
-	public String noticeFormView(Model model,
-			HttpServletRequest req,
-			Authentication auth,
+	public String noticeFormView(Model model, HttpServletRequest req, Authentication auth,
 			@RequestParam(value = "sbjno", required = false, defaultValue = "0") int sbjno) {
 		ProfessorVO prof = new ProfessorVO();
 		prof.setNo(Integer.parseInt(auth.getName()));
-		
+
 		int selected = sbjno;
 		List<SubjectVO> subjects = subjectService.findListByProfessorVO(prof);
-		if(selected < 1) {
+		if (selected < 1) {
 			selected = subjects.get(0).getNo();
 		}
-		
+
 		model.addAttribute("subjects", subjects);
 		model.addAttribute("selected", selected);
 		return req.getServletPath();
 	}
 
 	@GetMapping("/noticeList")
-	public String noticeListView(Model model, 
-			HttpServletRequest req,
-			Authentication auth,
+	public String noticeListView(Model model, HttpServletRequest req, Authentication auth,
 			@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum) {
-		
+
 		ProfessorVO prof = new ProfessorVO();
 		prof.setNo(Integer.parseInt(auth.getName()));
 
 		List<LectureNoticeVO> noticeList = noticeService.findByProfessor(prof, pageNum, 15);
-		List<LectureNoticeVO> noticeList2 = noticeService.findByProfessor(prof, pageNum, 999);
+		List<LectureNoticeVO> noticeList2 = noticeService.findByProfessor(prof, 1, 999);
 		int pageCount = (int) Math.ceil((double) noticeList2.size() / (15 + 1));
 
 		model.addAttribute("noticeList", noticeList);
@@ -148,68 +151,58 @@ public class EclassProfessorEclassController {
 	}
 
 	@GetMapping("/subject")
-	public String subjectView(
-			Model model, 
-			HttpServletRequest req,
-			@RequestParam(value="no", required = false, defaultValue = "0")int no ) {
+	public String subjectView(Model model, HttpServletRequest req,
+			@RequestParam(value = "no", required = false, defaultValue = "0") int no) {
 		String season = yearService.yearFind();
-		
-		if(no < 1) {
-			return "redirect:/"+profPath;
+
+		if (no < 1) {
+			return "redirect:/" + profPath;
 		}
 		SubjectVO subject = subjectService.findOneWithApplysAndRatioAndFilesById(no);
-		
+
 		// 개강일 검색
 		PortalScheduleVO schedule = portalScheduleService.findSeasonSchedule(season, "1101");
-		
+
 		// 개강일
 		LocalDate firstDay = LocalDate.ofInstant(schedule.getStartDate().toInstant(), ZoneId.systemDefault());
 		LocalDate startDate = firstDay.minusDays(1);
-		
+
 		// 시간표 목록
 		List<LectureScheduleVO> subSche = lecScheduleService.findScheduleBySubjectId(no);
-		
-		List<LocalDate> schedules = new ArrayList<LocalDate>(); 
-		for(LectureScheduleVO lecSche : subSche) {
-			schedules.add(startDate.with(
-				TemporalAdjusters.next(
-					DayOfWeek.of(CustomDateUtills.koreanWeeksToLocalDateNum(lecSche.getDayCode()))
-				)
-			));
+
+		List<LocalDate> schedules = new ArrayList<LocalDate>();
+		for (LectureScheduleVO lecSche : subSche) {
+			schedules.add(startDate.with(TemporalAdjusters
+					.next(DayOfWeek.of(CustomDateUtills.koreanWeeksToLocalDateNum(lecSche.getDayCode())))));
 		}
-		Collections.sort(schedules, (LocalDate d1, LocalDate d2)->d1.compareTo(d1));
-		
-		LocalDate lastDay = schedules.get(schedules.size()-1).plusWeeks(15);
-		
+		Collections.sort(schedules, (LocalDate d1, LocalDate d2) -> d1.compareTo(d1));
+
+		LocalDate lastDay = schedules.get(schedules.size() - 1).plusWeeks(15);
+
 		model.addAttribute("subject", subject);
 		model.addAttribute("firstDay", firstDay);
 		model.addAttribute("lastDay", lastDay);
-		
+
 		return req.getServletPath();
 	}
 
 	@GetMapping("/subjectForm")
-	public String subjectFormView(
-			Model model, 
-			HttpServletRequest req,
-			Authentication auth,
-			@RequestParam(value="no", required = false, defaultValue = "0")int no) {
+	public String subjectFormView(Model model, HttpServletRequest req, Authentication auth,
+			@RequestParam(value = "no", required = false, defaultValue = "0") int no) {
 		// TODO 내 강의 인지 검사
 		SubjectVO subject = subjectService.findOneWithRatioAndScheduleAndPlanById(no);
-		
+
 		model.addAttribute("subject", subject);
-		
+
 		return req.getServletPath();
 	}
 
 	@GetMapping("/subjectList")
-	public String subjectListView(Model model, 
-			HttpServletRequest req,
-			Authentication auth,
+	public String subjectListView(Model model, HttpServletRequest req, Authentication auth,
 			@RequestParam(value = "season", required = false, defaultValue = "0") int season) {
 
 		ProfessorVO prof = new ProfessorVO();
-		prof.setNo(Integer.parseInt(auth.getName()) );
+		prof.setNo(Integer.parseInt(auth.getName()));
 
 		if (season == 0) {
 			season = 106;
@@ -226,16 +219,15 @@ public class EclassProfessorEclassController {
 	}
 
 	@GetMapping("/objectionList")
-	public String objectionListView(HttpServletRequest req, 
-									Authentication authentication,
-			                        Model model) {
-		
-		List<Map<String, Object>> list = objectionService.objectionListOfProf(Integer.parseInt(authentication.getName()), "all");
+	public String objectionListView(HttpServletRequest req, Authentication authentication, Model model) {
+
+		List<Map<String, Object>> list = objectionService
+				.objectionListOfProf(Integer.parseInt(authentication.getName()), "all");
 		model.addAttribute("objList", list);
-		
+
 		CodeMasterVO seasonCodes = codeService.findById("100");
 		model.addAttribute("seasonCodes", seasonCodes);
-		
+
 		return req.getServletPath();
 	}
 
