@@ -75,7 +75,7 @@ public class AttendanceController {
 	
 	@PostMapping("/staff/update/attendance")
 	public ResponseEntity<String> updateAttendance(
-			@RequestBody List<AttendanceVO> list) {
+			@RequestBody List<AttendanceVO> attendanceList) {
 
 		HttpHeaders resHeaders = new HttpHeaders();
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
@@ -83,7 +83,7 @@ public class AttendanceController {
 		
 		try {
 			res = new ResponseEntity<String>(
-					service.updateAttendanceList(list),
+					service.updateAttendanceList(attendanceList),
 					resHeaders,
 					HttpStatus.OK);
 		} catch (Throwable e) {

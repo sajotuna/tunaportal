@@ -955,6 +955,8 @@ xmlns:th="http://www.thymeleaf.org"
             const GRADE_STUD_ID = "student-";
             const LECTURE_FILE_ID = "lecture-file-";
             const RADIO_GROUP_NAME = "radio-group-";
+            const ATTENDANCE_SUBJECT_ID = "attendance_subject_";
+            const DETIAL_ATTENDANCE_BLOCK_ID = "attendance_block_";
             const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
             const REST_URL = {
@@ -977,6 +979,7 @@ xmlns:th="http://www.thymeleaf.org"
               SUBMIT_TASK_GRADE_UPDATE : "/tuna/staff/eclass/updateSubmitTaskScore",
               SUBMIT_LECTURE_FILE_UPLOAD : "/tuna/staff/insertSubjectFile",
               SUBMIT_ATTENDANCES : "/tuna/staff/insert/attendance",
+              SUBMIT_ATTENDANCES_UPDATE : "/tuna/staff/update/attendance",
               LECTURE_FILE_DELETE : "/tuna/staff/deleteSubjectFile",
 
             };
@@ -1970,8 +1973,10 @@ xmlns:th="http://www.thymeleaf.org"
 ██ ██ ██          ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██    
  █ ████      ███████    ██     ██████  ██████  ███████ ██   ████    ██    
 */
-            function studentClickEvent() {
-              let stNo = event.target.getAttribute('data_stno')
+            function studentClickEvent(studno) {
+              let stNo = 0;
+              if(!studno) stNo = event.target.getAttribute('data_stno');
+              else stNo = studno;
               // let sbjNo = event.target.dataset.sbjno;
               let student = {
                 no: stNo
@@ -2112,11 +2117,11 @@ xmlns:th="http://www.thymeleaf.org"
                 let latenessCnt = 0; // 지각
                 
                 let blockHTML = `
-                <div class="block block-rounded block-themed block-bordered border-1">
+                <div id="${DETIAL_ATTENDANCE_BLOCK_ID+subject.no}" class="block block-rounded block-themed block-bordered border-1">
                   <div class="block-header bg-primary-darker">
                     <div class="block-title">${subject.name}</div>
                     <div>
-                      <button class="btn btn-sm btn-primary">적용</button>
+                      <button id="${ATTENDANCE_SUBJECT_ID+subject.no}" class="btn btn-sm btn-primary" onclick="submitDetailAttendance(${student.no})">적용</button>
                     </div>
                   </div>
                   <div class="block-content p-0" style="overflow-x: scroll;">
@@ -2144,27 +2149,34 @@ xmlns:th="http://www.thymeleaf.org"
                         `</tr>
                       </thead>
                       <tbody>
-                        <tr class="m-0">
-                          <td class="p-0">
+                        <tr class="attendance_list m-0">
+                          <th class="p-0">
                             <div class="p-1">${attenCnt}</div>
                             <div class="p-1">${absenceCnt}</div>
                             <div class="p-1">${latenessCnt}</div>
-                          </td>`;
+                          </th>`;
                   for(let atten of subject.attendanceList) {
                     if(!atten.stateCode) continue;
                     let td = document.createElement('td');
+                    td.id = "detail_atten_"+atten.no;
                     td.classList.add('p-0');
                     td.innerHTML = `
                             <div>
-                              <input type="radio" class="btn-check" name="atten${atten.no}" id="atten_atten${atten.no}" autocomplete="off" ${atten.stateCode=="1401"?"checked":""} />
+                              <input type="radio" class="btn-check" name="atten${atten.no}" 
+                                id="atten_atten${atten.no}" autocomplete="off" value="1401"
+                                ${atten.stateCode=="1401"?"checked":"" } />
                               <label class="btn btn-outline-success p-1" for="atten_atten${atten.no}">출석</label>
                             </div>
                             <div>
-                              <input type="radio" class="btn-check" name="atten${atten.no}" id="atten_late${atten.no}" autocomplete="off" ${atten.stateCode=="1402"?"checked":""} />
+                              <input type="radio" class="btn-check" name="atten${atten.no}" 
+                                id="atten_late${atten.no}" autocomplete="off" value="1402"
+                                ${atten.stateCode=="1402"?"checked":""} />
                               <label class="btn btn-outline-warning p-1" for="atten_late${atten.no}">지각</label>
                             </div>
                             <div>
-                              <input type="radio" class="btn-check" name="atten${atten.no}" id="atten_absen${atten.no}" autocomplete="off" ${atten.stateCode=="1403"?"checked":""} />
+                              <input type="radio" class="btn-check" name="atten${atten.no}" 
+                                id="atten_absen${atten.no}" autocomplete="off" value="1403"
+                                ${atten.stateCode=="1403"?"checked":""} />
                               <label class="btn btn-outline-danger p-1" for="atten_absen${atten.no}">결석</label> 
                             </div>
                     `;
@@ -2245,8 +2257,58 @@ xmlns:th="http://www.thymeleaf.org"
 
             }
 
-            function submitDetailAttendance() {
+            function submitDetailAttendance(studno) {
+              // console.log(event.target);
+              let sbjno = event.target.id.slice(ATTENDANCE_SUBJECT_ID.length);
+              let block = document.querySelector("#"+DETIAL_ATTENDANCE_BLOCK_ID+sbjno);
+              let checkedAttenList = block.querySelectorAll('td input[type="radio"]:checked');
+              let attendanceList = [];
+
+              for(let input of checkedAttenList) {
+                let obj = {
+                  no :input.name.slice("atten".length),
+                  stateCode: input.value
+                }
+                attendanceList.push(obj);
+              }
               
+              fetch(REST_URL.SUBMIT_ATTENDANCES_UPDATE, {
+                method: "POST",
+                headers: {
+                  'header': header,
+                  'X-Requested-with': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify(attendanceList)
+              })
+              .then( async (res) => {
+                let resBody = await res.text();
+
+                if(res.ok) {
+                  Dialogs.dialog('success',
+                  "성공",
+                  resBody,
+                  function() {
+                    studentClickEvent(studno);
+                  })
+                } else {
+                  Dialogs.dialog('error',
+                  '실패',
+                  resBody,
+                  function() {
+                    console.error(resBody);
+                  });
+                }
+              })
+              .catch((err)=> {
+                Dialogs.dialog('error',
+                '오류',
+                err,
+                function() {
+                  console.error(err);
+                })
+              })
             }
 
             function allStudentAttend() {
