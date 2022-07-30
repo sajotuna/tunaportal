@@ -130,6 +130,9 @@ data-layout-decorate="~{layouts/navLayout}">
           object.value = object.value.slice(0, object.maxLength);
         }    
       }
+    function success(success){
+  	  Dialogs.dialog('success', '완료', success);
+    }
     
     function disable(){
     	updateBtn.disabled = false;

@@ -68,7 +68,8 @@ public class ProfessorController {
 		
 		professorDao.AdminProfUpdate(vo);
 		ra.addAttribute("no", vo.getNo());
-		return "redirect:/admin/adminUserInfo";
+		ra.addFlashAttribute("success", "회원정보가 수정되었습니다.");
+		return "redirect:/admin/admin/userInfo";
 	}
 	
 	
