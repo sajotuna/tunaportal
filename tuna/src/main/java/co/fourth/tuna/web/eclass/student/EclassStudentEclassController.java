@@ -116,9 +116,11 @@ public class EclassStudentEclassController {
 		
 		map.put("sbjNo", vo.getSbjNo());
 		map.put("pageNum", pageNum);
-		map.put("size", 5);
-		map.put("listSize", Math.ceil((double)qnaDao.lectureQnaPagingCount(vo)/5));
+		map.put("size", 10);
+		map.put("listSize", Math.ceil((double)qnaDao.lectureQnaPagingCount(vo)/10));
 		List<Map<String, Object>> qna = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
+		
+		System.out.println("rn? RN?"+qna);
 		
 		model.addAttribute("qna", qna);
 		model.addAttribute("map", map);

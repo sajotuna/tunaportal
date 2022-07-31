@@ -29,7 +29,7 @@
 <!-- 질문목록 -->
 	<select id="qnaList" resultType="map" parameterType="HashMap">
 	<![CDATA[
-	SELECT q.*, ROWNUM
+	SELECT q.*
 	FROM
     (SELECT
    		Q.NO, 
@@ -41,16 +41,14 @@
 	    Q.SBJNO,
 	    Q.STNO,
 	    Q.VISIBLE,
-	    S.NAME,  
-  		ROWNUM RN
+	    S.NAME,
+        ROW_NUMBER() OVER(ORDER BY Q.NO DESC) rn
 	FROM STUDENT S, LECTUREQNA Q
 	WHERE Q.SBJNO = #{sbjNo}
     AND S.NO = Q.STNO
-    ORDER BY Q.NO) Q
-    WHERE RN 
-    	BETWEEN (#{pageNum}-1) * #{size} +1
-    	AND #{pageNum}*#{size}
-    	ORDER BY ROWNUM DESC
+    ORDER BY Q.NO desc) q
+    WHERE rn BETWEEN (#{pageNum}-1)*#{size}+1 AND #{pageNum}*#{size}
+    ORDER BY Q.NO DESC
 
     ]]>
 	</select>
