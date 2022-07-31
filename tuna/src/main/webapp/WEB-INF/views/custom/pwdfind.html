@@ -1,32 +1,16 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>비밀번호찾기</title>
-<!-- Icons -->
-<!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-<link rel="shortcut icon"
-	th:href="@{/resources/assets/media/favicons/favicon.png}">
-<link rel="icon" type="image/png" sizes="192x192"
-	th:href="@{/resources/assets/media/favicons/favicon-192x192.png}">
-<link rel="apple-touch-icon" sizes="180x180"
-	th:href="@{/resources/assets/media/favicons/apple-touch-icon-180x180.png}">
-<!-- END Icons -->
-<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
-  <script th:src="@{/resources/assets/js/dialog.js}"></script>
-<!-- Stylesheets -->
-<!-- Fonts and OneUI framework -->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-<link rel="stylesheet" id="css-main"
-	th:href="@{/resources/assets/css/oneui.min.css}">
-
-<!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-<!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/amethyst.min.css"> -->
-<!-- END Stylesheets -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="shortcut icon" th:href="@{/resources/assets/media/tuna-icon.ico}">
+	<link rel="icon" th:href="@{/resources/assets/media/tuna-icon.ico}">
+	<title>비밀번호찾기</title>
+	
+	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+	<script th:src="@{/resources/assets/js/dialog.js}"></script>
+	<link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
 </head>
 <body>
 	<div id="page-container">
@@ -35,12 +19,13 @@
 		<main id="main-container">
 			<!-- Page Content -->
 			<div class="bg-primary">
-				<div class="row g-0 bg-primary-dark-op">
+				<div class="row g-0 bg-primary-dark-op" th:style="|background-image: url('@{/resources/assets/media/tuna_login.jpg}'); background-size:contain;|">
 					<!-- Meta Info Section -->
 					<div
 						class="hero-static col-lg-4 d-none d-lg-flex flex-column justify-content-center">
 						<div class="p-4 p-xl-5 flex-grow-1 d-flex align-items-center">
 							<div class="w-100">
+							<img th:src="@{/resources/assets/media/tuna_logo.png}" style="display:block;width:30%;">
 								<a class="link-fx fw-semibold fs-2 text-white"
 									th:href="@{/custom/login}">
 									TUNA </a>
@@ -49,17 +34,11 @@
 						<div
 							class="p-4 p-xl-5 d-xl-flex justify-content-between align-items-center fs-sm">
 							<p class="fw-medium text-white-50 mb-0">
-								<strong>OneUI 5.2</strong> &copy; <span data-toggle="year-copy"></span>
+								<strong>TUNA 0.1</strong> &copy; <span data-toggle="year-copy"></span>
 							</p>
 							<ul class="list list-inline mb-0 py-2">
 								<li class="list-inline-item"><a
-									class="text-white-75 fw-medium" href="javascript:void(0)">Legal</a>
-								</li>
-								<li class="list-inline-item"><a
-									class="text-white-75 fw-medium" href="javascript:void(0)">Contact</a>
-								</li>
-								<li class="list-inline-item"><a
-									class="text-white-75 fw-medium" href="javascript:void(0)">Terms</a>
+									class="text-white-75 fw-medium" href="javascript:void(0)">GitHub</a>
 								</li>
 							</ul>
 						</div>
@@ -69,11 +48,6 @@
 					<!-- Main Section -->
 					<div
 						class="hero-static col-lg-8 d-flex flex-column align-items-center bg-body-light">
-						<div class="p-3 w-100 d-lg-none text-center">
-							<a class="link-fx fw-semibold fs-3 text-dark" href="index.html">
-								One<span class="fw-normal">UI</span>
-							</a>
-						</div>
 						<div class="p-4 w-100 flex-grow-1 d-flex align-items-center">
 							<div class="w-100">
 								<!-- Header -->
