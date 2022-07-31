@@ -73,15 +73,22 @@
 			</div>
 				<script th:inline="javascript">
 				function insertQna(){
-					Dialogs.dialog('question', '질문을 등록하시겠습니까? 수정 및 삭제가 불가능힙니다.', '확인', insertQnaAction);
+					Dialogs.dialog('warnConfirm', '질문을 등록하시겠습니까? 수정 및 삭제가 불가능힙니다.', '등록하시려면 확인을 눌러주시기 바랍니다.', insertOneQna);
 				}
 				
-				function insertQnaAction(){
+				function insertOneQna(){
+					let stno = document.querySelector('meta[name="_csrf_header"]').value
+					let token = document.querySelector('meta[name="_csrf"]').value
 					fetch('isnertQnaAction', {
 						method : "POST",
+						headers:{
+							'header' : stno,
+							'X-Requested-with' : 'XMLHttpRequest',
+							'Content-Type' : 'application/json; charset=utf-8',
+							'X-CSRF-Token' : token
+						},
 						body : JSON.stringify({"title":title},{"content":content})
 						}).then(result=> {
-							Dialogs.dialog('success', '질문등록이 완료되었습니다.', '확인', success);
 							location.href='@{/stud/eclass/qnaList}?sbjNo=${sbjNo}';
 						})
 					
