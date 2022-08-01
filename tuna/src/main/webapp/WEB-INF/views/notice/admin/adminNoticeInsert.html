@@ -10,9 +10,9 @@
 
 	<title>공지사항 등록</title>
 	<style>
-.ck-editor__editable {
-    min-height: 380px;
-}
+		.ck-editor__editable {
+			min-height: 380px;
+		}
 	</style>
 </head>
 
@@ -22,79 +22,86 @@
 
 		<!--title start-->
 		<div class="mt-3">
-		<div class="content content-full">
+			<div class="content content-full">
 
-			<h3 class="fw-bold">공지사항 등록</h3>
-			<div class="block block-rounded">
-				<form onsubmit="return formCheck()"
-					th:action="@{/admin/admin/adminNoticeInsert(${_csrf.parameterName}=${_csrf.token})}"
-					class="block-content block-content-full" method="post" enctype="multipart/form-data" id="frm">
-					<div>
-						<input type="text" name="title" class="mb-4 form-control" id="title" required
-							placeholder="공지사항 등록">
+				<h3 class="fw-bold">공지사항 등록</h3>
+				<div class="block block-rounded">
+					<form onsubmit="return formCheck()"
+						th:action="@{/admin/admin/adminNoticeInsert(${_csrf.parameterName}=${_csrf.token})}"
+						class="block-content block-content-full" method="post" enctype="multipart/form-data" id="frm">
+						<div>
+							<input type="text" name="title" class="mb-4 form-control" id="title" required
+								placeholder="공지사항 등록">
+							<hr>
+							<div class="mb-4">
+								<!-- CKEditor 5 Classic Container -->
+								<textarea name="content" id="ckfinder"></textarea>
+							</div>
+						</div>
 						<hr>
-						<div class="mb-4">
-							<!-- CKEditor 5 Classic Container -->
-							<textarea name="content" id="ckfinder"></textarea>
+						<div class="row mb-3">
+							<div class="col-6">
+								<input class="form-control" type="file" id="file" name="file" multiple="multiple">
+							</div>
+							<div class="col-6">
+								<select id="visible" name="visible" class="form-select">
+									<option value="Y">공개</option>
+									<option value="N">비공개</option>
+								</select>
+							</div>
 						</div>
-					</div>
-					<hr>
-					<div class="row mb-3">
-						<div class="col-6">
-							<input class="form-control" type="file" id="file" name="file" multiple="multiple">
+						<div class="d-flex justify-content-end">
+							<button type="submit" id="sbmBtn" class="btn btn-outline-secondary me-2">등록</button>
+							<button type="button" class="btn btn-outline-secondary"
+								th:onclick="|location.href='@{adminNoticeList}'|">홈으로</button>
 						</div>
-						<div class="col-6">
-							<select id="visible" name="visible" class="form-select">
-								<option value="Y">공개</option>
-								<option value="N">비공개</option>
-							</select>
-						</div>
-					</div>
-					<div class="d-flex justify-content-end">
-						<button type="submit" id="sbmBtn" class="btn btn-outline-secondary me-2">등록</button>
-						<button type="button" class="btn btn-outline-secondary"
-							th:onclick="|location.href='@{adminNoticeList}'|">홈으로</button>
-					</div>
 
-				</form>
+					</form>
+				</div>
+
 			</div>
 
-		</div>
+			<!-- Editor script -->
+			<script th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
 
-		<!-- Editor script -->
-		<script th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
+			<script>
 
-		<script>
+				let header = document.querySelector('meta[name="_csrf_header"]').content;
+				let token = document.querySelector('meta[name="_csrf"]').content;
 
-			let header = document.querySelector('meta[name="_csrf_header"]').content;
-			let token = document.querySelector('meta[name="_csrf"]').content;
+				document.addEventListener('DOMContentLoaded', function () {
+					ckfinder();
 
-			document.addEventListener('DOMContentLoaded', function () {
-				ckfinder();
-
-			})
+				})
 
 
-			function formCheck() {
-				if (window.editor.getData() == "") {  //then   window.editor = editor;
-					Dialogs.dialog('error',
-						'',
-						'내용을 입력해주세요.'
-					);
-					return false;
-					window.editor.editing.view.focus();
+				function formCheck() {
+					var subBtn = document.querySelector('#sbmBtn')
+					if (window.editor.getData() == "") {  //then   window.editor = editor;
+						Dialogs.dialog('error',
+							'',
+							'내용을 입력해주세요.'
+						);
+						return false;
+						window.editor.editing.view.focus();
 
-				} else {
-					return true;
+					} else {
+						//다중클릭방지
+						subBtn.addEventListener("click", function (e) {
+							this.setAttribute("disabled", "disabled");
+							//폼 서밋
+						});
+						return true;
+					}
+
 				}
 
-			}
 
-		</script>
+			</script>
 
-		<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
-		<script th:src="@{/resources/assets/js/dialog.js}"></script>
-		<script th:src="@{/resources/assets/js/editor.js}"></script>
+			<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+			<script th:src="@{/resources/assets/js/dialog.js}"></script>
+			<script th:src="@{/resources/assets/js/editor.js}"></script>
 
 	</main>
 </body>
