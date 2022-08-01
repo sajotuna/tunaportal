@@ -17,7 +17,8 @@ FROM  (SELECT ROWNUM as RNUM,
 				  	CONTENT,
 				  	ENROLLDATE,
 				  	VISIBLE,
-				  	ADNO
+				  	ADNO,
+				  	HIT
 	   			FROM PORTALNOTICE
 				WHERE 
 				<if test="state == 1">1 = 1 </if>
@@ -31,10 +32,18 @@ FROM  (SELECT ROWNUM as RNUM,
 <!-- 유저 전체조회 -->
 <select id="portalNoticeList"
 	resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO"> 
-SELECT b.* , fileSelect(no) FILEYN
+	
+	SELECT b.* , fileSelect(no) FILEYN
 FROM  (SELECT ROWNUM as RNUM,
 			  a.*
-		FROM (SELECT *
+		FROM (SELECT
+				  	NO,
+				  	TITLE,
+				  	CONTENT,
+				  	ENROLLDATE,
+				  	VISIBLE,
+				  	ADNO,
+				  	HIT
 	   			FROM PORTALNOTICE
 				WHERE 
 				<if test="state == 1">1 = 1 </if>
@@ -43,9 +52,7 @@ FROM  (SELECT ROWNUM as RNUM,
 				AND VISIBLE ='Y'
 			   ORDER BY ENROLLDATE DESC)a
 			  )b
-WHERE RNUM
-	  BETWEEN  #{startList}
-	  AND 		#{endList}
+<![CDATA[ WHERE #{startList}<RNUM  AND RNUM<=#{endList}]]>
 </select>
 
 <!-- 전체 카운트 -->
@@ -95,7 +102,12 @@ SET TITLE = #{title},
 WHERE NO = #{no}
 </update>
 
-
+<!-- 조회수 -->
+<update id="noticeHitUpdate" parameterType="int">
+		UPDATE PORTALNOTICE
+		SET
+		HIT = HIT + 1 WHERE NO = #{no}
+</update>
 
 <!-- 파일 -->
 <!-- 전체조회 -->
@@ -136,5 +148,7 @@ DELETE FROM PORTALFILE
 DELETE FROM PORTALFILE
 WHERE PNNO = #{no}
 </delete>
+
+
 
 </mapper>

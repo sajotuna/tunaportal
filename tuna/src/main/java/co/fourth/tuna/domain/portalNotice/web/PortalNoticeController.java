@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,35 +43,34 @@ public class PortalNoticeController {
 	// 전체조회
 	@RequestMapping("/portalNoticeList")
 	public String portalnoticeList(Model model, PortalNoticeVO vo,
-			@RequestParam(value="state" , required=false, defaultValue="1") int state,
-			@RequestParam(value="key", required=false, defaultValue="1") String key,
-			@RequestParam( required = false, defaultValue = "1") int page,
+			@RequestParam(value = "state", required = false, defaultValue = "1") int state,
+			@RequestParam(value = "key", required = false, defaultValue = "1") String key,
+			@RequestParam(required = false, defaultValue = "1") int page,
 			@RequestParam(required = false, defaultValue = "1") int range) {
-			//@RequestParam(value="admin") String admin
+		// @RequestParam(value="admin") String admin
 
 		ListPagingVO pvo = new ListPagingVO();
 		List<PortalNoticeVO> notices = null;
 		String retn = "";
-		
-/*		if(admin.equals("admin")) {
-			pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N"), 10, 10);
-			notices = noticeDao.adminNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
-			re = "notice/admin/adminNoticeList";
-		} else { }*/
-		
-		
-			pvo.pageInfo(page, range, noticeDao.getNoticeCnt("Y",state,key), 5, 10);
-			notices = noticeDao.portalNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
-			retn = "notice/user/portalNoticeList";
 
+		/*
+		 * if(admin.equals("admin")) { pvo.pageInfo(page, range,
+		 * noticeDao.getNoticeCnt("N"), 10, 10); notices =
+		 * noticeDao.adminNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
+		 * re = "notice/admin/adminNoticeList"; } else { }
+		 */
 
-
+		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("Y", state, key), 5, 10);
+		notices = noticeDao.portalNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
+		retn = "notice/user/portalNoticeList";
+		
+		
+		logger.error("대체 왜 "+pvo);
+		logger.error("대체 왜 "+notices);
 		model.addAttribute("notices", notices);
 		model.addAttribute("paging", pvo);
 		model.addAttribute("key", key);
 		model.addAttribute("state", state);
-		
-		
 
 		return retn;
 
@@ -83,8 +80,9 @@ public class PortalNoticeController {
 	@RequestMapping("/portalNoticeSelect")
 	public String portalNoticeSelect(PortalNoticeVO vo, Model model) {
 		model.addAttribute("content", noticeDao.noticeSelect(vo));
-
 		model.addAttribute("files", noticeDao.fileSelect(Integer.parseInt(vo.getNo())));
+		
+		/* noticeDao.noticeHitUpdate(vo.getNo()); */
 
 		return "notice/user/portalNoticeSelect";
 	}
@@ -93,27 +91,23 @@ public class PortalNoticeController {
 	// 전체조회
 	@RequestMapping("/admin/admin/adminNoticeList")
 	public String adminNoticeList(Model model, PortalNoticeVO vo,
-			@RequestParam(value="state" , required=false, defaultValue="1") int state,
-			@RequestParam(value="key", required=false, defaultValue="1") String key,
+			@RequestParam(value = "state", required = false, defaultValue = "1") int state,
+			@RequestParam(value = "key", required = false, defaultValue = "1") String key,
 			@RequestParam(required = false, defaultValue = "1") int page,
 			@RequestParam(required = false, defaultValue = "1") int range) {
 
 		ListPagingVO pvo = new ListPagingVO();
-		
-		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N",state, key), 5, 10);
+
+		pvo.pageInfo(page, range, noticeDao.getNoticeCnt("N", state, key), 5, 10);
 		List<PortalNoticeVO> notices = noticeDao.adminNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
-		
-		
+
 		model.addAttribute("notices", notices);
 		model.addAttribute("paging", pvo);
 		model.addAttribute("key", key);
 		model.addAttribute("state", state);
-		
-		logger.error("여기 보세요" + key + state);
 
 		return "notice/admin/adminNoticeList";
 	}
-
 
 	// 단건조회
 	@RequestMapping("/admin/admin/adminNoticeSelect")
@@ -131,20 +125,19 @@ public class PortalNoticeController {
 		return "notice/admin/adminNoticeInsert";
 	}
 
-	
 	// Editor 이미지 업로드
 	@PostMapping("/ckImage")
 	@ResponseBody
 	public Map<String, String> ckfinderImage(MultipartHttpServletRequest request) throws Exception {
-		
+
 		MultipartFile image = request.getFile("upload");
 		Map<String, String> result = new HashMap<>();
-		
+
 		String[] fileInfo = fileService.upload(image, "PortalNotice/image");
-		
+
 		result.put("uploaded", "true");
 		result.put("url", "/tuna/display?fileName=" + fileInfo[1] + "&folder=PortalNotice/image");
-		
+
 		return result;
 
 	}
@@ -154,7 +147,6 @@ public class PortalNoticeController {
 	public String adminNoticeInsert(PortalNoticeVO vo, PortalNoticeFileVO fileVo, Authentication authentication,
 			@RequestParam(value = "file") MultipartFile[] files) throws IOException {
 
-		
 		vo.setAdNo((authentication.getName()));
 		noticeDao.noticeInsert(vo);
 
@@ -208,7 +200,6 @@ public class PortalNoticeController {
 
 	}
 
-
 	// 파일삭제
 	@DeleteMapping("/fileDel")
 	@ResponseBody
@@ -234,7 +225,5 @@ public class PortalNoticeController {
 		return noticeDao.noticeDelete(vo);
 
 	}
-
-
 
 }
