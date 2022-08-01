@@ -157,10 +157,10 @@
 			let objNo = $(this).data('objno');
 			let answer = $('#answer').val();
 			
-			if(!content) {
+			if(!answer) {
 				Dialogs.dialog('error',
 					  		   '등록 불가',
-					 	   	   '내용을 작성해 주세요.');
+					 	   	   '내용을 입력해 주세요.');
 			} else {
 				
 				Dialogs.dialog(
@@ -225,10 +225,13 @@
 				$('#content').text(obj.CONTENT);
 				
 				if (obj.ANSWER == null) {
+					$('#answer').text('');
 					$('#answer').attr('disabled', false);
 					$('#objUpdateBtn').attr('disabled', false);
 				} else {
+					$('#answer').text('');
 					$('#answer').text(obj.ANSWER);
+					$('#answer').attr('disabled', true);
 					$('#objUpdateBtn').attr('disabled', true);
 				}
 				
