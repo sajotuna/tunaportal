@@ -5,155 +5,90 @@ xmlns:th="http://www.thymeleaf.org"
     data-layout-decorate="~{layouts/eclassProfLayout}">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="_csrf" th:content="${_csrf.token}">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
     <title>E-Class 문의 상세</title>
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
   <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
   <script th:src="@{/resources/assets/js/dialog.js}"></script>
+  <style>
+  figure {
+         flex: 0 0 auto;
+         width: 100%;
+  }
+
+  @media (max-width: 800px) {
+
+     figure img {
+        width: 100%;
+     }
+
+  }
+  
+  .ck-editor__editable {
+     min-height: 200px;
+  }  
+    
+  </style>
   </head>
   <body>
-
-    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
-      <div id="page-overlay"></div>
-
-      <aside id="side-overlay">
-        <div class="content-header">
-        </div>
-        <div class="content-side">
-        </div>
-      </aside>
-
-      <!--
-███████ ██ ██████  ███████     ██████   █████  ██████  
-██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██   ██ █████       ██████  ███████ ██████  
-     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
-      -->
-      <nav id="sidebar" aria-label="Main Navigation">
-        <div class="content-header">
-
-        </div>
-        <div class="js-sidebar-scroll">
-        </div>
-      </nav>
-      <!-- SIDE BAR END -->
-      
-      <!--
-██   ██ ███████  █████  ██████  ███████ ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-███████ █████   ███████ ██   ██ █████   ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
-      -->
-      <header id="page-header">
-        <div class="content-header">page-header</div>
-      </header>
-      <!--HEADER END-->
-
-<!--
- ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
-██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
-██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
-██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
- ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
--->
       <main id="main-container" layout:fragment="main">
-        <!-- <div class="bg-body-light">
-          <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-              <div class="flex-grow-1">
-                <h1 class="h3 fw-bold mb-2">
-                  Main
-                </h1>
-                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                  E-class 홈 화면 입니다.
-                </h2>
+        <div class="content content-full pt-5">
+          <div class="col-xxl-12">
+            <div class="d-flex">
+              <div class="col-5 col-md-4 col-xxl-3 header-rounded bg-body-light row py-2 px-3 ms-2 mb-0">
+                <div class="col-sm-5 text-start">작성자</div>
+                <div class="col-sm-7 wrap fw-bold" th:text = "${qna.stNo}">데이터 없음</div>
+              </div>
+              <div class="col-5 col-md-4 col-xxl-3 header-rounded bg-body-light row py-2 px-3 mb-0">
+                <div class="col-sm-5 wrap text-start" style="width: 70px">작성일</div>
+                <div class="col-sm-7 wrap fw-bold" th:text = ${qna.enrollDate}>데이터 없음</div>
               </div>
             </div>
-          </div>
-        </div> content header END -->
-
-        <div class="content">
-
-          <div class="col-xxl-12">
-            <h3 class="h3 fw-bold-ms-3">
-              문의 상세
-            </h3>
-            <div class="block block-rounded">
+            <div class="block block-rounded mb-5">
               <div class="block-content">
-                <!-- <table class="table table-vcenter">
-                </table> -->
                 <div class="row mt-2">
-                  <div class="col-1 d-none d-xl-block">
-                    <p>제목</p>
-                  </div>
-                  <div class="h4 col-11 mb-1">
-                    <p th:text =${qna.title}></p>
-                  </div>
-                </div>
-                <div class="d-none d-lg-block">
-                  <div class="row">
-                    <div class="col-6 d-flex">
-                      <div class="text-start" style="width: 80px">작성자 :</div>
-                      <div class="wrap fw-bold me-5" th:text = "${qna.stNo}"></div>
-                    </div>
-                    <div class="col-6 d-flex">
-                      <div class="wrap text-start" style="width: 80px">작성일 :</div>
-                      <div class="wrap fw-bold" th:text = ${qna.enrollDate}></div>
-                    </div>
-                  </div>
+                    <p class="h4 mb-0" th:text =${qna.title}></p>
                 </div>
                 <hr>
                 <div class="row">
                   <p class="col-12 px-5" th:text = "${qna.content}">
                   </p>
                 </div>
-                <hr>
-                <div class="row">
+              </div>
+            </div> <!-- block end-->
+            <div class="col-5 col-md-4 col-xxl-3 header-rounded bg-body-light row py-2 px-3 ms-2 mb-0">
+              <div class="col-sm-5 text-start">답변일자</div>
+              <div class="col-sm-7 wrap fw-bold" th:text= "${qna.answerDate}">데이터 없음</div>
+            </div>
+            <div class="block block-rounded">
+             <div class="block-content block-content-full">
+             <div class="row">
                 <form th:action = "@{/prof/lecQnaAnswer}" method = "POST">
                   <input type = "hidden" th:value = "${qna.no}" name = "no">
                   
                   <th:block th:if = "${#strings.isEmpty(qna.answer)}">
-	                  <div class = "col-2">
-	                  	<p>답변일자</p>
-	                  </div>
-	                  <div class="col-2 text-start">
-	                    <p>답변</p>
-	                  </div>
-	                  <div class="col-10" >
+	                  <div class="col-12 mb-3" >
 	                  <textarea name="answer" id="ckfinder" ></textarea>
 	                  </div>
-	                  	<div>
-	                    <button class="btn btn-primary">작성</button>
+	                  <div class="d-flex justify-content-center justify-content-lg-end me-lg-1">
+	                    <button class="btn btn-primary col-12 col-lg-1">작성</button>
 	                  </div>
                   </th:block>
                   
                   <th:block th:unless = "${#strings.isEmpty(qna.answer)}">
-	                  <div class = "col-2">
-	                  	<p>답변일자</p>
+	                  <div class="col-12 mb-3" >
+                       <textarea name="answer" id="ckfinder" th:text = "${qna.answer}"></textarea>
 	                  </div>
-	                  <div class = "col-2" th:text= "${qna.answerDate}">
-	                  	
-	                  </div>
-	                  <div class="col-2 text-start">
-	                    <p>답변</p>
-	                  </div>
-	                  <div class="col-10" >
-                       <textarea name="answer" id="ckfinder"th:text = "${qna.answer}"></textarea>
-	                  </div>
-	                  	<div>
-	                    <button class="btn btn-primary">수정</button>
+	                  <div class="d-flex justify-content-center justify-content-lg-end me-lg-1">
+	                    <button class="btn btn-primary col-12 col-lg-1">수정</button>
 	                  </div>
                   </th:block>
                   
-                  </form>
-                </div>
+                </form>
               </div>
-            </div> <!-- block end-->
-
+            </div>
+            </div>
 
           </div> <!-- col-12 end -->
 

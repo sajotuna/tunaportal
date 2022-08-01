@@ -3,131 +3,52 @@
 xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     data-layout-decorate="~{layouts/eclassProfLayout}">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>E-Class 전체 공지</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
-    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
-  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
-  <script th:src="@{/resources/assets/js/dialog.js}"></script>
-  </head>
-  <body>
-
-    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
-      <div id="page-overlay"></div>
-
-      <aside id="side-overlay">
-        <div class="content-header">
-        </div>
-        <div class="content-side">
-        </div>
-      </aside>
-
-      <!--
-███████ ██ ██████  ███████     ██████   █████  ██████  
-██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██   ██ █████       ██████  ███████ ██████  
-     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
-      -->
-      <nav id="sidebar" aria-label="Main Navigation">
-        <div class="content-header">
-
-        </div>
-        <div class="js-sidebar-scroll">
-        </div>
-      </nav>
-      <!-- SIDE BAR END -->
-      
-      <!--
-██   ██ ███████  █████  ██████  ███████ ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-███████ █████   ███████ ██   ██ █████   ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
-      -->
-      <header id="page-header">
-        <div class="content-header">page-header</div>
-      </header>
-      <!--HEADER END-->
-
-<!--
- ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
-██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
-██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
-██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
- ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
--->
+<head>
+  	<meta charset="UTF-8" />
+  	<title>E-Class 전체 공지사항</title>
+	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+	<script th:src="@{/resources/assets/js/dialog.js}"></script>
+</head>
+<body>
       <main id="main-container" layout:fragment="main">
-        <!-- <div class="bg-body-light">
-          <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-              <div class="flex-grow-1">
-                <h1 class="h3 fw-bold mb-2">
-                  Main
-                </h1>
-                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                  제목
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div> content header END -->
-
         <div class="content">
-				<div class="row">
-					<div class="col-12">
-						<h3 class="h3 fw-bold mb-2">전체공지</h3>
-					</div>
-				</div>
+		  <h3 class="h3 fw-bold">전체 공지사항</h3>
           <div class="col-xxl-12">
-            <div class="block block-rounded">
-              <div class="block-content">
-
-                <table class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
-                  <tbody>
-                    <tr class="text-center fw-bold bg-dark text-white">
-                      <th style="width: 100px">번호</th>
+            <div class="block block-rounded" style="min-height:500px">
+                <table class="table table-hover table-vcenter scroll-table m-0">
+                  <thead>
+                    <tr class="text-center fw-bold">
+                      <th style="width: 80px">번호</th>
                       <th>제목</th>
                       <th style="width: 15%">작성</th>
                       <th style="width: 15%">등록일시</th>
-                    </tr >
+                    </tr>
+                  </thead>
+                  <tbody>
                     <tr th:onclick="'window.location.href = \''+ @{/eclass/professor/notice(no=${notice.no})}+ '\''" th:each="notice:${noticeList}">
-                      <td th:text="${notice.no}">00</td>
+                      <td class="text-center" th:text="${notice.no}">00</td>
                       <td th:text="${notice.title}" class="text-start">제목데이터 없음</td>
                       <td th:text="${notice.subjectVO.name}">과목 데이터없음</td>
                       <td th:text="${notice.enrollDate}">날짜 없음</td>
                     </tr>
                   </tbody>
                 </table>
-                <div class = "row">
-	                <div class = "col-4 ">
-	                	
-	                </div>
-	                <div class ="col-4 d-flex justify-content-center">
-	                	<input type = "button" class = "btn btn-primary m-2" onclick = "location.href = 'noticeForm';" value = "등록">
-	                </div>
-	             </div>
-                <div class = "col-12 d-flex justify-content-end">
-	                <nav aria-label="Page navigation">
-	                  <ul class="pagination pagination-sm">
-	                    
-	                    <li class="page-item" th:each="num : ${#numbers.sequence(1,pageCount)}">
-	                      <button class="page-link" onclick="javascript:pageBtnClick(this);" style="width:25pt;height:25pt; font-size:16px;" th:text="${num}"></button>
-	                    </li>
-	                    
-	                  </ul>
-	                </nav>
-	            </div>
-              </div>
 
             </div> <!-- block end-->
-
-          </div> <!-- col-12 end -->
-
+            <div class = "row">
+             <div class="col-md-6 d-flex justify-content-center justify-content-md-start">
+               <ul class="pagination pagination-sm mb-md-0">
+                 <li class="page-item" th:each="num : ${#numbers.sequence(1,pageCount)}">
+                   <button class="page-link" onclick="javascript:pageBtnClick(this);" style="width:25pt;height:25pt; font-size:16px;" th:text="${num}"></button>
+                 </li>
+               </ul>
+             </div>
+             <div class ="col-md-6 d-flex justify-content-center justify-content-md-end">
+               <input type="button" class = "btn btn-sm btn-primary col-2" onclick = "location.href = 'noticeForm';" value = "등록">
+             </div>
+         	</div>
+          </div>
         </div> <!-- content END -->
 
         <!-- 모달 리스트 -->
