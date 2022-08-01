@@ -1764,10 +1764,10 @@ xmlns:th="http://www.thymeleaf.org"
                     <td><input type="number" class="form-control" name="finals" value="${stud.gradeVO.finals}"></td>
                     <td><input type="number" class="form-control" value="${stud.gradeVO.task}" disabled></td>
                     <td><input type="number" class="form-control" value="${stud.gradeVO.total}" disabled></td>`;
+                    studentsGradeTr.push(tr);
                   }
                 tr.innerHTML = innerHTML;
                 tbody.appendChild(tr);
-                studentsGradeTr.push(tr);
               }
             }
             
