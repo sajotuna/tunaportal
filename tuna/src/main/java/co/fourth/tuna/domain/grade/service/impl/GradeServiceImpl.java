@@ -125,8 +125,8 @@ public class GradeServiceImpl implements GradeService {
 	@Transactional
 	public String updateSubmitTaskGrade(EclassSubmitTaskScoreForm form) throws Error{
 		taskService.updateSubmitTaskScoreByVO(form);
-		
 		for( SubmitTaskVO vo : form.getSubmitTaskList() ) {
+			if(vo.getNo() == null) continue;
 			gradeService.updateTaskGradeByStudentIdAndSubjectId(vo.getStNo(), form.getSbjno());			
 		}
 		

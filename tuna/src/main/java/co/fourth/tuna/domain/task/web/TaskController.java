@@ -74,7 +74,7 @@ public class TaskController {
 					e.getMessage(),
 					resHeaders,
 					HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			resEntity = new ResponseEntity<String>(
 					e.getMessage(),
 					resHeaders,

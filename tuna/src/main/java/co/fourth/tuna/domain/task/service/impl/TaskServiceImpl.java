@@ -76,6 +76,7 @@ public class TaskServiceImpl implements TaskService {
 	public String updateSubmitTaskScoreByVO(EclassSubmitTaskScoreForm data) {
 		
 		for( SubmitTaskVO vo : data.getSubmitTaskList() ) { // student list
+			if ( vo.getNo() == null ) continue; 
 			if( (vo.getScore() > 100) || (vo.getScore() < 0) ) {
 				throw new Error("점수가 100점보다 크거나 0보다 작을 수 없습니다.");
 			}

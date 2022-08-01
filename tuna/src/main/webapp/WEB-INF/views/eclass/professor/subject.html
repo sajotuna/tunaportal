@@ -1145,6 +1145,7 @@ xmlns:th="http://www.thymeleaf.org"
                   // console.log(tr.data_submit_no);
                   let score = tr.querySelector(".task-score-input").value;
                   // console.log(score);
+                  //console.log(tr);
                   let submitTask = {
                     no: tr.data_submit_no,
                     stNo: tr.data_stno,
@@ -1158,7 +1159,7 @@ xmlns:th="http://www.thymeleaf.org"
                     submitTaskList: submitTaskList
                   }
                 }
-                console.log(requestObj);
+                // console.log(requestObj);
 
                 fetch(REST_URL.SUBMIT_TASK_GRADE_UPDATE, {
                   method: "POST",
@@ -1563,13 +1564,13 @@ xmlns:th="http://www.thymeleaf.org"
               let tbody = document.querySelector("#task-table tbody");
               tbody.innerHTML = "";
 
+              studentsTaskTr = [];
               for( student of students) {
                 let tr = document.createElement('tr');
                 let fileName, uri, enrollDate, score, disabled;
                 
                 tbody.appendChild(tr);
                 
-                studentsTaskTr = [];
                 studentsTaskTr.push(tr);
 
                 if(!student.submitTask || !student.submitTask.fileName) {
@@ -1579,6 +1580,7 @@ xmlns:th="http://www.thymeleaf.org"
                   score = 0;
                   disabled = "disabled"
                 } else { //
+                  tr.data_submit_id = student.submitTask.no;
                   fileName = student.submitTask.fileName;
                   uri = `/tuna/download?fileName=${student.submitTask.fileName}&originName=${student.submitTask.uri}&folder=lectureFile`;
                   enrollDate = dateTimeToISO(student.submitTask.enrollDate);

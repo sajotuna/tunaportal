@@ -135,8 +135,8 @@ AND NO = #{no}
 	parameterType="int">
 	SELECT *
 	FROM SUBMITTASK
-	WHERE STNO = #{STNO}
-	AND SBJNO = #{sbjNo}
+	WHERE STNO = #{stno}
+	AND taskno = #{taskno}
 </select>
 
 <select id="selectSubmitTaskWithTaskListByStudentIdAndSubjectId"
