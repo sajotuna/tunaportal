@@ -117,7 +117,8 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	public List<SubjectWithAttendanceVO> getListByStudentIdAndProfessorId(int stno, int pfno) {
-		List<SubjectWithAttendanceVO> subjectList = map.selectListByStudentIdAndPrfessorId(stno, pfno);
+		String season =  yearService.yearFind();
+		List<SubjectWithAttendanceVO> subjectList = map.selectListByStudentIdAndPrfessorId(stno, pfno, season);
 		for(SubjectWithAttendanceVO subject : subjectList) {
 			subject.setAttendanceList(attendanceService.getListByStudentIdAndSbjno(stno, subject.getNo()));
 			subject.setGrade(gradeService.getOneByStudentIdAndSubjectId(stno, subject.getNo()));

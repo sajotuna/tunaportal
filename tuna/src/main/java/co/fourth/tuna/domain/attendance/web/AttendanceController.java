@@ -10,13 +10,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.attendance.service.AttendanceService;
+import co.fourth.tuna.domain.attendance.vo.AttendanceUpdateFormVO;
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
@@ -52,7 +53,8 @@ public class AttendanceController {
 	
 	@PostMapping("/staff/insert/attendance")
 	public ResponseEntity<String> submitsAttendance(
-			@RequestBody List<AttendanceVO> attendanceList) {
+			Authentication auth,
+			@RequestBody AttendanceUpdateFormVO form) {
 		HttpHeaders resHeaders = new HttpHeaders();
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		ResponseEntity<String> res = null;
@@ -60,7 +62,7 @@ public class AttendanceController {
 		// TODO sbjno 가 내강의인지 체크하기
 		try {
 			res = new ResponseEntity<String>(
-					service.updateAttendanceList(attendanceList),
+					service.updateAttendanceList(form),
 					resHeaders,
 					HttpStatus.OK);
 		} catch (Throwable e) {
@@ -75,7 +77,7 @@ public class AttendanceController {
 	
 	@PostMapping("/staff/update/attendance")
 	public ResponseEntity<String> updateAttendance(
-			@RequestBody List<AttendanceVO> attendanceList) {
+			@RequestBody AttendanceUpdateFormVO form) {
 
 		HttpHeaders resHeaders = new HttpHeaders();
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
@@ -83,7 +85,7 @@ public class AttendanceController {
 		
 		try {
 			res = new ResponseEntity<String>(
-					service.updateAttendanceList(attendanceList),
+					service.updateAttendanceList(form),
 					resHeaders,
 					HttpStatus.OK);
 		} catch (Throwable e) {
@@ -91,7 +93,6 @@ public class AttendanceController {
 					e.getMessage(),
 					resHeaders,
 					HttpStatus.BAD_REQUEST);
-					
 		}
 		
 		return res;

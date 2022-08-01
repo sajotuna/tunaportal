@@ -1243,6 +1243,7 @@ xmlns:th="http://www.thymeleaf.org"
               let submitBtn = attendanceForm.querySelector(".submit_button");
               let radios = attendanceForm.querySelectorAll('input[type="radio"]');
               let attendanceList = [];
+              let form = {};
 
               submitBtn.addEventListener('click', function(event) {
                 for(const radio of radios) {
@@ -1256,6 +1257,11 @@ xmlns:th="http://www.thymeleaf.org"
                   }
                 }
 
+                form = {
+                  sbjno: sbjno,
+                  attendanceList: attendanceList
+                }
+
                 fetch(REST_URL.SUBMIT_ATTENDANCES, {
                   method: "POST",
                   headers: {
@@ -1264,7 +1270,7 @@ xmlns:th="http://www.thymeleaf.org"
                     'Content-Type': 'application/json',
                     'X-CSRF-Token': token
                   },
-                  body: JSON.stringify(attendanceList)
+                  body: JSON.stringify(form),
                 })
                 .then( async (res) => {
                   let resBody = await res.text();
@@ -1482,8 +1488,11 @@ xmlns:th="http://www.thymeleaf.org"
               tbody.innerHTML = "";
               data.students.forEach(student => {
                 let tr = document.createElement('tr');
-                tr.data_attendance_id = student.attendance.no;
-                let stateCode = student.attendance.stateCode;
+                let stateCode;
+                if(student.attendance != null ){
+                  tr.data_attendance_id = student.attendance.no;
+                  stateCode = student.attendance.stateCode;
+                }
 
                 let innerHTML = `
                 <td class="table-cell" style="width: 54px;">
@@ -1500,8 +1509,11 @@ xmlns:th="http://www.thymeleaf.org"
                   ${student.no}
                 </td>
                 <td class="table-cell">
-                  <div class="atten-radio-group space-x-4">
-                    <div class="form-check form-check-inline">
+                  <div class="atten-radio-group space-x-4">`;
+                  if(!student.attendance) {
+                    innerHTML += `<div class="text-muted" >수강 대기중</div>`
+                  } else {
+                    innerHTML += `<div class="form-check form-check-inline">
                       <input class="radio-attend form-check-input" type="radio" id="atten-radio-attend-${student.attendance.no}" name="${RADIO_GROUP_NAME+student.attendance.no}" value="1401" ${stateCode=="1401"?"checked":""}>
                       <label class="form-check-label" for="atten-radio-attend-${student.attendance.no}">출석</label>
                     </div>
@@ -1512,8 +1524,9 @@ xmlns:th="http://www.thymeleaf.org"
                     <div class="form-check form-check-inline">
                       <input class="radio-lateness form-check-input" type="radio" id="atten-radio-lateness-${student.attendance.no}" name="${RADIO_GROUP_NAME+student.attendance.no}" value="1403" ${stateCode=="1403"?"checked":""}>
                       <label class="form-check-label" for="atten-radio-lateness-${student.attendance.no}">지각</label>
-                    </div>
-                  </div>
+                    </div>`
+                  }
+                 innerHTML+=  `</div>
                 </td>`;
                 // TODO 날짜 넣기
                 
@@ -2011,11 +2024,11 @@ xmlns:th="http://www.thymeleaf.org"
                 }
               })
               .catch((err) => {
+                console.log(err);
                 Dialogs.dialog('error',
                 '오류',
                 err,
                 function() {
-                  console.error(err);
                 })
               }).finally(()=> {
                 offUserDetailCurtaion();
@@ -2216,7 +2229,7 @@ xmlns:th="http://www.thymeleaf.org"
               for(let block of blocks) {
                 block.remove();
               }
-
+              console.log(student);
               for(let subject of student.subjectList) {
                 let block = document.createElement('div');
                 blockParent.appendChild(block);
@@ -2264,6 +2277,7 @@ xmlns:th="http://www.thymeleaf.org"
               let sbjno = event.target.id.slice(ATTENDANCE_SUBJECT_ID.length);
               let block = document.querySelector("#"+DETIAL_ATTENDANCE_BLOCK_ID+sbjno);
               let checkedAttenList = block.querySelectorAll('td input[type="radio"]:checked');
+              let form = {};
               let attendanceList = [];
 
               for(let input of checkedAttenList) {
@@ -2272,6 +2286,12 @@ xmlns:th="http://www.thymeleaf.org"
                   stateCode: input.value
                 }
                 attendanceList.push(obj);
+              }
+
+              form = {
+                stno: stno,
+                sbjno: sbjno,
+                attendanceList: attendanceList,
               }
               
               fetch(REST_URL.SUBMIT_ATTENDANCES_UPDATE, {
@@ -2282,7 +2302,7 @@ xmlns:th="http://www.thymeleaf.org"
                   'Content-Type': 'application/json',
                   'X-CSRF-Token': token
                 },
-                body: JSON.stringify(attendanceList)
+                body: JSON.stringify(form)
               })
               .then( async (res) => {
                 let resBody = await res.text();
@@ -2295,20 +2315,20 @@ xmlns:th="http://www.thymeleaf.org"
                     studentClickEvent(studno);
                   })
                 } else {
+                  console.error(resBody);
                   Dialogs.dialog('error',
                   '실패',
                   resBody,
                   function() {
-                    console.error(resBody);
                   });
                 }
               })
               .catch((err)=> {
+                console.error(err);
                 Dialogs.dialog('error',
                 '오류',
                 err,
                 function() {
-                  console.error(err);
                 })
               })
             }

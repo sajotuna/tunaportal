@@ -10,12 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.fourth.tuna.domain.attendance.mapper.AttendanceMapper;
 import co.fourth.tuna.domain.attendance.service.AttendanceService;
+import co.fourth.tuna.domain.attendance.vo.AttendanceUpdateFormVO;
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
+import co.fourth.tuna.domain.grade.service.GradeService;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
 
 	@Autowired AttendanceMapper map;
+	
+	@Autowired GradeService gradeService;
 	
 	@Override
 	public String studentAttendance(AttendanceVO vo) {
@@ -35,9 +39,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	@Transactional
-	public String updateAttendanceList(List<AttendanceVO> list) throws Error{
-		for(AttendanceVO att : list) {
-			// TODO 출결 코드로 바꾸기
+	public String updateAttendanceList(AttendanceUpdateFormVO form) throws Error{
+		for(AttendanceVO att : form.getAttendanceList()) {
+			
 			if( !(att.getStateCode().equals("1401")||
 					att.getStateCode().equals("1402")||
 					att.getStateCode().equals("1403"))) {
@@ -49,12 +53,14 @@ public class AttendanceServiceImpl implements AttendanceService {
 			}
 			
 		}
-		return "업데이트 성공";
+		
+		return gradeService.updateTaskGradeByStudentIdAndSubjectId(form.getStno(), form.getSbjno());
 	}
 
 	@Override
 	public List<AttendanceVO> getListByStudentIdAndSbjno(int stno, int sbjno) {
 		return map.selectListByStudentIdAndSbjectId(stno, sbjno);
 	}
+		
 
 }

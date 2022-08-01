@@ -67,7 +67,7 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 			attens = attenMap.findListByStudentIdAndSubjectId(student.getNo(), sbjno);
 			student.setAttendanceList(attens);
 			GradeVO grade = gradeMap.findOneByStudentIdAndSubjectId(student.getNo(), sbjno);
-			grade.setAttd(computeAttendanceScore(attens));
+			//grade.setAttd(computeAttendanceScore(attens));
 			
 			student.setGradeVO(grade);
 			for(TaskVO task : tasks) {
@@ -84,33 +84,6 @@ public class StudentServiceImpl implements StudentService, UserDetailsService {
 		return students;
 	}
 	
-	
-	
-	public int computeAttendanceScore(List<AttendanceVO> attens) {
-		int score = 100; // 100점 만점
-		int absence = 0; // 결석
-		int lateness = 0; // 지각(1/3 결석)
-		int count = attens.size(); // 수업 횟수
-		
-		// TODO 출결 횟수 이상함
-		// 1401:출석, 1402:결석, 1403:지각
-		for(int i=0; i < attens.size()-1; i++) {
-			if(attens.get(i).getStateCode() != null) {
-				if(attens.get(i).getStateCode().equals("1402")) {
-					absence++;
-				} else if (attens.get(i).getStateCode().equals("1403")){
-					lateness++;
-				}
-			}
-		}
-		
-		// 결석 계산
-		if(absence > 0) score -= (absence*100)/count;
-		// 지각 계산
-		if(lateness > 0) score -= (lateness/3*100)/count;
-
-		return score;
-	}
 
 	@Override
 	public void studPwdUpdate(StudentVO vo) {
