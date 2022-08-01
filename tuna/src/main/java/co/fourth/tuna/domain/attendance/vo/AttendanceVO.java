@@ -22,4 +22,6 @@ public class AttendanceVO {
 	private Integer sbjNo;
 	//날짜
 	private Date classDate;
+	//시즌코드
+	private Integer seasonCode;
 }
