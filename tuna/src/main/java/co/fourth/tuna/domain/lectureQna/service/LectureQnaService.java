@@ -27,4 +27,6 @@ public interface LectureQnaService {
 	List<LectureQnaVO> findListBySubjectId(int sbjno);
 	
 	List<LectureQnaVO> getListByStudentIdAndSubjectId(int stno, int sbjno);
+	
+	public LectureQnaVO findLectureQnaByLecture(int qnano);
 }

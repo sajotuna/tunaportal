@@ -149,4 +149,22 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 		
 	</select>
 	
+	<select id="selectOneByLectureQnaId"
+		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+		SELECT
+			NO         ,
+			TITLE      ,
+			CONTENT    ,
+			ANSWER     ,
+			ENROLLDATE ,
+			STNO       ,
+			SBJNO      ,
+			ANSWERDATE ,
+			VISIBLE
+		FROM
+			lectureqna
+		WHERE no = #{qnano}
+	</select>
+	
+	
 </mapper>

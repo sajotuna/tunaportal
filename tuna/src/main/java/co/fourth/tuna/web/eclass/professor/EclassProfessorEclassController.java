@@ -129,6 +129,7 @@ public class EclassProfessorEclassController {
 
 	@GetMapping("/qna")
 	public String qnaView(Model model, HttpServletRequest req) {
+		
 		return req.getServletPath();
 	}
 
