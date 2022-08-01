@@ -8,8 +8,10 @@
 
 <title>질의응답작성</title>
 <link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
-<link rel="stylesheet"
-	th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
+<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
+<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+<script th:src="@{/resources/assets/js/dialog.js}"></script>
 </head>
 <body>
 	<div id="page-container"
@@ -53,10 +55,11 @@
 									</table>
 										<textarea class="js-simplemde" id="content" name="content"></textarea>
 									<div class="d-flex justify-content-center">
-										<button type="submit" th:onclick="|location.href='@{/stud/eclass/qnaSelect}'|" class="btn btn-primary m-2">등록</button>
-										<button
+										<button type="submit" id="btn" onclick="javascript:insertQna();" class="btn btn-primary m-2">등록</button>
+										<button 
 											th:onclick="|location.href='@{/stud/eclass/qnaList}?sbjNo=${sbjNo}'|"
 											type="button" class="btn btn-dark  m-2">취소</button>
+<!-- 											th:onclick="|location.href='@{/stud/eclass/qnaSelect}'|" -->
 									</div>
 									</form>
 								</div>
@@ -68,6 +71,30 @@
 					</div>
 				</div>
 			</div>
+				<script th:inline="javascript">
+				function insertQna(){
+					Dialogs.dialog('warnConfirm', '질문을 등록하시겠습니까? 수정 및 삭제가 불가능힙니다.', '등록하시려면 확인을 눌러주시기 바랍니다.', insertOneQna);
+				}
+				
+				function insertOneQna(){
+					let stno = document.querySelector('meta[name="_csrf_header"]').value
+					let token = document.querySelector('meta[name="_csrf"]').value
+					fetch('isnertQnaAction', {
+						method : "POST",
+						headers:{
+							'header' : stno,
+							'X-Requested-with' : 'XMLHttpRequest',
+							'Content-Type' : 'application/json; charset=utf-8',
+							'X-CSRF-Token' : token
+						},
+						body : JSON.stringify({"title":title},{"content":content})
+						}).then(result=> {
+							location.href='@{/stud/eclass/qnaList}?sbjNo=${sbjNo}';
+						})
+					
+				}
+				
+				</script>
 			<script>
 				if(document.getElementById("visibleCheck").checked){
 					document.getElementById("visibleValue").disabled = true;

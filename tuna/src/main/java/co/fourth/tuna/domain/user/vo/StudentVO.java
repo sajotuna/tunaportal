@@ -41,10 +41,6 @@ public class StudentVO implements UserDetails{
 	private ScholarVO scholarvo;
 	private tuitionGiveVO tuitionGivevo;
 	
-	
-	
-	
-	
 	public String getChpwd() {
 		return chpwd;
 	}

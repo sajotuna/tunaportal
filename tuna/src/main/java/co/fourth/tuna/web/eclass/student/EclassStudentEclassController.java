@@ -116,9 +116,11 @@ public class EclassStudentEclassController {
 		
 		map.put("sbjNo", vo.getSbjNo());
 		map.put("pageNum", pageNum);
-		map.put("size", 5);
-		map.put("listSize", Math.ceil((double)qnaDao.lectureQnaPagingCount(vo)/5));
+		map.put("size", 10);
+		map.put("listSize", Math.ceil((double)qnaDao.lectureQnaPagingCount(vo)/10));
 		List<Map<String, Object>> qna = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
+		
+		System.out.println("rn? RN?"+qna);
 		
 		model.addAttribute("qna", qna);
 		model.addAttribute("map", map);
@@ -144,8 +146,8 @@ public class EclassStudentEclassController {
 	
 	//질의응답작성폼
 	@RequestMapping("/qnaInsert")
-	public String qnaInsert(Model model, LectureQnaVO vo, 
-							HttpServletRequest req, 
+	public String qnaInsert(Model model, LectureQnaVO vo, RedirectAttributes redir,
+							HttpServletRequest req,
 							Authentication authentication) {
 		model.addAttribute("sbjNo",req.getParameter("sbjNo"));
 		
@@ -162,6 +164,8 @@ public class EclassStudentEclassController {
 		 		
 		qnaDao.insertOneQna(vo);
 		
+		redir.addFlashAttribute("question", "정말 등록하시겠습니까? 등록하시면 삭제 및 수정이 불가능합니다.");
+		redir.addFlashAttribute("success", "질문 등록이 완료되었습니다.");
 		redir.addAttribute("no", vo.getNo());
 		redir.addAttribute("sbjNo", vo.getSbjNo());
 		
