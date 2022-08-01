@@ -95,8 +95,6 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 	AND STNO = #{stNo}
 	</delete>
 
-	
-
 <!-- 목록 subject으로 찾기 -->
 	<select id="findBySubjectId"
 		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
@@ -116,6 +114,7 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 			JOIN subject s
 				ON	l.sbjno = s.no
 			WHERE s.pfno = #{prof.no}
+			ORDER BY l.no DESC
 		) WHERE rn 
 				BETWEEN (#{pageNum}-1)*#{size}+1
 				AND #{pageNum}*#{size}
@@ -146,5 +145,10 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 			AND sbjno = #{sbjno}
 		
 	</select>
-	
+<select id ="professorFindQna" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO" resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+select * from lectureqna where no = #{no}
+</select>
+<update id = "professorQnaUpdate" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">	
+update lectureqna set answer = #{answer}, answerdate = sysdate where no = #{no}
+</update>	
 </mapper>

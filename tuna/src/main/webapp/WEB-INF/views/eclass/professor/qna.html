@@ -6,10 +6,12 @@ xmlns:th="http://www.thymeleaf.org"
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
     <title>E-Class 문의 상세</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
-    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
   </head>
   <body>
 
@@ -89,38 +91,65 @@ xmlns:th="http://www.thymeleaf.org"
                     <p>제목</p>
                   </div>
                   <div class="h4 col-11 mb-1">
-                    <p>교수님 궁금한게 있는데요</p>
+                    <p th:text =${qna.title}></p>
                   </div>
                 </div>
                 <div class="d-none d-lg-block">
                   <div class="row">
                     <div class="col-6 d-flex">
                       <div class="text-start" style="width: 80px">작성자 :</div>
-                      <div class="wrap fw-bold me-5">감동원 (참치공학)</div>
+                      <div class="wrap fw-bold me-5" th:text = "${qna.stNo}"></div>
                     </div>
                     <div class="col-6 d-flex">
                       <div class="wrap text-start" style="width: 80px">작성일 :</div>
-                      <div class="wrap fw-bold">2022-07-05</div>
+                      <div class="wrap fw-bold" th:text = ${qna.enrollDate}></div>
                     </div>
                   </div>
                 </div>
                 <hr>
                 <div class="row">
-                  <p class="col-12 px-5">
-                    교수님!!! 모르겠습니다!!
+                  <p class="col-12 px-5" th:text = "${qna.content}">
                   </p>
                 </div>
                 <hr>
                 <div class="row">
-                  <div class="col-2 text-start">
-                    <p>답변</p>
-                  </div>
-                  <div class="col-10">
-                    <textarea class="js-maxlength form-control js-maxlength-enabled" id="example-maxlength10" name="example-maxlength10" rows="5" maxlength="100" placeholder="" data-always-show="true"></textarea>
-                  </div>
-                  <div>
-                    <button class="btn btn-primary">삭제</button>
-                  </div>
+                <form th:action = "@{/prof/lecQnaAnswer}" method = "POST">
+                  <input type = "hidden" th:value = "${qna.no}" name = "no">
+                  
+                  <th:block th:if = "${#strings.isEmpty(qna.answer)}">
+	                  <div class = "col-2">
+	                  	<p>답변일자</p>
+	                  </div>
+	                  <div class="col-2 text-start">
+	                    <p>답변</p>
+	                  </div>
+	                  <div class="col-10" >
+	                  <textarea name="answer" id="ckfinder" ></textarea>
+	                  </div>
+	                  	<div>
+	                    <button class="btn btn-primary">작성</button>
+	                  </div>
+                  </th:block>
+                  
+                  <th:block th:unless = "${#strings.isEmpty(qna.answer)}">
+	                  <div class = "col-2">
+	                  	<p>답변일자</p>
+	                  </div>
+	                  <div class = "col-2" th:text= "${qna.answerDate}">
+	                  	
+	                  </div>
+	                  <div class="col-2 text-start">
+	                    <p>답변</p>
+	                  </div>
+	                  <div class="col-10" >
+                       <textarea name="answer" id="ckfinder"th:text = "${qna.answer}"></textarea>
+	                  </div>
+	                  	<div>
+	                    <button class="btn btn-primary">수정</button>
+	                  </div>
+                  </th:block>
+                  
+                  </form>
                 </div>
               </div>
             </div> <!-- block end-->
@@ -129,17 +158,69 @@ xmlns:th="http://www.thymeleaf.org"
           </div> <!-- col-12 end -->
 
         </div> <!-- content END -->
+          <th:block th:if = "${(success != null && success != '')}">
+			<script th:inline="javascript">
+				let success = /*[[${success}]]*/ 'default';
+				if (success) {
+					Dialogs.dialog('success', '완료', success);
+				}
+			</script>
+		</th:block>
+        <script
+			th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
+        <script th:src="@{/resources/assets/js/plugins/dropzone/min/dropzone.min.js}"></script>
+<script>
+    let header = document.querySelector('meta[name="_csrf_header"]').content;
+	let token = document.querySelector('meta[name="_csrf"]').content;
+    
 
-        <!-- 모달 리스트 -->
-        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              Hello
-            </div>
-          </div>
-        </div> -->
-        <!-- 모달 리스트 END -->
-        
+    document.addEventListener('DOMContentLoaded', function() {
+		ckfinder();
+    })
+  
+  function ckfinder() {
+      let ckfinder = document.querySelector('#ckfinder');
+
+      if (ckfinder) {
+        ClassicEditor
+          .create(document.querySelector('#ckfinder'),         		
+          		{   
+          			language:'ko',
+          			ckfinder:{
+          				uploadUrl : getContextPath() + 'ckImage?_csrf=' + token
+          			},
+          			image: {
+        			      styles: [ "alignLeft", "alignCenter", "alignRight"],      
+        			      toolbar: [
+        			        "imageStyle:alignLeft",
+        			        "imageStyle:alignCenter",
+        			        "imageStyle:alignRight",
+        			        "|",
+        			        "imageTextAlternative",
+
+        			      ]
+        			 }           			
+
+          		})
+          .then(editor => {
+            window.editor = editor;
+          })
+          .catch(error => {
+            console.error('There was a problem initializing the classic editor.', error);
+          });
+      }
+      
+ 
+  }
+  function getContextPath() {
+		var pathName = window.location.pathname.substring(1);
+		var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+		var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+		return path_root;
+	}
+      
+      
+    </script>
       </main>
 
 <!--
@@ -149,11 +230,7 @@ xmlns:th="http://www.thymeleaf.org"
 ██      ██    ██ ██    ██    ██    ██      ██   ██ 
 ██       ██████   ██████     ██    ███████ ██   ██ 
 -->
-      <!-- <footer id="page-footer" class="bg-flat-lighter">
-        <div class="content">footer</div>
-      </footer> -->
+      
     </div>
-    
-    <script src="../assets/js/oneui.app.min.js"></script>
   </body>
 </html>
