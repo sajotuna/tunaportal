@@ -1729,10 +1729,14 @@ xmlns:th="http://www.thymeleaf.org"
               tbody.innerHTML = "";
               for( let stud of studList ) {
                 let tr = document.createElement('tr');
-                tr.id = GRADE_STUD_ID+stud.gradeVO.no;
+                if(!stud.gradeVO) {
+
+                } else {
+                  tr.id = GRADE_STUD_ID+stud.gradeVO.no;
+                }
                 tr.data_stno = stud.no;
                 tr.classList.add('m-0');
-                tr.innerHTML = `
+                let innerHTML = `
                   <td class="table-cell">
                     ${stud.name}
                   </td>
@@ -1742,12 +1746,19 @@ xmlns:th="http://www.thymeleaf.org"
                   <td class="table-cell">
                     ${stud.no}
                   </td>
-                  <td><input type="number" class="form-control" value="${stud.gradeVO.attd}" disabled></td>
-                  <td><input type="number" class="form-control" name="middle" value="${stud.gradeVO.middle}"></td>
-                  <td><input type="number" class="form-control" name="finals" value="${stud.gradeVO.finals}"></td>
-                  <td><input type="number" class="form-control" value="${stud.gradeVO.task}" disabled></td>
-                  <td><input type="number" class="form-control" value="${stud.gradeVO.total}" disabled></td>
-                `;
+                  `
+                  if(!stud.gradeVO) {
+                    innerHTML += 
+                    `<td class="text-mute" colspan="5">수강 대기중</td>`;
+                  } else {
+                    innerHTML += 
+                    `<td><input type="number" class="form-control" value="${stud.gradeVO.attd}" disabled></td>
+                    <td><input type="number" class="form-control" name="middle" value="${stud.gradeVO.middle}"></td>
+                    <td><input type="number" class="form-control" name="finals" value="${stud.gradeVO.finals}"></td>
+                    <td><input type="number" class="form-control" value="${stud.gradeVO.task}" disabled></td>
+                    <td><input type="number" class="form-control" value="${stud.gradeVO.total}" disabled></td>`;
+                  }
+                tr.innerHTML = innerHTML;
                 tbody.appendChild(tr);
                 studentsGradeTr.push(tr);
               }
