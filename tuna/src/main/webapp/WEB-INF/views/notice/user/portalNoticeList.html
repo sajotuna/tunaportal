@@ -62,6 +62,8 @@
 								<th class="d-none d-lg-table-cell"
 									style="text-align: center; width:150px; height: 10%;">첨부파일</th>
 								<th class="d-none d-lg-table-cell" style="text-align: center; width: 20%;">Date</th>
+								<th class="d-none d-lg-table-cell"
+										style="text-align: center; width: 10%;">조회수</th>
 							</tr>
 
 						</thead>
@@ -81,6 +83,7 @@
 										</th:block>
 									</td>
 									<td class="fs-sm text-muted text-center">[[${notices.enrollDate}]]</td>
+									<td class="fs-sm text-muted text-center">[[${notices.hit}]]</td>
 								</tr>
 							</th:block>
 
@@ -129,7 +132,6 @@
 			var token = $("meta[name='_csrf']").attr('content');
 
 			//get방식 파라메터 숨기기
-			history.replaceState({}, null, location.pathname);
 
 			// 페이징 번호
 			function pagingNo(page, range) {

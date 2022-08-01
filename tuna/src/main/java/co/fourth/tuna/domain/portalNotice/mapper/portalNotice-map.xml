@@ -103,7 +103,7 @@ WHERE NO = #{no}
 </update>
 
 <!-- 조회수 -->
-<update id="noticeHitUpdate" parameterType="int">
+<update id="noticeHitUpdate" parameterType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
 		UPDATE PORTALNOTICE
 		SET
 		HIT = HIT + 1 WHERE NO = #{no}

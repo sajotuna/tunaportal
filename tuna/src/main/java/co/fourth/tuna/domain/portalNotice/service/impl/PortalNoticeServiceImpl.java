@@ -45,10 +45,9 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 	}
 	
 	@Override
-	public int noticeHitUpdate(int no) {
+	public int noticeHitUpdate(String no) {
 		return map.noticeHitUpdate(no);
 	}
-	
 	
 	//파일
 	public List<PortalNoticeFileVO> fileList() {

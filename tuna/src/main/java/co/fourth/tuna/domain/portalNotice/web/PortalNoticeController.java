@@ -64,9 +64,6 @@ public class PortalNoticeController {
 		notices = noticeDao.portalNoticeList(state, key, pvo.getStartList(), pvo.getEndList());
 		retn = "notice/user/portalNoticeList";
 		
-		
-		logger.error("대체 왜 "+pvo);
-		logger.error("대체 왜 "+notices);
 		model.addAttribute("notices", notices);
 		model.addAttribute("paging", pvo);
 		model.addAttribute("key", key);
@@ -82,7 +79,7 @@ public class PortalNoticeController {
 		model.addAttribute("content", noticeDao.noticeSelect(vo));
 		model.addAttribute("files", noticeDao.fileSelect(Integer.parseInt(vo.getNo())));
 		
-		/* noticeDao.noticeHitUpdate(vo.getNo()); */
+		noticeDao.noticeHitUpdate(vo.getNo());
 
 		return "notice/user/portalNoticeSelect";
 	}
