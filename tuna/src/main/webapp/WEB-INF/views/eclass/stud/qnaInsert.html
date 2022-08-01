@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <title>질의응답작성</title>
 <link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
 <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
@@ -36,7 +37,7 @@
 							class="dataTables_wrapper dt-bootstrap5 no-footer">
 							<div class="row">
 								<div class="col-sm-12">
-									<form th:action="@{insertOneQna(${_csrf.parameterName}=${_csrf.token})}" method="POST">
+									<form th:action="@{insertOneQna(${_csrf.parameterName}=${_csrf.token})}" method="POST" id ="frm">
 									<input type="hidden" th:value="${param.sbjNo}" name="sbjNo" id="sbjNo">
 									<table
 										class="table table-vcenter js-dataTable-full dataTable no-footer"
@@ -55,7 +56,7 @@
 									</table>
 										<textarea class="js-simplemde" id="content" name="content"></textarea>
 									<div class="d-flex justify-content-center">
-										<button type="submit" id="btn" onclick="javascript:insertQna();" class="btn btn-primary m-2">등록</button>
+										<button type="button" id="btn" onclick="javascript:insertQna();" class="btn btn-primary m-2">등록</button>
 										<button 
 											th:onclick="|location.href='@{/stud/eclass/qnaList}?sbjNo=${sbjNo}'|"
 											type="button" class="btn btn-dark  m-2">취소</button>
@@ -71,35 +72,35 @@
 					</div>
 				</div>
 			</div>
+			<script th:inline="javascript">
+			function content() {
+			    var key = window.event.keyCode;
+
+			    // If the user has pressed enter
+			    if (key === 13) {
+			        document.getElementById("content").value = document.getElementById("content").value + "<br>";
+			        return false;
+			    }
+			    else {
+			        return true;
+			    }
+			}
+			</script>
+			<script>
+				if(document.getElementById("visibleCheck").checked){
+					document.getElementById("visibleValue").disabled = true;}
+			</script>
 				<script th:inline="javascript">
 				function insertQna(){
 					Dialogs.dialog('warnConfirm', '질문을 등록하시겠습니까? 수정 및 삭제가 불가능힙니다.', '등록하시려면 확인을 눌러주시기 바랍니다.', insertOneQna);
 				}
 				
 				function insertOneQna(){
-					let stno = document.querySelector('meta[name="_csrf_header"]').value
-					let token = document.querySelector('meta[name="_csrf"]').value
-					fetch('isnertQnaAction', {
-						method : "POST",
-						headers:{
-							'header' : stno,
-							'X-Requested-with' : 'XMLHttpRequest',
-							'Content-Type' : 'application/json; charset=utf-8',
-							'X-CSRF-Token' : token
-						},
-						body : JSON.stringify({"title":title},{"content":content})
-						}).then(result=> {
-							location.href='@{/stud/eclass/qnaList}?sbjNo=${sbjNo}';
-						})
-					
+					frm.submit();
 				}
 				
 				</script>
-			<script>
-				if(document.getElementById("visibleCheck").checked){
-					document.getElementById("visibleValue").disabled = true;
-				}
-			</script>
+			
 			<script
 				th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
 			<!-- Page JS Helpers (CKEditor + SimpleMDE plugins) -->

@@ -443,6 +443,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 		let prevBtn = document.querySelector("#prev")
 		let pageingBtn = document.querySelectorAll("#pageingBtn");
 		nextBtn.addEventListener('click', function(){
+			nextBtn.disabled = true;
 			tagInsert(parseInt(params.pageNum)+1)
 		})
 		
@@ -450,6 +451,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 				if(parseInt(params.pageNum) == 1){
 					prevBtn.disabled = true;
 				}else{
+					prevBtn.disabled = true;
 					tagInsert(parseInt(params.pageNum)-1)	
 				}
 			})

@@ -1,13 +1,14 @@
 package co.fourth.tuna.web.eclass.student;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -101,7 +103,6 @@ public class EclassStudentEclassController {
 		
 		String[] weekplan = plan[11].split("~");
 		
-		System.out.println("외않나옴?" + lectureSchedule.get(0));
 		
 		model.addAttribute("sc", lectureSchedule.get(0));
 		model.addAttribute("plan", lists.get(0));
@@ -119,12 +120,14 @@ public class EclassStudentEclassController {
 		map.put("size", 10);
 		map.put("listSize", Math.ceil((double)qnaDao.lectureQnaPagingCount(vo)/10));
 		List<Map<String, Object>> qna = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
+		int length = qna.size();
 		
-		System.out.println("rn? RN?"+qna);
+		System.out.println(length);
 		
 		model.addAttribute("qna", qna);
 		model.addAttribute("map", map);
 		model.addAttribute("sbjNo", vo.getSbjNo());
+		model.addAttribute("length", length);
 		
 		return "eclass/stud/qnaList";
 	}
@@ -161,27 +164,28 @@ public class EclassStudentEclassController {
 		
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		vo.setVisible(Integer.parseInt(req.getParameter("visibleCheck")));
-		 		
+
+		
 		qnaDao.insertOneQna(vo);
 		
 		redir.addFlashAttribute("question", "정말 등록하시겠습니까? 등록하시면 삭제 및 수정이 불가능합니다.");
-		redir.addFlashAttribute("success", "질문 등록이 완료되었습니다.");
 		redir.addAttribute("no", vo.getNo());
 		redir.addAttribute("sbjNo", vo.getSbjNo());
 		
 		return "redirect:/stud/eclass/qnaSelect";
 	}
 	
-	@RequestMapping("/delOneQna")
-	public String delOneQna(LectureQnaVO vo, RedirectAttributes redir,Authentication authentication) {
-		vo.setStNo(Integer.parseInt(authentication.getName()));
-		qnaDao.delOneQna(vo);
-		redir.addFlashAttribute("success", "삭제가 완료되었습니다.");
-		redir.addAttribute("sbjNo", vo.getSbjNo());
-		
-		return "redirect:/stud/eclass/qnaList";
-		
-	}
+	/*
+	 * @RequestMapping("/delOneQna") public String delOneQna(LectureQnaVO vo,
+	 * RedirectAttributes redir,Authentication authentication) {
+	 * vo.setStNo(Integer.parseInt(authentication.getName())); qnaDao.delOneQna(vo);
+	 * redir.addFlashAttribute("success", "삭제가 완료되었습니다.");
+	 * redir.addAttribute("sbjNo", vo.getSbjNo());
+	 * 
+	 * return "redirect:/stud/eclass/qnaList";
+	 * 
+	 * }
+	 */
 
 	
 	@RequestMapping("/taskList")
@@ -316,16 +320,32 @@ public class EclassStudentEclassController {
 	//수강목록 홈
 	@Autowired private SubjectMapper map;
 	@RequestMapping("/home")
-	public String home(Model model, EclassStudentHomeVO vo, Authentication authentication) {
+	public String home(Model model,
+			EclassStudentHomeVO vo, 
+			Authentication authentication,
+			HttpServletResponse res,
+			@CookieValue(value="seasonCode", required=false, defaultValue="0") String seasonCode) {
+		
+		
+		Cookie cookie = new Cookie("seasonCode", seasonCode);
+		cookie.setMaxAge(60*60*24);
+		cookie.setSecure(true);
+		
+		
 		
 		if(vo.getSeasonCode() == null) {
 			vo.setSeasonCode(Integer.parseInt(year.yearFind()));
 		}
 		
+		cookie.setValue(vo.getSeasonCode().toString());
+		
+		
+		
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> list = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.subList", vo);
 		model.addAttribute("list", list);
 		
+		res.addCookie(cookie);
 		
 		
 		List<Map<String, Object>> tt = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.twoTask", vo);
@@ -355,7 +375,9 @@ public class EclassStudentEclassController {
 	
 	//출석
 	@RequestMapping("/attendance")
-	public String studentAttendance(Model model, AttendanceVO vo, HttpServletRequest req, Authentication authentication) {
+	public String studentAttendance(Model model, AttendanceVO vo, 
+			HttpServletRequest req, 
+			Authentication authentication) {
 		vo.setStNo(Integer.parseInt(authentication.getName()));
 		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
@@ -364,11 +386,9 @@ public class EclassStudentEclassController {
 		if(attd.size() > 16) {
 			List<Map<String, Object>> major = attd; 
 			model.addAttribute("major", major);
-			System.out.println("전공"+major);
 		}else{
 			List<Map<String, Object>> refin = attd;
 			model.addAttribute("refin", refin);
-			System.out.println("교양"+refin);
 		};
 		
 		return "eclass/stud/attendance";
