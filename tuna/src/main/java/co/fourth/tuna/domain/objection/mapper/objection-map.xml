@@ -56,12 +56,13 @@
 		WHERE S.NO = O.SBJNO
 		AND O.STNO = ST.NO
         AND O.SBJNO = G.SBJNO
+        AND O.STNO = G.STNO
 		AND PS.NO = S.SEASONCODE
 		AND PD.NO = S.DEPTCODE
 		AND PT.NO = S.TYPE
 		AND S.PFNO = ${pfNo}
 		<if test="seasonCode != 'all'">AND S.SEASONCODE = #{seasonCode}</if>
-		ORDER BY O.NO DESC
+		ORDER BY S.SEASONCODE DESC
 	
 	</select>
 
