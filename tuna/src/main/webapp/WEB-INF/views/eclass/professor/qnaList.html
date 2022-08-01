@@ -142,7 +142,6 @@ xmlns:th="http://www.thymeleaf.org"
 			<script th:inline="javascript">
 				let btns = document.querySelectorAll('li > button')
 				let pageNum = /*[[${param.pageNum}]]*/
-				console.log(pageNum)
 				btns.forEach(btn=>{
 					if(btn.innerHTML == pageNum){
 						btn.parentElement.setAttribute("class", "page-item active")
@@ -157,8 +156,7 @@ xmlns:th="http://www.thymeleaf.org"
 		}
 		
 		function qnaDetail(e){
-			console.log(e.children[0].innerHTML);
-			location.href = 'qna';
+			location.href = 'qna?no='+e.children[0].innerHTML;
 		}
 		
 		</script>
