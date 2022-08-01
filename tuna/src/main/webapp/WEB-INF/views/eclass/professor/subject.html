@@ -1006,6 +1006,7 @@ xmlns:th="http://www.thymeleaf.org"
             let tabPanel; // 탭 패널
             let tabContents; // 탭 컨탠츠
             let userDetailModal; //
+            let onAttendanceEvent = -1;
             
             // 로딩 출력
             let loaderCurtain;
@@ -1207,7 +1208,7 @@ xmlns:th="http://www.thymeleaf.org"
               let fileInsertForm = document.querySelector("#fileInsertFrm");
               let title = fileInsertForm.querySelector(".input-title");
               let file = fileInsertForm.querySelector(".input-file");
-
+              
               fileInsertForm.addEventListener('click', function(ele) {
                 let formData = new FormData();
                 formData.append('file', file.files[0]);
@@ -1241,71 +1242,78 @@ xmlns:th="http://www.thymeleaf.org"
             function setAttendanceSubmitEvent() {
               let attendanceForm = document.querySelector("#btabs-static-student");
               let submitBtn = attendanceForm.querySelector(".submit_button");
+
+              submitBtn.removeEventListener('click', attendanceFetchSubmitHandler);
+              submitBtn.addEventListener('click', attendanceFetchSubmitHandler);
+            }
+            
+            function attendanceFetchSubmitHandler(event) {
+              let attendanceForm = document.querySelector("#btabs-static-student");
               let radios = attendanceForm.querySelectorAll('input[type="radio"]');
+              let stno = 0;
+
               let attendanceList = [];
               let form = {};
 
-              submitBtn.addEventListener('click', function(event) {
-                for(const radio of radios) {
-                  if(radio.checked){
-                    let attendanceObj = {
-                      no : radio.name.slice(RADIO_GROUP_NAME.length),
-                      stateCode : radio.value,
-                      sbjNo : sbjno,
-                    }
-                    attendanceList.push(attendanceObj);
+              for(const radio of radios) {
+                if(radio.checked){
+                  stno = radio.parentElement.parentElement.getAttribute('data_student_id');
+                  let attendanceObj = {
+                    no : radio.name.slice(RADIO_GROUP_NAME.length),
+                    stateCode : radio.value,
+                    sbjNo : sbjno,
+                    stNo : stno,
                   }
+                  attendanceList.push(attendanceObj);
                 }
+              }
 
-                form = {
-                  sbjno: sbjno,
-                  attendanceList: attendanceList
-                }
+              form = {
+                sbjno: sbjno,
+                attendanceList: attendanceList
+              }
 
-                fetch(REST_URL.SUBMIT_ATTENDANCES, {
-                  method: "POST",
-                  headers: {
-                    'header' : header,
-                    'X-Requested-with': 'XMLHttpRequest',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': token
-                  },
-                  body: JSON.stringify(form),
-                })
-                .then( async (res) => {
-                  let resBody = await res.text();
-                  console.log(resBody);
-                  if(res.ok) {
-                    Dialogs.dialog('success',
-                    '입력 성공',
-                    resBody,
-                    function() {
-
-                    })
-                  } else {
-                    Dialogs.dialog('error',
-                    '입력 실패',
-                    resBody,
-                    function() {
-                      console.error(resBody);
-                      onTab = -1;
-                      tabClickEvent(1);
-                    })
-                  }
-                }).catch((err) => {
-                  Dialogs.dialog('error',
-                  '오류',
-                  err,
+              fetch(REST_URL.SUBMIT_ATTENDANCES, {
+                method: "POST",
+                headers: {
+                  'header' : header,
+                  'X-Requested-with': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify(form),
+              })
+              .then( async (res) => {
+                let resBody = await res.text();
+                console.log(resBody);
+                if(res.ok) {
+                  Dialogs.dialog('success',
+                  '입력 성공',
+                  resBody,
                   function() {
-                    console.error(err)
-                    onTab = -1;
-                    tabClickEvent(onTab);
-                  })
-                })
 
-              });
+                  })
+                } else {
+                  Dialogs.dialog('error',
+                  '입력 실패',
+                  resBody,
+                  function() {
+                    console.error(resBody);
+                    onTab = -1;
+                    tabClickEvent(1);
+                  })
+                }
+              }).catch((err) => {
+                Dialogs.dialog('error',
+                '오류',
+                err,
+                function() {
+                  console.error(err)
+                  onTab = -1;
+                  tabClickEvent(onTab);
+                })
+              })
             }
-            
 
 /*
 ████████  █████  ██████       ██████ ██      ██  ██████ ██   ██ 
@@ -1509,7 +1517,7 @@ xmlns:th="http://www.thymeleaf.org"
                   ${student.no}
                 </td>
                 <td class="table-cell">
-                  <div class="atten-radio-group space-x-4">`;
+                  <div data_student_id="${student.no}" class="atten-radio-group space-x-4">`;
                   if(!student.attendance) {
                     innerHTML += `<div class="text-muted" >수강 대기중</div>`
                   } else {
@@ -1534,7 +1542,6 @@ xmlns:th="http://www.thymeleaf.org"
                 tbody.appendChild(tr);
               });
               setAttendanceSubmitEvent();
-
             }
             
             // 과제 패널

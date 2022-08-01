@@ -1,6 +1,5 @@
 package co.fourth.tuna.domain.attendance.service.impl;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -40,8 +39,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	@Transactional
 	public String updateAttendanceList(AttendanceUpdateFormVO form) throws Error{
+		String result = "";
+		System.out.println(form);
 		for(AttendanceVO att : form.getAttendanceList()) {
-			
+			System.out.println(att);
 			if( !(att.getStateCode().equals("1401")||
 					att.getStateCode().equals("1402")||
 					att.getStateCode().equals("1403"))) {
@@ -52,9 +53,15 @@ public class AttendanceServiceImpl implements AttendanceService {
 				throw new Error("업데이트 실패");
 			}
 			
+			if(form.getStno() == null) {
+				gradeService.updateAttendanceTaskGrade(att.getStNo(), form.getSbjno());
+			}
+		}
+		if(form.getStno() != null) {
+			result = gradeService.updateAttendanceTaskGrade(form.getStno(), form.getSbjno());
 		}
 		
-		return gradeService.updateTaskGradeByStudentIdAndSubjectId(form.getStno(), form.getSbjno());
+		return result;
 	}
 
 	@Override

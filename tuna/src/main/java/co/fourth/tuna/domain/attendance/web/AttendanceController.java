@@ -59,6 +59,7 @@ public class AttendanceController {
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		ResponseEntity<String> res = null;
 		
+		
 		// TODO sbjno 가 내강의인지 체크하기
 		try {
 			res = new ResponseEntity<String>(

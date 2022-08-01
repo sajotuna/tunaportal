@@ -57,7 +57,7 @@ public class GradeServiceImpl implements GradeService {
 	}
 	
 	@Override
-	public String updateTaskGradeByStudentIdAndSubjectId(int stNo, int sbjNo) {
+	public String updateTaskGradeByStudentIdAndSubjectId(int stNo, int sbjNo) throws Error{
 		List<GradeFormVO> gradeList = new ArrayList<GradeFormVO>();
 		List<TaskVO> taskList = taskService.findListBySubjectId(sbjNo);
 		int sum = 0;
