@@ -68,7 +68,7 @@
 		AND S.TYPE = PT.NO
 		AND STNO = #{stNo}
 		AND S.SEASONCODE NOT IN #{seasonCode}
-		ORDER BY SBJNO
+		ORDER BY S.SEASONCODE DESC
 		
 	</select>
 	
