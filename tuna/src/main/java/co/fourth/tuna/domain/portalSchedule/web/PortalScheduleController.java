@@ -47,16 +47,11 @@ public class PortalScheduleController {
 		return "schedule/user/portalSchedule";
 	}
 
-	// user
+	// user 리스트 붙이기
 	@GetMapping("/portalScheduleList")
 	@ResponseBody
 	public List<PortalScheduleVO> portalScheduleList(PortalScheduleVO vo) {
-
 	
-		if(vo.getSeasonCode()==null) {
-			vo.setSeasonCode(yearService.yearFind());
-		}
-		
 		return scheduleDao.scheduleList(vo);
 	}
 	
