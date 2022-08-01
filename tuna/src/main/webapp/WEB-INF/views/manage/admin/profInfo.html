@@ -45,8 +45,8 @@
                         <div class="mb-3">
                           <div class="input-group">
                             <span class="input-group-text">소속</span>
-                            <select class="form-select" id="deptcode" name="deptCode" onchange="javascript:updateSuccess();">
-			                    <option selected value="${vo.deptcode}" th:text = "${@codeList.getName(vo.deptcode)}"></option>
+                            <select class="form-select" id="deptcode" name="deptcode" onchange="javascript:updateSuccess();">
+			                    <option selected th:value="${vo.deptcode}" th:text = "${@codeList.getName(vo.deptcode)}"></option>
 				                  <option value="801" id="801">기계공학과</option>
 				                  <option value="805" id="805">항공우주공학과</option>
 				                  <option value="810" id="810">생명공학과</option>

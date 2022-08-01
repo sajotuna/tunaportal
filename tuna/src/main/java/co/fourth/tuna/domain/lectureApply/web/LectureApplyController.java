@@ -50,16 +50,16 @@ public class LectureApplyController {
 	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication,@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
 			  @RequestParam Map<String, Object> params ) {
 
-		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
-			model.addAttribute("error", "현재 수강신청 열람기간이 아닙니다.");
-			return "schedule/date/courseDate";
-		}
+//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
+//			model.addAttribute("error", "현재 수강신청 열람기간이 아닙니다.");
+//			return "schedule/date/courseDate";
+//		}
 		
 		
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		params.put("seasonCode", yearDao.yearFind());
-		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount()/10));
+		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount(yearDao.yearFind())/10));
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
 		vo.setStateCode("402");

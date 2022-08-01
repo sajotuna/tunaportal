@@ -127,11 +127,12 @@ public class SubjectServiceImpl implements SubjectService {
 		return subjectList;
   }
 
-	public int subjectCount() {
+	public int subjectCount(String seasonCode) {
 		// TODO Auto-generated method stub
-		return map.subjectCount();
+		return map.subjectCount(seasonCode);
 
 	}
+
 	
 	
 	

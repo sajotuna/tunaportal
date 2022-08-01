@@ -19,7 +19,7 @@ public interface SubjectService {
 	public List<SubjectVO> findListForProfessorMain(ProfessorVO prof, int seasonCode, int pageNum, int size);
 	public List<SubjectVO> SubjectCheck();
 	public List<SubjectVO> searchSubjectList(String seasonCode, String searchKey, String key);
-	public int subjectCount();
+	public int subjectCount(String seasonCode);
 //	ArrayList<SubjectVO> getList(int pageNum, int size);
 //	ArrayList<SubjectVO> getListByProf(ProfessorVO prof, int pageNum, int size);
 //	

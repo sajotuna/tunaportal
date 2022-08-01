@@ -122,7 +122,7 @@ BETWEEN (#{pageNum}-1)*#{size}+1
 </select>
 <update id = "scholarUpdate" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
 	
-	update scholarApply set statecode = #{stateCode} where no = #{no} and statecode <![CDATA[<>]]> 501 and statecode <![CDATA[<>]]> 505
+	update scholarApply set statecode = #{stateCode} where no = #{no}
 	
 </update>
 
