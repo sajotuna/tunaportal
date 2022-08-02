@@ -22,7 +22,11 @@ WHERE 1=1
 </if>
 <if test="statecode != null and !statecode.equals('')">
     AND u.STATECODE = #{statecode}
-</if>) l 
+</if>
+<if test="role != null and !role.equals('')">
+    AND u.role = #{role}
+</if>
+) l 
 WHERE rn
 BETWEEN (#{pageNum}-1)*#{size}+1
     AND #{pageNum}*#{size}
