@@ -82,8 +82,8 @@ WHERE no = #{no}
 			SELECT CASE WHEN MAX(NO)!= 0 THEN MAX(NO) + 1 
 						ELSE 1 END AS ID FROM PORTALNOTICE
 </selectKey>
-INSERT INTO PORTALNOTICE
-VALUES (#{no}, #{content}, #{title}, #{visible}, #{adNo}, sysDate)
+INSERT INTO PORTALNOTICE(no, content, title, visible, adNo, enrollDate, hit)
+VALUES (#{no}, #{content}, #{title}, #{visible}, #{adNo}, sysDate, 0)
 </insert>
 
 <!-- 삭제 -->
@@ -108,6 +108,23 @@ WHERE NO = #{no}
 		SET
 		HIT = HIT + 1 WHERE NO = #{no}
 </update>
+
+<!-- 유저 이전글 다음글 -->
+<select id="movePage"
+ 
+resultType="co.fourth.tuna.domain.portalNotice.vo.PortalNoticeVO">
+select * from(SELECT 
+		NO,
+         LEAD(NO,1,9999) OVER(ORDER BY NO) AS next,
+         LAG(NO,1,9999) OVER(ORDER BY NO) AS last,
+         TITLE,
+         LEAD(TITLE,1,9999) OVER(ORDER BY NO) AS nexttitle,
+         LAG(TITLE,1,9999) OVER(ORDER BY NO) AS lasttitle        
+		FROM PORTALNOTICE		 
+		<if test="visible eq 'Y'.toString()">WHERE visible='Y'</if>
+        order by NO DESC) 
+        WHERE NO = #{no}
+</select>
 
 <!-- 파일 -->
 <!-- 전체조회 -->

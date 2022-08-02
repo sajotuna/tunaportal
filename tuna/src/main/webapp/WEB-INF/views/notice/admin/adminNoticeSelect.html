@@ -67,10 +67,26 @@
 					<th:block th:if="${not #lists.isEmpty(files)}">
 						<div th:each="file, i:${files}" class="col5">
 							첨부파일 : <a
-								th:href="@{/download(fileName=${file.uri}, originName=${file.name}, folder=portalNotice)}">[[${file.name}]]</a>
+								th:href="@{/download(fileName=${file.uri}, originName=${file.name}, folder=PortalNotice)}">[[${file.name}]]</a>
 						</div>
 					</th:block>
 					<hr>
+					<th:block th:each="move, i:${move}">
+						<div th:if="${move.next != 9999} ">
+							다음글 : <a th:href="@{/admin/admin/adminNoticeSelect(no=${move.next})}">[[${move.nexttitle}]]</a>
+						</div>
+						<div th:if="${move.next == 9999}">
+							<p>다음글이 없습니다.
+							<p>
+						</div>
+						<div th:if="${move.last != 9999}">
+							이전글 : <a th:href="@{/admin/admin/adminNoticeSelect(no=${move.last})}">[[${move.lasttitle}]]</a>
+						</div>
+						<div th:if="${move.last == 9999}">
+							<p>다음글이 없습니다.
+							</p>
+						</div>
+					</th:block>
 					<div class="p-1 d-flex justify-content-end">
 						<button type="button" class="btn btn-outline-secondary m-1"
 							th:onclick="|location.href='@{adminNoticeList}'|">목록</button>
@@ -87,9 +103,6 @@
 
 
 		</div>
-		<script>
-			history.replaceState({}, null, location.pathname);
-		</script>
 	</main>
 </body>
 
