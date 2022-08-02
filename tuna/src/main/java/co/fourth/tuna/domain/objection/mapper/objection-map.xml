@@ -10,18 +10,20 @@
   
 	<select id="findListBySubjectId"
 		resultMap="objectionWithGrade">
-		SELECT O.*, OBJECTIONSTATE(O.SBJNO, O.STNO) AS OBJSTATE
-		FROM OBJECTION O
-		WHERE sbjno = #{sbjno}
+		SELECT O.*, 
+				OBJECTIONSTATE(O.SBJNO, O.STNO) AS OBJSTATE,
+       			GRADETOALPHABET(G.TOTAL) AS ALPHABET,
+        		GRADETOPOINT(G.TOTAL) AS SCORE
+		FROM OBJECTION O, GRADE G
+		WHERE O.SBJNO = G.SBJNO
+		AND O.STNO = G.STNO
+		AND O.sbjno = #{sbjNo}
 		ORDER BY O.NO DESC
 	</select>
 	
 	<resultMap id="objectionWithGrade" type="co.fourth.tuna.domain.objection.vo.ObjectionVO">
-		<association property="grade" 
-		             column="sbjNo" 
-		             javaType="co.fourth.tuna.domain.grade.vo.GradeVO"
-		             select="co.fourth.tuna.domain.grade.mapper.GradeMapper.findBySbjectNo"
-		></association>
+		 <result property="alphabet" column="alphabet" />
+		 <result property="score" column="score" />
 		 <association property="student" 
 		             column="{no=stNo}" 
 		             javaType="co.fourth.tuna.domain.user.vo.StudentVO"

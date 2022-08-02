@@ -2,17 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.fourth.tuna.domain.grade.mapper.GradeMapper">
 
-	<select id="findBySbjectNo"
-		    resultType="co.fourth.tuna.domain.grade.vo.GradeVO">
-	
-		SELECT G.*, 
-		       GRADETOALPHABET(G.TOTAL) AS ALPHABET, 
-		       GRADETOPOINT(G.TOTAL) AS SCORE
-		FROM GRADE G
-		WHERE SBJNO = #{sbjNo}
-		
-	</select>
-
 	<!-- 당해학기 성적 조회 -->
 	<select id="currentSemesterGradeSelect" resultType="map">
 	

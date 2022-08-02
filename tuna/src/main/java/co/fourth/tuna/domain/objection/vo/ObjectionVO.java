@@ -25,7 +25,8 @@ public class ObjectionVO {
 	private int stNo;
 	private int sbjNo;
 	
-	GradeVO grade;
+	private String alphabet;
+	private double score;
 	StudentVO student;
 	
 	private String objState;
