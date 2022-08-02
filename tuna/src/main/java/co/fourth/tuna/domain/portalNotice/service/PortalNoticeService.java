@@ -18,6 +18,8 @@ public interface PortalNoticeService {
 	int noticeDelete(PortalNoticeVO vo);
 
 	int noticeUpdate(PortalNoticeVO vo);
+	
+	int noticeHitUpdate(String no);
 
 	List<PortalNoticeFileVO> fileList();
 

@@ -16,7 +16,8 @@
 a.top {
 	position: fixed;
 	background-color: rgb(207, 230, 250);
-	width:80px;
+	font-weight:bold;
+	width:100px;
 	height:50px;
 	right:2%;
 	text-align:center;
@@ -54,8 +55,9 @@ a.top {
 						<select style="width: 200px" id="seasonSelect" name="seasonCode"
 							class="form-select">
 							<th:block th:each="seasonCode : ${seasonCodes}">
-								<option th:value="${seasonCode.no}"
-									th:text="${seasonCode.codeName}" th:selected=${seasonCodes}>#</option>
+								<option th:value="${seasonCode.no}" 
+									th:text="${seasonCode.codeName}"
+									th:attr="selected=${presentCode == seasonCode.no} ?'selected'">#</option>
 							</th:block>
 						</select>
 					</div>

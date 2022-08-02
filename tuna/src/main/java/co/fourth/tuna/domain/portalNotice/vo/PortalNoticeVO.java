@@ -19,6 +19,7 @@ public class PortalNoticeVO {
 	private String visible;
 	private String adNo;	
 	private String fileyn;
+	private String hit;
 		
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	private Date enrollDate;

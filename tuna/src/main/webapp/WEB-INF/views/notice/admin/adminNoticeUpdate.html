@@ -1,164 +1,166 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	data-layout-decorate="~{layouts/adminLayout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" data-layout-decorate="~{layouts/adminLayout}">
+
 <head>
-<meta charset="UTF-8">
-<meta name="_csrf" th:content="${_csrf.token}">
-<meta name="_csrf_header" th:content="${_csrf.headerName}">
-<link rel="stylesheet"
-	th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
-	<link rel="stylesheet"
-	th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-<title>공지사항 수정</title>
-<style>
-.ck-editor__editable {
-    min-height: 380px;
-}
-</style>
+	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
+	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+	<title>공지사항 수정</title>
+	<style>
+		.ck-editor__editable {
+			min-height: 380px;
+		}
+	</style>
 </head>
+
 <body>
 	<!--폼 시작-->
 	<main layout:fragment="main">
-			<!--title start-->
+		<!--title start-->
 		<div class="mt-3">
-		<div class="content content-full">
-			<h3 class="fw-bold">공지사항 수정</h3>
-			<div class="block block-rounded">
-				<form
-					onsubmit="return formCheck()"
-					th:action="@{/admin/admin/adminNoticeUpdate(${_csrf.parameterName}=${_csrf.token})}"
-					class="block-content block-content-full" method="post"
-					enctype="multipart/form-data">
-					<div th:each="notice, i:${content}">
-						<input type="hidden" name="no" id="no" th:value="${notice.no}">
-						<input type="text" name="title" class="mb-4 form-control"
-							id="title" th:value="${notice.title}" required>
-						<hr>
-					<div class="mb-4">
-					  <!-- CKEditor 5 Classic Container -->
-						<textarea name ="content" id="ckfinder">[[${notice.content}]]</textarea>
-					</div>
-						<hr>
-						<div class="row mb-3">
-							<div class="col-6">
-								<div id="fileRow" th:each="file, i:${files}" class="col5 mb-3">
-									첨부파일 : [[${file.name}]]
-									<button th:data-uri=${file.uri} th:data-no=${file.no}
-										type="button"
-										class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled delBtn">
-										<i class="fa fa-fw fa-times"></i>
-									</button>
-								</div>
-								<div class="col-6">
-									<input class="form-control" type="file" id="file" name="file"
-										multiple="multiple">
-								</div>
+			<div class="content content-full">
+				<h3 class="fw-bold">공지사항 수정</h3>
+				<div class="block block-rounded">
+					<form onsubmit="return formCheck()"
+						th:action="@{/admin/admin/adminNoticeUpdate(${_csrf.parameterName}=${_csrf.token})}"
+						class="block-content block-content-full" method="post" enctype="multipart/form-data">
+						<div th:each="notice, i:${content}">
+							<input type="hidden" name="no" id="no" th:value="${notice.no}">
+							<input type="text" name="title" class="mb-4 form-control" id="title"
+								th:value="${notice.title}" required>
+							<hr>
+							<div class="mb-4">
+								<!-- CKEditor 5 Classic Container -->
+								<textarea name="content" id="ckfinder">[[${notice.content}]]</textarea>
 							</div>
+							<hr>
+							<div class="row mb-3">
+								<div class="col-6">
+									<div id="fileRow" th:each="file, i:${files}" class="col5 mb-3">
+										첨부파일 : [[${file.name}]]
+										<button th:data-uri=${file.uri} th:data-no=${file.no} type="button"
+											class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled delBtn">
+											<i class="fa fa-fw fa-times"></i>
+										</button>
+									</div>
+									<div class="col-6">
+										<input class="form-control" type="file" id="file" name="file"
+											multiple="multiple">
+									</div>
+								</div>
 
-							<div class="col-6">
-								<select id="visible" name="visible" class="form-select">
-									<th:block th:if="${notice.visible=='Y'}">
-									<option selected value="Y">공개</option>
-									<option value="N">비공개</option>
-									</th:block>
-									<th:block th:if="${notice.visible=='N'}">
-									<option value="Y">공개</option>
-									<option selected value="N">비공개</option>
-									</th:block>
-								</select>
+								<div class="col-6">
+									<select id="visible" name="visible" class="form-select">
+										<th:block th:if="${notice.visible=='Y'}">
+											<option selected value="Y">공개</option>
+											<option value="N">비공개</option>
+										</th:block>
+										<th:block th:if="${notice.visible=='N'}">
+											<option value="Y">공개</option>
+											<option selected value="N">비공개</option>
+										</th:block>
+									</select>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="d-flex justify-content-end">
-						<button type="submit" id="sbmBtn" class="sbmBtn btn btn-outline-secondary me-2">수정</button>
-						<button type="button" class="btn btn-outline-secondary"
-							th:onclick="|location.href='@{/admin/admin/adminNoticeList}'|">홈으로</button>
-					</div>
-			
-					</th:block>
-				</form>
+						<div class="d-flex justify-content-end">
+							<button type="submit" id="sbmBtn" class="sbmBtn btn btn-outline-secondary me-2">수정</button>
+							<button type="button" class="btn btn-outline-secondary"
+								th:onclick="|location.href='@{/admin/admin/adminNoticeList}'|">홈으로</button>
+						</div>
+
+						</th:block>
+					</form>
+				</div>
 			</div>
-			</div>	
 		</div>
 		<!-- Editor script -->
 		<script th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
 		<script>
 			let header = document.querySelector('meta[name="_csrf_header"]').content;
-		    let token = document.querySelector('meta[name="_csrf"]').content;
-			
-		    $(function() {
-		    	ckfinder();
-		    	fileDelete();
-		    })
-		    
-	    
-  		    function formCheck(){
-	    	if (window.editor.getData() == "") {  //then   window.editor = editor;
-				Dialogs.dialog('error', 
-	                    '', 
-	                    '내용을 입력해주세요.');
-	            return false; 
-            window.editor.editing.view.focus();    
-     		} else {
-    				 return true;
-     				}
-			
-			} 
-	     
-		
-		    //파일삭제 
-		    function fileDelete(){
-		    		$('.delBtn').on('click', function() {
-				var header = $("meta[name='_csrf_header']").attr('content');
-				var token = $("meta[name='_csrf']").attr('content');
+			let token = document.querySelector('meta[name="_csrf"]').content;
 
-				let uri = $(this).data('uri');
-				let no = $(this).data('no');
-				let fileRow = $(this).parent();
-
-				$.ajax({
-					url : getContextPath() + 'fileDel',
-					method : 'DELETE',
-					data : JSON.stringify({
-						no : no,
-						uri : uri
-					}),
-					contentType : 'application/json; charset=utf-8',
-					dataType : 'json',
-					beforeSend : function(xhr) {
-						xhr.setRequestHeader(header, token);
-					},
-				}).done(function(success) {
-					if (success) {
-						fileRow.remove();
-					} else {
-						console.log(no)
-					}
-				})
+			$(function () {
+				ckfinder();
+				fileDelete();
 			})
-		    }
+
+			function formCheck() {
+				var subBtn = document.querySelector('#sbmBtn')
+				if (window.editor.getData() == "") {  //then   window.editor = editor;
+					Dialogs.dialog('error',
+						'',
+						'내용을 입력해주세요.'
+					);
+					return false;
+					window.editor.editing.view.focus();
+
+				} else {
+					//다중클릭방지
+					subBtn.addEventListener("click", function (e) {
+						this.setAttribute("disabled", "disabled");
+						//폼 서밋
+					});
+					return true;
+				}
+
+			}
+
+
+			//파일삭제 
+			function fileDelete() {
+				$('.delBtn').on('click', function () {
+					var header = $("meta[name='_csrf_header']").attr('content');
+					var token = $("meta[name='_csrf']").attr('content');
+
+					let uri = $(this).data('uri');
+					let no = $(this).data('no');
+					let fileRow = $(this).parent();
+
+					$.ajax({
+						url: getContextPath() + 'fileDel',
+						method: 'DELETE',
+						data: JSON.stringify({
+							no: no,
+							uri: uri
+						}),
+						contentType: 'application/json; charset=utf-8',
+						dataType: 'json',
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader(header, token);
+						},
+					}).done(function (success) {
+						if (success) {
+							fileRow.remove();
+						} else {
+							console.log(no)
+						}
+					})
+				})
+			}
 
 
 			function getContextPath() {
 				var pathName = window.location.pathname.substring(1);
 				var webName = pathName == '' ? '' : pathName.substring(0,
-						pathName.indexOf('/'));
+					pathName.indexOf('/'));
 				var path_root = window.location.protocol + '//'
-						+ window.location.host + '/' + webName + '/';
+					+ window.location.host + '/' + webName + '/';
 				return path_root;
 			}
-			
 
 
-			
+
+
 		</script>
-		<script
-			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+		<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 		<script th:src="@{/resources/assets/js/dialog.js}"></script>
 		<script th:src="@{/resources/assets/js/editor.js}"></script>
-		
+
 	</main>
 </body>
+
 </html>
