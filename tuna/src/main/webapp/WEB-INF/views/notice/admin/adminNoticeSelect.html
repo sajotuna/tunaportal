@@ -61,9 +61,6 @@
 						<input th:if="${content.visible} =='N'" type="text" readonly value="비공개" style="border:none;">
 
 					</div>
-
-
-					<hr>
 					<th:block th:if="${not #lists.isEmpty(files)}">
 						<div th:each="file, i:${files}" class="col5">
 							첨부파일 : <a
