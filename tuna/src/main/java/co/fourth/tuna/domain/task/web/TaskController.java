@@ -27,10 +27,8 @@ import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
 @Controller
 public class TaskController {
 	
-	@Autowired private SubjectMapper map;
 	@Autowired private TaskService taskService;
 	@Autowired private StudentService studService;
-	@Autowired private GradeService gradeService;
 	
 	@PostMapping(value="/staff/insertTask")
 	public ResponseEntity<String> insertTask(

@@ -35,7 +35,7 @@ public class LectureQnaController {
 		ra.addAttribute("no", qna.getNo());
 		ra.addFlashAttribute("success", "답변 작성이 완료되었습니다.");
 		
-		return "redirect:/staff/lecQna";
+		return "redirect:/staff/eclass/qna";
 		
 	}
 }

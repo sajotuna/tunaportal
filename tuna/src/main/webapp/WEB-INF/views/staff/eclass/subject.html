@@ -1015,6 +1015,10 @@ xmlns:th="http://www.thymeleaf.org"
             //
             let studentsGradeTr = [];
             let studentsTaskTr = [];
+            
+            function alertEvent(){
+              alert("wow!!?");
+            }
 
             // 로드 이벤트
             window.addEventListener("DOMContentLoaded", function() {
@@ -1323,6 +1327,9 @@ xmlns:th="http://www.thymeleaf.org"
    ██    ██   ██ ██████       ██████ ███████ ██  ██████ ██   ██ 
 */
             //
+            function tabReset() {
+              onTab = -1;
+            }
             function tabClickEvent(tabIdx) {
               let reqURL = "";
               let sbj = {};
@@ -1495,9 +1502,9 @@ xmlns:th="http://www.thymeleaf.org"
               date_text.innerText = `${data.date} (${weekday})`;
 
               tbody.innerHTML = "";
-              data.students.sort(function(a, b) {
-                if( a.attendance != null) { return -1; }
-              })
+              // data.students.sort(function(a, b) {
+              //   if( a.attendance != null) { return -1; }
+              // })
               data.students.forEach(student => {
                 let tr = document.createElement('tr');
                 let stateCode;
@@ -1589,9 +1596,9 @@ xmlns:th="http://www.thymeleaf.org"
               tbody.innerHTML = "";
 
               studentsTaskTr = [];
-              students.sort(function(a,b) {
-                if(a.submitTask != null) return -1;
-              });
+              // students.sort(function(a,b) {
+              //   if(a.submitTask != null) return -1;
+              // });
               for( student of students) {
                 let tr = document.createElement('tr');
                 let fileName, uri, enrollDate, score, disabled;
@@ -1689,7 +1696,9 @@ xmlns:th="http://www.thymeleaf.org"
 
               for(let qna of qnaList) {
                 qnaContent += `
-                      <li><a class="d-flex text-primary-dark py-2" target="_blank" href="${REST_URL.SUBJECT_QNA_LINK+"?no="+qna.no}">`
+                      <li><a class="d-flex text-primary-dark py-2" 
+                        href="${REST_URL.SUBJECT_QNA_LINK+"?no="+qna.no}" 
+                        onclick="window.open(this.href, 'qna', 'height=1200, width=920, menubar=0, status=0, toolbar=0'); return false;" >`
                 if( qna.answer == null ) {
                   qnaContent+=`<div class="col-1 d-none d-lg-block text-center text-danger">대기</div>`;
                 } else {
@@ -1744,9 +1753,9 @@ xmlns:th="http://www.thymeleaf.org"
               //for(let tr of trTags){ tr.remove() };
               tbody.innerHTML = "";
 
-              studList.sort(function(a,b) {
-                if(a.gradeVO != null) { return -1; }
-              })
+              // studList.sort(function(a,b) {
+              //   if(a.gradeVO != null) { return -1; }
+              // })
               for( let stud of studList ) {
                 let tr = document.createElement('tr');
                 if(!stud.gradeVO) {

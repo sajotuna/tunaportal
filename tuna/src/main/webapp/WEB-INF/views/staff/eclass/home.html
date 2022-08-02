@@ -129,7 +129,7 @@ xmlns:th="http://www.thymeleaf.org"
                   <table class="js-table-checkable table table-hover table-vcenter">
                     <tbody>
 	                    	
-                      <tr th:each="qna : ${qnaList}" th:onclick="|trClickEvent(${qna.no})|">
+                      <tr th:each="qna : ${qnaList}" th:onclick="|qnaClickEvent(${qna.no})|">
                         <td class="d-flex justify-content-between">
                           <div>
                             <div><strong th:text="${qna.title}">#####</strong></div>
@@ -389,11 +389,11 @@ xmlns:th="http://www.thymeleaf.org"
               return false;
             }
             
-            window.open("/tuna/staff/eclass/qna?no="+qnano, "qna", "menubar=0, status=0, toolbar=0, height=1200, width=1000");
+            window.open("/tuna/staff/eclass/qna?no="+qnano, "qna", "menubar=0, status=0, toolbar=0, height=1200, width=920");
           }
 
           function noticeClickEvent(noticeNo) {
-            window.open("/tuna/staff/eclass/notice?no="+noticeNo, "notice", "menubar=0, status=0, toolbar=0, height=1200, width=1000");
+            window.open("/tuna/staff/eclass/notice?no="+noticeNo, "notice", "menubar=0, status=0, toolbar=0, height=1200, width=920");
           }
           
           function setDetailUserInfo(student) {
