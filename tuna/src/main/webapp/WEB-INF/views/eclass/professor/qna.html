@@ -38,7 +38,7 @@ xmlns:th="http://www.thymeleaf.org"
             <div class="d-flex">
               <div class="col-5 col-md-4 col-xxl-3 header-rounded bg-body-light row py-2 px-3 ms-2 mb-0">
                 <div class="col-sm-5 text-start">작성자</div>
-                <div class="col-sm-7 wrap fw-bold" th:text = "${qna.stNo}">데이터 없음</div>
+                <div class="col-sm-7 wrap fw-bold" th:text = "${qna.studentVO.name}">데이터 없음</div>
               </div>
               <div class="col-5 col-md-4 col-xxl-3 header-rounded bg-body-light row py-2 px-3 mb-0">
                 <div class="col-sm-5 wrap text-start" style="width: 70px">작성일</div>
@@ -52,7 +52,7 @@ xmlns:th="http://www.thymeleaf.org"
                 </div>
                 <hr>
                 <div class="row">
-                  <p class="col-12 px-5" th:text = "${qna.content}">
+                  <p class="col-12 px-5" th:utext = "${qna.content}">
                   </p>
                 </div>
               </div>

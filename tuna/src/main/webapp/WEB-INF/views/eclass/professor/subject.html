@@ -327,7 +327,7 @@ xmlns:th="http://www.thymeleaf.org"
          ██    ██   ██ ███████ ██   ██ 
 -->
                   <div class="tab-pane pb-3" id="btabs-static-task" role="tabpanel" aria-labelledby="btabs-static-task-tab">
-                    <div style="overflow-y:scroll; overflow-x:scroll; height: 310px;">
+                    <div style="overflow-y:scroll; overflow-x:scroll; height: 305px;">
                       <table id="task-table" class="table table-hover table-vcenter ">
                         <thead>
                           <tr>
@@ -942,7 +942,7 @@ xmlns:th="http://www.thymeleaf.org"
             <div>결석</div>
           </div>
          -->
-<!--
+<!-- @ script
 ███████  ██████ ██████  ██ ██████  ████████ 
 ██      ██      ██   ██ ██ ██   ██    ██    
 ███████ ██      ██████  ██ ██████     ██    
@@ -981,7 +981,8 @@ xmlns:th="http://www.thymeleaf.org"
               SUBMIT_ATTENDANCES : "/tuna/staff/insert/attendance",
               SUBMIT_ATTENDANCES_UPDATE : "/tuna/staff/update/attendance",
               LECTURE_FILE_DELETE : "/tuna/staff/deleteSubjectFile",
-
+              
+              SUBJECT_QNA_LINK : "/tuna/eclass/professor/qna",
             };
             // const TAB_BTN_NUM = {
 
@@ -1458,6 +1459,7 @@ xmlns:th="http://www.thymeleaf.org"
             function setNoticeContent(notices) {
               let table = document.querySelector('#subject-notice-table');
               let tbody = table.firstElementChild;
+              tbody.innerHTML = "";
               notices.forEach(data => {
                 // console.log(data);
                 let mDate = new Date(data.enrollDate);
@@ -1612,7 +1614,7 @@ xmlns:th="http://www.thymeleaf.org"
                 tr.classList.add("m-0");
                 tr.innerHTML = `
                 <td class="table-cell">
-                  <a class="" href="javascript:void(0);">${student.name}</a>
+                  <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);" onclick="studentClickEvent(${student.no})">${student.name}</a>
                 </td>
                 <td class="table-cell">
                     ${student.deptName}
@@ -1681,7 +1683,7 @@ xmlns:th="http://www.thymeleaf.org"
 
               for(let qna of qnaList) {
                 qnaContent += `
-                      <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">`
+                      <li><a class="d-flex text-primary-dark py-2" target="_blank" href="${REST_URL.SUBJECT_QNA_LINK+"?no="+qna.no}">`
                 if( qna.answer == null ) {
                   qnaContent+=`<div class="col-1 d-none d-lg-block text-center text-danger">대기</div>`;
                 } else {
@@ -1705,6 +1707,7 @@ xmlns:th="http://www.thymeleaf.org"
             // 이의신청 패널
             function setObjectionContent(objList) {
               let table = document.querySelector('#subject-objection-table');
+              table.innerHTML = "";
               let tbody = document.createElement('tbody');
               tbody.setAttribute('id', 'objectionTb');
 
@@ -2168,7 +2171,7 @@ xmlns:th="http://www.thymeleaf.org"
                     <table class="table table-vcenter table-bordered text-center mb-0 table-bordered border-dark border-2">
                       <thead>
                         <tr>
-                          <th class="p-1" style="min-width: 50px;">종합</th>`;
+                          <th class="p-1" style="min-width: 50px;">${subject.attendanceList.length>0?"종합":"수강 대기중"}</th>`;
                 for(let atten of subject.attendanceList){
                   let attenDate = dateNumberToISO(atten.classDate).slice(5).replace('-','/');
                   let th = document.createElement('th');
@@ -2191,9 +2194,9 @@ xmlns:th="http://www.thymeleaf.org"
                       <tbody>
                         <tr class="attendance_list m-0">
                           <th class="p-0">
-                            <div class="p-1">${attenCnt}</div>
-                            <div class="p-1">${absenceCnt}</div>
-                            <div class="p-1">${latenessCnt}</div>
+                            <div class="p-1">${subject.attendanceList.length>0?attenCnt:"&nbsp"}</div>
+                            <div class="p-1">${subject.attendanceList.length>0?absenceCnt:"-"}</div>
+                            <div class="p-1">${subject.attendanceList.length>0?latenessCnt:"&nbsp"}</div>
                           </th>`;
                   for(let atten of subject.attendanceList) {
                     if(!atten.stateCode) continue;
@@ -2271,22 +2274,29 @@ xmlns:th="http://www.thymeleaf.org"
                         <thead>
                           <tr>
                             <th style="min-width: 90px;">출결</th>
-                                <th style="min-width: 90px;">중간고사</th>
-                                <th style="min-width: 90px;">기말고사</th>
-                                <th style="min-width: 90px;">과제평균</th>
-                                <th style="min-width: 90px;">총점</th>
-                                <th style="min-width: 120px;"></th>
+                            <th style="min-width: 90px;">중간고사</th>
+                            <th style="min-width: 90px;">기말고사</th>
+                            <th style="min-width: 90px;">과제평균</th>
+                            <th style="min-width: 90px;">총점</th>
+                            <th style="min-width: 120px;"></th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr class="m-0">
-                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.attd}" disabled></td>
+                          <tr class="m-0">`;
+                          if(subject.grade != null) {
+                            blockHTML += `<td><input type="number" class="form-control" placeholder="" value="${subject.grade.attd}" disabled></td>
                             <td><input type="number" class="form-control" placeholder="" value="${subject.grade.middle}"></td>
                             <td><input type="number" class="form-control" placeholder="" value="${subject.grade.finals}"></td>
                             <td><input type="number" class="form-control" placeholder="" value="${subject.grade.task}" disabled></td>
                             <td><input type="number" class="form-control" placeholder=""  value="${subject.grade.total}" disabled></td>
-                            <td><button class="btn btn-primary">적용</button></td>
-                          </tr>
+                            <td><button class="btn btn-primary">적용</button></td>`
+                          } else {
+                            blockHTML += `
+                              <td colspan="6">
+                                <div class="text-mute">수강 대기중</div>
+                              </td>`
+                          }
+                            blockHTML+= `</tr>
                         </tbody>
                       </table>
                     </div>
