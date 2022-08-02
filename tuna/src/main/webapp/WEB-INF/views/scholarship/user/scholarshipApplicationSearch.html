@@ -78,7 +78,7 @@
                       
                       <td class="fw-semibold fs-sm filebox">
 	                      	<th:block th:if = "${not #strings.isEmpty(sch.FILENAME)}">
-	                      	<a th:href="@{/download(fileName=${sch.URI}, originName=${sch.FILENAME}, folder=Scholar)}">[[${sch.FILENAME}]]</a>
+	                      	<a th:href="@{/download(fileName=${sch.URI}, originName=${sch.FILENAME}, folder=ScholarFile)}">[[${sch.FILENAME}]]</a>
 	                      	</th:block>
 	                      	<th:block th:unless = "${not #strings.isEmpty(sch.FILENAME)}">
 	                      		<label for="file" id = "filetag" >파일 없음</label>
