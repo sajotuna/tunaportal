@@ -133,7 +133,7 @@ public class EclassProfessorEclassController {
 	@GetMapping("/qna")
 	public String qnaView(Model model, HttpServletRequest req, LectureQnaVO qna) {
 		
-		qna = lectureService.professorFindQna(qna);
+		qna = lectureService.findLectureQnaByLecture(qna.getNo());
 		model.addAttribute("qna", qna);
 
 		return req.getServletPath();
