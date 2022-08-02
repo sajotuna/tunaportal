@@ -9,6 +9,11 @@
 <title>강의공지상세</title>
 <link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
 </head>
+<style>
+/* table tr th{
+white-space : normal;
+} */
+</style>
 <body>
 	<div id="page-container"
 		class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
@@ -49,18 +54,16 @@
 											class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
 											id="DataTables_Table_0"
 											aria-describedby="DataTables_Table_0_info" th:each="ns : ${ns}">
-											<thead>
 												<tr>
-													<th class="text-center" tabindex="0" colspan="2">제목</th>
-													<th colspan="5" th:text="${ns.TITLE}"></th>
-													<th colspan="2">작성일자</th>
-													<th colspan="3" th:text="${ns.ENROLLDATE}"></th>
+													<th class="text-center" tabindex="0" colspan="2" style="width:100px">제목</th>
+													<th colspan="5" style="width:378px" th:text="${ns.TITLE}"></th>
+													<th class="text-center" style="width:100px" colspan="2">작성일자</th>
+													<th colspan="3" style="width:200px" th:text="${ns.ENROLLDATE}"></th>
 												</tr>
-											</thead>
 											<tbody>
 												<tr>
-													<th class="text-center" colspan="2">내용</th>
-													<th colspan="10" style="height:500px; overflow-y:scroll;" th:utext="${ns.content}"></th>
+													<th class="text-center" colspan="2" style="width:100px">내용</th>
+													<th colspan="10" style="height:500px; width:678px; overflow-y:scroll; vertical-align:top;" th:utext="${ns.content}"></th>
 												</tr>
 											</tbody>
 										</table>
