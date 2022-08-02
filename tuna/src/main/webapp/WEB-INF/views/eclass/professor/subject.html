@@ -1715,8 +1715,8 @@ xmlns:th="http://www.thymeleaf.org"
                 tr.setAttribute('data-objno', obj.no);
                 tr.classList.add('objTr');
                 tr.innerHTML = ` <th style="fw-semibold fs-sm">${obj.student.name}</th>
-                                 <th style="fw-semibold fs-sm">${obj.grade.alphabet}</th>
-                                 <th style="fw-semibold fs-sm">${obj.grade.score}</th>
+                                 <th style="fw-semibold fs-sm">${obj.alphabet}</th>
+                                 <th style="fw-semibold fs-sm">${obj.score}</th>
                                  <th style="fw-semibold fs-sm">${obj.enrollDate}</th>
                                  <th style="fw-semibold fs-sm">${obj.answerDate != null ? obj.answerDate : ''}</th>
                                  <th class="objState" style="fw-semibold fs-sm">${obj.objState}</th>`;
@@ -1810,49 +1810,56 @@ xmlns:th="http://www.thymeleaf.org"
             		let objNo = this.getAttribute('data-objno');
             		let answer = objAnswer.value;
             		
-            		Dialogs.dialog('checkConfirm',
-		 					       '정말로 등록하시겠습니까?',
-		 					       '한 번 등록된 답변은 수정할 수 없습니다.',
-		 					       function() {
-            							fetch(REST_URL.OBJECTION_PUT, {
-	            				                method: "PUT",
-	            				                headers: {
-	            				                  'header': header,
-	            				                  'X-Requested-With': 'XMLHttpRequest',
-	            				                  'Content-Type': 'application/json',
-	            				                  'X-CSRF-Token': token
-	            				                },
-	            				                body: JSON.stringify({
-	            				                	no:objNo,
-	            				                	answer:answer
-	            				                })
-	            				             })
-	            				             .then(result => result.json())
-	            				             .then(result => {
-	            				            	 if(result) {
-	            				            		 
-		            				            	 Dialogs.dialog('success',
-				  										           '등록 완료',
-				  										           '성적 이의신청 답변 등록이 완료되었습니다.');
+            		if (!answer) {
+            			Dialogs.dialog('error',
+						      	   '등록 실패',
+						    	   '내용을 입력해 주세요.');
+            		} else {
+	            		Dialogs.dialog('checkConfirm',
+			 					       '정말로 등록하시겠습니까?',
+			 					       '한 번 등록된 답변은 수정할 수 없습니다.',
+			 					       function() {
+	            							fetch(REST_URL.OBJECTION_PUT, {
+		            				                method: "PUT",
+		            				                headers: {
+		            				                  'header': header,
+		            				                  'X-Requested-With': 'XMLHttpRequest',
+		            				                  'Content-Type': 'application/json',
+		            				                  'X-CSRF-Token': token
+		            				                },
+		            				                body: JSON.stringify({
+		            				                	no:objNo,
+		            				                	answer:answer
+		            				                })
+		            				             })
+		            				             .then(result => result.json())
+		            				             .then(result => {
+		            				            	 if(result) {
+		            				            		 
+			            				            	 Dialogs.dialog('success',
+					  										           '등록 완료',
+					  										           '성적 이의신청 답변 등록이 완료되었습니다.');
+			            				            	 
+			            				            	 objState.innerHTML = '답변 완료';
+			            				            	 objAnswer.setAttribute('disabled', true);
+			            				            	 objUpdateBtn.setAttribute('disabled', true);
+			            				            	 
+			            				            	 objectionTb.remove();
+			            				                 reqSbjContent(5, sbjno, REST_URL.OBJECTION_LIST, setObjectionContent);
 		            				            	 
-		            				            	 objState.innerHTML = '답변 완료';
-		            				            	 objAnswer.setAttribute('disabled', true);
-		            				            	 objUpdateBtn.setAttribute('disabled', true);
-		            				            	 
-		            				            	 objectionTb.remove();
-		            				                 reqSbjContent(5, sbjno, REST_URL.OBJECTION_LIST, setObjectionContent);
-	            				            	 
-	            				            	 } else {
-	            				            		 Dialogs.dialog('error',
-			  										      	   '등록 실패',
-			  										    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
-	            				            	 }
-	            				             }).catch(error => {
-	            				            	 Dialogs.dialog('error',
-			  										      	   '등록 실패',
-			  										    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
-	            				             })
-            					   })
+		            				            	 } else {
+		            				            		 Dialogs.dialog('error',
+				  										      	   '등록 실패',
+				  										    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
+		            				            	 }
+		            				             }).catch(error => {
+		            				            	 Dialogs.dialog('error',
+				  										      	   '등록 실패',
+				  										    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
+		            				             })
+	            					   })
+            		}
+            		
             	}) 
             }
             
