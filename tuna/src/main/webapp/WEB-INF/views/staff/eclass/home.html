@@ -179,7 +179,7 @@ xmlns:th="http://www.thymeleaf.org"
                       <th style="width: 15%">작성</th>
                       <th style="width: 15%">등록일시</th>
                     </tr> -->
-                    <tr th:onclick="'window.location.href = \''+ @{/staff/eclass/notice(no=${notice.no})} + '\''" th:each="notice:${noticeList}">
+                    <tr th:onclick="|noticeClickEvent(${notice.no})|" th:each="notice:${noticeList}">
                       <td style="width: 100px" th:text="${notice.no}">00</td>
                       <td class="text-start" th:text="${notice.title}">제목 데이터 없음</td>
                       <td style="width: 15%" th:text="${notice.subjectVO.name}">과목 없음</td>
@@ -209,12 +209,12 @@ xmlns:th="http://www.thymeleaf.org"
                     <button type="button" class="nav-link" id="btabs-grade-tab" data-bs-toggle="tab" data-bs-target="#btabs-grade" role="tab" aria-controls="btabs-grade" aria-selected="false">성적관리</button>
                   </li>
                 </ul>
-                <!--
-                ███    ███        ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
-                ████  ████       ██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
-                ██ ████ ██ █████ ██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
-                ██  ██  ██       ██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
-                ██      ██        ██████  ██████  ██   ████    ██    ███████ ██   ████    ██
+                <!-- @ MODAL CONTENT
+               ███    ███  ██████  ██████   █████  ██             ██████ 
+               ████  ████ ██    ██ ██   ██ ██   ██ ██            ██          
+               ██ ████ ██ ██    ██ ██   ██ ███████ ██      █████ ██          
+               ██  ██  ██ ██    ██ ██   ██ ██   ██ ██            ██          
+               ██      ██  ██████  ██████  ██   ██ ███████        ██████ 
                 -->
                 <div id="user_detail_modal" class="block-content tab-content">
                   <div id="userDetailCurtain" class="">
@@ -384,12 +384,16 @@ xmlns:th="http://www.thymeleaf.org"
     
           }
     
-          function trClickEvent(qnano) {
+          function qnaClickEvent(qnano) {
             if(event.target.classList.contains('user_info')) {
               return false;
             }
             
-            window.open("/tuna/staff/eclass/qna?no="+qnano);
+            window.open("/tuna/staff/eclass/qna?no="+qnano, "qna", "menubar=0, status=0, toolbar=0, height=1200, width=1000");
+          }
+
+          function noticeClickEvent(noticeNo) {
+            window.open("/tuna/staff/eclass/notice?no="+noticeNo, "notice", "menubar=0, status=0, toolbar=0, height=1200, width=1000");
           }
           
           function setDetailUserInfo(student) {
