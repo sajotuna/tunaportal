@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    data-layout-decorate="~{layouts/navLayout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layouts/navLayout}">
+
 <head>
-<meta charset="UTF-8">
-<style>
-	figure {
-		flex: 0 0 auto;
-  		width: 100%;
-	}
-	
-	@media (max-width: 800px) {
-	
-		figure img {
-			width:100%;
+	<meta charset="UTF-8">
+	<style>
+		figure {
+			flex: 0 0 auto;
+			width: 100%;
 		}
-	
-	}
-</style>
-<title>학사공지 상세조회</title>
+
+		@media (max-width: 800px) {
+
+			figure img {
+				width: 100%;
+			}
+
+		}
+	</style>
+	<title>학사공지 상세조회</title>
 </head>
+
 <body>
 	<main layout:fragment="main">
 		<!--title start-->
@@ -38,39 +39,55 @@
 		<!--title end-->
 
 		<div class="content content-boxed">
-				<div class="block block-rounded">
-					<div class="block-content block-content-full">
-						<div class="row d-flex justify-content-center py-sm-3">
-							<div th:each="content, i:${content}"
-								class="text-center fs-sm push">
-								<h2 class="mt-3">[[${content.title }]]</h2>
-								<div class="d-flex justify-content-end">
-									<span class="py-2 px-2 bg-body-light col-2 rounded">
-										[[${content.enrollDate }]] </span>
-								</div>
+			<div class="block block-rounded">
+				<div class="block-content block-content-full">
+					<div class="row d-flex justify-content-center py-sm-3">
+						<div th:each="content, i:${content}" class="text-center fs-sm push">
+							<h2 class="mt-3">[[${content.title }]]</h2>
+							<div class="d-flex justify-content-end">
+								<span class="py-2 px-2 bg-body-light col-2 rounded">
+									[[${content.enrollDate }]] </span>
 							</div>
 						</div>
-						<!--제목 end-->
-						<hr>
-						<div class="row p-5" th:each="content, i:${content}" th:utext="${content.content}">
-
-						</div>
-						<hr>
-						<th:block th:if="${not #lists.isEmpty(files)}" >
+					</div>
+					<!--제목 end-->
+					<hr>
+					<div class="row p-5" th:each="content, i:${content}" th:utext="${content.content}">
+					</div>
+					<hr>
+					<th:block th:if="${not #lists.isEmpty(files)}">
 						<div th:each="file, i:${files}" class="col5">
-							첨부파일 :  <a th:href="@{/download(fileName=${file.uri}, originName=${file.name}, folder=portalNotice)}">[[${file.name}]]</a>
+							첨부파일 : <a
+								th:href="@{/download(fileName=${file.uri}, originName=${file.name}, folder=PortalNotice)}">[[${file.name}]]</a>
 						</div>
-						</th:block>
-							<hr>
-							<div class="p-1 d-flex justify-content-end">
-								<button type="button" class="btn btn-outline-secondary m-1 mb-4"
-									th:onclick="|location.href='@{/portalNoticeList}'|">목록</button>
-							</div>
+					</th:block>
+					<hr>
+					<th:block th:each="move, i:${move}">
+					<div  th:if="${move.next != 9999} ">
+						다음글 : <a th:href="@{/portalNoticeSelect(no=${move.next})}">[[${move.nexttitle}]]</a>
+					</div>
+					<div th:if="${move.next == 9999}">
+						<p>다음글이 없습니다.
+						<p>
+					</div>
+					<div th:if="${move.last != 9999}">
+						이전글 : <a th:href="@{/portalNoticeSelect(no=${move.last})}">[[${move.lasttitle}]]</a>
+					</div>
+					<div th:if="${move.last == 9999}">
+						<p>다음글이 없습니다.
+						</p>
+					</div>
+					</th:block>
+					<div class="p-1 d-flex justify-content-end">
+						<button type="button" class="btn btn-outline-secondary m-1 mb-4"
+							th:onclick="|location.href='@{/portalNoticeList}'|">목록</button>
+					</div>
 
-					</div>
-					</div>
+				</div>
+			</div>
 		</div>
 
 	</main>
 </body>
+
 </html>

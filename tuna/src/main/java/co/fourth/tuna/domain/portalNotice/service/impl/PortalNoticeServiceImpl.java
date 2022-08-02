@@ -49,6 +49,11 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 		return map.noticeHitUpdate(no);
 	}
 	
+	@Override
+	public PortalNoticeVO movePage(String no, String visible) {
+		return map.movePage(no, visible);
+	}
+	
 	//파일
 	public List<PortalNoticeFileVO> fileList() {
 		 return map.fileList();
@@ -75,6 +80,8 @@ public class PortalNoticeServiceImpl implements PortalNoticeService {
 	public int getNoticeCnt(String visible, int state, String key) {
 		return map.getNoticeCnt(visible, state, key);
 	}
+
+
 
 
 

@@ -28,6 +28,9 @@ public interface PortalNoticeMapper {
 
 	int noticeHitUpdate(String no);
 	
+	PortalNoticeVO movePage(@Param("no")String no, @Param("visible")String visible);
+	
+	
 	//파일
 	List<PortalNoticeFileVO> fileList();
 
