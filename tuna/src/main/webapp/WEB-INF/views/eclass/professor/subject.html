@@ -299,7 +299,7 @@ xmlns:th="http://www.thymeleaf.org"
                     <form id="subject-attendance-form" onsubmit="return false;">
                       <div class="row">
                         <div class="col-xl-3 align-self-center">
-                          <span class="fs-lg fw-bold" id="attendance_date_text">yy-MM-dd (요)</span>
+                          <span class="fs-lg fw-bold" id="attendance_date_text">##-##-## (##)</span>
                         </div>
                         <div class="offset-5 col-xl-2">
                           <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
@@ -690,13 +690,13 @@ xmlns:th="http://www.thymeleaf.org"
                     <button type="button" class="nav-link" id="btabs-grade-tab" data-bs-toggle="tab" data-bs-target="#btabs-grade" role="tab" aria-controls="btabs-grade" aria-selected="false">성적관리</button>
                   </li>
                 </ul>
-<!--
-███    ███        ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
-████  ████       ██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
-██ ████ ██ █████ ██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
-██  ██  ██       ██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
-██      ██        ██████  ██████  ██   ████    ██    ███████ ██   ████    ██
--->
+              <!--
+              ███    ███        ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+              ████  ████       ██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+              ██ ████ ██ █████ ██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+              ██  ██  ██       ██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+              ██      ██        ██████  ██████  ██   ████    ██    ███████ ██   ████    ██
+              -->
                 <div id="user_detail_modal" class="block-content tab-content">
                   <div id="userDetailCurtain" class="">
                     <div class="overflow-hidden bg-white-95 position-absolute top-0 start-0 w-100 h-100 opacity-75"></div>
@@ -1496,6 +1496,9 @@ xmlns:th="http://www.thymeleaf.org"
               date_text.innerText = `${data.date} (${weekday})`;
 
               tbody.innerHTML = "";
+              data.students.sort(function(a, b) {
+                if( a.attendance != null) { return -1; }
+              })
               data.students.forEach(student => {
                 let tr = document.createElement('tr');
                 let stateCode;
@@ -1587,6 +1590,9 @@ xmlns:th="http://www.thymeleaf.org"
               tbody.innerHTML = "";
 
               studentsTaskTr = [];
+              students.sort(function(a,b) {
+                if(a.submitTask != null) return -1;
+              });
               for( student of students) {
                 let tr = document.createElement('tr');
                 let fileName, uri, enrollDate, score, disabled;
@@ -1737,6 +1743,10 @@ xmlns:th="http://www.thymeleaf.org"
               studentsGradeTr = [];
               //for(let tr of trTags){ tr.remove() };
               tbody.innerHTML = "";
+
+              studList.sort(function(a,b) {
+                if(a.gradeVO != null) { return -1; }
+              })
               for( let stud of studList ) {
                 let tr = document.createElement('tr');
                 if(!stud.gradeVO) {
