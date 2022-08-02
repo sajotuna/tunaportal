@@ -13,6 +13,11 @@
 <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 <script th:src="@{/resources/assets/js/dialog.js}"></script>
+	<style>
+.ck-editor__editable {
+    min-height: 380px;
+}
+	</style>
 </head>
 <body>
 	<div id="page-container"
@@ -54,7 +59,7 @@
 											</tr>
 										</thead>
 									</table>
-										<textarea class="js-simplemde" id="content" name="content"></textarea>
+										<textarea id="ckfinder" name="content"></textarea>
 									<div class="d-flex justify-content-center">
 										<button type="button" id="btn" onclick="javascript:insertQna();" class="btn btn-primary m-2">등록</button>
 										<button 
@@ -72,20 +77,6 @@
 					</div>
 				</div>
 			</div>
-			<script th:inline="javascript">
-			function content() {
-			    var key = window.event.keyCode;
-
-			    // If the user has pressed enter
-			    if (key === 13) {
-			        document.getElementById("content").value = document.getElementById("content").value + "<br>";
-			        return false;
-			    }
-			    else {
-			        return true;
-			    }
-			}
-			</script>
 			<script>
 				if(document.getElementById("visibleCheck").checked){
 					document.getElementById("visibleValue").disabled = true;}
@@ -104,9 +95,20 @@
 			<script
 				th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
 			<!-- Page JS Helpers (CKEditor + SimpleMDE plugins) -->
+			<script th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
 			<script>
 				One.helpersOnLoad([ 'js-simplemde' ]);
 			</script>
+			<script>
+			let header = document.querySelector('meta[name="_csrf_header"]').content;
+			let token = document.querySelector('meta[name="_csrf"]').content;
+
+			document.addEventListener('DOMContentLoaded', function () {
+				ckfinder();
+
+			})
+			</script>
+			<script th:src="@{/resources/assets/js/editor.js}"></script>
 		</main>
 	</div>
 </body>

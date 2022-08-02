@@ -122,8 +122,6 @@ public class EclassStudentEclassController {
 		List<Map<String, Object>> qna = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
 		int length = qna.size();
 		
-		System.out.println(length);
-		
 		model.addAttribute("qna", qna);
 		model.addAttribute("map", map);
 		model.addAttribute("sbjNo", vo.getSbjNo());
@@ -357,7 +355,7 @@ public class EclassStudentEclassController {
 	//단건강의홈
 	@RequestMapping("/lectureHome")
 	public String lectureHome(Model model, EclassStudentHomeVO vo, HttpServletRequest req) {
-		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
+		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo"))); 
 		
 		List<Map<String, Object>> stn = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.singleTwoNotice", vo);
 		List<Map<String, Object>> stt = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.singleTwoTask", vo);
