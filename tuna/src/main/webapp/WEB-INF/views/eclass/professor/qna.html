@@ -5,141 +5,157 @@ xmlns:th="http://www.thymeleaf.org"
     data-layout-decorate="~{layouts/eclassProfLayout}">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
     <title>E-Class 문의 상세</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
-    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
+  <style>
+  figure {
+         flex: 0 0 auto;
+         width: 100%;
+  }
+
+  @media (max-width: 800px) {
+
+     figure img {
+        width: 100%;
+     }
+
+  }
+  
+  .ck-editor__editable {
+     min-height: 200px;
+  }  
+    
+  </style>
   </head>
   <body>
-
-    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
-      <div id="page-overlay"></div>
-
-      <aside id="side-overlay">
-        <div class="content-header">
-        </div>
-        <div class="content-side">
-        </div>
-      </aside>
-
-      <!--
-███████ ██ ██████  ███████     ██████   █████  ██████  
-██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██   ██ █████       ██████  ███████ ██████  
-     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
-      -->
-      <nav id="sidebar" aria-label="Main Navigation">
-        <div class="content-header">
-
-        </div>
-        <div class="js-sidebar-scroll">
-        </div>
-      </nav>
-      <!-- SIDE BAR END -->
-      
-      <!--
-██   ██ ███████  █████  ██████  ███████ ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-███████ █████   ███████ ██   ██ █████   ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
-      -->
-      <header id="page-header">
-        <div class="content-header">page-header</div>
-      </header>
-      <!--HEADER END-->
-
-<!--
- ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
-██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
-██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
-██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
- ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
--->
       <main id="main-container" layout:fragment="main">
-        <!-- <div class="bg-body-light">
-          <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-              <div class="flex-grow-1">
-                <h1 class="h3 fw-bold mb-2">
-                  Main
-                </h1>
-                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                  E-class 홈 화면 입니다.
-                </h2>
+        <div class="content content-full pt-5">
+          <div class="col-xxl-12">
+            <div class="d-flex">
+              <div class="col-5 col-md-4 col-xxl-3 header-rounded bg-body-light row py-2 px-3 ms-2 mb-0">
+                <div class="col-sm-5 text-start">작성자</div>
+                <div class="col-sm-7 wrap fw-bold" th:text = "${qna.stNo}">데이터 없음</div>
+              </div>
+              <div class="col-5 col-md-4 col-xxl-3 header-rounded bg-body-light row py-2 px-3 mb-0">
+                <div class="col-sm-5 wrap text-start" style="width: 70px">작성일</div>
+                <div class="col-sm-7 wrap fw-bold" th:text = ${qna.enrollDate}>데이터 없음</div>
               </div>
             </div>
-          </div>
-        </div> content header END -->
-
-        <div class="content">
-
-          <div class="col-xxl-12">
-            <h3 class="h3 fw-bold-ms-3">
-              문의 상세
-            </h3>
-            <div class="block block-rounded">
+            <div class="block block-rounded mb-5">
               <div class="block-content">
-                <!-- <table class="table table-vcenter">
-                </table> -->
                 <div class="row mt-2">
-                  <div class="col-1 d-none d-xl-block">
-                    <p>제목</p>
-                  </div>
-                  <div class="h4 col-11 mb-1">
-                    <p>교수님 궁금한게 있는데요</p>
-                  </div>
-                </div>
-                <div class="d-none d-lg-block">
-                  <div class="row">
-                    <div class="col-6 d-flex">
-                      <div class="text-start" style="width: 80px">작성자 :</div>
-                      <div class="wrap fw-bold me-5">감동원 (참치공학)</div>
-                    </div>
-                    <div class="col-6 d-flex">
-                      <div class="wrap text-start" style="width: 80px">작성일 :</div>
-                      <div class="wrap fw-bold">2022-07-05</div>
-                    </div>
-                  </div>
+                    <p class="h4 mb-0" th:text =${qna.title}></p>
                 </div>
                 <hr>
                 <div class="row">
-                  <p class="col-12 px-5">
-                    교수님!!! 모르겠습니다!!
+                  <p class="col-12 px-5" th:text = "${qna.content}">
                   </p>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-2 text-start">
-                    <p>답변</p>
-                  </div>
-                  <div class="col-10">
-                    <textarea class="js-maxlength form-control js-maxlength-enabled" id="example-maxlength10" name="example-maxlength10" rows="5" maxlength="100" placeholder="" data-always-show="true"></textarea>
-                  </div>
-                  <div>
-                    <button class="btn btn-primary">삭제</button>
-                  </div>
                 </div>
               </div>
             </div> <!-- block end-->
-
+            <div class="col-5 col-md-4 col-xxl-3 header-rounded bg-body-light row py-2 px-3 ms-2 mb-0">
+              <div class="col-sm-5 text-start">답변일자</div>
+              <div class="col-sm-7 wrap fw-bold" th:text= "${qna.answerDate}">데이터 없음</div>
+            </div>
+            <div class="block block-rounded">
+             <div class="block-content block-content-full">
+             <div class="row">
+                <form th:action = "@{/prof/lecQnaAnswer}" method = "POST">
+                  <input type = "hidden" th:value = "${qna.no}" name = "no">
+                  
+                  <th:block th:if = "${#strings.isEmpty(qna.answer)}">
+	                  <div class="col-12 mb-3" >
+	                  <textarea name="answer" id="ckfinder" ></textarea>
+	                  </div>
+	                  <div class="d-flex justify-content-center justify-content-lg-end me-lg-1">
+	                    <button class="btn btn-primary col-12 col-lg-1">작성</button>
+	                  </div>
+                  </th:block>
+                  
+                  <th:block th:unless = "${#strings.isEmpty(qna.answer)}">
+	                  <div class="col-12 mb-3" >
+                       <textarea name="answer" id="ckfinder" th:text = "${qna.answer}"></textarea>
+	                  </div>
+	                  <div class="d-flex justify-content-center justify-content-lg-end me-lg-1">
+	                    <button class="btn btn-primary col-12 col-lg-1">수정</button>
+	                  </div>
+                  </th:block>
+                  
+                </form>
+              </div>
+            </div>
+            </div>
 
           </div> <!-- col-12 end -->
 
         </div> <!-- content END -->
+          <th:block th:if = "${(success != null && success != '')}">
+			<script th:inline="javascript">
+				let success = /*[[${success}]]*/ 'default';
+				if (success) {
+					Dialogs.dialog('success', '완료', success);
+				}
+			</script>
+		</th:block>
+        <script
+			th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
+        <script th:src="@{/resources/assets/js/plugins/dropzone/min/dropzone.min.js}"></script>
+<script>
+    let header = document.querySelector('meta[name="_csrf_header"]').content;
+	let token = document.querySelector('meta[name="_csrf"]').content;
+    
 
-        <!-- 모달 리스트 -->
-        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              Hello
-            </div>
-          </div>
-        </div> -->
-        <!-- 모달 리스트 END -->
-        
+    document.addEventListener('DOMContentLoaded', function() {
+		ckfinder();
+    })
+  
+  function ckfinder() {
+      let ckfinder = document.querySelector('#ckfinder');
+
+      if (ckfinder) {
+        ClassicEditor
+          .create(document.querySelector('#ckfinder'),         		
+          		{   
+          			language:'ko',
+          			ckfinder:{
+          				uploadUrl : getContextPath() + 'ckImage?_csrf=' + token
+          			},
+          			image: {
+        			      styles: [ "alignLeft", "alignCenter", "alignRight"],      
+        			      toolbar: [
+        			        "imageStyle:alignLeft",
+        			        "imageStyle:alignCenter",
+        			        "imageStyle:alignRight",
+        			        "|",
+        			        "imageTextAlternative",
+
+        			      ]
+        			 }           			
+
+          		})
+          .then(editor => {
+            window.editor = editor;
+          })
+          .catch(error => {
+            console.error('There was a problem initializing the classic editor.', error);
+          });
+      }
+      
+ 
+  }
+  function getContextPath() {
+		var pathName = window.location.pathname.substring(1);
+		var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+		var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+		return path_root;
+	}
+      
+      
+    </script>
       </main>
 
 <!--
@@ -149,11 +165,7 @@ xmlns:th="http://www.thymeleaf.org"
 ██      ██    ██ ██    ██    ██    ██      ██   ██ 
 ██       ██████   ██████     ██    ███████ ██   ██ 
 -->
-      <!-- <footer id="page-footer" class="bg-flat-lighter">
-        <div class="content">footer</div>
-      </footer> -->
+      
     </div>
-    
-    <script src="../assets/js/oneui.app.min.js"></script>
   </body>
 </html>
