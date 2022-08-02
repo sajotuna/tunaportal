@@ -25,23 +25,23 @@
 	<!-- Page Content -->
 	<div class="content">
 	<p class="h3 fw-bold">학기별 이의신청 조회</p>
-	<!-- Input -->
-				<div class="row">
-					<div class="col-xl-3">
-						<div class="mb-4 mb-lg-4">
-							<select class="form-select" id="seasonCode">
-								<option selected value="all">전체 학기</option>
-								<th:block th:each="seasonCodeVO : ${seasonCodes}">
-									<th:block th:each="seasonCode : ${seasonCodeVO.children}">
-										<option th:value="${seasonCode.no}" 
-										    	th:text="${seasonCode.codeName}">#</option>
-									</th:block>
-								</th:block>
-							</select>
-						</div>
-					</div>
+		<!-- Input -->
+		<div class="row">
+			<div class="col-xl-3">
+				<div class="mb-4 mb-lg-4">
+					<select class="form-select" id="seasonCode">
+						<option selected value="all">전체 학기</option>
+						<th:block th:each="seasonCodeVO : ${seasonCodes}">
+							<th:block th:each="seasonCode : ${seasonCodeVO.children}">
+								<option th:value="${seasonCode.no}" 
+								    	th:text="${seasonCode.codeName}">#</option>
+							</th:block>
+						</th:block>
+					</select>
 				</div>
-				<!-- END Input -->
+			</div>
+		</div>
+		<!-- END Input -->
 		<!-- Block -->
 		<div class="block block-rounded mb-4">
 				<!-- Table -->
@@ -220,7 +220,9 @@
 				$('#sbjname').text(obj.NAME);
 				$('#stname').text(obj.STNAME);
 				$('#objstate').text(obj.OBJSTATE);
-				$('#content').text(obj.CONTENT);
+				
+				let content = obj.CONTENT.replace(/\n/g, '<br>');
+				$('#content').html(content);
 				
 				if (obj.ANSWER == null) {
 					$('#answer').text('');
