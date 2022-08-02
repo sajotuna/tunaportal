@@ -21,15 +21,15 @@
 				</div>
 				<div class="col-md-6 col-xl-4">
 					<div class="block block-rounded bg-primary-darker mb-2">
-						<div class="space-x-2 text-center text-gray-light">
-							신청 과목수 <span id="mySubjectCount">0</span>
+						<div class="text-center text-gray-light p-2">
+							신청 과목수 <div id="mySubjectCount" class="badge bg-primary ms-1">0</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6 col-xl-4">
 					<div class="block block-rounded bg-primary-darker mb-3">
-						<div class="space-x-2 text-center text-gray-light">
-							신청 학점 <span id="mySubjectTotal">0</span>
+						<div class="text-center text-gray-light p-2">
+							신청 학점 <div id="mySubjectTotal" class="badge bg-primary ms-1">0</div>
 						</div>
 					</div>
 				</div>
@@ -62,7 +62,6 @@
 			findMySubjectAjax();
 		})
 	
-		
 		function findMySubjectAjax() {
 			
 			$('#mySubject').on('change', function () {
@@ -78,47 +77,55 @@
 
 				}).done(function(mySubjects) {
 					
-					let count = 0;
-					let totalPoint = 0;
-					
-					// 과목 리스트
 					$('#mySubjectTb').html('');
+					$('#countBadge').css('display', 'none');
+					$('#totalBadge').css('display', 'none');
+					$('#mySubjectCount').text('0');
+					$('#mySubjectTotal').text('0');
 					
-					for (subject of mySubjects) {
+					if(mySubjects != '') {
 						
-						count++;
-						totalPoint += parseInt(`${subject.POINT}`);
+						let count = 0;
+						let totalPoint = 0;
 						
-						$('#mySubjectTb').append($('<tr>').attr('id', subject.SBJNO)
-										 .append($('<td>').addClass('fw-semibold fs-sm').text(subject.SBJNO))
-										 .append($('<td>').addClass('fw-semibold fs-sm').text(subject.NAME))
-										 .append($('<td>').addClass('fw-semibold fs-sm').text(subject.DEPTCODE))
-										 .append($('<td>').addClass('fw-semibold fs-sm').text(subject.TYPE))
-										 .append($('<td>').addClass('fw-semibold fs-sm').text(subject.PFNAME))
-										);
+						// 과목 리스트
 						
-						let txt = '';
-						
-						 if(subject.DAYCODE.search('/') != -1) {
-							let days = subject.DAYCODE.split('/');
-							let times = subject.TIMECODE.split(' ');
-							txt = `${subject.ROOMCODE} ${days[0]} ${times[0]} / ${days[1]} ${times[1]}`;
-						} else {
-							txt = `${subject.ROOMCODE} ${subject.DAYCODE} ${subject.TIMECODE}`;
+						for (subject of mySubjects) {
+							
+							count++;
+							totalPoint += parseInt(`${subject.POINT}`);
+							
+							$('#mySubjectTb').append($('<tr>').attr('id', subject.SBJNO)
+											 .append($('<td>').addClass('fw-semibold fs-sm').text(subject.SBJNO))
+											 .append($('<td>').addClass('fw-semibold fs-sm').text(subject.NAME))
+											 .append($('<td>').addClass('fw-semibold fs-sm').text(subject.DEPTCODE))
+											 .append($('<td>').addClass('fw-semibold fs-sm').text(subject.TYPE))
+											 .append($('<td>').addClass('fw-semibold fs-sm').text(subject.PFNAME))
+											);
+							
+							let txt = '';
+							
+							 if(subject.DAYCODE.search('/') != -1) {
+								let days = subject.DAYCODE.split('/');
+								let times = subject.TIMECODE.split(' ');
+								txt = `${subject.ROOMCODE} ${days[0]} ${times[0]} / ${days[1]} ${times[1]}`;
+							} else {
+								txt = `${subject.ROOMCODE} ${subject.DAYCODE} ${subject.TIMECODE}`;
+								
+							}
+	
+							$(`#${subject.SBJNO}`).append($('<td>').addClass('fw-semibold fs-sm').text(txt));
 							
 						}
-
-						$(`#${subject.SBJNO}`).append($('<td>').addClass('fw-semibold fs-sm').text(txt));
 						
+						// 신청 과목 수, 칭찬 배지
+						$('#mySubjectCount').text(count);
+						$('#mySubjectTotal').text(totalPoint);
 					}
-					
-					// 신청 과목 수, 신청 학점
-					$('#mySubjectCount').text(count);
-					$('#mySubjectTotal').text(totalPoint);
 				})
 			}) 
 		}
-	
+		
 	</script>
 	</th:block>
 </body>
