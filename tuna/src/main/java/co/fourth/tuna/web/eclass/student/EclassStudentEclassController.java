@@ -324,25 +324,25 @@ public class EclassStudentEclassController {
 			HttpServletResponse res,
 			@CookieValue(value="seasonCode", required=false, defaultValue="0") String seasonCode) {
 		
-		
-		Cookie cookie = new Cookie("seasonCode", seasonCode);
-		cookie.setMaxAge(60*60*24);
-		cookie.setSecure(true);
-		
-		
-		
-		if(vo.getSeasonCode() == null) {
-			vo.setSeasonCode(Integer.parseInt(year.yearFind()));
+		Cookie cookie = null;
+		if(seasonCode.isBlank() || seasonCode.equals("0")) {
+			seasonCode = year.yearFind();
 		}
 		
-		cookie.setValue(vo.getSeasonCode().toString());
-		
-		
+		if(vo.getSeasonCode() == null) {
+			vo.setSeasonCode(Integer.parseInt(seasonCode));
+			cookie = new Cookie("seasonCode", seasonCode);
+		} else {
+			cookie = new Cookie("seasonCode", vo.getSeasonCode().toString());
+			cookie.setMaxAge(60*60*24);
+			cookie.setSecure(true);
+		}
 		
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		List<Map<String, Object>> list = sql.selectList("co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper.subList", vo);
 		model.addAttribute("list", list);
 		
+
 		res.addCookie(cookie);
 		
 		
@@ -395,13 +395,23 @@ public class EclassStudentEclassController {
 	@ModelAttribute("side")
 	public Map<String, Object> side(Authentication authentication,
 			Model model,
-			HttpServletRequest req,
-			@RequestParam(value = "seasonCode", 
-						  required = false) String seasonCode) {
+			HttpServletRequest req, HttpServletResponse res,
+			@CookieValue(value="seasonCode", required=false, defaultValue="0") String seasonCode) {
 		
-		if(seasonCode == null) {
+
+		String seasonParam = req.getParameter("seasonCode");
+		Cookie cookie = null;
+		
+		if(seasonParam != null && !seasonParam.isBlank()) {
+			seasonCode = seasonParam;
+		}
+		
+		if(seasonCode == null || seasonCode.isBlank() || seasonCode.equals("0")) {
 			seasonCode = year.yearFind();
 		}
+		cookie = new Cookie("seasonCode", seasonCode);
+		res.addCookie(cookie);
+		
 		
 		EclassStudentHomeVO vo = new EclassStudentHomeVO();
 		vo.setNo(Integer.parseInt(authentication.getName()));
@@ -412,6 +422,7 @@ public class EclassStudentEclassController {
 		sidemap.put("side", list);
 		
 		model.addAttribute("seasonCode", seasonCode);
+		model.addAttribute("side", list);
 		
 		return sidemap;
 	}
