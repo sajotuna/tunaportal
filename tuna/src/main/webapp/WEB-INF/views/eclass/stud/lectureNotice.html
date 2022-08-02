@@ -30,27 +30,27 @@
 					<div id="DataTables_Table_0_wrapper"
 						class="dataTables_wrapper dt-bootstrap5 no-footer">
 						<div class="row">
-							<div class="col-sm-12" style="height:370px; overflow-y:scroll;">
+							<div class="col-sm-12" style="height:600px; overflow-y:scroll;">
 								<table
 									class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
 									id="DataTables_Table_0"
 									aria-describedby="DataTables_Table_0_info">
 									<thead>
 										<tr>
-											<td class="text-center fw-bold" style="width: 80px;" tabindex="0"
+											<td class="text-center fw-bold bg-dark text-white" style="width: 80px;" tabindex="0"
 												rowspan="1">번호</td>
-											<td class="text-center fw-bold" tabindex="0" colspan="7">제목</td>
-											<td class="text-center fw-bold" rowspan="1" colspan="3">작성일자</td>
+											<td class="text-center fw-bold bg-dark text-white" style="width: 350px;" >제목</td>
+											<td class="text-center fw-bold bg-dark text-white" style="width: 150px;" >작성일자</td>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="n : ${notice}">
-											<th class="text-center fw-bold" th:text="${n.ROWNUM}"></th>
-											<th class="text-center fw-bold" colspan="7"><a th:href="@{/stud/eclass/lectureNoticeSelect(no = ${n.NO}, sbjNo = ${n.SBJNO})}" th:text="${n.TITLE}" style="color:black"></a></th>
-											<th class="text-center fw-bold" colspan="3" th:text="${n.ENROLLDATE}"></th>
+											<th class="text-center" th:text="${n.ROWNUM}"></th>
+											<th class="text-center"><a th:href="@{/stud/eclass/lectureNoticeSelect(no = ${n.NO}, sbjNo = ${n.SBJNO})}" th:text="${n.TITLE}" style="color:black"></a></th>
+											<th class="text-center" th:text="${n.ENROLLDATE}"></th>
 										</tr>
 										<tr th:if="${#lists.isEmpty(notice)}">
-										<th class="fw-bold text-center" colspan="10" rowspan="5">공지가 등록되지 않았습니다.</th>
+										<th class="fw-bold text-center" colspan="3">공지가 등록되지 않았습니다.</th>
 										</tr>
 									</tbody>
 								</table>

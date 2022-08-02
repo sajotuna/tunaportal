@@ -29,7 +29,7 @@
 <!-- 질문목록 -->
 	<select id="qnaList" resultType="map" parameterType="HashMap">
 	<![CDATA[
-	SELECT q.*, ROWNUM
+	SELECT q.*
 	FROM
     (SELECT
    		Q.NO, 
@@ -41,16 +41,14 @@
 	    Q.SBJNO,
 	    Q.STNO,
 	    Q.VISIBLE,
-	    S.NAME,  
-  		ROWNUM RN
+	    S.NAME,
+        ROW_NUMBER() OVER(ORDER BY Q.NO DESC) rn
 	FROM STUDENT S, LECTUREQNA Q
 	WHERE Q.SBJNO = #{sbjNo}
     AND S.NO = Q.STNO
-    ORDER BY Q.NO) Q
-    WHERE RN 
-    	BETWEEN (#{pageNum}-1) * #{size} +1
-    	AND #{pageNum}*#{size}
-    	ORDER BY ROWNUM DESC
+    ORDER BY Q.NO desc) q
+    WHERE rn BETWEEN (#{pageNum}-1)*#{size}+1 AND #{pageNum}*#{size}
+    ORDER BY Q.NO DESC
 
     ]]>
 	</select>
@@ -97,8 +95,6 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 	AND STNO = #{stNo}
 	</delete>
 
-	
-
 <!-- 목록 subject으로 찾기 -->
 	<select id="findBySubjectId"
 		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
@@ -118,6 +114,7 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 			JOIN subject s
 				ON	l.sbjno = s.no
 			WHERE s.pfno = #{prof.no}
+			ORDER BY l.no DESC
 		) WHERE rn 
 				BETWEEN (#{pageNum}-1)*#{size}+1
 				AND #{pageNum}*#{size}
@@ -167,4 +164,11 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 	</select>
 	
 	
+<select id ="professorFindQna" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO" resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+select * from lectureqna where no = #{no}
+</select>
+<update id = "professorQnaUpdate" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">	
+update lectureqna set answer = #{answer}, answerdate = sysdate where no = #{no}
+</update>	
+
 </mapper>

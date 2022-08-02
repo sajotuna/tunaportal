@@ -1,17 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	data-layout-decorate="~{layouts/navLayout}">
 
 <head>
-	<meta charset="UTF-8">
-	<title>학사일정</title>
-	<style>
-		.searchClass {
-			color: rgb(0, 65, 121);
-			background-color: rgb(207, 230, 250);
-			font-weight: bold;
-		}
-	</style>
+<meta charset="UTF-8">
+<title>학사일정</title>
+<style>
+.searchClass {
+	color: rgb(0, 65, 121);
+	background-color: rgb(207, 230, 250);
+	font-weight: bold;
+}
+
+a.top {
+	position: fixed;
+	background-color: rgb(207, 230, 250);
+	font-weight:bold;
+	width:100px;
+	height:50px;
+	right:2%;
+	text-align:center;
+	bottom: 5%;
+	display: none;
+	 line-height: 50px;
+	  border-radius: 30px;
+}
+
+</style>
 </head>
 
 <body>
@@ -24,7 +40,8 @@
 					class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
 					<div class="flex-grow-1 mb-1 mb-md-0">
 						<p class="h3 fw-bold mb-2">학사일정</p>
-						<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">연도학기별 학사일정 조회 및 검색</p>
+						<p class="h6 fw-medium fw-medium text-muted mb-0 text-gray-dark">연도학기별
+							학사일정 조회 및 검색</p>
 					</div>
 				</div>
 			</div>
@@ -35,18 +52,20 @@
 			<div class="block block-rounded">
 				<div class="block-header block-header-default">
 					<div class="block-title">
-						<select style="width:200px" id="seasonSelect" name="seasonCode" class="form-select">
+						<select style="width: 200px" id="seasonSelect" name="seasonCode"
+							class="form-select">
 							<th:block th:each="seasonCode : ${seasonCodes}">
-								<option th:value="${seasonCode.no}" th:text="${seasonCode.codeName}"
-									th:selected=${seasonCodes}>#</option>
+								<option th:value="${seasonCode.no}" 
+									th:text="${seasonCode.codeName}"
+									th:attr="selected=${presentCode == seasonCode.no} ?'selected'">#</option>
 							</th:block>
 						</select>
 					</div>
 					<div class="block-obtions">
 						<!--search start-->
-						<div class="input-group" style="width:200px">
-							<input type="text" id="searchText" class="form-control form-control-alt"
-								placeholder="Search">
+						<div class="input-group" style="width: 200px">
+							<input type="text" id="searchText"
+								class="form-control form-control-alt" placeholder="Search">
 							<button id="searchBtn" class="btn btn-alt-secondary">
 								<i class="fa fa-search"></i>
 							</button>
@@ -58,14 +77,15 @@
 
 				<!-- content start -->
 				<div class="block-content">
-					<table class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
+					<table
+						class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
 						id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
 						<thead>
 							<tr>
-								<th class="text-center" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-									colspan="1">월</th>
-								<th class="text-center" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-									colspan="1">일</th>
+								<th class="text-center" tabindex="0"
+									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">월</th>
+								<th class="text-center" tabindex="0"
+									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">일</th>
 								<th class="text-center" tabindex="0" style="width: 70%"
 									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">학사내용</th>
 							</tr>
@@ -78,12 +98,16 @@
 				</div>
 				<!-- content end -->
 			</div>
+			<div >
+				<a href="#" class="top">Top</a>
+			</div>
 		</div>
 		<script>
 			$(function () {
 				seasonSelect()
 				makeSchedule()
 				search()
+				topBtn()
 			})
 
 
@@ -93,6 +117,22 @@
 				return;
 
 			})
+			
+			function topBtn(){
+				$( window ).scroll( function() {
+					if ( $( this ).scrollTop() > 200 ) {
+					$( '.top' ).fadeIn();
+					} else {
+				$( '.top' ).fadeOut();
+				}
+				} );
+			
+			$( '.top' ).click( function() {
+				$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+				return false;
+			} );
+			}
+
 
 
 			function search() {

@@ -31,31 +31,31 @@
 						<div id="DataTables_Table_0_wrapper"
 							class="dataTables_wrapper dt-bootstrap5 no-footer">
 							<div class="row">
-								<div class="col-sm-12">
+								<div class="col-sm-12" style="height:600px;overflow-y:scroll;">
 									<table
 										class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
 										id="DataTables_Table_0"
 										aria-describedby="DataTables_Table_0_info">
 										<thead>
 											<tr>
-												<th class="text-center" style="width: 80px;" tabindex="0"
+												<th class="text-center bg-dark text-white" style="width: 50px;" tabindex="0" 
 													rowspan="1">번호</th>
-												<th class="text-center" tabindex="0" colspan="7">제목</th>
-												<th class="text-center" rowspan="1" colspan="3">작성일자</th>
-												<th class="text-center" rowspan="1" colspan="3">마감일자</th>
+												<th class="text-center bg-dark text-white" style="width:350px;" tabindex="0" >제목</th>
+												<th class="text-center bg-dark text-white" style="width:100px;" >작성일자</th>
+												<th class="text-center bg-dark text-white" style="width:100px;" >마감일자</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr th:each="i, t : ${s.taskList}">
 												<th class="text-center" th:text="${i.rowNum}"></th>
-												<th class="text-center" colspan="7"><a
+												<th class="text-center"  ><a
 													th:href="@{/stud/eclass/taskSelect(no=${i.no},sbjNo=${i.sbjNo})}"
 													th:text="${i.title}" style="color: black"></a></th>
-												<th class="text-center" colspan="3" th:text="${i.startDate}"></th>
-												<th class="text-center" colspan="3" th:text="${i.limitDate}"></th>
+												<th class="text-center"  th:text="${i.startDate}"></th>
+												<th class="text-center"  th:text="${i.limitDate}"></th>
 											</tr>
 											<tr th:if=${#lists.isEmpty(s.taskList)}>
-												<th class="fw-bold text-center" colspan="13" rowspan="5">과제가
+												<th class="fw-bold text-center" colspan="4">과제가
 													등록되지 않았습니다.</th>
 											</tr>
 										</tbody>

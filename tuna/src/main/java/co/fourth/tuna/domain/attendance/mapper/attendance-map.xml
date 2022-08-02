@@ -4,9 +4,14 @@
 	
 	<select id="selectAttendancesForSubject" 
 		resultType="co.fourth.tuna.domain.attendance.vo.AttendanceVO">
-		SELECT *
-		FROM attendance
-		WHERE sbjno = #{no}
+	SELECT A.STATECODE, A.STNO, A.SBJNO, A.CLASSDATE 
+	FROM ATTENDANCE A, LECTUREAPPLY L
+	WHERE A.SBJNO = L.SBJNO
+	AND A.STNO = L.STNO
+	AND L.STNO = #{stNo}
+	AND L.SEASONCODE = #{seasonCode}
+	AND A.SBJNO = #{sbjNo}
+	ORDER BY CLASSDATE
 	</select>
 	
 	<select id="studentAttendance" resultType="map"

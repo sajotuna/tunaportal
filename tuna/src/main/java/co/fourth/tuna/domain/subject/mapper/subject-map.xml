@@ -228,9 +228,9 @@
 			AND s.seasoncode = ${season}
 	</select>
 
-	<select id = "subjectCount" resultType = "int">
+	<select id = "subjectCount" resultType = "int" parameterType="String">
 	
-	SELECT COUNT(*) FROM SUBJECT
+	SELECT COUNT(*) FROM SUBJECT WHERE SEASONCODE = #{seasonCode}
 	
 	</select>
 	

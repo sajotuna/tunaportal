@@ -39,7 +39,7 @@ public interface SubjectMapper {
 			@Param("season")String season);
 
 	
-	public int subjectCount();
+	public int subjectCount(String seasonCode);
 	
 
 	//public ArrayList<SubjectVO>findListForLectureSchedule(@Param("pageNum")int start, @Param("size")int size);

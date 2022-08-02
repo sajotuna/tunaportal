@@ -75,7 +75,17 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 		student = studentService.findById(student);
 		lectureQna.setStudentVO(student);
 		return lectureQna;
+  }
+  
+  @Override
+	public LectureQnaVO professorFindQna(LectureQnaVO vo) {
+		return mapper.professorFindQna(vo);
 	}
+
+	@Override
+	public void professorQnaUpdate(LectureQnaVO vo) {
+		mapper.professorQnaUpdate(vo);
+  }
 
 	
 	//mapper 주입, 오버라이딩
