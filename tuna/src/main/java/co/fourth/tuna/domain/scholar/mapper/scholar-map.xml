@@ -40,7 +40,7 @@ insert into scholarapply values(#{no}, 501, null, #{seasonCode}, #{stNo}, #{schN
 <select id = "ScholarCheck" resultType = "map" parameterType="co.fourth.tuna.domain.scholar.vo.ScholarApplyVO">
 	
 	select sa.seasoncode, s.name, sa.no, sa.stno, st.name stuname, st.deptcode,
-	st.sy, sa.statecode ,sa.uri , sa.filename
+	st.sy, sa.statecode ,sa.uri , sa.filename, sa.schno
 	from scholarapply sa, scholar s, student st
 	where sa.stno = #{stNo} 
 	  and sa.stno = st.no
@@ -113,6 +113,7 @@ FROM
       <if test="sy != null and !sy.equals('')">
       AND S2.SY = #{sy}
       </if>
+      ORDER BY SC2.SEASONCODE DESC, SC2.NO ASC
       )
 WHERE rn 
 BETWEEN (#{pageNum}-1)*#{size}+1

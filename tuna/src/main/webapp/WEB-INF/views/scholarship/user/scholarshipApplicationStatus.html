@@ -82,15 +82,17 @@
                       <td class="fw-semibold fs-sm filebox">
 	                      <form th:action="@{/stud/scholar/FileUpload(${_csrf.parameterName}=${_csrf.token})}" method = "POST" id = "frm" enctype="multipart/form-data">
 	                      	<input type = "hidden" name = "no" th:value = "${sch.NO}">
-	                      	
-	                      	
 	                      	<th:block th:if = "${not #strings.isEmpty(sch.FILENAME)}">
 	                      		<label th:for="file+${status.count}" id = "filetag"  >[[${sch.FILENAME}]]</label>
 	                      		<input type="file" th:id="file+${status.count}" name = "file" style="display:none">
 	                      	</th:block>
 	                      	<th:block th:unless = "${not #strings.isEmpty(sch.FILENAME)}">
-	                      		<label th:for="file+${status.count}" id = "filetag" >파일찾기</label>
-	                      		<input type="file" th:id="file+${status.count}" name = "file" style="display:none">
+	                      		 <th:block th:if = "${#strings.equals(sch.NAME, '성적우수')}">
+	                      		 </th:block>
+	                      		 <th:block th:unless = "${#strings.equals(sch.NAME, '성적우수')}">
+		                      		<label th:for="file+${status.count}" id = "filetag" >파일찾기</label>
+		                      		<input type="file" th:id="file+${status.count}" name = "file" style="display:none">
+	                      		</th:block>
 	                      	</th:block>
 	                      	
 	                      </form>
