@@ -15,6 +15,10 @@ TUNA Portal은 가상 대학교 TUNA의 포탈 서비스이다.
 </tr>
 <tr>
 <th>IDE</th>
+<td><img src="https://img.shields.io/badge/Eclipse-2C2255?style=flat-square&logo=Eclipse&logoColor=white"/> <img src="https://img.shields.io/badge/VSCode-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=white"/></td>
+</tr>
+<tr>
+<th>OS</th>
 <td><img src="https://img.shields.io/badge/Windows-0078D6?style=flat-square&logo=Windows&logoColor=white"/> <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=Ubuntu&logoColor=white"/> <img src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white"/></td>
 </tr>
 <tr>
