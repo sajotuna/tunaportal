@@ -1006,6 +1006,7 @@ xmlns:th="http://www.thymeleaf.org"
             let tabPanel; // 탭 패널
             let tabContents; // 탭 컨탠츠
             let userDetailModal; //
+            let onAttendanceEvent = -1;
             
             // 로딩 출력
             let loaderCurtain;
@@ -1145,6 +1146,7 @@ xmlns:th="http://www.thymeleaf.org"
                   // console.log(tr.data_submit_no);
                   let score = tr.querySelector(".task-score-input").value;
                   // console.log(score);
+                  //console.log(tr);
                   let submitTask = {
                     no: tr.data_submit_no,
                     stNo: tr.data_stno,
@@ -1158,7 +1160,7 @@ xmlns:th="http://www.thymeleaf.org"
                     submitTaskList: submitTaskList
                   }
                 }
-                console.log(requestObj);
+                // console.log(requestObj);
 
                 fetch(REST_URL.SUBMIT_TASK_GRADE_UPDATE, {
                   method: "POST",
@@ -1206,7 +1208,7 @@ xmlns:th="http://www.thymeleaf.org"
               let fileInsertForm = document.querySelector("#fileInsertFrm");
               let title = fileInsertForm.querySelector(".input-title");
               let file = fileInsertForm.querySelector(".input-file");
-
+              
               fileInsertForm.addEventListener('click', function(ele) {
                 let formData = new FormData();
                 formData.append('file', file.files[0]);
@@ -1240,65 +1242,78 @@ xmlns:th="http://www.thymeleaf.org"
             function setAttendanceSubmitEvent() {
               let attendanceForm = document.querySelector("#btabs-static-student");
               let submitBtn = attendanceForm.querySelector(".submit_button");
-              let radios = attendanceForm.querySelectorAll('input[type="radio"]');
-              let attendanceList = [];
 
-              submitBtn.addEventListener('click', function(event) {
-                for(const radio of radios) {
-                  if(radio.checked){
-                    let attendanceObj = {
-                      no : radio.name.slice(RADIO_GROUP_NAME.length),
-                      stateCode : radio.value,
-                      sbjNo : sbjno,
-                    }
-                    attendanceList.push(attendanceObj);
-                  }
-                }
-
-                fetch(REST_URL.SUBMIT_ATTENDANCES, {
-                  method: "POST",
-                  headers: {
-                    'header' : header,
-                    'X-Requested-with': 'XMLHttpRequest',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': token
-                  },
-                  body: JSON.stringify(attendanceList)
-                })
-                .then( async (res) => {
-                  let resBody = await res.text();
-                  console.log(resBody);
-                  if(res.ok) {
-                    Dialogs.dialog('success',
-                    '입력 성공',
-                    resBody,
-                    function() {
-
-                    })
-                  } else {
-                    Dialogs.dialog('error',
-                    '입력 실패',
-                    resBody,
-                    function() {
-                      console.error(resBody);
-                      onTab = -1;
-                      tabClickEvent(1);
-                    })
-                  }
-                }).catch((err) => {
-                  Dialogs.dialog('error',
-                  '오류',
-                  err,
-                  function() {
-                    console.error(err)
-                    onTab = -1;
-                    tabClickEvent(onTab);
-                  })
-                })
-
-              });
+              submitBtn.removeEventListener('click', attendanceFetchSubmitHandler);
+              submitBtn.addEventListener('click', attendanceFetchSubmitHandler);
             }
             
+            function attendanceFetchSubmitHandler(event) {
+              let attendanceForm = document.querySelector("#btabs-static-student");
+              let radios = attendanceForm.querySelectorAll('input[type="radio"]');
+              let stno = 0;
+
+              let attendanceList = [];
+              let form = {};
+
+              for(const radio of radios) {
+                if(radio.checked){
+                  stno = radio.parentElement.parentElement.getAttribute('data_student_id');
+                  let attendanceObj = {
+                    no : radio.name.slice(RADIO_GROUP_NAME.length),
+                    stateCode : radio.value,
+                    sbjNo : sbjno,
+                    stNo : stno,
+                  }
+                  attendanceList.push(attendanceObj);
+                }
+              }
+
+              form = {
+                sbjno: sbjno,
+                attendanceList: attendanceList
+              }
+
+              fetch(REST_URL.SUBMIT_ATTENDANCES, {
+                method: "POST",
+                headers: {
+                  'header' : header,
+                  'X-Requested-with': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify(form),
+              })
+              .then( async (res) => {
+                let resBody = await res.text();
+                console.log(resBody);
+                if(res.ok) {
+                  Dialogs.dialog('success',
+                  '입력 성공',
+                  resBody,
+                  function() {
+
+                  })
+                } else {
+                  Dialogs.dialog('error',
+                  '입력 실패',
+                  resBody,
+                  function() {
+                    console.error(resBody);
+                    onTab = -1;
+                    tabClickEvent(1);
+                  })
+                }
+              }).catch((err) => {
+                Dialogs.dialog('error',
+                '오류',
+                err,
+                function() {
+                  console.error(err)
+                  onTab = -1;
+                  tabClickEvent(onTab);
+                })
+              })
+            }
 
 /*
 ████████  █████  ██████       ██████ ██      ██  ██████ ██   ██ 
@@ -1481,8 +1496,11 @@ xmlns:th="http://www.thymeleaf.org"
               tbody.innerHTML = "";
               data.students.forEach(student => {
                 let tr = document.createElement('tr');
-                tr.data_attendance_id = student.attendance.no;
-                let stateCode = student.attendance.stateCode;
+                let stateCode;
+                if(student.attendance != null ){
+                  tr.data_attendance_id = student.attendance.no;
+                  stateCode = student.attendance.stateCode;
+                }
 
                 let innerHTML = `
                 <td class="table-cell" style="width: 54px;">
@@ -1499,8 +1517,11 @@ xmlns:th="http://www.thymeleaf.org"
                   ${student.no}
                 </td>
                 <td class="table-cell">
-                  <div class="atten-radio-group space-x-4">
-                    <div class="form-check form-check-inline">
+                  <div data_student_id="${student.no}" class="atten-radio-group space-x-4">`;
+                  if(!student.attendance) {
+                    innerHTML += `<div class="text-muted" >수강 대기중</div>`
+                  } else {
+                    innerHTML += `<div class="form-check form-check-inline">
                       <input class="radio-attend form-check-input" type="radio" id="atten-radio-attend-${student.attendance.no}" name="${RADIO_GROUP_NAME+student.attendance.no}" value="1401" ${stateCode=="1401"?"checked":""}>
                       <label class="form-check-label" for="atten-radio-attend-${student.attendance.no}">출석</label>
                     </div>
@@ -1511,8 +1532,9 @@ xmlns:th="http://www.thymeleaf.org"
                     <div class="form-check form-check-inline">
                       <input class="radio-lateness form-check-input" type="radio" id="atten-radio-lateness-${student.attendance.no}" name="${RADIO_GROUP_NAME+student.attendance.no}" value="1403" ${stateCode=="1403"?"checked":""}>
                       <label class="form-check-label" for="atten-radio-lateness-${student.attendance.no}">지각</label>
-                    </div>
-                  </div>
+                    </div>`
+                  }
+                 innerHTML+=  `</div>
                 </td>`;
                 // TODO 날짜 넣기
                 
@@ -1520,7 +1542,6 @@ xmlns:th="http://www.thymeleaf.org"
                 tbody.appendChild(tr);
               });
               setAttendanceSubmitEvent();
-
             }
             
             // 과제 패널
@@ -1563,13 +1584,13 @@ xmlns:th="http://www.thymeleaf.org"
               let tbody = document.querySelector("#task-table tbody");
               tbody.innerHTML = "";
 
+              studentsTaskTr = [];
               for( student of students) {
                 let tr = document.createElement('tr');
                 let fileName, uri, enrollDate, score, disabled;
                 
                 tbody.appendChild(tr);
                 
-                studentsTaskTr = [];
                 studentsTaskTr.push(tr);
 
                 if(!student.submitTask || !student.submitTask.fileName) {
@@ -1579,6 +1600,7 @@ xmlns:th="http://www.thymeleaf.org"
                   score = 0;
                   disabled = "disabled"
                 } else { //
+                  tr.data_submit_id = student.submitTask.no;
                   fileName = student.submitTask.fileName;
                   uri = `/tuna/download?fileName=${student.submitTask.fileName}&originName=${student.submitTask.uri}&folder=lectureFile`;
                   enrollDate = dateTimeToISO(student.submitTask.enrollDate);
@@ -1714,10 +1736,14 @@ xmlns:th="http://www.thymeleaf.org"
               tbody.innerHTML = "";
               for( let stud of studList ) {
                 let tr = document.createElement('tr');
-                tr.id = GRADE_STUD_ID+stud.gradeVO.no;
+                if(!stud.gradeVO) {
+
+                } else {
+                  tr.id = GRADE_STUD_ID+stud.gradeVO.no;
+                }
                 tr.data_stno = stud.no;
                 tr.classList.add('m-0');
-                tr.innerHTML = `
+                let innerHTML = `
                   <td class="table-cell">
                     ${stud.name}
                   </td>
@@ -1727,14 +1753,21 @@ xmlns:th="http://www.thymeleaf.org"
                   <td class="table-cell">
                     ${stud.no}
                   </td>
-                  <td><input type="number" class="form-control" value="${stud.gradeVO.attd}" disabled></td>
-                  <td><input type="number" class="form-control" name="middle" value="${stud.gradeVO.middle}"></td>
-                  <td><input type="number" class="form-control" name="finals" value="${stud.gradeVO.finals}"></td>
-                  <td><input type="number" class="form-control" value="${stud.gradeVO.task}" disabled></td>
-                  <td><input type="number" class="form-control" value="${stud.gradeVO.total}" disabled></td>
-                `;
+                  `
+                  if(!stud.gradeVO) {
+                    innerHTML += 
+                    `<td class="text-mute" colspan="5">수강 대기중</td>`;
+                  } else {
+                    innerHTML += 
+                    `<td><input type="number" class="form-control" value="${stud.gradeVO.attd}" disabled></td>
+                    <td><input type="number" class="form-control" name="middle" value="${stud.gradeVO.middle}"></td>
+                    <td><input type="number" class="form-control" name="finals" value="${stud.gradeVO.finals}"></td>
+                    <td><input type="number" class="form-control" value="${stud.gradeVO.task}" disabled></td>
+                    <td><input type="number" class="form-control" value="${stud.gradeVO.total}" disabled></td>`;
+                    studentsGradeTr.push(tr);
+                  }
+                tr.innerHTML = innerHTML;
                 tbody.appendChild(tr);
-                studentsGradeTr.push(tr);
               }
             }
             
@@ -2009,11 +2042,11 @@ xmlns:th="http://www.thymeleaf.org"
                 }
               })
               .catch((err) => {
+                console.log(err);
                 Dialogs.dialog('error',
                 '오류',
                 err,
                 function() {
-                  console.error(err);
                 })
               }).finally(()=> {
                 offUserDetailCurtaion();
@@ -2214,7 +2247,7 @@ xmlns:th="http://www.thymeleaf.org"
               for(let block of blocks) {
                 block.remove();
               }
-
+              console.log(student);
               for(let subject of student.subjectList) {
                 let block = document.createElement('div');
                 blockParent.appendChild(block);
@@ -2262,6 +2295,7 @@ xmlns:th="http://www.thymeleaf.org"
               let sbjno = event.target.id.slice(ATTENDANCE_SUBJECT_ID.length);
               let block = document.querySelector("#"+DETIAL_ATTENDANCE_BLOCK_ID+sbjno);
               let checkedAttenList = block.querySelectorAll('td input[type="radio"]:checked');
+              let form = {};
               let attendanceList = [];
 
               for(let input of checkedAttenList) {
@@ -2270,6 +2304,12 @@ xmlns:th="http://www.thymeleaf.org"
                   stateCode: input.value
                 }
                 attendanceList.push(obj);
+              }
+
+              form = {
+                stno: stno,
+                sbjno: sbjno,
+                attendanceList: attendanceList,
               }
               
               fetch(REST_URL.SUBMIT_ATTENDANCES_UPDATE, {
@@ -2280,7 +2320,7 @@ xmlns:th="http://www.thymeleaf.org"
                   'Content-Type': 'application/json',
                   'X-CSRF-Token': token
                 },
-                body: JSON.stringify(attendanceList)
+                body: JSON.stringify(form)
               })
               .then( async (res) => {
                 let resBody = await res.text();
@@ -2293,20 +2333,20 @@ xmlns:th="http://www.thymeleaf.org"
                     studentClickEvent(studno);
                   })
                 } else {
+                  console.error(resBody);
                   Dialogs.dialog('error',
                   '실패',
                   resBody,
                   function() {
-                    console.error(resBody);
                   });
                 }
               })
               .catch((err)=> {
+                console.error(err);
                 Dialogs.dialog('error',
                 '오류',
                 err,
                 function() {
-                  console.error(err);
                 })
               })
             }

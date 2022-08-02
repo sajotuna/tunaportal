@@ -135,6 +135,7 @@ public class EclassProfessorEclassController {
 		
 		qna = lectureService.professorFindQna(qna);
 		model.addAttribute("qna", qna);
+
 		return req.getServletPath();
 	}
 

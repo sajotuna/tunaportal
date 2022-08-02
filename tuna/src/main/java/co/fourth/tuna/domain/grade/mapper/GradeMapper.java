@@ -18,6 +18,7 @@ public interface GradeMapper {
 	
 
 	public GradeVO findBySbjectNo(GradeVO vo);
+	public GradeVO selectOneByGradeId(int id);
 	public GradeVO findOneByStudentIdAndSubjectId(
 				@Param("stno")int stno, 
 				@Param("sbjno")int sbjno);

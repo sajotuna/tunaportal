@@ -145,10 +145,30 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 			AND sbjno = #{sbjno}
 		
 	</select>
+	
+	<select id="selectOneByLectureQnaId"
+		resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
+		SELECT
+			NO         ,
+			TITLE      ,
+			CONTENT    ,
+			ANSWER     ,
+			ENROLLDATE ,
+			STNO       ,
+			SBJNO      ,
+			ANSWERDATE ,
+			VISIBLE
+		FROM
+			lectureqna
+		WHERE no = #{qnano}
+	</select>
+	
+	
 <select id ="professorFindQna" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO" resultType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">
 select * from lectureqna where no = #{no}
 </select>
 <update id = "professorQnaUpdate" parameterType="co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO">	
 update lectureqna set answer = #{answer}, answerdate = sysdate where no = #{no}
 </update>	
+
 </mapper>

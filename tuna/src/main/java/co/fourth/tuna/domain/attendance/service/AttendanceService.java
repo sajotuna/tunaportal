@@ -3,6 +3,7 @@ package co.fourth.tuna.domain.attendance.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import co.fourth.tuna.domain.attendance.vo.AttendanceUpdateFormVO;
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 
 public interface AttendanceService {
@@ -16,7 +17,7 @@ public interface AttendanceService {
 	public List<AttendanceVO> findAttendanceByDateAndSubjectId(LocalDate date, int sbjno);
 	
 	// 출석부 업데이트
-	public String updateAttendanceList(List<AttendanceVO> list);
+	public String updateAttendanceList(AttendanceUpdateFormVO form);
 	
 	// 
 	public List<AttendanceVO> getListByStudentIdAndSbjno(int stno, int sbjno);

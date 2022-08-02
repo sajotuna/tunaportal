@@ -144,4 +144,21 @@
 		AND sbjno = #{sbjNo}
 	</update>
 
+	<select id="selectOneByGradeId"
+		resultType="co.fourth.tuna.domain.grade.vo.GradeVO" >
+		SELECT 
+			NO     ,
+			MIDDLE ,
+			FINALS ,
+			ATTD   ,
+			TOTAL  ,
+			TASK   ,
+			STNO   ,
+			SBJNO
+		FROM
+			grade
+		WHERE
+			no = ${no}
+	</select>
+
 </mapper>

@@ -45,6 +45,9 @@ public interface LectureQnaMapper {
 			@Param("stno")int stno, 
 			@Param("sbjno")int sbjno);
 	
+
+	public LectureQnaVO selectOneByLectureQnaId(int qnano);
+
 	//교수qna 한건조회
 	public LectureQnaVO professorFindQna(LectureQnaVO vo);
 	//교수 답안 작성

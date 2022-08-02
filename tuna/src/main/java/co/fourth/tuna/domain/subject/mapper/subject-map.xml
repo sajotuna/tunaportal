@@ -225,6 +225,7 @@
 			on (s.no = l.sbjno)
 		WHERE l.stno = ${stno}
 			AND s.pfno = ${pfno}
+			AND s.seasoncode = ${season}
 	</select>
 
 	<select id = "subjectCount" resultType = "int" parameterType="String">
