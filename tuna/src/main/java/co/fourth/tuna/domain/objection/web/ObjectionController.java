@@ -25,7 +25,7 @@ public class ObjectionController {
 	@Autowired ObjectionService objectionDao;
 	@Autowired YearService yearDao;
 	
-	@PostMapping("/prof/objections")
+	@PostMapping("/staff/objections")
 	public List<ObjectionVO> objectionListBySubjectId(
 			@RequestBody Map<String, Integer>reqData) {
 		return objectionDao.findListBySubjectId(reqData.get("sbjno"));

@@ -65,7 +65,7 @@ xmlns:th="http://www.thymeleaf.org"
                 <div class="block-header bg-primary-darker">
                   <h3 class="block-title">강의 목록</h3>
                   <div class="block-options">
-                    <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/eclass/professor/subjectList}">
+                    <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/staff/eclass/subjectList}">
                       <i class="fa fa-ellipsis"></i>
                     </a>
                   </div>
@@ -74,7 +74,7 @@ xmlns:th="http://www.thymeleaf.org"
                   <ul class="nav-items push" th:if="${not #lists.isEmpty(subList)}">
                     <!-- TODO remove id -->
                     <li id="test-li"  th:each="sub:${subList}">
-                      <a class="row m-2 pb-2" th:href="@{/eclass/professor/subject(no=${sub.no})}">
+                      <a class="row m-2 pb-2" th:href="@{/staff/eclass/subject(no=${sub.no})}">
                         
                         <div class="col-6">
                           <!--19자 제한 (19자 넘으면 19자 부터 ...)-->
@@ -119,7 +119,7 @@ xmlns:th="http://www.thymeleaf.org"
                 <div class="block-header bg-primary-darker">
                   <h3 class="block-title">수강생 문의</h3>
                   <div class="block-options">
-                    <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/eclass/professor/qnaList}">
+                    <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/staff/eclass/qnaList}">
                       <i class="fa fa-ellipsis"></i>
                     </a>
                   </div>
@@ -165,7 +165,7 @@ xmlns:th="http://www.thymeleaf.org"
               <div class="block-header bg-primary-darker ">
                 <h3 class="block-title">전체 공지</h3>
                 <div class="block-options">
-                  <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/eclass/professor/noticeList}">
+                  <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/staff/eclass/noticeList}">
                     <i class="fa fa-ellipsis"></i>
                   </a>
                 </div>
@@ -179,7 +179,7 @@ xmlns:th="http://www.thymeleaf.org"
                       <th style="width: 15%">작성</th>
                       <th style="width: 15%">등록일시</th>
                     </tr> -->
-                    <tr th:onclick="'window.location.href = \''+ @{/eclass/professor/notice(no=${notice.no})} + '\''" th:each="notice:${noticeList}">
+                    <tr th:onclick="'window.location.href = \''+ @{/staff/eclass/notice(no=${notice.no})} + '\''" th:each="notice:${noticeList}">
                       <td style="width: 100px" th:text="${notice.no}">00</td>
                       <td class="text-start" th:text="${notice.title}">제목 데이터 없음</td>
                       <td style="width: 15%" th:text="${notice.subjectVO.name}">과목 없음</td>
@@ -389,7 +389,7 @@ xmlns:th="http://www.thymeleaf.org"
               return false;
             }
             
-            window.open("/tuna/eclass/professor/qna?no="+qnano);
+            window.open("/tuna/staff/eclass/qna?no="+qnano);
           }
           
           function setDetailUserInfo(student) {

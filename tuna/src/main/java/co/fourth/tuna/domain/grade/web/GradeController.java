@@ -52,7 +52,7 @@ public class GradeController {
 	}
 	
 	//
-	@PostMapping("/prof/updateGrades")
+	@PostMapping("/staff/updateGrades")
 	public ResponseEntity<String> updateGrades(
 			@RequestBody List<GradeFormVO> grades) {
 		

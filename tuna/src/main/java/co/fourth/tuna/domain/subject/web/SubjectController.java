@@ -38,7 +38,7 @@ public class SubjectController {
 		return subjectDao.searchSubjectList(seasonCode, searchKey, key);
 	}
 	
-	@PostMapping("/professor/updateSubject")
+	@PostMapping("/staff/updateSubject")
 	public ResponseEntity<String> updateSubject(
 			@RequestBody SubjectUpdateForm form) {
 		HttpHeaders resHeaders = new HttpHeaders();

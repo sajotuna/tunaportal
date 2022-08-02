@@ -26,7 +26,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:onclick="'window.location.href = \''+ @{/eclass/professor/notice(no=${notice.no})}+ '\''" th:each="notice:${noticeList}">
+                    <tr th:onclick="'window.location.href = \''+ @{/staff/eclass/notice(no=${notice.no})}+ '\''" th:each="notice:${noticeList}">
                       <td class="text-center" th:text="${notice.no}">00</td>
                       <td th:text="${notice.title}" class="text-start">제목데이터 없음</td>
                       <td th:text="${notice.subjectVO.name}">과목 데이터없음</td>

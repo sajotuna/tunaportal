@@ -112,7 +112,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                     <div class="pt-3 row">
                       <div class="col-10 offset-1 col-xxl-3 offset-xxl-9">
-                        <button th:onclick="|location.href='@{/eclass/professor/subjectForm(no=${param.no})}'|" class="col-12 btn btn-primary">
+                        <button th:onclick="|location.href='@{/staff/eclass/subjectForm(no=${param.no})}'|" class="col-12 btn btn-primary">
                           수정 
                         </button>
                       </div>
@@ -429,7 +429,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                     <div class="pt-2 row">
                       <div class="col-xl-2">
-                        <button class="col-12 btn btn-dark">전체보기</button>
+                        <button href="" class="col-12 btn btn-dark">전체보기</button>
                       </div>
                     </div>
                   </div> <!-- qna TAB END -->
@@ -961,20 +961,19 @@ xmlns:th="http://www.thymeleaf.org"
 
             const REST_URL = {
               STUDENT_DETAIL : "/tuna/staff/student",
-              PROGRESS_CONTENT : "/tuna/prof/lecPlans",
-              //ATTENDANCE_CONTENT : "/tuna/prof/students",
+              PROGRESS_CONTENT : "/tuna/staff/lecPlans",
               ATTENDANCE_CONTENT : "/tuna/staff/attendance",
               TASK_CONTENT : "/tuna/staff/task/content",
-              QNA_CONTENT : "/tuna/prof/lecQna",
-              NOTICE_CONTENT : "/tuna/prof/lecNotices",
-              OBJECTION_CONTENT : "/tuna/prof/objections",
-              GRADE_CONTENT : "/tuna/prof/students",
+              QNA_CONTENT : "/tuna/staff/lecQna",
+              NOTICE_CONTENT : "/tuna/staff/lecNotices",
+              OBJECTION_CONTENT : "/tuna/staff/objections",
+              GRADE_CONTENT : "/tuna/staff/students",
 
-              GRDAE_UPDATE : "/tuna/prof/updateGrades",
+              GRDAE_UPDATE : "/tuna/staff/updateGrades",
               TASK_INSERT : '/tuna/staff/insertTask',
               OBJECTION_GET : '/tuna/staff/eclass/objection?objNo=',
               OBJECTION_PUT : '/tuna/staff/eclass/objection',
-              OBJECTION_LIST : "/tuna/prof/objections",
+              OBJECTION_LIST : "/tuna/staff/objections",
 
               SUBMIT_TASK_GRADE_UPDATE : "/tuna/staff/eclass/updateSubmitTaskScore",
               SUBMIT_LECTURE_FILE_UPLOAD : "/tuna/staff/insertSubjectFile",
@@ -982,7 +981,7 @@ xmlns:th="http://www.thymeleaf.org"
               SUBMIT_ATTENDANCES_UPDATE : "/tuna/staff/update/attendance",
               LECTURE_FILE_DELETE : "/tuna/staff/deleteSubjectFile",
               
-              SUBJECT_QNA_LINK : "/tuna/eclass/professor/qna",
+              SUBJECT_QNA_LINK : "/tuna/staff/eclass/qna",
             };
             // const TAB_BTN_NUM = {
 
@@ -1646,7 +1645,8 @@ xmlns:th="http://www.thymeleaf.org"
               
               let plan_progress_content = document.getElementById("subject-progress");
               let ulTag = plan_progress_content.getElementsByTagName("ul")[0];
-              
+              ulTag.innerHTML = "";
+
               for(let plan of planList) {
                 let li = document.createElement('li');
                 ulTag.appendChild(li);

@@ -64,7 +64,7 @@ xmlns:th="http://www.thymeleaf.org"
             <div class="block block-rounded">
              <div class="block-content block-content-full">
              <div class="row">
-                <form th:action = "@{/prof/lecQnaAnswer}" method = "POST">
+                <form th:action = "@{/staff/lecQnaAnswer}" method = "POST">
                   <input type = "hidden" th:value = "${qna.no}" name = "no">
                   
                   <th:block th:if = "${#strings.isEmpty(qna.answer)}">

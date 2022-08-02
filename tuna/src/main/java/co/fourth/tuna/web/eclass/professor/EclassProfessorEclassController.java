@@ -39,7 +39,7 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 import co.fourth.tuna.util.CustomDateUtills;
 
 @Controller
-@RequestMapping("/eclass/professor")
+@RequestMapping("/staff/eclass/")
 public class EclassProfessorEclassController {
 
 	@Autowired
@@ -52,7 +52,6 @@ public class EclassProfessorEclassController {
 	PortalScheduleService portalScheduleService;
 	@Autowired
 	ObjectionService objectionService;
-	
 	@Autowired
 	LectureScheduleService lecScheduleService;
 
