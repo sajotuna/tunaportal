@@ -6,106 +6,40 @@ xmlns:th="http://www.thymeleaf.org"
     data-layout-decorate="~{layouts/eclassProfLayout}">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="_csrf" th:content="${_csrf.token}">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
   <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
   <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
   <script th:src="@{/resources/assets/js/dialog.js}"></script>
-   <title>E-Class 공지 수정</title>
-    
+  <title>E-Class 공지 수정</title>
+  <style>
+     .ck-editor__editable {
+       min-height: 380px;
+     }
+  </style>
   </head>
   <body>
-
-    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
-      <div id="page-overlay"></div>
-
-      <aside id="side-overlay">
-        <div class="content-header">
-        </div>
-        <div class="content-side">
-        </div>
-      </aside>
-
-      <!--
-███████ ██ ██████  ███████     ██████   █████  ██████  
-██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██   ██ █████       ██████  ███████ ██████  
-     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
-      -->
-      <nav id="sidebar" aria-label="Main Navigation">
-        <div class="content-header">
-
-        </div>
-        <div class="js-sidebar-scroll">
-        </div>
-      </nav>
-      <!-- SIDE BAR END -->
-      
-      <!--
-██   ██ ███████  █████  ██████  ███████ ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-███████ █████   ███████ ██   ██ █████   ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
-      -->
-      <header id="page-header">
-        <div class="content-header">page-header</div>
-      </header>
-      <!--HEADER END-->
-
-<!--
- ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
-██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
-██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
-██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
- ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
--->
       <main id="main-container" layout:fragment="main">
-        <!-- <div class="bg-body-light">
-          <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-              <div class="flex-grow-1">
-                <h1 class="h3 fw-bold mb-2">
-                  Main
-                </h1>
-                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                  E-class 홈 화면 입니다.
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div> content header END -->
-
-        <div class="content">
-          <h2 class="h3 fw-bold">공지 사항</h2>
+        <div class="content content-full">
+          <h2 class="h3 fw-bold d-none d-lg-block">공지사항 수정</h2>
           <div class="col-xxl-12">
             <div class="block block-rounded">
-              <div class="block-content">
+              <div class="block-content block-content-full">
                 <form th:action="@{/eclass/professor/updateNotice}" method="POST" id = "frm">
                   <div class="row mt-2">
-                    <label class="col-1 d-none d-xl-block" for="title_input">
-                      제목
-                    </label>
-                    <div class="h4 col-11 mb-1">
+                    <div class="h4 col-12 mb-3">
                        <input type = "hidden" th:value = "${notice.no}" name = "no">
-                      <input id="title_input" name = "title" type="text" class="col-11 form-control" th:value = "${notice.title}">
+                      <input id="title_input" name = "title" type="text" placeholder="제목" class="col-12 form-control" th:value = "${notice.title}">
                     </div>
                   </div>
-                  <hr>
                   <div class="row">
                     <!-- 내용 입력-->
-                      <div class="col-12">
+                      <div class="col-12 mb-3">
                         <textarea name="content" id="ckfinder">[[${notice.content}]]</textarea>
                       </div>
                   </div>
-                  <hr>
-                  
-                  <div class="row items-push">
-                    <div class="col-6">
-                      <input class="btn btn-primary col-xl-4 offset-xl-1" id= "nBtn" type="button" value="수정">
-                    </div>
+                  <div class="d-flex justify-content-center justify-content-lg-end me-lg-1">
+                    <input class="btn btn-primary col-12 col-lg-1" id= "nBtn" type="button" value="수정">
                   </div>
                 </form>
               </div>
@@ -115,27 +49,6 @@ xmlns:th="http://www.thymeleaf.org"
 
         </div> <!-- content END -->
 
-        <!-- 모달 리스트 -->
-        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              Hello
-            </div>
-          </div>
-        </div> -->
-        <!-- 모달 리스트 END -->
-        
-      
-<!--
-███████  ██████   ██████  ████████ ███████ ██████  
-██      ██    ██ ██    ██    ██    ██      ██   ██ 
-█████   ██    ██ ██    ██    ██    █████   ██████  
-██      ██    ██ ██    ██    ██    ██      ██   ██ 
-██       ██████   ██████     ██    ███████ ██   ██ 
--->
-      <!-- <footer id="page-footer" class="bg-flat-lighter">
-        <div class="content">footer</div>
-      </footer> -->
     <script
 			th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
     <script>

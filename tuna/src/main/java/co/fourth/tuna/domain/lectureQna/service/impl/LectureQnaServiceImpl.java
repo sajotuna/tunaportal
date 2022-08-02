@@ -10,13 +10,18 @@ import org.springframework.stereotype.Service;
 import co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper;
 import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
+import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.ProfessorVO;
+import co.fourth.tuna.domain.user.vo.StudentVO;
 
 @Service
 public class LectureQnaServiceImpl implements LectureQnaService {
 
 	@Autowired
 	LectureQnaMapper mapper;
+	
+	@Autowired
+	StudentService studentService;
 	
 //	@Override
 //	public List<LectureQnaVO> qnaList(String key) {
@@ -61,6 +66,26 @@ public class LectureQnaServiceImpl implements LectureQnaService {
 	public int lectureQnaPagingCount(LectureQnaVO vo) {
 		return mapper.lectureQnaPagingCount(vo);
 	}
+
+	@Override
+	public LectureQnaVO findLectureQnaByLecture(int qnano) {
+		LectureQnaVO lectureQna = mapper.selectOneByLectureQnaId(qnano);
+		StudentVO student = new StudentVO();
+		student.setNo(lectureQna.getStNo());
+		student = studentService.findById(student);
+		lectureQna.setStudentVO(student);
+		return lectureQna;
+  }
+  
+  @Override
+	public LectureQnaVO professorFindQna(LectureQnaVO vo) {
+		return mapper.professorFindQna(vo);
+	}
+
+	@Override
+	public void professorQnaUpdate(LectureQnaVO vo) {
+		mapper.professorQnaUpdate(vo);
+  }
 
 	
 	//mapper 주입, 오버라이딩

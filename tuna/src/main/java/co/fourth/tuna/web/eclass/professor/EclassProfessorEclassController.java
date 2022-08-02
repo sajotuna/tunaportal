@@ -52,7 +52,7 @@ public class EclassProfessorEclassController {
 	PortalScheduleService portalScheduleService;
 	@Autowired
 	ObjectionService objectionService;
-
+	
 	@Autowired
 	LectureScheduleService lecScheduleService;
 
@@ -131,7 +131,11 @@ public class EclassProfessorEclassController {
 	}
 
 	@GetMapping("/qna")
-	public String qnaView(Model model, HttpServletRequest req) {
+	public String qnaView(Model model, HttpServletRequest req, LectureQnaVO qna) {
+		
+		qna = lectureService.professorFindQna(qna);
+		model.addAttribute("qna", qna);
+
 		return req.getServletPath();
 	}
 

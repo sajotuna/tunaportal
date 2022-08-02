@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
@@ -60,5 +61,17 @@ public class LectureQnaController {
 	public List<LectureQnaVO> getLectureQna(
 			@RequestBody Map<String, Integer>reqData) {
 		return lecQnaService.findListBySubjectId(reqData.get("sbjno"));
+	}
+	
+	@PostMapping("/prof/lecQnaAnswer")
+	public String lecQnaAnswer(LectureQnaVO qna,RedirectAttributes ra) {
+		
+		lecQnaService.professorQnaUpdate(qna);
+		
+		ra.addAttribute("no", qna.getNo());
+		ra.addFlashAttribute("success", "답변 작성이 완료되었습니다.");
+		
+		return "redirect:/eclass/professor/qna";
+		
 	}
 }

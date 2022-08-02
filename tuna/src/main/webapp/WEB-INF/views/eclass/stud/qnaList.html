@@ -51,7 +51,7 @@ table tr td{
 						<div id="DataTables_Table_0_wrapper"
 							class="dataTables_wrapper dt-bootstrap5 no-footer">
 							<div class="row">
-								<div class="col-sm-12" style="height:370px;">
+								<div class="col-sm-12" style="height:600px;">
 									<table
 										class="table table-bordered js-dataTable-full dataTable no-footer"
 										id="DataTables_Table_0"
@@ -69,7 +69,7 @@ table tr td{
 										<tbody th:each="q : ${qna}">
 											<tr
 												th:if="${q.VISIBLE} == 0 and ${not #strings.isEmpty(qna)}">
-												<td class="text-center" th:text="${q.ROWNUM}"></td>
+												<td class="text-center" th:text="${q.NO}"></td>
 												<td class="text-center"><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
 													style="color: black">[[${q.TITLE}]]</a></td>
@@ -83,7 +83,7 @@ table tr td{
 											</tr>
 											<tr
 												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} != ${q.STNO}">
-												<td class="text-center"  th:text="${q.ROWNUM}"></td>
+												<td class="text-center"  th:text="${q.NO}"></td>
 												<td class="text-center" colspan="3">비공개 질문입니다.<i class="fa fa-2x fa-lock ms-2" style="font-size:10px; line-height:10px;"></i></td>
 												<td class="text-center text-danger fw-bold" colspan="2"
 													th:if="${not #strings.isEmpty(q.ANSWER)}">답변</td>
@@ -92,7 +92,7 @@ table tr td{
 											</tr>
 											<tr
 												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} == ${q.STNO}">
-												<td class="text-center" th:text="${q.ROWNUM}"></td>
+												<td class="text-center" th:text="${q.NO}"></td>
 												<td class="text-center"><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
 													style="color: black;"> [[${q.TITLE}]]<i class="fa fa-2x fa-lock ms-2" style="font-size:10px; line-height:10px;"></i></a></td>
@@ -109,6 +109,7 @@ table tr td{
 												<td class="text-center" colspan="5">질문이 등록되지 않았습니다.</td>
 											</tr>
 									</table>
+								
 								</div>
 							</div>
 							<div class="d-flex justify-content-center">
@@ -170,6 +171,7 @@ table tr td{
 		let prevBtn = document.querySelector("#prev")
 		let pageingBtn = document.querySelectorAll("#pageingBtn");
 		nextBtn.addEventListener('click', function(){
+			nextBtn.disabled = true;
 			tagInsert(parseInt(map.pageNum)+1)
 		})
 		
@@ -177,6 +179,7 @@ table tr td{
 				if(parseInt(map.pageNum) == 1){
 					prevBtn.disabled = true;
 				}else{
+			 		prevBtn.disabled = true;
 					tagInsert(parseInt(map.pageNum)-1)	
 				}
 			})

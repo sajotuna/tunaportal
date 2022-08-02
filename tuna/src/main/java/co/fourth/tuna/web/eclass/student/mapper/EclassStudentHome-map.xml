@@ -17,12 +17,13 @@
 	<select id="twoTask" resultType="map" parameterType="co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO">
 	<![CDATA[
 	SELECT* FROM
-		(SELECT DISTINCT T.NO, T.SBJNO, T.TITLE, TO_CHAR(T.LIMITDATE, 'MM"월"DD"일"') LIMITDATE, S.NAME
+		(SELECT DISTINCT T.NO, T.SBJNO, T.TITLE, TO_CHAR(T.LIMITDATE, 'MM"월"DD"일"') LIMITDATE, 
+        S.NAME
 		FROM TASK T, LECTUREAPPLY L, SUBJECT S
 		WHERE T.SBJNO = L.SBJNO
 		AND L.SBJNO = S.NO
 		AND L.STNO = #{no}
-		AND L.SEASONCODE = #{seasonCode}
+        AND t.limitdate > sysdate
 		ORDER BY T.NO DESC)
 		WHERE ROWNUM <=5
 		]]>

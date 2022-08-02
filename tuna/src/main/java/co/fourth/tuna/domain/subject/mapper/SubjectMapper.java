@@ -35,7 +35,8 @@ public interface SubjectMapper {
 
 	public List<SubjectWithAttendanceVO> selectListByStudentIdAndPrfessorId(
 			@Param("stno")int stno, 
-			@Param("pfno")int pfno);
+			@Param("pfno")int pfno,
+			@Param("season")String season);
 
 	
 	public int subjectCount(String seasonCode);

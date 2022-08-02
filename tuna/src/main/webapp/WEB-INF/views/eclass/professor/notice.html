@@ -5,124 +5,68 @@ xmlns:th="http://www.thymeleaf.org"
     data-layout-decorate="~{layouts/eclassProfLayout}">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="_csrf" th:content="${_csrf.token}">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
     <title>E-Class 공지 상세</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
-    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
-  	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
-  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
-  <script th:src="@{/resources/assets/js/dialog.js}"></script>
+    <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+    <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+    <script th:src="@{/resources/assets/js/dialog.js}"></script>
+  <style>
+  	.header-rounded {
+  		border-top-left-radius: 0.25rem;
+  		border-top-right-radius: 0.25rem;
+  	}
+  	
+  	figure {
+         flex: 0 0 auto;
+         width: 100%;
+      }
+
+    @media (max-width: 800px) {
+
+       figure img {
+          width: 100%;
+       }
+
+    }
+  </style>
   </head>
   <body>
-
-    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
-      <div id="page-overlay"></div>
-
-      <aside id="side-overlay">
-        <div class="content-header">
-        </div>
-        <div class="content-side">
-        </div>
-      </aside>
-
-      <!--
-███████ ██ ██████  ███████     ██████   █████  ██████  
-██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██   ██ █████       ██████  ███████ ██████  
-     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
-      -->
-      <nav id="sidebar" aria-label="Main Navigation">
-        <div class="content-header">
-
-        </div>
-        <div class="js-sidebar-scroll">
-        </div>
-      </nav>
-      <!-- SIDE BAR END -->
-      
-      <!--
-██   ██ ███████  █████  ██████  ███████ ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-███████ █████   ███████ ██   ██ █████   ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
-      -->
-      <header id="page-header">
-        <div class="content-header">page-header</div>
-      </header>
-      <!--HEADER END-->
-
-<!--
- ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
-██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
-██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
-██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
- ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
--->
       <main id="main-container" layout:fragment="main">
-        <!-- <div class="bg-body-light">
-          <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-              <div class="flex-grow-1">
-                <h1 class="h3 fw-bold mb-2">
-                  Main
-                </h1>
-                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                  E-class 홈 화면 입니다.
-                </h2>
+        <div class="content content-full pt-5">
+          <div class="col-xxl-12">
+            <div class="d-flex">
+              <div class="col-5 col-md-4 col-xxl-3 header-rounded bg-body-light row py-2 px-3 ms-2 mb-0">
+                <div class="col-sm-5 text-start">과목</div>
+                <div class="col-sm-7 wrap fw-bold" th:text="${notice.subjectVO.name}">과목 데이터가 없습니다</div>
+              </div>
+              <div class="col-5 col-md-4 col-xxl-3 header-rounded bg-body-light row py-2 px-3 mb-0">
+                <div class="col-sm-5 wrap text-start" style="width: 70px">작성일</div>
+                <div class="col-sm-7 wrap fw-bold" th:text="${notice.enrollDate}">작성일 데이터가 없습니다!</div>
               </div>
             </div>
-          </div>
-        </div> content header END -->
-
-        <div class="content">
-          <h2 class="h3 fw-bold">공지 사항</h2>
-          <div class="col-xxl-12">
-            <div class="block block-rounded">
-              <div class="block-content">
-                <!-- <table class="table table-vcenter">
-                </table> -->
-                <form th:action = @{/eclass/professor/noticeUpdate} method = "post">
-                <div class="row mt-2">
-                  <div class="col-1 d-none d-xl-block">
-                    <p>제목</p>
-                  </div>
-                  <div class="h4 col-11 mb-1">
-                    <p th:text="${notice.title}">제목 데이터가 없습니다</p>
-                  </div>
-                  <input type = "hidden" th:value = "${notice.no}" name = "no">
-                  <input type = "hidden" th:value = "${notice.title}" name = "title">
-                </div>
-                <div class="d-none d-lg-block">
-                  <div class="row">
-                    <div class="col-6 d-flex">
-                      <div class="text-start" style="width: 80px">작성과목 :</div>
-                      <div class="wrap fw-bold me-5" th:text="${notice.subjectVO.name}">과목 데이터가 없습니다</div>
-                    </div>
-                    <div class="col-6 d-flex">
-                      <div class="wrap text-start" style="width: 80px">작성일 :</div>
-                      <div class="wrap fw-bold" th:text="${notice.enrollDate}">작성일 데이터가 없습니다!</div>
-                    </div>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <p class="col-12 px-5" th:utext=${notice.content}>
-                    내용 데이터가 없습니다!
-                  </p>
-                  <input type = "hidden" th:value = "${notice.content}" name = "content">
-                </div>
-                <hr>
-                <div class="ps-3 pb-3 row">
-					<input type ="button" class="col-1 me-2 btn btn-primary" onclick = "javascript:noticeDel();" value = "삭제">
-					<input type = "submit" class="col-1 me-2 btn btn-dark" value = "수정">
-                </div>
-                </form>
-              </div>
-            </div> <!-- block end-->
+            <form th:action = @{/eclass/professor/noticeUpdate} method = "post">
+	            <div class="block block-rounded mb-4">
+	              <div class="block-content">
+	                <div class="row mt-2">
+	                  <p class="h4 mb-0" th:text="${notice.title}">제목 데이터가 없습니다</p>
+	                  <input type = "hidden" th:value = "${notice.no}" name = "no">
+	                  <input type = "hidden" th:value = "${notice.title}" name = "title">
+	                </div>
+	                <hr>
+	                <div class="row">
+	                  <p class="col-12 px-5" th:utext=${notice.content}>
+	                    내용 데이터가 없습니다!
+	                  </p>
+	                  <input type = "hidden" th:value = "${notice.content}" name = "content">
+	                </div>
+	              </div>
+	            </div> <!-- block end-->
+	            <div class="row justify-content-center">
+					<input type ="button" class="col-5 col-lg-1 me-2 btn btn-primary" onclick = "javascript:noticeDel();" value = "삭제">
+					<input type = "submit" class="col-5 col-lg-1 me-2 btn btn-dark" value = "수정">
+	            </div>
+            </form>
             
           </div> <!-- col-12 end -->
 

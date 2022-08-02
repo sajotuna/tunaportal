@@ -5,13 +5,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <title>질의응답작성</title>
 <link rel="stylesheet" th:href="@{/resources/assets/css/oneui.min.css}" />
 <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/simplemde/simplemde.min.css}">
 <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 <script th:src="@{/resources/assets/js/dialog.js}"></script>
+	<style>
+.ck-editor__editable {
+    min-height: 380px;
+}
+	</style>
 </head>
 <body>
 	<div id="page-container"
@@ -36,7 +42,7 @@
 							class="dataTables_wrapper dt-bootstrap5 no-footer">
 							<div class="row">
 								<div class="col-sm-12">
-									<form th:action="@{insertOneQna(${_csrf.parameterName}=${_csrf.token})}" method="POST">
+									<form th:action="@{insertOneQna(${_csrf.parameterName}=${_csrf.token})}" method="POST" id ="frm">
 									<input type="hidden" th:value="${param.sbjNo}" name="sbjNo" id="sbjNo">
 									<table
 										class="table table-vcenter js-dataTable-full dataTable no-footer"
@@ -53,9 +59,9 @@
 											</tr>
 										</thead>
 									</table>
-										<textarea class="js-simplemde" id="content" name="content"></textarea>
+										<textarea id="ckfinder" name="content"></textarea>
 									<div class="d-flex justify-content-center">
-										<button type="submit" id="btn" onclick="javascript:insertQna();" class="btn btn-primary m-2">등록</button>
+										<button type="button" id="btn" onclick="javascript:insertQna();" class="btn btn-primary m-2">등록</button>
 										<button 
 											th:onclick="|location.href='@{/stud/eclass/qnaList}?sbjNo=${sbjNo}'|"
 											type="button" class="btn btn-dark  m-2">취소</button>
@@ -71,34 +77,38 @@
 					</div>
 				</div>
 			</div>
+			<script>
+				if(document.getElementById("visibleCheck").checked){
+					document.getElementById("visibleValue").disabled = true;}
+			</script>
 				<script th:inline="javascript">
 				function insertQna(){
-					Dialogs.dialog('question', '질문을 등록하시겠습니까? 수정 및 삭제가 불가능힙니다.', '확인', insertQnaAction);
+					Dialogs.dialog('warnConfirm', '질문을 등록하시겠습니까? 수정 및 삭제가 불가능힙니다.', '등록하시려면 확인을 눌러주시기 바랍니다.', insertOneQna);
 				}
 				
-				function insertQnaAction(){
-					fetch('isnertQnaAction', {
-						method : "POST",
-						body : JSON.stringify({"title":title},{"content":content})
-						}).then(result=> {
-							Dialogs.dialog('success', '질문등록이 완료되었습니다.', '확인', success);
-							location.href='@{/stud/eclass/qnaList}?sbjNo=${sbjNo}';
-						})
-					
+				function insertOneQna(){
+					frm.submit();
 				}
 				
 				</script>
-			<script>
-				if(document.getElementById("visibleCheck").checked){
-					document.getElementById("visibleValue").disabled = true;
-				}
-			</script>
+			
 			<script
 				th:src="@{/resources/assets/js/plugins/simplemde/simplemde.min.js}"></script>
 			<!-- Page JS Helpers (CKEditor + SimpleMDE plugins) -->
+			<script th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
 			<script>
 				One.helpersOnLoad([ 'js-simplemde' ]);
 			</script>
+			<script>
+			let header = document.querySelector('meta[name="_csrf_header"]').content;
+			let token = document.querySelector('meta[name="_csrf"]').content;
+
+			document.addEventListener('DOMContentLoaded', function () {
+				ckfinder();
+
+			})
+			</script>
+			<script th:src="@{/resources/assets/js/editor.js}"></script>
 		</main>
 	</div>
 </body>

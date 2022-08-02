@@ -6,6 +6,7 @@
 	<settings>
 		<setting name = "mapUnderscoreToCamelCase" value = "false"/>
 		<setting name="callSettersOnNulls" value="true"/>
+		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
 	<typeAliases>
