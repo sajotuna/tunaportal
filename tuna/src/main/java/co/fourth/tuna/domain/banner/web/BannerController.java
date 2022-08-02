@@ -26,17 +26,16 @@ public class BannerController {
 	
 	@Autowired BannerService bannerDao;
 	@Autowired FileService fileService;
-	@Autowired String fileDir;
 	
 	// 슬라이드 배너 조회
 	@RequestMapping("/{user}/banner/sliderBanner")
-	public List<BannerVO> sliderBanner(@PathVariable String user, Model model) {
+	public List<BannerVO> sliderBannerSelect(@PathVariable String user, Model model) {
 		return bannerDao.sliderBannerSelect();
 	}
 	
 	// 기본, 옵션 배너 1건 조회
 	@GetMapping("/{user}/banner/{bannerCode}")
-	public BannerVO optionBannerSelect(@PathVariable String user, @PathVariable String bannerCode) {
+	public BannerVO bannerSelect(@PathVariable String user, @PathVariable String bannerCode) {
 			return bannerDao.bannerSelect(bannerCode);	
 	}
 	
@@ -48,7 +47,7 @@ public class BannerController {
 	
 	// 배너 등록
 	@PostMapping("/admin/admin/banner/{bannerCode}")
-	public int sliderBannerInsert(@PathVariable String bannerCode, @RequestParam(value = "file")MultipartFile file, BannerVO vo) {
+	public int bannerInsert(@PathVariable String bannerCode, @RequestParam(value = "file")MultipartFile file, BannerVO vo) {
 		
 		String[] fileInfo = fileService.upload(file, "banner");
 		
@@ -67,6 +66,5 @@ public class BannerController {
 		return bannerDao.bannerDelete(vo);
 		
 	}
-
 	
 }
