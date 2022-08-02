@@ -1,33 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	data-layout-decorate="~{layouts/navLayout}">
 
 <head>
-<meta charset="UTF-8">
-<title>학사일정</title>
-<style>
-.searchClass {
-	color: rgb(0, 65, 121);
-	background-color: rgb(207, 230, 250);
-	font-weight: bold;
-}
+	<meta charset="UTF-8">
+	<title>학사일정</title>
+	<style>
+		.searchClass {
+			color: rgb(0, 65, 121);
+			background-color: rgb(207, 230, 250);
+			font-weight: bold;
+		}
 
-a.top {
-	position: fixed;
-	background-color: rgb(207, 230, 250);
-	font-weight:bold;
-	width:100px;
-	height:50px;
-	right:2%;
-	text-align:center;
-	bottom: 5%;
-	display: none;
-	 line-height: 50px;
-	  border-radius: 30px;
-}
-
-</style>
+		a.top {
+			position: fixed;
+			background-color: rgb(207, 230, 250);
+			font-weight: bold;
+			width: 100px;
+			height: 50px;
+			right: 2%;
+			text-align: center;
+			bottom: 5%;
+			display: none;
+			line-height: 50px;
+			border-radius: 30px;
+		}
+	</style>
 </head>
 
 <body>
@@ -52,11 +50,9 @@ a.top {
 			<div class="block block-rounded">
 				<div class="block-header block-header-default">
 					<div class="block-title">
-						<select style="width: 200px" id="seasonSelect" name="seasonCode"
-							class="form-select">
+						<select style="width: 200px" id="seasonSelect" name="seasonCode" class="form-select">
 							<th:block th:each="seasonCode : ${seasonCodes}">
-								<option th:value="${seasonCode.no}" 
-									th:text="${seasonCode.codeName}"
+								<option th:value="${seasonCode.no}" th:text="${seasonCode.codeName}"
 									th:attr="selected=${presentCode == seasonCode.no} ?'selected'">#</option>
 							</th:block>
 						</select>
@@ -64,8 +60,8 @@ a.top {
 					<div class="block-obtions">
 						<!--search start-->
 						<div class="input-group" style="width: 200px">
-							<input type="text" id="searchText"
-								class="form-control form-control-alt" placeholder="Search">
+							<input type="text" id="searchText" class="form-control form-control-alt"
+								placeholder="Search">
 							<button id="searchBtn" class="btn btn-alt-secondary">
 								<i class="fa fa-search"></i>
 							</button>
@@ -77,15 +73,14 @@ a.top {
 
 				<!-- content start -->
 				<div class="block-content">
-					<table
-						class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
+					<table class="table table-bordered table-vcenter js-dataTable-full dataTable no-footer"
 						id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
 						<thead>
 							<tr>
-								<th class="text-center" tabindex="0"
-									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">월</th>
-								<th class="text-center" tabindex="0"
-									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">일</th>
+								<th class="text-center" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+									colspan="1">월</th>
+								<th class="text-center" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+									colspan="1">일</th>
 								<th class="text-center" tabindex="0" style="width: 70%"
 									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">학사내용</th>
 							</tr>
@@ -98,7 +93,7 @@ a.top {
 				</div>
 				<!-- content end -->
 			</div>
-			<div >
+			<div>
 				<a href="#" class="top">Top</a>
 			</div>
 		</div>
@@ -117,20 +112,20 @@ a.top {
 				return;
 
 			})
-			
-			function topBtn(){
-				$( window ).scroll( function() {
-					if ( $( this ).scrollTop() > 200 ) {
-					$( '.top' ).fadeIn();
+
+			function topBtn() {
+				$(window).scroll(function () {
+					if ($(this).scrollTop() > 200) {
+						$('.top').fadeIn();
 					} else {
-				$( '.top' ).fadeOut();
-				}
-				} );
-			
-			$( '.top' ).click( function() {
-				$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
-				return false;
-			} );
+						$('.top').fadeOut();
+					}
+				});
+
+				$('.top').click(function () {
+					$('html, body').animate({scrollTop: 0}, 400);
+					return false;
+				});
 			}
 
 
@@ -156,7 +151,7 @@ a.top {
 
 					$('html,body').animate({
 						scrollTop: $(".searchClass").offset().top
-					},'smooth');
+					}, 'smooth');
 
 
 
@@ -192,15 +187,30 @@ a.top {
 						for (schedule of schedules) {
 
 							//day표시하기 ('2020-11-11' or '2020 ~ 2020')
-							if (schedule.startDate == schedule.endDate) {
-								var day = schedule.startDate
-							} else {
-								var day = (schedule.startDate.concat(` ~ ${schedule.endDate}`))
+
+							var month = schedule.startDate.substr(5, 2) + "월 " 
+							var day =  schedule.startDate.substr(8, 2) + "일"
+							
+							month = month.replace(/(^0+)/, "")
+							day = day.replace(/(^0+)/, "")
+							var all = month + day 
+
+							if (schedule.startDate != schedule.endDate) {
+							
+								var endMonth = schedule.endDate.substr(5, 2) + "월 "
+								var endDay = schedule.endDate.substr(8, 2) + "일"
+								
+								endMonth = endMonth.replace(/(^0+)/, "")
+								endDay = endDay.replace(/(^0+)/, "")
+								
+								var end = endMonth+endDay
+								
+								all += " ~ " + end
 							}
 
 							$('#scheduleList').append($('<tr>')
-								.append($('<td>').addClass('text-center fs-sm sorting_1 col-1 rowCheck').html(('0' + schedule.month).substr(-2)))
-								.append($('<td>').addClass('fw-semibold fs-sm text-center').html(day))
+								.append($('<td>').addClass('text-center rowCheck h2').html(('0' + schedule.month).substr(-2)))
+								.append($('<td>').addClass('fw-semibold fs-sm text-center').html(all))
 								.append($('<td>').addClass('fs-sm searchList').html(schedule.content))
 							)
 
@@ -212,7 +222,7 @@ a.top {
 
 					//rowspan function 
 					$('.rowCheck').each(function () {
-
+						
 						var rows = $(".rowCheck:contains('" + $(this).html() + "')");
 						if (rows.length > 1) {
 							rows.eq(0).attr('rowspan', rows.length);
