@@ -5,6 +5,7 @@
 	<select id="getBannerCnt" resultType="int">
 		SELECT COUNT(*)
 		FROM BANNER
+		<if test="bannerCode != 'all'">WHERE BANNERCODE = #{bannerCode}</if>
 	</select>
 
 	<update id="sliderBannerUpdate">
@@ -38,12 +39,13 @@
 
 	<select id="bannerListSelect"
 		    resultMap="bannerListWithAdmin">
-		select *
-		from (select rownum as rnum,
-		             b.*
-		      from banner b
-		      order by no desc)
-		<![CDATA[where #{startList} < rnum and rnum <= #{endList}]]>
+		SELECT *
+		FROM (SELECT ROWNUM AS RNUM,
+		             B.*
+		      FROM BANNER B
+		      <if test="bannerCode != 'all'">WHERE BANNERCODE = #{bannerCode}</if>
+		      ORDER BY NO DESC)
+		<![CDATA[WHERE #{startList} < RNUM AND RNUM <= #{endList}]]>
 	
 	</select>
 

@@ -63,8 +63,8 @@
 						        </div>
 						        <label class="form-label" for="startDate">게시일자 <span class="text-danger">*</span></label>
 					            <div class="mb-4">
-					              	<div id="dateShake" class="input-daterange input-group">
-									    <div class="input-daterange input-group" data-date-format="yyyy-mm-dd" data-week-start="1" data-autoclose="true" data-today-highlight="true">
+					              	<div id="dateShake">
+									    <div class="input-daterange input-group" data-date-format="yyyy/mm/dd" data-week-start="1" data-autoclose="true" data-today-highlight="true">
 									      <input type="text" class="form-control date" id="date" name="startDate" placeholder="게시 시작일" data-week-start="1" data-autoclose="true" data-today-highlight="true">
 									      <span class="input-group-text fw-semibold">
 									        <i class="fa fa-fw fa-arrow-right"></i>
@@ -87,10 +87,9 @@
 		</div>
 	</div>
 	<!-- END Page Content -->
-	<script th:src="@{/resources/assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
-	<script>One.helpersOnLoad(['jq-datepicker']);</script>
-	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	<script th:src="@{/resources/assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	<script th:src="@{/resources/assets/js/banner/banner.js}"></script>
 	<script th:src="@{/resources/assets/js/banner/bn-ajax.js}"></script>
 	<script th:src="@{/resources/assets/js/dialog.js}"></script>
@@ -99,7 +98,22 @@
 		
 		$(function() {
 			banner('1303');
+			datePicker();
 		})
+		
+		function datePicker() {
+		    $('.js-datepicker:not(.js-datepicker-enabled)').add('.input-daterange:not(.js-datepicker-enabled)').each((index, element) => {
+			    let el = $(element);
+			
+			    el.addClass('js-datepicker-enabled').datepicker({
+			        weekStart: el.data('week-start') || 0,
+			        autoclose: el.data('autoclose') || false,
+			        todayHighlight: el.data('today-highlight') || false,
+			        container: el.data('container') || '#page-container',
+			        orientation: 'bottom' // Position issue when using BS5, set it to bottom until officially supported
+			    });
+    		});
+  		}
 
 	</script>
 </main>

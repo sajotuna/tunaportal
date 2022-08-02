@@ -323,28 +323,31 @@
 		// 이의신청 insert table
 		function objTableMake() {
 				
-				$('#objectionTb tr').removeClass('table-primary');
-				$(this).addClass('table-primary');
-				
-				$('#content').attr('disabled', false);
-				$('#objInsertBtn').attr('disabled', false);
-				
-				let datas = ['pfname', 'sbjname', 'objstate', 'content', 'answer'];
-				
-				for (data of datas) {
-					$(`#${data}`).text('');
-					$(`#${data}`).text($(this).data(data));
-					$(`#${data}`).val($(this).data(data));
-				}
-				
-				if ($(this).data('content')) {
-					$('#content').attr('disabled', true);
-					$('#objInsertBtn').attr('disabled', true);
-				}
-				
-				$('#objInsertBtn').data('sbjno', $(this).data('sbjno'));
-				
+			$('#objectionTb tr').removeClass('table-primary');
+			$(this).addClass('table-primary');
+			
+			$('#content').text('');
+			$('#content').attr('disabled', false);
+			$('#objInsertBtn').attr('disabled', false);
+			
+			let datas = ['pfname', 'sbjname', 'objstate', 'answer'];
+			
+			for (data of datas) {
+				$(`#${data}`).text('');
+				$(`#${data}`).text($(this).data(data));
+				$(`#${data}`).val($(this).data(data));
 			}
+			
+			if ($(this).data('content')) {
+				let content = $(this).data('content').replace(/\n/g, '<br>');
+				$('#content').html(content);
+				$('#content').attr('disabled', true);
+				$('#objInsertBtn').attr('disabled', true);
+			}
+			
+			$('#objInsertBtn').data('sbjno', $(this).data('sbjno'));
+			
+		}
 		
 		function getContextPath() {
 			var pathName = window.location.pathname.substring(1);

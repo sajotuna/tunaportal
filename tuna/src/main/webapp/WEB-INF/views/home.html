@@ -291,7 +291,7 @@
 		                <div class="block block-rounded">
 		                    <div class="block-content box">
 		                        <button class="box-btn btn btn-dark fw-bold" 
-		                        		th:onclick="|window.open('@{/stud/course/Warning}')|">수강신청</button>
+		                        		th:onclick="|window.open('@{/stud/course/Warning}', 'course')|">수강신청</button>
 		                    </div>
 		                </div>
 		            </div>
@@ -309,7 +309,7 @@
 		                        <div class="block block-rounded">
 		                            <div class="block-content short-box">
 		                                <button class="box-btn btn btn-outline-light text-primary-darker fw-bold" 
-		                                		th:onclick="|window.open('@{/stud/scholar/Application}')|">장학 신청 및 조회</button>
+		                                		th:onclick="|window.open('@{/stud/scholar/Application}', 'scholar')|">장학 신청 및 조회</button>
 		                            </div>
 		                        </div>
 		                    </div>
@@ -355,7 +355,7 @@
 		                <div class="block block-rounded">
 		                    <div class="block-content box">
 		                        <button class="box-btn btn btn-outline-light text-primary-darker fw-bold" 
-		                        		th:onclick="|window.open('@{/stud/eclass/home}')|">e-Class</button>
+		                        		th:onclick="|window.open('@{/stud/eclass/home}', 'eclass')|">e-Class</button>
 		                    </div>
 		                </div>
 		            </div>
@@ -389,7 +389,7 @@
 				    <div class="col-lg-4 col-xl-3">
 						<div class="block block-rounded staff-box">
 						    <button class="box-btn btn fw-bold banner long-img-btn"
-						    		th:onclick="|window.open('@{/eclass/professor/home}')|">
+						    		th:onclick="|window.open('@{/eclass/professor/home}', 'eclass-prof')|">
 								<div class="text-gray-lighter long-img-div">e-Class<br>교수</div>
 								<img class="banner-img" th:src="@{/resources/assets/media/home-01.jpeg}">
 						    </button>
@@ -488,13 +488,6 @@
 			})
 		}
 	   	
-	   	function getContextPath() {
-			var pathName = window.location.pathname.substring(1);
-			var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
-			var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
-			return path_root;
-		}
-	   	
 	   	function freshmanUpdate(){
 	   		
 	   		var reg = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$"
@@ -516,8 +509,8 @@
 					return;
 				}
 				
-				if(fn_checkPass(pwd.value) == false)
-				{
+				if(fn_checkPass(pwd.value) == false){
+					
 					alert("비밀번호는 소문자, 대문자, 숫자, 특수문자 \n조합하여 8자리 이상으로 구성하세요.");
 					
 				} else {
@@ -527,28 +520,37 @@
 					} else {
 						alert("비밀번호가 서로 다릅니다. 확인해주세요.")
 					}
+					
 				}
+				
 				pwd.value = '';
 				pwd1.value = '';
 			}
 			
-			function fn_checkPass(password) {
+		function fn_checkPass(password) {
 
-				var checkPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+			var checkPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
 
-				if (checkPass.test(password)) {
-					return true;
-				} else {
-					return false;
-				}
+			if (checkPass.test(password)) {
+				return true;
+			} else {
+				return false;
 			}
+		}
+		
+	   	function getContextPath() {
+			var pathName = window.location.pathname.substring(1);
+			var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+			var path_root = window.location.protocol + '//' + window.location.host + '/' + webName + '/';
+			return path_root;
+		}
    	
    	</script>
    	
    	<th:block th:if = "${#authentication.principal.chpwd != null && #authentication.principal.chpwd != ''}">
 	   	<script th:inline = "javascript">
 		   	let chpwd = /*[[${#authentication.principal.chpwd}]]*/ 'default';	
-		   	console.log(chpwd)
+		   	//console.log(chpwd)
 		   	loaderCurtain = document.querySelector('#loaderCurtain');
 		   	if(chpwd == '0'){
 		   		loaderCurtain.classList.remove('d-none');
