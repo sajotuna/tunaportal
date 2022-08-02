@@ -23,67 +23,65 @@
 <body>
 <main layout:fragment="main">
 	<!-- Page Content -->
-	<div class="mt-3">
-		<div class="content">
-		<p class="h3 fw-bold">학기별 이의신청 조회</p>
-		<!-- Input -->
-					<div class="row">
-						<div class="col-xl-3">
-							<div class="mb-4 mb-lg-4">
-								<select class="form-select" id="seasonCode">
-									<option selected value="all">전체 학기</option>
-									<th:block th:each="seasonCodeVO : ${seasonCodes}">
-										<th:block th:each="seasonCode : ${seasonCodeVO.children}">
-											<option th:value="${seasonCode.no}" 
-											    	th:text="${seasonCode.codeName}">#</option>
-										</th:block>
+	<div class="content">
+	<p class="h3 fw-bold">학기별 이의신청 조회</p>
+	<!-- Input -->
+				<div class="row">
+					<div class="col-xl-3">
+						<div class="mb-4 mb-lg-4">
+							<select class="form-select" id="seasonCode">
+								<option selected value="all">전체 학기</option>
+								<th:block th:each="seasonCodeVO : ${seasonCodes}">
+									<th:block th:each="seasonCode : ${seasonCodeVO.children}">
+										<option th:value="${seasonCode.no}" 
+										    	th:text="${seasonCode.codeName}">#</option>
 									</th:block>
-								</select>
-							</div>
+								</th:block>
+							</select>
 						</div>
 					</div>
-					<!-- END Input -->
-			<!-- Block -->
-			<div class="block block-rounded mb-4">
-					<!-- Table -->
-					<div class="mb-4 scroll-table-div">
-						<table class="table table-hover table-vcenter scroll-table m-0">
-							<thead>
-								<tr>
-									<th style="width: 200px;">연도/학기</th>
-									<th style="width: 120px;">과목번호</th>
-									<th>과목명</th>
-									<th style="width: 200px;">개설학과</th>
-									<th style="width: 100px;">이수구분</th>
-									<th style="width: 100px;">학생명</th>
-									<th style="width: 100px;">등급</th>
-									<th style="width: 100px;">평점</th>
-									<th>이의신청일</th>
-									<th style="width: 100px;">신청상태</th>
+				</div>
+				<!-- END Input -->
+		<!-- Block -->
+		<div class="block block-rounded mb-4">
+				<!-- Table -->
+				<div class="mb-4 scroll-table-div">
+					<table class="table table-hover table-vcenter scroll-table m-0">
+						<thead>
+							<tr>
+								<th style="width: 200px;">연도/학기</th>
+								<th style="width: 120px;">과목번호</th>
+								<th>과목명</th>
+								<th style="width: 200px;">개설학과</th>
+								<th style="width: 100px;">이수구분</th>
+								<th style="width: 100px;">학생명</th>
+								<th style="width: 100px;">등급</th>
+								<th style="width: 100px;">평점</th>
+								<th>이의신청일</th>
+								<th style="width: 100px;">신청상태</th>
+							</tr>
+						</thead>
+						<tbody id="objectionTb">
+							<th:block th:each="obj, i:${objList}">
+								<tr data-bs-toggle="modal" data-bs-target="#objection" th:data-objno="${obj.NO}">
+									<td scope="row" class="fw-semibold fs-sm" th:text="${obj.SEASONCODE}">#</td>
+									<td class="fw-semibold fs-sm" th:text="${obj.SBJNO}">#</td>
+									<td class="fw-semibold fs-sm" th:text="${obj.NAME}">#</td>
+									<td class="fw-semibold fs-sm" th:text="${obj.DEPTCODE}">#</td>
+									<td class="fw-semibold fs-sm" th:text="${obj.TYPE}">#</td>
+									<td class="fw-semibold fs-sm" th:text="${obj.STNAME}"></td>
+									<td class="fw-semibold fs-sm" th:text="${obj.ALPHABET}"></td>
+									<td class="fw-semibold fs-sm" th:text="${obj.TOTAL}"></td>
+									<td class="fw-semibold fs-sm" th:text="${#dates.format(obj.ENROLLDATE, 'yyyy-MM-dd')}">#</td>
+									<td class="fw-semibold fs-sm objState" th:text="${obj.OBJSTATE}"></td>
 								</tr>
-							</thead>
-							<tbody id="objectionTb">
-								<th:block th:each="obj, i:${objList}">
-									<tr data-bs-toggle="modal" data-bs-target="#objection" th:data-objno="${obj.NO}">
-										<td scope="row" class="fw-semibold fs-sm" th:text="${obj.SEASONCODE}">#</td>
-										<td class="fw-semibold fs-sm" th:text="${obj.SBJNO}">#</td>
-										<td class="fw-semibold fs-sm" th:text="${obj.NAME}">#</td>
-										<td class="fw-semibold fs-sm" th:text="${obj.DEPTCODE}">#</td>
-										<td class="fw-semibold fs-sm" th:text="${obj.TYPE}">#</td>
-										<td class="fw-semibold fs-sm" th:text="${obj.STNAME}"></td>
-										<td class="fw-semibold fs-sm" th:text="${obj.ALPHABET}"></td>
-										<td class="fw-semibold fs-sm" th:text="${obj.TOTAL}"></td>
-										<td class="fw-semibold fs-sm" th:text="${#dates.format(obj.ENROLLDATE, 'yyyy-MM-dd')}">#</td>
-										<td class="fw-semibold fs-sm objState" th:text="${obj.OBJSTATE}"></td>
-									</tr>
-								</th:block>
-							</tbody>
-						</table>
-					</div>
-					<!-- END Table -->
-			</div>
-			<!-- END Block -->
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+				<!-- END Table -->
 		</div>
+		<!-- END Block -->
 	</div>
 	<!-- END Page Content -->
 	
@@ -157,10 +155,10 @@
 			let objNo = $(this).data('objno');
 			let answer = $('#answer').val();
 			
-			if(!content) {
+			if(!answer) {
 				Dialogs.dialog('error',
 					  		   '등록 불가',
-					 	   	   '내용을 작성해 주세요.');
+					 	   	   '내용을 입력해 주세요.');
 			} else {
 				
 				Dialogs.dialog(
@@ -225,10 +223,13 @@
 				$('#content').text(obj.CONTENT);
 				
 				if (obj.ANSWER == null) {
+					$('#answer').text('');
 					$('#answer').attr('disabled', false);
 					$('#objUpdateBtn').attr('disabled', false);
 				} else {
+					$('#answer').text('');
 					$('#answer').text(obj.ANSWER);
+					$('#answer').attr('disabled', true);
 					$('#objUpdateBtn').attr('disabled', true);
 				}
 				

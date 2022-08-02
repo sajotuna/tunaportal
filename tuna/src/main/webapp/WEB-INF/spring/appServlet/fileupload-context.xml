@@ -6,7 +6,7 @@
 	
 	<bean id="fileDir" class="java.lang.String">
 		<constructor-arg>
-			<value>/home/ubuntu/apache-tomcat-9.0.65/webapps/tuna/WEB-INF/files/</value>
+			<value>/home/ubuntu/files/</value>
 		</constructor-arg>
 	</bean>
 	

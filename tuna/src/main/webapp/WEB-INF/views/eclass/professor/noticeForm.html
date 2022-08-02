@@ -4,95 +4,33 @@ xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     data-layout-decorate="~{layouts/eclassProfLayout}">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="_csrf" th:content="${_csrf.token}">
-	<meta name="_csrf_header" th:content="${_csrf.headerName}">
-    <title>E-Class 공지 등록</title>
-  	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <meta charset="UTF-8" />
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <title>E-Class 공지 등록</title>
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
   <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
   <script th:src="@{/resources/assets/js/dialog.js}"></script>
+  <style>
+     .ck-editor__editable {
+       min-height: 380px;
+     }
+  </style>
   </head>
   <body>
 
-   <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
-    <!--  <div id="page-overlay"></div>
-
-      <aside id="side-overlay">
-        <div class="content-header">
-        </div>
-        <div class="content-side">
-        </div>
-      </aside> -->
-
-      <!--
-███████ ██ ██████  ███████     ██████   █████  ██████  
-██      ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██   ██ █████       ██████  ███████ ██████  
-     ██ ██ ██   ██ ██          ██   ██ ██   ██ ██   ██ 
-███████ ██ ██████  ███████     ██████  ██   ██ ██   ██ 
-      -->
-      <!-- <nav id="sidebar" aria-label="Main Navigation">
-        <div class="content-header">
-
-        </div>
-        <div class="js-sidebar-scroll">
-        </div>
-      </nav> -->
-      <!-- SIDE BAR END -->
-      
-      <!--
-██   ██ ███████  █████  ██████  ███████ ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-███████ █████   ███████ ██   ██ █████   ██████  
-██   ██ ██      ██   ██ ██   ██ ██      ██   ██ 
-██   ██ ███████ ██   ██ ██████  ███████ ██   ██                                     
-      -->
-      <!--<header id="page-header">
-        <div class="content-header">page-header</div>
-      </header>-->
-      <!--HEADER END-->
-
-<!--
- ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
-██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
-██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
-██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
- ██████  ██████  ██   ████    ██    ███████ ██   ████    ██ 
--->
       <main id="main-container" layout:fragment="main">
-        <!-- <div class="bg-body-light">
-          <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-              <div class="flex-grow-1">
-                <h1 class="h3 fw-bold mb-2">
-                  Main
-                </h1>
-                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                  E-class 홈 화면 입니다.
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div> content header END -->
-
-        <div class="content">
-          <h2 class="h3 fw-bold">공지 사항</h2>
+        <div class="content content-full">
+          <h2 class="h3 fw-bold d-none d-lg-block">공지사항 등록</h2>
           <div class="col-xxl-12">
             <div class="block block-rounded">
-              <div class="block-content">
+              <div class="block-content block-content-full">
                 <form th:action="@{/staff/eclass/notice}" method="POST" id = "frm">
                   <div class="row mt-2">
-                    <label class="col-1 d-none d-xl-block" for="title_input">
-                      제목
-                    </label>
-                    <div class="h4 col-7 mb-1">
-                      <input id="title_input" name="title" type="text" class="col-12 form-control">
+                    <div class="h4 col-lg-7 mb-2 mb-lg-3">
+                      <input id="title_input" name="title" type="text" placeholder="제목" class="col-12 form-control">
                     </div>
-                    <label class="col-1 d-none d-xl-block" for="subject- selector">
-                      과목
-                    </label>
-                    <div class="col-3">
+                    <div class="col-lg-5">
                       <select id="subject-selector" name="sbjNo" class="form-select">
                         <option
                           th:each="subject : ${subjects}"
@@ -104,47 +42,22 @@ xmlns:th="http://www.thymeleaf.org"
                       </select>
                     </div>
                   </div>
-                  <hr>
                   <div class="row">
                     <!-- 내용 입력-->
-                      <div class="offset-1 col-10">
+                      <div class="col-12 mb-3">
                        <textarea name="content" id="ckfinder"></textarea>
                       </div>
                   </div>
-                  <hr>
-                  <!-- <div class="row mb-4">
-                    <div class="col-2 text-start">
-                      <p>첨부파일</p>
-                    </div>
-                    <div class="col-10">
-                      <div class="dropzone" id="fileDropzone"></div>
-                    </div>
-                  </div> -->
-                  <div class="row items-push">
-                    <div class="col-6">
-                      <input class="btn btn-primary col-xl-4 offset-xl-1" id="nBtn" type="button" value="등록">
-                    </div>
+                  <div class="d-flex justify-content-center justify-content-lg-end me-lg-1">
+                      <input class="btn btn-primary col-12 col-lg-1" id="nBtn" type="button" value="등록">
                   </div>
                 </form>
               </div>
             </div> <!-- block end-->
-            
           </div> <!-- col-12 end -->
-
         </div> <!-- content END -->
-
-        <!-- 모달 리스트 -->
-        <!-- <div class="modal" id="modal-block-normal" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              Hello
-            </div>
-          </div>
-        </div> -->
-        <!-- 모달 리스트 END -->
         <script
 			th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
-        <script th:src="@{/resources/assets/js/plugins/dropzone/min/dropzone.min.js}"></script>
         <script>
           One.helpersOnLoad(['js-simplemde']);
           //fileDropzone dropzone 설정할 태그의 id로 지정

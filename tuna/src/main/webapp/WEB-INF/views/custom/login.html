@@ -3,9 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<link rel="shortcut icon" th:href="@{/resources/assets/media/tuna-icon.ico}">
-	<link rel="icon" th:href="@{/resources/assets/media/tuna-icon.ico}">
-	<title>login</title>
+	<link rel="shortcut icon" th:href="@{/resources/assets/media/tuna_favicon.ico}">
+	<link rel="icon" th:href="@{/resources/assets/media/tuna_favicon.ico}">
+	<title>로그인</title>
 	
 	<link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
 </head>
@@ -51,12 +51,19 @@
 					<!-- Main Section -->
 					<div
 						class="hero-static col-lg-8 d-flex flex-column align-items-center bg-body-light">
-						
+						<div class="p-3 w-100 d-lg-none text-center">
+		                	<a class="link-fx fw-semibold fs-3 text-dark" href="index.html">
+		                  	TUNA <span class="fw-normal">Portal</span>
+		                	</a>
+		                </div>
 						<div class="p-4 w-100 flex-grow-1 d-flex align-items-center">
 							<div class="w-100">
 								<!-- Header -->
 								<div class="text-center mb-5">
-									<h1 class="fw-bold mb-2">TUNA Portal</h1>
+									<h1 class="fw-bold mb-2">로그인</h1>
+									<p class="fw-medium text-muted">
+				                      본인의 학번 또는 교번으로 로그인하세요.
+				                    </p>
 								</div>
 								<!-- END Header -->
 								
@@ -71,50 +78,45 @@
 											<div class="mb-4">
 												<input type="text"
 													class="form-control form-control-lg form-control-alt py-3"
-													id="username" name="username" placeholder="Username">
+													id="username" name="username" placeholder="아이디">
 											</div>
 											<div class="mb-4">
 												<input type="password"
 													class="form-control form-control-lg form-control-alt py-3"
-													id="password" name="password" placeholder="Password">
+													id="password" name="password" placeholder="비밀번호">
 											</div>
-											<div
-												class="d-flex justify-content-between align-items-center mb-4">
-												<div>
-													<a
-														class="text-muted fs-sm fw-medium d-block d-lg-inline-block mb-1"
-														href="pwdfind"> Forgot Password? </a>
-												</div>
-											</div>
-
-											<div>
-												<button type="submit" class="btn btn-lg btn-alt-primary">
-													<i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i>
-													Sign In
-												</button>
-											</div>
+											<div class="d-flex justify-content-between align-items-center mb-4">
+					                          <div>
+					                            <a class="fs-sm fw-medium d-block d-lg-inline-block mb-1" href="pwdfind">
+					                              비밀번호를 잊으셨나요?
+					                            </a>
+					                          </div>
+					                          <div>
+					                            <button type="submit" class="btn btn-lg btn-alt-primary">
+					                              <i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i> 로그인
+					                            </button>
+					                          </div>
+					                        </div>
 										</form>
 										<div th:if="${LoginFailMessage}">
 									        <p th:text="${LoginFailMessage}" class="alert alert-danger"></p>
 									    </div>
 									</div>
-
 								</div>
+								<!-- END Sign In Form -->
 							</div>
 						</div>
-
-						<!-- END Sign In Form -->
+						<div
+							class="px-4 py-3 w-100 d-lg-none d-flex flex-column flex-sm-row justify-content-between fs-sm text-center text-sm-start">
+							<p class="fw-medium text-black-50 py-2 mb-0">
+								<strong>TUNA 0.1</strong> &copy; <span data-toggle="year-copy"></span>
+							</p>
+							<ul class="list list-inline py-2 mb-0">
+								<li class="list-inline-item"><a class="text-muted fw-medium"
+									href="https://github.com/sajotuna/tunaportal" target="_blank">GitHub</a></li>
+							</ul>
+						</div>
 					</div>
-				</div>
-				<div
-					class="px-4 py-3 w-100 d-lg-none d-flex flex-column flex-sm-row justify-content-between fs-sm text-center text-sm-start">
-					<p class="fw-medium text-black-50 py-2 mb-0">
-						<strong>TUNA 0.1</strong> &copy; <span data-toggle="year-copy"></span>
-					</p>
-					<ul class="list list-inline py-2 mb-0">
-						<li class="list-inline-item"><a class="text-muted fw-medium"
-							href="https://github.com/sajotuna/tunaportal" target="_blank">GitHub</a></li>
-					</ul>
 				</div>
 			</div>
 		</section>
