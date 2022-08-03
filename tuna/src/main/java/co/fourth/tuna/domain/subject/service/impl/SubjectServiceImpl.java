@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.subject.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.fourth.tuna.domain.attendance.service.AttendanceService;
 import co.fourth.tuna.domain.common.mapper.LectureScheduleMapper;
 import co.fourth.tuna.domain.common.service.YearService;
+import co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO;
 import co.fourth.tuna.domain.grade.service.GradeService;
 import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
 import co.fourth.tuna.domain.lectureplan.mapper.LecturePlanMapper;
@@ -133,6 +135,18 @@ public class SubjectServiceImpl implements SubjectService {
 		// TODO Auto-generated method stub
 		return map.subjectCount(params);
 
+	}
+
+	@Override
+	public Integer thisWeekCalculator(List<LecturePlanVO> plans, List<LectureScheduleVO> schedule) {
+		LocalDate today = LocalDate.now();
+		for( int i = 0; i < plans.size(); i++ ) {
+			for( LectureScheduleVO lecSche : schedule ) {
+				lecSche
+			}
+		}
+		
+		return null;
 	}
 
 	

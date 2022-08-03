@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO;
 import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.subject.vo.SubjectVO;
@@ -34,5 +35,9 @@ public interface SubjectService {
 	public String updateGradeRatio(GradeRatioVO grade);
 	
 	public List<SubjectWithAttendanceVO> getListByStudentIdAndProfessorId(int stno, int pfno);
-
+	
+	/*
+	 * 이번 주차 계산기
+	 * */
+	public Integer thisWeekCalculator(List<LecturePlanVO> plans, List<LectureScheduleVO> schedule);
 }

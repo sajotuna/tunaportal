@@ -3,6 +3,7 @@ package co.fourth.tuna.web.eclass.professor;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,16 +22,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.fourth.tuna.domain.attendance.service.AttendanceService;
 import co.fourth.tuna.domain.common.service.CodeService;
 import co.fourth.tuna.domain.common.service.LectureScheduleService;
 import co.fourth.tuna.domain.common.service.YearService;
-import co.fourth.tuna.domain.common.service.impl.YearServiceImpl;
 import co.fourth.tuna.domain.common.vo.code.CodeMasterVO;
 import co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO;
 import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
 import co.fourth.tuna.domain.lectureNotice.vo.LectureNoticeVO;
 import co.fourth.tuna.domain.lectureQna.service.LectureQnaService;
 import co.fourth.tuna.domain.lectureQna.vo.LectureQnaVO;
+import co.fourth.tuna.domain.lectureplan.service.LecturePlanService;
+import co.fourth.tuna.domain.lectureplan.vo.LecturePlanVO;
 import co.fourth.tuna.domain.objection.service.ObjectionService;
 import co.fourth.tuna.domain.portalSchedule.service.PortalScheduleService;
 import co.fourth.tuna.domain.portalSchedule.vo.PortalScheduleVO;
@@ -55,7 +58,11 @@ public class EclassProfessorEclassController {
 	ObjectionService objectionService;
 	@Autowired
 	LectureScheduleService lecScheduleService;
-
+	@Autowired
+	AttendanceService attendanceService;
+	@Autowired
+	LecturePlanService lecPlanService;
+	
 	@Autowired
 	YearService yearService;
 
@@ -157,13 +164,13 @@ public class EclassProfessorEclassController {
 
 	@GetMapping("/subject")
 	public String subjectView(Model model, HttpServletRequest req,
-			@RequestParam(value = "no", required = false, defaultValue = "0") int no) {
+			@RequestParam(value = "no", required = false, defaultValue = "0") int sbjno) {
 		String season = yearService.yearFind();
 
-		if (no < 1) {
+		if (sbjno < 1) {
 			return "redirect:/" + WEB_PATH;
 		}
-		SubjectVO subject = subjectService.findOneWithApplysAndRatioAndFilesById(no);
+		SubjectVO subject = subjectService.findOneWithApplysAndRatioAndFilesById(sbjno);
 
 		// 개강일 검색
 		PortalScheduleVO schedule = portalScheduleService.findSeasonSchedule(season, "1101");
@@ -173,19 +180,39 @@ public class EclassProfessorEclassController {
 		LocalDate startDate = firstDay.minusDays(1);
 
 		// 시간표 목록
-		List<LectureScheduleVO> subSche = lecScheduleService.findScheduleBySubjectId(no);
+		List<LectureScheduleVO> subSche = lecScheduleService.findScheduleBySubjectId(sbjno);
 
 		List<LocalDate> schedules = new ArrayList<LocalDate>();
 		for (LectureScheduleVO lecSche : subSche) {
 			schedules.add(startDate.with(TemporalAdjusters
 					.next(DayOfWeek.of(CustomDateUtills.koreanWeeksToLocalDateNum(lecSche.getDayCode())))));
 		}
-		Collections.sort(schedules, (LocalDate d1, LocalDate d2) -> d1.compareTo(d1));
-
+		Collections.sort(schedules, (LocalDate d1, LocalDate d2) -> d1.compareTo(d2));
+		
+		LocalDate lectureStartDay = schedules.get(0);
 		LocalDate lastDay = schedules.get(schedules.size() - 1).plusWeeks(15);
-
+		
+		Integer thisWeek = 0;
+		
+		LocalDate today = LocalDate.now();
+		
+		// 주차 계산
+		List<LecturePlanVO> plans = lecPlanService.findListBySubjectId(sbjno);
+		subjectService.thisWeekCalculator(plans, subSche);
+		for(int i=0; i < plans.size(); i++) {
+			for( LectureScheduleVO lecSche : subSche ) {
+				LocalDate ldate = startDate.with(
+					TemporalAdjusters.next(
+						DayOfWeek.of(CustomDateUtills.koreanWeeksToLocalDateNum(lecSche.getDayCode()))
+					)
+				);
+				if(today.compareTo(ldate) < 0) break;
+			}
+		}
+		
+		
 		model.addAttribute("subject", subject);
-		model.addAttribute("firstDay", firstDay);
+		model.addAttribute("firstDay", lectureStartDay);
 		model.addAttribute("lastDay", lastDay);
 		
 		return req.getServletPath();

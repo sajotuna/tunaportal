@@ -110,7 +110,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </small></h5>
                     <div>수강생  : <strong><span th:text="${#lists.size(subject.lectureApplyList)}">데이터 없음</span> 명</strong></div>
                     <div>학점 : <strong th:text="${subject.point}">데이터 없음</strong></div>
-                    <div>주차 : <strong>?? / 16</strong></div>
+                    <div>주차 : <strong><span></span>/ 16</strong></div>
                     <div>기간 : <strong>
                       <span th:text="${firstDay}">20??-??-??</span> ~ 
                       <span th:text="${lastDay}">20??-??-??</span></strong></div>
@@ -312,7 +312,7 @@ xmlns:th="http://www.thymeleaf.org"
                     <form id="subject-attendance-form" onsubmit="return false;">
                       <div class="row">
                         <div class="col-xl-3 align-self-center">
-                          <span class="fs-lg fw-bold" id="attendance_date_text">##-##-## (##)</span>
+                          <span class="fs-lg fw-bold" id="attendance_date_text">####-## (##)</span>
                         </div>
                         <div class="offset-5 col-xl-2">
                           <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
@@ -442,7 +442,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                     <div class="pt-2 row">
                       <div class="col-xl-2">
-                        <button href="" class="col-12 btn btn-dark">전체보기</button>
+                        <button th:href="@{/staff/eclass/qnaList}" class="col-12 btn btn-dark">전체보기</button>
                       </div>
                     </div>
                   </div> <!-- qna TAB END -->
@@ -1727,7 +1727,7 @@ xmlns:th="http://www.thymeleaf.org"
                 li.data_wkcode = plan.wkCode-1200;
                 li.data_summary = plan.summary;
                 li.data_pad = plan.placeAndDate;
-              }
+              } 
               ulTag.children[0].children[0].click();
             }
 
