@@ -18,6 +18,7 @@ import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.lectureBasket.service.LectureBasketService;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
 import co.fourth.tuna.domain.subject.service.SubjectService;
+import co.fourth.tuna.domain.subject.vo.SubjectVO;
 
 @Controller
 public class LectureBasketController {
@@ -43,11 +44,12 @@ public class LectureBasketController {
 //			model.addAttribute("error", "현재 수강꾸러미 열람기간이 아닙니다.");
 //			return "schedule/date/basketDate";
 //		}
-		
+		SubjectVO sbj = new SubjectVO();
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		params.put("seasonCode", yearDao.yearFind());
-		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount(yearDao.yearFind())/10));
+		
+		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount(params)/10));
 		vo.setSeasonCode(yearDao.yearFind());
 		vo.setStNo(authentication.getName());
 		List<Map<String, Object>> lists = SqlSession
@@ -94,7 +96,7 @@ public class LectureBasketController {
 				return "redirect:/stud/course/Basket";
 			}
 		}
-		ra.addFlashAttribute("success", "수강신청이 완료되었습니다.");
+		ra.addFlashAttribute("success", "수강꾸러미 등록이 완료되었습니다.");
 		return "redirect:/stud/course/Basket";
 
 	}
@@ -103,7 +105,7 @@ public class LectureBasketController {
 	public String basketDelete(Authentication authentication, RedirectAttributes ra, LectureBasketVO vo) {
 		vo.setStNo(authentication.getName());
 		LectureBasketDao.baskDelete(vo);
-		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
+		ra.addFlashAttribute("success", "수강꾸러미 내역의 삭제가 완료되었습니다.");
 		return "redirect:/stud/course/Basket";
 	}
 
