@@ -20,6 +20,19 @@ xmlns:th="http://www.thymeleaf.org"
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
+    <style>
+      .line-hider-fluid {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 49px;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        
+        line-height: 49px;
+      }
+    </style>
   </head>
   <body>
 
@@ -112,7 +125,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                     <div class="pt-3 row">
                       <div class="col-10 offset-1 col-xxl-3 offset-xxl-9">
-                        <button th:onclick="|location.href='@{/eclass/professor/subjectForm(no=${param.no})}'|" class="col-12 btn btn-primary">
+                        <button th:onclick="|location.href='@{/staff/eclass/subjectForm(no=${param.no})}'|" class="col-12 btn btn-primary">
                           수정 
                         </button>
                       </div>
@@ -288,7 +301,7 @@ xmlns:th="http://www.thymeleaf.org"
                       </div>
                     </div>
                   </div> <!-- progress TAB END-->
-<!--
+<!-- @ studnet @ attendance
       ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ 
 ▄ ██ ▄██         ██    ██    ██ ██   ██ ██      ████   ██    ██    
  ████ ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    
@@ -299,7 +312,7 @@ xmlns:th="http://www.thymeleaf.org"
                     <form id="subject-attendance-form" onsubmit="return false;">
                       <div class="row">
                         <div class="col-xl-3 align-self-center">
-                          <span class="fs-lg fw-bold" id="attendance_date_text">yy-MM-dd (요)</span>
+                          <span class="fs-lg fw-bold" id="attendance_date_text">##-##-## (##)</span>
                         </div>
                         <div class="offset-5 col-xl-2">
                           <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
@@ -327,7 +340,7 @@ xmlns:th="http://www.thymeleaf.org"
          ██    ██   ██ ███████ ██   ██ 
 -->
                   <div class="tab-pane pb-3" id="btabs-static-task" role="tabpanel" aria-labelledby="btabs-static-task-tab">
-                    <div style="overflow-y:scroll; overflow-x:scroll; height: 310px;">
+                    <div style="overflow-y:scroll; overflow-x:scroll; height: 305px;">
                       <table id="task-table" class="table table-hover table-vcenter ">
                         <thead>
                           <tr>
@@ -429,25 +442,28 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                     <div class="pt-2 row">
                       <div class="col-xl-2">
-                        <button class="col-12 btn btn-dark">전체보기</button>
+                        <button href="" class="col-12 btn btn-dark">전체보기</button>
                       </div>
                     </div>
                   </div> <!-- qna TAB END -->
-<!--
-      ███    ██  ██████  ████████ ██  ██████ ███████ 
-▄ ██ ▄████   ██ ██    ██    ██    ██ ██      ██      
- ████ ██ ██  ██ ██    ██    ██    ██ ██      █████   
-▀ ██ ▀██  ██ ██ ██    ██    ██    ██ ██      ██      
-      ██   ████  ██████     ██    ██  ██████ ███████
+<!-- @ notice
+        ███    ██  ██████  ████████ ██  ██████ ███████ 
+▄ ██ ▄  ████   ██ ██    ██    ██    ██ ██      ██      
+ ████   ██ ██  ██ ██    ██    ██    ██ ██      █████   
+▀ ██ ▀  ██  ██ ██ ██    ██    ██    ██ ██      ██      
+        ██   ████  ██████     ██    ██  ██████ ███████  
 -->
                   <div class="tab-pane" id="btabs-static-notice" role="tabpanel" aria-labelledby="btabs-static-notice-tab">
                     <table id="subject-notice-table" class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
-                      <tbody>
+                      <thead>
                         <tr>
                           <th style="width: 100px">번호</th>
                           <th class="text-start">제목</th>
                           <th style="width: 15%">등록일</th>
                         </tr>
+                      </thead>
+                      <tbody>
+                        
                       </tbody>
                     </table>
                     <div class="col-xl-2">
@@ -690,13 +706,13 @@ xmlns:th="http://www.thymeleaf.org"
                     <button type="button" class="nav-link" id="btabs-grade-tab" data-bs-toggle="tab" data-bs-target="#btabs-grade" role="tab" aria-controls="btabs-grade" aria-selected="false">성적관리</button>
                   </li>
                 </ul>
-<!--
-███    ███        ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
-████  ████       ██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
-██ ████ ██ █████ ██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
-██  ██  ██       ██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
-██      ██        ██████  ██████  ██   ████    ██    ███████ ██   ████    ██
--->
+              <!--
+              ███    ███        ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
+              ████  ████       ██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
+              ██ ████ ██ █████ ██      ██    ██ ██ ██  ██    ██    █████   ██ ██  ██    ██    
+              ██  ██  ██       ██      ██    ██ ██  ██ ██    ██    ██      ██  ██ ██    ██    
+              ██      ██        ██████  ██████  ██   ████    ██    ███████ ██   ████    ██
+              -->
                 <div id="user_detail_modal" class="block-content tab-content">
                   <div id="userDetailCurtain" class="">
                     <div class="overflow-hidden bg-white-95 position-absolute top-0 start-0 w-100 h-100 opacity-75"></div>
@@ -942,7 +958,7 @@ xmlns:th="http://www.thymeleaf.org"
             <div>결석</div>
           </div>
          -->
-<!--
+<!-- @ script
 ███████  ██████ ██████  ██ ██████  ████████ 
 ██      ██      ██   ██ ██ ██   ██    ██    
 ███████ ██      ██████  ██ ██████     ██    
@@ -961,27 +977,28 @@ xmlns:th="http://www.thymeleaf.org"
 
             const REST_URL = {
               STUDENT_DETAIL : "/tuna/staff/student",
-              PROGRESS_CONTENT : "/tuna/prof/lecPlans",
-              //ATTENDANCE_CONTENT : "/tuna/prof/students",
+              PROGRESS_CONTENT : "/tuna/staff/lecPlans",
               ATTENDANCE_CONTENT : "/tuna/staff/attendance",
               TASK_CONTENT : "/tuna/staff/task/content",
-              QNA_CONTENT : "/tuna/prof/lecQna",
-              NOTICE_CONTENT : "/tuna/prof/lecNotices",
-              OBJECTION_CONTENT : "/tuna/prof/objections",
-              GRADE_CONTENT : "/tuna/prof/students",
+              QNA_CONTENT : "/tuna/staff/lecQna",
+              NOTICE_CONTENT : "/tuna/staff/lecNotices",
+              OBJECTION_CONTENT : "/tuna/staff/objections",
+              GRADE_CONTENT : "/tuna/staff/students",
 
-              GRDAE_UPDATE : "/tuna/prof/updateGrades",
+              GRDAES_UPDATE : "/tuna/staff/updateGrades",
+              GRADE_UPDATE : "/tuna/staff/updateGrade",
               TASK_INSERT : '/tuna/staff/insertTask',
               OBJECTION_GET : '/tuna/staff/eclass/objection?objNo=',
               OBJECTION_PUT : '/tuna/staff/eclass/objection',
-              OBJECTION_LIST : "/tuna/prof/objections",
+              OBJECTION_LIST : "/tuna/staff/objections",
 
               SUBMIT_TASK_GRADE_UPDATE : "/tuna/staff/eclass/updateSubmitTaskScore",
               SUBMIT_LECTURE_FILE_UPLOAD : "/tuna/staff/insertSubjectFile",
               SUBMIT_ATTENDANCES : "/tuna/staff/insert/attendance",
               SUBMIT_ATTENDANCES_UPDATE : "/tuna/staff/update/attendance",
               LECTURE_FILE_DELETE : "/tuna/staff/deleteSubjectFile",
-
+              
+              SUBJECT_QNA_LINK : "/tuna/staff/eclass/qna",
             };
             // const TAB_BTN_NUM = {
 
@@ -1015,6 +1032,10 @@ xmlns:th="http://www.thymeleaf.org"
             //
             let studentsGradeTr = [];
             let studentsTaskTr = [];
+            
+            function alertEvent(){
+              alert("wow!!?");
+            }
 
             // 로드 이벤트
             window.addEventListener("DOMContentLoaded", function() {
@@ -1315,7 +1336,7 @@ xmlns:th="http://www.thymeleaf.org"
               })
             }
 
-/*
+/* @ TAB CLICK
 ████████  █████  ██████       ██████ ██      ██  ██████ ██   ██ 
    ██    ██   ██ ██   ██     ██      ██      ██ ██      ██  ██  
    ██    ███████ ██████      ██      ██      ██ ██      █████   
@@ -1323,6 +1344,9 @@ xmlns:th="http://www.thymeleaf.org"
    ██    ██   ██ ██████       ██████ ███████ ██  ██████ ██   ██ 
 */
             //
+            function tabReset() {
+              onTab = -1;
+            }
             function tabClickEvent(tabIdx) {
               let reqURL = "";
               let sbj = {};
@@ -1457,7 +1481,8 @@ xmlns:th="http://www.thymeleaf.org"
             // 공지사항 패널 세팅
             function setNoticeContent(notices) {
               let table = document.querySelector('#subject-notice-table');
-              let tbody = table.firstElementChild;
+              let tbody = table.querySelector('tbody');
+              tbody.innerHTML = "";
               notices.forEach(data => {
                 // console.log(data);
                 let mDate = new Date(data.enrollDate);
@@ -1465,12 +1490,16 @@ xmlns:th="http://www.thymeleaf.org"
                 mDate = mDate.slice(0, mDate.indexOf('T'));
 
                 let tr = document.createElement('tr');
-                let atag = document.createElement('a');
                 tbody.appendChild(tr);
+                tr.addEventListener("click", function() {
+                  window.open("/tuna/staff/eclass/notice?no="+data.no, 'notice', 'heigth=1200, width=920, menubar=0, status=0, toolbar=0');
+                })
 
                 let td_no = document.createElement('td');
                 let td_title = document.createElement('td');
-                td_title.classList.add('text-start')
+                td_title.classList.add('text-start');
+                td_title.classList.add("line-hider-fluid");
+                td_title.classList.add("pt-0");
                 let td_date = document.createElement('td');
                 
                 tr.appendChild(td_no)
@@ -1494,6 +1523,9 @@ xmlns:th="http://www.thymeleaf.org"
               date_text.innerText = `${data.date} (${weekday})`;
 
               tbody.innerHTML = "";
+              // data.students.sort(function(a, b) {
+              //   if( a.attendance != null) { return -1; }
+              // })
               data.students.forEach(student => {
                 let tr = document.createElement('tr');
                 let stateCode;
@@ -1585,6 +1617,9 @@ xmlns:th="http://www.thymeleaf.org"
               tbody.innerHTML = "";
 
               studentsTaskTr = [];
+              // students.sort(function(a,b) {
+              //   if(a.submitTask != null) return -1;
+              // });
               for( student of students) {
                 let tr = document.createElement('tr');
                 let fileName, uri, enrollDate, score, disabled;
@@ -1612,7 +1647,7 @@ xmlns:th="http://www.thymeleaf.org"
                 tr.classList.add("m-0");
                 tr.innerHTML = `
                 <td class="table-cell">
-                  <a class="" href="javascript:void(0);">${student.name}</a>
+                  <a class="" data-bs-toggle="modal" data-bs-target="#modal-block-tabs" href="javascript:void(0);" onclick="studentClickEvent(${student.no})">${student.name}</a>
                 </td>
                 <td class="table-cell">
                     ${student.deptName}
@@ -1638,7 +1673,8 @@ xmlns:th="http://www.thymeleaf.org"
               
               let plan_progress_content = document.getElementById("subject-progress");
               let ulTag = plan_progress_content.getElementsByTagName("ul")[0];
-              
+              ulTag.innerHTML = "";
+
               for(let plan of planList) {
                 let li = document.createElement('li');
                 ulTag.appendChild(li);
@@ -1681,7 +1717,9 @@ xmlns:th="http://www.thymeleaf.org"
 
               for(let qna of qnaList) {
                 qnaContent += `
-                      <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">`
+                      <li><a class="d-flex text-primary-dark py-2" 
+                        href="${REST_URL.SUBJECT_QNA_LINK+"?no="+qna.no}" 
+                        onclick="window.open(this.href, 'qna', 'height=1200, width=920, menubar=0, status=0, toolbar=0'); return false;" >`
                 if( qna.answer == null ) {
                   qnaContent+=`<div class="col-1 d-none d-lg-block text-center text-danger">대기</div>`;
                 } else {
@@ -1705,6 +1743,7 @@ xmlns:th="http://www.thymeleaf.org"
             // 이의신청 패널
             function setObjectionContent(objList) {
               let table = document.querySelector('#subject-objection-table');
+              table.innerHTML = "";
               let tbody = document.createElement('tbody');
               tbody.setAttribute('id', 'objectionTb');
 
@@ -1734,6 +1773,10 @@ xmlns:th="http://www.thymeleaf.org"
               studentsGradeTr = [];
               //for(let tr of trTags){ tr.remove() };
               tbody.innerHTML = "";
+
+              // studList.sort(function(a,b) {
+              //   if(a.gradeVO != null) { return -1; }
+              // })
               for( let stud of studList ) {
                 let tr = document.createElement('tr');
                 if(!stud.gradeVO) {
@@ -1908,7 +1951,7 @@ xmlns:th="http://www.thymeleaf.org"
                     gradeDatas.push(gradeObj)
                   }
 
-                  fetch(REST_URL.GRDAE_UPDATE, {
+                  fetch(REST_URL.GRDAES_UPDATE, {
                     method: "POST",
                     headers: {
                       'header': header,
@@ -2168,7 +2211,7 @@ xmlns:th="http://www.thymeleaf.org"
                     <table class="table table-vcenter table-bordered text-center mb-0 table-bordered border-dark border-2">
                       <thead>
                         <tr>
-                          <th class="p-1" style="min-width: 50px;">종합</th>`;
+                          <th class="p-1" style="min-width: 50px;">${subject.attendanceList.length>0?"종합":"수강 대기중"}</th>`;
                 for(let atten of subject.attendanceList){
                   let attenDate = dateNumberToISO(atten.classDate).slice(5).replace('-','/');
                   let th = document.createElement('th');
@@ -2191,9 +2234,9 @@ xmlns:th="http://www.thymeleaf.org"
                       <tbody>
                         <tr class="attendance_list m-0">
                           <th class="p-0">
-                            <div class="p-1">${attenCnt}</div>
-                            <div class="p-1">${absenceCnt}</div>
-                            <div class="p-1">${latenessCnt}</div>
+                            <div class="p-1">${subject.attendanceList.length>0?attenCnt:"&nbsp"}</div>
+                            <div class="p-1">${subject.attendanceList.length>0?absenceCnt:"-"}</div>
+                            <div class="p-1">${subject.attendanceList.length>0?latenessCnt:"&nbsp"}</div>
                           </th>`;
                   for(let atten of subject.attendanceList) {
                     if(!atten.stateCode) continue;
@@ -2271,22 +2314,29 @@ xmlns:th="http://www.thymeleaf.org"
                         <thead>
                           <tr>
                             <th style="min-width: 90px;">출결</th>
-                                <th style="min-width: 90px;">중간고사</th>
-                                <th style="min-width: 90px;">기말고사</th>
-                                <th style="min-width: 90px;">과제평균</th>
-                                <th style="min-width: 90px;">총점</th>
-                                <th style="min-width: 120px;"></th>
+                            <th style="min-width: 90px;">중간고사</th>
+                            <th style="min-width: 90px;">기말고사</th>
+                            <th style="min-width: 90px;">과제평균</th>
+                            <th style="min-width: 90px;">총점</th>
+                            <th style="min-width: 120px;"></th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr class="m-0">
-                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.attd}" disabled></td>
+                          <tr class="m-0">`;
+                          if(subject.grade != null) {
+                            blockHTML += `<td><input type="number" class="form-control" placeholder="" value="${subject.grade.attd}" disabled></td>
                             <td><input type="number" class="form-control" placeholder="" value="${subject.grade.middle}"></td>
                             <td><input type="number" class="form-control" placeholder="" value="${subject.grade.finals}"></td>
                             <td><input type="number" class="form-control" placeholder="" value="${subject.grade.task}" disabled></td>
                             <td><input type="number" class="form-control" placeholder=""  value="${subject.grade.total}" disabled></td>
-                            <td><button class="btn btn-primary">적용</button></td>
-                          </tr>
+                            <td><button class="btn btn-primary">적용</button></td>`
+                          } else {
+                            blockHTML += `
+                              <td colspan="6">
+                                <div class="text-mute">수강 대기중</div>
+                              </td>`
+                          }
+                            blockHTML+= `</tr>
                         </tbody>
                       </table>
                     </div>

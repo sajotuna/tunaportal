@@ -74,9 +74,14 @@ public class ScholarController {
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
 		ScholarDao.ScholarApply(vo);
-
-		ra.addFlashAttribute("success", "장학금신청이 완료되었습니다. 파일을 제출해주세요.");
-		return "redirect:/stud/scholar/Status";
+		
+		if(vo.getSchNo().equals("1")) {
+			ra.addFlashAttribute("success", "장학금신청이 완료되었습니다.");
+			return "redirect:/stud/scholar/Status";
+		}else {
+			ra.addFlashAttribute("success", "장학금신청이 완료되었습니다. 파일을 제출해주세요.");
+			return "redirect:/stud/scholar/Status";
+		}
 	}
 
 	@RequestMapping("/stud/scholar/FileUpload")
@@ -105,7 +110,7 @@ public class ScholarController {
 //		}
 
 		ScholarDao.ScholarDelete(vo);
-		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
+		ra.addFlashAttribute("success", "장학신청 삭제가 완료되었습니다.");
 		return "redirect:/stud/scholar/Status";
 	}
 

@@ -28,19 +28,26 @@
 							<h4 class="h3 fw-bold mb-2">강의자료실</h4>
 						</div>
 					</div>
-					
+
 					<div class="row d-flex justify-content-center">
-						<div class="d-flex justify-content-center" th:each="lf, i : ${lectureFile}">
-							<div class="block block-fx-shadow block-rounded col-7 block-link-pop border-start border-primary border-4 accordion">
+						<div class="d-flex justify-content-center"
+							th:each="lf, i : ${lectureFile}">
+							<div
+								class="block block-fx-shadow block-rounded col-7 block-link-pop border-start border-primary border-4 accordion">
 								<div class="block-header block-header-default">
-									<h3 class="h4 d-flex fw-bold justify-content-center mt-3" th:text="${lf.title}"></h3>
-									<p class="fw-bold pt-3 mb-0"><small>[[${lf.enrollDate}]]</small></p>
+									<h3 class="h4 d-flex fw-bold justify-content-center mt-3"
+										th:text="${lf.title}"></h3>
+									<input type="hidden" id="index" th:value="${i.index}">
+									<p class="fw-bold pt-3 mb-0">
+										<small>[[${lf.enrollDate}]]</small>
+									</p>
 								</div>
 								<div class="block-content">
 									<ul class="list-unstyled">
 										<li>
 											<p class="fw-bold p-2">
-												<a th:href="@{/download(fileName=${lf.uri}, originName=${lf.fileName}, folder=lectureFile)}">[[${lf.fileName}]]</a>
+												<a
+													th:href="@{/download(fileName=${lf.uri}, originName=${lf.fileName}, folder=lectureFile)}">[[${lf.fileName}]]</a>
 											</p>
 										</li>
 									</ul>
@@ -55,7 +62,7 @@
 							<div class="row">
 								<div class="row block-content">
 									<div>
-										<h3 class="h4 col-7 text-center">강의자료가 등록되지 않았습니다.</h3>
+										<h3 class="h4 text-center">강의자료가 등록되지 않았습니다.</h3>
 									</div>
 								</div>
 							</div>
@@ -66,10 +73,11 @@
 			<script type="text/javascript">
 				$(function() {
 					console.log($(".accordion"))
-					$(".accordion").accordion({
-						/* active : false, */
+					let index = document.querySelectorAll("#index");
+						$(".accordion").accordion({
+							active : false,
 						collapsible : true
-					})
+						})
 				});
 			</script>
 		</main>

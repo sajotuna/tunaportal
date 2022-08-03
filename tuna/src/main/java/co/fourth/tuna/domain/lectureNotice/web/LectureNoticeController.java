@@ -31,37 +31,8 @@ public class LectureNoticeController {
 	SqlSession sql;
 	@Autowired
 	LectureNoticeService service;
-//	
-//	@RequestMapping("/eclass/student/lectureNotice")
-//	public String lectureNotice(Model model, LectureNoticeVO vo) {
-//		vo.setSbjNo(90079);
-//		vo.setSeasonCode(105);
-//		vo.setStNo(13168019);
-//		List<Map<String, Object>> notice = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeList", vo);
-//		
-//		model.addAttribute("notice", notice);
-//		
-//		return "eclass/stud/lectureNotice";
-//	}
-//	
-//	@RequestMapping("/eclass/student/lectureNoticeSelect")
-//	public String lectureNoticeSelect(Model model, LectureNoticeVO vo) {
-//		
-//		vo.setStNo(13168019);
-//		vo.setSeasonCode(105);
-//		vo.setSbjNo(90079);
-//		vo.setNo(1);
-//		List<Map<String, Object>> ns = sql.selectList("co.fourth.tuna.domain.lectureNotice.mapper.LectureNoticeMapper.noticeSelect", vo);
-//		
-//		System.out.println(ns);
-//		
-//		model.addAttribute("ns", ns);
-//		
-//		return "eclass/stud/lectureNoticeSelect";
-//	}
-//	
 
-	@PostMapping("/prof/lecNotices")
+	@PostMapping("/staff/lecNotices")
 	@ResponseBody
 	public List<LectureNoticeVO> lectureNotices(@RequestBody Map<String, Integer> data) {
 		// TODO 내 강의인지 확인
@@ -71,16 +42,16 @@ public class LectureNoticeController {
 	@PostMapping("/staff/eclass/notice")
 	public String writeNotice(Authentication auth, LectureNoticeVO notice) {
 		service.insertLectureNotice(notice);
-		return "redirect:/eclass/professor/noticeList";
+		return "redirect:/staff/eclass/noticeList";
 	}
 
-	@RequestMapping("/eclass/professor/noticeUpdate")
+	@RequestMapping("/staff/eclass/noticeUpdate")
 	public String noticeUpdateView(Model model, LectureNoticeVO notice) {
 		model.addAttribute("notice", notice);
 		return "eclass/professor/noticeUpdate";
 	}
 	
-	@RequestMapping("/eclass/professor/updateNotice")
+	@RequestMapping("/staff/eclass/updateNotice")
 	public String noticeUpdate(RedirectAttributes ra, LectureNoticeVO notice) {
 		
 		service.noticeUpdate(notice);

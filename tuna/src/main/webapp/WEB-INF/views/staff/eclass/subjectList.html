@@ -78,7 +78,7 @@ xmlns:th="http://www.thymeleaf.org"
         	<div class="row justify-content-between">
         		<h2 class="col-9 h3 fw-bold">전체 강의</h2>
         		<div class="col-3">
-        			<select id="seasonSelector" class="form-select" onchange="if(this.selectedIndex) changeSeasonData(event);">
+        			<select id="seasonSelector" class="form-select" onchange="changeSeasonData(event);">
         				<option 
                   th:each="season : ${seasonCodes.children}"
                   th:value="${season.no}"
@@ -95,7 +95,7 @@ xmlns:th="http://www.thymeleaf.org"
             <!-- block start -->
             <div th:block th:each="sub : ${subList}">
             	<a class="block block-rounded block-link-pop border-start border-primary border-4" 
-             		th:href="@{/eclass/professor/subject(no=${sub.no})}">
+             		th:href="@{/staff/eclass/subject(no=${sub.no})}">
 	              <div class="block-header block-header-default">
 	                <h3 class="block-title"> 
 	                    <span th:text="${sub.name}">데이터없음</span>

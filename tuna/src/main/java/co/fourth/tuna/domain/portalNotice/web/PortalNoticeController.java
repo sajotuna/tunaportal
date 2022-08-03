@@ -76,9 +76,11 @@ public class PortalNoticeController {
 	// 단건조회
 	@RequestMapping("/portalNoticeSelect")
 	public String portalNoticeSelect(PortalNoticeVO vo, Model model) {
+		
 		model.addAttribute("content", noticeDao.noticeSelect(vo));
 		model.addAttribute("files", noticeDao.fileSelect(Integer.parseInt(vo.getNo())));
-		
+		model.addAttribute("move",noticeDao.movePage(vo.getNo(), "Y"));
+		logger.error("브이오" + vo);
 		noticeDao.noticeHitUpdate(vo.getNo());
 
 		return "notice/user/portalNoticeSelect";
@@ -108,9 +110,13 @@ public class PortalNoticeController {
 
 	// 단건조회
 	@RequestMapping("/admin/admin/adminNoticeSelect")
-	public String adminNoticeSelect(PortalNoticeVO vo, Model model) {
+	public String adminNoticeSelect(PortalNoticeVO vo, Model model,
+			@RequestParam(value = "visible", required = false) String visible) {
 		model.addAttribute("content", noticeDao.noticeSelect(vo));
-
+		logger.error("어디냐" + vo);
+		logger.error("알수가없다" + noticeDao.movePage(vo.getNo(), "N"));
+		
+		model.addAttribute("move",noticeDao.movePage(vo.getNo(), "N"));
 		model.addAttribute("files", noticeDao.fileSelect(Integer.parseInt(vo.getNo())));
 
 		return "notice/admin/adminNoticeSelect";
@@ -216,7 +222,7 @@ public class PortalNoticeController {
 
 		for (int i = 0; i < list.size(); i++) {
 			logger.info("uri ::" + list.get(i).getUri());
-			fileService.delete(list.get(i).getUri(), "portalNotice");
+			fileService.delete(list.get(i).getUri(), "PortalNotice");
 		}
 
 		return noticeDao.noticeDelete(vo);

@@ -20,6 +20,10 @@ public class PortalNoticeVO {
 	private String adNo;	
 	private String fileyn;
 	private String hit;
+	private int next;
+	private int last;
+	private String nexttitle;
+	private String lasttitle;
 		
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	private Date enrollDate;

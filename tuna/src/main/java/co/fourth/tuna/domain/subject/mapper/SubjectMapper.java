@@ -2,6 +2,7 @@ package co.fourth.tuna.domain.subject.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -39,7 +40,7 @@ public interface SubjectMapper {
 			@Param("season")String season);
 
 	
-	public int subjectCount(String seasonCode);
+	public int subjectCount(Map<String, Object> params);
 	
 
 	//public ArrayList<SubjectVO>findListForLectureSchedule(@Param("pageNum")int start, @Param("size")int size);

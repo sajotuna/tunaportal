@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import co.fourth.tuna.domain.common.service.CodeService;
 import co.fourth.tuna.domain.common.service.LectureScheduleService;
 import co.fourth.tuna.domain.common.service.YearService;
+import co.fourth.tuna.domain.common.service.impl.YearServiceImpl;
 import co.fourth.tuna.domain.common.vo.code.CodeMasterVO;
 import co.fourth.tuna.domain.common.vo.subject.LectureScheduleVO;
 import co.fourth.tuna.domain.lectureNotice.service.LectureNoticeService;
@@ -39,7 +40,7 @@ import co.fourth.tuna.domain.user.vo.ProfessorVO;
 import co.fourth.tuna.util.CustomDateUtills;
 
 @Controller
-@RequestMapping("/eclass/professor")
+@RequestMapping("/staff/eclass")
 public class EclassProfessorEclassController {
 
 	@Autowired
@@ -52,7 +53,6 @@ public class EclassProfessorEclassController {
 	PortalScheduleService portalScheduleService;
 	@Autowired
 	ObjectionService objectionService;
-	
 	@Autowired
 	LectureScheduleService lecScheduleService;
 
@@ -62,7 +62,7 @@ public class EclassProfessorEclassController {
 	@Autowired
 	CodeService codeService;
 
-	private String profPath = "eclass/professor";
+	private static final String WEB_PATH = "/staff/eclass";
 
 	private static final Logger logger = LoggerFactory.getLogger(EclassProfessorEclassController.class);
 
@@ -71,6 +71,7 @@ public class EclassProfessorEclassController {
 //		logger.info(req.getRequestURI()); //tuna/eclass/professor/notice
 //		logger.info(req.getRequestURL().toString()); //http://localhost/tuna/eclass/professor/notice
 //		logger.info(req.getServletPath()); //eclass/professor/notice
+//		System.out.println(new Object() {}.getClass().getEnclosingMethod().getAnnotation(GetMapping.class).value()[0]);
 
 		ProfessorVO prof = new ProfessorVO();
 		prof.setNo(Integer.parseInt(auth.getName()));
@@ -85,7 +86,7 @@ public class EclassProfessorEclassController {
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("noticeList", noticeList);
 
-		return profPath + "/home";
+		return WEB_PATH + "/home";
 	}
 
 	@GetMapping("/notice")
@@ -133,7 +134,7 @@ public class EclassProfessorEclassController {
 	@GetMapping("/qna")
 	public String qnaView(Model model, HttpServletRequest req, LectureQnaVO qna) {
 		
-		qna = lectureService.professorFindQna(qna);
+		qna = lectureService.findLectureQnaByLecture(qna.getNo());
 		model.addAttribute("qna", qna);
 
 		return req.getServletPath();
@@ -160,7 +161,7 @@ public class EclassProfessorEclassController {
 		String season = yearService.yearFind();
 
 		if (no < 1) {
-			return "redirect:/" + profPath;
+			return "redirect:/" + WEB_PATH;
 		}
 		SubjectVO subject = subjectService.findOneWithApplysAndRatioAndFilesById(no);
 
@@ -186,7 +187,7 @@ public class EclassProfessorEclassController {
 		model.addAttribute("subject", subject);
 		model.addAttribute("firstDay", firstDay);
 		model.addAttribute("lastDay", lastDay);
-
+		
 		return req.getServletPath();
 	}
 
@@ -209,7 +210,7 @@ public class EclassProfessorEclassController {
 		prof.setNo(Integer.parseInt(auth.getName()));
 
 		if (season == 0) {
-			season = 106;
+			season = Integer.parseInt(yearService.yearFind());
 		}
 
 		CodeMasterVO seasonMasterCode = codeService.findById("100");

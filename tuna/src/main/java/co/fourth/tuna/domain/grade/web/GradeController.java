@@ -52,7 +52,7 @@ public class GradeController {
 	}
 	
 	//
-	@PostMapping("/prof/updateGrades")
+	@PostMapping("/staff/updateGrades")
 	public ResponseEntity<String> updateGrades(
 			@RequestBody List<GradeFormVO> grades) {
 		
@@ -79,6 +79,12 @@ public class GradeController {
 		
 		return resEntity;
 				
+	}
+	
+	@PostMapping("/staff/updateGrade")
+	public ResponseEntity<String> updateGrade(
+			@RequestBody GradeFormVO grade) {
+		return null;
 	}
 	
 	@PostMapping(value="/staff/eclass/updateSubmitTaskScore")

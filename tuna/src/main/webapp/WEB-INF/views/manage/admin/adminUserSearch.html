@@ -32,6 +32,17 @@
       <div class="block block-rounded mb-2">
         <div class="block-content p-5">
           <form th:action="@{/admin/admin/userSearch}" method="post" class="row" id = "checkFrm">
+           <div class="row justify-content-end">
+	           <div class="col-xl-3">
+	            <div class="mb-5">
+	              <select class="form-select" id="role" name="role" onchange="this.form.submit()">
+	                <option selected value="">교수/학생</option>
+	                <option value="ROLE_STUDENT" id = "student">학생</option>
+		            <option value="ROLE_STAFF" id ="staff">교수</option>
+	              </select>
+	            </div>
+	          </div>
+           </div>
            <div class="row justify-content-center">
             <div class="col-xl-3 ">
               <div class="mb-2">
@@ -44,6 +55,7 @@
                 height: 0px; width: 0px;">
               </div>
             </div>
+            
             <div class="col-xl-3 ">
               <div class="mb-2">
                 <input type="number" placeholder="학번/교번" class="form-control" id="no"
@@ -134,31 +146,31 @@
                     </button>
                   </li>
                   <li class="page-item">
-                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">1</button>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">2</button>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">3</button>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">4</button>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">5</button>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">6</button>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">7</button>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">8</button>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)">9</button>
+                    <button class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
                     <button class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
@@ -197,12 +209,20 @@
 <script th:inline="javascript">
 	document.addEventListener('DOMContentLoaded', function(){
 		let params = /*[[${params}]]*/ 'default';
-		
-		console.log(params.pageSize)
+		if(params.pageSize == 0)
+			params.pageSize = 1;
 		
 		let nextBtn = document.querySelector("#next")
 		let prevBtn = document.querySelector("#prev")
 		let pageingBtn = document.querySelectorAll("#pageingBtn");
+		
+		if(parseInt(params.pageNum) == parseInt(params.pageSize)){
+			nextBtn.disabled = true;
+		}
+		if(parseInt(params.pageNum) == 1){
+			prevBtn.disabled = true;
+		}
+		
 		nextBtn.addEventListener('click', function(){
 			nextBtn.disabled = true;
 			tagInsert(parseInt(params.pageNum)+1)
@@ -216,8 +236,15 @@
 					tagInsert(parseInt(params.pageNum)-1)	
 				}
 			})
-				
+			
 		pageingBtn.forEach((btn,idx) =>{
+			
+			if(pageingBtn[idx].innerHTML == '' || pageingBtn[idx].innerHTML == null)
+				if(parseInt(params.pageSize) < idx+1){
+					pageingBtn[idx].remove();
+				}
+				else
+					pageingBtn[idx].innerHTML = idx+1;
 			
 			if(params.pageNum > (pageingBtn.length)/2){
 				pageingBtn[Math.ceil((pageingBtn.length-1)/2)].innerHTML = params.pageNum
@@ -228,12 +255,6 @@
 				
 				if(parseInt(pageingBtn[idx].innerHTML) > parseInt(params.pageSize)){
 					pageingBtn[idx].disabled = true;
-				}
-				if(parseInt(params.pageNum) == parseInt(params.pageSize)){
-					nextBtn.disabled = true;
-				}
-				if(parseInt(params.pageNum) == 1){
-					prevBtn.disabled = true;
 				}
 			}
 			
@@ -312,6 +333,13 @@
 		if(params.year != null){
 			$('#year').val(params.year)
 		}
+		console.log(params)
+		if(params.role == "ROLE_STUDENT"){
+			$('#student').attr('selected', 'selected')
+		}else if(params.role == "ROLE_STAFF"){
+			$('#staff').attr('selected', 'selected')
+		}
+		
 		
 	})
 </script>

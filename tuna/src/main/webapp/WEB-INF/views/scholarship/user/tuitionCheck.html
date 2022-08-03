@@ -41,14 +41,20 @@
 			left: 50px;
 			width: 200px;
 		}
+		@media print {
+		  header, footer, #noprint { display:none }
+		#header, #sec_2{display:none}
+		}
+		
+		
 	</style>
 
 </head>
 
 <body>
-	<main layout:fragment="main">
+	<main layout:fragment="main" id ="noprint">
 		<!-- Hero -->
-		<div class="bg-body-light">
+		<div class="bg-body-light" id = "noprint">
 			<div class="content content-full content-boxed">
 				<div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
 					<div class="flex-grow-1 mb-1 mb-md-0">
@@ -74,48 +80,48 @@
 												<option value="107" id="107">2023년 1학기</option>
 												<option value="106" id="106">2022년 2학기</option>
 												<option value="105" id="105">2022년 1학기</option>
-												<option value="104" id="104">2021년 1학기</option>
-												<option value="103" id="103">2021년 2학기</option>
-												<option value="102" id="102">2020년 1학기</option>
-												<option value="101" id="101">2020년 2학기</option>
+												<option value="104" id="104">2021년 2학기</option>
+												<option value="103" id="103">2021년 1학기</option>
+												<option value="102" id="102">2020년 2학기</option>
+												<option value="101" id="101">2020년 1학기</option>
 											</select>
 										</div>
 									</div>
 								</div>
 								<embed height="1000px" width="1150px" target="_self">
-								<table class="table table-striped table-vcenter table-bordered mb-5">
+								<table class="table table-vcenter table-bordered mb-5" style ="border : 1px solid rgba(100,100,100); border-collapse:collapse;">
 									<thead>
 										<tr>
-											<th class="fw-semibold fs-sm">대학</th>
+											<th class="fw-semibold fs-sm bg-gray">대학</th>
 											<td class="fw-semibold fs-sm" colspan="2">튜나대학교</td>
-											<th class="fw-semibold fs-sm">학과</th>
+											<th class="fw-semibold fs-sm bg-gray">학과</th>
 											<td class="fw-semibold fs-sm" colspan="2"><input type="hidden" id="deptCode"
 													name="deptCode"
 													th:value="${vo.deptCode}">[[${@codeList.getName(vo.deptCode)}]]
 											</td>
 										</tr>
 										<tr>
-											<th class="fw-semibold fs-sm">학번</th>
+											<th class="fw-semibold fs-sm bg-gray ">학번</th>
 											<td class="fw-semibold fs-sm" id="no">[[${vo.no}]]</td>
-											<th class="fw-semibold fs-sm">학년</th>
+											<th class="fw-semibold fs-sm bg-gray ">학년</th>
 											<td class="fw-semibold fs-sm">[[${vo.sy}]]</td>
-											<th class="fw-semibold fs-sm">성명</th>
+											<th class="fw-semibold fs-sm bg-gray ">성명</th>
 											<td class="fw-semibold fs-sm">[[${vo.name}]]</td>
 
 										</tr>
 										<tr>
-											<th class="fw-semibold fs-sm" rowspan="2">구분</th>
-											<th class="fw-semibold fs-sm" rowspan="2">등록금</th>
-											<th class="fw-semibold fs-sm" colspan="3">등록금감면내역</th>
-											<th class="fw-semibold fs-sm" rowspan="2">실 납부 금액(A-B)</th>
+											<th class="fw-semibold fs-sm bg-gray " rowspan="2">구분</th>
+											<th class="fw-semibold fs-sm bg-gray " rowspan="2">등록금</th>
+											<th class="fw-semibold fs-sm bg-gray " colspan="3">등록금감면내역</th>
+											<th class="fw-semibold fs-sm bg-gray " rowspan="2">실 납부 금액(A-B)</th>
 										</tr>
 										<tr>
-											<th class="fw-semibold fs-sm">교내장학</th>
-											<th class="fw-semibold fs-sm">성적우수</th>
-											<th class="fw-semibold fs-sm">대학교직원가족</th>
+											<th class="fw-semibold fs-sm bg-gray ">교내장학</th>
+											<th class="fw-semibold fs-sm bg-gray ">성적우수</th>
+											<th class="fw-semibold fs-sm bg-gray ">대학교직원가족</th>
 										</tr>
 										<tr>
-											<th class="fw-semibold fs-sm">수업료</th>
+											<th class="fw-semibold fs-sm bg-gray">수업료</th>
 											<td class="fw-semibold fs-sm" id="tuition"></td>
 											<td class="fw-semibold fs-sm"></td>
 											<td class="fw-semibold fs-sm"></td>
@@ -124,30 +130,28 @@
 
 										</tr>
 										<tr>
-											<th class="fw-semibold fs-sm">총계</th>
+											<th class="fw-semibold fs-sm bg-gray">총계</th>
 											<td class="fw-semibold fs-sm"></td>
 											<td class="fw-semibold fs-sm" id="goodGrade"></td>
 											<td class="fw-semibold fs-sm" id="family"></td>
 											<td class="fw-semibold fs-sm" id="staffFamily"></td>
 										</tr>
 									</thead>
-									<tbody>
 
-									</tbody>
 								</table>
 
-								<p class="ms-4 mb-4">위 금액을 납부하시길 바랍니다.</p>
+								<p class="ms-4 mb-4">위 금액을 납부하였음을 증명합니다.</p>
 								<p class="ms-4 mb-2">납부기간 : <span id="tuitionDate"></span></p>
 								<p class="ms-4 mb-2">납부장소 : 대구은행</p>
 								<p class="ms-4 mb-4">가상계좌 : 220-13-304766</p>
 
-								<p class="ms-4 mb-0">문의처 : 입학관리 담당자 최규완 (010-XXXX-XXXX)</p>
+								<p class="ms-4 mb-0">문의처 : 입학관리 담당자 김영민 (010-5701-8439)</p>
 								<div class="row justify-content-center">
 									<img th:src="@{/resources/assets/media/tuna_stamp.png}" style="width:500px;">
 								</div>
 							</div>
 							<div class="d-flex justify-content-center">
-								<button id="create_pdf" class="d-none d-md-table-cell btn btn-secondary">
+								<button id="app" class="d-none d-md-table-cell btn btn-secondary">
 									<i class="fa fa-file-pdf m-1"></i>PDF
 								</button>
 							</div>
@@ -161,27 +165,29 @@
 		<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 		<script>
 			$('#app').on('click', function () {
+				document.body.innerHTML =  document.getElementById('pdf_wrap').innerHTML;
 				window.print();
+				window.reload();
 			})
 
-			$('#create_pdf').click(function () {
-				//pdf_wrap을 canvas객체로 변환
-				html2canvas($('#pdf_wrap')[0]).then(function (canvas) {
-					var doc = new jsPDF('p', 'mm', 'a4'); //jspdf객체 생성
-					var imgData = canvas.toDataURL('image/png'); //캔버스를 이미지로 변환
-					var imgWidth = 180; // 이미지 가로 길이(mm) / A4 기준 210mm
-					var pageHeight = imgWidth * 1.3; // 출력 페이지 세로 길이 계산 A4 기준
-					var imgHeight = canvas.height * imgWidth / canvas.width;
-					var heightLeft = imgHeight;
-					var margin = 10; // 출력 페이지 여백설정
-					var doc = new jsPDF('p', 'mm');
-					var position = 0;
-					doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight); //이미지를 기반으로 pdf생성
+// 			$('#create_pdf').click(function () {
+// 				//pdf_wrap을 canvas객체로 변환
+// 				html2canvas($('#pdf_wrap')[0]).then(function (canvas) {
+// 					var doc = new jsPDF('p', 'mm', 'a4'); //jspdf객체 생성
+// 					var imgData = canvas.toDataURL('image/png'); //캔버스를 이미지로 변환
+// 					var imgWidth = 180; // 이미지 가로 길이(mm) / A4 기준 210mm
+// 					var pageHeight = imgWidth * 1.3; // 출력 페이지 세로 길이 계산 A4 기준
+// 					var imgHeight = canvas.height * imgWidth / canvas.width;
+// 					var heightLeft = imgHeight;
+// 					var margin = 10; // 출력 페이지 여백설정
+// 					var doc = new jsPDF('p', 'mm');
+// 					var position = 50;
+// 					doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight); //이미지를 기반으로 pdf생성
 					
 
-					doc.save('tuna_등록금납입확인서.pdf'); //pdf저장
-				});
-			});
+// 					doc.save('tuna_등록금납입확인서.pdf'); //pdf저장
+// 				});
+// 			});
 		</script>
 		<script th:inline="javascript">
 			document.addEventListener("DOMContentLoaded", function () {

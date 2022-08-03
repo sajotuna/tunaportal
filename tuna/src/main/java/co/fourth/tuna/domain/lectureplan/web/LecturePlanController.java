@@ -63,7 +63,7 @@ public class LecturePlanController {
 	
 	
 	
-	@PostMapping("/prof/lecPlans")
+	@PostMapping("/staff/lecPlans")
 	@ResponseBody
 	public List<LecturePlanVO> getLecturePlansBySubjectId(
 			@RequestBody Map<String, Integer> reqData){

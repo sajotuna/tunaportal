@@ -1,6 +1,7 @@
 package co.fourth.tuna.domain.subject.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -128,9 +129,9 @@ public class SubjectServiceImpl implements SubjectService {
 		return subjectList;
   }
 
-	public int subjectCount(String seasonCode) {
+	public int subjectCount(Map<String, Object> params) {
 		// TODO Auto-generated method stub
-		return map.subjectCount(seasonCode);
+		return map.subjectCount(params);
 
 	}
 

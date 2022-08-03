@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ko"
+xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  data-layout-decorate="~{layouts/eclassProfLayout}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <title>E-Class 교수 홈</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+  </head>
+  <body>
+
+    <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+      <div id="page-overlay"></div>
+
+      <aside id="side-overlay">
+        <div class="content-header">
+        </div>
+        <div class="content-side">
+        </div>
+      </aside>
+
+      <nav id="sidebar" aria-label="Main Navigation">
+        <div class="content-header">
+
+        </div>
+        <div class="js-sidebar-scroll">
+        </div>
+      </nav>
+      <header id="page-header">
+        <div class="content-header">page-header</div>
+      </header>
+
+      <main id="main-container" layout:fragment="main">
+        <!-- <div class="bg-body-light">
+          <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+              <div class="flex-grow-1">
+                <h1 class="h3 fw-bold mb-2">
+                  Main
+                </h1>
+                <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                  E-class 홈 화면 입니다.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div> content header END -->
+
+        <div class="content">
+          <h2 class="h3 fw-bold">Home</h2>
+          <div class="row">
+
+            <div class="col-xxl-8">
+              <!-- <div class="row justify-content-between align-items-end pb-3">
+                <h2 class="col-10 mb-1">오늘 강의 목록</h2>
+                <a class="col-2 text-end" href="javascript:void(0)">더보기</a>
+              </div> -->
+              <div class="block block-rounded block-themed">
+                <div class="block-header bg-primary-darker">
+                  <h3 class="block-title">강의 목록</h3>
+                  <div class="block-options">
+                    <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/staff/eclass/subjectList}">
+                      <i class="fa fa-ellipsis"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="block-content p-0">
+                  <ul class="nav-items push" th:if="${not #lists.isEmpty(subList)}">
+                    <!-- TODO remove id -->
+                    <li id="test-li"  th:each="sub:${subList}">
+                      <a class="row m-2 pb-2" th:href="@{/staff/eclass/subject(no=${sub.no})}">
+                        
+                        <div class="col-6">
+                          <!--19자 제한 (19자 넘으면 19자 부터 ...)-->
+                          <div class="fw-bold fs-5" th:text="${sub.name}">강의 데이터없음</div>
+                          <div class="ps-2 text-muted" th:text="${'['+ @codeList.getName(sub.seasonCode) +']'}">[학기 데이터없음]</div>
+                        </div>
+
+                        <div class="col-6 text-gray-darker">
+                          <div class="text-end">
+                            <span></span>
+                          </div>
+                          <div class="row justify-content-between">
+                            <div class="col-6">
+                              <span>차수:</span>
+                              <span>데이터 없음</span>
+                            </div>
+                            <div class="col-5">
+                              <span>수강생 :</span>
+                              <span th:text="${#lists.size(sub.lectureApplyList)}">데이터 없음</span>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </a>
+                    </li>
+
+                  </ul>
+                  <ul th:unless="${not #lists.isEmpty(subList)}"> 
+                    <li>강의가 없습니다!</li>
+                  </ul>
+                </div><!-- block content END -->
+
+              </div>
+            </div><!-- 강의목록 END -->
+
+            <div class="col-xxl-4"> <!-- 수강생 문의 -->
+              <!-- <div class="row justify-content-between align-items-end pb-3">
+                <h2 class="col-9 mb-1">수강생 문의</h2>
+                <a class="col-3 text-end" href="javascript:void(0)">더보기</a>
+              </div> -->
+              <div class="block block-rounded block-themed">
+                <div class="block-header bg-primary-darker">
+                  <h3 class="block-title">수강생 문의</h3>
+                  <div class="block-options">
+                    <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/staff/eclass/qnaList}">
+                      <i class="fa fa-ellipsis"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="block-content p-0" th:if="${not #lists.isEmpty(qnaList)}">
+                  
+                  <table class="js-table-checkable table table-hover table-vcenter">
+                    <tbody>
+	                    	
+                      <tr th:each="qna : ${qnaList}" th:onclick="|qnaClickEvent(${qna.no})|">
+                        <td class="d-flex justify-content-between">
+                          <div>
+                            <div><strong th:text="${qna.title}">#####</strong></div>
+                            <div th:text="${qna.subjectVO.name}">####</div>
+                          </div>
+                          <div class="text-end">
+                            <div th:text="${qna.enrollDate}">####-##-##</div>
+                            <div data-bs-toggle="modal" data-bs-target="#modal-block-normal">
+                              <a th:text="${qna.studentVO.name}" class="user_info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-original-title="" 
+                              href="javascript:void(0)" th:onlcick="|studentClickEvent(${qna.stNo})|">
+                              ###</a>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+                <div th:unless="${not #lists.isEmpty(subList)}">
+                  문의가 없습니다!
+                </div>
+              </div>
+            </div>
+          </div> <!-- 수강생 문의 END -->
+
+          <div class="col-xxl-12">
+            <!-- <div class="row justify-content-between align-items-end pb-3">
+              <h2 class="col-10 mb-1">전체 공지</h2>
+              <a class="col-2 text-end" href="javascript:void(0)">더보기</a>
+            </div> -->
+            <div class="block block-rounded block-themed table-bordered ">
+              <div class="block-header bg-primary-darker ">
+                <h3 class="block-title">전체 공지</h3>
+                <div class="block-options">
+                  <a class="btn btn-sm rounded-pill btn-dark" th:href="@{/staff/eclass/noticeList}">
+                    <i class="fa fa-ellipsis"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="block-content p-0">
+                <table class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
+                  <tbody>
+                    <!-- <tr>
+                      <th style="width: 100px">번호</th>
+                      <th>제목</th>
+                      <th style="width: 15%">작성</th>
+                      <th style="width: 15%">등록일시</th>
+                    </tr> -->
+                    <tr th:onclick="|noticeClickEvent(${notice.no})|" th:each="notice:${noticeList}">
+                      <td style="width: 100px" th:text="${notice.no}">00</td>
+                      <td class="text-start" th:text="${notice.title}">제목 데이터 없음</td>
+                      <td style="width: 15%" th:text="${notice.subjectVO.name}">과목 없음</td>
+                      <td style="width: 15%" th:text="${notice.enrollDate}">날짜 없음</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- content END -->
+
+        <!-- 모달 리스트 -->
+        <div class="modal" id="modal-block-tabs" tabindex="-1" role="dialog" aria-labelledby="modal-block-tabs" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="block block-rounded block-transparent mb-0">
+                <ul class="nav nav-tabs nav-tabs-block" role="tablist">
+                  <li class="nav-item">
+                    <button type="button" class="nav-link active" id="btabs-info-tab" data-bs-toggle="tab" data-bs-target="#btabs-info" role="tab" aria-controls="btabs-info" aria-selected="true">학생정보</button>
+                  </li>
+                  <li class="nav-item">
+                    <button type="button" class="nav-link" id="btabs-attendance-tab" data-bs-toggle="tab" data-bs-target="#btabs-attendance" role="tab" aria-controls="btabs-attendance" aria-selected="false">출결관리</button>
+                  </li>
+                  <li class="nav-item">
+                    <button type="button" class="nav-link" id="btabs-grade-tab" data-bs-toggle="tab" data-bs-target="#btabs-grade" role="tab" aria-controls="btabs-grade" aria-selected="false">성적관리</button>
+                  </li>
+                </ul>
+                <!-- @ MODAL CONTENT
+               ███    ███  ██████  ██████   █████  ██             ██████ 
+               ████  ████ ██    ██ ██   ██ ██   ██ ██            ██          
+               ██ ████ ██ ██    ██ ██   ██ ███████ ██      █████ ██          
+               ██  ██  ██ ██    ██ ██   ██ ██   ██ ██            ██          
+               ██      ██  ██████  ██████  ██   ██ ███████        ██████ 
+                -->
+                <div id="user_detail_modal" class="block-content tab-content">
+                  <div id="userDetailCurtain" class="">
+                    <div class="overflow-hidden bg-white-95 position-absolute top-0 start-0 w-100 h-100 opacity-75"></div>
+                    <span class="position-absolute top-50 start-50 translate-middle">
+                      <div class="spinner-border text-secondary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </span>
+                  </div>
+
+                  <div class="tab-pane active" id="btabs-info" role="tabpanel" aria-labelledby="btabs-info-tab">
+                    <div class="row row-cols-auto">
+                      <div class="col-1 d-none d-lg-block text-end">
+                        <div>이름</div>
+                        <div>학번</div>
+                        <div>연락처</div>
+                      </div>
+                      <div class="col-3 fw-bold">
+                        <div class="align-items-center">
+                          <div><span id="detail-name">######</span>&nbsp;
+                            <span id="detail-dept" class="fw-medium fs-sm text-muted">####</span></div>
+                          <div id="detail-no">########</div>
+                          <div id="detail-phone">###-####-####</div>
+                        </div>
+                      </div>
+                      <div class="col-1 d-none d-lg-block text-end">
+                        <div>email</div>
+                        <div>생년월일</div>
+                        <div>주소</div>
+                      </div>
+                      <div class="col fw-bold">
+                        <div id="detail-email">###@#####.###</div>
+                        <div id="detail-birth">##/##/##</div>
+                        <div id="detail-addr">########## #### ###### ######## ###</div>
+                      </div>
+                    </div>
+                    <p></p>
+                    <!-- 학생 정보 TOP  END-->
+
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="block block-rounded block-themed block-bordered bg-black-5">
+                          <div class="block-header bg-primary-darker">
+                            <div class="block-title">과제제출</div>
+                          </div>
+                          <div class="block-content py-0" style="overflow-y:scroll; height: 200px;">
+                            <table class="table table-hover table-vcenter fs-sm">
+                              <tbody id="detail-task-list">
+                                <!-- <tr>
+                                  <td>참치공학</td>
+                                  <td>과제#1</td>
+                                  <td class="table-cell">
+                                    <i class="fa fa-file-arrow-down"></i>
+                                  </td>
+                                  <td class="text-primary">
+                                    <a href="javascript:void(0);">김철수_멸치족의 역사.zip</a>
+                                  </td>
+                                  <td>22-07-06 16:14</td>
+                                </tr> -->
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="block block-rounded block-themed block-bordered bg-black-5">
+                          <div class="block-header bg-primary-darker">
+                            <div class="block-title">문의내역</div>
+                          </div>
+                          <div class="block-content py-0" style="overflow-y:scroll; height: 200px;">
+                            <ul id="detail-qna-list" class="nav-items push fs-sm">
+                              <!-- <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                                <div class="col-2 text-center">참치공학</div>
+                                <div class="col-1 d-none d-lg-block text-center text-danger">대기</div>
+                                <div class="col-1 d-none d-lg-block text-center text-gray">비공개</div>
+                                <div class="col-7">안녕하세요 교수님? 궁금한게 있는데요</div>
+                                <div class="col-1 d-none d-lg-block text-center">07-06</div>
+                              </a></li> -->
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div> <!-- 학생정보 BOT END-->
+                  </div> <!-- 학생정보 탭 END -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 모달 리스트 END -->
+
+<!-- @ script
+███████  ██████ ██████  ██ ██████  ████████ 
+██      ██      ██   ██ ██ ██   ██    ██    
+███████ ██      ██████  ██ ██████     ██    
+     ██ ██      ██   ██ ██ ██         ██    
+███████  ██████ ██   ██ ██ ██         ██    
+-->
+        <script>
+          let userDetailModal;
+          let userDetailCurtain;
+
+          let header = document.querySelector('meta[name="_csrf_header"]').content;
+          let token = document.querySelector('meta[name="_csrf"]').content;
+
+          const REST_URL = {
+              STUDENT_DETAIL : "/tuna/staff/student",
+          }
+
+          window.addEventListener("DOMContentLoaded", function() {
+            userDetailModal = document.querySelector('#user_detail_modal');
+            userDetailCurtain = document.querySelector('#userDetailCurtain');
+
+            offUserDetailCurtaion();
+          });
+
+
+          function studentClickEvent(studno) {
+            event.stopPropagation();
+            console.log("studentClick Event");
+            let stNo = 0;
+            stNo = studno;
+            // let sbjNo = event.target.dataset.sbjno;
+            let student = {
+              no: stNo
+            }
+            onUserDetailCurtain();
+            fetch(REST_URL.STUDENT_DETAIL, {
+              method: "POST",
+              headers: {
+                    'header': header,
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': token
+              },
+              body: JSON.stringify(student)
+            })
+            .then( async (res) => {
+              let resBody = await res.json();
+    
+              if(res.ok) {
+                setDetailUserInfo(resBody.student)
+                setDetailUserAttendance(resBody.student);
+                setDetailUserGrade(resBody.student);
+              } else {
+                Dialogs.dialog('error',
+                '학생정보 가져오기 실패',
+                resBody.msg,
+                function() {
+                  console.error(resBody.msg);
+                });
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              Dialogs.dialog('error',
+              '오류',
+              err,
+              function() {
+              })
+            }).finally(()=> {
+              offUserDetailCurtaion();
+            })
+    
+          }
+    
+          function qnaClickEvent(qnano) {
+            if(event.target.classList.contains('user_info')) {
+              return false;
+            }
+            
+            window.open("/tuna/staff/eclass/qna?no="+qnano, "qna", "menubar=0, status=0, toolbar=0, height=1200, width=920");
+          }
+
+          function noticeClickEvent(noticeNo) {
+            window.open("/tuna/staff/eclass/notice?no="+noticeNo, "notice", "menubar=0, status=0, toolbar=0, height=1200, width=920");
+          }
+          
+          function setDetailUserInfo(student) {
+              console.log(student);
+              let detail_name = userDetailModal.querySelector("#detail-name");
+              let detail_dept = userDetailModal.querySelector("#detail-dept");
+              let detail_no = userDetailModal.querySelector('#detail-no');
+              let detail_phone = userDetailModal.querySelector('#detail-phone');
+              let detail_email = userDetailModal.querySelector('#detail-email');
+              let detail_birth = userDetailModal.querySelector('#detail-birth');
+              let detail_addr = userDetailModal.querySelector('#detail-addr');
+
+              let detail_task_list = userDetailModal.querySelector('#detail-task-list');
+              detail_task_list.innerHTML = "";
+              let detail_qna_list = userDetailModal.querySelector('#detail-qna-list');
+              detail_qna_list.innerHTML = "";
+
+              detail_name.innerText = student.name;
+              detail_dept.innerText = student.deptName;
+              detail_no.innerText = student.no;
+              detail_phone.innerText = stringToTelStyle(student.tel);
+              detail_email.innerText = student.email;
+              detail_birth.innerText = dateNumberToISO(student.birth);
+              detail_addr.innerText = student.addr;
+
+              for( let subject of student.subjectList) {
+                // 제출 과제
+                for( let submitTask of subject.submitTaskList ) {
+                  let url = `/tuna/download?fileName=${submitTask.fileName}&originName=${submitTask.uri}&folder=lectureFile`;
+                  let tr = document.createElement('tr');
+                  detail_task_list.appendChild(tr);
+                  tr.innerHTML = `
+                    <td>${subject.name}</td>
+                    <td>${submitTask.task.title}</td>
+                    <td class="table-cell">
+                      <i class="fa fa-file-arrow-down"></i>
+                    </td>
+                    <td class="text-primary">
+                      <a href="${url}">${submitTask.fileName}</a>
+                    </td>
+                    <td>${dateTimeToISO(submitTask.enrollDate)}</td>`;
+                }
+
+                //문의
+                for( let qna of subject.qnaList ) {
+                  let li = document.createElement('li');
+                  let answer_txt = '';
+                  let answer_class = "";
+                  let visible_txt = "";
+                  let visible_class
+
+                  if(!qna.answer) {
+                    answer_txt = "대기";
+                  } else {
+                    answer_txt = "완료";
+                    answer_class = 'text-danger';
+                  }
+
+                  if(qna.visible == 0) {
+                    visible_txt = "비공개"
+                    visible_class = "text-gray";
+                  } else {
+                    visible_txt = "공개"
+                  }
+
+                  detail_qna_list.appendChild(li);
+                  // TODO 
+                  li.innerHTML = `
+                  <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                    <div class="col-2 text-center">${subject.name}</div>
+                    <div class="col-1 d-none d-lg-block text-center"><span class="${answer_class}">${answer_txt}</span></div>
+                    <div class="col-1 d-none d-lg-block text-center ${visible_class}">${visible_txt}</div>
+                    <div class="col-7">${textCutter(qna.title, 40)}</div>
+                    <div class="col-1 d-none d-lg-block text-center">${dateNumberToISO(qna.enrollDate)}</div>
+                  </a></li>
+                  `;
+                }
+              }
+              
+            }
+            
+            // 출결 세팅
+            function setDetailUserAttendance(student) {
+              let detail_attendance = document.querySelector('#btabs-attendance');
+              let blockParent = detail_attendance.querySelector('#atten-block-list');
+              let blocks = detail_attendance.querySelectorAll('.block');
+              for(let block of blocks) {
+                block.remove();
+              }
+
+              for(let subject of student.subjectList) {
+                let block = document.createElement('div');
+                blockParent.appendChild(block);
+                let attenCnt = 0; //출석 수
+                let absenceCnt = 0; //결석
+                let latenessCnt = 0; // 지각
+                
+                let blockHTML = `
+                <div id="${DETIAL_ATTENDANCE_BLOCK_ID+subject.no}" class="block block-rounded block-themed block-bordered border-1">
+                  <div class="block-header bg-primary-darker">
+                    <div class="block-title">${subject.name}</div>
+                    <div>
+                      <button id="${ATTENDANCE_SUBJECT_ID+subject.no}" class="btn btn-sm btn-primary" onclick="submitDetailAttendance(${student.no})">적용</button>
+                    </div>
+                  </div>
+                  <div class="block-content p-0" style="overflow-x: scroll;">
+                    <table class="table table-vcenter table-bordered text-center mb-0 table-bordered border-dark border-2">
+                      <thead>
+                        <tr>
+                          <th class="p-1" style="min-width: 50px;">${subject.attendanceList.length>0?"종합":"수강 대기중"}</th>`;
+                for(let atten of subject.attendanceList){
+                  let attenDate = dateNumberToISO(atten.classDate).slice(5).replace('-','/');
+                  let th = document.createElement('th');
+                  th.classList.add("p-0");
+                  th.style.width = "50px";
+                  th.innerText = attenDate;
+                  if(atten.stateCode == "1401") {
+                    attenCnt++;
+                  } else if(atten.stateCode == "1402") {
+                    absenceCnt++;
+                  } else if(atten.stateCode == "1403") {
+                    latenessCnt++;
+                  }
+
+                  blockHTML += th.outerHTML;
+                }
+                  blockHTML +=
+                        `</tr>
+                      </thead>
+                      <tbody>
+                        <tr class="attendance_list m-0">
+                          <th class="p-0">
+                            <div class="p-1">${subject.attendanceList.length>0?attenCnt:"&nbsp"}</div>
+                            <div class="p-1">${subject.attendanceList.length>0?absenceCnt:"-"}</div>
+                            <div class="p-1">${subject.attendanceList.length>0?latenessCnt:"&nbsp"}</div>
+                          </th>`;
+                  for(let atten of subject.attendanceList) {
+                    if(!atten.stateCode) continue;
+                    let td = document.createElement('td');
+                    td.id = "detail_atten_"+atten.no;
+                    td.classList.add('p-0');
+                    td.innerHTML = `
+                            <div>
+                              <input type="radio" class="btn-check" name="atten${atten.no}" 
+                                id="atten_atten${atten.no}" autocomplete="off" value="1401"
+                                ${atten.stateCode=="1401"?"checked":"" } />
+                              <label class="btn btn-outline-success p-1" for="atten_atten${atten.no}">출석</label>
+                            </div>
+                            <div>
+                              <input type="radio" class="btn-check" name="atten${atten.no}" 
+                                id="atten_late${atten.no}" autocomplete="off" value="1402"
+                                ${atten.stateCode=="1402"?"checked":""} />
+                              <label class="btn btn-outline-warning p-1" for="atten_late${atten.no}">지각</label>
+                            </div>
+                            <div>
+                              <input type="radio" class="btn-check" name="atten${atten.no}" 
+                                id="atten_absen${atten.no}" autocomplete="off" value="1403"
+                                ${atten.stateCode=="1403"?"checked":""} />
+                              <label class="btn btn-outline-danger p-1" for="atten_absen${atten.no}">결석</label> 
+                            </div>
+                    `;
+                    blockHTML += td.outerHTML;
+                  }
+                          // <td class="p-0">
+                          //   <div>
+                          //     <input type="radio" class="btn-check" name="atten0301" id="atten0301-1" autocomplete="off" checked />
+                          //     <label class="btn btn-outline-success p-1" for="atten0301-1">출석</label>
+                          //   </div>
+                          //   <div>
+                          //     <input type="radio" class="btn-check" name="atten0301" id="atten0301-2" autocomplete="off" />
+                          //     <label class="btn btn-outline-warning p-1" for="atten0301-2">지각</label>
+                          //   </div>
+                          //   <div>
+                          //     <input type="radio" class="btn-check" name="atten0301" id="atten0301-3" autocomplete="off" />
+                          //     <label class="btn btn-outline-danger p-1" for="atten0301-3">결석</label> 
+                          //   </div>
+                    blockHTML+=`
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                `;
+                block.innerHTML = blockHTML;
+              }
+            }
+
+            // 성적 세팅
+            function setDetailUserGrade(student) {
+              //btabs-grade
+              let detail_grade = document.querySelector('#btabs-grade');
+              let blockParent = detail_grade.querySelector('#grade-block-list');
+              let blocks = detail_grade.querySelectorAll('.block');
+              for(let block of blocks) {
+                block.remove();
+              }
+              console.log(student);
+              for(let subject of student.subjectList) {
+                let block = document.createElement('div');
+                blockParent.appendChild(block);
+
+                let blockHTML = `
+                  <div class="block block-rounded block-themed block-bordered border-1">
+                    <div class="block-header bg-primary-darker">
+                      <div class="block-title">
+                        ${subject.name}
+                      </div>
+                    </div>
+                    <div class="block-content p-0" style="overflow-x: scroll;">
+                      <table class="table table-hover table-vcenter text-center m-0">
+                        <thead>
+                          <tr>
+                            <th style="min-width: 90px;">출결</th>
+                            <th style="min-width: 90px;">중간고사</th>
+                            <th style="min-width: 90px;">기말고사</th>
+                            <th style="min-width: 90px;">과제평균</th>
+                            <th style="min-width: 90px;">총점</th>
+                            <th style="min-width: 120px;"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="m-0">`;
+                          if(subject.grade != null) {
+                            blockHTML += `<td><input type="number" class="form-control" placeholder="" value="${subject.grade.attd}" disabled></td>
+                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.middle}"></td>
+                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.finals}"></td>
+                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.task}" disabled></td>
+                            <td><input type="number" class="form-control" placeholder=""  value="${subject.grade.total}" disabled></td>
+                            <td><button class="btn btn-primary">적용</button></td>`
+                          } else {
+                            blockHTML += `
+                              <td colspan="6">
+                                <div class="text-mute">수강 대기중</div>
+                              </td>`
+                          }
+                            blockHTML+= `</tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                `;
+                block.innerHTML = blockHTML;
+              }
+
+            }
+
+            function submitDetailAttendance(studno) {
+              // console.log(event.target);
+              let sbjno = event.target.id.slice(ATTENDANCE_SUBJECT_ID.length);
+              let block = document.querySelector("#"+DETIAL_ATTENDANCE_BLOCK_ID+sbjno);
+              let checkedAttenList = block.querySelectorAll('td input[type="radio"]:checked');
+              let form = {};
+              let attendanceList = [];
+
+              for(let input of checkedAttenList) {
+                let obj = {
+                  no :input.name.slice("atten".length),
+                  stateCode: input.value
+                }
+                attendanceList.push(obj);
+              }
+
+              form = {
+                stno: stno,
+                sbjno: sbjno,
+                attendanceList: attendanceList,
+              }
+              
+              fetch(REST_URL.SUBMIT_ATTENDANCES_UPDATE, {
+                method: "POST",
+                headers: {
+                  'header': header,
+                  'X-Requested-with': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify(form)
+              })
+              .then( async (res) => {
+                let resBody = await res.text();
+
+                if(res.ok) {
+                  Dialogs.dialog('success',
+                  "성공",
+                  resBody,
+                  function() {
+                    studentClickEvent(studno);
+                  })
+                } else {
+                  console.error(resBody);
+                  Dialogs.dialog('error',
+                  '실패',
+                  resBody,
+                  function() {
+                  });
+                }
+              })
+              .catch((err)=> {
+                console.error(err);
+                Dialogs.dialog('error',
+                '오류',
+                err,
+                function() {
+                })
+              })
+            }
+
+            function onUserDetailCurtain() {
+              userDetailCurtain.classList.remove('d-none');
+            }
+            function offUserDetailCurtaion() {
+              userDetailCurtain.classList.add('d-none');
+            }
+
+        </script>
+      </main>
+
+      <!-- <footer id="page-footer" class="bg-flat-lighter">
+        <div class="content">footer</div>
+      </footer> -->
+    </div>
+
+  </body>
+</html>

@@ -20,6 +20,8 @@ public interface PortalNoticeService {
 	int noticeUpdate(PortalNoticeVO vo);
 	
 	int noticeHitUpdate(String no);
+	
+	PortalNoticeVO movePage(String no, String visible);
 
 	List<PortalNoticeFileVO> fileList();
 

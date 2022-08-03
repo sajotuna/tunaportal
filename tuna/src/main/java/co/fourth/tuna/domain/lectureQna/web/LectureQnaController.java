@@ -20,50 +20,14 @@ public class LectureQnaController {
 	@Autowired SqlSession sql;
 	@Autowired LectureQnaService lecQnaService;
 	
-//	@RequestMapping("/eclass/student/qnaList")
-//	public String qnaList(Model model, @RequestParam HashMap<String, Object> map, @RequestParam(value="pageNum", required=false, defaultValue= "1" ) int pageNum) {
-//		
-//		map.put("sbjNo", 18011);
-//		map.put("pageNum", pageNum);
-//		map.put("size", 5);
-//		List<Map<String, Object>> qna = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
-//		
-//		map.put("sbjNo", 18011);
-//		map.put("pageNum", pageNum);
-//		map.put("size", 100);
-//		List<Map<String, Object>> qna2 = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaList", map);
-//		
-//		int pageCount = (int)Math.ceil((double)qna2.size()/(5));
-//		
-//		model.addAttribute("qna", qna);
-//		model.addAttribute("pgcnt", pageCount);
-//		
-//		System.out.println(qna);
-//		
-//		return "eclass/stud/qnaList";
-//	}
-//	
-//	@RequestMapping("eclass/student/qnaSelect")
-//	public String qnaSelect(Model model, LectureQnaVO vo) {
-//		
-//		vo.setNo(1);
-//		vo.setSbjNo(18011);
-//		vo.setStNo(13168019);
-//		List<Map<String, Object>> qs = sql.selectList("co.fourth.tuna.domain.lectureQna.mapper.LectureQnaMapper.qnaSelect", vo);
-//		
-//		System.out.println(qs);
-//		model.addAttribute("qs", qs);
-//		
-//		return "eclass/stud/qnaSelect";
-//	}
-	@PostMapping("/prof/lecQna")
+	@PostMapping("/staff/lecQna")
 	@ResponseBody
 	public List<LectureQnaVO> getLectureQna(
 			@RequestBody Map<String, Integer>reqData) {
 		return lecQnaService.findListBySubjectId(reqData.get("sbjno"));
 	}
 	
-	@PostMapping("/prof/lecQnaAnswer")
+	@PostMapping("/staff/lecQnaAnswer")
 	public String lecQnaAnswer(LectureQnaVO qna,RedirectAttributes ra) {
 		
 		lecQnaService.professorQnaUpdate(qna);
@@ -71,7 +35,7 @@ public class LectureQnaController {
 		ra.addAttribute("no", qna.getNo());
 		ra.addFlashAttribute("success", "답변 작성이 완료되었습니다.");
 		
-		return "redirect:/eclass/professor/qna";
+		return "redirect:/staff/eclass/qna";
 		
 	}
 }

@@ -143,8 +143,11 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
                     
                     <td class="fw-semibold fs-sm" >
-                    	[[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
-                     </td>
+                      [[${#strings.arraySplit(sub.DAYCODE, '/')[0] +'  '+ #strings.arraySplit(sub.TIMECODE, ' ')[0]}]]
+                      	<th:block th:if = "${#strings.indexOf(sub.DAYCODE,'/') != -1}">
+                      		<br>[[${#strings.arraySplit(sub.DAYCODE, '/')[1] +'  '+ #strings.arraySplit(sub.TIMECODE, ' ')[1]}]]
+                      	</th:block>
+                      </td>
                     </tr>
                   </tbody>
 
@@ -166,31 +169,31 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                     </button>
                 </li>
                  <li class="page-item">
-                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">1</button>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">2</button>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">3</button>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">4</button>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">5</button>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">6</button>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">7</button>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">8</button>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)">9</button>
+                    <button type ="button" class="page-link" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                 <li class="page-item">
                   <button type ="button" class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
@@ -240,7 +243,10 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
                       <td class="fw-semibold fs-sm" th:text = "${sub.POINT}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${sub.LIMIT}"></td>
                       <td class="fw-semibold fs-sm" >
-	                      [[${sub.DAYCODE +'  '+ sub.TIMECODE}]]
+                      [[${#strings.arraySplit(sub.DAYCODE, '/')[0] +'  '+ #strings.arraySplit(sub.TIMECODE, ' ')[0]}]]
+                      	<th:block th:if = "${#strings.indexOf(sub.DAYCODE,'/') != -1}">
+                      		<br>[[${#strings.arraySplit(sub.DAYCODE, '/')[1] +'  '+ #strings.arraySplit(sub.TIMECODE, ' ')[1]}]]
+                      	</th:block>
                       </td>
                       <th class="fw-semibold fs-sm"><a class = "btn" th:href = "@{/stud/course/basketDelete(sbjNo=${sub.NO})}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -278,9 +284,20 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 	document.addEventListener('DOMContentLoaded', function(){
 		let params = /*[[${params}]]*/ 'default';
 		
+		if(params.pageSize == 0)
+			params.pageSize = 1;
+		
 		let nextBtn = document.querySelector("#next")
 		let prevBtn = document.querySelector("#prev")
 		let pageingBtn = document.querySelectorAll("#pageingBtn");
+		
+		if(parseInt(params.pageNum) == parseInt(params.pageSize)){
+			nextBtn.disabled = true;
+		}
+		if(parseInt(params.pageNum) == 1){
+			prevBtn.disabled = true;
+		}
+		
 		nextBtn.addEventListener('click', function(){
 			nextBtn.disabled = true;
 			tagInsert(parseInt(params.pageNum)+1)
@@ -294,8 +311,15 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 					tagInsert(parseInt(params.pageNum)-1)	
 				}
 			})
-				
+			
 		pageingBtn.forEach((btn,idx) =>{
+			
+			if(pageingBtn[idx].innerHTML == '' || pageingBtn[idx].innerHTML == null)
+				if(parseInt(params.pageSize) < idx+1){
+					pageingBtn[idx].remove();
+				}
+				else
+					pageingBtn[idx].innerHTML = idx+1;
 			
 			if(params.pageNum > (pageingBtn.length)/2){
 				pageingBtn[Math.ceil((pageingBtn.length-1)/2)].innerHTML = params.pageNum
@@ -306,12 +330,6 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 				
 				if(parseInt(pageingBtn[idx].innerHTML) > parseInt(params.pageSize)){
 					pageingBtn[idx].disabled = true;
-				}
-				if(parseInt(params.pageNum) == parseInt(params.pageSize)){
-					nextBtn.disabled = true;
-				}
-				if(parseInt(params.pageNum) == 1){
-					prevBtn.disabled = true;
 				}
 			}
 			
