@@ -288,7 +288,7 @@ xmlns:th="http://www.thymeleaf.org"
                       </div>
                     </div>
                   </div> <!-- progress TAB END-->
-<!--
+<!-- @ studnet @ attendance
       ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ 
 ▄ ██ ▄██         ██    ██    ██ ██   ██ ██      ████   ██    ██    
  ████ ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    
@@ -969,7 +969,8 @@ xmlns:th="http://www.thymeleaf.org"
               OBJECTION_CONTENT : "/tuna/staff/objections",
               GRADE_CONTENT : "/tuna/staff/students",
 
-              GRDAE_UPDATE : "/tuna/staff/updateGrades",
+              GRDAES_UPDATE : "/tuna/staff/updateGrades",
+              GRADE_UPDATE : "/tuna/staff/updateGrade",
               TASK_INSERT : '/tuna/staff/insertTask',
               OBJECTION_GET : '/tuna/staff/eclass/objection?objNo=',
               OBJECTION_PUT : '/tuna/staff/eclass/objection',
@@ -1319,7 +1320,7 @@ xmlns:th="http://www.thymeleaf.org"
               })
             }
 
-/*
+/* @ TAB CLICK
 ████████  █████  ██████       ██████ ██      ██  ██████ ██   ██ 
    ██    ██   ██ ██   ██     ██      ██      ██ ██      ██  ██  
    ██    ███████ ██████      ██      ██      ██ ██      █████   
@@ -1930,7 +1931,7 @@ xmlns:th="http://www.thymeleaf.org"
                     gradeDatas.push(gradeObj)
                   }
 
-                  fetch(REST_URL.GRDAE_UPDATE, {
+                  fetch(REST_URL.GRDAES_UPDATE, {
                     method: "POST",
                     headers: {
                       'header': header,
