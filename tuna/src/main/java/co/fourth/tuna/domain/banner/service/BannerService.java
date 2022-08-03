@@ -6,7 +6,7 @@ import co.fourth.tuna.domain.banner.vo.BannerVO;
 
 public interface BannerService {
 
-	List<BannerVO> bannerListSelect(int startList, int endList);
+	List<BannerVO> bannerListSelect(int startList, int endList, String bannerCode);
 	BannerVO bannerSelect(String bannerCode);
 	int bannerInsert(BannerVO vo);
 	int bannerDelete(BannerVO vo);
@@ -14,6 +14,6 @@ public interface BannerService {
 	List<BannerVO> sliderBannerSelect();
 	int sliderBannerUpdate(BannerVO vo);
 	
-	int getBannerCnt();
+	int getBannerCnt(String bannerCode);
 	
 }

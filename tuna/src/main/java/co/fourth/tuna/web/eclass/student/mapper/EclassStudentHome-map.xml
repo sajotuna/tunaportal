@@ -3,7 +3,8 @@
 <mapper
 	namespace="co.fourth.tuna.web.eclass.student.mapper.EclassStudentHomeMapper">
 	
-	<select id="subList" resultType="map" parameterType="co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO">
+	<select id="subList" resultType="map" 
+	parameterType="co.fourth.tuna.web.eclass.student.vo.EclassStudentHomeVO">
 		SELECT DISTINCT L.SBJNO,  J.NAME, S.NO , L.SEASONCODE, E.ROOMCODE,
        	LISTAGG(E.DAYCODE, '/') WITHIN GROUP (ORDER BY E.DAYCODE DESC) OVER (PARTITION BY L.SBJNO) AS DAYCODE,
         LISTAGG(E.TIMECODE, '/') WITHIN GROUP (ORDER BY E.DAYCODE DESC) OVER (PARTITION BY L.SBJNO) AS TIMECODE
@@ -24,6 +25,7 @@
 		AND L.SBJNO = S.NO
 		AND L.STNO = #{no}
         AND t.limitdate > sysdate
+        AND L.SEASONCODE = #{seasonCode}
 		ORDER BY T.NO DESC)
 		WHERE ROWNUM <=5
 		]]>

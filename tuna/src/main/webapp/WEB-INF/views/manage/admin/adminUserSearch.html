@@ -45,6 +45,15 @@
               </div>
             </div>
             <div class="col-xl-3 ">
+            <div class="mb-2">
+              <select class="form-select" id="role" name="role">
+                <option selected value="">연도/학기</option>
+                <option value="ROLE_STUDENT" id = "student">학생</option>
+	            <option value="ROLE_STAFF" id ="staff">교수</option>
+              </select>
+            </div>
+          </div>
+            <div class="col-xl-3 ">
               <div class="mb-2">
                 <input type="number" placeholder="학번/교번" class="form-control" id="no"
                   name="no">
@@ -312,6 +321,13 @@
 		if(params.year != null){
 			$('#year').val(params.year)
 		}
+		console.log(params)
+		if(params.role == "ROLE_STUDENT"){
+			$('#student').attr('selected', 'selected')
+		}else if(params.role == "ROLE_STAFF"){
+			$('#staff').attr('selected', 'selected')
+		}
+		
 		
 	})
 </script>
