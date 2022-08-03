@@ -25,6 +25,7 @@ import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
 import co.fourth.tuna.domain.subject.service.SubjectService;
+import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import nl.captcha.Captcha;
 
 @Controller
@@ -59,7 +60,7 @@ public class LectureApplyController {
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		params.put("seasonCode", yearDao.yearFind());
-		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount(yearDao.yearFind())/10));
+		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount(params)/10));
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
 		vo.setStateCode("402");
@@ -111,7 +112,7 @@ public class LectureApplyController {
 	public String courseDelete(Authentication authentication,RedirectAttributes ra, LectureApplyVO vo) {
 		vo.setStNo(authentication.getName());
 		LectureApplyDao.CourseDelete(vo);
-		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
+		ra.addFlashAttribute("success", "수강신청 내역의 삭제가 완료되었습니다.");
 		return "redirect:/stud/course/Application";
 	}
 	

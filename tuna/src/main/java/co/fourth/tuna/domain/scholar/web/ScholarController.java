@@ -110,7 +110,7 @@ public class ScholarController {
 //		}
 
 		ScholarDao.ScholarDelete(vo);
-		ra.addFlashAttribute("success", "삭제가 완료되었습니다.");
+		ra.addFlashAttribute("success", "장학신청 삭제가 완료되었습니다.");
 		return "redirect:/stud/scholar/Status";
 	}
 

@@ -14,15 +14,6 @@
   <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
   <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
   <script th:src="@{/resources/assets/js/dialog.js}"></script>
-  <style>
-    tr {
-      text-align: center;
-    }
-
-    td {
-      text-align: center;
-    }
-  </style>
 
 </head>
 
@@ -40,32 +31,32 @@
               <form th:action="@{/stud/scholar/Apply}" method="post" id = "frm">
                 <div class="mb-4">
                   <div class="input-group">
-                    <span class="input-group-text">소속</span>
+                    <span class="input-group-text" style ="width: 80px ">소속</span>
                     <input type="text" class="form-control" th:value="${@codeList.getName(vo.deptCode)}" id="deptcode" name="deptcode" readonly>
                   </div>
                 </div>
                 <div class="mb-4">
                   <div class="input-group">
-                    <span class="input-group-text">이름</span>
+                    <span class="input-group-text" style ="width: 80px">이름</span>
                     <input type="text" class="form-control" th:value= "${vo.name}" id="name" name="name" readonly>
                   </div>
                 </div>
                 <div class="mb-4">
                   <div class="input-group">
-                    <span class="input-group-text">생년월일</span>
+                    <span class="input-group-text text-center" style ="width: 80px">생년월일</span>
                     <input type="text" class="form-control" th:value= "${vo.birth}" id="birth" name="birth" readonly>
                   </div>
                 </div>
                 <div class="mb-4">
                   <div class="input-group">
-                    <span class="input-group-text">휴대전화</span>
+                    <span class="input-group-text text-center" style ="width: 80px">휴대전화</span>
                     <input type="text" class="form-control" th:value= "${vo.tel}" id="tel" name="tel" readonly>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="input-group">
-                      <span class="input-group-text">계좌정보</span>
+                      <span class="input-group-text" style ="width: 80px">계좌정보</span>
                       <span class="input-group-text">은행</span>
                       <div class="col-md-3 col-xl-2">
                         <select class="form-select" id="example-select" name="example-select">
@@ -99,9 +90,9 @@
                           <option value="21">SC제일은행</option>
                         </select>
                       </div>
-                      <span class="input-group-text">계좌 번호</span>
+                      <span class="input-group-text" style ="width: 80px">계좌 번호</span>
                       <input type="text" class="form-control" th:value ="${vo.bank}" id="bank" name="bank">
-                      <span class="input-group-text">예금주</span>
+                      <span class="input-group-text" style ="width: 80px">예금주</span>
                       <input type="text" class="form-control" th:value ="${vo.name}" id="accname" name="accname">
                     </div>
                   </div>
@@ -110,27 +101,27 @@
                 <table class="table table-striped table-vcenter table-bordered">
                   <thead>
                     <tr>
-                      <th class="fw-semibold fs-sm" rowspan="2"><input type="radio" name = "schNo" value = "1"><br>학업성적우수장학금</th>
-                      <th class="fw-semibold fs-sm">안내사항</th>
-                      <td class="fw-semibold fs-sm">직전학기 과락없이 수강신청 기준학점(단, 모든 학부(과)의 최종학기 직전학기는 14학점) 이상 취득하고, 직전학기 학업성적
-                        평점평균이 B(3.5) 이상이며 품행이 단정한 자로서 학부(과)장이 추천한 자. 단, 시행에 관한 사항은 별도로 정한다.</td>
+                      <th class="fw-semibold fs-sm text-center" rowspan="2"><input type="radio" name = "schNo" value = "1"><br>성적우수<br>장학금</th>
+                      <th class="fw-semibold fs-sm" style = "width:80px; ">안내사항</th>
+                      <td class="fw-semibold fs-sm text-left">직전학기 과락없이 수강신청 기준학점(단, 모든 학부(과)의 최종학기 직전학기는 14학점) 이상 취득하고, 직전학기 학업성적
+                        평점평균이 B(3.5) 이상이며 품행이 단정한 자 단, 시행에 관한 사항은 별도로 정한다.</td>
                     </tr>
                     <tr>
                       <th class="fw-semibold fs-sm">제출서류</th>
-                      <td class="fw-semibold fs-sm">없음</td>
+                      <td class="fw-semibold fs-sm text-center">없음</td>
                     </tr>
                     <tr>
-                      <th class="fw-semibold fs-sm" rowspan="2"><input type="radio" name = "schNo" value = "2"><br>가족 장학금</th>
+                      <th class="fw-semibold fs-sm text-center" rowspan="2"><input type="radio" name = "schNo" value = "2"><br>가족 장학금</th>
                       <th class="fw-semibold fs-sm">안내사항</th>
                       <td class="fw-semibold fs-sm">친가족 2명 이상 본 대학교(학부과정)에 재학하고 있는 자 중 1인에게 지원(단, 모든 학부(과)의 직전학기는 12학점.
                         4학년은 8학점)이상 취득하고, 직전학기 학업성적 평점평균이 C+(2.5)이상 </td>
                     </tr>
                     <tr>
                       <th class="fw-semibold fs-sm">제출서류</th>
-                      <td class="fw-semibold fs-sm">가족관계증명서</td>
+                      <td class="fw-semibold fs-sm text-center">가족관계증명서</td>
                     </tr>
                     <tr>
-                      <th class="fw-semibold fs-sm" rowspan="2"><input type="radio" name = "schNo" value = "3"><br>교직원가족 장학금</th>
+                      <th class="fw-semibold fs-sm text-center" rowspan="2"><input type="radio" name = "schNo" value = "3" style ="width:100px;"><br>교직원가족<br>장학금</th>
                       <th class="fw-semibold fs-sm">안내사항</th>
                       <td class="fw-semibold fs-sm">대학 교직원 가족 또는 법인 소속 교직원 가족이며, 직전학기 17학점(졸업예정 학생은 12학점) 이상 취득하고, 직전학기
                         학업성적 평점평균이 C(2.0)이상 </td>
@@ -138,7 +129,7 @@
                     </tr>
                     <tr>
                       <th class="fw-semibold fs-sm">제출서류</th>
-                      <td class="fw-semibold fs-sm">가족관계증명서</td>
+                      <td class="fw-semibold fs-sm text-center">가족관계증명서</td>
                     </tr>
 
 

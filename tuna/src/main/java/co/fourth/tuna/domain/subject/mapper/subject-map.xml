@@ -228,9 +228,15 @@
 			AND s.seasoncode = ${season}
 	</select>
 
-	<select id = "subjectCount" resultType = "int" parameterType="String">
+	<select id = "subjectCount" resultType = "int" parameterType="map">
 	
-	SELECT COUNT(*) FROM SUBJECT WHERE SEASONCODE = #{seasonCode}
+	SELECT COUNT(*) 
+	FROM SUBJECT 
+	WHERE SEASONCODE = #{seasonCode}
+	<if test="deptCode != null and !deptCode.equals('')">AND DEPTCODE = #{deptCode} </if>
+	<if test="type != null and !type.equals('')"> AND TYPE = #{type} </if>
+	<if test="target != null and !target.equals('')"> AND TARGET = #{target} </if>
+	<if test="name != null and !name.equals('')"> AND (NAME like '%'||#{name}||'%' OR NAME like '%'||UPPER(#{name})||'%')</if>
 	
 	</select>
 	
