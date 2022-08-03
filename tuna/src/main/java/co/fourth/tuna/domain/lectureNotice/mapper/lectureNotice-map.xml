@@ -75,6 +75,7 @@ SELECT N.*, ROWNUM FROM
 		SELECT *
 		FROM lecturenotice
 		WHERE sbjno = #{sbjno}
+		ORDER BY no DESC
 	</select>
 	
 	<insert id="insertOneByLectureNoticeVO"

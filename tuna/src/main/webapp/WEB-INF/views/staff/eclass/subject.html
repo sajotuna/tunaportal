@@ -466,8 +466,13 @@ xmlns:th="http://www.thymeleaf.org"
                         
                       </tbody>
                     </table>
-                    <div class="col-xl-2">
-                      <button class="col-12 btn btn-dark"> 공지 작성 </button>
+                    <div class="row">
+                      <div class="col-xl-2">
+                        <button id="subject-notice-write-btn" class="col-12 btn btn-dark"> 공지 작성 </button>
+                      </div>
+                      <div class="col-xl-2">
+                        <button id="subject-notice-all-btn" class="col-12 btn btn-primary">전체 보기</button>
+                      </div>
                     </div>
                     <p></p>
                   </div> <!-- notice TAB END -->
@@ -1052,6 +1057,8 @@ xmlns:th="http://www.thymeleaf.org"
               objTrClickEvent();
               objUpdateClickEvent();
               initFileInsertForm();
+              initNoticeWriteButton();
+              initNoticeAllButton();
             });
 
             // 초기화 세팅
@@ -1336,6 +1343,20 @@ xmlns:th="http://www.thymeleaf.org"
               })
             }
 
+            function initNoticeWriteButton() {
+              let btn = document.querySelector("#subject-notice-write-btn");
+              btn.addEventListener('click', function() {
+                window.open('/tuna/staff/eclass/noticeForm?sbjno='+sbjno);
+              })
+            }
+
+            function initNoticeAllButton() {
+              let btn = document.querySelector("#subject-notice-all-btn");
+              btn.addEventListener('click', function() {
+                window.open('/tuna/staff/eclass/noticeList')
+              })
+            }
+
 /* @ TAB CLICK
 ████████  █████  ██████       ██████ ██      ██  ██████ ██   ██ 
    ██    ██   ██ ██   ██     ██      ██      ██ ██      ██  ██  
@@ -1483,7 +1504,8 @@ xmlns:th="http://www.thymeleaf.org"
               let table = document.querySelector('#subject-notice-table');
               let tbody = table.querySelector('tbody');
               tbody.innerHTML = "";
-              notices.forEach(data => {
+              notices.forEach( (data, idx) => {
+                if(idx > 4) return false;
                 // console.log(data);
                 let mDate = new Date(data.enrollDate);
                 mDate = mDate.toISOString();
