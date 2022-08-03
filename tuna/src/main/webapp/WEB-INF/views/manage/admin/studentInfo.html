@@ -44,8 +44,8 @@
                       
                         <div class="mb-3">
                           <div class="input-group">
-                            <span class="input-group-text">소속</span>
-                            <select class="form-select" id="deptCode" name="deptCode" onchange="javascript:updateSuccess();">
+                            <span class="input-group-text col-1">소속</span>
+                            <select class="form-select col-3" style="padding-right:12px;" id="deptCode" name="deptCode" onchange="javascript:updateSuccess();">
 			                    <option selected th:value="${vo.deptCode}" th:text = "${@codeList.getName(vo.deptCode)}"></option>
 				                  <option value="801" id="801">기계공학과</option>
 				                  <option value="805" id="805">항공우주공학과</option>
@@ -58,56 +58,56 @@
 				                  <option value="804" id="804">화학공학과</option>
 				                  <option value="807" id="807">정보통신학과</option>
 			                  </select>
-                            <span class="input-group-text">이름</span>
-                            <input type="text" class="form-control" name = "name" th:value = "${vo.name}" >
-                            <span class="input-group-text">생년월일</span>
-                            <input type="text" class="form-control" th:value = "${vo.birth}" readonly>
+                            <span class="input-group-text col-1">이름</span>
+                            <input type="text" class="form-control col-3" name = "name" th:value = "${vo.name}" >
+                            <span class="input-group-text col-1">생년월일</span>
+                            <input type="text" class="form-control col-3" th:value = "${vo.birth}" readonly>
                           </div>
                     </div>
                     <div class="mb-3">
                       <div class="input-group">
-                        <span class="input-group-text">학번</span>
-                        <input type="text" class="form-control" th:value = "${vo.no}" name = "no">
-                        <span class="input-group-text">학년</span>
-                        <input type="text" class="form-control" th:value = "${vo.sy}" readonly>
-                        <span class="input-group-text">입학날짜</span>
-                        <input type="text" class="form-control" th:value = "${vo.enterDate}" readonly>
+                        <span class="input-group-text col-1">학번</span>
+                        <input type="text" class="form-control col-3" th:value = "${vo.no}" name = "no">
+                        <span class="input-group-text col-1">학년</span>
+                        <input type="text" class="form-control col-3" th:value = "${vo.sy}" readonly>
+                        <span class="input-group-text col-1">입학날짜</span>
+                        <input type="text" class="form-control col-3" th:value = "${vo.enterDate}" readonly>
                       </div>
                     </div>
                     <div class="mb-3">
                       <div class="input-group">
-                        <span class="input-group-text">재적상태</span>
-                        <select class="form-select" id="stateCode" name="stateCode" onchange="javascript:updateSuccess();">
+                        <span class="input-group-text col-1">재적상태</span>
+                        <select class="form-select col-3" style="padding-right:12px;" id="stateCode" name="stateCode" onchange="javascript:updateSuccess();">
 	                  		<option th:value = "${vo.stateCode}" th:text = "${@codeList.getName(vo.stateCode)}"></option>
 		                 	<option value="301" id = "301">재학</option>
 		                  	<option value="302" id = "302">휴학</option>
 		                  	<option value="303" id = "303">퇴학</option>
 		                  	<option value="304" id = "304">졸업</option>
 		                </select>
-                        <span class="input-group-text">전화번호</span>
-                        <input type="text" class="form-control"  th:value = "${vo.tel}" readonly>
-                        <span class="input-group-text">이메일</span>
+                        <span class="input-group-text col-1">전화번호</span>
+                        <input type="text" class="form-control col-3"  th:value = "${vo.tel}" readonly>
+                        <span class="input-group-text col-1">이메일</span>
                         <th:block th:if = "${not #strings.isEmpty(vo.email)}">
-                      	<input type="text" class="form-control"  th:value = "${vo.email}" readonly> 
+                      	<input type="text" class="form-control col-3"  th:value = "${vo.email}" readonly> 
 	                    </th:block>
 	                    <th:block th:unless = "${not #strings.isEmpty(vo.email)}">
-	                      	<input type="text" class="form-control" readonly>
+	                      	<input type="text" class="form-control col-3" readonly>
 	                    </th:block>
                       </div>
                     </div>
                     <div class="mb-3">
                       <div class="input-group">
                       <th:block th:if = "${not #strings.isEmpty(vo.bank)}">
-                        <span class="input-group-text">은행</span>
-                        <input type="text" class="form-control" th:value = "${@codeList.getName(vo.bacc)}" readonly>
-                        <span class="input-group-text">계좌번호</span>
-                        <input type="text" class="form-control" th:value = "${vo.bank}" readonly>
+                        <span class="input-group-text col-1">은행</span>
+                        <input type="text" class="form-control col-3" th:value = "${@codeList.getName(vo.bacc)}" readonly>
+                        <span class="input-group-text col-1">계좌번호</span>
+                        <input type="text" class="form-control col-3" th:value = "${vo.bank}" readonly>
                       </th:block>
                       <th:block th:unless = "${not #strings.isEmpty(vo.bank)}">
-                        <span class="input-group-text">은행</span>
-                        <input type="text" class="form-control" readonly>
-                        <span class="input-group-text">계좌번호</span>
-                        <input type="text" class="form-control" readonly>
+                        <span class="input-group-text col-1">은행</span>
+                        <input type="text" class="form-control col-5" readonly>
+                        <span class="input-group-text col-1">계좌번호</span>
+                        <input type="text" class="form-control col-5" readonly>
                       </th:block>
                       </div>
                     </div>

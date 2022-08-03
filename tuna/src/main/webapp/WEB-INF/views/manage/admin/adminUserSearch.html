@@ -138,7 +138,7 @@
             </div>
             <ul class="pagination justify-content-center">
                   <li class="page-item">
-                    <button class="page-link" href="javascript:void(0)" tabindex="-1" aria-label="Previous" id = "prev">
+                    <button class="page-link" type="button" href="javascript:void(0)" tabindex="-1" aria-label="Previous" id = "prev">
                       <span aria-hidden="true">
                         <i class="fa fa-angle-double-left"></i>
                       </span>
@@ -173,7 +173,7 @@
                     <button class="page-link" type ="button" id = "pageingBtn" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <button class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
+                    <button class="page-link" type="button" href="javascript:void(0)" aria-label="Next" id = "next">
                       <span aria-hidden="true">
                         <i class="fa fa-angle-double-right"></i>
                       </span>
@@ -199,7 +199,7 @@
     let no = document.querySelectorAll('#no');
     userName.forEach( function (btn,idx){
     	btn.addEventListener('click', function(){
-    		window.open("userInfo?no="+no[idx+1].innerHTML, "사용자상세조회", "width=850, height=1000, top=10, left=10");
+    		window.open("userInfo?no="+no[idx+1].innerHTML, "사용자상세조회", "width=1000, height=1000, top=10, left=10");
     	})
     })
     
