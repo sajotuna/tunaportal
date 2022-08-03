@@ -80,20 +80,20 @@
 				for (data of datas){
 					console.log(datas)
 					
-					if(data.no%2 == 0){
+					if(data.no%6 == 0){
 		    			let obj = {
 			    				title : data.content,
 			    				start : data.startDate,
 			    				end : data.endDate,
 			    				no : data.no,
-			    				color:'rgb(66, 161, 180)'
+			    				color:'rgb(99, 166, 173)'
 			    			
 							}
 		    			calendarList.push(obj)
 						
 					}
 
-					else  {
+					else if(data.no%6 == 1) {
 		    			obj = {
 			    				title : data.content,
 			    				start : data.startDate,
@@ -101,6 +101,57 @@
 			    				no : data.no,
 			    				
 			    				color:'rgb(64, 103, 135)'
+			    			
+							}
+		    			calendarList.push(obj)
+						
+					}
+					else if(data.no%6 == 2) {
+		    			obj = {
+			    				title : data.content,
+			    				start : data.startDate,
+			    				end : data.endDate,
+			    				no : data.no,
+			    				
+			    				color:'rgb(66, 129, 180)'
+			    			
+							}
+		    			calendarList.push(obj)
+						
+					}
+					else if(data.no%6 == 3) {
+		    			obj = {
+			    				title : data.content,
+			    				start : data.startDate,
+			    				end : data.endDate,
+			    				no : data.no,
+			    				
+			    				color:'rgb(113, 156, 186)'
+			    			
+							}
+		    			calendarList.push(obj)
+						
+					}
+					else if(data.no%6 == 4) {
+		    			obj = {
+			    				title : data.content,
+			    				start : data.startDate,
+			    				end : data.endDate,
+			    				no : data.no,
+			    				
+			    				color:'rgb(81, 141, 167)'
+			    			
+							}
+		    			calendarList.push(obj)
+						
+					}else{
+						obj = {
+			    				title : data.content,
+			    				start : data.startDate,
+			    				end : data.endDate,
+			    				no : data.no,
+			    				
+			    				color:'rgb(113, 186, 176)'
 			    			
 							}
 		    			calendarList.push(obj)
