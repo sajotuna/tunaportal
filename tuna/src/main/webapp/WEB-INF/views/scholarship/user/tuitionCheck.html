@@ -43,16 +43,18 @@
 		}
 		@media print {
 		  header, footer, #noprint { display:none }
-		#header, #sec_2{display:none}
 		}
-		
+		@media print {
+		  @page { margin: 0; }
+		  body { margin: 1.6cm; }
+		}
 		
 	</style>
 
 </head>
 
 <body>
-	<main layout:fragment="main" id ="noprint">
+	<main layout:fragment="main">
 		<!-- Hero -->
 		<div class="bg-body-light" id = "noprint">
 			<div class="content content-full content-boxed">
@@ -165,9 +167,7 @@
 		<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 		<script>
 			$('#app').on('click', function () {
-				document.body.innerHTML =  document.getElementById('pdf_wrap').innerHTML;
 				window.print();
-				window.reload();
 			})
 
 // 			$('#create_pdf').click(function () {

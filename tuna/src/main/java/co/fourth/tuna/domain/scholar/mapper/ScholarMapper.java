@@ -1,6 +1,7 @@
 package co.fourth.tuna.domain.scholar.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import co.fourth.tuna.domain.scholar.vo.ScholarApplyVO;
 import co.fourth.tuna.domain.scholar.vo.ScholarVO;
@@ -17,4 +18,5 @@ public interface ScholarMapper {
 	public void scholarCheckUpdate (ScholarApplyVO vo);
 	public void scholarSuccessUpdate (ScholarApplyVO vo);
 	public void scholarStudentGiveMoney (ScholarApplyVO vo);
+	public int scholarApplyCount(Map<String, Object> params);
 }

@@ -19,6 +19,10 @@
       margin-top: 50px;
       margin-left: 20px;
     }
+    button:disabled,
+	button[disabled]{
+	  color: rgba(87, 87, 87, 0.49);
+}
 
   </style>
 
@@ -166,50 +170,50 @@
 	          </table>
           </div>
           <ul class="pagination justify-content-center">
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)" tabindex="-1" aria-label="Previous" id = "prev">
-                    <span aria-hidden="true">
-                      <i class="fa fa-angle-double-left"></i>
-                    </span>
-                    <span class="visually-hidden">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">1</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">2</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">3</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">4</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" id = "pageingBtn" href="javascript:void(0)">5</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">6</a>
+                  <li class="page-item">
+                    <button class="page-link" href="javascript:void(0)" tabindex="-1" type = "button" aria-label="Previous" id = "prev">
+                      <span aria-hidden="true">
+                        <i class="fa fa-angle-double-left"></i>
+                      </span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                  </li>
+                   <li class="page-item">
+                    <button class="page-link" id = "pageingBtn" type = "button" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">7</a>
+                    <button class="page-link" id = "pageingBtn" type = "button" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">8</a>
+                    <button class="page-link" id = "pageingBtn" type = "button" href="javascript:void(0)"></button>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" id = "pageingBtn" href="javascript:void(0)">9</a>
+                    <button class="page-link" id = "pageingBtn" type = "button" href="javascript:void(0)"></button>
                   </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)" aria-label="Next" id = "next">
-                    <span aria-hidden="true">
-                      <i class="fa fa-angle-double-right"></i>
-                    </span>
-                    <span class="visually-hidden">Next</span>
-                  </a>
-                </li>
-              </ul>
+                  <li class="page-item">
+                    <button class="page-link" id = "pageingBtn" type = "button" href="javascript:void(0)"></button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link" id = "pageingBtn" type = "button" href="javascript:void(0)"></button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link" id = "pageingBtn" type = "button" href="javascript:void(0)"></button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link" id = "pageingBtn" type = "button" href="javascript:void(0)"></button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link" id = "pageingBtn" type = "button" href="javascript:void(0)"></button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link" href="javascript:void(0)" type = "button" aria-label="Next" id = "next">
+                      <span aria-hidden="true">
+                        <i class="fa fa-angle-double-right"></i>
+                      </span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </li>
+                </ul>
           <div class="d-flex justify-content-center">
             <div class="m-2">
               <input type="submit" class="btn btn-primary" value="심사확인">
@@ -268,42 +272,54 @@
 <script th:inline="javascript">
 	document.addEventListener('DOMContentLoaded', function(){
 		let params = /*[[${params}]]*/ 'default';
+		
+		if(params.pageSize == 0)
+			params.pageSize = 1;
+		
 		let nextBtn = document.querySelector("#next")
 		let prevBtn = document.querySelector("#prev")
 		let pageingBtn = document.querySelectorAll("#pageingBtn");
+		
+		if(parseInt(params.pageNum) == parseInt(params.pageSize)){
+			nextBtn.disabled = true;
+		}
+		if(parseInt(params.pageNum) == 1){
+			prevBtn.disabled = true;
+		}
+		
 		nextBtn.addEventListener('click', function(){
-			pageingBtn.forEach(btn =>{
-				let a = btn.innerHTML
-				btn.innerHTML = parseInt(a)+9;
-			})
-			tagInsert(pageingBtn[0].innerHTML)
+			nextBtn.disabled = true;
+			tagInsert(parseInt(params.pageNum)+1)
 		})
 		
 		prevBtn.addEventListener('click', function(){
-			pageingBtn.forEach((btn,idx) =>{
-				let a = btn.innerHTML
-				if (parseInt(a) > 9){
-					btn.innerHTML = parseInt(a)-9;
+				if(parseInt(params.pageNum) == 1){
+					prevBtn.disabled = true;
 				}else{
-					params.pageNum = 1;
-					if(idx == 0){
-						btn.innerHTML = parseInt(params.pageNum) + idx
-					}
-					else{
-						btn.innerHTML = parseInt(pageingBtn[idx-1].innerHTML) + 1;
-					}
+					prevBtn.disabled = true;
+					tagInsert(parseInt(params.pageNum)-1)	
 				}
 			})
-			tagInsert(pageingBtn[0].innerHTML)
-		})
-		
+			
 		pageingBtn.forEach((btn,idx) =>{
+			
+			if(pageingBtn[idx].innerHTML == '' || pageingBtn[idx].innerHTML == null)
+				if(parseInt(params.pageSize) < idx+1){
+					pageingBtn[idx].remove();
+				}
+				else
+					pageingBtn[idx].innerHTML = idx+1;
+			
 			if(params.pageNum > (pageingBtn.length)/2){
 				pageingBtn[Math.ceil((pageingBtn.length-1)/2)].innerHTML = params.pageNum
 				if(Math.ceil((pageingBtn.length-1)/2) > idx)
 					pageingBtn[idx].innerHTML = params.pageNum - Math.ceil((pageingBtn.length-1)/2) + idx
 				else
 					pageingBtn[idx].innerHTML = params.pageNum - (Math.ceil((pageingBtn.length-1)/2) - idx)
+				
+				if(parseInt(pageingBtn[idx].innerHTML) > parseInt(params.pageSize)){
+					pageingBtn[idx].disabled = true;
+				}
 			}
 			
 			if(btn.innerHTML == params.pageNum){
