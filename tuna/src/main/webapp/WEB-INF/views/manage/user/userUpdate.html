@@ -42,43 +42,48 @@ data-layout-decorate="~{layouts/navLayout}">
 	                      <div class="col-lg-12 col-xl-12">
 	                        <div class="mb-3">
 	                          <div class="input-group">
-	                            <span class="input-group-text d-none d-md-block">소속</span>
-	                            <input type="text" class="form-control" th:value = "${@codeList.getName(vo.deptCode)}" readonly>
-	                            <span class="input-group-text d-none d-md-block">이름</span>
-	                            <input type="text" class="form-control" th:value = "${vo.name}" readonly>
-	                            <span class="input-group-text d-none d-md-block">생년월일</span>
-	                            <input type="text" class="form-control" th:value = "${vo.birth}" readonly>
+	                            <span class="input-group-text d-none d-md-block col-1">소속</span>
+	                            <input type="text" class="form-control col-3" th:value = "${@codeList.getName(vo.deptCode)}" readonly>
+	                            <span class="input-group-text d-none d-md-block col-1" >이름</span>
+	                            <input type="text" class="form-control col-3" th:value = "${vo.name}" readonly>
+	                            <span class="input-group-text d-none d-md-block col-1">생년월일</span>
+	                            <input type="text" class="form-control col-3" th:value = "${vo.birth}" readonly>
 	                          </div>
 	                    	</div>
 	                    <div class="mb-3">
 	                      <div class="input-group">
-	                        <span class="input-group-text d-none d-md-block">학번</span>
-	                        <input type="text" class="form-control" id = "no" th:value = "${vo.no}" readonly>
-	                        <span class="input-group-text d-none d-md-block">학년</span>
-	                        <input type="text" class="form-control" th:value = "${vo.sy}" readonly>
-	                        <span class="input-group-text d-none d-md-block">입학날짜</span>
-	                        <input type="text" class="form-control" th:value = "${vo.enterDate}" readonly>
+	                        <span class="input-group-text d-none d-md-block col-1">학번</span>
+	                        <input type="text" class="form-control col-3" id = "no" th:value = "${vo.no}" readonly>
+	                        <span class="input-group-text d-none d-md-block col-1">학년</span>
+	                        <input type="text" class="form-control col-3" th:value = "${vo.sy}" readonly>
+	                        <span class="input-group-text d-none d-md-block col-1">입학날짜</span>
+	                        <input type="text" class="form-control col-3" th:value = "${vo.enterDate}" readonly>
 	                      </div>
 	                    </div>
 	                    <div class="mb-3">
 	                      <div class="input-group">
-	                        <span class="input-group-text d-none d-md-block">재적상태</span>
-	                        <input type="text" class="form-control d-none d-md-block" th:value = "${@codeList.getName(vo.stateCode)}" readonly>
-	                        <span class="input-group-text d-none d-md-block">전화번호</span>
-	                        <input type="number" onchange = "javascript:disable();" maxlength="11" oninput="maxLengthCheck(this)"  class="form-control" name = "tel" th:value = "${vo.tel}">
-	                        <span class="input-group-text d-none d-md-block">이메일</span>
+	                        <span class="input-group-text d-none d-md-block col-1">재적상태</span>
+	                        <input type="text" class="form-control d-none d-md-block col-3" th:value = "${@codeList.getName(vo.stateCode)}" readonly>
+	                        <span class="input-group-text d-none d-md-block col-1">전화번호</span>
+	                        <input type="number" onchange = "javascript:disable();" maxlength="11" oninput="maxLengthCheck(this)"  class="form-control col-3" name = "tel" th:value = "${vo.tel}">
+	                        <span class="input-group-text d-none d-md-block col-1">이메일</span>
 	                        <th:block th:if = "${not #strings.isEmpty(vo.email)}">
-	                      	<input type="text" class="form-control" name = "email" th:value = "${vo.email}">
+	                      	<input type="text" class="form-control col-3" name = "email" th:value = "${vo.email}">
 		                    </th:block>
 		                    <th:block th:unless = "${not #strings.isEmpty(vo.email)}">
-		                      	<input type="text" class="form-control" name = "email"  placeholder = "이메일 주소를 입력하세요...">
+		                      	<input type="text" class="form-control col-3" name = "email"  placeholder = "이메일 주소를 입력하세요...">
 		                    </th:block>
 	                      </div>
 	                    </div>
+	                  </div>
+	                  
+	                     <div class="mb-2 mt-3">
+	                    <h4>은행 정보</h4>
+	                   </div>
 	                    <div class="mb-3">
 	                      <div class="input-group">
-	                        
-	                        <span class="input-group-text d-none d-md-block">은행</span>
+	                        <span class="input-group-text d-none d-md-block col-1" >은행</span>
+	                        <div class="col-2">
 	                        <select class="form-select" id="bacc" name="bacc" onchange="javascript:updateSuccess();">
 	                        <th:block th:if = "${not #strings.isEmpty(vo.bacc)}">
 		                          <option th:value="${vo.bacc}" th:text="${@codeList.getName(vo.bacc)}"></option>
@@ -114,18 +119,20 @@ data-layout-decorate="~{layouts/navLayout}">
 		                          <option value="45">HSBC은행</option>
 		                          <option value="21">SC제일은행</option>
 	                        </select>
+	                        </div>
+	                        <div class="col-1"></div>
 	                     <th:block th:if = "${not #strings.isEmpty(vo.bank)}">
-	                        <span class="input-group-text d-none d-md-block">계좌번호</span>
-	                        <input type="text" class="form-control" name = "bank" maxlength="16" th:value = "${vo.bank}" >
+	                        <span class="rounded input-group-text d-none d-md-block col-1">계좌번호</span>
+	                        <input type="text" class="form-control col-7" name = "bank" maxlength="16" th:value = "${vo.bank}" >
 	                      </th:block>
 	                      <th:block th:unless = "${not #strings.isEmpty(vo.bank)}">
-	                        <span class="input-group-text">계좌번호</span>
-	                        <input type="text" name = "bank" class="form-control" >
+	                        <span class="rounded input-group-text col-1">계좌번호</span>
+	                        <input type="text" name = "bank" class="form-control col-7" >
 	                      </th:block>
 	                      </div>
 	                    </div>
-	                  </div>
-	                </div>
+	                
+	                 </div>
 	                <div class="mb-4">
 	                    <h4>현 주소</h4>
 	                </div>
@@ -195,7 +202,7 @@ data-layout-decorate="~{layouts/navLayout}">
     
       function showPopup(){
     	  let no = document.querySelector('#no')
-          window.open("pwdUpdate?no="+no.value,"비밀번호변경","width=600, height=400, top=10, left=10");
+          window.open("pwdUpdate?no="+no.value,"비밀번호변경","width=600, height=450, top=250, left=650");
       }
       
       function success(success){
