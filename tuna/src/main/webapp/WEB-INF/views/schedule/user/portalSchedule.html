@@ -46,7 +46,6 @@
 		</div>
 		<!--title end-->
 		<div class="content content-boxed">
-
 			<div class="block block-rounded">
 				<div class="block-header block-header-default">
 					<div class="block-title">
@@ -77,10 +76,10 @@
 						id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
 						<thead>
 							<tr>
-								<th class="text-center" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+								<th class="text-center bg-gray " tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
 									colspan="1">월</th>
-								<th class="text-center" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-									colspan="1">일</th>
+								<th class="text-center bg-body-light" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+									colspan="1">기간</th>
 								<th class="text-center" tabindex="0" style="width: 70%"
 									aria-controls="DataTables_Table_0" rowspan="1" colspan="1">학사내용</th>
 							</tr>
@@ -209,8 +208,8 @@
 							}
 
 							$('#scheduleList').append($('<tr>')
-								.append($('<td>').addClass('text-center rowCheck h2').html(('0' + schedule.month).substr(-2)))
-								.append($('<td>').addClass('fw-semibold fs-sm text-center').html(all))
+								.append($('<td>').addClass('text-center rowCheck h2 bg-gray').html(('0' + schedule.month).substr(-2)))
+								.append($('<td>').addClass('fw-semibold fs-sm text-center bg-body-light').html(all))
 								.append($('<td>').addClass('fs-sm searchList').html(schedule.content))
 							)
 

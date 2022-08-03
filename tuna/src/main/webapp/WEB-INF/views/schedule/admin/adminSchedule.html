@@ -18,7 +18,6 @@
 <title>학사일정관리</title>
 <style>
 /* body 스타일 */
-
 .fc-header-toolbar {
 	padding-top: 1em;
 	padding-left: 1em;
@@ -26,43 +25,39 @@
 }
 
 .fc-day-sun a {
-  color: rgb(184, 108, 111);
-  text-decoration: none;
+	color: rgb(184, 108, 111);
+	text-decoration: none;
 }
 
 /* 토요일 날짜 파란색 */
 .fc-day-sat a {
-  color: rgb(69, 123, 169);
-  text-decoration: none;
+	color: rgb(69, 123, 169);
+	text-decoration: none;
 }
 
-.fc-h-event{
-border-radius:40px;
-} 
-
-.fc-event-title-container{
-border-radius:4px;
-background-color:rgb(64, 103, 135);
+.fc-h-event {
+	border-radius: 40px;
 }
 
-
+.fc-event-title-container {
+	border-radius: 4px;}
 </style>
 </head>
 
-<body >
+<body>
 	<main layout:fragment="main">
-	
+
 		<!-- title start -->
 		<div class="content content-full mt-3">
 			<h3 class="fw-bold">학사일정 관리</h3>
-			<div  class="block block-rounded px-5 pb-5 pt-4">
+			<div class="block block-rounded px-5 pb-5 pt-4">
 				<!-- calendar 태그 -->
 				<div id='calendar-container'>
-					<div id='calendar' style="height:100px"></div>
+					<div id='calendar' style="height: 100px"></div>
 				</div>
 			</div>
-		
-</div>
+
+		</div>
 
 		<script th:inline="javascript">
 		var header = $("meta[name='_csrf_header']").attr('content');
@@ -75,7 +70,6 @@ background-color:rgb(64, 103, 135);
     	
         $(function calendar(){
     
-        	check()
         	var calendarList = []
         	
     		$.ajax({
@@ -84,14 +78,36 @@ background-color:rgb(64, 103, 135);
     			dataType :'json'
     		}).done(function(datas){
 				for (data of datas){
+					console.log(datas)
 					
-	    			let obj = {
-	    				title : data.content,
-	    				start : data.startDate,
-	    				end : data.endDate,
-	    				no : data.no	
-	    			}
-	    			calendarList.push(obj)
+					if(data.no%2 == 0){
+		    			let obj = {
+			    				title : data.content,
+			    				start : data.startDate,
+			    				end : data.endDate,
+			    				no : data.no,
+			    				color:'rgb(66, 161, 180)'
+			    			
+							}
+		    			calendarList.push(obj)
+						
+					}
+
+					else  {
+		    			obj = {
+			    				title : data.content,
+			    				start : data.startDate,
+			    				end : data.endDate,
+			    				no : data.no,
+			    				
+			    				color:'rgb(64, 103, 135)'
+			    			
+							}
+		    			calendarList.push(obj)
+						
+					}
+
+	    			
 				}
 				
 				// calendar element 취득
@@ -238,12 +254,7 @@ background-color:rgb(64, 103, 135);
 
     
 </script>
-<script>
-function check(){
-	
-}
 
-</script>
 		<script>
 		function getPathRootJump() {
 		    var pathName = window.location.pathname.substring(1);
@@ -257,7 +268,7 @@ function check(){
 		<script th:src="@{/resources/assets/js/dialog.js}"></script>
 		<script
 			th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
-<script
+		<script
 			src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
 		<script
 			src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
