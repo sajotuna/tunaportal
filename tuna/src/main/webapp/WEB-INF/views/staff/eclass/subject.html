@@ -480,7 +480,7 @@ xmlns:th="http://www.thymeleaf.org"
 -->
                   <div class="tab-pane" id="btabs-static-objection" role="tabpanel" aria-labelledby="btabs-static-objection-tab">
 					<div class="mb-4" style="height:345px; overflow-y:scroll;">
-	                    <table id="subject-objection-table" class="table table-hover table-vcenter">
+	                    <table id="subject-objection-table" class="table table-hover table-vcenter mb-0">
 	                      <thead>
 	                        <tr>
 	                          <th>학생명</th>
@@ -1743,9 +1743,9 @@ xmlns:th="http://www.thymeleaf.org"
             // 이의신청 패널
             function setObjectionContent(objList) {
               let table = document.querySelector('#subject-objection-table');
-              table.innerHTML = "";
               let tbody = document.createElement('tbody');
               tbody.setAttribute('id', 'objectionTb');
+              tbody.innerHTML = "";
 
               for (let obj of objList) {
                 let tr = document.createElement('tr');
@@ -1828,7 +1828,9 @@ xmlns:th="http://www.thymeleaf.org"
 		           	            	  objSbjName.innerHTML = result.NAME;
 		           	            	  objStname.innerHTML = result.STNAME;
 		           	            	  objState.innerHTML = result.OBJSTATE;
-		           	            	  objContent.innerHTML = result.CONTENT;
+		           	            	  
+		           	            	  let content = result.CONTENT.replace(/\n/g, '<br>');
+		           	            	  objContent.innerHTML = content;
 		           	            	  
 		           	            	  if(result.ANSWER == null) {
 		           	            		  objAnswer.removeAttribute('disabled');
