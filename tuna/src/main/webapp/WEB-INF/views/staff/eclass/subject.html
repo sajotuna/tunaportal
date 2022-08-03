@@ -110,7 +110,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </small></h5>
                     <div>수강생  : <strong><span th:text="${#lists.size(subject.lectureApplyList)}">데이터 없음</span> 명</strong></div>
                     <div>학점 : <strong th:text="${subject.point}">데이터 없음</strong></div>
-                    <div>주차 : <strong><span></span>/ 16</strong></div>
+                    <div>주차 : <strong><span th:text="${thisWeek}"></span>/ 16</strong></div>
                     <div>기간 : <strong>
                       <span th:text="${firstDay}">20??-??-??</span> ~ 
                       <span th:text="${lastDay}">20??-??-??</span></strong></div>

@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.subject.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -39,5 +40,5 @@ public interface SubjectService {
 	/*
 	 * 이번 주차 계산기
 	 * */
-	public Integer thisWeekCalculator(List<LecturePlanVO> plans, List<LectureScheduleVO> schedule);
+	public Integer thisWeekCalculator(List<LecturePlanVO> plans, List<LectureScheduleVO> schedule, LocalDate startDate);
 }

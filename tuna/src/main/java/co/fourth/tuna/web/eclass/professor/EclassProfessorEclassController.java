@@ -178,6 +178,7 @@ public class EclassProfessorEclassController {
 		// 개강일
 		LocalDate firstDay = LocalDate.ofInstant(schedule.getStartDate().toInstant(), ZoneId.systemDefault());
 		LocalDate startDate = firstDay.minusDays(1);
+//		LocalDate startDate = LocalDate.now().minusWeeks(2);
 
 		// 시간표 목록
 		List<LectureScheduleVO> subSche = lecScheduleService.findScheduleBySubjectId(sbjno);
@@ -194,20 +195,14 @@ public class EclassProfessorEclassController {
 		
 		Integer thisWeek = 0;
 		
-		LocalDate today = LocalDate.now();
-		
 		// 주차 계산
 		List<LecturePlanVO> plans = lecPlanService.findListBySubjectId(sbjno);
-		subjectService.thisWeekCalculator(plans, subSche);
-		for(int i=0; i < plans.size(); i++) {
-			for( LectureScheduleVO lecSche : subSche ) {
-				LocalDate ldate = startDate.with(
-					TemporalAdjusters.next(
-						DayOfWeek.of(CustomDateUtills.koreanWeeksToLocalDateNum(lecSche.getDayCode()))
-					)
-				);
-				if(today.compareTo(ldate) < 0) break;
-			}
+		thisWeek = subjectService.thisWeekCalculator(plans, subSche, startDate);
+		
+		if(thisWeek != null) {
+			model.addAttribute("thisWeek", thisWeek);
+		} else {
+			model.addAttribute("thisWeek", "#");
 		}
 		
 		
