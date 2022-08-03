@@ -87,7 +87,7 @@ public class UserController {
 		
 	}
 	
-	@PostMapping("/prof/students")
+	@PostMapping("/staff/students")
 	@ResponseBody
 	public List<StudentExVO> getStudentsBySubjectId(
 			@RequestBody Map<String, Integer> reqData) {

@@ -79,6 +79,7 @@
 	JOIN task t
 		ON l.sbjno = t.sbjno
 	WHERE t.no = #{taskno}
+	ORDER BY s.no
 </select>
 
 <update id="studPwdUpdate" parameterType="co.fourth.tuna.domain.user.vo.StudentVO">
@@ -153,8 +154,9 @@ update student set pwd = #{pwd}, email = #{email}, chpwd = 1 where no = #{no}
 		</include>) AS deptname
 	FROM student s
 	JOIN lectureapply l
-    ON s.no = l.stno
+    	ON s.no = l.stno
 	WHERE sbjno = #{sbjno}
+	ORDER BY s.no
 	
 </select>
 

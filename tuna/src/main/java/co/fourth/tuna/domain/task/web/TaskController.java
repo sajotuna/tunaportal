@@ -27,35 +27,8 @@ import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
 @Controller
 public class TaskController {
 	
-	@Autowired private SubjectMapper map;
 	@Autowired private TaskService taskService;
 	@Autowired private StudentService studService;
-	@Autowired private GradeService gradeService;
-	
-//	@RequestMapping("/eclass/student/taskList")
-//	public String taskList(Model model) {
-//		
-//		//단일과목과제 조회
-//		StudentVO sv = new StudentVO();
-//		SubjectVO sb = new SubjectVO();
-//		sv.setNo(13168019);
-//		sb.setNo(90079);
-//		List<SubjectVO> sbjli = map.selectOneSubTask(sv, sb);
-//		model.addAttribute("sbjli", sbjli);
-//		return "eclass/stud/taskList";
-//	}
-//	
-//	@Autowired SqlSession sql;
-//	@RequestMapping("/eclass/student/taskSelect")
-//	public String taskSelect(Model model, TaskVO vo) {
-//		vo.setNo(1);
-//		vo.setSbjNo(90079);
-//		List<Map<String, Object>> tsk = sql.selectList("co.fourth.tuna.domain.task.mapper.TaskMapper.taskSelect", vo);
-//		
-//		model.addAttribute("tsk", tsk);
-//		
-//		return "eclass/stud/taskSelect";
-//	}
 	
 	@PostMapping(value="/staff/insertTask")
 	public ResponseEntity<String> insertTask(
