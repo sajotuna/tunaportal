@@ -1,6 +1,7 @@
 package co.fourth.tuna.domain.subject.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ public interface SubjectService {
 	public List<SubjectVO> findListForProfessorMain(ProfessorVO prof, int seasonCode, int pageNum, int size);
 	public List<SubjectVO> SubjectCheck();
 	public List<SubjectVO> searchSubjectList(String seasonCode, String searchKey, String key);
-	public int subjectCount(String seasonCode);
+	public int subjectCount(Map<String, Object> params);
 //	ArrayList<SubjectVO> getList(int pageNum, int size);
 //	ArrayList<SubjectVO> getListByProf(ProfessorVO prof, int pageNum, int size);
 //	
