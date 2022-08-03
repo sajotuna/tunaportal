@@ -20,6 +20,19 @@ xmlns:th="http://www.thymeleaf.org"
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
+    <style>
+      .line-hider-fluid {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 49px;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        
+        line-height: 49px;
+      }
+    </style>
   </head>
   <body>
 
@@ -433,21 +446,24 @@ xmlns:th="http://www.thymeleaf.org"
                       </div>
                     </div>
                   </div> <!-- qna TAB END -->
-<!--
-      ███    ██  ██████  ████████ ██  ██████ ███████ 
-▄ ██ ▄████   ██ ██    ██    ██    ██ ██      ██      
- ████ ██ ██  ██ ██    ██    ██    ██ ██      █████   
-▀ ██ ▀██  ██ ██ ██    ██    ██    ██ ██      ██      
-      ██   ████  ██████     ██    ██  ██████ ███████
+<!-- @ notice
+        ███    ██  ██████  ████████ ██  ██████ ███████ 
+▄ ██ ▄  ████   ██ ██    ██    ██    ██ ██      ██      
+ ████   ██ ██  ██ ██    ██    ██    ██ ██      █████   
+▀ ██ ▀  ██  ██ ██ ██    ██    ██    ██ ██      ██      
+        ██   ████  ██████     ██    ██  ██████ ███████  
 -->
                   <div class="tab-pane" id="btabs-static-notice" role="tabpanel" aria-labelledby="btabs-static-notice-tab">
                     <table id="subject-notice-table" class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
-                      <tbody>
+                      <thead>
                         <tr>
                           <th style="width: 100px">번호</th>
                           <th class="text-start">제목</th>
                           <th style="width: 15%">등록일</th>
                         </tr>
+                      </thead>
+                      <tbody>
+                        
                       </tbody>
                     </table>
                     <div class="col-xl-2">
@@ -1465,7 +1481,7 @@ xmlns:th="http://www.thymeleaf.org"
             // 공지사항 패널 세팅
             function setNoticeContent(notices) {
               let table = document.querySelector('#subject-notice-table');
-              let tbody = table.firstElementChild;
+              let tbody = table.querySelector('tbody');
               tbody.innerHTML = "";
               notices.forEach(data => {
                 // console.log(data);
@@ -1474,12 +1490,16 @@ xmlns:th="http://www.thymeleaf.org"
                 mDate = mDate.slice(0, mDate.indexOf('T'));
 
                 let tr = document.createElement('tr');
-                let atag = document.createElement('a');
                 tbody.appendChild(tr);
+                tr.addEventListener("click", function() {
+                  window.open("/tuna/staff/eclass/notice?no="+data.no, 'notice', 'heigth=1200, width=920, menubar=0, status=0, toolbar=0');
+                })
 
                 let td_no = document.createElement('td');
                 let td_title = document.createElement('td');
-                td_title.classList.add('text-start')
+                td_title.classList.add('text-start');
+                td_title.classList.add("line-hider-fluid");
+                td_title.classList.add("pt-0");
                 let td_date = document.createElement('td');
                 
                 tr.appendChild(td_no)
