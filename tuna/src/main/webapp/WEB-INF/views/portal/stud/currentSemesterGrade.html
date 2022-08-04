@@ -339,10 +339,14 @@
 			}
 			
 			if ($(this).data('content')) {
-				let content = $(this).data('content').replace(/\n/g, '<br>');
-				$('#content').html(content);
+				$('#content').text($(this).data('content'));
 				$('#content').attr('disabled', true);
 				$('#objInsertBtn').attr('disabled', true);
+			}
+			
+			if ($(this).data('answer')) {
+				let answer = $(this).data('answer').replace(/\n/g, '<br>');
+				$('#answer').html(answer);
 			}
 			
 			$('#objInsertBtn').data('sbjno', $(this).data('sbjno'));
