@@ -7,6 +7,19 @@
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 	<title>학사공지 </title>
 	<style>
+table tr td a{
+	line-height: 26.5px;
+	padding-top: 0px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	word-break: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	color: black;
+	font-weight:440;
+}
 	</style>
 </head>
 
@@ -29,26 +42,37 @@
 		<div class="content content-boxed">
 			<div class="block block-rounded">
 				<div class="p-3 p-sm-5 ">
-					<!-- Search Form (visible on larger screens) -->
-					<form id="frm" class="row d-flex justify-content-end" action="/tuna/portalNoticeList" method="post">
-						<input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
-
-						<select style="width:130px" name="state" id="state" class="form-select">
-							<option th:attr="selected=${state==1} ? 'selected'" value="1">선택</option>
-							<option th:attr="selected=${state==2} ? 'selected'" value="2">제목</option>
-							<option th:attr="selected=${state==3} ? 'selected'" value="3">내용</option>
-						</select>
-
-
-						<div style="width:200px" class="input-group">
-							<input type="text" class="form-control form-control-alt" autofocus id="key" name="key"
-								placeholder="Search" th:attr="value=${key==1} ? ' ' : ${key}">
-							<button id="searchBtn" type="submit" class="btn btn-alt-secondary">
-								<i class="fa fa-search"></i>
-							</button>
+					<div class="row mb-4">
+						<div class="col-lg-6 mb-3 mb-lg-0 d-flex  justify-content-center justify-content-lg-start">
+							<button type="button" style="width:100px" class="mr-3 col-12 btn btn-outline-secondary"
+								th:onclick="|location.href='@{portalNoticeList}'|">전체보기</button>
 						</div>
-					</form>
+						<!-- Search Form (visible on larger screens) -->
 
+						<form id="frm" onsubmit="return selection()"
+							class="d-flex justify-content-center justify-content-lg-end p-0 col-lg-6 mb-3 m-lg-0"
+							action="/tuna/portalNoticeList" method="post">
+
+							<input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
+							<select style="width: 200px" name="state" id="state"
+								class=" justify-content-center form-select">
+								<option th:attr="selected=${state==1} ? 'selected'" value="1">선택</option>
+								<option th:attr="selected=${state==2} ? 'selected'" value="2">제목</option>
+								<option th:attr="selected=${state==3} ? 'selected'" value="3">내용</option>
+							</select>
+
+
+
+							<div style="width:200px" class="justify-content-center input-group mx-1">
+								<input type="text" class="form-control form-control-alt" id="key" name="key"
+								 th:attr="value=${key=='1'} ? ' ' : ${key}">
+								<button id="searchBtn" type="submit" class="btn btn-alt-secondary">
+									<i class="fa fa-search"></i>
+								</button>
+							</div>
+
+						</form>
+					</div>
 					<!-- END Search Form -->
 
 
@@ -57,13 +81,12 @@
 						<!--thead 표 제목-->
 						<thead>
 							<tr>
-								<th class="text-center d-none d-lg-table-cell" style="width: 10%;">#</th>
-								<th class="d-none d-lg-table-cell" style="text-align: center">제목</th>
-								<th class="d-none d-lg-table-cell"
-									style="text-align: center; width:10%; height: 10%;">첨부파일</th>
+								<th class="text-center d-none d-lg-table-cell" style="width: 8%;">#</th>
+								<th class="d-none d-lg-table-cell txt_line" style="text-align: center">제목</th>
+								<th class="d-none d-lg-table-cell" style="text-align: center; width:13%; height: 10%;">
+									첨부파일</th>
 								<th class="d-none d-lg-table-cell" style="text-align: center; width: 20%;">Date</th>
-								<th class="d-none d-lg-table-cell"
-										style="text-align: center; width: 7%;">조회수</th>
+								<th class="d-none d-lg-table-cell" style="text-align: center; width: 13%;">조회수</th>
 							</tr>
 
 						</thead>
@@ -73,8 +96,8 @@
 								<tr th:each="notices, i:${notices}" th:data-no=${notices.no}>
 
 									<td class="text-center" id="nocheck">[[${notices.no}]]</td>
-									<td><a th:href="@{/portalNoticeSelect(no=${notices.no})}">[[${notices.title}]]</a>
-									</td>
+									<td><a th:href="@{/portalNoticeSelect(no=${notices.no})}">[[${notices.title}]]
+									</a></td>
 									<td>
 										<th:block th:if="${notices.fileyn == 'Y'}">
 											<p style="text-align: center; margin: 0 0 0 0">
@@ -89,7 +112,7 @@
 
 							<th:block th:if="${#lists.isEmpty(notices)}">
 								<tr class="text-center">
-									<td colspan="5">해당 내용이 없습니다.</td>
+									<td colspan="6">해당 내용이 없습니다.</td>
 								</tr>
 
 							</th:block>
@@ -131,7 +154,13 @@
 			var header = $("meta[name='_csrf_header']").attr('content');
 			var token = $("meta[name='_csrf']").attr('content');
 
-			//get방식 파라메터 숨기기
+			//검색 1 일때 attr 속성 없애기 
+			function selection() {
+				if ($('#state').val() == 1) {
+					$("#key").removeAttr("value");
+				}
+			}
+
 
 			// 페이징 번호
 			function pagingNo(page, range) {
