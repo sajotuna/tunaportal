@@ -77,7 +77,7 @@ public class LectureBasketController {
 		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
 		
 		if(courcheck.isEmpty()) {
-			ra.addFlashAttribute("error", "수강꾸러미에 담을 과목을 체크해주세요");
+			ra.addFlashAttribute("error", "수강꾸러미에 담을 과목을 선택해주세요.");
 			return "redirect:/stud/course/Basket";
 		}
 		
@@ -96,7 +96,7 @@ public class LectureBasketController {
 				return "redirect:/stud/course/Basket";
 			}
 		}
-		ra.addFlashAttribute("success", "수강꾸러미 등록이 완료되었습니다.");
+		ra.addFlashAttribute("success", "수강꾸러미 신청이 완료되었습니다.");
 		return "redirect:/stud/course/Basket";
 
 	}

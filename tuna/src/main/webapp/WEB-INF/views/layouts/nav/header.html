@@ -4,11 +4,17 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>navHeader</title>
+<style>
+@media print {
+		  header, footer, #noprint { display:none }
+		}
+</style>
+
 </head>
 <body>
 <th:block th:fragment="header">
 	<!-- Navigation -->
-	<div class="bg-primary-darker">
+	<div class="bg-primary-darker" id = "noprint">
 		<div class="content py-3">
 			<!-- Toggle Main Navigation -->
 			<div class="d-lg-none">

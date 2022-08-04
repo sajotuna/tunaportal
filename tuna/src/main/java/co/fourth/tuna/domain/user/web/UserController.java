@@ -119,7 +119,7 @@ public class UserController {
 	public String adminInfoUpdate(RedirectAttributes ra,AdminVO vo,Authentication authentication) {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		AdminDao.adminInfoUpdate(vo);
-		ra.addFlashAttribute("success", "회원정보가 수정되었습니다.");
+		ra.addFlashAttribute("success", "회원정보 수정이 완료되었습니다.");
 		return "redirect:/admin/adminUpdate";
 	}
 	
@@ -132,7 +132,7 @@ public class UserController {
 			AdminDao.adminpwdUpdate(vo);    
 			message = "비밀번호가 변경 되었습니다.";
 		}else {
-			message = "비밀번호가 틀립니다.";
+			message = "비밀번호가 틀렸습니다.";
 			ra.addFlashAttribute("error", message);
 			return "redirect:/admin/pwdUpdate";
 		}

@@ -333,15 +333,21 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
       </div>
     </div>
   </div>
-  <th:block th:if = "${(success != null && success != '') || (error != null && error != '')}">
+  <th:block th:if = "${(success != null && success != '') || (error != null && error != '') || (delSuc != null && delSuc != '')}">
 	<script th:inline="javascript">
 	document.querySelector('#answer').focus();
 		let success = /*[[${success}]]*/ 'default';
 		let error = /*[[${error}]]*/ 'default';
+		let sucmsg = /*[[#{title.suc.apply}]]*/ 'default';
+		let errmsg = /*[[#{title.err.apply}]]*/ 'default';
+		let delmsg = /*[[#{title.suc.delete}]]*/ 'default';
+		let delSuc = /*[[${delSuc}]]*/ 'default';
 		if (success) {
-			Dialogs.dialog('success', '완료', success);
+			Dialogs.dialog('success',sucmsg, success);
 		} else if (error) {
-			Dialogs.dialog('error', '실패', error);
+			Dialogs.dialog('error', errmsg, error);
+		} else if(delSuc){
+			Dialogs.dialog('error', delmsg, delSuc);
 		}
 		
 	</script>
@@ -388,7 +394,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 									if (result == '200') {
 										let sbjno = document.querySelector('#sbjno')
 										if(sbjno.value == '' || sbjno.value == null){
-											Dialogs.dialog('error', '수강신청 실패', '과목코드를 입력해주세요.')
+											Dialogs.dialog('error', '신청 실패', '과목코드를 입력해주세요.')
 											getImage();
 											document.querySelector('#answer').setAttribute(
 													'value', '');
@@ -397,7 +403,7 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 										}
 										// 성공 코드
 									} else {
-										Dialogs.dialog('error', '수강신청 실패', '자동입력방지 코드가 틀립니다.')
+										Dialogs.dialog('error', '신청 실패', '자동입력방지 코드가 틀립니다.')
 										getImage();
 										document.querySelector('#answer').setAttribute(
 												'value', '');
