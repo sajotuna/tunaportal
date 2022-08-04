@@ -147,7 +147,9 @@ public class ScholarController {
 
 		List<Map<String, Object>> lists = SqlSession
 				.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.adminScholarCheck", params);
-
+		
+		params.put("pageSize", Math.ceil((double)ScholarDao.scholarApplyCount(params)/10));
+		
 		model.addAttribute("list", lists);
 		model.addAttribute("params", params);
 

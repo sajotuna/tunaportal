@@ -82,7 +82,7 @@ FROM
               FROM GRADE G, SUBJECT S 
              WHERE S.SEASONCODE = 105 AND S.NO = G.SBJNO AND STNO = S2.NO) AS AVGSCORE,
              (SELECT SUM(POINT) FROM LECTUREAPPLY L , SUBJECT S
-              WHERE S.NO = L.SBJNO AND L.STNO = S2.NO) PREVGRADE
+              WHERE S.NO = L.SBJNO AND L.STNO = S2.NO AND L.SEASONCODE = 105) PREVGRADE
              , S2.DEPTCODE
              , S2.ENTERDATE
              , SC.NAME SCHNAME
@@ -149,6 +149,30 @@ BETWEEN (#{pageNum}-1)*#{size}+1
 		)
 	}
 </insert>
+
+<select id = "scholarApplyCount" resultType="int" parameterType="map">
+select count(*) 
+from scholarapply sc2, student s2
+where sc2.stno = s2.no
+	  <if test="year != null and !year.equals('')">
+      	AND SC2.SEASONCODE = #{year}
+      </if>
+      <if test="schno != null and !schno.equals('')">
+      	AND SC2.SCHNO = #{schno}
+      </if>
+      <if test="startDate != null and !startDate.equals('') and endDate != null and !endDate.equals('')">
+      	AND SC2.APPLYDATE BETWEEN #{startDate} AND #{endDate}
+      </if>
+      <if test="no != null and !no.equals('')">
+      	AND S2.NO = #{no}
+      </if>
+      <if test="schState != null and !schState.equals('')">
+      	AND SC2.STATECODE = #{schState}
+      </if>
+      <if test="sy != null and !sy.equals('')">
+      	AND S2.SY = #{sy}
+      </if>
+</select>
 
 
 
