@@ -38,21 +38,21 @@
 										aria-describedby="DataTables_Table_0_info">
 										<thead>
 											<tr>
-												<th class="text-center bg-dark text-white" style="width: 50px;" tabindex="0" 
+												<th class="text-center fw-bold bg-dark text-white" style="width: 50px;" tabindex="0" 
 													rowspan="1">번호</th>
-												<th class="text-center bg-dark text-white" style="width:350px;" tabindex="0" >제목</th>
-												<th class="text-center bg-dark text-white" style="width:100px;" >작성일자</th>
-												<th class="text-center bg-dark text-white" style="width:100px;" >마감일자</th>
+												<th class="text-center fw-bold bg-dark text-white" style="width:350px;" tabindex="0" >제목</th>
+												<th class="text-center fw-bold bg-dark text-white" style="width:100px;" >작성일자</th>
+												<th class="text-center fw-bold bg-dark text-white" style="width:100px;" >마감일자</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr th:each="i, t : ${s.taskList}">
-												<th class="text-center" th:text="${i.rowNum}"></th>
-												<th class="text-center"  ><a
+												<td class="text-center" th:text="${i.rowNum}"></td>
+												<td><a
 													th:href="@{/stud/eclass/taskSelect(no=${i.no},sbjNo=${i.sbjNo})}"
-													th:text="${i.title}" style="color: black"></a></th>
-												<th class="text-center"  th:text="${i.startDate}"></th>
-												<th class="text-center"  th:text="${i.limitDate}"></th>
+													th:text="${i.title}" style="color: black"></a></td>
+												<td class="text-center"  th:text="${i.startDate}"></td>
+												<td class="text-center"  th:text="${i.limitDate}"></td>
 											</tr>
 											<tr th:if=${#lists.isEmpty(s.taskList)}>
 												<th class="fw-bold text-center" colspan="4">과제가

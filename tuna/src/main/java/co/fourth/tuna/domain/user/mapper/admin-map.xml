@@ -9,7 +9,7 @@
 <select id ="adminUserCheck" parameterType="map" resultType="map">
 SELECT l.*
 from (select u.*, rownum rn
-from (select a.* from adminusercheck a order by a.no desc) u
+from (select a.* from adminusercheck a) u
 WHERE 1=1
 <if test="startDate != null and !startDate.equals('') and endDate != null and !endDate.equals('')">
       AND u.ENTERDATE BETWEEN TO_DATE(#{startDate},'rrrr-MM-dd') AND TO_DATE(#{endDate},'rrrr-MM-dd')
@@ -65,8 +65,25 @@ SELECT case when count(*) >= 1 then 1 else 0 end as truefalse
 
 </select>
 
-<select id = "AdminUserCount" resultType="int">
-	select count(*) from userSelect
+<select id = "AdminUserCount" resultType="int" parameterType="map">
+	select count(*) 
+	from adminusercheck
+	WHERE 1=1
+	<if test="startDate != null and !startDate.equals('') and endDate != null and !endDate.equals('')">
+	      AND ENTERDATE BETWEEN TO_DATE(#{startDate},'rrrr-MM-dd') AND TO_DATE(#{endDate},'rrrr-MM-dd')
+	</if>
+	<if test="no != null and !no.equals('')">
+	    AND no = #{no}
+	</if>
+	<if test="deptCode != null and !deptCode.equals('')">
+	    AND DEPTCODE = #{deptCode}
+	</if>
+	<if test="statecode != null and !statecode.equals('')">
+	    AND STATECODE = #{statecode}
+	</if>
+	<if test="role != null and !role.equals('')">
+	    AND role = #{role}
+	</if>
 </select>
 
 
