@@ -81,6 +81,12 @@ public class GradeController {
 				
 	}
 	
+	@PostMapping("/staff/updateGrade")
+	public ResponseEntity<String> updateGrade(
+			@RequestBody GradeFormVO grade) {
+		return null;
+	}
+	
 	@PostMapping(value="/staff/eclass/updateSubmitTaskScore")
 	public ResponseEntity<String> updateSubmitTaskScore(
 			@RequestBody EclassSubmitTaskScoreForm data) {

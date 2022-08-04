@@ -20,6 +20,19 @@ xmlns:th="http://www.thymeleaf.org"
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/flatpickr/flatpickr.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
+    <style>
+      .line-hider-fluid {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 49px;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        
+        line-height: 49px;
+      }
+    </style>
   </head>
   <body>
 
@@ -97,7 +110,7 @@ xmlns:th="http://www.thymeleaf.org"
                     </small></h5>
                     <div>수강생  : <strong><span th:text="${#lists.size(subject.lectureApplyList)}">데이터 없음</span> 명</strong></div>
                     <div>학점 : <strong th:text="${subject.point}">데이터 없음</strong></div>
-                    <div>주차 : <strong>?? / 16</strong></div>
+                    <div>주차 : <strong><span th:text="${thisWeek}"></span>/ 16</strong></div>
                     <div>기간 : <strong>
                       <span th:text="${firstDay}">20??-??-??</span> ~ 
                       <span th:text="${lastDay}">20??-??-??</span></strong></div>
@@ -288,7 +301,7 @@ xmlns:th="http://www.thymeleaf.org"
                       </div>
                     </div>
                   </div> <!-- progress TAB END-->
-<!--
+<!-- @ studnet @ attendance
       ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ 
 ▄ ██ ▄██         ██    ██    ██ ██   ██ ██      ████   ██    ██    
  ████ ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    
@@ -299,7 +312,7 @@ xmlns:th="http://www.thymeleaf.org"
                     <form id="subject-attendance-form" onsubmit="return false;">
                       <div class="row">
                         <div class="col-xl-3 align-self-center">
-                          <span class="fs-lg fw-bold" id="attendance_date_text">##-##-## (##)</span>
+                          <span class="fs-lg fw-bold" id="attendance_date_text">####-## (##)</span>
                         </div>
                         <div class="offset-5 col-xl-2">
                           <button class="col-12 btn btn-dark" onclick="allStudentAttend()">전체 출석</button>
@@ -429,29 +442,37 @@ xmlns:th="http://www.thymeleaf.org"
                     </div>
                     <div class="pt-2 row">
                       <div class="col-xl-2">
-                        <button href="" class="col-12 btn btn-dark">전체보기</button>
+                        <button th:href="@{/staff/eclass/qnaList}" class="col-12 btn btn-dark">전체보기</button>
                       </div>
                     </div>
                   </div> <!-- qna TAB END -->
-<!--
-      ███    ██  ██████  ████████ ██  ██████ ███████ 
-▄ ██ ▄████   ██ ██    ██    ██    ██ ██      ██      
- ████ ██ ██  ██ ██    ██    ██    ██ ██      █████   
-▀ ██ ▀██  ██ ██ ██    ██    ██    ██ ██      ██      
-      ██   ████  ██████     ██    ██  ██████ ███████
+<!-- @ notice
+        ███    ██  ██████  ████████ ██  ██████ ███████ 
+▄ ██ ▄  ████   ██ ██    ██    ██    ██ ██      ██      
+ ████   ██ ██  ██ ██    ██    ██    ██ ██      █████   
+▀ ██ ▀  ██  ██ ██ ██    ██    ██    ██ ██      ██      
+        ██   ████  ██████     ██    ██  ██████ ███████  
 -->
                   <div class="tab-pane" id="btabs-static-notice" role="tabpanel" aria-labelledby="btabs-static-notice-tab">
                     <table id="subject-notice-table" class="js-table-checkable table table-hover table-vcenter text-center table-bordered"> 
-                      <tbody>
+                      <thead>
                         <tr>
                           <th style="width: 100px">번호</th>
                           <th class="text-start">제목</th>
                           <th style="width: 15%">등록일</th>
                         </tr>
+                      </thead>
+                      <tbody>
+                        
                       </tbody>
                     </table>
-                    <div class="col-xl-2">
-                      <button class="col-12 btn btn-dark"> 공지 작성 </button>
+                    <div class="row">
+                      <div class="col-xl-2">
+                        <button id="subject-notice-write-btn" class="col-12 btn btn-dark"> 공지 작성 </button>
+                      </div>
+                      <div class="col-xl-2">
+                        <button id="subject-notice-all-btn" class="col-12 btn btn-primary">전체 보기</button>
+                      </div>
                     </div>
                     <p></p>
                   </div> <!-- notice TAB END -->
@@ -464,7 +485,7 @@ xmlns:th="http://www.thymeleaf.org"
 -->
                   <div class="tab-pane" id="btabs-static-objection" role="tabpanel" aria-labelledby="btabs-static-objection-tab">
 					<div class="mb-4" style="height:345px; overflow-y:scroll;">
-	                    <table id="subject-objection-table" class="table table-hover table-vcenter">
+	                    <table id="subject-objection-table" class="table table-hover table-vcenter mb-0">
 	                      <thead>
 	                        <tr>
 	                          <th>학생명</th>
@@ -969,7 +990,8 @@ xmlns:th="http://www.thymeleaf.org"
               OBJECTION_CONTENT : "/tuna/staff/objections",
               GRADE_CONTENT : "/tuna/staff/students",
 
-              GRDAE_UPDATE : "/tuna/staff/updateGrades",
+              GRDAES_UPDATE : "/tuna/staff/updateGrades",
+              GRADE_UPDATE : "/tuna/staff/updateGrade",
               TASK_INSERT : '/tuna/staff/insertTask',
               OBJECTION_GET : '/tuna/staff/eclass/objection?objNo=',
               OBJECTION_PUT : '/tuna/staff/eclass/objection',
@@ -1035,6 +1057,8 @@ xmlns:th="http://www.thymeleaf.org"
               objTrClickEvent();
               objUpdateClickEvent();
               initFileInsertForm();
+              initNoticeWriteButton();
+              initNoticeAllButton();
             });
 
             // 초기화 세팅
@@ -1319,7 +1343,21 @@ xmlns:th="http://www.thymeleaf.org"
               })
             }
 
-/*
+            function initNoticeWriteButton() {
+              let btn = document.querySelector("#subject-notice-write-btn");
+              btn.addEventListener('click', function() {
+                window.open('/tuna/staff/eclass/noticeForm?sbjno='+sbjno);
+              })
+            }
+
+            function initNoticeAllButton() {
+              let btn = document.querySelector("#subject-notice-all-btn");
+              btn.addEventListener('click', function() {
+                window.open('/tuna/staff/eclass/noticeList')
+              })
+            }
+
+/* @ TAB CLICK
 ████████  █████  ██████       ██████ ██      ██  ██████ ██   ██ 
    ██    ██   ██ ██   ██     ██      ██      ██ ██      ██  ██  
    ██    ███████ ██████      ██      ██      ██ ██      █████   
@@ -1464,21 +1502,26 @@ xmlns:th="http://www.thymeleaf.org"
             // 공지사항 패널 세팅
             function setNoticeContent(notices) {
               let table = document.querySelector('#subject-notice-table');
-              let tbody = table.firstElementChild;
+              let tbody = table.querySelector('tbody');
               tbody.innerHTML = "";
-              notices.forEach(data => {
+              notices.forEach( (data, idx) => {
+                if(idx > 4) return false;
                 // console.log(data);
                 let mDate = new Date(data.enrollDate);
                 mDate = mDate.toISOString();
                 mDate = mDate.slice(0, mDate.indexOf('T'));
 
                 let tr = document.createElement('tr');
-                let atag = document.createElement('a');
                 tbody.appendChild(tr);
+                tr.addEventListener("click", function() {
+                  window.open("/tuna/staff/eclass/notice?no="+data.no, 'notice', 'heigth=1200, width=920, menubar=0, status=0, toolbar=0');
+                })
 
                 let td_no = document.createElement('td');
                 let td_title = document.createElement('td');
-                td_title.classList.add('text-start')
+                td_title.classList.add('text-start');
+                td_title.classList.add("line-hider-fluid");
+                td_title.classList.add("pt-0");
                 let td_date = document.createElement('td');
                 
                 tr.appendChild(td_no)
@@ -1684,7 +1727,7 @@ xmlns:th="http://www.thymeleaf.org"
                 li.data_wkcode = plan.wkCode-1200;
                 li.data_summary = plan.summary;
                 li.data_pad = plan.placeAndDate;
-              }
+              } 
               ulTag.children[0].children[0].click();
             }
 
@@ -1722,9 +1765,9 @@ xmlns:th="http://www.thymeleaf.org"
             // 이의신청 패널
             function setObjectionContent(objList) {
               let table = document.querySelector('#subject-objection-table');
-              table.innerHTML = "";
               let tbody = document.createElement('tbody');
               tbody.setAttribute('id', 'objectionTb');
+              tbody.innerHTML = "";
 
               for (let obj of objList) {
                 let tr = document.createElement('tr');
@@ -1807,7 +1850,9 @@ xmlns:th="http://www.thymeleaf.org"
 		           	            	  objSbjName.innerHTML = result.NAME;
 		           	            	  objStname.innerHTML = result.STNAME;
 		           	            	  objState.innerHTML = result.OBJSTATE;
-		           	            	  objContent.innerHTML = result.CONTENT;
+		           	            	  
+		           	            	  let content = result.CONTENT.replace(/\n/g, '<br>');
+		           	            	  objContent.innerHTML = content;
 		           	            	  
 		           	            	  if(result.ANSWER == null) {
 		           	            		  objAnswer.removeAttribute('disabled');
@@ -1930,7 +1975,7 @@ xmlns:th="http://www.thymeleaf.org"
                     gradeDatas.push(gradeObj)
                   }
 
-                  fetch(REST_URL.GRDAE_UPDATE, {
+                  fetch(REST_URL.GRDAES_UPDATE, {
                     method: "POST",
                     headers: {
                       'header': header,

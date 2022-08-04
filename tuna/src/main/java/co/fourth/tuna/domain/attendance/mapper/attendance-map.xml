@@ -37,7 +37,7 @@
 		SELECT MIN(classdate) local_date
 		FROM attendance
 		WHERE sbjno = #{sbjno} 
-			AND classdate > SYSDATE
+			AND classdate > SYSDATE-1
 	</select>
 	
 	<select id="findAttendanceByDateAndSubjectId">

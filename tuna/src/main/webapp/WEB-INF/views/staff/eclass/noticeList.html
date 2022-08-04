@@ -9,6 +9,19 @@ xmlns:th="http://www.thymeleaf.org"
 	<link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
 	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	<script th:src="@{/resources/assets/js/dialog.js}"></script>
+  <style>
+  .line-hider-fluid { 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 49px;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    
+    line-height: 49px;
+  }
+  </style>
 </head>
 <body>
       <main id="main-container" layout:fragment="main">
@@ -28,9 +41,9 @@ xmlns:th="http://www.thymeleaf.org"
                   <tbody>
                     <tr th:onclick="'window.location.href = \''+ @{/staff/eclass/notice(no=${notice.no})}+ '\''" th:each="notice:${noticeList}">
                       <td class="text-center" th:text="${notice.no}">00</td>
-                      <td th:text="${notice.title}" class="text-start">제목데이터 없음</td>
-                      <td th:text="${notice.subjectVO.name}">과목 데이터없음</td>
-                      <td th:text="${notice.enrollDate}">날짜 없음</td>
+                      <td th:text="${notice.title}" class="text-start line-hider-fluid pt-0">제목데이터 없음</td>
+                      <td th:text="${notice.subjectVO.name}" class="text-center">과목 데이터없음</td>
+                      <td th:text="${notice.enrollDate}" class="text-center">날짜 없음</td>
                     </tr>
                   </tbody>
                 </table>

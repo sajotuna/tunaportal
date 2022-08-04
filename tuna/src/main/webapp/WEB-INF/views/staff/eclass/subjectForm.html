@@ -214,6 +214,14 @@ xmlns:th="http://www.thymeleaf.org"
             let btn1 = document.getElementById("subject-submit-btn1");
             let btn2 = document.getElementById("subject-submit-btn2");
 
+            btn2.addEventListener('click', function() {
+              Dialogs.dialog('checkConfirm',
+                '수정하시겠습니까?',
+                '',
+                updateSubject
+              )
+            });
+            
             btn1.addEventListener("click", function() {
               Dialogs.dialog('checkConfirm',
                 '수정하시겠습니까?',

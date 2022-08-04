@@ -25,9 +25,10 @@ xmlns:th="http://www.thymeleaf.org"
                  <tr class="text-center fw-bold">
                    <th style="width: 80px" >번호</th>
                    <th >제목</th>
-                   <th style="width: 15%" >과목명</th>
-                   <th style="width: 15%" >작성자</th>
-                   <th style="width: 15%" >작성일자</th>
+                   <th style="width: 12%" >과목명</th>
+                   <th style="width: 12%" >작성자</th>
+                   <th style="width: 12%" >작성일자</th>
+                   <th style="width: 12%" >답변여부</th>
                  </tr>
                </thead>
                <tbody>
@@ -35,9 +36,15 @@ xmlns:th="http://www.thymeleaf.org"
 	                 <tr onclick="qnaDetail(this)">
 	                   <td class="text-center" th:text = "${qna.no}"></td>
 	                   <td class="text-start" th:text = "${qna.title}"></td>
-	                   <td th:text = "${qna.subjectVO.name}"></td>
-	                   <td th:text = "${qna.studentVO.name}"></td>
-	                   <td style="width: 15%" th:text = "${qna.enrollDate}"></td>
+	                   <td class="text-center" th:text = "${qna.subjectVO.name}"></td>
+	                   <td class="text-center" th:text = "${qna.studentVO.name}"></td>
+	                   <td class="text-center" th:text = "${qna.enrollDate}"></td>
+                     <th:block th:if="${qna.answer != null}">
+                       <td class="text-center text-success" th:text="완료"></td>
+                     </th:block>
+                     <th:block th:unless="${qna.answer != null}">
+                      <td class="text-center text-danger" th:text="대기"></td>
+                     </th:block>
 	                 </tr>
 	               </th:block>
                </tbody>

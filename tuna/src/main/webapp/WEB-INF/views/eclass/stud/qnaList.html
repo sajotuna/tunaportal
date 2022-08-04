@@ -19,11 +19,16 @@
 	  color: rgba(87, 87, 87, 0.49);
 }
 
-table tr td{
-	text-overflow : ellipsis;
-	overflow : hidden;
-	white-space : nowrap;
-	max-width : 200px;
+.line-hider-fluid {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 49px;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	
+	line-height: 49px;
 }
 
 </style>

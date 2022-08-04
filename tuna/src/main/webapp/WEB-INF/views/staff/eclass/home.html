@@ -12,6 +12,40 @@ xmlns:th="http://www.thymeleaf.org"
     <title>E-Class 교수 홈</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
     <link rel="stylesheet" id="css-main" href="../assets/css/oneui.min.css" />
+    <style type="text/css">
+      .line-hider {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .line-hider-fluid {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 49px;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        
+        line-height: 49px;
+      }
+
+      .line-hider-fluid-20 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 20px;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        
+        line-height: 20px;
+        padding-top: 0px;
+      }
+
+
+    </style>
   </head>
   <body>
 
@@ -74,24 +108,26 @@ xmlns:th="http://www.thymeleaf.org"
                   <ul class="nav-items push" th:if="${not #lists.isEmpty(subList)}">
                     <!-- TODO remove id -->
                     <li id="test-li"  th:each="sub:${subList}">
-                      <a class="row m-2 pb-2" th:href="@{/staff/eclass/subject(no=${sub.no})}">
-                        
-                        <div class="col-6">
-                          <!--19자 제한 (19자 넘으면 19자 부터 ...)-->
+                      <a class="row m-0 p-2"  th:href="@{/staff/eclass/subject(no=${sub.no})}">
+                        <div class="col-5">
                           <div class="fw-bold fs-5" th:text="${sub.name}">강의 데이터없음</div>
                           <div class="ps-2 text-muted" th:text="${'['+ @codeList.getName(sub.seasonCode) +']'}">[학기 데이터없음]</div>
                         </div>
 
-                        <div class="col-6 text-gray-darker">
+                        <div class="col-7 text-gray-darker">
                           <div class="text-end">
                             <span></span>
                           </div>
+                          <!--"<div th:each='sche:${sub.lectureScheduleList}' th:text='|${sche.dayCode} : ${sche.timeCode}|'></div>"-->
                           <div class="row justify-content-between">
                             <div class="col-6">
-                              <span>차수:</span>
-                              <span>데이터 없음</span>
+                              <button class="btn btn-sm btn-primary" type="button" 
+                                data-bs-toggle="collapse" th:data-bs-target="|#subject_collapse_${sub.no}|"
+                                aria-expanded="false" th:aria-controls="|subject_collapse_${sub.no}|"
+                                onclick="event.preventDefault();"
+                              >강의 일시 정보</button>
                             </div>
-                            <div class="col-5">
+                            <div class="offset-1 col-5">
                               <span>수강생 :</span>
                               <span th:text="${#lists.size(sub.lectureApplyList)}">데이터 없음</span>
                             </div>
@@ -99,6 +135,12 @@ xmlns:th="http://www.thymeleaf.org"
                           
                         </div>
                       </a>
+                      <div th:id="|subject_collapse_${sub.no}|" class="collapse row m-0 text-center fs-sm bg-light">
+                        <div class="col-2 m-1 p-0" th:each="sche:${sub.lectureScheduleList}">
+                          <span class="card card-body p-1" th:text="|[${@codeList.getName(sche.roomCode)}](${sche.dayCode})${sche.timeCode}|"></span>
+                        </div>
+                        <hr class="m-0">
+                      </div>
                     </li>
 
                   </ul>
@@ -132,13 +174,13 @@ xmlns:th="http://www.thymeleaf.org"
                       <tr th:each="qna : ${qnaList}" th:onclick="|qnaClickEvent(${qna.no})|">
                         <td class="d-flex justify-content-between">
                           <div>
-                            <div><strong th:text="${qna.title}">#####</strong></div>
+                            <div class="line-hider-fluid-20"><strong th:text="${qna.title}">#####</strong></div>
                             <div th:text="${qna.subjectVO.name}">####</div>
                           </div>
-                          <div class="text-end">
+                          <div style="min-width:91px" class="text-end">
                             <div th:text="${qna.enrollDate}">####-##-##</div>
                             <div data-bs-toggle="modal" data-bs-target="#modal-block-normal">
-                              <a th:text="${qna.studentVO.name}" class="user_info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-original-title="" 
+                              <a th:text="${qna.studentVO.name}" class="user_info"  
                               href="javascript:void(0)" th:onlcick="|studentClickEvent(${qna.stNo})|">
                               ###</a>
                             </div>
@@ -179,11 +221,12 @@ xmlns:th="http://www.thymeleaf.org"
                       <th style="width: 15%">작성</th>
                       <th style="width: 15%">등록일시</th>
                     </tr> -->
-                    <tr th:onclick="|noticeClickEvent(${notice.no})|" th:each="notice:${noticeList}">
-                      <td style="width: 100px" th:text="${notice.no}">00</td>
-                      <td class="text-start" th:text="${notice.title}">제목 데이터 없음</td>
-                      <td style="width: 15%" th:text="${notice.subjectVO.name}">과목 없음</td>
-                      <td style="width: 15%" th:text="${notice.enrollDate}">날짜 없음</td>
+                    <tr th:onclick="|noticeClickEvent(${notice.no})|" th:each="notice:${noticeList}" >
+                      <td style="width: 80px" th:text="${notice.no}">00</td>
+                      <td class="text-start line-hider-fluid pt-0">
+                        <div th:text="${notice.title}">제목 데이터 없음</div></td>
+                      <td style="width: 120px" th:text="${notice.subjectVO.name}">과목 없음</td>
+                      <td style="width: 180px" th:text="${notice.enrollDate}">날짜 없음</td>
                     </tr>
                   </tbody>
                 </table>
@@ -330,6 +373,8 @@ xmlns:th="http://www.thymeleaf.org"
           window.addEventListener("DOMContentLoaded", function() {
             userDetailModal = document.querySelector('#user_detail_modal');
             userDetailCurtain = document.querySelector('#userDetailCurtain');
+
+
 
             offUserDetailCurtaion();
           });
@@ -708,6 +753,7 @@ xmlns:th="http://www.thymeleaf.org"
             }
 
         </script>
+        <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
       </main>
 
       <!-- <footer id="page-footer" class="bg-flat-lighter">
