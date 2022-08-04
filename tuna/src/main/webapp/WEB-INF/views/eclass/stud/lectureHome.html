@@ -43,7 +43,7 @@ table tr td{
 								<input type="hidden" th:value="${stn.NO}">
 								<input type="hidden" th:value="${stn.SBJNO}">
 									<td class="fw-semibold fs-sm">
-										<a th:href="@{/stud/eclass/lectureNoticeSelect(no = ${stn.NO}, sbjNo = ${stn.SBJNO})}" style="color:black" th:text="${stn.TITLE}+'/'+${stn.ENROLLDATE}"></a>
+										<a th:href="@{/stud/eclass/lectureNoticeSelect(no = ${stn.NO}, sbjNo = ${stn.SBJNO})}" style="color:black" th:text="${stn.TITLE}"></a>
 										</td>
 								</tr>
 								<tr th:if="${#lists.isEmpty(stn)}">
