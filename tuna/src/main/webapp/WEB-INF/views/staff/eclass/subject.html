@@ -399,7 +399,7 @@ xmlns:th="http://www.thymeleaf.org"
                         <span>마감 : </span><span id="task-limit">테스트</span>
                       </div>
                       <div class="col-xxl-2 col-10">
-                        <button class="col-12 btn btn-dark">전체 다운로드</button>
+                        <!-- <button class="col-12 btn btn-dark">전체 다운로드</button> -->
                       </div>
                       <div class="col-xxl-1 col-10">
                         <button id="task-score-submit" class="col-12 btn btn-primary">적용</button>
@@ -1317,36 +1317,49 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify(form),
               })
-              .then( async (res) => {
-                let resBody = await res.text();
-                // console.log(resBody);
-                if(res.ok) {
-                  Dialogs.dialog('success',
-                  '입력 성공',
-                  resBody,
-                  function() {
-
-                  })
-                } else {
-                  Dialogs.dialog('error',
-                  '입력 실패',
-                  resBody,
-                  function() {
-                    console.error(resBody);
+              .then( res => res.json())
+              .then( result => {
+                console.log(result);
+                Dialogs.dialog(result.type,
+                result.title,
+                result.msg,
+                function() {
+                  if(result.type == "error") {
                     onTab = -1;
                     tabClickEvent(1);
-                  })
-                }
-              }).catch((err) => {
-                Dialogs.dialog('error',
-                '오류',
-                err,
-                function() {
-                  console.error(err)
-                  onTab = -1;
-                  tabClickEvent(onTab);
+                  }
                 })
               })
+              // .then( (res) => {
+              //   let resBody = await res.text();
+              //   // console.log(resBody);
+              //   if(res.ok) {
+              //     Dialogs.dialog('success',
+              //     '입력 성공',
+              //     resBody,
+              //     function() {
+
+              //     })
+              //   } else {
+              //     Dialogs.dialog('error',
+              //     '입력 실패',
+              //     resBody,
+              //     function() {
+              //       console.error(resBody);
+              //       onTab = -1;
+              //       tabClickEvent(1);
+              //     })
+              //   }
+              // }).catch((err) => {
+              //   Dialogs.dialog('error',
+              //   '오류',
+              //   err,
+              //   function() {
+              //     console.error(err)
+              //     onTab = -1;
+              //     tabClickEvent(onTab);
+              //   })
+              // })
             }
 
             function initNoticeWriteButton() {
@@ -1520,7 +1533,7 @@ xmlns:th="http://www.thymeleaf.org"
                 let tr = document.createElement('tr');
                 tbody.appendChild(tr);
                 tr.addEventListener("click", function() {
-                  window.open("/tuna/staff/eclass/notice?no="+data.no, 'notice', 'heigth=1200, width=920, menubar=0, status=0, toolbar=0');
+                  window.open("/tuna/staff/eclass/notice?no="+data.no, 'notice', 'height=1200, width=920, menubar=0, status=0, toolbar=0');
                 })
 
                 let td_no = document.createElement('td');
@@ -1991,36 +2004,18 @@ xmlns:th="http://www.thymeleaf.org"
                     },
                     body: JSON.stringify(gradeDatas)
                   })
-                  .then(async (res) => {
-                    let resBody = await res.text();
-                    if(res.ok) {
-                      Dialogs.dialog("success",
-                        "성공",
-                        resBody,
-                        function() {
-                        });
-                    } else {
-                      Dialogs.dialog("error",
-                      "실패",
-                      resBody,
-                      function() {
-                        console.error(resBody);
-                      })
-                    }
-
-                  })
-                  .catch((err) => {
-                    Dialogs.dialog("error",
-                      "오류",
-                      err,
-                      function() {
-                        console.error(err)
-                      })
-                      
-                  })
-                  .finally(()=> {
+                  .then( res => res.json())
+                  .then( result => {
+                    onTab = -1;
                     tabClickEvent(6);
-                  }) // fetch END
+
+                    Dialogs.dialog(result.type,
+                    result.title,
+                    result.msg,
+                    function() {
+                      
+                    })
+                  });
                 }
               );
 

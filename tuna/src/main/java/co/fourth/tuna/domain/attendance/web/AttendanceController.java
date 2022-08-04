@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.fourth.tuna.domain.attendance.service.AttendanceService;
 import co.fourth.tuna.domain.attendance.vo.AttendanceUpdateFormVO;
-import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
+import co.fourth.tuna.util.ResMsgVO;
 import co.fourth.tuna.web.eclass.professor.vo.SubjectAttendanceRestVO;
 
 @Controller
@@ -52,50 +52,40 @@ public class AttendanceController {
 	}
 	
 	@PostMapping("/staff/insert/attendance")
-	public ResponseEntity<String> submitsAttendance(
+	public ResponseEntity<ResMsgVO> submitsAttendance(
 			Authentication auth,
 			@RequestBody AttendanceUpdateFormVO form) {
-		HttpHeaders resHeaders = new HttpHeaders();
-		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		ResponseEntity<String> res = null;
-		
 		
 		// TODO sbjno 가 내강의인지 체크하기
-		try {
-			res = new ResponseEntity<String>(
-					service.updateAttendanceList(form),
-					resHeaders,
-					HttpStatus.OK);
-		} catch (Throwable e) {
-			res = new ResponseEntity<String>(
-					e.getMessage(),
-					resHeaders,
-					HttpStatus.BAD_REQUEST);
-		}
+		HttpHeaders resHeaders = new HttpHeaders();
+		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		ResponseEntity<ResMsgVO> res = null;
+		
+		ResMsgVO msg = service.updateAttendanceList(form);
+		
+		res = new ResponseEntity<ResMsgVO>(
+				msg,
+				resHeaders,
+				HttpStatus.OK);
 		
 		return res;
 	}
 	
 	@PostMapping("/staff/update/attendance")
-	public ResponseEntity<String> updateAttendance(
+	public ResponseEntity<ResMsgVO> updateAttendance(
 			@RequestBody AttendanceUpdateFormVO form) {
+		// TODO sbjno 가 내 강의인지 체크하기
 
 		HttpHeaders resHeaders = new HttpHeaders();
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		ResponseEntity<String> res = null;
+		ResponseEntity<ResMsgVO> res = null;
 		
-		// TODO sbjno 가 내 강의인지 체크하기
-		try {
-			res = new ResponseEntity<String>(
-					service.updateAttendanceList(form),
-					resHeaders,
-					HttpStatus.OK);
-		} catch (Throwable e) {
-			res = new ResponseEntity<String>(
-					e.getMessage(),
-					resHeaders,
-					HttpStatus.BAD_REQUEST);
-		}
+		ResMsgVO msg = service.updateAttendanceList(form);
+		
+		res = new ResponseEntity<ResMsgVO>(
+				msg,
+				resHeaders,
+				HttpStatus.OK);
 		
 		return res;
 	}

@@ -87,6 +87,7 @@ xmlns:th="http://www.thymeleaf.org"
     }
     
     function noticeDelete(){
+      console.log("hello");
     	let no = document.querySelector("[name = no]").value
     	let header = document.querySelector('meta[name="_csrf_header"]').content;
         let token = document.querySelector('meta[name="_csrf"]').content;

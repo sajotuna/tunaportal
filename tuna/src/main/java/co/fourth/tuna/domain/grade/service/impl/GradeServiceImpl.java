@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,8 @@ import co.fourth.tuna.domain.task.service.TaskService;
 import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
+import co.fourth.tuna.util.ResMsgService;
+import co.fourth.tuna.util.ResMsgVO;
 
 @Service
 public class GradeServiceImpl implements GradeService {
@@ -30,6 +33,10 @@ public class GradeServiceImpl implements GradeService {
 	@Autowired TaskService taskService;
 	@Autowired GradeService gradeService;
 	@Autowired AttendanceService attendanceService;
+	@Autowired ResMsgService resMsgService;
+	
+	@Autowired
+	MessageSourceAccessor msg;
 
 	@Override
 	public List<Map<String, Object>> currentSemesterGradeSelect(int stNo, String seasonCode) {
@@ -85,11 +92,16 @@ public class GradeServiceImpl implements GradeService {
 
 	@Override
 	@Transactional
-	public String updateGradeListByGradeNo(List<GradeFormVO> list) {
+	public ResMsgVO updateGradeListByGradeNo(List<GradeFormVO> list) {
+		ResMsgVO result = resMsgService.build(
+				"title.suc.enroll",
+				new String[]{"msg.suc.update", "성적"},
+				ResMsgVO.SUCCESS);
+		
 		for(GradeFormVO form : list) {
 			gradeService.updateGradeByGradeNo(form);
 		}
-		return "성적이 성공적으로 등록 되었습니다.";
+		return result;
 	}
 
 	@Override
@@ -119,10 +131,12 @@ public class GradeServiceImpl implements GradeService {
 	}
 
 	@Override
-	public String updateAttendanceTaskGrade(int stno, int sbjno) {
+	public ResMsgVO updateAttendanceTaskGrade(int stno, int sbjno) {
 		List<AttendanceVO> attens = attendanceService.getListByStudentIdAndSbjno(stno, sbjno);
 		if(attens.size() < 1) {
-			throw new Error("출결 현황이 없습니다.");
+			return resMsgService.build("title.error.enroll",
+					new String[]{"msg.err.fail", "출석 성적"}, 
+					ResMsgVO.ERROR);
 		}
 		int score = computeAttendanceScore(attens);
 		//GradeVO grade = gradeService.getOneByStudentIdAndSubjectId(stno, sbjno);
@@ -134,10 +148,13 @@ public class GradeServiceImpl implements GradeService {
 	}
 
 	@Override
-	public String updateGradeByGradeNo(GradeFormVO vo) throws Error {
-		String result = scoreLimitFilter(vo);
+	public ResMsgVO updateGradeByGradeNo(GradeFormVO vo) throws Error {
+		ResMsgVO result = scoreLimitFilter(vo);
 		if(mapper.updateGradeByGradeNo(vo) < 1) {
-			throw new Error("성적 등록에 실패 했습니다.");
+			return resMsgService.build(
+					"title.err.enroll",
+					"msg.err.wrongInput", 
+					ResMsgVO.ERROR);
 		}
 		
 		GradeVO grade = mapper.selectOneByGradeId(vo.getNo());
@@ -146,17 +163,21 @@ public class GradeServiceImpl implements GradeService {
 		form.setStNo(grade.getStNo());
 		form.setTotal(computeTotalScore(grade.getSbjNo(), grade.getStNo()));
 		if(mapper.updateGradeByStudentNoAndSubjectNo(form) < 1) {
-			throw new Error("종합 성적 등록에 실패 했습니다.");
+			return new ResMsgVO(msg.getMessage("title.err.enroll"),
+					msg.getMessage("msg.err.fail", new String[] {"종합성적 등록"}), ResMsgVO.ERROR);
 		}
 		
 		return result;
 	}
 	
 	@Override
-	public String updateGradeByStudentNoAndSubjectNo(GradeFormVO vo) throws Error {
-		String result = scoreLimitFilter(vo);
+	public ResMsgVO updateGradeByStudentNoAndSubjectNo(GradeFormVO vo) throws Error {
+		ResMsgVO result = scoreLimitFilter(vo);
 		if ( mapper.updateGradeByStudentNoAndSubjectNo(vo) < 1) {
-			throw new Error("성적 등록에 실패 했습니다.");
+			return new ResMsgVO(
+					msg.getMessage("title.err.enroll")
+					, msg.getMessage("msg.err.fail",new String[]{"성적 등록"})
+					, ResMsgVO.ERROR );
 		}
 		
 		GradeFormVO grade = new GradeFormVO();
@@ -164,25 +185,39 @@ public class GradeServiceImpl implements GradeService {
 		grade.setStNo(vo.getStNo());
 		grade.setTotal(computeTotalScore(vo.getSbjNo(), vo.getStNo()));
 		if ( mapper.updateGradeByStudentNoAndSubjectNo(grade) < 1) {
-			throw new Error("종합 성적 등록에 실패 했습니다.");
+			return new ResMsgVO(
+					msg.getMessage("title.err.enroll"),
+					msg.getMessage("msg.err.fail", new String[] {"종합성적 등록"}),
+					ResMsgVO.ERROR);
 		}
 		
 		return result;
 	}
 	
-	public String scoreLimitFilter(GradeFormVO vo) throws Error{
+	public ResMsgVO scoreLimitFilter(GradeFormVO vo) {
+		ResMsgVO msg = resMsgService.build(
+				"title.suc.update",
+				new String[]{"msg.suc.update","성적 등록"},
+				"success");
+		
 		if ( vo.getAttd() != null && vo.getAttd() > 100 
 			|| vo.getMiddle() != null && vo.getMiddle() > 100 
 			|| vo.getFinals() != null && vo.getFinals() > 100 
-			|| vo.getTask() != null && vo.getTask() > 100 )
-			throw new Error("100점을 넘을 수 없습니다.");
+			|| vo.getTask() != null && vo.getTask() > 100 ) {
+			return resMsgService.build("title.err.update"
+					,"msg.err.aboveHundo",
+					"error");
+		}
 		if( vo.getAttd() != null && vo.getAttd() < 0
 				|| vo.getMiddle() != null && vo.getMiddle() < 0
 				|| vo.getFinals() != null && vo.getFinals() < 0
-				|| vo.getTask() != null && vo.getTask() < 0 )
-			throw new Error("0점보다 작을 수 없습니다.");
+				|| vo.getTask() != null && vo.getTask() < 0 ) {
+			return resMsgService.build("title.err.update"
+					,"msg.err.belowZero"
+					,"error");
+		}
 		
-		return "성적 등록에 성공했습니다.";
+		return msg;
 	}
 	
 	@Override

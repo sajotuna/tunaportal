@@ -8,20 +8,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.fourth.tuna.domain.common.service.YearService;
 import co.fourth.tuna.domain.grade.service.GradeService;
 import co.fourth.tuna.domain.grade.vo.GradeFormVO;
-import co.fourth.tuna.domain.grade.vo.GradeVO;
 import co.fourth.tuna.domain.task.service.TaskService;
 import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
-import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
+import co.fourth.tuna.util.ResMsgVO;
 
 @RestController
 public class GradeController {
@@ -53,29 +50,16 @@ public class GradeController {
 	
 	//
 	@PostMapping("/staff/updateGrades")
-	public ResponseEntity<String> updateGrades(
+	public ResponseEntity<ResMsgVO> updateGrades(
 			@RequestBody List<GradeFormVO> grades) {
 		
 		HttpHeaders resHeaders = new HttpHeaders();
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		
-		ResponseEntity<String> resEntity = null;
-		try {
-			resEntity = new ResponseEntity<String>(
-					gradeDao.updateGradeListByGradeNo(grades), 
-					resHeaders, 
-					HttpStatus.OK);
-		} catch (Error e) {
-			resEntity = new ResponseEntity<String>(
-				e.getMessage(),
-				resHeaders,
-				HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			resEntity = new ResponseEntity<String>(
-				e.getMessage(),
-				resHeaders,
-				HttpStatus.BAD_REQUEST);
-		}
+		ResponseEntity<ResMsgVO> resEntity = new ResponseEntity<ResMsgVO>(
+				gradeDao.updateGradeListByGradeNo(grades), 
+				resHeaders, 
+				HttpStatus.OK);
 		
 		return resEntity;
 				
