@@ -136,7 +136,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	<script th:src="@{/resources/assets/js/dialog.js}"></script>
-	<script type="text/javascript">
+	<script th:inline="javascript">
 	var header = $("meta[name='_csrf_header']").attr('content');
 	var token = $("meta[name='_csrf']").attr('content');
 	var userNo = $("meta[name='userNo']").attr('content');
@@ -157,14 +157,14 @@
 			
 			if(!answer) {
 				Dialogs.dialog('error',
-					  		   '등록 불가',
-					 	   	   '내용을 입력해 주세요.');
+					  		    /*[[#{title.err.enroll}]]*/ 'default',
+					 	   	   /*[[#{msg.err.inputPlz('내용')}]]*/ 'default');
 			} else {
 				
 				Dialogs.dialog(
 					'checkConfirm',
-					'정말로 등록하시겠습니까?',
-					'한 번 등록된 답변은 수정할 수 없습니다.',
+					 /*[[#{title.cfm.enroll}]]*/ 'default',
+					 /*[[#{msg.cfm.notUpdate}]]*/ 'default',
 					function() {
 					
 						$.ajax({
@@ -184,8 +184,8 @@
 						}).done(function() {
 							
 							Dialogs.dialog('success',
-								           '등록 완료',
-								           '성적 이의신청 답변 등록이 완료되었습니다.');
+								            /*[[#{title.suc.enroll}]]*/ 'default',
+								            /*[[#{msg.suc.enroll('성적 이의신청 답변')}]]*/ 'default');
 						
 							$('#objstate').text('답변 완료');
 							$('#answer').attr('disabled', true);
@@ -195,8 +195,8 @@
 						}).fail(function() {
 							
 							Dialogs.dialog('error',
-								      	   '등록 실패',
-								    	   '이의신청 답변 등록이 정상적으로 처리되지 않았습니다.');
+								      	    /*[[#{title.err.enroll}]]*/ 'default',
+								    	   /*[[#{msg.err.fail('등록')}]]*/ 'default');
 							
 						})
 					});

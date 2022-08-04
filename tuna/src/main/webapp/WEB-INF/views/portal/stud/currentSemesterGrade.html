@@ -221,7 +221,7 @@
 	<!-- END Objection Modal -->
 	<script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
 	<script th:src="@{/resources/assets/js/dialog.js}"></script>
-	<script type="text/javascript">
+	<script th:inline="javascript">
 		var header = $("meta[name='_csrf_header']").attr('content');
 		var token = $("meta[name='_csrf']").attr('content');
 		var userNo = $("meta[name='userNo']").attr('content');
@@ -242,14 +242,14 @@
 				
 				if(!content) {
 					Dialogs.dialog('error',
-							  	   '등록 불가',
-							 	   '내용을 작성해 주세요.');
+							  	    /*[[#{title.err.enroll}]]*/ 'default',
+							 	   /*[[#{msg.err.inputPlz('내용')}]]*/ 'default');
 				} else {
 					
 					Dialogs.dialog(
 						'checkConfirm',
-						'정말로 등록하시겠습니까?',
-						'한 번 등록한 이의신청은 변경할 수 없습니다.',
+						 /*[[#{title.cfm.enroll}]]*/ 'default',
+						 /*[[#{msg.cfm.notUpdate}]]*/ 'default',
 						function() {
 							$.ajax({
 								url: getContextPath() + 'stud/portal/objection',
@@ -266,8 +266,8 @@
 							}).done(function(result) {
 								if(result) {
 									Dialogs.dialog('success', 
-							                       '이의신청 완료', 
-							                       '성적 이의신청이 완료되었습니다.');
+							                       /*[[#{title.suc.done('이의신청')}]]*/ 'default', 
+							                       /*[[#{msg.suc.apply('성적이의')}]]*/ 'default');
 									
 									objectionListSelectAjax();
 									

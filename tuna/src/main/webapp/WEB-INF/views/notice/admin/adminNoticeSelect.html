@@ -10,7 +10,7 @@
 	<style>
 		figure {
 			flex: 0 0 auto;
-			width: 100%;
+			
 		}
 
 		@media (max-width: 800px) {
@@ -19,6 +19,10 @@
 				width: 100%;
 			}
 
+		}
+		
+		figure img {
+		width:100%;
 		}
 
 		table {
@@ -67,9 +71,12 @@
 						<input th:if="${content.visible} =='N'" type="text" readonly value="비공개" style="border:none;">
 
 					</div>
+					<hr>
 					<th:block th:if="${not #lists.isEmpty(files)}">
+					
 						<div th:each="file, i:${files}" class="col5">
-							첨부파일 : <a
+						첨부파일 :
+							 <a
 								th:href="@{/download(fileName=${file.uri}, originName=${file.name}, folder=PortalNotice)}">[[${file.name}]]</a>
 						</div>
 					</th:block>

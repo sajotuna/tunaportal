@@ -64,7 +64,7 @@
 			<!-- Editor script -->
 			<script th:src="@{/resources/assets/js/plugins/ckeditor5-tuna/build/ckeditor.js}"></script>
 
-			<script>
+			<script th:inline="javascript">
 
 				let header = document.querySelector('meta[name="_csrf_header"]').content;
 				let token = document.querySelector('meta[name="_csrf"]').content;
@@ -76,11 +76,12 @@
 
 
 				function formCheck() {
+					var checkTitle = /*[[#{msg.err.inputPlz('내용')}]]*/ 'default';
 					var subBtn = document.querySelector('#sbmBtn')
 					if (window.editor.getData() == "") {  //then   window.editor = editor;
 						Dialogs.dialog('error',
 							'',
-							'내용을 입력해주세요.'
+							checkTitle
 						);
 						return false;
 						window.editor.editing.view.focus();

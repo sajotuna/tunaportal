@@ -184,7 +184,7 @@ table tr td a {
 				</div>
 			</div>
 		</div>
-		<script>
+		<script th:inline="javascript">
 		var header = $("meta[name='_csrf_header']").attr('content');
 		var token = $("meta[name='_csrf']").attr('content');
 		
@@ -258,11 +258,13 @@ table tr td a {
 							success();
 							
 							function success(){	
+								let delTitle = /*[[#{title.cfm.delete}]]*/ 'default';
+								console.log(delTitle)
 								
 								 if( job === 'delete') {							 
 									 toast.fire({
-									 title : '해당공지를 삭제하시겠습니까?',
-									 text: '이 작업은 취소 할 수 없습니다.',
+									 title : delTitle,
+									 text:   /*[[#{msg.cfm.notCancel}]]*/ 'default',
 									 icon: 'warning',
 									 showCancelButton: true,
 									 customClass:{

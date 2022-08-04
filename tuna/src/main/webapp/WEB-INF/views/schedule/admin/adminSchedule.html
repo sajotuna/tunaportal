@@ -215,24 +215,28 @@
 	                			  },
 	                	
 	                		}).then(function(result){
+	                			 let scheduleCheck = /*[[#{msg.err.selectPlz('일정사항')}]]*/ 'default';
+	                			 let seasonCheck = /*[[#{msg.err.selectPlz('학기')}]]*/ 'default';
+	                			 let nameCheck = /*[[#{msg.err.inputPlz('일정')}]]*/ 'default';
+	                			
 	                			 if (result.isConfirmed) {
 	                			
 	                			if($("#scheduleSelect").val() == 9999){
 	                				Dialogs.dialog('error', 
 	            		                    '', 
-	            		                    '일정사항을 선택해주세요.');
+	            		                    scheduleCheck);
                     	    		return;
                     	    		}
                     			else if($("#seasonSelect").val() == 9999){
                     				Dialogs.dialog('error', 
                 		                    '', 
-                		                    '학기를 선택해주세요.');
+                		                    seasonCheck);
                     	    		return;
                     	    		}
                     			else if($("#title").val() =='' ||$("#title").val() =='null' ){
                     				Dialogs.dialog('error', 
                 		                    '', 
-                		                    '일정을 입력해주세요.');
+                		                    nameCheck);
                     	    		return;
                     	    	}	}
 	                			
@@ -254,7 +258,7 @@
 	                    			console.log($("#scheduleSelect").val())
 	                    			   			
 	                    			Dialogs.dialog('success', 
-		                    		                '등록완료', 
+	                    					 /*[[#{title.suc.enroll}]]*/ 'default', 
 		                    		                  '',
 		                    		  function(){
 		    	                    		location.reload();
@@ -268,7 +272,7 @@
 	                  eventClick:function(arg){	   
 	                	    	  var result = arg.event._def.title.substr(0, 29);
 	                	  		  Dialogs.dialog('warnConfirm', 
-	                			  '삭제하시겠습니까?', 
+	                	  				 /*[[#{title.cfm.delete}]]*/ 'default', 
 	                			  '* '+ result + ' *', 
 				                    function() {	                		  
 		                		 $.ajax({
