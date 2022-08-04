@@ -1,16 +1,14 @@
-$(function() {
-	submit();
-})
 
 // 배너 수정, 배너 등록 버튼 클릭
-function submit() {
+function submit(fileMsg, textMsg, OptMsg,
+				cfmTitle, cfmMsg) {
 	$('.submit-btn').on('click', function () {
 		
 		// value check
-		let elemAry = [{'element':$('#file'), 'message':'파일을 업로드해 주세요.'}, 
-						{'element':$('#inputTxt'), 'message':'빈 칸을 입력해 주세요.'}, 
-						{'element':$('#select'), 'message':'옵션을 선택해 주세요.'}, 
-						{'element':$('.date'), 'message':'일자를 모두 선택해 주세요.'}];
+		let elemAry = [{'element':$('#file'), 'message':fileMsg}, 
+						{'element':$('#inputTxt'), 'message':textMsg}, 
+						{'element':$('#select'), 'message':OptMsg}, 
+						{'element':$('.date'), 'message':OptMsg}];
 		
 		for (let obj of elemAry) {
 			
@@ -29,7 +27,7 @@ function submit() {
 		}
 		
 		const job = $(this).data('job');
-		bannerInsert(job);
+		bannerInsert(job, cfmTitle, cfmMsg);
 		
 	}) 
 }
@@ -73,7 +71,7 @@ $('#file').on('change', changeEvent => {
 
 
 function insertSuccess() {
-	Dialogs.dialog('success', '등록 완료', '배너 등록이 완료되었습니다.')
+	Dialogs.dialog('success', '등록 완료', '등록이 완료되었습니다.')
 }
 
 function error() {

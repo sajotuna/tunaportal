@@ -1,11 +1,3 @@
-$(function() {
-	preview();
-	sliderPreview();
-	uploadAjax();
-	submit();
-	trUp();
-	trDown();
-})
 
 // 배너 미리보기
 function sliderPreview() {
@@ -39,7 +31,11 @@ function preview() {
 }
 
 // 순서 등록, 삭제 버튼 클릭
-function submit() {
+function submit(updTitle, updMsg, 
+				delTitle, delMsg, 
+				errTitle, errMsg,
+				subSucTitle, subSucMsg,
+				delSucTitle, delSucMsg) {
 	
 	$('.submit-btn').on('click', function () {
 		
@@ -48,30 +44,28 @@ function submit() {
 		if (job === 'submit') {
 			
 			Dialogs.dialog('checkConfirm', 
-	                       '순서를 변경하시겠습니까?', 
-	                       '설정한 순서대로 배너의 순서를 변경합니다.',
+	                       updTitle, 
+	                       updMsg,
 	                       function() {
 								$('#tb tr').each(function(idx) {
-									sequenceAjax(this, idx);
+									sequenceAjax(this, idx, subSucTitle, subSucMsg);
 								})
 						  });
 						  
 		} else if (job === 'delete') {
 			
-			console.log($('#tb input:radio:checked'));
-			
 			if($('#tb input:radio:checked').length) {
 				
 				Dialogs.dialog('warnConfirm', 
-		                       '정말로 삭제하시겠습니까?', 
-		                       '삭제한 사진은 복구할 수 없습니다.',
+		                       delTitle, 
+		                       delMsg,
 		                       function() {
-									deleteAjax();
+									deleteAjax(delSucTitle, delSucMsg);
 							   });
 			} else {
 				Dialogs.dialog('error', 
-		                       '작업 실패', 
-		                       '선택된 사진이 없습니다.')
+		                       errTitle, 
+		                       errMsg)
 			}
 			
 		}
@@ -96,7 +90,4 @@ function trDown() {
 	})
 }
 
-function error() {
-	Dialogs.dialog('error', '작업 실패', '작업이 정상적으로 처리되지 않았습니다.')
-}
 

@@ -131,6 +131,28 @@
 	<script th:src="@{/resources/assets/js/banner/sliderBanner.js}"></script>
 	<script th:src="@{/resources/assets/js/banner/sbn-ajax.js}"></script>
 	<script th:src="@{/resources/assets/js/dialog.js}"></script>
+	<script th:inline="javascript">
+	
+	$(function() {
+		preview();
+		sliderPreview();
+		uploadAjax(/*[[#{title.suc.enroll}]]*/ 'default',
+				   /*[[#{msg.suc.enroll('사진')}]]*/ 'default');
+		submit(/*[[#{title.cfm.update}]]*/ 'default',
+			   /*[[#{msg.cfm.bannerOrder}]]*/ 'default',
+			   /*[[#{title.cfm.delete}]]*/ 'default',
+			   /*[[#{msg.cfm.notCancel}]]*/ 'default',
+			   /*[[#{title.err.delete}]]*/ 'default',
+			   /*[[#{msg.err.selectPlz('사진')}]]*/ 'default',
+			   /*[[#{title.suc.update}]]*/ 'default',
+			   /*[[#{msg.suc.update('배너 순서')}]]*/ 'default',
+			   /*[[#{title.suc.delete}]]*/ 'default',
+			   /*[[#{msg.suc.delete('사진')}]]*/ 'default');
+		trUp();
+		trDown();
+	})
+	
+	</script>
 
 </main>
 </body>

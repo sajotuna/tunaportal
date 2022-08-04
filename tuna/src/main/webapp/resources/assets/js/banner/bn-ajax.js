@@ -20,14 +20,14 @@ function banner(bannerCode) {
 }
 
 // 배너 삭제
-function bannerDelete() {
+function bannerDelete(delTitle, delMsg, sucTitle, sucmsg) {
 	$('.bnDelete').on('click', function() {
 		let uri = $(this).data('uri');
 		let no = $(this).data('no');
 		
 		Dialogs.dialog('warnConfirm', 
-	                    '정말로 삭제하시겠습니까?', 
-	                    '삭제된 사진은 복구할 수 없습니다.', 
+	                    delTitle, 
+	                    delMsg, 
 	                    function() {
 		
 							$.ajax({
@@ -44,8 +44,8 @@ function bannerDelete() {
 									
 									if (success) {
 										Dialogs.dialog('success', 
-									                   '삭제 완료', 
-									                   '배너 사진 삭제가 완료되었습니다.',
+									                   sucTitle, 
+									                   sucmsg,
 									                   function() {
 															location.reload();
 												       });
@@ -60,8 +60,8 @@ function bannerDelete() {
 	})
 }
 
-// 기본 배너 등록
-function bannerInsert(bannerCode) {
+// 옵션 배너 등록
+function bannerInsert(bannerCode, cfmTitle, cfmMsg) {
 	let formData = new FormData();
 	
 	formData.append("file", $('input[name=file]').get(0).files[0]);
@@ -76,8 +76,8 @@ function bannerInsert(bannerCode) {
 	}
 	
 	Dialogs.dialog('checkConfirm', 
-                    '정말로 등록하시겠습니까?', 
-                    '등록된 배너는 수정할 수 없으며, 이전 배너 삭제는 전체 배너 관리에서 가능합니다.',
+                    cfmTitle, 
+                    cfmMsg,
                     function() {
 	
 						$.ajax({
