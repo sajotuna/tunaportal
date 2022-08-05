@@ -68,14 +68,14 @@
 												<td class="text-center fw-bold bg-dark text-white" style="width: 700px;">제목</td>
 												<td class="text-center fw-bold bg-dark text-white" style="width: 100px;">작성자</td>
 												<td class="text-center fw-bold bg-dark text-white" style="width: 100px;">작성일자</td>
-												<td class="text-center fw-bold bg-dark text-white" style="width: 50px;">답변여부</td>
+												<td class="text-center fw-bold bg-dark text-white" style="width: 100px;">답변여부</td>
 											</tr>
 										</thead>
 										<tbody th:each="q : ${qna}">
 											<tr
 												th:if="${q.VISIBLE} == 0 and ${not #strings.isEmpty(qna)}">
 												<td class="text-center" th:text="${q.NO}"></td>
-												<td class="text-center"><a
+												<td class=""><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
 													style="color: black">[[${q.TITLE}]]</a></td>
 												<td class="text-center" th:text="${q.NAME}"></td>
@@ -98,7 +98,7 @@
 											<tr
 												th:if="${q.VISIBLE} == 1 and ${#authentication.principal.username} == ${q.STNO}">
 												<td class="text-center" th:text="${q.NO}"></td>
-												<td class="text-center"><a
+												<td class=""><a
 													th:href="@{/stud/eclass/qnaSelect(no=${q.NO},sbjNo=${q.SBJNO})}"
 													style="color: black;"> [[${q.TITLE}]]<i class="fa fa-2x fa-lock ms-2" style="font-size:10px; line-height:10px;"></i></a></td>
 												<td class="text-center"th:text="${q.NAME}"></td>
