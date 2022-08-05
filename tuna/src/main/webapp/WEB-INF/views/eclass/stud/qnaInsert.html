@@ -82,16 +82,22 @@
 					document.getElementById("visibleValue").disabled = true;}
 			</script>
 				<script th:inline="javascript">
+				var warn = /*[[${warntitle}]]*/ 'default';
+				var question = /*[[${question}]]*/ 'default';
+				var notitle = /*[[${notitle}]]*/ 'default';
+				var nocontent = /*[[${nocontent}]]*/ 'default';
+				var err = /*[[${err}]]*/ 'default';
+				
 				function insertQna(){
 				var content = $("#ckfinder").val();
 				var title = $("#title").val();
 					if(title == ''){
-						Dialogs.dialog('error', '제목을 입력하시기 바랍니다.', 'error')
+						Dialogs.dialog('error', err, notitle)
 						return;
 					}else if(window.editor.getData() == ''){
-						Dialogs.dialog('error', '내용을 입력하시기 바랍니다.', 'error')
+						Dialogs.dialog('error', err, nocontent)
 					}else{
-					Dialogs.dialog('warnConfirm', '질문을 등록하시겠습니까? 수정 및 삭제가 불가능합니다.', '등록하시려면 확인을 눌러주시기 바랍니다.', insertOneQna);
+					Dialogs.dialog('warnConfirm', warn, question, insertOneQna);
 					}
 				}
 				

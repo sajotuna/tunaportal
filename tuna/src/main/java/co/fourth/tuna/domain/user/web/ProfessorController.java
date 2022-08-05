@@ -1,6 +1,7 @@
 package co.fourth.tuna.domain.user.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ public class ProfessorController {
 	
 	@Autowired 
 	private ProfessorService professorDao;
+	
+	@Autowired 
+	private MessageSourceAccessor msg;
 	
 	@Autowired
 	private BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
@@ -37,7 +41,7 @@ public class ProfessorController {
 	public String proInfoUpdate(RedirectAttributes ra,ProfessorVO vo, Authentication authentication) {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		professorDao.profUpdate(vo);
-		ra.addFlashAttribute("success", "회원정보 수정이 완료되었습니다.");
+		ra.addFlashAttribute("success", msg.getMessage("msg.suc.update", new String[]{"회원정보"}));
 		return "redirect:/staff/userUpdate";
 	}
 	
@@ -53,13 +57,11 @@ public class ProfessorController {
 		if(enc.matches(beforepassword,oldpwd)) {
 			vo.setPwd(enc.encode(vo.getPwd()));
 			professorDao.staffPwdUpdate(vo);
-			message = "비밀번호가 변경 되었습니다.";
 		}else {
-			message = "비밀번호가 틀렸습니다.";
-			ra.addFlashAttribute("error", message);
+			ra.addFlashAttribute("error", msg.getMessage("msg.err.wrongPwd"));
 			return "redirect:/staff/pwdUpdate";
 		}
-		ra.addFlashAttribute("success", message);
+		ra.addFlashAttribute("success", msg.getMessage("msg.suc.update", new String[]{"비밀번호"}));
 		return "redirect:/staff/pwdUpdate";
 	}
 	
@@ -68,7 +70,7 @@ public class ProfessorController {
 		
 		professorDao.AdminProfUpdate(vo);
 		ra.addAttribute("no", vo.getNo());
-		ra.addFlashAttribute("success", "회원정보 수정이 완료되었습니다.");
+		ra.addFlashAttribute("success", msg.getMessage("msg.suc.update", new String[]{"회원정보"}));
 		return "redirect:/admin/admin/userInfo";
 	}
 	

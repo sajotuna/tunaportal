@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,8 @@ public class UserController {
 	private SqlSession SqlSession;
 	@Autowired 
 	private ProfessorService professorDao;
+	@Autowired 
+	private MessageSourceAccessor msg;
 	@Autowired
 	private BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
@@ -119,24 +122,21 @@ public class UserController {
 	public String adminInfoUpdate(RedirectAttributes ra,AdminVO vo,Authentication authentication) {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		AdminDao.adminInfoUpdate(vo);
-		ra.addFlashAttribute("success", "회원정보 수정이 완료되었습니다.");
+		ra.addFlashAttribute("success", msg.getMessage("msg.suc.update", new String[]{"회원정보"}));
 		return "redirect:/admin/adminUpdate";
 	}
 	
 	@RequestMapping("/admin/userpwdUpdate")
 	public String userpwdUpdate(RedirectAttributes ra,Model model, String beforepassword, AdminVO vo){
 		String oldpwd = AdminDao.adminPwdFind(vo);
-		String message = "";
 		if(enc.matches(beforepassword,oldpwd)) {
 			vo.setPwd(enc.encode(vo.getPwd()));
 			AdminDao.adminpwdUpdate(vo);    
-			message = "비밀번호가 변경 되었습니다.";
 		}else {
-			message = "비밀번호가 틀렸습니다.";
-			ra.addFlashAttribute("error", message);
+			ra.addFlashAttribute("error", msg.getMessage("msg.err.wrongPwd"));
 			return "redirect:/admin/pwdUpdate";
 		}
-		ra.addFlashAttribute("success", message);
+		ra.addFlashAttribute("success", msg.getMessage("msg.suc.update", new String[]{"비밀번호"}));
 		return "redirect:/admin/pwdUpdate";
 	}
 	

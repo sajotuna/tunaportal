@@ -1,6 +1,7 @@
 package co.fourth.tuna.domain.user.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +30,8 @@ public class StudentController {
 	private StudentService StudentDao;
 	 @Autowired
 	    private AuthenticationManager authenticationManager; 
+		@Autowired 
+		private MessageSourceAccessor msg;
 	@Autowired
 	private BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
@@ -44,7 +47,7 @@ public class StudentController {
 	public String userInfoUpdate(RedirectAttributes ra,StudentVO vo, Authentication authentication) {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		StudentDao.studUpdate(vo);
-		ra.addFlashAttribute("success", "회원정보 수정이 완료되었습니다.");
+		ra.addFlashAttribute("success",  msg.getMessage("msg.suc.update", new String[]{"회원정보"}));
 		return "redirect:/stud/userUpdate";
 	}
 	
@@ -57,24 +60,21 @@ public class StudentController {
 	public String AdminUserUpdate(StudentVO vo,RedirectAttributes ra) {
 		StudentDao.AdminStudUpdate(vo);
 		ra.addAttribute("no", vo.getNo());
-		ra.addFlashAttribute("success", "회원정보 수정이 완료되었습니다.");
+		ra.addFlashAttribute("success",  msg.getMessage("msg.suc.update", new String[]{"회원정보"}));
 		return "redirect:/admin/admin/userInfo";
 	}
 	
 	@RequestMapping("/stud/userpwdUpdate")
 	public String userpwdUpdate(RedirectAttributes ra,Model model, String beforepassword, StudentVO vo){
 		String oldpwd = StudentDao.findStudPwd(vo);
-		String message = "";
 		if(enc.matches(beforepassword,oldpwd)) {
 			vo.setPwd(enc.encode(vo.getPwd()));
 			StudentDao.studPwdUpdate(vo);
-			message = "비밀번호가 변경 되었습니다.";
 		}else {
-			message = "비밀번호가 틀렸습니다.";
-			ra.addFlashAttribute("error", message);
+			ra.addFlashAttribute("error", msg.getMessage("msg.err.wrongPwd"));
 			return "redirect:/stud/pwdUpdate";
 		}
-		ra.addFlashAttribute("success", message);
+		ra.addFlashAttribute("success", msg.getMessage("msg.suc.update", new String[]{"비밀번호"}));
 		return "redirect:/stud/pwdUpdate";
 	}
 	
@@ -83,8 +83,7 @@ public class StudentController {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		vo.setPwd(enc.encode(vo.getPwd()));
 		StudentDao.freshmanPwdUpdate(vo);
-		String message = "비밀번호 및 이메일이 변경 완료되었습니다.";
-		ra.addFlashAttribute("success", message);
+		ra.addFlashAttribute("success", msg.getMessage("msg.suc.update", new String[]{"회원정보"}));
 		
 		vo = StudentDao.findById(vo);
 		
