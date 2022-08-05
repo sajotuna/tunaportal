@@ -14,6 +14,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,6 +60,7 @@ public class EclassStudentEclassController {
 	@Autowired private FileService fileService;
 	@Autowired YearService year;
 	@Autowired String fileDir;
+	@Autowired private MessageSourceAccessor msgAccossor;
 	
 	@RequestMapping("/")
 	public void Eclass() {
@@ -166,7 +168,7 @@ public class EclassStudentEclassController {
 		
 		qnaDao.insertOneQna(vo);
 		
-		redir.addFlashAttribute("question", "정말 등록하시겠습니까? 등록하시면 삭제 및 수정이 불가능합니다.");
+		redir.addFlashAttribute("question", "정말 등록하시겠습니까? 등록하면 수정 및 삭제가 불가능합니다.");
 		redir.addAttribute("no", vo.getNo());
 		redir.addAttribute("sbjNo", vo.getSbjNo());
 		
@@ -208,6 +210,7 @@ public class EclassStudentEclassController {
 		vo.setSbjNo(Integer.parseInt(req.getParameter("sbjNo")));
 		
 		SubmitTaskVO vo1 = new SubmitTaskVO();
+		
 		//로그인한 유저 아이디
 		vo1.setStNo(Integer.parseInt(authentication.getName()));
 		//과제인덱스
@@ -219,6 +222,9 @@ public class EclassStudentEclassController {
 			fts = taskDao.findSubmission(vo1);
 		}
 		
+		
+		
+		model.addAttribute("success", msgAccossor.getMessage("msg.suc.enroll", new String[]{"파일"}));
 		model.addAttribute("tsk", tsk);
 		model.addAttribute("fts",fts);
 		

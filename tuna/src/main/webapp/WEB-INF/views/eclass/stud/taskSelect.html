@@ -164,21 +164,25 @@
 				  /* console.log(whDate); */
 				  console.log("과제제출일미경과")
 				  document.getElementById("file").style.display = "block";
-				  document.getElementById("button").style.display = "block";
+				  document.getElementById("btn").style.display = "block";
+				  document.getElementById("delbtn").style.display = "block";
 
 			  }else{
-				  /* console.log(whDate); */
 				  console.log("과제제출일경과")
 				  document.getElementById("file").style.display = "none";
-				  document.getElementById("button").style.display = "none";
+				  document.getElementById("btn").style.display = "none";
 				  document.getElementById("delbtn").style.display = "none";
 			  }
+				 
+			  
 			}
 				
 
 			</script>
+			<th:block th:if="${(success != null && success != '')}">
 			<script th:inline="javascript">
-
+			var success =/*[[${success}]]*/ 'default';
+			
 			function taskInsert(){
 			var fileNam = $("#file").val();
 				
@@ -188,11 +192,12 @@
 				 console.log(fileId)
 				
 				if(fileId == -1){
-					Dialogs.dialog('error', '유효하지 않은 파일입니다.', 'error');
+					Dialogs.dialog('error', '업로드 실패', '유효하지 않은 파일입니다.');
 					return;
 				}else{
-				frm.submit();
-					Dialogs.dialog('success', '성공적으로 파일이 업로드되었습니다.', 'success')		
+				Dialogs.dialog('success', '업로드 성공', '파일 등록이 완료되었습니다.');		
+				setTimeout(function(){
+					frm.submit()}, 1000)
 				}
 				
 			}
@@ -205,16 +210,18 @@
 				 console.log(fileId)
 				
 				if(fileId == -1){
-					Dialogs.dialog('error', '유효하지 않은 파일입니다.', 'error');
+					Dialogs.dialog('error', '업로드 실패', '유효하지 않은 파일입니다.');
 					return;
 				} else{
-					frm.submit();
-					Dialogs.dialog('success', '성공적으로 파일이 업데이트되었습니다.', 'success')
+					Dialogs.dialog('success','업로드 성공','파일 업데이트가 완료되었습니다.');
+					setTimeout(function(){
+					frm.submit()}, 1000)
 				}
 				
 			} 
 			
 			</script>
+			</th:block>
 		</main>
 	</div>
 </body>

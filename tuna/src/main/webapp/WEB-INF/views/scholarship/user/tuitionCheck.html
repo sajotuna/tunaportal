@@ -43,12 +43,12 @@
 		}
 		@media print {
 		  header, footer, #noprint { display:none }
+		  #seasonCode {border:none}
 		}
 		@media print {
 		  @page { margin: 0; }
-		  body { margin: 1.6cm; }
+		  body { margin: 0.1cm; height : 50mm; width : 225mm;}
 		}
-		
 	</style>
 
 </head>
@@ -103,12 +103,11 @@
 											</td>
 										</tr>
 										<tr>
-											<th class="fw-semibold fs-sm bg-gray ">학번</th>
+											<th class="fw-semibold fs-sm bg-gray ">학번/학년</th>
 											<td class="fw-semibold fs-sm" id="no">[[${vo.no}]]</td>
-											<th class="fw-semibold fs-sm bg-gray ">학년</th>
-											<td class="fw-semibold fs-sm">[[${vo.sy}]]</td>
+											<td class="fw-semibold fs-sm">[[${vo.sy}]] 학년</td>
 											<th class="fw-semibold fs-sm bg-gray ">성명</th>
-											<td class="fw-semibold fs-sm">[[${vo.name}]]</td>
+											<td class="fw-semibold fs-sm" colspan="2">[[${vo.name}]]</td>
 
 										</tr>
 										<tr>
@@ -154,14 +153,12 @@
 							</div>
 							<div class="d-flex justify-content-center">
 								<button id="app" class="d-none d-md-table-cell btn btn-secondary">
-									<i class="fa fa-file-pdf m-1"></i>PDF
+									출력
 								</button>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 		<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>

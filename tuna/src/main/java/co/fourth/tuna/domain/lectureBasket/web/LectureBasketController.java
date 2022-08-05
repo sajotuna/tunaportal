@@ -40,10 +40,10 @@ public class LectureBasketController {
 							  @RequestParam Map<String, Object> params ) {
 
 		
-//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1103") != 1) {
-//			model.addAttribute("error", "현재 수강꾸러미 열람기간이 아닙니다.");
-//			return "schedule/date/basketDate";
-//		}
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1103") != 1) {
+			model.addAttribute("error", "수강 꾸러미 기간이 아닙니다.");
+			return "schedule/date/basketDate";
+		}
 		SubjectVO sbj = new SubjectVO();
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
@@ -77,7 +77,7 @@ public class LectureBasketController {
 		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
 		
 		if(courcheck.isEmpty()) {
-			ra.addFlashAttribute("error", "수강꾸러미에 담을 과목을 체크해주세요");
+			ra.addFlashAttribute("error", "수강꾸러미에 담을 과목을 선택해주세요.");
 			return "redirect:/stud/course/Basket";
 		}
 		
@@ -96,7 +96,7 @@ public class LectureBasketController {
 				return "redirect:/stud/course/Basket";
 			}
 		}
-		ra.addFlashAttribute("success", "수강꾸러미 등록이 완료되었습니다.");
+		ra.addFlashAttribute("success", "수강꾸러미 신청이 완료되었습니다.");
 		return "redirect:/stud/course/Basket";
 
 	}

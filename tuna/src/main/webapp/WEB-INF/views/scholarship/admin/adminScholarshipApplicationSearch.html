@@ -121,7 +121,7 @@
           <div class="mb-3" style="overflow-x:scroll; overflow-y: hidden;">
 	          <table class="table table-striped table-vcenter m-0" style="width:1340px;">
 	          <thead>
-	              <tr>
+	              <tr class = "text-center">
 	                <th class="text-center" style="width: 80px;">
 	                	<button type="button" class="btn btn-light" id = "allSelect">
 	                		<i class="fa fa-circle-check"></i>
@@ -130,33 +130,33 @@
 	                <th style="width: 100px;">학번</th>
 	                <th style="width: 100px;">성명</th>
 	                <th style="width: 120px;">재적상태</th>
-	                <th style="width: 80px;">학년</th>
-	                <th style="width: 120px;">수강학점</th>
-	                <th style="width: 80px;">평점</th>
 	                <th style="width: 100px;">학과</th>
-	                <th style="width: 120px;">입학일</th>
-	                <th style="width: 120px;">신청이름</th>
+	                <th style="width: 120px;">입학년도</th>
+	                <th style="width: 120px;">장학명</th>
 	                <th style="width: 110px;">접수번호</th>
 	                <th style="width: 110px;">심사현황</th>
 	                <th style="width: 150px;">신청날짜</th>
+	                <th style="width: 80px;">학년</th>
+	                <th style="width: 120px;">수강학점</th>
+	                <th style="width: 80px;">평점</th>
 	                <th style="width: 100px;">첨부파일</th>
 	              </tr>
 	            </thead>
 	            <tbody>
-	              <tr th:scope="row" th:each="sch, status : ${list}">
+	              <tr th:scope="row" th:each="sch, status : ${list}" class = "text-center">
 					<th class="fw-semibold fs-sm text-center"><input type="checkbox" name = "scholarCheckbox" th:value = "${sch.SCHNO} +','+${sch.SEASONCODE}"></th>
 					<th class="fw-semibold fs-sm" th:text="${sch.NO}"></th>
 					<td class="fw-semibold fs-sm" th:text = "${sch.NAME}"></td>
 					<td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sch.STATECODE)}"></td>
-					<td class="fw-semibold fs-sm" th:text = "${sch.SY}"></td>
-					<td class="fw-semibold fs-sm" th:text = "${sch.PREVGRADE}"></td>
-					<td class="fw-semibold fs-sm" th:text = "${sch.AVGSCORE}"></td>
 					<td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sch.DEPTCODE)}"></td>
 					<td class="fw-semibold fs-sm" th:text = "${#dates.format(sch.ENTERDATE, 'yyyy-MM-dd')}"></td>
 					<td class="fw-semibold fs-sm" th:text = "${sch.SCHNAME}"></td>
 					<td class="fw-semibold fs-sm" th:text = "${sch.SCHNO}"></td>
 					<td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sch.SCHSTATECODE)}"></td>
 					<td class="fw-semibold fs-sm" th:text = "${#dates.format(sch.APPLYDATE, 'yyyy-MM-dd')}"></td>
+					<td class="fw-semibold fs-sm" th:text = "${sch.SY}"></td>
+					<td class="fw-semibold fs-sm" th:text = "${sch.PREVGRADE}"></td>
+					<td class="fw-semibold fs-sm" th:text = "${sch.AVGSCORE}"></td>
 					<td class="fw-semibold fs-sm filebox">
 						<th:block th:if = "${not #strings.isEmpty(sch.FILENAME)}">
 						<a th:href="@{/download(fileName=${sch.URI}, originName=${sch.FILENAME}, folder=ScholarFile)}">[[${sch.FILENAME}]]</a>

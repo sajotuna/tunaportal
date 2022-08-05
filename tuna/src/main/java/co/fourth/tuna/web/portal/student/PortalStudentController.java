@@ -82,10 +82,10 @@ public class PortalStudentController {
 		
 		int result = dateCheckDao.accessDateCheck(yearDao.yearFind(), "1106");
 		
-//		if (result == 0) {
-//			redirectAttributes.addFlashAttribute("error", "지금은 성적 조회 기간이 아닙니다.");
-//			return "redirect:/home";
-//		}
+		if (result == 0) {
+			redirectAttributes.addFlashAttribute("error", "성적 조회 기간이 아닙니다.");
+			return "redirect:/home";
+		}
 		
 		List<Map<String, Object>> grades = gradeDao.currentSemesterGradeSelect(
 												Integer.parseInt(authentication.getName()), 
