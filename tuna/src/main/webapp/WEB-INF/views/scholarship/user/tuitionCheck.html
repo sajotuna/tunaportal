@@ -222,6 +222,11 @@
 
 
 		<script>
+		
+		function priceToString(price) {
+		    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
+		
 			function submitFnc() {
 				let header = document.querySelector('meta[name="_csrf_header"]').content;
 				let token = document.querySelector('meta[name="_csrf"]').content;
@@ -263,15 +268,16 @@
 						result.forEach((val, idx) => {
 
 							if (idx == 0) {
-								tuition.innerHTML = result[0].AMOUNT + '원';
+								tuition.innerHTML = priceToString(result[0].AMOUNT) + '원';
 							}
 
 							if (val.SCHNAME == '성적우수') {
-								goodGrade.innerHTML = val.GIVEMONEY + '원'
+								goodGrade.innerHTML = priceToString(val.GIVEMONEY) + '원'
+								
 							} else if (val.SCHNAME == '가족') {
-								family.innerHTML = val.GIVEMONEY + '원'
+								family.innerHTML = priceToString(val.GIVEMONEY) + '원'
 							} else if (val.SCHNAME == '교직원가족') {
-								staffFamily.innerHTML = val.GIVEMONEY + '원'
+								staffFamily.innerHTML = priceToString(val.GIVEMONEY) + '원'
 							}
 
 
@@ -279,7 +285,7 @@
 							if (result[0].AMOUNT < 0) {
 								tuitionSum.innerHTML = '0원'
 							} else {
-								tuitionSum.innerHTML = result[0].AMOUNT;
+								tuitionSum.innerHTML = priceToString(result[0].AMOUNT);
 							}
 						})
 
