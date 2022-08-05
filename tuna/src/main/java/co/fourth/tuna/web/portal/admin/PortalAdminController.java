@@ -34,7 +34,7 @@ public class PortalAdminController {
 			                 @RequestParam(required = false, defaultValue = "all") String bannerCode) {
 		
 		ListPagingVO vo = new ListPagingVO();
-		vo.pageInfo(page, range, bannerDao.getBannerCnt(bannerCode), 5, 9);
+		vo.pageInfo(page, range, bannerDao.getBannerCnt(bannerCode), 5, 8);
 		
 		List<BannerVO> list = bannerDao.bannerListSelect(vo.getStartList(), vo.getEndList(), bannerCode);
 		
