@@ -101,7 +101,7 @@ public class PortalStudentController {
 			}
 		}
 		if (findN) {
-			total.put("AVG", "비공개");
+			total.put("AVG", "private");
 		}
 		
 		model.addAttribute("grades", grades);
