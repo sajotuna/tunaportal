@@ -1678,7 +1678,7 @@ xmlns:th="http://www.thymeleaf.org"
                 } else { //
                   tr.data_submit_id = student.submitTask.no;
                   fileName = student.submitTask.fileName;
-                  uri = `/tuna/download?fileName=${student.submitTask.fileName}&originName=${student.submitTask.uri}&folder=lectureFile`;
+                  uri = `/tuna/download?fileName=${student.submitTask.uri}&originName=${student.submitTask.fileName}&folder=lectureFile`;
                   enrollDate = dateTimeToISO(student.submitTask.enrollDate);
                   score = student.submitTask.score;
                   tr.data_submit_no = student.submitTask.no;
