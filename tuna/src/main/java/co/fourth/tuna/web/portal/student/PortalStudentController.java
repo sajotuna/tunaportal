@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ public class PortalStudentController {
 	@Autowired YearService yearDao;
 	@Autowired DateCheckService dateCheckDao;
 	@Autowired CodeService codeService;
+	@Autowired private MessageSourceAccessor msgAccessor;
 	
 	// 강의/성적 조회
 	@RequestMapping("/stud/portal/subjectAndReport")
@@ -83,7 +85,7 @@ public class PortalStudentController {
 		int result = dateCheckDao.accessDateCheck(yearDao.yearFind(), "1106");
 		
 		if (result == 0) {
-			redirectAttributes.addFlashAttribute("error", "성적 조회 기간이 아닙니다.");
+			redirectAttributes.addFlashAttribute("error", msgAccessor.getMessage("msg.err.notAccess", new String[]{"성적 조회"}));
 			return "redirect:/home";
 		}
 		
