@@ -218,7 +218,7 @@
 								</a>
 							</li>
 							<li class="nav-main-item">
-								<a class="nav-main-link" th:href="@{/stud/scholar/Application}" target="_blank"> 
+								<a class="nav-main-link" href="javascript:scholarPop()"> 
 									<span class="nav-main-link-name">장학 신청 및 조회</span>
 								</a>
 							</li>
@@ -240,12 +240,12 @@
 						</a>
 						<ul class="nav-main-submenu">
 							<li class="nav-main-item">
-								<a class="nav-main-link" th:href="@{/stud/eclass/home}" target="_blank">
+								<a class="nav-main-link" href="javascript:eclassPop()">
 									<span class="nav-main-link-name">e-class</span>
 								</a>	
 							</li>
 							<li class="nav-main-item">
-								<a class="nav-main-link" th:href="@{/stud/course/Warning}" target="_blank">
+								<a class="nav-main-link" href="javascript:coursePop()">
 									<span class="nav-main-link-name">수강신청</span>
 								</a>
 							</li>
@@ -459,6 +459,16 @@
 	   	$(function() {
 	   		shortcutBanner();
 		})
+		
+		function scholarPop() {
+	   		let popup = window.open( "/tuna/stud/scholar/Application", "scholar");
+	   	}
+	   	function eclassPop() {
+	   		let popup = window.open( "/tuna/stud/eclass/home", "eclass");
+	   	}
+	   	function coursePop() {
+	   		let popup = window.open( "/tuna/stud/course/Warning", "course");
+	   	}
 		
 		// 바로가기 배너
 		function shortcutBanner() {

@@ -81,10 +81,13 @@
 	<script th:src="@{/resources/assets/js/banner/banner.js}"></script>
 	<script th:src="@{/resources/assets/js/banner/bn-ajax.js}"></script>
 	
-	<script type="text/javascript">
+	<script type="text/javascript" th:inline="javascript">
 
 		$(function() {
 			banner('1302');
+			submit(/*[[#{msg.err.selectPlz('파일')}]]*/ 'default',
+					/*[[#{msg.err.inputPlz('텍스트')}]]*/ 'default',
+					/*[[#{msg.err.selectPlz('옵션')}]]*/ 'default');
 		})
 		
 	</script>

@@ -3,9 +3,9 @@ var token = $("meta[name='_csrf']").attr('content');
 var userNo = $("meta[name='userNo']").attr('content');
 
 // 사진 업로드
-function uploadAjax() {
+function uploadAjax(sucTitle, sucMsg) {
 
-	$('#file').on('change', changeEvent => {
+	$('#file').on('change', () => {
 		
 		let formData = new FormData();
 		formData.append('file', $('input[name=file]').prop('files')[0]);
@@ -26,8 +26,8 @@ function uploadAjax() {
 			console.log(success);
 			if (success) {
 				Dialogs.dialog('success', 
-		                       '등록 완료', 
-		                       '이제 사진 순서를 변경한 후 미리보기에서 등록할 수 있습니다',
+		                       sucTitle, 
+		                       sucMsg,
 							   function() {
 								   location.reload();
 							   });
@@ -39,7 +39,7 @@ function uploadAjax() {
 }	
 
 // 순서 등록
-function sequenceAjax(elem, idx) {
+function sequenceAjax(elem, idx, subSucTitle, subSucMsg) {
 	
 	$.ajax({
 		
@@ -53,8 +53,8 @@ function sequenceAjax(elem, idx) {
 	}).done(function(success) {
 		if(success) {
 			Dialogs.dialog('success', 
-		                   '순서 등록 완료', 
-		                   '슬라이드 배너 순서 변경이 완료되었습니다.');
+		                   subSucTitle, 
+		                   subSucMsg);
 		}
 	}).fail(function(){
 		 error();
@@ -62,7 +62,7 @@ function sequenceAjax(elem, idx) {
 	
 }
 
-function deleteAjax() {
+function deleteAjax(delSucTitle, delSucMsg) {
 	
 	let tr = $('#tb input:radio:checked').closest('tr');
 
@@ -79,8 +79,8 @@ function deleteAjax() {
 	}).done(function(success) {
 		if(success) {
 			Dialogs.dialog('success', 
-		                   '삭제 완료', 
-		                   '사진 삭제가 완료되었습니다.',
+		                   delSucTitle, 
+		                   delSucMsg,
 		                   function() {
 								location.reload();
 						   });
