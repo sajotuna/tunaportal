@@ -48,7 +48,7 @@ public class LectureNoticeController {
 	@RequestMapping("/staff/eclass/noticeUpdate")
 	public String noticeUpdateView(Model model, LectureNoticeVO notice) {
 		model.addAttribute("notice", notice);
-		return "eclass/professor/noticeUpdate";
+		return "staff/eclass/noticeUpdate";
 	}
 	
 	@RequestMapping("/staff/eclass/updateNotice")
@@ -57,11 +57,11 @@ public class LectureNoticeController {
 		service.noticeUpdate(notice);
 		ra.addFlashAttribute("success", "공지사항 수정이 완료되었습니다.");
 		ra.addAttribute("no", notice.getNo());
-		return "redirect:/eclass/professor/notice";
+		return "redirect:/staff/eclass/notice";
 	}
 	
 	@ResponseBody
-	@RequestMapping("/eclass/professor/noticeDelete")
+	@RequestMapping("/staff/eclass/noticeDelete")
 	public int noticeDelete(@RequestBody LectureNoticeVO notice) {
 		
 		return service.noticeDelete(notice);
