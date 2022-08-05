@@ -399,7 +399,7 @@ xmlns:th="http://www.thymeleaf.org"
                         <span>마감 : </span><span id="task-limit">테스트</span>
                       </div>
                       <div class="col-xxl-2 col-10">
-                        <button class="col-12 btn btn-dark">전체 다운로드</button>
+                        <!-- <button class="col-12 btn btn-dark">전체 다운로드</button> -->
                       </div>
                       <div class="col-xxl-1 col-10">
                         <button id="task-score-submit" class="col-12 btn btn-primary">적용</button>
@@ -978,6 +978,12 @@ xmlns:th="http://www.thymeleaf.org"
             const RADIO_GROUP_NAME = "radio-group-";
             const ATTENDANCE_SUBJECT_ID = "attendance_subject_";
             const DETIAL_ATTENDANCE_BLOCK_ID = "attendance_block_";
+            const GRADE_SBUJECT_ID = "grade_sbuject_";
+            const DETAIL_GRADE_BLOCK_ID = "grade_block_"
+            
+            const DETAIL_INPUT_MIDDLE = "grade_input_middle_";
+            const DETAIL_INPUT_FINALS = "grade_input_finals_";
+            
             const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
             const REST_URL = {
@@ -1311,36 +1317,49 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify(form),
               })
-              .then( async (res) => {
-                let resBody = await res.text();
-                console.log(resBody);
-                if(res.ok) {
-                  Dialogs.dialog('success',
-                  '입력 성공',
-                  resBody,
-                  function() {
-
-                  })
-                } else {
-                  Dialogs.dialog('error',
-                  '입력 실패',
-                  resBody,
-                  function() {
-                    console.error(resBody);
+              .then( res => res.json())
+              .then( result => {
+                console.log(result);
+                Dialogs.dialog(result.type,
+                result.title,
+                result.msg,
+                function() {
+                  if(result.type == "error") {
                     onTab = -1;
                     tabClickEvent(1);
-                  })
-                }
-              }).catch((err) => {
-                Dialogs.dialog('error',
-                '오류',
-                err,
-                function() {
-                  console.error(err)
-                  onTab = -1;
-                  tabClickEvent(onTab);
+                  }
                 })
               })
+              // .then( (res) => {
+              //   let resBody = await res.text();
+              //   // console.log(resBody);
+              //   if(res.ok) {
+              //     Dialogs.dialog('success',
+              //     '입력 성공',
+              //     resBody,
+              //     function() {
+
+              //     })
+              //   } else {
+              //     Dialogs.dialog('error',
+              //     '입력 실패',
+              //     resBody,
+              //     function() {
+              //       console.error(resBody);
+              //       onTab = -1;
+              //       tabClickEvent(1);
+              //     })
+              //   }
+              // }).catch((err) => {
+              //   Dialogs.dialog('error',
+              //   '오류',
+              //   err,
+              //   function() {
+              //     console.error(err)
+              //     onTab = -1;
+              //     tabClickEvent(onTab);
+              //   })
+              // })
             }
 
             function initNoticeWriteButton() {
@@ -1514,7 +1533,7 @@ xmlns:th="http://www.thymeleaf.org"
                 let tr = document.createElement('tr');
                 tbody.appendChild(tr);
                 tr.addEventListener("click", function() {
-                  window.open("/tuna/staff/eclass/notice?no="+data.no, 'notice', 'heigth=1200, width=920, menubar=0, status=0, toolbar=0');
+                  window.open("/tuna/staff/eclass/notice?no="+data.no, 'notice', 'height=1200, width=920, menubar=0, status=0, toolbar=0');
                 })
 
                 let td_no = document.createElement('td');
@@ -1985,36 +2004,18 @@ xmlns:th="http://www.thymeleaf.org"
                     },
                     body: JSON.stringify(gradeDatas)
                   })
-                  .then(async (res) => {
-                    let resBody = await res.text();
-                    if(res.ok) {
-                      Dialogs.dialog("success",
-                        "성공",
-                        resBody,
-                        function() {
-                        });
-                    } else {
-                      Dialogs.dialog("error",
-                      "실패",
-                      resBody,
-                      function() {
-                        console.error(resBody);
-                      })
-                    }
-
-                  })
-                  .catch((err) => {
-                    Dialogs.dialog("error",
-                      "오류",
-                      err,
-                      function() {
-                        console.error(err)
-                      })
-                      
-                  })
-                  .finally(()=> {
+                  .then( res => res.json())
+                  .then( result => {
+                    onTab = -1;
                     tabClickEvent(6);
-                  }) // fetch END
+
+                    Dialogs.dialog(result.type,
+                    result.title,
+                    result.msg,
+                    function() {
+                      
+                    })
+                  });
                 }
               );
 
@@ -2321,13 +2322,13 @@ xmlns:th="http://www.thymeleaf.org"
               for(let block of blocks) {
                 block.remove();
               }
-              console.log(student);
+              // console.log(student);
               for(let subject of student.subjectList) {
                 let block = document.createElement('div');
                 blockParent.appendChild(block);
 
                 let blockHTML = `
-                  <div class="block block-rounded block-themed block-bordered border-1">
+                  <div id=${DETAIL_GRADE_BLOCK_ID+subject.no} class="block block-rounded block-themed block-bordered border-1">
                     <div class="block-header bg-primary-darker">
                       <div class="block-title">
                         ${subject.name}
@@ -2349,11 +2350,11 @@ xmlns:th="http://www.thymeleaf.org"
                           <tr class="m-0">`;
                           if(subject.grade != null) {
                             blockHTML += `<td><input type="number" class="form-control" placeholder="" value="${subject.grade.attd}" disabled></td>
-                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.middle}"></td>
-                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.finals}"></td>
-                            <td><input type="number" class="form-control" placeholder="" value="${subject.grade.task}" disabled></td>
-                            <td><input type="number" class="form-control" placeholder=""  value="${subject.grade.total}" disabled></td>
-                            <td><button class="btn btn-primary">적용</button></td>`
+                            <td><input id="${DETAIL_INPUT_MIDDLE+subject.no}" type="number" class="form-control" placeholder="" value="${subject.grade.middle}"></td>
+                            <td><input id="${DETAIL_INPUT_FINALS+subject.no}" type="number" class="form-control" placeholder="" value="${subject.grade.finals}"></td>
+                            <td><input id="" type="number" class="form-control" placeholder="" value="${subject.grade.task}" disabled></td>
+                            <td><input id="" type="number" class="form-control" placeholder=""  value="${subject.grade.total}" disabled></td>
+                            <td><button id="${GRADE_SBUJECT_ID+subject.no}" class="btn btn-primary" onclick="submitDetailGrade(${subject.grade.no}, ${student.no})">적용</button></td>`
                           } else {
                             blockHTML += `
                               <td colspan="6">
@@ -2388,7 +2389,7 @@ xmlns:th="http://www.thymeleaf.org"
               }
 
               form = {
-                stno: stno,
+                stno: studno,
                 sbjno: sbjno,
                 attendanceList: attendanceList,
               }
@@ -2423,6 +2424,58 @@ xmlns:th="http://www.thymeleaf.org"
                 }
               })
               .catch((err)=> {
+                console.error(err);
+                Dialogs.dialog('error',
+                '오류',
+                err,
+                function() {
+                })
+              })
+            }
+
+            function submitDetailGrade(gradeno, stno) {
+              let sbjno = event.target.id.slice(GRADE_SBUJECT_ID.length);
+              let input_middle = document.querySelector(`#${DETAIL_INPUT_MIDDLE+sbjno}`);
+              let input_finals = document.querySelector(`#${DETAIL_INPUT_FINALS+sbjno}`);
+              
+              let grades = [];
+              let grade = {
+                no : gradeno,
+                middle: input_middle.value,
+                finals: input_finals.value,
+              };
+              grades.push(grade);
+              //GRDAES_UPDATE
+              fetch(REST_URL.GRDAES_UPDATE, {
+                method: "POST",
+                headers: {
+                  'header': header,
+                  'X-Requested-with': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
+                },
+                body: JSON.stringify(grades)
+              })
+              .then( async (res) => {
+                let resBody = await res.text();
+
+                if(res.ok) {
+                  Dialogs.dialog('success',
+                  "성공",
+                  resBody,
+                  function() {
+                    studentClickEvent(stno);
+                  })
+                } else {
+                  console.error(resBody);
+                  Dialogs.dialog('error',
+                  '실패',
+                  resBody,
+                  function() {
+                  });
+                }
+              })
+              .catch((err) => {
                 console.error(err);
                 Dialogs.dialog('error',
                 '오류',

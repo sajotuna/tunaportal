@@ -3,14 +3,12 @@ package co.fourth.tuna.domain.grade.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Service;
-
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.grade.vo.GradeFormVO;
 import co.fourth.tuna.domain.grade.vo.GradeVO;
 import co.fourth.tuna.domain.subject.vo.GradeRatioVO;
 import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
+import co.fourth.tuna.util.ResMsgVO;
 
 public interface GradeService {
 	
@@ -22,19 +20,19 @@ public interface GradeService {
 	
 	public String updateTaskGradeByStudentIdAndSubjectId(int stNo, int sbjNo);
 	
-	public String updateGradeByGradeNo(GradeFormVO vo);
-	public String updateGradeByStudentNoAndSubjectNo(GradeFormVO vo);
-	public String updateGradeListByGradeNo(List<GradeFormVO> vo);
+	public ResMsgVO updateGradeByGradeNo(GradeFormVO vo);
+	public ResMsgVO updateGradeByStudentNoAndSubjectNo(GradeFormVO vo);
+	public ResMsgVO updateGradeListByGradeNo(List<GradeFormVO> vo);
 	public String updateGradeListByStudentNoAndSbjectNo(List<GradeFormVO> vo);
 	
 	public String updateSubmitTaskGrade(EclassSubmitTaskScoreForm form);
-	public String updateAttendanceTaskGrade(int sbjno, int stno);
+	public ResMsgVO updateAttendanceTaskGrade(int sbjno, int stno);
 	public GradeVO getOneByStudentIdAndSubjectId(int stno, int sbjno);
 	
 	public int computeTotalScore(int sbjno, int stno);
 	
 	public int computeAttendanceScore(List<AttendanceVO> attends);
-	public String scoreLimitFilter(GradeFormVO vo);
+	public ResMsgVO scoreLimitFilter(GradeFormVO vo);
 	
 	public GradeRatioVO getGradeRatioBySubjectId(int sbjno);
 }
