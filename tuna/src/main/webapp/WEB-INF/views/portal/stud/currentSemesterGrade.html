@@ -110,7 +110,8 @@
 								<td scope="row" class="text-center fw-semibold fs-sm" th:text="${total.COUNT}">0</td>
 								<td class="text-center fw-semibold fs-sm" th:if="${total.SUM != null}" th:text="${total.SUM}">0</td>
 								<td class="text-center fw-semibold fs-sm" th:if="${total.SUM == null}" th:text="0"></td>
-								<td class="text-center fw-semibold fs-sm" th:if="${total.AVG != null}" th:text="${#numbers.formatDecimal(total.AVG,1,2)}">0</td>
+								<td class="text-center fw-semibold fs-sm" th:if="${total.AVG != 'private'}" th:text="${#numbers.formatDecimal(total.AVG,1,2)}">0</td>
+								<td class="text-center fw-semibold fs-sm" th:if="${total.AVG == 'private'}">비공개</td>
 								<td class="text-center fw-semibold fs-sm" th:if="${total.AVG == null}" th:text="0"></td>
 							</tr>
 						</tbody>
@@ -326,7 +327,7 @@
 			$('#objectionTb tr').removeClass('table-primary');
 			$(this).addClass('table-primary');
 			
-			$('#content').text('');
+			$('#content').val('');
 			$('#content').attr('disabled', false);
 			$('#objInsertBtn').attr('disabled', false);
 			
@@ -339,7 +340,7 @@
 			}
 			
 			if ($(this).data('content')) {
-				$('#content').text($(this).data('content'));
+				$('#content').val($(this).data('content'));
 				$('#content').attr('disabled', true);
 				$('#objInsertBtn').attr('disabled', true);
 			}
