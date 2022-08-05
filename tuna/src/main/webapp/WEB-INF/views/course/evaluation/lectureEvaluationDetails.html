@@ -97,8 +97,11 @@
     })
     
     function success(success){
-    	  Dialogs.dialog('success', '완료', success);
+    	  Dialogs.dialog('success', '완료', success, reload);
       }
+    function reload(){
+    	window.location.reload();
+    }
     
     </script>
     </main>
