@@ -147,7 +147,7 @@ xmlns:th="http://www.thymeleaf.org"
                           <div class="flex-grow-1 m-0 row justify-content-between">
                             <div class="col">
                               <i class="far fa- fa-file"></i>&nbsp
-                              <a th:href="@{/download(fileName=${file.uri}, originName=${file.fileName}, folder=LectureFile)}"><span th:text="${file.fileName}">이름 데이터 없음</span></a>
+                              <a th:href="@{/download(fileName=${file.uri}, originName=${file.fileName}, folder=lectureFile)}"><span th:text="${file.fileName}">이름 데이터 없음</span></a>
                             </div>
                             <div class="col-3">
                               <span th:text="${file.enrollDate}">??-??-??</span>
