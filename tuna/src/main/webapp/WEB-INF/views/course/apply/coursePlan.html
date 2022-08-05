@@ -22,7 +22,7 @@ tr {
 </head>
 <body>
 	<div id="page-container"
-		class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+		class="sidebar-o sidebar-gray enable-page-overlay side-scroll page-header-fixed main-content-narrow">
 		<!-- 
  ██████  ██████  ███    ██ ████████ ███████ ███    ██ ████████ 
 ██      ██    ██ ████   ██    ██    ██      ████   ██    ██    
@@ -33,56 +33,56 @@ tr {
 			<div class="content">
 				<div class="row">
 					<div class="col-12">
-						<h3 class="h3 fw-bold ms-3">강의계획서</h3>
+						<h3 class="h3 fw-bold mb-2">강의계획서</h3>
 					</div>
-					<div class="content content-boxed bg-body-extra-light">
+					<div class="block block-content bg-body-extra-light block-rounded">
 						<div id="page-container">
 							<div class="row">
 								<div class="col-lg-12 col-xl-12">
-									<table class="table table-vcenter table-bordered">
+									<table class="table table-vcenter table-bordered rounded" style="border: 1px solid rgba(200, 200, 200)">
 										<tbody>
 											<tr>
-												<th class="fw-semibold fs-sm" >교과목명</th>
+												<th class="fw-semibold fs-sm table-active" >교과목명</th>
 												<th class="fw-semibold fs-sm" colspan="8" th:text="${plan.NAME}"></th>
 											</tr>
 
 											<tr>
-												<th class="fw-semibold fs-sm">교수명</th>
+												<th class="fw-semibold fs-sm table-active">교수명</th>
 												<th class="fw-semibold fs-sm" colspan="4" th:text="${plan.PRONM}"></th>
-												<th class="fw-semibold fs-sm">소속학과</th>
+												<th class="fw-semibold fs-sm table-active">소속학과</th>
 												<th class="fw-semibold fs-sm" colspan="4" th:text="${@codeList.getName(plan.DEPTCODE)}"></th>
 											</tr>
 											<tr>
-												<th class="fw-semibold fs-sm">이메일</th>
+												<th class="fw-semibold fs-sm table-active">이메일</th>
 												<th class="fw-semibold fs-sm" colspan="4" th:text="${plan.EMAIL}"></th>
-												<th class="fw-semibold fs-sm">연락처</th>
+												<th class="fw-semibold fs-sm table-active">연락처</th>
 												<th class="fw-semibold fs-sm" colspan="4" th:text="${plan.TEL}"></th>
 											</tr>
 											<tr>
-												<th class="fw-semibold fs-sm">과목코드</th>
+												<th class="fw-semibold fs-sm table-active">과목코드</th>
 												<th class="fw-semibold fs-sm" colspan="4" th:text="${plan.NO}"></th>
-												<th class="fw-semibold fs-sm">개설년도/학기</th>
+												<th class="fw-semibold fs-sm table-active">개설년도/학기</th>
 												<th class="fw-semibold fs-sm" colspan="4" th:text="${@codeList.getName(plan.SEASONCODE)}"></th>
 											</tr>
 											<tr>
-												<th class="fw-semibold fs-sm">수강대상</th>
+												<th class="fw-semibold fs-sm table-active">수강대상</th>
 												<th class="fw-semibold fs-sm" colspan="4" th:text="${plan.TARGET}"></th>
-												<th class="fw-semibold fs-sm">강의실</th>
+												<th class="fw-semibold fs-sm table-active">강의실</th>
 												<th class="fw-semibold fs-sm" colspan="4" th:text="${@codeList.getName(sc.ROOMCODE)}"></th>
 											</tr>
 											<tr>
-												<th class="fw-semibold fs-sm">요일/교시</th>
-												<th class="fw-semibold fs-sm" colspan="4" th:text="${sc.DAYCODE}+${sc.TIMECODE}"></th>
-												<th class="fw-semibold fs-sm">학점</th>
+												<th class="fw-semibold fs-sm table-active">요일/교시</th>
+												<th class="fw-semibold fs-sm" colspan="4" th:utext="${sc.DAYCODE}+'<br/>'+${sc.TIMECODE}"></th>
+												<th class="fw-semibold fs-sm table-active">학점</th>
 												<th class="fw-semibold fs-sm" colspan="4" th:text="${plan.POINT}"></th>
 											</tr>
 											<tr>
-												<th class="fw-semibold fs-sm" colspan="2" rowspan="2">평가기준(%)</th>
+												<th class="fw-semibold fs-sm table-active" colspan="2" rowspan="2">평가기준(%)</th>
 												<th:block class="col-8">
-												<th class="fw-semibold fs-sm" colspan="2" >출 석</th>
-												<th class="fw-semibold fs-sm" colspan="2" >중간고사</th>
-												<th class="fw-semibold fs-sm" colspan="2" >기말고사</th>
-												<th class="fw-semibold fs-sm" colspan="2" >과제</th>
+												<th class="fw-semibold fs-sm table-active" colspan="2" >출 석</th>
+												<th class="fw-semibold fs-sm table-active" colspan="2" >중간고사</th>
+												<th class="fw-semibold fs-sm table-active" colspan="2" >기말고사</th>
+												<th class="fw-semibold fs-sm table-active" colspan="2" >과제</th>
 											</tr>
 											<tr>
 												<th class="fw-semibold fs-sm" colspan="2"  th:text="${plan.ATTD}"></th>
@@ -92,10 +92,10 @@ tr {
 												</th:block>
 											</tr>
 											<tr>
-												<th class="fw-semibold fs-sm" colspan="9">주차별 강의계획</th>
+												<th class="fw-semibold fs-sm table-active" colspan="9">주차별 강의계획</th>
 											</tr>
 											<tr th:each="i, w : ${weekplan}">
-												<th class="fw-semibold fs-sm" colspan="2" th:text="${w.index+1}+주차"></th>
+												<th class="fw-semibold fs-sm table-active" colspan="2" th:text="${w.index+1}+주차"></th>
 												<th class="fw-semibold fs-sm text-start" colspan="7" th:text="${i}"></th>
 											</tr>
 										</tbody>
@@ -106,7 +106,7 @@ tr {
 					</div>
 				</div>
 			</div>
-			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 	</div>
+			<script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
 </body>
 </html>

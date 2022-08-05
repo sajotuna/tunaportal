@@ -29,6 +29,8 @@
 								<a class="link-fx fw-semibold fs-2 text-white"
 									th:href="@{/custom/login}">
 									TUNA </a>
+									<p class="text-white-75 me-xl-8 mt-2">Welcome to your
+									portal.</p>
 							</div>
 						</div>
 						<div
@@ -147,9 +149,9 @@
 			let success = /*[[${success}]]*/ 'default';
 			let error = /*[[${error}]]*/ 'default';
 			if (success) {
-				Dialogs.dialog('success', '완료', success);
+				Dialogs.dialog('success',/*[[#{title.suc.input}]]*/ 'default', success);
 			} else if (error) {
-				Dialogs.dialog('error', '실패', error);
+				Dialogs.dialog('error', /*[[#{title.err.input}]]*/ 'default', error);
 			}
 		</script>
 	</th:block>

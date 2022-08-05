@@ -44,7 +44,7 @@ public class StudentController {
 	public String userInfoUpdate(RedirectAttributes ra,StudentVO vo, Authentication authentication) {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		StudentDao.studUpdate(vo);
-		ra.addFlashAttribute("success", "회원정보가 수정되었습니다.");
+		ra.addFlashAttribute("success", "회원정보 수정이 완료되었습니다.");
 		return "redirect:/stud/userUpdate";
 	}
 	
@@ -57,7 +57,7 @@ public class StudentController {
 	public String AdminUserUpdate(StudentVO vo,RedirectAttributes ra) {
 		StudentDao.AdminStudUpdate(vo);
 		ra.addAttribute("no", vo.getNo());
-		ra.addFlashAttribute("success", "회원정보가 수정되었습니다.");
+		ra.addFlashAttribute("success", "회원정보 수정이 완료되었습니다.");
 		return "redirect:/admin/admin/userInfo";
 	}
 	
@@ -70,7 +70,7 @@ public class StudentController {
 			StudentDao.studPwdUpdate(vo);
 			message = "비밀번호가 변경 되었습니다.";
 		}else {
-			message = "비밀번호가 틀립니다.";
+			message = "비밀번호가 틀렸습니다.";
 			ra.addFlashAttribute("error", message);
 			return "redirect:/stud/pwdUpdate";
 		}
@@ -83,7 +83,7 @@ public class StudentController {
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		vo.setPwd(enc.encode(vo.getPwd()));
 		StudentDao.freshmanPwdUpdate(vo);
-		String message = "비밀번호 및 이메일이 변경 되었습니다.";
+		String message = "비밀번호 및 이메일이 변경 완료되었습니다.";
 		ra.addFlashAttribute("success", message);
 		
 		vo = StudentDao.findById(vo);

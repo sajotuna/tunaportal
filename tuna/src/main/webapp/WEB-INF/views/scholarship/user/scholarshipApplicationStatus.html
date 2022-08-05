@@ -80,15 +80,16 @@
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(sch.STATECODE)}"></td>
                       
                       <td class="fw-semibold fs-sm filebox">
+	                      <th:block th:if = "${#strings.equals(sch.NAME, '성적우수')}">
+	                      </th:block>
+	                      <th:block th:unless = "${#strings.equals(sch.NAME, '성적우수')}">
 	                      <form th:action="@{/stud/scholar/FileUpload(${_csrf.parameterName}=${_csrf.token})}" method = "POST" id = "frm" enctype="multipart/form-data">
 	                      	<input type = "hidden" name = "no" th:value = "${sch.NO}">
-	                      	<th:block th:if = "${not #strings.isEmpty(sch.FILENAME)}">
+	                      	 	<th:block th:if = "${not #strings.isEmpty(sch.FILENAME)}">
 	                      		<label th:for="file+${status.count}" id = "filetag"  >[[${sch.FILENAME}]]</label>
 	                      		<input type="file" th:id="file+${status.count}" name = "file" style="display:none">
 	                      	</th:block>
 	                      	<th:block th:unless = "${not #strings.isEmpty(sch.FILENAME)}">
-	                      		 <th:block th:if = "${#strings.equals(sch.NAME, '성적우수')}">
-	                      		 </th:block>
 	                      		 <th:block th:unless = "${#strings.equals(sch.NAME, '성적우수')}">
 		                      		<label th:for="file+${status.count}" id = "filetag" >파일찾기</label>
 		                      		<input type="file" th:id="file+${status.count}" name = "file" style="display:none">
@@ -96,6 +97,8 @@
 	                      	</th:block>
 	                      	
 	                      </form>
+	                      </th:block>
+	                      
                       </td>
                       <td class="fw-semibold fs-sm"><a class = "btn" id = "delBtn" th:onclick = "|javascript:delClick(${sch.NO});|" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
 						  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>

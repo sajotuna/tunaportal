@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,6 @@ import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
 import co.fourth.tuna.domain.subject.service.SubjectService;
-import co.fourth.tuna.domain.subject.vo.SubjectVO;
 import nl.captcha.Captcha;
 
 @Controller
@@ -41,6 +41,8 @@ public class LectureApplyController {
 	private DateCheckService DataDao;
 	@Autowired
 	private SubjectService sbjDao;
+	@Autowired
+	private MessageSourceAccessor msgAccessor;
 	
 	@RequestMapping("/stud/course/Warning")
 	public String courseWarning() {
@@ -87,13 +89,13 @@ public class LectureApplyController {
 		String target = LectureApplyDao.subjectTarget(vo);
 		
 		if(target == null || target == "") {
-			ra.addFlashAttribute("error", "잘못된 과목코드입니다. 과목코드를 제대로 입력해주세요.");
+			ra.addFlashAttribute("error", msgAccessor.getMessage("msg.err.checkSbjcode"));
 			return "redirect:/stud/course/Application";
 		}
 		
 		
 		if(grade - Integer.parseInt(target) < 0) {
-			ra.addFlashAttribute("error", "수강신청 가능한 학점이 없습니다.");
+			ra.addFlashAttribute("error", msgAccessor.getMessage("msg.err.checkPoint"));
 			return "redirect:/stud/course/Application";
 		}
 		String message = LectureApplyDao.ApplyErrorMsg(vo);
@@ -112,7 +114,7 @@ public class LectureApplyController {
 	public String courseDelete(Authentication authentication,RedirectAttributes ra, LectureApplyVO vo) {
 		vo.setStNo(authentication.getName());
 		LectureApplyDao.CourseDelete(vo);
-		ra.addFlashAttribute("success", "수강신청 내역의 삭제가 완료되었습니다.");
+		ra.addFlashAttribute("delSuc", "수강신청 내역의 삭제가 완료되었습니다.");
 		return "redirect:/stud/course/Application";
 	}
 	
