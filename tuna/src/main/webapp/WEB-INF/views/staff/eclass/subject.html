@@ -32,6 +32,18 @@ xmlns:th="http://www.thymeleaf.org"
         
         line-height: 49px;
       }
+
+      .line-hider-fluid-24 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        
+        height: 24px;
+        line-height: 24px;
+      }
     </style>
   </head>
   <body>
@@ -1740,7 +1752,7 @@ xmlns:th="http://www.thymeleaf.org"
                   qnaContent += `<div class="col-1 d-none d-lg-block text-center">공개</div>`
                 }
 
-                qnaContent += `<div class="col-6">${qna.title}</div>
+                qnaContent += `<div class="col-6 line-hider-fluid-24">${qna.title}</div>
                     <div class="col-2 fw-bold text-end">${qna.studentVO.name}</div>
                     <div class="col text-center">${dateNumberToDateString(qna.enrollDate)}</div>
                   </a></li>`;

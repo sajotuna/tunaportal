@@ -125,6 +125,7 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 		SELECT *
 		FROM lectureQna
 		WHERE sbjno = ${sbjno}
+		ORDER BY enrolldate DESC
 	</select>
 	
 	<select id="selectListByStudentIdAndSubjectId" 
@@ -143,6 +144,7 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 			lectureqna
 		WHERE stno = #{stno}
 			AND sbjno = #{sbjno}
+		ORDER BY enrolldate DESC
 		
 	</select>
 	
@@ -161,6 +163,7 @@ VALUES(#{no}, #{title}, #{content}, null, sysdate, #{stNo}, #{sbjNo}, null, #{vi
 		FROM
 			lectureqna
 		WHERE no = #{qnano}
+		ORDER BY enrolldate DESC
 	</select>
 	
 	
