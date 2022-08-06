@@ -1640,7 +1640,7 @@ xmlns:th="http://www.thymeleaf.org"
                 selector.appendChild(option);
                 if(task.no == taskno) {
                   option.selected = true;
-                  limitTag.innerText = dateNumberToISO(task.limitDate);
+                  limitTag.innerText = dateNumberToDateString(task.limitDate);
                 }
               }
             }
@@ -1775,7 +1775,7 @@ xmlns:th="http://www.thymeleaf.org"
 
                 qnaContent += `<div class="col-6">${qna.title}</div>
                     <div class="col-2 fw-bold text-end">${qna.studentVO.name}</div>
-                    <div class="col text-center">${dateNumberToISO(qna.enrollDate)}</div>
+                    <div class="col text-center">${dateNumberToDateString(qna.enrollDate)}</div>
                   </a></li>`;
               }
               ulTag.innerHTML = qnaContent;
@@ -2149,13 +2149,13 @@ xmlns:th="http://www.thymeleaf.org"
               detail_no.innerText = student.no;
               detail_phone.innerText = stringToTelStyle(student.tel);
               detail_email.innerText = student.email;
-              detail_birth.innerText = dateNumberToISO(student.birth);
+              detail_birth.innerText = dateNumberToDateString(student.birth);
               detail_addr.innerText = student.addr;
 
               for( let subject of student.subjectList) {
                 // 제출 과제
                 for( let submitTask of subject.submitTaskList ) {
-                  let url = `/tuna/download?fileName=${submitTask.fileName}&originName=${submitTask.uri}&folder=lectureFile`;
+                  let url = `/tuna/download?fileName=${submitTask.uri}&originName=${submitTask.fileName}&folder=task`;
                   let tr = document.createElement('tr');
                   detail_task_list.appendChild(tr);
                   tr.innerHTML = `
@@ -2200,7 +2200,7 @@ xmlns:th="http://www.thymeleaf.org"
                     <div class="col-1 d-none d-lg-block text-center"><span class="${answer_class}">${answer_txt}</span></div>
                     <div class="col-1 d-none d-lg-block text-center ${visible_class}">${visible_txt}</div>
                     <div class="col-7">${textCutter(qna.title, 40)}</div>
-                    <div class="col-1 d-none d-lg-block text-center">${dateNumberToISO(qna.enrollDate)}</div>
+                    <div class="col-1 d-none d-lg-block text-center">${dateNumberToDateString(qna.enrollDate)}</div>
                   </a></li>
                   `;
                 }
@@ -2238,10 +2238,10 @@ xmlns:th="http://www.thymeleaf.org"
                         <tr>
                           <th class="p-1" style="min-width: 50px;">${subject.attendanceList.length>0?"종합":"수강 대기중"}</th>`;
                 for(let atten of subject.attendanceList){
-                  let attenDate = dateNumberToISO(atten.classDate).slice(5).replace('-','/');
+                  let attenDate = dateNumberToDateString(atten.classDate).slice(5).replace('-','/');
                   let th = document.createElement('th');
                   th.classList.add("p-0");
-                  th.style.width = "50px";
+                  th.style.minWidth = "50px";
                   th.innerText = attenDate;
                   if(atten.stateCode == "1401") {
                     attenCnt++;
@@ -2264,7 +2264,7 @@ xmlns:th="http://www.thymeleaf.org"
                             <div class="p-1">${subject.attendanceList.length>0?latenessCnt:"&nbsp"}</div>
                           </th>`;
                   for(let atten of subject.attendanceList) {
-                    if(!atten.stateCode) continue;
+                    //if(!atten.stateCode) continue;
                     let td = document.createElement('td');
                     td.id = "detail_atten_"+atten.no;
                     td.classList.add('p-0');
@@ -2273,19 +2273,19 @@ xmlns:th="http://www.thymeleaf.org"
                               <input type="radio" class="btn-check" name="atten${atten.no}" 
                                 id="atten_atten${atten.no}" autocomplete="off" value="1401"
                                 ${atten.stateCode=="1401"?"checked":"" } />
-                              <label class="btn btn-outline-success p-1" for="atten_atten${atten.no}">출석</label>
+                              <label class="btn btn-outline-success p-1 w-100" for="atten_atten${atten.no}">출석</label>
                             </div>
                             <div>
                               <input type="radio" class="btn-check" name="atten${atten.no}" 
                                 id="atten_late${atten.no}" autocomplete="off" value="1402"
                                 ${atten.stateCode=="1402"?"checked":""} />
-                              <label class="btn btn-outline-warning p-1" for="atten_late${atten.no}">지각</label>
+                              <label class="btn btn-outline-danger p-1 w-100" for="atten_late${atten.no}">결석</label>
                             </div>
                             <div>
                               <input type="radio" class="btn-check" name="atten${atten.no}" 
                                 id="atten_absen${atten.no}" autocomplete="off" value="1403"
                                 ${atten.stateCode=="1403"?"checked":""} />
-                              <label class="btn btn-outline-danger p-1" for="atten_absen${atten.no}">결석</label> 
+                              <label class="btn btn-outline-warning p-1 w-100" for="atten_absen${atten.no}">지각</label> 
                             </div>
                     `;
                     blockHTML += td.outerHTML;
@@ -2506,11 +2506,15 @@ xmlns:th="http://www.thymeleaf.org"
               loaderCurtain.classList.add('d-none');
             }
 
-            function dateNumberToISO(dateNumber) {
+            function dateNumberToDateString(dateNumber) {
               let mDate = new Date(dateNumber);
-                mDate = mDate.toISOString();
-                mDate = mDate.slice(0, mDate.indexOf('T'));
-              return mDate;
+
+              let year = mDate.getFullYear();
+              let month = mDate.getMonth()+1;
+              let day = mDate.getDate();
+              
+              let result =  `${year}-${month >= 10?month:'0'+month}-${day>=10?day:'0'+day}`;
+              return result;
             }
 
             function dateTimeToISO(dateNumber) {

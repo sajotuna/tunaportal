@@ -3,6 +3,8 @@ package co.fourth.tuna.domain.attendance.service.impl;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Service;
@@ -15,19 +17,23 @@ import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.grade.service.GradeService;
 import co.fourth.tuna.util.ResMsgService;
 import co.fourth.tuna.util.ResMsgVO;
+import co.fourth.tuna.web.eclass.professor.EclassProfessorEclassController;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
 
-	@Autowired AttendanceMapper map;
+	@Autowired 
+	AttendanceMapper map;
 	
-	@Autowired GradeService gradeService;
-	
+	@Autowired 
+	GradeService gradeService;
 	@Autowired
 	ResMsgService resMsgService;
 	
 	@Autowired
 	MessageSourceAccessor msg;
+	
+	private static final Logger logger = LoggerFactory.getLogger(AttendanceServiceImpl.class);
 	
 	@Override
 	public String studentAttendance(AttendanceVO vo) {
@@ -83,7 +89,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	public List<AttendanceVO> getListByStudentIdAndSbjno(int stno, int sbjno) {
-		return map.selectListByStudentIdAndSbjectId(stno, sbjno);
+		List<AttendanceVO> attendances = map.selectListByStudentIdAndSbjectId(stno, sbjno);
+		
+		return attendances;
 	}
 		
 
