@@ -23,8 +23,6 @@ import co.fourth.tuna.domain.lectureEval.vo.LectureEvalVO;
 public class LectureEvalController {
 
 	@Autowired
-	private SqlSession SqlSession;
-	@Autowired
 	private LectureEvalService evalDao;
 	@Autowired
 	private DateCheckService DataDao;
@@ -37,23 +35,21 @@ public class LectureEvalController {
 		return "course/evaluation/lectureEvaluation";
 	}
 	
-	
 	@RequestMapping("/stud/course/Details")
 	public String lectureEvaluationDetails(RedirectAttributes ra,LectureEvalVO vo, Model model, Authentication authentication) {
-		if(DataDao.accessDateCheck(yearDao.yearFind(), "1105") != 1) {
-			ra.addFlashAttribute("error", msgAccessor.getMessage("msg.err.notAccess", new String[]{"강의평가"}));
-			return "redirect:/home";
-		}
+//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1105") != 1) {
+//			ra.addFlashAttribute("error", msgAccessor.getMessage("msg.err.notAccess", new String[]{"강의평가"}));
+//			return "redirect:/home";
+//		}
 		vo.setStNo(authentication.getName());
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.CourseEval", vo);
+		List<Map<String,Object>> lists = evalDao.CourseEval(vo);
 		model.addAttribute("list", lists);
 		return "course/evaluation/lectureEvaluationDetails";
 	}
 	
 	@RequestMapping("/stud/course/Search")
 	public String lectureEvaluationSearch(String proNo, Model model) {
-		
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.EvalAvgScore",proNo);
+		List<Map<String,Object>> lists = evalDao.EvalAvgScore(proNo);
 		model.addAttribute("list", lists);
 		return "course/evaluation/lectureEvaluationSearch";
 	}
@@ -73,7 +69,7 @@ public class LectureEvalController {
 	public List<Map<String,Object>> portalLectureEvaluation(LectureEvalVO vo, Model model, Authentication authentication) {
 		
 		vo.setStNo(authentication.getName());
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.EvalAvgScore", vo);
+		List<Map<String,Object>> lists = evalDao.EvalAvgScore(vo.getStNo());
 		return lists;
 	}
 

@@ -3,7 +3,6 @@ package co.fourth.tuna.domain.scholar.web;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.Authentication;
@@ -29,16 +28,10 @@ public class ScholarController {
 
 	@Autowired
 	private StudentService StudentDao;
-
-	@Autowired
-	private SqlSession SqlSession;
-
 	@Autowired
 	private ScholarService ScholarDao;
-
 	@Autowired
 	private FileService fileService;
-
 	@Autowired
 	private YearService yearDao;
 	@Autowired
@@ -50,8 +43,7 @@ public class ScholarController {
 	public String scholarshipApplicationStatus(Model model, ScholarApplyVO vo, Authentication authentication) {
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
-		List<Map<String, Object>> lists = SqlSession
-				.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.ScholarCheck", vo);
+		List<Map<String, Object>> lists = ScholarDao.ScholarCheck(vo);
 
 		model.addAttribute("list", lists);
 		return "scholarship/user/scholarshipApplicationStatus";
@@ -118,8 +110,7 @@ public class ScholarController {
 
 		vo.setSeasonCode(year);
 		vo.setStNo(authentication.getName());
-		List<Map<String, Object>> lists = SqlSession
-				.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.ScholarCheck", vo);
+		List<Map<String, Object>> lists = ScholarDao.ScholarCheck(vo);
 
 		model.addAttribute("list", lists);
 		model.addAttribute("year", year);
@@ -144,8 +135,7 @@ public class ScholarController {
 		}
 		
 			
-		List<Map<String, Object>> lists = SqlSession
-				.selectList("co.fourth.tuna.domain.scholar.mapper.ScholarMapper.adminScholarCheck", params);
+		List<Map<String, Object>> lists = ScholarDao.adminScholarCheck(params);
 		
 		params.put("pageSize", Math.ceil((double)ScholarDao.scholarApplyCount(params)/10));
 		model.addAttribute("scholartime", DataDao.accessDateCheck(yearDao.yearFind(), "1108"));

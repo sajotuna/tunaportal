@@ -1,5 +1,6 @@
 package co.fourth.tuna.domain.user.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,11 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int AdminUserCount(Map<String, Object> params) {
 		return mapper.AdminUserCount(params);
+	}
+
+	@Override
+	public List<Map<String, Object>> adminUserCheck(Map<String, Object> params) {
+		return mapper.adminUserCheck(params);
 	}
 
 }

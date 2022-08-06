@@ -103,14 +103,13 @@
 		
           
           <div class="m-4" style="overflow-x:scroll; overflow-y: hidden;">
-            <table class="table table-striped table-vcenter m-0" style = "width :1152px;">
+            <table class="table table-striped table-vcenter m-0" style = "width :1400px;">
               <thead class = "text-center">
                 <tr>
                   <th  >학번</th>
                   <th  >성명</th>
                   <th >재적상태</th>
                   <th >학년</th>
-                  <th  >평점</th>
                   <th >학과</th>
                   <th >입사/입학년도</th>
                 </tr>
@@ -126,7 +125,6 @@
                       <td class="fw-semibold fs-sm"></td>
                       </th:block>
                       <td class="fw-semibold fs-sm" th:text = "${user.SY}"></td>
-                      <td class="fw-semibold fs-sm" th:text = "${user.AVGSCORE}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${@codeList.getName(user.DEPTCODE)}"></td>
                       <td class="fw-semibold fs-sm" th:text = "${#dates.format(user.ENTERDATE, 'yyyy-MM-dd')}"></td>
                 </tr>

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.fourth.tuna.domain.common.service.DateCheckService;
 import co.fourth.tuna.domain.common.service.YearService;
+import co.fourth.tuna.domain.lectureApply.service.LectureApplyService;
 import co.fourth.tuna.domain.lectureBasket.service.LectureBasketService;
 import co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO;
 import co.fourth.tuna.domain.subject.service.SubjectService;
@@ -25,11 +26,11 @@ import co.fourth.tuna.domain.subject.vo.SubjectVO;
 public class LectureBasketController {
 
 	@Autowired
-	private SqlSession SqlSession;
-	@Autowired
 	private YearService yearDao;
 	@Autowired
 	private LectureBasketService LectureBasketDao;
+	@Autowired
+	private LectureApplyService LectureApplyDao;
 	@Autowired
 	private SubjectService sbjDao;
 	@Autowired
@@ -60,10 +61,8 @@ public class LectureBasketController {
 		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount(params)/10));
 		vo.setSeasonCode(yearDao.yearFind());
 		vo.setStNo(authentication.getName());
-		List<Map<String, Object>> lists = SqlSession
-				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind", params);
-		List<Map<String, Object>> baskLists = SqlSession
-				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket", vo);
+		List<Map<String, Object>> lists = LectureApplyDao.SubjectFind(params);
+		List<Map<String, Object>> baskLists = LectureApplyDao.CourseBasket(vo);
 		
 		int grade = Integer.parseInt(LectureBasketDao.FindCourseGrade(vo));
 		
@@ -121,8 +120,7 @@ public class LectureBasketController {
 	public String courseBasketLectureList(Model model, LectureBasketVO vo, Authentication authentication) {
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
-		List<Map<String, Object>> baskLists = SqlSession
-				.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket", vo);
+		List<Map<String, Object>> baskLists = LectureApplyDao.CourseBasket(vo);
 		model.addAttribute("baskList", baskLists);
 
 		return "course/basket/courseBasketLectureList";
@@ -130,17 +128,15 @@ public class LectureBasketController {
 	
 	@RequestMapping("/stud/course/BasketSchedule")
 	public String courseBasketSchedule(Model model, LectureBasketVO vo, Authentication authentication) {
-
 		return "course/basket/courseBasketSchedule";
-
 	}
 	
 	@ResponseBody
 	@RequestMapping("/stud/course/BasketScheduleCheck")
-	public List<LectureBasketVO> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
+	public List<Map<String, Object>> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
-		return SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.BasketSchedule", vo);
+		return LectureApplyDao.BasketSchedule(vo);
 	}
 	
 	

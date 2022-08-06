@@ -29,11 +29,6 @@ public class ScholarServiceImpl implements ScholarService {
 	}
 
 	@Override
-	public List<ScholarApplyVO> ScholarCheck(ScholarApplyVO vo) {
-		return mapper.ScholarCheck(vo);
-	}
-
-	@Override
 	public void FileUpLoad(ScholarApplyVO vo) {
 		mapper.FileUpLoad(vo);
 	}
@@ -71,6 +66,18 @@ public class ScholarServiceImpl implements ScholarService {
 	@Override
 	public int scholarApplyCount(Map<String, Object> params) {
 		return mapper.scholarApplyCount(params);
+	}
+
+	@Override
+	public List<Map<String, Object>> adminScholarCheck(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return mapper.adminScholarCheck(params);
+	}
+
+	@Override
+	public List<Map<String, Object>> ScholarCheck(ScholarApplyVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.ScholarCheck(vo);
 	}
 	
 	

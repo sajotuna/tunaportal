@@ -36,8 +36,6 @@ public class LectureApplyController {
 	@Autowired
 	private YearService yearDao; 
 	@Autowired
-	private SqlSession SqlSession;
-	@Autowired
 	private DateCheckService DataDao;
 	@Autowired
 	private SubjectService sbjDao;
@@ -59,23 +57,26 @@ public class LectureApplyController {
 	public String courseApplication(RedirectAttributes ra,Model model,LectureApplyVO vo, Authentication authentication,@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
 			  @RequestParam Map<String, Object> params ) {
 
-		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
-			ra.addFlashAttribute("accessError", msgAccessor.getMessage("msg.err.notAccess", new String[]{"수강신청"}));
-			return "redirect:/stud/date/courseDate";
-		}
-		
+//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
+//			ra.addFlashAttribute("accessError", msgAccessor.getMessage("msg.err.notAccess", new String[]{"수강신청"}));
+//			return "redirect:/stud/date/courseDate";
+//		}
 		
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
 		params.put("seasonCode", yearDao.yearFind());
 		params.put("pageSize", Math.ceil((double)sbjDao.subjectCount(params)/10));
+		LectureBasketVO bask = new LectureBasketVO();
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
-		vo.setStateCode("402");
 		int grade = Integer.parseInt(LectureApplyDao.FindApplyGrade(vo));
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.SubjectFind", params);
-		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo);
-		List<Map<String,Object>> baskLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseBasket",vo);
+		
+		bask.setStNo(authentication.getName());
+		bask.setSeasonCode(yearDao.yearFind());
+		bask.setStateCode("402");
+		List<Map<String,Object>> lists = LectureApplyDao.SubjectFind(params);
+		List<Map<String,Object>> courLists = LectureApplyDao.CourseFind(vo);
+		List<Map<String,Object>> baskLists = LectureApplyDao.CourseBasket(bask);
 		model.addAttribute("list", lists);
 		model.addAttribute("courList", courLists);
 		model.addAttribute("grade", grade);
@@ -129,7 +130,7 @@ public class LectureApplyController {
 		
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
-		List<Map<String,Object>> courLists = SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseFind",vo);
+		List<Map<String,Object>> courLists = LectureApplyDao.CourseFind(vo);
 		
 		model.addAttribute("courList", courLists);
 		
@@ -178,10 +179,10 @@ public class LectureApplyController {
 	
 	@ResponseBody
 	@RequestMapping("/stud/course/ApplyScheduleCheck")
-	public List<LectureBasketVO> BasketSchedule(Authentication authentication, LectureBasketVO vo) {
+	public List<Map<String,Object>> BasketSchedule(Authentication authentication, LectureApplyVO vo) {
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
-		return SqlSession.selectList("co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper.CourseSchedule", vo);
+		return LectureApplyDao.CourseSchedule(vo);
 	}
 	
 	// 내 수강내역
