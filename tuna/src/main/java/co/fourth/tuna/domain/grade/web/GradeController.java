@@ -81,23 +81,26 @@ public class GradeController {
 	}
 	
 	@PostMapping(value="/staff/eclass/updateSubmitTaskScore")
-	public ResponseEntity<String> updateSubmitTaskScore(
+	public ResponseEntity<ResponseMsg> updateSubmitTaskScore(
 			@RequestBody EclassSubmitTaskScoreForm data) {
 		HttpHeaders resHeaders = new HttpHeaders();
+		ResponseEntity<ResponseMsg> res = null;
+		ResponseMsg msg = null;
+		
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		ResponseEntity<String> res = null;
 		
 		try {
-			res = new ResponseEntity<String>(
-					gradeDao.updateSubmitTaskGrade(data),
-					resHeaders,
-					HttpStatus.OK);
-		} catch (Throwable e) {
-			res = new ResponseEntity<String>(
-					e.getMessage(),
-					resHeaders,
-					HttpStatus.BAD_REQUEST);
+			msg = gradeDao.updateSubmitTaskGrade(data);
+		} catch (CustomException e) {
+			e.printStackTrace();
+			msg = e.getResMsg();
 		}
+		
+		
+		res = new ResponseEntity<ResponseMsg>(
+				msg,
+				resHeaders,
+				HttpStatus.OK);
 		
 		return res;
 	}

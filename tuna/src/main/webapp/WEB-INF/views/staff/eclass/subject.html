@@ -2055,14 +2055,15 @@ xmlns:th="http://www.thymeleaf.org"
                   setDetailUserInfo(resBody.student)
                   setDetailUserAttendance(resBody.student);
                   setDetailUserGrade(resBody.student);
-                } else {
-                  Dialogs.dialog('error',
-                  '학생정보 가져오기 실패',
-                  resBody.msg,
-                  function() {
-                    console.error(resBody.msg);
-                  });
-                }
+                } 
+                // else {
+                //   Dialogs.dialog('error',
+                //   '학생정보 가져오기 실패',
+                //   resBody.msg,
+                //   function() {
+                //     console.error(resBody.msg);
+                //   });
+                // }
               })
               .catch((err) => {
                 console.log(err);
@@ -2384,32 +2385,16 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify(grades)
               })
-              .then( async (res) => {
-                let resBody = await res.text();
-
-                if(res.ok) {
-                  Dialogs.dialog('success',
-                  "성공",
-                  resBody,
+              .then( res => res.json())
+              .then( result => {
+                Dialogs.dialog(result.type,
+                  result.title,
+                  result.msg,
                   function() {
-                    studentClickEvent(stno);
-                  })
-                } else {
-                  console.error(resBody);
-                  Dialogs.dialog('error',
-                  '실패',
-                  resBody,
-                  function() {
-                  });
-                }
-              })
-              .catch((err) => {
-                console.error(err);
-                Dialogs.dialog('error',
-                '오류',
-                err,
-                function() {
-                })
+                    if(result.type == "success")
+                      studentClickEvent(stno);
+                  }
+                )
               })
             }
 

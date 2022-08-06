@@ -65,7 +65,11 @@ public class GradeServiceImpl implements GradeService {
 	}
 	
 	@Override
-	public String updateTaskGradeByStudentIdAndSubjectId(int stNo, int sbjNo) throws Error{
+	public ResponseMsg updateTaskGradeByStudentIdAndSubjectId(int stNo, int sbjNo) throws CustomException{
+		ResponseMsg res = resMsgService.build("title.suc.eroll",
+				new String[]{"msg.suc.enroll","성적"},
+				ResponseMsg.SUCCESS);
+		
 		List<GradeFormVO> gradeList = new ArrayList<GradeFormVO>();
 		List<TaskVO> taskList = taskService.findListBySubjectId(sbjNo);
 		int sum = 0;
@@ -88,7 +92,7 @@ public class GradeServiceImpl implements GradeService {
 	
 		updateGradeListByStudentNoAndSbjectNo(gradeList);
 		
-		return "성적이 성공적으로 등록 되었습니다.";
+		return res;
 	}
 
 	@Override
@@ -107,23 +111,32 @@ public class GradeServiceImpl implements GradeService {
 
 	@Override
 	@Transactional
-	public String updateGradeListByStudentNoAndSbjectNo(List<GradeFormVO> list) {
+	public ResponseMsg updateGradeListByStudentNoAndSbjectNo(List<GradeFormVO> list) throws CustomException {
+		ResponseMsg res = resMsgService.build(
+				"title.suc.enroll",
+				new String[]{"msg.suc.enroll", "성적"},
+				ResponseMsg.SUCCESS);
 		for(GradeFormVO form : list) {
 			gradeService.updateGradeByStudentNoAndSubjectNo(form);
 		}
-		return "성적이 성공적으로 등록 되었습니다.";
+		return res;
 	}
 
 	@Override
 	@Transactional
-	public String updateSubmitTaskGrade(EclassSubmitTaskScoreForm form) throws Error{
-		taskService.updateSubmitTaskScoreByVO(form);
+	public ResponseMsg updateSubmitTaskGrade(EclassSubmitTaskScoreForm form) throws CustomException{
+		ResponseMsg res = resMsgService.build(
+			"title.suc.enroll",
+			new String[]{"msg.suc.enroll", "점수"},
+			ResponseMsg.SUCCESS);
+		
+		res = taskService.updateSubmitTaskScoreByVO(form);
 		for( SubmitTaskVO vo : form.getSubmitTaskList() ) {
 			if(vo.getNo() == null) continue;
 			gradeService.updateTaskGradeByStudentIdAndSubjectId(vo.getStNo(), form.getSbjno());			
 		}
 		
-		return "성공적으로 등록 되었습니다.";
+		return res;
 	}
 
 	@Override
@@ -132,7 +145,7 @@ public class GradeServiceImpl implements GradeService {
 	}
 
 	@Override
-	public ResponseMsg updateAttendanceTaskGrade(int stno, int sbjno) {
+	public ResponseMsg updateAttendanceTaskGrade(int stno, int sbjno) throws CustomException {
 		List<AttendanceVO> attens = attendanceService.getListByStudentIdAndSbjno(stno, sbjno);
 		if(attens.size() < 1) {
 			return resMsgService.build("title.error.enroll",
@@ -183,19 +196,21 @@ public class GradeServiceImpl implements GradeService {
 	}
 	
 	@Override
-	public ResponseMsg updateGradeByStudentNoAndSubjectNo(GradeFormVO vo) {
+	public ResponseMsg updateGradeByStudentNoAndSubjectNo(GradeFormVO vo) throws CustomException {
 		ResponseMsg result = resMsgService.build(
 				"title.suc.enroll",
 				new String[]{"msg.suc.enroll","성적 등록"},
 				ResponseMsg.SUCCESS);
 		
 		if(!scoreLimitFilter(vo)) {
-			return resMsgService.build(
+			result = resMsgService.build(
 					"title.err.enroll",
 					"msg.err.wrongInput",
 					ResponseMsg.ERROR);
+			throw new CustomException(result);
 		}
 		if ( mapper.updateGradeByStudentNoAndSubjectNo(vo) < 1) {
+			
 			return new ResponseMsg(
 					msg.getMessage("title.err.enroll")
 					, msg.getMessage("msg.err.fail",new String[]{"성적 등록"})

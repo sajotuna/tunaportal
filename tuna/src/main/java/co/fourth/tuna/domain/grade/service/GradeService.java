@@ -19,15 +19,15 @@ public interface GradeService {
 	public List<Map<String, Object>> seasonSubjectGradeSelect(int stNo, String seasonCode);
 	public List<Map<String, Object>> avgGradeSelect(int stNo, String SeasonCode);
 	
-	public String updateTaskGradeByStudentIdAndSubjectId(int stNo, int sbjNo);
+	public ResponseMsg updateTaskGradeByStudentIdAndSubjectId(int stNo, int sbjNo) throws CustomException;
 	
 	public ResponseMsg updateGradeByGradeNo(GradeFormVO vo) throws CustomException;
-	public ResponseMsg updateGradeByStudentNoAndSubjectNo(GradeFormVO vo);
+	public ResponseMsg updateGradeByStudentNoAndSubjectNo(GradeFormVO vo) throws CustomException;
 	public ResponseMsg updateGradeListByGradeNo(List<GradeFormVO> vo) throws CustomException;
-	public String updateGradeListByStudentNoAndSbjectNo(List<GradeFormVO> vo);
+	public ResponseMsg updateGradeListByStudentNoAndSbjectNo(List<GradeFormVO> vo) throws CustomException;
 	
-	public String updateSubmitTaskGrade(EclassSubmitTaskScoreForm form);
-	public ResponseMsg updateAttendanceTaskGrade(int sbjno, int stno);
+	public ResponseMsg updateSubmitTaskGrade(EclassSubmitTaskScoreForm form) throws CustomException;
+	public ResponseMsg updateAttendanceTaskGrade(int sbjno, int stno) throws CustomException;
 	public GradeVO getOneByStudentIdAndSubjectId(int stno, int sbjno);
 	
 	public int computeTotalScore(int sbjno, int stno);

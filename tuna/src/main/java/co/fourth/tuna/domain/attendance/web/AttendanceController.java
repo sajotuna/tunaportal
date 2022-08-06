@@ -20,6 +20,7 @@ import co.fourth.tuna.domain.attendance.service.AttendanceService;
 import co.fourth.tuna.domain.attendance.vo.AttendanceUpdateFormVO;
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
+import co.fourth.tuna.util.CustomException;
 import co.fourth.tuna.util.ResponseMsg;
 import co.fourth.tuna.web.eclass.professor.vo.SubjectAttendanceRestVO;
 
@@ -61,7 +62,12 @@ public class AttendanceController {
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		ResponseEntity<ResponseMsg> res = null;
 		
-		ResponseMsg msg = service.updateAttendanceList(form);
+		ResponseMsg msg;
+		try {
+			msg = service.updateAttendanceList(form);
+		} catch (CustomException e) {
+			msg = e.getResMsg();
+		}
 		
 		res = new ResponseEntity<ResponseMsg>(
 				msg,
@@ -80,7 +86,13 @@ public class AttendanceController {
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		ResponseEntity<ResponseMsg> res = null;
 		
-		ResponseMsg msg = service.updateAttendanceList(form);
+		ResponseMsg msg;
+		try {
+			msg = service.updateAttendanceList(form);
+		} catch (CustomException e) {
+			e.printStackTrace();
+			msg = e.getResMsg();
+		}
 		
 		res = new ResponseEntity<ResponseMsg>(
 				msg,

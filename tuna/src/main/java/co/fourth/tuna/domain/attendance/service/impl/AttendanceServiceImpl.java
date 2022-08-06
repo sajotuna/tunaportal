@@ -15,6 +15,7 @@ import co.fourth.tuna.domain.attendance.service.AttendanceService;
 import co.fourth.tuna.domain.attendance.vo.AttendanceUpdateFormVO;
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.grade.service.GradeService;
+import co.fourth.tuna.util.CustomException;
 import co.fourth.tuna.util.ResMsgService;
 import co.fourth.tuna.util.ResponseMsg;
 import co.fourth.tuna.web.eclass.professor.EclassProfessorEclassController;
@@ -53,7 +54,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	@Transactional
-	public ResponseMsg updateAttendanceList(AttendanceUpdateFormVO form) {
+	public ResponseMsg updateAttendanceList(AttendanceUpdateFormVO form) throws CustomException {
 		ResponseMsg result = new ResponseMsg();
 		
 //		System.out.println(form);
