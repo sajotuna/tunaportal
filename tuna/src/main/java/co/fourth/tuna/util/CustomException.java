@@ -8,5 +8,5 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class CustomException extends Throwable {
-	private ResMsgVO resMsg;
+	private ResponseMsg resMsg;
 }

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import co.fourth.tuna.domain.common.service.FileService;
 import co.fourth.tuna.domain.lectureFile.service.LectureFileService;
 import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
+import co.fourth.tuna.util.ResponseMsg;
 
 @Controller
 public class LectureFileController {
@@ -22,50 +23,36 @@ public class LectureFileController {
 	@Autowired LectureFileService lectureFileService;
 	
 	@PostMapping("/staff/insertSubjectFile")
-	public ResponseEntity<String> insertLectureFile(
+	public ResponseEntity<ResponseMsg> insertLectureFile(
 			@RequestParam(value = "file")MultipartFile file,
 			LectureFileVO filevo) {
-		ResponseEntity<String> res = null;
+		ResponseEntity<ResponseMsg> res = null;
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		try {
-			String[] fileInfo = fileService.upload(file, "lectureFile");
-			filevo.setFileName(fileInfo[0]);
-			filevo.setUri(fileInfo[1]);
-			
-			res = new ResponseEntity<String>(
-					lectureFileService.insertLectureFileByLectureFileVO(filevo),
-					headers,
-					HttpStatus.OK);
-					
-		} catch ( Throwable e) {
-			res = new ResponseEntity<String>(
-					e.getMessage(),
-					headers,
-					HttpStatus.BAD_REQUEST);
-		}
+		
+		String[] fileInfo = fileService.upload(file, "lectureFile");
+		filevo.setFileName(fileInfo[0]);
+		filevo.setUri(fileInfo[1]);
+		
+		res = new ResponseEntity<ResponseMsg>(
+				lectureFileService.insertLectureFileByLectureFileVO(filevo),
+				headers,
+				HttpStatus.OK);
 		
 		return res;
 	}
 	
 	@PostMapping("/staff/deleteSubjectFile")
-	public ResponseEntity<String> deleteLectureFile(
+	public ResponseEntity<ResponseMsg> deleteLectureFile(
 			@RequestBody LectureFileVO file) {
-		ResponseEntity<String> res = null;
+		ResponseEntity<ResponseMsg> res = null;
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		
-		try {
-			res = new ResponseEntity<String>(
-					lectureFileService.deleteLecturefileByLectureFileVO(file),
-					headers,
-					HttpStatus.OK);
-		} catch( Throwable e ) {
-			res = new ResponseEntity<String>(
-					e.getMessage(),
-					headers,
-					HttpStatus.BAD_REQUEST);
-		}
+
+		res = new ResponseEntity<ResponseMsg>(
+				lectureFileService.deleteLecturefileByLectureFileVO(file),
+				headers,
+				HttpStatus.OK);
 		
 		return res;
 	}

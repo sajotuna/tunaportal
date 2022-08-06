@@ -1,6 +1,5 @@
 package co.fourth.tuna.domain.task.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.fourth.tuna.domain.grade.service.GradeService;
-import co.fourth.tuna.domain.grade.vo.GradeFormVO;
 import co.fourth.tuna.domain.task.mapper.TaskMapper;
 import co.fourth.tuna.domain.task.service.TaskService;
 import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
 import co.fourth.tuna.domain.task.vo.SubmitTaskWithTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
+import co.fourth.tuna.util.ResMsgService;
+import co.fourth.tuna.util.ResponseMsg;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -25,6 +25,8 @@ public class TaskServiceImpl implements TaskService {
 	GradeService gradeService;
 	@Autowired
 	TaskService service;
+	@Autowired
+	ResMsgService msg;
 	
 	@Override
 	public TaskVO taskList(TaskVO vo) {
@@ -53,17 +55,27 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public String insertTaskByVO(TaskVO vo) {
+	public ResponseMsg insertTaskByVO(TaskVO vo) {
+		ResponseMsg res = msg.build(
+				"title.suc.enroll",
+				new String[]{"msg.suc.enroll","과제"}, 
+				ResponseMsg.SUCCESS);
 		if(vo.getTitle().isBlank()) {
-			throw new Error("제목이 없습니다.");
+			return msg.build(
+					"title.err.enroll",
+					new String[]{"msg.err.input", "제목"}, 
+					ResponseMsg.ERROR);
 		}
 		if(vo.getLimitDate() == null) {
-			throw new Error("마감일이 없습니다.");
+			return msg.build(
+					"title.err.enroll", 
+					new String[]{"msg.err.input", "만료일"}, 
+					ResponseMsg.ERROR);
 		}
 		if(map.insertTaskByVO(vo) < 1) {
 			throw new Error("등록 실패");
 		}
-		return "등록 성공";
+		return res;
 	}
 
 	@Override
@@ -73,19 +85,29 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	@Transactional
-	public String updateSubmitTaskScoreByVO(EclassSubmitTaskScoreForm data) {
+	public ResponseMsg updateSubmitTaskScoreByVO(EclassSubmitTaskScoreForm data) {
+		ResponseMsg res = msg.build(
+				"title.suc.enroll",
+				new String[]{"msg.suc.enroll","점수"},
+				ResponseMsg.SUCCESS);
 		
 		for( SubmitTaskVO vo : data.getSubmitTaskList() ) { // student list
 			if ( vo.getNo() == null ) continue; 
 			if( (vo.getScore() > 100) || (vo.getScore() < 0) ) {
-				throw new Error("점수가 100점보다 크거나 0보다 작을 수 없습니다.");
+				return msg.build(
+						"title.suc.enroll",
+						"msg.err.wrongInput",
+						ResponseMsg.ERROR);
 			}
 			if( map.updateSubmitTaskByVO(vo) < 0 ) {
-				throw new Error("등록 실패");
+				return msg.build(
+						"title.suc.enroll",
+						new String[]{"msg.err.fail","점수"},
+						ResponseMsg.ERROR);
 			}
 		}
 		
-		return "등록 성공";
+		return res;
 	}
 
 	@Override

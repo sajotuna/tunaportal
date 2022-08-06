@@ -1106,65 +1106,43 @@ xmlns:th="http://www.thymeleaf.org"
 
               modal.addEventListener('click', function(e) {
                 if(e.target.classList.contains('submitBtn')){
-                  Dialogs.dialog('checkConfirm',
-                    '정말 등록하시겠습니까?',
-                    '',
-                    function() {
-                      onLoaderCurtain();
-                      tabFlag.set(1, false);
-                      
-                      let task = {
-                        title : modal.querySelector("#task-title").value,
-                        content : modal.querySelector('#task-content').value,
-                        startDate : modal.querySelector('#task-start-input').value,
-                        limitDate : modal.querySelector("#task-limit-input").value,
-                        sbjNo : sbjno
+                  onLoaderCurtain();
+                  tabFlag.set(1, false);
+                  
+                  let task = {
+                    title : modal.querySelector("#task-title").value,
+                    content : modal.querySelector('#task-content').value,
+                    startDate : modal.querySelector('#task-start-input').value,
+                    limitDate : modal.querySelector("#task-limit-input").value,
+                    sbjNo : sbjno
+                  }
+
+                  fetch( REST_URL.TASK_INSERT, {
+                    method: "POST",
+                    headers: {
+                      'header': header,
+                      'X-Requested-with': 'XMLHttpRequest',
+                      'Content-Type': 'application/json',
+                      'X-CSRF-Token': token
+                    },
+                    body: JSON.stringify(task)
+                  })
+                  .then( res => res.json())
+                  .then( result => {
+                    Dialogs.dialog(result.type,
+                      result.title,
+                      result.msg,
+                      function() {
+                        modal.getElementsByClassName("close-btn")[0].click();
                       }
-
-                      fetch( REST_URL.TASK_INSERT, {
-                        method: "POST",
-                        headers: {
-                          'header': header,
-                          'X-Requested-with': 'XMLHttpRequest',
-                          'Content-Type': 'application/json',
-                          'X-CSRF-Token': token
-                        },
-                        body: JSON.stringify(task)
-                      })
-                      .then( async (res) => {
-                        let resBody = await res.text();
-
-                        if(res.ok) {
-                          Dialogs.dialog('success',
-                            "성공",
-                            resBody,
-                            function() {
-                              modal.getElementsByClassName("close-btn")[0].click()
-                            });
-                        } else {
-                          Dialogs.dialog('error',
-                          '실패',
-                          resBody,
-                          function() {
-                            console.error(resBody);
-                          });
-                        }
-                      })
-                      .catch((err) => {
-                        Dialogs.dialog('error',
-                        '오류',
-                        err,
-                        function() {
-                          console.error(err);
-                        })
-                      })
-                      .finally(()=>{
-                        tabClickEvent(2);
-                      }) // fetch END
-                    }) // Dialog END
+                    )
+                  })
+                  .finally(()=>{
+                    onTab = -1;
+                    tabClickEvent(2);
+                  }) // fetch END
                 }
-              }) 
-
+              })
             } // initTaskInsert END
 
             function initTaskScoreSubmit() {
@@ -1206,34 +1184,19 @@ xmlns:th="http://www.thymeleaf.org"
                   },
                   body: JSON.stringify(requestObj)
                 })
-                .then( async (res) => {
-                  let resBody = await res.text();
-
-                  if(res.ok) {
-                    Dialogs.dialog('success', 
-                    "성공",
-                    resBody,
+                .then( res => res.json())
+                .then( result => {
+                  Dialogs.dialog(result.type,
+                    result.title,
+                    result.msg,
                     function() {
 
-                    })
-                  } else {
-                    Dialogs.dialog('error',
-                    '실패',
-                    resBody,
-                    function() {
-                      console.error(resBody);
-                    })
-                  }
-                  // TODO dialog
+                    }
+                  )
                 })
-                .catch((err) => {
-                  Dialogs.dialog('error',
-                  '오류',
-                  err,
-                  function() {
-                    console.error(err);
-                  })
-                })
+                .finally(()=>{
+
+                }) // fetch END
               })
 
             } // initTaskScoreSubmit END
@@ -1255,20 +1218,24 @@ xmlns:th="http://www.thymeleaf.org"
                     fetch( REST_URL.SUBMIT_LECTURE_FILE_UPLOAD+'?_csrf='+token, {
                       method: 'post',
                       body: formData
-                  }).then( async (res) => {
-                    let resBody = await res.text();
-                    if(res.ok) {
-                      Dialogs.dialog('success',
-                      "성공",
-                      resBody,
+                  })
+                  .then( res => res.json())
+                  .then( result => {
+                    Dialogs.dialog(result.type,
+                      result.title,
+                      result.msg,
                       function() {
                         mUrl = g_url;
                         mUrl.searchParams.set('no', sbjno);
                         mUrl.searchParams.set('msg', onTab)
                         window.location.href = mUrl.href;
-                      })
-                    }
+                      }
+                    )
                   })
+                  .finally(()=>{
+                    
+                  }) // fetch END
+
                 }
               });
             }
@@ -2029,48 +1996,29 @@ xmlns:th="http://www.thymeleaf.org"
                 fileName: li.data_fileName,
                 uri: li.data_uri
               }
+              fetch(REST_URL.LECTURE_FILE_DELETE, {
+                method: "POST",
+                headers: {
+                  'header': header,
+                  'X-Requested-with':'XMLHttpRequest',
+                  'Content-Type':'application/json',
+                  'X-CSRF-Token': token,
+                },
+                body: JSON.stringify(file)
+              })
+              .then( res => res.json())
+              .then( result => {
+                Dialogs.dialog(result.type,
+                  result.title,
+                  result.msg,
+                  function() {
 
-              Dialogs.dialog('checkConfirm',
-                '정말 삭제하시겠습니까?',
-                '되돌릴 수 없습니다.',
-                function() {
-                  fetch(REST_URL.LECTURE_FILE_DELETE, {
-                    method: "POST",
-                    headers: {
-                      'header': header,
-                      'X-Requested-with':'XMLHttpRequest',
-                      'Content-Type':'application/json',
-                      'X-CSRF-Token': token,
-                    },
-                    body: JSON.stringify(file)
-                  }).then(async (res) => {
-                    let resBody = await res.text();
+                  }
+                )
+              })
+              .finally(()=>{
 
-                    if(res.ok) {
-                      li.remove();
-                      Dialogs.dialog('success',
-                      "성공",
-                      resBody,
-                      function() {
-                        
-                      })
-                    } else {
-                      Dialogs.dialog('error',
-                      '실패',
-                      resBody,
-                      function() {
-                        console.error(resBody);
-                      })
-                    }
-                  }).catch((err) => {
-                    Dialogs.dialog('error',
-                    '오류',
-                    err,
-                    function(){
-                      console.error(err);
-                    })
-                  })
-                })
+              }) // fetch END
             }
 
             
