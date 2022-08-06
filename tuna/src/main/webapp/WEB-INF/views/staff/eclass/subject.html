@@ -2404,32 +2404,12 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify(form)
               })
-              .then( async (res) => {
-                let resBody = await res.text();
-
-                if(res.ok) {
-                  Dialogs.dialog('success',
-                  "성공",
-                  resBody,
-                  function() {
-                    studentClickEvent(studno);
-                  })
-                } else {
-                  console.error(resBody);
-                  Dialogs.dialog('error',
-                  '실패',
-                  resBody,
-                  function() {
-                  });
-                }
-              })
-              .catch((err)=> {
-                console.error(err);
-                Dialogs.dialog('error',
-                '오류',
-                err,
-                function() {
-                })
+              .then( res => res.json())
+              .then( result => {
+                Dialogs.dialog(result.type,
+                result.title,
+                result.msg,
+                function() { })
               })
             }
 

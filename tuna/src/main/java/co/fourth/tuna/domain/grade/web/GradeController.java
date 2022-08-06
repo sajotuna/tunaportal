@@ -18,6 +18,7 @@ import co.fourth.tuna.domain.grade.service.GradeService;
 import co.fourth.tuna.domain.grade.vo.GradeFormVO;
 import co.fourth.tuna.domain.task.service.TaskService;
 import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
+import co.fourth.tuna.util.CustomException;
 import co.fourth.tuna.util.ResMsgVO;
 
 @RestController
@@ -55,11 +56,19 @@ public class GradeController {
 		
 		HttpHeaders resHeaders = new HttpHeaders();
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		ResponseEntity<ResMsgVO> resEntity = null;
 		
-		ResponseEntity<ResMsgVO> resEntity = new ResponseEntity<ResMsgVO>(
-				gradeDao.updateGradeListByGradeNo(grades), 
-				resHeaders, 
-				HttpStatus.OK);
+		try {
+			resEntity = new ResponseEntity<ResMsgVO>(
+					gradeDao.updateGradeListByGradeNo(grades), 
+					resHeaders, 
+					HttpStatus.OK);			
+		} catch ( CustomException e) {
+			resEntity = new ResponseEntity<ResMsgVO>(
+					e.getResMsg(), 
+					resHeaders, 
+					HttpStatus.OK);
+		}
 		
 		return resEntity;
 				
