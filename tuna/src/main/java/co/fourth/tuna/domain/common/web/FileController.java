@@ -2,7 +2,6 @@ package co.fourth.tuna.domain.common.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,12 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -38,28 +38,25 @@ public class FileController {
 	
 	// 파일 다운로드
 	@RequestMapping("/download")
-	public void download(
+	public ResponseEntity<Object> download(
 			@Param("fileName") String fileName,
 			@Param("originName") String originName,
 			@Param("folder") String folder, HttpServletResponse response) {
 		
-		String filePath = fileDir + folder + File.separator + fileName;
+		String path = fileDir + folder + File.separator + fileName;
 		
 		try {
 			
-			byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File(filePath));
+			Path filePath = Paths.get(path);
+			Resource resource = new InputStreamResource(Files.newInputStream(filePath));
 			
-			response.setContentType("application/octet-stream");
-			response.setContentLength(fileByte.length);
-			response.setHeader("Content-Disposition", "attachment; fileName=\""
-				+ URLEncoder.encode(originName, "UTF-8") + "\";");
-		
-			response.getOutputStream().write(fileByte);
-			response.getOutputStream().flush();
-			response.getOutputStream().close();
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(originName).build());
 			
-		} catch (IOException e) {
-			e.printStackTrace();
+			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+			
+		} catch(Exception e) {
+			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
 		}
 		
 	}
