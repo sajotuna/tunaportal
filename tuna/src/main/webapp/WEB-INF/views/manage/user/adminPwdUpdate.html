@@ -150,9 +150,7 @@
      <th:block th:if = "${error != null && error != ''}">
 	<script th:inline="javascript">
 		let error = /*[[${error}]]*/ 'default';
-		if (error) {
-			Dialogs.dialog('error', '실패', error);
-		}
+		alert(error)
 	</script>
 	</th:block>  
 </body>

@@ -144,27 +144,39 @@
   
   <script th:inline="javascript">
   function delClick(no){
-		Dialogs.dialog('warnConfirm', '장학금 신청취소를 하시겠습니까?', '확인을 누르시면 취소가 진행 됩니다.', function del(){
+	  let delTitle = /*[[#{title.cfm.delete}]]*/ 'defalut';
+	  let delMsg = /*[[#{msg.cfm.notCancel}]]*/ 'defalut';
+		Dialogs.dialog('warnConfirm', delTitle, delMsg, function del(){
 			location.href = 'Delete?no='+no
 		});
 	}
   </script>
   
-  <th:block th:if = "${(success != null && success != '')}">
+  <th:block th:if = "${(success != null && success != '') || (fileSuccess != null && fileSuccess != '') || (delete != null && delete != '')}">
 	<script th:inline="javascript">
 		let success = /*[[${success}]]*/ 'default';
+		let sucTitle = /*[[#{title.suc.apply}]]*/ 'default';
+		let fileSuccess = /*[[${fileSuccess}]]*/ 'default';
+		let fileTitle = /*[[#{title.suc.enroll}]]*/ 'default';
+		let schdelete = /*[[${delete}]]*/ 'default';
+		let delTitle = /*[[#{title.suc.delete}]]*/ 'default';
 		if (success) {
-			Dialogs.dialog('success', '완료', success);
+			Dialogs.dialog('success', sucTitle, success);
+		}else if(fileSuccess){
+			Dialogs.dialog('success', fileTitle, fileSuccess);
+		}else if(schdelete){
+			Dialogs.dialog('success', delTitle, schdelete);
 		}
 	</script>
 </th:block>
 
-<th:block th:if = "${error != null && error != ''}">
-	<script th:inline="javascript">
-		let error = /*[[${error}]]*/ 'default';
-		Dialogs.dialog('error', '접근 불가', error);
+	<th:block th:if = "${(accessError != null && accessError != '')}">
+  <script th:inline="javascript">
+  let accessError = /*[[${accessError}]]*/ 'default';
+	let accessTitle = /*[[#{title.err.access}]]*/ 'default';
+		Dialogs.dialog('error', accessTitle, accessError);
 	</script>
-</th:block>
+  </th:block>
   
 <script>
 	let forms = document.querySelectorAll('#frm')

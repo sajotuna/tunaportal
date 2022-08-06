@@ -148,9 +148,18 @@
   <th:block th:if = "${error != null && error != ''}">
   <script th:inline="javascript">
 		let error = /*[[${error}]]*/ 'default';
-		Dialogs.dialog('error', '접근 불가', error);
+		let errorTitle = /*[[#{title.err.apply}]]*/ 'default';
+		Dialogs.dialog('error', errorTitle, error);
 	</script>
   </th:block>
+	<th:block th:if = "${(accessError != null && accessError != '')}">
+  <script th:inline="javascript">
+  let accessError = /*[[${accessError}]]*/ 'default';
+	let accessTitle = /*[[#{title.err.access}]]*/ 'default';
+		Dialogs.dialog('error', accessTitle, accessError);
+	</script>
+  </th:block>
+  
   <script>
   let check = 0;
   function ScholarApply(){
@@ -174,7 +183,7 @@
 			  		radios.forEach(radio=>{
 			  			if(radio.checked == true){
 			  				if(radio.value == val.schNo){
-			  					Dialogs.dialog('error', '실패', '동일한장학금은 신청이 불가능합니다.');
+			  					Dialogs.dialog('error', '신청 실패', '동일한장학금은 신청이 불가능합니다.');
 			  					check++;
 			  					return;
 			  				}

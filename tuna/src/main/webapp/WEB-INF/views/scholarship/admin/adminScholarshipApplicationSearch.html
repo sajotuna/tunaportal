@@ -214,14 +214,16 @@
                     </button>
                   </li>
                 </ul>
-          <div class="d-flex justify-content-center">
-            <div class="m-2">
-              <input type="submit" class="btn btn-primary" value="심사확인">
-            </div>
-            <div class="m-2">
-              <input type="button" class="btn btn-danger" onclick="javascript:ScholarReject();" value="심사거절">
-            </div>      
-        </div>
+                <th:block th:if = "${scholartime == 1}">
+		          <div class="d-flex justify-content-center">
+		            <div class="m-2">
+		              <input type="submit" class="btn btn-primary" value="심사확인">
+		            </div>
+		            <div class="m-2">
+		              <input type="button" class="btn btn-danger" onclick="javascript:ScholarReject();" value="심사거절">
+		            </div>      
+		        </div>
+        	   </th:block>
           </form>
         </div>
       </div>
@@ -232,10 +234,12 @@
 		<script th:inline="javascript">
 			let success = /*[[${success}]]*/ 'default';
 			let error = /*[[${error}]]*/ 'default';
+			let sucTitle = /*[[#{title.suc.done('심사')}]]*/ 'default';
+			let errTitle = /*[[#{title.err.fail('심사')}]]*/ 'default';
 			if (success) {
-				Dialogs.dialog('success', '완료', success);
+				Dialogs.dialog('success', sucTitle, success);
 			} else if (error) {
-				Dialogs.dialog('error', '실패', error);
+				Dialogs.dialog('error', errTitle, error);
 			}
 		</script>
 	</th:block>

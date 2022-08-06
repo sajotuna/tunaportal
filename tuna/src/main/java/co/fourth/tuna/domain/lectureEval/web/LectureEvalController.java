@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,8 @@ public class LectureEvalController {
 	private DateCheckService DataDao;
 	@Autowired
 	private YearService yearDao; 
+	@Autowired
+	private MessageSourceAccessor msgAccessor;
 	@RequestMapping("/stud/course/Evaluation")
 	public String lectureEvaluation() {
 		return "course/evaluation/lectureEvaluation";
@@ -37,10 +40,10 @@ public class LectureEvalController {
 	
 	@RequestMapping("/stud/course/Details")
 	public String lectureEvaluationDetails(RedirectAttributes ra,LectureEvalVO vo, Model model, Authentication authentication) {
-//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1105") != 1) {
-//			ra.addFlashAttribute("error", "강의 평가 기간이 아닙니다.");
-//			return "redirect:/home";
-//		}
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1105") != 1) {
+			ra.addFlashAttribute("error", msgAccessor.getMessage("msg.err.notAccess", new String[]{"강의평가"}));
+			return "redirect:/home";
+		}
 		vo.setStNo(authentication.getName());
 		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.CourseEval", vo);
 		model.addAttribute("list", lists);
@@ -60,7 +63,7 @@ public class LectureEvalController {
 		vo.setEvalState("y");
 		vo.setStNo(authentication.getName());
 		evalDao.EvalSucess(vo);
-		ra.addFlashAttribute("success", "강의평가가 완료되었습니다.");
+		ra.addFlashAttribute("success", msgAccessor.getMessage("msg.suc.done", new String[]{"강의평가"}));
 		return "redirect:/stud/course/Evaluation";
 	}
 	

@@ -49,14 +49,20 @@ public class LectureApplyController {
 		return "course/apply/courseWarning";
 	}
 	
+	@RequestMapping("/stud/date/courseDate")
+	public String courseDate() {
+		return "schedule/date/courseDate";
+	}
+	
+	
 	@RequestMapping("/stud/course/Application")
-	public String courseApplication(Model model,LectureApplyVO vo, Authentication authentication,@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
+	public String courseApplication(RedirectAttributes ra,Model model,LectureApplyVO vo, Authentication authentication,@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
 			  @RequestParam Map<String, Object> params ) {
 
-//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
-//			model.addAttribute("error", "수강 신청 기간이 아닙니다.");
-//			return "schedule/date/courseDate";
-//		}
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
+			ra.addFlashAttribute("accessError", msgAccessor.getMessage("msg.err.notAccess", new String[]{"수강신청"}));
+			return "redirect:/stud/date/courseDate";
+		}
 		
 		
 		params.put("pageNum", pageNum);
@@ -113,7 +119,7 @@ public class LectureApplyController {
 	public String courseDelete(Authentication authentication,RedirectAttributes ra, LectureApplyVO vo) {
 		vo.setStNo(authentication.getName());
 		LectureApplyDao.CourseDelete(vo);
-		ra.addFlashAttribute("delSuc", "수강신청 내역의 삭제가 완료되었습니다.");
+		ra.addFlashAttribute("delSuc", msgAccessor.getMessage("msg.suc.delete", new String[]{"수강신청 내역의"}));
 		return "redirect:/stud/course/Application";
 	}
 	

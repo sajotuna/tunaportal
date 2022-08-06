@@ -139,21 +139,16 @@
 	</script>
 	   <th:block th:if = "${success != null && success != ''}">
       	<script th:inline = "javascript">
-      	let success = /*[[${success}]]*/ 'default';
-      	
-      	opener.success(success)
-      	window.close();
-      	
-      	
+	      	let success = /*[[${success}]]*/ 'default';
+	      	opener.success(success)
+	      	window.close();
       	</script>
       </th:block>
       
      <th:block th:if = "${error != null && error != ''}">
 	<script th:inline="javascript">
 		let error = /*[[${error}]]*/ 'default';
-		if (error) {
-			Dialogs.dialog('error', '실패', error);
-		}
+		alert(error)
 	</script>
 	</th:block>  
 </body>

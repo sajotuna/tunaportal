@@ -87,9 +87,9 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 
 
 
-<th:block th:if = "${error != null && error != ''}">
+<th:block th:if = "${accessError != null && accessError != ''}">
 	<script th:inline="javascript">
-		let error = /*[[${error}]]*/ 'default';
+		let error = /*[[${accessError}]]*/ 'default';
 		
 		Dialogs.dialog('error', '접근 불가', error);
 		
