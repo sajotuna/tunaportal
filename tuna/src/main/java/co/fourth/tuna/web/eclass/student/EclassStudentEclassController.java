@@ -152,7 +152,18 @@ public class EclassStudentEclassController {
 	public String qnaInsert(Model model, LectureQnaVO vo, RedirectAttributes redir,
 							HttpServletRequest req,
 							Authentication authentication) {
+		
 		model.addAttribute("sbjNo",req.getParameter("sbjNo"));
+		//질문등록경고헤더
+		model.addAttribute("warntitle", msgAccossor.getMessage("title.cfm.enroll"));
+		//질문등록경고문구
+		model.addAttribute("question", msgAccossor.getMessage("msg.cfm.warn"));
+		//제목없음
+		model.addAttribute("notitle", msgAccossor.getMessage("msg.err.inputPlz", new String[]{"제목"}));
+		//내용없음
+		model.addAttribute("nocontent", msgAccossor.getMessage("msg.err.inputPlz", new String[]{"내용"}));
+		//등록실패
+		model.addAttribute("err", msgAccossor.getMessage("title.err.enroll"));
 		
 		return "eclass/stud/qnaInsert";
 	}
@@ -168,7 +179,7 @@ public class EclassStudentEclassController {
 		
 		qnaDao.insertOneQna(vo);
 		
-		redir.addFlashAttribute("question", "정말 등록하시겠습니까? 등록하면 수정 및 삭제가 불가능합니다.");
+		
 		redir.addAttribute("no", vo.getNo());
 		redir.addAttribute("sbjNo", vo.getSbjNo());
 		
@@ -223,8 +234,11 @@ public class EclassStudentEclassController {
 		}
 		
 		
-		
+		model.addAttribute("warning", msgAccossor.getMessage("title.err.upload"));
+		model.addAttribute("suctitle", msgAccossor.getMessage("title.suc.upload"));
 		model.addAttribute("success", msgAccossor.getMessage("msg.suc.enroll", new String[]{"파일"}));
+		model.addAttribute("update", msgAccossor.getMessage("msg.suc.update", new String[]{"파일"}));
+		model.addAttribute("error", msgAccossor.getMessage("msg.err.fileFail"));
 		model.addAttribute("tsk", tsk);
 		model.addAttribute("fts",fts);
 		

@@ -395,18 +395,16 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 										let sbjno = document.querySelector('#sbjno')
 										if(sbjno.value == '' || sbjno.value == null){
 											Dialogs.dialog('error', '신청 실패', '과목코드를 입력해주세요.')
+											document.querySelector('#answer').value = '';
 											getImage();
-											document.querySelector('#answer').setAttribute(
-													'value', '');
 										}else{
 											frm.submit();
 										}
 										// 성공 코드
 									} else {
 										Dialogs.dialog('error', '신청 실패', '자동입력방지 코드가 틀립니다.')
+										document.querySelector('#answer').value = '';
 										getImage();
-										document.querySelector('#answer').setAttribute(
-												'value', '');
 									}
 								}).done(function(result){
 									console.log(result)
