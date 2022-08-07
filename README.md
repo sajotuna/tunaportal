@@ -68,6 +68,9 @@ TUNA Portal은 가상 대학교 TUNA의 포탈 서비스이다.
 > #### 학사일정
 > ![image](https://user-images.githubusercontent.com/95123287/183274345-e8cf60f9-1ca6-42f0-a7ea-a15b58f9619e.png)
 
+> #### 성적 조회
+> ![image](https://user-images.githubusercontent.com/95123287/183277790-783600fd-98e6-4a32-b6c3-d0160fe24fcd.png)
+
 > #### 수강신청
 > ![image](https://user-images.githubusercontent.com/95123287/183274337-2857e02c-057c-41de-9c21-e73658d50ba1.png)
 > ![image](https://user-images.githubusercontent.com/95123287/183277406-580c7944-ff64-4ef0-960d-875c1eb68191.png)
