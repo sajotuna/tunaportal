@@ -1056,6 +1056,10 @@ xmlns:th="http://www.thymeleaf.org"
             let studentsGradeTr = [];
             let studentsTaskTr = [];
             
+            // callback func
+            let callbackFunc = function() {return null;};
+            let selectedStudentNo = 0;
+
             function alertEvent(){
               alert("wow!!?");
             }
@@ -1339,6 +1343,26 @@ xmlns:th="http://www.thymeleaf.org"
               //     tabClickEvent(onTab);
               //   })
               // })
+            }
+
+            function openQnaWindow(qna_no, func) {
+              let qna = window.open(REST_URL.SUBJECT_QNA_LINK+"?no="+qna_no
+                ,"qna", "height=1200, width=920, menubar=0, status=0, toolbar=0");
+              callbackFunc = func;
+            }
+
+            function qnaTabClickEvent() {
+              tabReset();
+              tabClickEvent(3);
+            }
+
+            function detailQnaClickEvent() {
+              studentClickEvent(selectedStudentNo);
+            }
+
+            function windowCallbackFunc() {
+              callbackFunc();
+              callbackFunc = null;
             }
 
             function initNoticeWriteButton() {
@@ -1738,8 +1762,8 @@ xmlns:th="http://www.thymeleaf.org"
               for(let qna of qnaList) {
                 qnaContent += `
                       <li><a class="d-flex text-primary-dark py-2" 
-                        href="${REST_URL.SUBJECT_QNA_LINK+"?no="+qna.no}" 
-                        onclick="window.open(this.href, 'qna', 'height=1200, width=920, menubar=0, status=0, toolbar=0'); return false;" >`
+                        href="javascript:void(0);"
+                        onclick="openQnaWindow(${qna.no},${qnaTabClickEvent});" >`
                 if( qna.answer == null ) {
                   qnaContent+=`<div class="col-1 d-none d-lg-block text-center text-danger">대기</div>`;
                 } else {
@@ -2045,6 +2069,7 @@ xmlns:th="http://www.thymeleaf.org"
               let stNo = 0;
               if(!studno) stNo = event.target.getAttribute('data_stno');
               else stNo = studno;
+              selectedStudentNo = stNo;
               // let sbjNo = event.target.dataset.sbjno;
               let student = {
                 no: stNo
@@ -2156,7 +2181,9 @@ xmlns:th="http://www.thymeleaf.org"
                   detail_qna_list.appendChild(li);
                   // TODO 
                   li.innerHTML = `
-                  <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                  <li><a class="d-flex text-primary-dark py-2" 
+                      href="javascript:void(0);" 
+                      onclick="openQnaWindow(${qna.no},${detailQnaClickEvent});">
                     <div class="col-2 text-center">${subject.name}</div>
                     <div class="col-1 d-none d-lg-block text-center"><span class="${answer_class}">${answer_txt}</span></div>
                     <div class="col-1 d-none d-lg-block text-center ${visible_class}">${visible_txt}</div>

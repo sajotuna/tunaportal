@@ -149,10 +149,7 @@ xmlns:th="http://www.thymeleaf.org"
   }
 
   window.addEventListener('unload', function() {
-    if(opener) {
-      opener.tabReset();
-      opener.tabClickEvent(3);
-    }
+      opener.windowCallbackFunc();
   });
 
   function getContextPath() {
