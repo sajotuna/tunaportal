@@ -37,10 +37,10 @@ public class LectureEvalController {
 	
 	@RequestMapping("/stud/course/Details")
 	public String lectureEvaluationDetails(RedirectAttributes ra,LectureEvalVO vo, Model model, Authentication authentication) {
-//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1105") != 1) {
-//			ra.addFlashAttribute("error", msgAccessor.getMessage("msg.err.notAccess", new String[]{"강의평가"}));
-//			return "redirect:/home";
-//		}
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1105") != 1) {
+			ra.addFlashAttribute("error", msgAccessor.getMessage("msg.err.notAccess", new String[]{"강의평가"}));
+			return "redirect:/home";
+		}
 		vo.setStNo(authentication.getName());
 		List<Map<String,Object>> lists = evalDao.CourseEval(vo);
 		model.addAttribute("list", lists);

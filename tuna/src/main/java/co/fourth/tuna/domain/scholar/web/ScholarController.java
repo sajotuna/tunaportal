@@ -39,8 +39,23 @@ public class ScholarController {
 	@Autowired
 	private MessageSourceAccessor msgAccessor;
 	
+	@RequestMapping("/stud/scholar/applyDate")
+	public String applyDate() {
+		return "schedule/date/applyDate";
+	}
+	
+	@RequestMapping("/stud/scholar/statusDate")
+	public String statusDate() {
+		return "schedule/date/statusDate";
+	}
+	
 	@RequestMapping("/stud/scholar/Status")
-	public String scholarshipApplicationStatus(Model model, ScholarApplyVO vo, Authentication authentication) {
+	public String scholarshipApplicationStatus(RedirectAttributes ra,Model model, ScholarApplyVO vo, Authentication authentication) {
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1107") != 1) {
+			ra.addFlashAttribute("accessError", msgAccessor.getMessage("msg.err.notAccess", new String[]{"장학신청"}));
+			return "redirect:/stud/scholar/statusDate";
+		}
+		
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
 		List<Map<String, Object>> lists = ScholarDao.ScholarCheck(vo);
@@ -50,7 +65,13 @@ public class ScholarController {
 	}
 
 	@RequestMapping("/stud/scholar/Application")
-	public String courseBasket(Model model, StudentVO vo, Authentication authentication) {
+	public String courseBasket(RedirectAttributes ra,Model model, StudentVO vo, Authentication authentication) {
+		
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1107") != 1) {
+			ra.addFlashAttribute("accessError", msgAccessor.getMessage("msg.err.notAccess", new String[]{"장학신청"}));
+			return "redirect:/stud/scholar/applyDate";
+		}
+		
 		vo.setNo(Integer.parseInt(authentication.getName()));
 		vo = StudentDao.findById(vo);
 		model.addAttribute("vo", vo);
@@ -60,11 +81,6 @@ public class ScholarController {
 	@RequestMapping("/stud/scholar/Apply")
 	public String ScolarShipApply(RedirectAttributes ra, Model model, ScholarApplyVO vo,
 			Authentication authentication) {
-
-		if(DataDao.accessDateCheck(yearDao.yearFind(), "1107") != 1) {
-			ra.addFlashAttribute("accessError", msgAccessor.getMessage("msg.err.notAccess", new String[]{"장학신청"}));
-			return "redirect:/stud/scholar/Application";
-		}
 
 		vo.setStNo(authentication.getName());
 		vo.setSeasonCode(yearDao.yearFind());
@@ -77,10 +93,6 @@ public class ScholarController {
 	@RequestMapping("/stud/scholar/FileUpload")
 	public String scholarFileUpload(RedirectAttributes ra, ScholarApplyVO vo,
 			@RequestParam(value = "file") MultipartFile file) {
-		if(DataDao.accessDateCheck(yearDao.yearFind(), "1107") != 1) {
-			ra.addFlashAttribute("accessError", msgAccessor.getMessage("msg.err.notAccess", new String[]{"장학신청"}));
-			return "redirect:/stud/scholar/Status";
-		}
 
 		String[] scholarFile = fileService.upload(file, "ScholarFile");
 		vo.setFileName(scholarFile[0]);
@@ -93,11 +105,6 @@ public class ScholarController {
 
 	@RequestMapping("/stud/scholar/Delete")
 	public String scholarDelete(RedirectAttributes ra, ScholarApplyVO vo) {
-
-		if(DataDao.accessDateCheck(yearDao.yearFind(), "1107") != 1) {
-			ra.addFlashAttribute("accessError", msgAccessor.getMessage("msg.err.notAccess", new String[]{"장학금 신청"}));
-			return "redirect:/stud/scholar/Status";
-		}
 
 		ScholarDao.ScholarDelete(vo);
 		ra.addFlashAttribute("delete", msgAccessor.getMessage("msg.suc.delete", new String[] {"장학금 신청내역"}));

@@ -57,10 +57,10 @@ public class LectureApplyController {
 	public String courseApplication(RedirectAttributes ra,Model model,LectureApplyVO vo, Authentication authentication,@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum, 
 			  @RequestParam Map<String, Object> params ) {
 
-//		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
-//			ra.addFlashAttribute("accessError", msgAccessor.getMessage("msg.err.notAccess", new String[]{"수강신청"}));
-//			return "redirect:/stud/date/courseDate";
-//		}
+		if(DataDao.accessDateCheck(yearDao.yearFind(), "1104") != 1) {
+			ra.addFlashAttribute("accessError", msgAccessor.getMessage("msg.err.notAccess", new String[]{"수강신청"}));
+			return "redirect:/stud/date/courseDate";
+		}
 		
 		params.put("pageNum", pageNum);
 		params.put("size", 10);
