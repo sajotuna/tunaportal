@@ -60,3 +60,30 @@ TUNA Portal은 가상 대학교 TUNA의 포탈 서비스이다.
 |2022.07.27 - 2022.08.02|테스트|데이터 작업, 빌드 및 배포, 오류 수정|
 |2022.08.03 - 2022.08.08|발표 준비|PPT, 보고서, 발표 리허설|
 |2022.08.09 - 2022.08.10|발표 및 수료||
+
+### Pages
+> #### 메인
+> ![image](https://user-images.githubusercontent.com/95123287/183274328-ad1612df-437f-434f-a9fb-288a2cd43f9c.png)
+
+> #### 학사일정
+> ![image](https://user-images.githubusercontent.com/95123287/183274345-e8cf60f9-1ca6-42f0-a7ea-a15b58f9619e.png)
+
+> #### 수강신청
+> ![image](https://user-images.githubusercontent.com/95123287/183274337-2857e02c-057c-41de-9c21-e73658d50ba1.png)
+> ![image](https://user-images.githubusercontent.com/95123287/183277406-580c7944-ff64-4ef0-960d-875c1eb68191.png)
+
+> #### 장학
+> ![image](https://user-images.githubusercontent.com/95123287/183276993-262edb43-6ea4-470c-a46c-09f7ae1985d2.png)
+
+> #### 학생 e-Class
+> ![image](https://user-images.githubusercontent.com/95123287/183274349-14879b21-d476-4904-99d4-3ca8fffd5c4e.png)
+> ![image](https://user-images.githubusercontent.com/95123287/183277284-74f121eb-09d3-4252-82e4-777437e31aa2.png)
+
+> #### 교수 e-Class
+> ![image](https://user-images.githubusercontent.com/95123287/183276979-59df8a36-40e3-4103-9ab8-b5a38d5e510c.png)
+> ![image](https://user-images.githubusercontent.com/95123287/183277351-82eec44a-a79c-41b2-901d-9442b7aa1c8d.png)
+
+> #### 관리자 페이지
+> ![image](https://user-images.githubusercontent.com/95123287/183277502-526e4442-c3b7-40aa-95ae-3d2651386afc.png)
+> ![image](https://user-images.githubusercontent.com/95123287/183277393-7e93af17-8c03-4796-8a02-496374bbb483.png)
+> ![image](https://user-images.githubusercontent.com/95123287/183277038-0a524872-c4a3-430e-8f06-ffc1d9159994.png)
