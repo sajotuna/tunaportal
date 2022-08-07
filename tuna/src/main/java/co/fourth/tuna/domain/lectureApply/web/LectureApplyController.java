@@ -100,7 +100,6 @@ public class LectureApplyController {
 			return "redirect:/stud/course/Application";
 		}
 		
-		
 		if(grade - Integer.parseInt(target) < 0) {
 			ra.addFlashAttribute("error", msgAccessor.getMessage("msg.err.checkPoint"));
 			return "redirect:/stud/course/Application";
