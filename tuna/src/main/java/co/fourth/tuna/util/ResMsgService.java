@@ -10,8 +10,8 @@ public class ResMsgService {
 	MessageSourceAccessor msgDao;
 	
 	// msg 파라미터가 없는 경우
-	public ResMsgVO build(String titleCode, String msgCode, String type) {
-		ResMsgVO resMsg = new ResMsgVO();
+	public ResponseMsg build(String titleCode, String msgCode, String type) {
+		ResponseMsg resMsg = new ResponseMsg();
 		resMsg.setTitle(msgDao.getMessage(titleCode));
 		resMsg.setMsg(msgDao.getMessage(msgCode));
 		resMsg.setType(type);
@@ -20,9 +20,9 @@ public class ResMsgService {
 	}
 	
 	// msg 에 파라미터가 있는 경우
-	public ResMsgVO build(String titleCode, String[] msgCode, String type) {
+	public ResponseMsg build(String titleCode, String[] msgCode, String type) {
 		String[] msgParam = {msgCode[1]};
-		ResMsgVO resMsg = new ResMsgVO();
+		ResponseMsg resMsg = new ResponseMsg();
 		resMsg.setTitle(msgDao.getMessage(titleCode));
 		resMsg.setMsg(msgDao.getMessage(msgCode[0], msgParam));
 		resMsg.setType(type);

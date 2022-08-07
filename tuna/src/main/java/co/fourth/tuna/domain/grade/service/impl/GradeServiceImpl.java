@@ -21,8 +21,9 @@ import co.fourth.tuna.domain.task.service.TaskService;
 import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
+import co.fourth.tuna.util.CustomException;
 import co.fourth.tuna.util.ResMsgService;
-import co.fourth.tuna.util.ResMsgVO;
+import co.fourth.tuna.util.ResponseMsg;
 
 @Service
 public class GradeServiceImpl implements GradeService {
@@ -64,7 +65,11 @@ public class GradeServiceImpl implements GradeService {
 	}
 	
 	@Override
-	public String updateTaskGradeByStudentIdAndSubjectId(int stNo, int sbjNo) throws Error{
+	public ResponseMsg updateTaskGradeByStudentIdAndSubjectId(int stNo, int sbjNo) throws CustomException{
+		ResponseMsg res = resMsgService.build("title.suc.eroll",
+				new String[]{"msg.suc.enroll","성적"},
+				ResponseMsg.SUCCESS);
+		
 		List<GradeFormVO> gradeList = new ArrayList<GradeFormVO>();
 		List<TaskVO> taskList = taskService.findListBySubjectId(sbjNo);
 		int sum = 0;
@@ -87,42 +92,51 @@ public class GradeServiceImpl implements GradeService {
 	
 		updateGradeListByStudentNoAndSbjectNo(gradeList);
 		
-		return "성적이 성공적으로 등록 되었습니다.";
+		return res;
 	}
 
 	@Override
-	@Transactional
-	public ResMsgVO updateGradeListByGradeNo(List<GradeFormVO> list) {
-		ResMsgVO result = resMsgService.build(
+	@Transactional(rollbackFor = {CustomException.class})
+	public ResponseMsg updateGradeListByGradeNo(List<GradeFormVO> list) throws CustomException {
+		ResponseMsg result = resMsgService.build(
 				"title.suc.enroll",
 				new String[]{"msg.suc.update", "성적"},
-				ResMsgVO.SUCCESS);
+				ResponseMsg.SUCCESS);
 		
 		for(GradeFormVO form : list) {
-			gradeService.updateGradeByGradeNo(form);
+			result = gradeService.updateGradeByGradeNo(form);
 		}
 		return result;
 	}
 
 	@Override
 	@Transactional
-	public String updateGradeListByStudentNoAndSbjectNo(List<GradeFormVO> list) {
+	public ResponseMsg updateGradeListByStudentNoAndSbjectNo(List<GradeFormVO> list) throws CustomException {
+		ResponseMsg res = resMsgService.build(
+				"title.suc.enroll",
+				new String[]{"msg.suc.enroll", "성적"},
+				ResponseMsg.SUCCESS);
 		for(GradeFormVO form : list) {
 			gradeService.updateGradeByStudentNoAndSubjectNo(form);
 		}
-		return "성적이 성공적으로 등록 되었습니다.";
+		return res;
 	}
 
 	@Override
 	@Transactional
-	public String updateSubmitTaskGrade(EclassSubmitTaskScoreForm form) throws Error{
-		taskService.updateSubmitTaskScoreByVO(form);
+	public ResponseMsg updateSubmitTaskGrade(EclassSubmitTaskScoreForm form) throws CustomException{
+		ResponseMsg res = resMsgService.build(
+			"title.suc.enroll",
+			new String[]{"msg.suc.enroll", "점수"},
+			ResponseMsg.SUCCESS);
+		
+		res = taskService.updateSubmitTaskScoreByVO(form);
 		for( SubmitTaskVO vo : form.getSubmitTaskList() ) {
 			if(vo.getNo() == null) continue;
 			gradeService.updateTaskGradeByStudentIdAndSubjectId(vo.getStNo(), form.getSbjno());			
 		}
 		
-		return "성공적으로 등록 되었습니다.";
+		return res;
 	}
 
 	@Override
@@ -131,12 +145,12 @@ public class GradeServiceImpl implements GradeService {
 	}
 
 	@Override
-	public ResMsgVO updateAttendanceTaskGrade(int stno, int sbjno) {
+	public ResponseMsg updateAttendanceTaskGrade(int stno, int sbjno) throws CustomException {
 		List<AttendanceVO> attens = attendanceService.getListByStudentIdAndSbjno(stno, sbjno);
 		if(attens.size() < 1) {
 			return resMsgService.build("title.error.enroll",
 					new String[]{"msg.err.fail", "출석 성적"}, 
-					ResMsgVO.ERROR);
+					ResponseMsg.ERROR);
 		}
 		int score = computeAttendanceScore(attens);
 		//GradeVO grade = gradeService.getOneByStudentIdAndSubjectId(stno, sbjno);
@@ -148,13 +162,24 @@ public class GradeServiceImpl implements GradeService {
 	}
 
 	@Override
-	public ResMsgVO updateGradeByGradeNo(GradeFormVO vo) throws Error {
-		ResMsgVO result = scoreLimitFilter(vo);
+	public ResponseMsg updateGradeByGradeNo(GradeFormVO vo) throws CustomException {
+		ResponseMsg result = resMsgService.build(
+				"title.suc.enroll", 
+				new String[]{"msg.suc.enroll", "성적 등록"}, 
+				ResponseMsg.SUCCESS);
+
+		if(!scoreLimitFilter(vo)) {
+			result = resMsgService.build(
+					"title.err.enroll", 
+					"msg.err.wrongInput", 
+					ResponseMsg.ERROR);
+			throw new CustomException(result);
+		}
 		if(mapper.updateGradeByGradeNo(vo) < 1) {
 			return resMsgService.build(
 					"title.err.enroll",
-					"msg.err.wrongInput", 
-					ResMsgVO.ERROR);
+					"msg.err.wrongInput",
+					ResponseMsg.ERROR);
 		}
 		
 		GradeVO grade = mapper.selectOneByGradeId(vo.getNo());
@@ -163,21 +188,33 @@ public class GradeServiceImpl implements GradeService {
 		form.setStNo(grade.getStNo());
 		form.setTotal(computeTotalScore(grade.getSbjNo(), grade.getStNo()));
 		if(mapper.updateGradeByStudentNoAndSubjectNo(form) < 1) {
-			return new ResMsgVO(msg.getMessage("title.err.enroll"),
-					msg.getMessage("msg.err.fail", new String[] {"종합성적 등록"}), ResMsgVO.ERROR);
+			return new ResponseMsg(msg.getMessage("title.err.enroll"),
+					msg.getMessage("msg.err.fail", new String[] {"종합성적 등록"}), ResponseMsg.ERROR);
 		}
 		
 		return result;
 	}
 	
 	@Override
-	public ResMsgVO updateGradeByStudentNoAndSubjectNo(GradeFormVO vo) throws Error {
-		ResMsgVO result = scoreLimitFilter(vo);
+	public ResponseMsg updateGradeByStudentNoAndSubjectNo(GradeFormVO vo) throws CustomException {
+		ResponseMsg result = resMsgService.build(
+				"title.suc.enroll",
+				new String[]{"msg.suc.enroll","성적 등록"},
+				ResponseMsg.SUCCESS);
+		
+		if(!scoreLimitFilter(vo)) {
+			result = resMsgService.build(
+					"title.err.enroll",
+					"msg.err.wrongInput",
+					ResponseMsg.ERROR);
+			throw new CustomException(result);
+		}
 		if ( mapper.updateGradeByStudentNoAndSubjectNo(vo) < 1) {
-			return new ResMsgVO(
+			
+			return new ResponseMsg(
 					msg.getMessage("title.err.enroll")
 					, msg.getMessage("msg.err.fail",new String[]{"성적 등록"})
-					, ResMsgVO.ERROR );
+					, ResponseMsg.ERROR );
 		}
 		
 		GradeFormVO grade = new GradeFormVO();
@@ -185,39 +222,31 @@ public class GradeServiceImpl implements GradeService {
 		grade.setStNo(vo.getStNo());
 		grade.setTotal(computeTotalScore(vo.getSbjNo(), vo.getStNo()));
 		if ( mapper.updateGradeByStudentNoAndSubjectNo(grade) < 1) {
-			return new ResMsgVO(
+			return new ResponseMsg(
 					msg.getMessage("title.err.enroll"),
 					msg.getMessage("msg.err.fail", new String[] {"종합성적 등록"}),
-					ResMsgVO.ERROR);
+					ResponseMsg.ERROR);
 		}
 		
 		return result;
 	}
 	
-	public ResMsgVO scoreLimitFilter(GradeFormVO vo) {
-		ResMsgVO msg = resMsgService.build(
-				"title.suc.update",
-				new String[]{"msg.suc.update","성적 등록"},
-				"success");
+	public Boolean scoreLimitFilter(GradeFormVO vo) {
 		
 		if ( vo.getAttd() != null && vo.getAttd() > 100 
 			|| vo.getMiddle() != null && vo.getMiddle() > 100 
 			|| vo.getFinals() != null && vo.getFinals() > 100 
 			|| vo.getTask() != null && vo.getTask() > 100 ) {
-			return resMsgService.build("title.err.update"
-					,"msg.err.aboveHundo",
-					"error");
+			return false;
 		}
 		if( vo.getAttd() != null && vo.getAttd() < 0
 				|| vo.getMiddle() != null && vo.getMiddle() < 0
 				|| vo.getFinals() != null && vo.getFinals() < 0
 				|| vo.getTask() != null && vo.getTask() < 0 ) {
-			return resMsgService.build("title.err.update"
-					,"msg.err.belowZero"
-					,"error");
+			return false;
 		}
 		
-		return msg;
+		return true;
 	}
 	
 	@Override

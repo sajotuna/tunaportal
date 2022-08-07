@@ -32,6 +32,18 @@ xmlns:th="http://www.thymeleaf.org"
         
         line-height: 49px;
       }
+
+      .line-hider-fluid-24 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        
+        height: 24px;
+        line-height: 24px;
+      }
     </style>
   </head>
   <body>
@@ -1044,6 +1056,10 @@ xmlns:th="http://www.thymeleaf.org"
             let studentsGradeTr = [];
             let studentsTaskTr = [];
             
+            // callback func
+            let callbackFunc = function() {return null;};
+            let selectedStudentNo = 0;
+
             function alertEvent(){
               alert("wow!!?");
             }
@@ -1106,65 +1122,43 @@ xmlns:th="http://www.thymeleaf.org"
 
               modal.addEventListener('click', function(e) {
                 if(e.target.classList.contains('submitBtn')){
-                  Dialogs.dialog('checkConfirm',
-                    '정말 등록하시겠습니까?',
-                    '',
-                    function() {
-                      onLoaderCurtain();
-                      tabFlag.set(1, false);
-                      
-                      let task = {
-                        title : modal.querySelector("#task-title").value,
-                        content : modal.querySelector('#task-content').value,
-                        startDate : modal.querySelector('#task-start-input').value,
-                        limitDate : modal.querySelector("#task-limit-input").value,
-                        sbjNo : sbjno
+                  onLoaderCurtain();
+                  tabFlag.set(1, false);
+                  
+                  let task = {
+                    title : modal.querySelector("#task-title").value,
+                    content : modal.querySelector('#task-content').value,
+                    startDate : modal.querySelector('#task-start-input').value,
+                    limitDate : modal.querySelector("#task-limit-input").value,
+                    sbjNo : sbjno
+                  }
+
+                  fetch( REST_URL.TASK_INSERT, {
+                    method: "POST",
+                    headers: {
+                      'header': header,
+                      'X-Requested-with': 'XMLHttpRequest',
+                      'Content-Type': 'application/json',
+                      'X-CSRF-Token': token
+                    },
+                    body: JSON.stringify(task)
+                  })
+                  .then( res => res.json())
+                  .then( result => {
+                    Dialogs.dialog(result.type,
+                      result.title,
+                      result.msg,
+                      function() {
+                        modal.getElementsByClassName("close-btn")[0].click();
                       }
-
-                      fetch( REST_URL.TASK_INSERT, {
-                        method: "POST",
-                        headers: {
-                          'header': header,
-                          'X-Requested-with': 'XMLHttpRequest',
-                          'Content-Type': 'application/json',
-                          'X-CSRF-Token': token
-                        },
-                        body: JSON.stringify(task)
-                      })
-                      .then( async (res) => {
-                        let resBody = await res.text();
-
-                        if(res.ok) {
-                          Dialogs.dialog('success',
-                            "성공",
-                            resBody,
-                            function() {
-                              modal.getElementsByClassName("close-btn")[0].click()
-                            });
-                        } else {
-                          Dialogs.dialog('error',
-                          '실패',
-                          resBody,
-                          function() {
-                            console.error(resBody);
-                          });
-                        }
-                      })
-                      .catch((err) => {
-                        Dialogs.dialog('error',
-                        '오류',
-                        err,
-                        function() {
-                          console.error(err);
-                        })
-                      })
-                      .finally(()=>{
-                        tabClickEvent(2);
-                      }) // fetch END
-                    }) // Dialog END
+                    )
+                  })
+                  .finally(()=>{
+                    onTab = -1;
+                    tabClickEvent(2);
+                  }) // fetch END
                 }
-              }) 
-
+              })
             } // initTaskInsert END
 
             function initTaskScoreSubmit() {
@@ -1206,34 +1200,19 @@ xmlns:th="http://www.thymeleaf.org"
                   },
                   body: JSON.stringify(requestObj)
                 })
-                .then( async (res) => {
-                  let resBody = await res.text();
-
-                  if(res.ok) {
-                    Dialogs.dialog('success', 
-                    "성공",
-                    resBody,
+                .then( res => res.json())
+                .then( result => {
+                  Dialogs.dialog(result.type,
+                    result.title,
+                    result.msg,
                     function() {
 
-                    })
-                  } else {
-                    Dialogs.dialog('error',
-                    '실패',
-                    resBody,
-                    function() {
-                      console.error(resBody);
-                    })
-                  }
-                  // TODO dialog
+                    }
+                  )
                 })
-                .catch((err) => {
-                  Dialogs.dialog('error',
-                  '오류',
-                  err,
-                  function() {
-                    console.error(err);
-                  })
-                })
+                .finally(()=>{
+
+                }) // fetch END
               })
 
             } // initTaskScoreSubmit END
@@ -1255,20 +1234,24 @@ xmlns:th="http://www.thymeleaf.org"
                     fetch( REST_URL.SUBMIT_LECTURE_FILE_UPLOAD+'?_csrf='+token, {
                       method: 'post',
                       body: formData
-                  }).then( async (res) => {
-                    let resBody = await res.text();
-                    if(res.ok) {
-                      Dialogs.dialog('success',
-                      "성공",
-                      resBody,
+                  })
+                  .then( res => res.json())
+                  .then( result => {
+                    Dialogs.dialog(result.type,
+                      result.title,
+                      result.msg,
                       function() {
                         mUrl = g_url;
                         mUrl.searchParams.set('no', sbjno);
                         mUrl.searchParams.set('msg', onTab)
                         window.location.href = mUrl.href;
-                      })
-                    }
+                      }
+                    )
                   })
+                  .finally(()=>{
+                    
+                  }) // fetch END
+
                 }
               });
             }
@@ -1360,6 +1343,26 @@ xmlns:th="http://www.thymeleaf.org"
               //     tabClickEvent(onTab);
               //   })
               // })
+            }
+
+            function openQnaWindow(qna_no, func) {
+              let qna = window.open(REST_URL.SUBJECT_QNA_LINK+"?no="+qna_no
+                ,"qna", "height=1200, width=920, menubar=0, status=0, toolbar=0");
+              callbackFunc = func;
+            }
+
+            function qnaTabClickEvent() {
+              tabReset();
+              tabClickEvent(3);
+            }
+
+            function detailQnaClickEvent() {
+              studentClickEvent(selectedStudentNo);
+            }
+
+            function windowCallbackFunc() {
+              callbackFunc();
+              callbackFunc = null;
             }
 
             function initNoticeWriteButton() {
@@ -1640,7 +1643,7 @@ xmlns:th="http://www.thymeleaf.org"
                 selector.appendChild(option);
                 if(task.no == taskno) {
                   option.selected = true;
-                  limitTag.innerText = dateNumberToISO(task.limitDate);
+                  limitTag.innerText = dateNumberToDateString(task.limitDate);
                 }
               }
             }
@@ -1678,7 +1681,7 @@ xmlns:th="http://www.thymeleaf.org"
                 } else { //
                   tr.data_submit_id = student.submitTask.no;
                   fileName = student.submitTask.fileName;
-                  uri = `/tuna/download?fileName=${student.submitTask.uri}\&originName=${student.submitTask.fileName}\&folder=lectureFile`;
+                  uri = `/tuna/download?fileName=${student.submitTask.uri}\&originName=${student.submitTask.fileName}\&folder=task`;
                   enrollDate = dateTimeToISO(student.submitTask.enrollDate);
                   score = student.submitTask.score;
                   tr.data_submit_no = student.submitTask.no;
@@ -1759,8 +1762,8 @@ xmlns:th="http://www.thymeleaf.org"
               for(let qna of qnaList) {
                 qnaContent += `
                       <li><a class="d-flex text-primary-dark py-2" 
-                        href="${REST_URL.SUBJECT_QNA_LINK+"?no="+qna.no}" 
-                        onclick="window.open(this.href, 'qna', 'height=1200, width=920, menubar=0, status=0, toolbar=0'); return false;" >`
+                        href="javascript:void(0);"
+                        onclick="openQnaWindow(${qna.no},${qnaTabClickEvent});" >`
                 if( qna.answer == null ) {
                   qnaContent+=`<div class="col-1 d-none d-lg-block text-center text-danger">대기</div>`;
                 } else {
@@ -1773,9 +1776,9 @@ xmlns:th="http://www.thymeleaf.org"
                   qnaContent += `<div class="col-1 d-none d-lg-block text-center">공개</div>`
                 }
 
-                qnaContent += `<div class="col-6">${qna.title}</div>
+                qnaContent += `<div class="col-6 line-hider-fluid-24">${qna.title}</div>
                     <div class="col-2 fw-bold text-end">${qna.studentVO.name}</div>
-                    <div class="col text-center">${dateNumberToISO(qna.enrollDate)}</div>
+                    <div class="col text-center">${dateNumberToDateString(qna.enrollDate)}</div>
                   </a></li>`;
               }
               ulTag.innerHTML = qnaContent;
@@ -2029,48 +2032,29 @@ xmlns:th="http://www.thymeleaf.org"
                 fileName: li.data_fileName,
                 uri: li.data_uri
               }
+              fetch(REST_URL.LECTURE_FILE_DELETE, {
+                method: "POST",
+                headers: {
+                  'header': header,
+                  'X-Requested-with':'XMLHttpRequest',
+                  'Content-Type':'application/json',
+                  'X-CSRF-Token': token,
+                },
+                body: JSON.stringify(file)
+              })
+              .then( res => res.json())
+              .then( result => {
+                Dialogs.dialog(result.type,
+                  result.title,
+                  result.msg,
+                  function() {
 
-              Dialogs.dialog('checkConfirm',
-                '정말 삭제하시겠습니까?',
-                '되돌릴 수 없습니다.',
-                function() {
-                  fetch(REST_URL.LECTURE_FILE_DELETE, {
-                    method: "POST",
-                    headers: {
-                      'header': header,
-                      'X-Requested-with':'XMLHttpRequest',
-                      'Content-Type':'application/json',
-                      'X-CSRF-Token': token,
-                    },
-                    body: JSON.stringify(file)
-                  }).then(async (res) => {
-                    let resBody = await res.text();
+                  }
+                )
+              })
+              .finally(()=>{
 
-                    if(res.ok) {
-                      li.remove();
-                      Dialogs.dialog('success',
-                      "성공",
-                      resBody,
-                      function() {
-                        
-                      })
-                    } else {
-                      Dialogs.dialog('error',
-                      '실패',
-                      resBody,
-                      function() {
-                        console.error(resBody);
-                      })
-                    }
-                  }).catch((err) => {
-                    Dialogs.dialog('error',
-                    '오류',
-                    err,
-                    function(){
-                      console.error(err);
-                    })
-                  })
-                })
+              }) // fetch END
             }
 
             
@@ -2085,6 +2069,7 @@ xmlns:th="http://www.thymeleaf.org"
               let stNo = 0;
               if(!studno) stNo = event.target.getAttribute('data_stno');
               else stNo = studno;
+              selectedStudentNo = stNo;
               // let sbjNo = event.target.dataset.sbjno;
               let student = {
                 no: stNo
@@ -2107,14 +2092,15 @@ xmlns:th="http://www.thymeleaf.org"
                   setDetailUserInfo(resBody.student)
                   setDetailUserAttendance(resBody.student);
                   setDetailUserGrade(resBody.student);
-                } else {
-                  Dialogs.dialog('error',
-                  '학생정보 가져오기 실패',
-                  resBody.msg,
-                  function() {
-                    console.error(resBody.msg);
-                  });
-                }
+                } 
+                // else {
+                //   Dialogs.dialog('error',
+                //   '학생정보 가져오기 실패',
+                //   resBody.msg,
+                //   function() {
+                //     console.error(resBody.msg);
+                //   });
+                // }
               })
               .catch((err) => {
                 console.log(err);
@@ -2149,13 +2135,13 @@ xmlns:th="http://www.thymeleaf.org"
               detail_no.innerText = student.no;
               detail_phone.innerText = stringToTelStyle(student.tel);
               detail_email.innerText = student.email;
-              detail_birth.innerText = dateNumberToISO(student.birth);
+              detail_birth.innerText = dateNumberToDateString(student.birth);
               detail_addr.innerText = student.addr;
 
               for( let subject of student.subjectList) {
                 // 제출 과제
                 for( let submitTask of subject.submitTaskList ) {
-                  let url = `/tuna/download?fileName=${submitTask.fileName}&originName=${submitTask.uri}&folder=lectureFile`;
+                  let url = `/tuna/download?fileName=${submitTask.uri}&originName=${submitTask.fileName}&folder=task`;
                   let tr = document.createElement('tr');
                   detail_task_list.appendChild(tr);
                   tr.innerHTML = `
@@ -2195,12 +2181,14 @@ xmlns:th="http://www.thymeleaf.org"
                   detail_qna_list.appendChild(li);
                   // TODO 
                   li.innerHTML = `
-                  <li><a class="d-flex text-primary-dark py-2" href="javascript:void(0)">
+                  <li><a class="d-flex text-primary-dark py-2" 
+                      href="javascript:void(0);" 
+                      onclick="openQnaWindow(${qna.no},${detailQnaClickEvent});">
                     <div class="col-2 text-center">${subject.name}</div>
                     <div class="col-1 d-none d-lg-block text-center"><span class="${answer_class}">${answer_txt}</span></div>
                     <div class="col-1 d-none d-lg-block text-center ${visible_class}">${visible_txt}</div>
                     <div class="col-7">${textCutter(qna.title, 40)}</div>
-                    <div class="col-1 d-none d-lg-block text-center">${dateNumberToISO(qna.enrollDate)}</div>
+                    <div class="col-1 d-none d-lg-block text-center">${dateNumberToDateString(qna.enrollDate)}</div>
                   </a></li>
                   `;
                 }
@@ -2238,10 +2226,10 @@ xmlns:th="http://www.thymeleaf.org"
                         <tr>
                           <th class="p-1" style="min-width: 50px;">${subject.attendanceList.length>0?"종합":"수강 대기중"}</th>`;
                 for(let atten of subject.attendanceList){
-                  let attenDate = dateNumberToISO(atten.classDate).slice(5).replace('-','/');
+                  let attenDate = dateNumberToDateString(atten.classDate).slice(5).replace('-','/');
                   let th = document.createElement('th');
                   th.classList.add("p-0");
-                  th.style.width = "50px";
+                  th.style.minWidth = "50px";
                   th.innerText = attenDate;
                   if(atten.stateCode == "1401") {
                     attenCnt++;
@@ -2264,7 +2252,7 @@ xmlns:th="http://www.thymeleaf.org"
                             <div class="p-1">${subject.attendanceList.length>0?latenessCnt:"&nbsp"}</div>
                           </th>`;
                   for(let atten of subject.attendanceList) {
-                    if(!atten.stateCode) continue;
+                    //if(!atten.stateCode) continue;
                     let td = document.createElement('td');
                     td.id = "detail_atten_"+atten.no;
                     td.classList.add('p-0');
@@ -2273,19 +2261,19 @@ xmlns:th="http://www.thymeleaf.org"
                               <input type="radio" class="btn-check" name="atten${atten.no}" 
                                 id="atten_atten${atten.no}" autocomplete="off" value="1401"
                                 ${atten.stateCode=="1401"?"checked":"" } />
-                              <label class="btn btn-outline-success p-1" for="atten_atten${atten.no}">출석</label>
+                              <label class="btn btn-outline-success p-1 w-100" for="atten_atten${atten.no}">출석</label>
                             </div>
                             <div>
                               <input type="radio" class="btn-check" name="atten${atten.no}" 
                                 id="atten_late${atten.no}" autocomplete="off" value="1402"
                                 ${atten.stateCode=="1402"?"checked":""} />
-                              <label class="btn btn-outline-warning p-1" for="atten_late${atten.no}">지각</label>
+                              <label class="btn btn-outline-danger p-1 w-100" for="atten_late${atten.no}">결석</label>
                             </div>
                             <div>
                               <input type="radio" class="btn-check" name="atten${atten.no}" 
                                 id="atten_absen${atten.no}" autocomplete="off" value="1403"
                                 ${atten.stateCode=="1403"?"checked":""} />
-                              <label class="btn btn-outline-danger p-1" for="atten_absen${atten.no}">결석</label> 
+                              <label class="btn btn-outline-warning p-1 w-100" for="atten_absen${atten.no}">지각</label> 
                             </div>
                     `;
                     blockHTML += td.outerHTML;
@@ -2404,32 +2392,12 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify(form)
               })
-              .then( async (res) => {
-                let resBody = await res.text();
-
-                if(res.ok) {
-                  Dialogs.dialog('success',
-                  "성공",
-                  resBody,
-                  function() {
-                    studentClickEvent(studno);
-                  })
-                } else {
-                  console.error(resBody);
-                  Dialogs.dialog('error',
-                  '실패',
-                  resBody,
-                  function() {
-                  });
-                }
-              })
-              .catch((err)=> {
-                console.error(err);
-                Dialogs.dialog('error',
-                '오류',
-                err,
-                function() {
-                })
+              .then( res => res.json())
+              .then( result => {
+                Dialogs.dialog(result.type,
+                result.title,
+                result.msg,
+                function() { })
               })
             }
 
@@ -2456,32 +2424,16 @@ xmlns:th="http://www.thymeleaf.org"
                 },
                 body: JSON.stringify(grades)
               })
-              .then( async (res) => {
-                let resBody = await res.text();
-
-                if(res.ok) {
-                  Dialogs.dialog('success',
-                  "성공",
-                  resBody,
+              .then( res => res.json())
+              .then( result => {
+                Dialogs.dialog(result.type,
+                  result.title,
+                  result.msg,
                   function() {
-                    studentClickEvent(stno);
-                  })
-                } else {
-                  console.error(resBody);
-                  Dialogs.dialog('error',
-                  '실패',
-                  resBody,
-                  function() {
-                  });
-                }
-              })
-              .catch((err) => {
-                console.error(err);
-                Dialogs.dialog('error',
-                '오류',
-                err,
-                function() {
-                })
+                    if(result.type == "success")
+                      studentClickEvent(stno);
+                  }
+                )
               })
             }
 
@@ -2506,11 +2458,15 @@ xmlns:th="http://www.thymeleaf.org"
               loaderCurtain.classList.add('d-none');
             }
 
-            function dateNumberToISO(dateNumber) {
+            function dateNumberToDateString(dateNumber) {
               let mDate = new Date(dateNumber);
-                mDate = mDate.toISOString();
-                mDate = mDate.slice(0, mDate.indexOf('T'));
-              return mDate;
+
+              let year = mDate.getFullYear();
+              let month = mDate.getMonth()+1;
+              let day = mDate.getDate();
+              
+              let result =  `${year}-${month >= 10?month:'0'+month}-${day>=10?day:'0'+day}`;
+              return result;
             }
 
             function dateTimeToISO(dateNumber) {

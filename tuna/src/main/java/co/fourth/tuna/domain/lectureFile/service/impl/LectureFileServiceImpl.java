@@ -8,32 +8,53 @@ import org.springframework.stereotype.Service;
 import co.fourth.tuna.domain.lectureFile.mapper.LectureFileMapper;
 import co.fourth.tuna.domain.lectureFile.service.LectureFileService;
 import co.fourth.tuna.domain.lectureFile.vo.LectureFileVO;
+import co.fourth.tuna.util.ResMsgService;
+import co.fourth.tuna.util.ResponseMsg;
 
 @Service
 public class LectureFileServiceImpl implements LectureFileService {
 	@Autowired LectureFileMapper map;
 	@Autowired FileService fileService;
+	@Autowired ResMsgService msgService;
 	
 	@Override
-	public String insertLectureFileByLectureFileVO(LectureFileVO vo) {
+	public ResponseMsg insertLectureFileByLectureFileVO(LectureFileVO vo) {
+		ResponseMsg res = msgService.build(
+				"title.suc.upload", 
+				new String[]{"msg.suc.enroll","강의자료"},
+				ResponseMsg.SUCCESS);
 		if ( vo.getTitle().isBlank() ) {
-			throw new Error("제목이 없습니다.");
+			return msgService.build(
+					"title.err.enroll",
+					new String[]{"msg.err.inputPlz","제목"},
+					ResponseMsg.ERROR);
 		}
 		if( map.insertLectureFileByLectureFileVO(vo) < 1 ) {
-			throw new Error("업로드 실패");
+			return msgService.build(
+				"title.err.enroll",
+				new String[]{"msg.err.fail","강의자료 등록"},
+				ResponseMsg.ERROR);
 		}
 		
-		return "업로드 성공";
+		return res;
 	}
 
 	@Override
-	public String deleteLecturefileByLectureFileVO(LectureFileVO vo) throws Error {
+	public ResponseMsg deleteLecturefileByLectureFileVO(LectureFileVO vo) {
+		ResponseMsg res = msgService.build(
+				"title.suc.delete", 
+				new String[]{"msg.suc.delete","강의자료"},
+				ResponseMsg.SUCCESS);
+		
 		if ( map.deleteLectureFileByLectureFileId(vo.getNo()) < 1 ) {
-			throw new Error("삭제 실패");
+			return msgService.build(
+					"title.err.enroll",
+					new String[]{"msg.err.fail","강의자료 삭제"},
+					ResponseMsg.ERROR);
 		}
 		fileService.delete(vo.getUri(), "LectureFile");
 		
-		return "삭제 성공";
+		return res;
 	}
 	
 	@Override

@@ -20,7 +20,8 @@ import co.fourth.tuna.domain.attendance.service.AttendanceService;
 import co.fourth.tuna.domain.attendance.vo.AttendanceUpdateFormVO;
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentWithAttendanceVO;
-import co.fourth.tuna.util.ResMsgVO;
+import co.fourth.tuna.util.CustomException;
+import co.fourth.tuna.util.ResponseMsg;
 import co.fourth.tuna.web.eclass.professor.vo.SubjectAttendanceRestVO;
 
 @Controller
@@ -52,18 +53,23 @@ public class AttendanceController {
 	}
 	
 	@PostMapping("/staff/insert/attendance")
-	public ResponseEntity<ResMsgVO> submitsAttendance(
+	public ResponseEntity<ResponseMsg> submitsAttendance(
 			Authentication auth,
 			@RequestBody AttendanceUpdateFormVO form) {
 		
 		// TODO sbjno 가 내강의인지 체크하기
 		HttpHeaders resHeaders = new HttpHeaders();
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		ResponseEntity<ResMsgVO> res = null;
+		ResponseEntity<ResponseMsg> res = null;
 		
-		ResMsgVO msg = service.updateAttendanceList(form);
+		ResponseMsg msg;
+		try {
+			msg = service.updateAttendanceList(form);
+		} catch (CustomException e) {
+			msg = e.getResMsg();
+		}
 		
-		res = new ResponseEntity<ResMsgVO>(
+		res = new ResponseEntity<ResponseMsg>(
 				msg,
 				resHeaders,
 				HttpStatus.OK);
@@ -72,17 +78,23 @@ public class AttendanceController {
 	}
 	
 	@PostMapping("/staff/update/attendance")
-	public ResponseEntity<ResMsgVO> updateAttendance(
+	public ResponseEntity<ResponseMsg> updateAttendance(
 			@RequestBody AttendanceUpdateFormVO form) {
 		// TODO sbjno 가 내 강의인지 체크하기
 
 		HttpHeaders resHeaders = new HttpHeaders();
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		ResponseEntity<ResMsgVO> res = null;
+		ResponseEntity<ResponseMsg> res = null;
 		
-		ResMsgVO msg = service.updateAttendanceList(form);
+		ResponseMsg msg;
+		try {
+			msg = service.updateAttendanceList(form);
+		} catch (CustomException e) {
+			e.printStackTrace();
+			msg = e.getResMsg();
+		}
 		
-		res = new ResponseEntity<ResMsgVO>(
+		res = new ResponseEntity<ResponseMsg>(
 				msg,
 				resHeaders,
 				HttpStatus.OK);

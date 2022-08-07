@@ -6,6 +6,7 @@ import co.fourth.tuna.domain.task.vo.EclassSubmitTaskScoreForm;
 import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
 import co.fourth.tuna.domain.task.vo.SubmitTaskWithTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
+import co.fourth.tuna.util.ResponseMsg;
 
 public interface TaskService {
 
@@ -29,11 +30,11 @@ public interface TaskService {
 	public void deleteSubmitTask(SubmitTaskVO vo);
 	
 	// 과제 생성
-	public String insertTaskByVO(TaskVO vo);
+	public ResponseMsg insertTaskByVO(TaskVO vo);
 	
 	public List<TaskVO> findListBySubjectId(int sbjno);
 	
-	public String updateSubmitTaskScoreByVO(EclassSubmitTaskScoreForm form);
+	public ResponseMsg updateSubmitTaskScoreByVO(EclassSubmitTaskScoreForm form);
 	
 	public SubmitTaskVO findSubmitTaskByStudentIdAndTaskId(int stno, int taskno);
 	

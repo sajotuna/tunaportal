@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResMsgVO {
+public class ResponseMsg {
 	
 	public static final String SUCCESS = "success";
 	public static final String CHECK_CONFIRM = "checkConfirm";

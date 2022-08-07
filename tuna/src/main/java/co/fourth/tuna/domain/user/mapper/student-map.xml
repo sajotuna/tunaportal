@@ -58,6 +58,7 @@
 	JOIN lectureapply l
 	    ON s.no = l.stno
 	WHERE sbjno = #{sbjno}
+	ORDER BY s.no
 </select>
 
 <select id="findListWithSubmitTaskByTaskId"

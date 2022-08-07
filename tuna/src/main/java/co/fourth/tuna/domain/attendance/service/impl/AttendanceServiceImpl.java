@@ -3,6 +3,8 @@ package co.fourth.tuna.domain.attendance.service.impl;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Service;
@@ -13,21 +15,26 @@ import co.fourth.tuna.domain.attendance.service.AttendanceService;
 import co.fourth.tuna.domain.attendance.vo.AttendanceUpdateFormVO;
 import co.fourth.tuna.domain.attendance.vo.AttendanceVO;
 import co.fourth.tuna.domain.grade.service.GradeService;
+import co.fourth.tuna.util.CustomException;
 import co.fourth.tuna.util.ResMsgService;
-import co.fourth.tuna.util.ResMsgVO;
+import co.fourth.tuna.util.ResponseMsg;
+import co.fourth.tuna.web.eclass.professor.EclassProfessorEclassController;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
 
-	@Autowired AttendanceMapper map;
+	@Autowired 
+	AttendanceMapper map;
 	
-	@Autowired GradeService gradeService;
-	
+	@Autowired 
+	GradeService gradeService;
 	@Autowired
 	ResMsgService resMsgService;
 	
 	@Autowired
 	MessageSourceAccessor msg;
+	
+	private static final Logger logger = LoggerFactory.getLogger(AttendanceServiceImpl.class);
 	
 	@Override
 	public String studentAttendance(AttendanceVO vo) {
@@ -47,20 +54,20 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	@Transactional
-	public ResMsgVO updateAttendanceList(AttendanceUpdateFormVO form) {
-		ResMsgVO result = new ResMsgVO();
+	public ResponseMsg updateAttendanceList(AttendanceUpdateFormVO form) throws CustomException {
+		ResponseMsg result = new ResponseMsg();
 		
 //		System.out.println(form);
 		for(AttendanceVO att : form.getAttendanceList()) {
 			if( !(att.getStateCode().equals("1401")||
 					att.getStateCode().equals("1402")||
 					att.getStateCode().equals("1403"))) {
-				return new ResMsgVO(msg.getMessage("title.err.update")
+				return new ResponseMsg(msg.getMessage("title.err.update")
 						,msg.getMessage("msg.err.wrongInput"), "err");
 			}
 			
 			if (map.updateAttendanceByAttendanceId(att) < 1) {
-				return new ResMsgVO(msg.getMessage("title.err.update"),
+				return new ResponseMsg(msg.getMessage("title.err.update"),
 						msg.getMessage("msg.err.fail", new String[]{"수정"}), "err");
 			}
 			
@@ -71,7 +78,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		if(form.getStno() != null) {
 			result = gradeService.updateAttendanceTaskGrade(form.getStno(), form.getSbjno());
 		}
-		if(result.getType().equals(ResMsgVO.SUCCESS)) {
+		if(result.getType().equals(ResponseMsg.SUCCESS)) {
 			result = resMsgService.build(
 					"title.suc.update",
 					new String[] {"msg.suc.enroll", "출결"}, 
@@ -83,7 +90,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	public List<AttendanceVO> getListByStudentIdAndSbjno(int stno, int sbjno) {
-		return map.selectListByStudentIdAndSbjectId(stno, sbjno);
+		List<AttendanceVO> attendances = map.selectListByStudentIdAndSbjectId(stno, sbjno);
+		
+		return attendances;
 	}
 		
 

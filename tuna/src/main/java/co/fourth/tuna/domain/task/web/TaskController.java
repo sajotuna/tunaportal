@@ -23,6 +23,7 @@ import co.fourth.tuna.domain.task.vo.SubmitTaskVO;
 import co.fourth.tuna.domain.task.vo.TaskVO;
 import co.fourth.tuna.domain.user.service.StudentService;
 import co.fourth.tuna.domain.user.vo.StudentWithSubmitTaskVO;
+import co.fourth.tuna.util.ResponseMsg;
 
 @Controller
 public class TaskController {
@@ -31,29 +32,17 @@ public class TaskController {
 	@Autowired private StudentService studService;
 	
 	@PostMapping(value="/staff/insertTask")
-	public ResponseEntity<String> insertTask(
+	public ResponseEntity<ResponseMsg> insertTask(
 			@RequestBody TaskVO task) {
-		ResponseEntity<String> resEntity = null;
+		ResponseEntity<ResponseMsg> resEntity = null;
 		HttpHeaders resHeaders = new HttpHeaders();
+		ResponseMsg msg = null;
+		
 		resHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		
-		try {
-			resEntity = new ResponseEntity<String>(
-					taskService.insertTaskByVO(task),
-					resHeaders,
-					HttpStatus.OK);
-		} catch (Error e) {
-			resEntity = new ResponseEntity<String>(
-					e.getMessage(),
-					resHeaders,
-					HttpStatus.BAD_REQUEST);
-		} catch (Throwable e) {
-			resEntity = new ResponseEntity<String>(
-					e.getMessage(),
-					resHeaders,
-					HttpStatus.BAD_REQUEST);
-		}
-		
+		msg = taskService.insertTaskByVO(task);
+
+		resEntity = new ResponseEntity<ResponseMsg>( msg, resHeaders, HttpStatus.OK );
+			
 		return resEntity;
 	}
 	
