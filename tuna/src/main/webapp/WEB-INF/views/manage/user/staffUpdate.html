@@ -116,11 +116,20 @@ data-layout-decorate="~{layouts/navLayout}">
     <th:block th:if = "${(success != null && success != '')}">
 	<script th:inline="javascript">
 		let success = /*[[${success}]]*/ 'default';
+		let sucTitle = /*[[#{title.suc.update}]]*/ 'default';
 		if (success) {
-			Dialogs.dialog('success', '완료', success);
+			Dialogs.dialog('success', sucTitle, success);
 		}
 	</script>
 </th:block>
+
+	<script th:inline="javascript">
+	    function success(success){
+	      let sucTitle = /*[[#{title.suc.update}]]*/ 'default';
+	  	  Dialogs.dialog('success', sucTitle, success);
+	    }
+    </script>
+
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
@@ -130,9 +139,6 @@ data-layout-decorate="~{layouts/navLayout}">
           object.value = object.value.slice(0, object.maxLength);
         }    
       }
-    function success(success){
-  	  Dialogs.dialog('success', '완료', success);
-    }
     
     function disable(){
     	updateBtn.disabled = false;

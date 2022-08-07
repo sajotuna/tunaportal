@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,35 +23,33 @@ import co.fourth.tuna.domain.lectureEval.vo.LectureEvalVO;
 public class LectureEvalController {
 
 	@Autowired
-	private SqlSession SqlSession;
-	@Autowired
 	private LectureEvalService evalDao;
 	@Autowired
 	private DateCheckService DataDao;
 	@Autowired
 	private YearService yearDao; 
+	@Autowired
+	private MessageSourceAccessor msgAccessor;
 	@RequestMapping("/stud/course/Evaluation")
 	public String lectureEvaluation() {
 		return "course/evaluation/lectureEvaluation";
 	}
 	
-	
 	@RequestMapping("/stud/course/Details")
 	public String lectureEvaluationDetails(RedirectAttributes ra,LectureEvalVO vo, Model model, Authentication authentication) {
 //		if(DataDao.accessDateCheck(yearDao.yearFind(), "1105") != 1) {
-//			ra.addFlashAttribute("error", "강의 평가 기간이 아닙니다.");
+//			ra.addFlashAttribute("error", msgAccessor.getMessage("msg.err.notAccess", new String[]{"강의평가"}));
 //			return "redirect:/home";
 //		}
 		vo.setStNo(authentication.getName());
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.CourseEval", vo);
+		List<Map<String,Object>> lists = evalDao.CourseEval(vo);
 		model.addAttribute("list", lists);
 		return "course/evaluation/lectureEvaluationDetails";
 	}
 	
 	@RequestMapping("/stud/course/Search")
 	public String lectureEvaluationSearch(String proNo, Model model) {
-		
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.EvalAvgScore",proNo);
+		List<Map<String,Object>> lists = evalDao.EvalAvgScore(proNo);
 		model.addAttribute("list", lists);
 		return "course/evaluation/lectureEvaluationSearch";
 	}
@@ -60,7 +59,7 @@ public class LectureEvalController {
 		vo.setEvalState("y");
 		vo.setStNo(authentication.getName());
 		evalDao.EvalSucess(vo);
-		ra.addFlashAttribute("success", "강의평가가 완료되었습니다.");
+		ra.addFlashAttribute("success", msgAccessor.getMessage("msg.suc.done", new String[]{"강의평가"}));
 		return "redirect:/stud/course/Evaluation";
 	}
 	
@@ -70,7 +69,7 @@ public class LectureEvalController {
 	public List<Map<String,Object>> portalLectureEvaluation(LectureEvalVO vo, Model model, Authentication authentication) {
 		
 		vo.setStNo(authentication.getName());
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.lectureEval.mapper.LectureEvalMapper.EvalAvgScore", vo);
+		List<Map<String,Object>> lists = evalDao.EvalAvgScore(vo.getStNo());
 		return lists;
 	}
 

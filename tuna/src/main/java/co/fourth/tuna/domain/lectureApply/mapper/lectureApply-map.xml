@@ -3,7 +3,7 @@
 <mapper
 	namespace="co.fourth.tuna.domain.lectureApply.mapper.LectureApplyMapper">
 
-<select id="SubjectFind" resultType="map" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
+<select id="SubjectFind" resultType="map" parameterType="map">
 
 SELECT *
 FROM ( SELECT 
@@ -64,7 +64,7 @@ SELECT DISTINCT
    AND STNO = #{stNo}
 </select>
 
-<select id = "CourseBasket" resultType="map" parameterType="co.fourth.tuna.domain.lectureApply.vo.LectureApplyVO">
+<select id = "CourseBasket" resultType="map" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
 
 SELECT DISTINCT 
        S.NO         NO, 
@@ -93,7 +93,7 @@ SELECT DISTINCT
 
 </select>
 
-<select id = "BasketSchedule" resultType = "map" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
+<select id = "BasketSchedule" resultType = "map" parameterType="map">
 
 SELECT
        S.NAME       NAME,   
@@ -110,7 +110,7 @@ SELECT
    <if test="stateCode != null and !stateCode.equals('')">AND STATECODE = #{stateCode}</if>
 </select>
 
-<select id = "CourseSchedule" resultType = "map" parameterType="co.fourth.tuna.domain.lectureBasket.vo.LectureBasketVO">
+<select id = "CourseSchedule" resultType = "map" parameterType="map">
 
 SELECT
        S.NAME       NAME,   

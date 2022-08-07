@@ -10,7 +10,6 @@ public interface ScholarMapper {
 
 	public void ScholarApply(ScholarApplyVO vo);
 	public List<ScholarVO> FindScholar(ScholarVO vo);
-	public List<ScholarApplyVO> ScholarCheck(ScholarApplyVO vo);
 	public void FileUpLoad(ScholarApplyVO vo);
 	public void ScholarDelete(ScholarApplyVO vo);
 	public void scholarUpdate(ScholarApplyVO vo);
@@ -19,4 +18,9 @@ public interface ScholarMapper {
 	public void scholarSuccessUpdate (ScholarApplyVO vo);
 	public void scholarStudentGiveMoney (ScholarApplyVO vo);
 	public int scholarApplyCount(Map<String, Object> params);
+	
+	public List<Map<String, Object>> ScholarCheck(ScholarApplyVO vo);
+	public List<Map<String, Object>> adminScholarCheck (Map<String, Object> params);
+	
+	
 }

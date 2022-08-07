@@ -12,6 +12,11 @@
     <link rel="stylesheet" id="css-main" th:href="@{/resources/assets/css/oneui.min.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick.css}">
     <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/slick-carousel/slick-theme.css}">
+  <link rel="stylesheet" th:href="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.css}">
+  <script th:src="@{/resources/assets/js/plugins/sweetalert2/sweetalert2.min.js}"></script>
+  <script th:src="@{/resources/assets/js/dialog.js}"></script>
+    
+  
   <style>
     thead {
       text-align: center;
@@ -282,7 +287,7 @@
   </th:block>
   
   <script th:src="@{/resources/assets/js/oneui.app.min.js}"></script>
-  <script>
+  <script th:inline = "javascript">
  
     let cnt = 0;
     
@@ -297,7 +302,10 @@
         }
       })
       if(cnt < 5){
-          alert('강의평가 체크를 완료해주세요.')
+    	  
+    	  let errTitle = /*[[#{title.err.fail('평가')}]]*/ 'default';
+    	  let errMsg = /*[[#{msg.err.selectPlz('강의평가 문항')}]]*/ 'default';
+    	  Dialogs.dialog('success', errTitle, errMsg);
           
       }else{
     	   

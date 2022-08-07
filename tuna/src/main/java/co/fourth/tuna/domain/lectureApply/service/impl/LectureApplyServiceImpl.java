@@ -17,23 +17,7 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	@Autowired
 	private LectureApplyMapper mapper;
 	
-	@Override
-	public List<LectureApplyVO> SubjectFind(int pageNum, int size) {
-		// TODO Auto-generated method stub
-		return mapper.SubjectFind(pageNum, size);
-	}
-
-	@Override
-	public List<LectureApplyVO> CourseFind(List<LectureApplyVO> vo) {
-		// TODO Auto-generated method stub
-		return mapper.CourseFind(vo);
-	}
-
-	@Override
-	public List<LectureApplyVO> CourseBasket(List<LectureApplyVO> vo) {
-		// TODO Auto-generated method stub
-		return mapper.CourseBasket(vo);
-	}
+	
 
 	@Override
 	public String FindApplyGrade(LectureApplyVO vo) {
@@ -71,6 +55,36 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	@Override
 	public void LectureApplySchedule(LectureApplyVO vo) {
 		mapper.LectureApplySchedule(vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> SubjectFind(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return mapper.SubjectFind(params);
+	}
+
+	@Override
+	public List<Map<String, Object>> CourseFind(LectureApplyVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.CourseFind(vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> CourseBasket(LectureBasketVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.CourseBasket(vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> BasketSchedule(LectureBasketVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.BasketSchedule(vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> CourseSchedule(LectureApplyVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.CourseSchedule(vo);
 	}
 	
 	

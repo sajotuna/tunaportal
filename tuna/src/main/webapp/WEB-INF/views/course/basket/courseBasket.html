@@ -40,18 +40,6 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
 <body>
 <main layout:fragment="main">
 
-<th:block th:if = "${(success != null && success != '') || (error != null && error != '')}">
-	<script th:inline="javascript">
-		let success = /*[[${success}]]*/ 'default';
-		let error = /*[[${error}]]*/ 'default';
-		if (success) {
-			Dialogs.dialog('success', '완료', success);
-		} else if (error) {
-			Dialogs.dialog('error', '실패', error);
-		}
-	</script>
-</th:block>
-
   <div id="section">
 
     <div id="page-container">
@@ -279,6 +267,27 @@ data-layout-decorate="~{layouts/lecApplyLayout}">
         })
   
   </script>
+  
+  <th:block th:if = "${(success != null && success != '') || (error != null && error != '') || (delSuc != null && delSuc != '')}">
+	<script th:inline="javascript">
+		let success = /*[[${success}]]*/ 'default';
+		let error = /*[[${error}]]*/ 'default';
+		let sucmsg = /*[[#{title.suc.apply}]]*/ 'default';
+		let errmsg = /*[[#{title.err.apply}]]*/ 'default';
+		let delmsg = /*[[#{title.suc.delete}]]*/ 'default';
+		let delSuc = /*[[${delSuc}]]*/ 'default';
+		
+		if (success) {
+			Dialogs.dialog('success',sucmsg, success);
+		} else if (error) {
+			Dialogs.dialog('error', errmsg, error);
+		} else if(delSuc){
+			Dialogs.dialog('error', delmsg, delSuc);
+		}
+		
+	</script>
+</th:block>
+  
   <th:block th:if = "${params != null && params != ''}">
 <script th:inline="javascript">
 	document.addEventListener('DOMContentLoaded', function(){

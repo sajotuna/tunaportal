@@ -34,8 +34,6 @@ public class UserController {
 	private AdminService AdminDao;
 	@Autowired 
 	private StudentService StudentDao;
-	@Autowired
-	private SqlSession SqlSession;
 	@Autowired 
 	private ProfessorService professorDao;
 	@Autowired 
@@ -51,25 +49,17 @@ public class UserController {
 		
 		if(params.get("year") != null && !params.get("year").equals("")) {
 			String Date = (String)params.get("year");
-			
-			System.out.println(Date.substring(0, Date.indexOf(" ")) +"~"+ (Date.substring(Date.lastIndexOf(" "),Date.length())).trim());
-			
 			params.put("startDate", Date.substring(0, Date.indexOf(" ")));
 			params.put("endDate", (Date.substring(Date.lastIndexOf(" "),Date.length())).trim());
 		}
 		
-		
-		List<Map<String,Object>> lists = SqlSession.selectList("co.fourth.tuna.domain.user.mapper.AdminMapper.adminUserCheck", params);
-		
+		List<Map<String,Object>> lists = AdminDao.adminUserCheck(params);
 		params.put("pageSize", Math.ceil((double)AdminDao.AdminUserCount(params)/10));
-		
 		model.addAttribute("list", lists);
 		model.addAttribute("params", params);
 		
 		return "manage/admin/adminUserSearch";
 	}
-	
-	
 	
 	@RequestMapping("/admin/admin/userInfo")
 	public String adminUserInfo(Model model,String no) {

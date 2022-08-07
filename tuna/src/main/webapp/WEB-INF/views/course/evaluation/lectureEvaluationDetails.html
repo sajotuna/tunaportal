@@ -85,7 +85,7 @@
           </div>
         </div>
       </div>
-    <script>
+    <script th:inline = "javascript">
     document.addEventListener('DOMContentLoaded', function(){
       let btns = document.querySelectorAll('#evalBtn');
       let sbjnos = document.querySelectorAll('#sbjno');
@@ -97,7 +97,8 @@
     })
     
     function success(success){
-    	  Dialogs.dialog('success', '완료', success, reload);
+    	  let sucTitle = /*[[#{title.suc.done('평가')}]]*/ 'default';
+    	  Dialogs.dialog('success', sucTitle, success, reload);
       }
     function reload(){
     	window.location.reload();
