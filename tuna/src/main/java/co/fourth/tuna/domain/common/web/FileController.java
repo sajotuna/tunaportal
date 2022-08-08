@@ -2,6 +2,7 @@ package co.fourth.tuna.domain.common.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,25 +37,28 @@ public class FileController {
 	
 	// 파일 다운로드
 	@RequestMapping("/download")
-	public ResponseEntity<Object> download(
+	public void download(
 			@Param("fileName") String fileName,
 			@Param("originName") String originName,
 			@Param("folder") String folder, HttpServletResponse response) {
 		
-		String path = fileDir + folder + File.separator + fileName;
+		String filePath = fileDir + folder + File.separator + fileName;
 		
 		try {
 			
-			Path filePath = Paths.get(path);
-			Resource resource = new InputStreamResource(Files.newInputStream(filePath));
+			byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File(filePath));
 			
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(originName).build());
-			
-			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+			response.setContentType("application/octet-stream");
+			response.setContentLength(fileByte.length);
+			response.setHeader("Content-Disposition", "attachment; fileName=\""
+				+ URLEncoder.encode(originName, "UTF-8") + "\";");
+
+			response.getOutputStream().write(fileByte);
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
 			
 		} catch(Exception e) {
-			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+			e.printStackTrace();
 		}
 		
 	}
