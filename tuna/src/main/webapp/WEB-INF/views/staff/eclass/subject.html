@@ -508,6 +508,9 @@ xmlns:th="http://www.thymeleaf.org"
 	                          <th>신청상태</th>
 	                        </tr>
 	                      </thead>
+                        <tbody>
+
+                        </tbody>
 	                     </table>
                      </div>
                   </div>  <!-- objection TAB END -->
@@ -1787,7 +1790,7 @@ xmlns:th="http://www.thymeleaf.org"
             // 이의신청 패널
             function setObjectionContent(objList) {
               let table = document.querySelector('#subject-objection-table');
-              let tbody = document.createElement('tbody');
+              let tbody = table.querySelector('tbody');
               tbody.setAttribute('id', 'objectionTb');
               tbody.innerHTML = "";
 
