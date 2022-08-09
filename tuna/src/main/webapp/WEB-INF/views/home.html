@@ -145,7 +145,8 @@
 			                <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
 			                    <div class="p-3 text-center bg-body-light border-bottom rounded-top">
 				                    <p class="mt-2 mb-0 fw-medium" ></p>
-				                    <p class="mb-0 text-muted fs-sm fw-medium" th:text = "${@codeList.getName(#authentication.principal.deptCode)}"></p>
+				                    <p class="mb-0 text-muted fs-sm fw-medium" 
+				                    	th:text = "${@codeList.getName(#authentication.principal.deptCode)}"></p>
 			                    </div>
 			                    <th:block sec:authorize="hasRole('ROLE_STUDENT')">
 			                    <div class="p-2">

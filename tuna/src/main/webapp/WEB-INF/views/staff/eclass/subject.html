@@ -2214,7 +2214,12 @@ xmlns:th="http://www.thymeleaf.org"
                 let attenCnt = 0; //출석 수
                 let absenceCnt = 0; //결석
                 let latenessCnt = 0; // 지각
+                let attenList = subject.attendanceList;
+                attenList.sort(function(a1, a2) {
+                  return new Date(a1.classDate) - new Date(a2.classDate);
+                })
                 
+
                 let blockHTML = `
                 <div id="${DETIAL_ATTENDANCE_BLOCK_ID+subject.no}" class="block block-rounded block-themed block-bordered border-1">
                   <div class="block-header bg-primary-darker">
@@ -2228,7 +2233,7 @@ xmlns:th="http://www.thymeleaf.org"
                       <thead>
                         <tr>
                           <th class="p-1" style="min-width: 50px;">${subject.attendanceList.length>0?"종합":"수강 대기중"}</th>`;
-                for(let atten of subject.attendanceList){
+                for(let atten of attenList){
                   let attenDate = dateNumberToDateString(atten.classDate).slice(5).replace('-','/');
                   let th = document.createElement('th');
                   th.classList.add("p-0");
