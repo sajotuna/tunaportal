@@ -10,27 +10,27 @@ TUNA Portal은 가상 대학교 TUNA의 포탈 서비스이다.
 ### Environment
 <table>
 <tr>
-<th>SCM</th>
+<td>SCM</td>
 <td><img src="https://img.shields.io/badge/Github-181717?style=flat-square&logo=GitHub&logoColor=white"/></td>
 </tr>
 <tr>
-<th>IDE</th>
+<td>IDE</td>
 <td><img src="https://img.shields.io/badge/Eclipse-2C2255?style=flat-square&logo=Eclipse&logoColor=white"/> <img src="https://img.shields.io/badge/VSCode-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=white"/></td>
 </tr>
 <tr>
-<th>OS</th>
+<td>OS</td>
 <td><img src="https://img.shields.io/badge/Windows-0078D6?style=flat-square&logo=Windows&logoColor=white"/> <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=Ubuntu&logoColor=white"/> <img src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white"/></td>
 </tr>
 <tr>
-<th>DataBase</th>
+<td>DataBase</td>
 <td><img src="https://img.shields.io/badge/Oracle 11g-F80000?style=flat-square&logo=Oracle&logoColor=white"/> <img src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white"/></td>
 </tr>
 <tr>
-<th>Server</th>
+<td>Server</td>
 <td><img src="https://img.shields.io/badge/Tomcat 9.0-F8DC75?style=flat-square&logo=Apache Tomcat&logoColor=black"/></td>
 </tr>
 <tr>
-<th>Build Tool & CI/CD</th>
+<td>Build Tool & CI/CD</td>
 <td><img src="https://img.shields.io/badge/Maven-C71A36?style=flat-square&logo=Apache Maven&logoColor=white"/> <img src="https://img.shields.io/badge/Jenkins-D24939?style=flat-square&logo=Jenkins&logoColor=white"/></td>
 </tr>
 </table>
@@ -38,14 +38,14 @@ TUNA Portal은 가상 대학교 TUNA의 포탈 서비스이다.
 ### Tech Stack
 <table>
 <tr>
-<th>Front-End</th>
+<td>Front-End</td>
 <td><img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=black"/> <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=flat-square&logo=Thymeleaf&logoColor=white"/> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=Bootstrap&logoColor=white"/></td>
 </tr>
 <tr>
-<th>Back-End</th>
+<td>Back-End</td>
 <td><img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat-square&logo=Spring Security&logoColor=white"/> <img src="https://img.shields.io/badge/JAVA-007396?style=flat-square&logo=Java&logoColor=white"/></td>
 </tr>
-<th>ETC</th>
+<td>ETC</td>
 <td><img src="https://img.shields.io/badge/Simple Captcha-41454A?style=flat-square&logoColor=white"/> <img src="https://img.shields.io/badge/Google Mail-4285F4?style=flat-square&logo=Google&logoColor=white"/> <img src="https://img.shields.io/badge/Kakao Address API-FFCD00?style=flat-square&logo=Kakao&logoColor=black"/></td>
 </tr>
 </table>
